@@ -127,10 +127,6 @@ break them if you try hard enough.
 /*
 
 Node
-	CLI
-        Output basename
-        Input file(s) 
-        Additional SDL include(s)
 	File I/O: https://nodejs.org/api/fs.html
         Revised file interface wrapper
 
@@ -190,20 +186,20 @@ Node:
 //##############################################################################
 
 var $CP = {
-    currentScene: null,
-    objectSerial: 0,
-    inputFiles: [ ]
+    currentScene:   null,
+    objectSerial:   0,
+    inputFiles:     [ ],
+    quietMode:      false,
+    debugMode:      false,
+    verbosity:      0,
+    sdlIncludes:    [ ],
+	outputBasename: null,    
 };
 //[cf]
-//[of]:* DEPENDENCIES/INIT
-$CP.getopt = require('commander');
+//[of]:* DEPENDENCIES
+$CP.fs = require("fs");
+$CP.getopt = require("commander");
 
-$CP.getopt
-    .version("0.1.0", "-v, --version")
-    .option("-Q, --quiet", "Suppress terminal output")
-    .option("-D, --debug", "Enable debugging mode")
-    .parse(process.argv);
-    
 //[cf]
 //[of]:D $CP.colorsInc
 //==============================================================================
@@ -2015,51 +2011,37 @@ $CP.zeroPad = function(num, pad) {
 
 //[of]:% File(path, mode)
 //==============================================================================
-// Output wrappers. For the time being, these will feed to the browser. The
-// longer-term goal is to mimic the C Standard Library file i/o functions, but
-// with the flexibility of the PHP wrappers. Right now, it just targets HTML
-// elements.
-// Currently, path should be an element selector beginning with "#". Supported
-// modes are r, w, a.
+// File I/O wrappers. CephaloPOV doesn't do anything fancy with files presently,
+// so just basic open, read, write, and close are supported. Other functionality
+// will be added as needed.
+//
+//     path   ... full path to file
+//     mode ..... the usual stdio modes, "r", "w", "a", etc.
+//     serial ... Optional. If supplied, the first instance of /0+/ in the
+//                filename will be replaced by this integer value, padded to
+//                the same number of characters.
+//
 //==============================================================================
 
-function File(path, mode) {
+function File(path, mode, serial) {
     this.path   = path;
     this.mode   = mode;
+    this.serial = serial === undefined ? null : serial;
     this.open   = false;
-	this.idBase = null;
-
-    if(path.substr(0, 1) != "#")
-        throw new TypeError("[File]: Only HTML element output is currently supported.");
-
-	this.path = path;
-	this.idBase = path.substr(1).replace(/[^-A-Za-z0-9_]/g, "_");
-
-    if(this.mode != "r" && this.mode != "w" && this.mode != "a")
-        throw new RangeError("[File]: Only file modes r, w, and a are currently supported.");
-
-    if(this.mode == "w") {
-
-        if($(this.path).length) {
-            $(this.path).html("");
-        } else {
-            $("body").append(
-            	"<div class='file_label' id='" + this.idBase + "_label'>" + this.path.substr(1) + "</div>\n"
-            	+ "<div class='file' id='" + this.idBase + "'></div>"
-            );
-        }
-        this.open = true;
-
-    } else if(mode == "r" || mode == "a") {
-
-        if($("#" + this.idBase).length) {
-            this.open = true;
-        } else {
-            throw new Error("[File]: " + this.path + " does not exist.");
-        }
-
-    }
-
+    this.handle = null;
+	
+	if(this.serial !== null) {
+		var parts = this.path.split(/[\/\\]/);
+		var match = parts[parts.length - 1].match(/0+/); 
+		if(match !== null) {
+			parts[parts.length - 1] = parts[parts.length - 1].replace(/0+/, $CP.zeroPad(this.serial, match[0].length));
+		}
+		this.path = parts.join("/");
+	}
+	
+	this.handle = $CP.fs.openSync(this.path, this.mode);
+	if(this.handle)
+		this.open = true;	
 }
 //[cf]
 //[of]:F File.read()
@@ -2069,25 +2051,21 @@ function File(path, mode) {
 File.prototype.read = function() {
     if(!this.open)
         throw new Error("[File.read]: No file is currently open.");
-    else if(this.mode != "r")
-        throw new Error("[File.read]: File is not open for reading.");
-    else
-        return $("#" + this.idBase).html();
+	return $CP.fs.readFileSync(this.handle).toString();
 }
 //[cf]
 //[of]:F File.write(data)
 File.prototype.write = function(data) {
     if(!this.open)
         throw new Error("[File.write]: No file is currently open.");
-    else if(this.mode != "w" && this.mode != "a")
-        throw new Error("[File.write]: File is not open for writing.");
-    else
-        $("#" + this.idBase).append(data);
+    $CP.fs.writeFileSync(this.handle, data);
 }
 //[cf]
 //[of]:F File.close()
 File.prototype.close = function() {
-    this.open = false;
+    $CP.fs.closeSync(this.handle);
+    this.open   = false;
+    this.handle = null;
 }
 //[cf]
 
@@ -3392,7 +3370,27 @@ Vector.prototype.toSDL = function(stops) {
 }
 //[cf]
 
+//[of]:* INIT [WIP]
+$CP.getopt
+    .version("0.1.0")
+    .option("-i, --input <file>", "input file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.inputFiles)
+	.option("-o, --output [name]", "output base name", function(v) { $CP.outputBasename = v.trim(); })
+	.option("-s, --sdl [name]", "include SDL file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.sdlIncludes)
+    .option("-D, --debug", "enable debugging mode")
+    .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
+    .option("-Q, --quiet", "suppress terminal output")
+    .parse(process.argv);
+    
+// TODO: option validation and immediate actons
 
+var x = new File("foo0000", "w", 10);
+x.write("I am the egg man, I am the walrus, googoogajoob!\n");
+x.close();
+x = new File("foo0010", "r");
+var contents = x.read();
+console.log(contents);
+x.close();
+//[cf]
 
 
 
