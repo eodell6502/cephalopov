@@ -126,13 +126,8 @@ break them if you try hard enough.
 //[of]:TODO
 /*
 
-Node
-	File I/O: https://nodejs.org/api/fs.html
-        Revised file interface wrapper
-
 Scene
 	Come up with generic SDL test include file
-	Add support for include files
 
 Work out details of transformations
 	baseTransform
@@ -140,7 +135,6 @@ Work out details of transformations
 	restoreBaseTransform()
 
 Vector: Allow entire vector to be produced by a JS or SDL function
-	
 
 Primitive: 
 	toSDL()
@@ -156,6 +150,8 @@ ImageOptions
 
 Matrix
 	rotate and skew
+
+Output loop
 
 ----------------
 
@@ -192,7 +188,7 @@ var $CP = {
     quietMode:      false,
     debugMode:      false,
     verbosity:      0,
-    sdlIncludes:    [ ],
+    sdlIncludes:    { },
 	outputBasename: null,    
 };
 //[cf]
@@ -1348,6 +1344,32 @@ $CP.inArray = function(a, k) {
             if(a[i] === k)
                 return true;
     return false;
+}
+//[cf]
+//[of]:F $CP.init()
+$CP.init = function() {
+
+	$CP.getopt
+	    .version("0.1.0")
+	    .option("-i, --input <file>", "input file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.inputFiles)
+		.option("-o, --output [name]", "output base name", function(v) { $CP.outputBasename = v.trim(); })
+		.option("-s, --sdl [name]", "include SDL file (can be used multiple times)", function(val, memo) { memo[val] = null; return memo; }, $CP.sdlIncludes)
+	    .option("-D, --debug", "enable debugging mode")
+	    .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
+	    .option("-Q, --quiet", "suppress terminal output")
+    	.parse(process.argv);
+    
+		for(var filename in $CP.sdlIncludes) {
+			try {
+				var file = new File(filename, "r");
+			} catch(e) {
+				console.log("[FATAL ERROR]: Unable to open file '" + filename + "'.");
+				return;
+			}
+			$CP.sdlIncludes[filename] = file.read();
+		}
+
+	console.log($CP.sdlIncludes);
 }
 //[cf]
 //[of]:F $CP.isFloat(val)
@@ -3371,25 +3393,7 @@ Vector.prototype.toSDL = function(stops) {
 //[cf]
 
 //[of]:* INIT [WIP]
-$CP.getopt
-    .version("0.1.0")
-    .option("-i, --input <file>", "input file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.inputFiles)
-	.option("-o, --output [name]", "output base name", function(v) { $CP.outputBasename = v.trim(); })
-	.option("-s, --sdl [name]", "include SDL file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.sdlIncludes)
-    .option("-D, --debug", "enable debugging mode")
-    .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
-    .option("-Q, --quiet", "suppress terminal output")
-    .parse(process.argv);
-    
-// TODO: option validation and immediate actons
-
-var x = new File("foo0000", "w", 10);
-x.write("I am the egg man, I am the walrus, googoogajoob!\n");
-x.close();
-x = new File("foo0010", "r");
-var contents = x.read();
-console.log(contents);
-x.close();
+$CP.init();
 //[cf]
 
 
