@@ -3461,9 +3461,377 @@ Vector.prototype.toSDL = function(stops) {
 $CP.init();
 //[cf]
 
+/*
+//[of]:toSDL code from prev version
+// Generic/Common
+
+toString(indent) {
+    var pad = $CP.tab(indent);
+    var contents = [ ];
+
+    if(this._clippedBy !== null) {
+        contents.push(pad + "clipped_by {");
+        contents.push(this._clippedBy.toString(indent + 1));
+        contents.push(pad + "}");
+    }
+
+    if(this._boundedBy !== null) {
+        contents.push(pad + "bounded_by {");
+        if(this._boundedBy === this._clippedBy) {
+            contents.push(pad + "    clipped_by");
+        } else {
+            contents.push(this._boundedBy.toString(indent + 1));
+        }
+        contents.push(pad + "}");
+    }
+
+    if(this._noShadow)
+        contents.push(pad + "no_shadow");
+
+    if(this._noImage)
+        contents.push(pad + "no_image");
+
+    if(this._noRadiosity)
+        contents.push(pad + "no_radiosity");
+
+    if(this._noReflection)
+        contents.push(pad + "no_reflection");
+
+    if(this._inverse)
+        contents.push(pad + "inverse");
+
+    if(this._sturm)
+        contents.push(pad + "sturm");
+
+    if(this._hierarchy)
+        contents.push(pad + "hierarchy");
+
+    if(this._double_illuminate)
+        contents.push(pad + "double_illuminate");
+
+    if(this._hollow)
+        contents.push(pad + "hollow");
+
+    // TODO: interior
+    // TODO: interior_texture
+    // TODO: pigment
+    // TODO: normal
+    // TODO: finish
+    // TODO: photons
+    // TODO: radiosity
+
+    if(this._transform !== null)
+        contents.push(pad + this._transform.toString(indent + 1));
+
+    return contents.join("\n");
+}
+
+
+// BICUBIC PATCH: TODO
+// BLOB: TODO
+
+// BOX
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "box {");
+    content.push(pad + "    " + this.corner1 + ", " + this.corner2);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// CONE
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "cone {");
+    content.push(pad + "    " + this.basePoint + ", " + this.baseRadius + ", " + this.capPoint + ", " + this.capRadius);
+    if(this.open)
+        content.push(pad + "    open");
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// CUBIC: TODO
+
+// CYLINDER
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "cylinder {");
+    content.push(pad + "    " + this.basePoint + ", " + this.capPoint + ", " + this.radius);
+    if(this.open)
+        content.push(pad + "    open");
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// DISC
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "disc {");
+    content.push(pad + "    " + this.center + ", " + this.normal + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// DIFFERENCE
+
+toString(indent) {
+	var pad  = $CP.tab(indent);
+	var content = [];
+	
+	content.push(pad + "difference {");
+	content.push(pad + "    " + this._positiveObject.toString(indent + 1));
+	for(var i = 0; i < this._negativeObjects.length; i++) {
+		content.push(pad + "    " + this._negativeObjects[i].toString(indent + 1));
+	}
+	content.push(super.toString(indent + 1));
+	content.push(pad + "}");
+	
+	return content.join("\n");
+}
+
+// HEIGHTFIELD
+
+toString(indent) {
+	var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "height_field {");
+    if(this._userFunc !== null) {
+    	content.push(pad + "    function FieldResolution_X, FieldResolution_Y { " + this.userFunc + " }});
+    } else if(this._filename !== null) {
+    	content.push(
+    		pad + "    "
+    		+ (this.hfType === null ? "" : (this.hfType + " "))
+    		+ '"' + this.filename + '" '
+    		+ (this.gamma === null ? "" : ("gamma " + this.gamma + " "))
+    		+ (this.premultiplied === null ? "" : (this.premultiplied ? "on" : "off"))
+    	);
+    } else {
+    	throw new Error("[HeightField]: Neither filename nor userFunc is defined.");
+    }
+    if(this.smooth === true)
+    	content.push(pad + "    smooth");
+    if(this.waterLevel !== null)
+    	content.push(pad + "    water_level " + this._waterLevel);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// INTERSECTION
+
+toString(indent) {
+	var pad  = $CP.tab(indent);
+	var content = [];
+	
+	content.push(pad + "intersection {");
+	for(var i = 0; i < this._objects.length; i++) {
+		content.push(pad + "    " + this._objects[i].toString(indent + 1));
+	}
+	content.push(super.toString(indent + 1));
+	content.push(pad + "}");
+	
+	return content.join("\n");
+}
+
+// ISOSURFACE: TODO
+// JULIAFRACTAL: TODO
+// LATHE: TODO
+
+// MERGE
+
+toString(indent) {
+	var pad  = $CP.tab(indent);
+	var content = [];
+	
+	content.push(pad + "merge {");
+	for(var i = 0; i < this._objects.length; i++) {
+		content.push(pad + "    " + this._objects[i].toString(indent + 1));
+	}
+	content.push(super.toString(indent + 1));
+	content.push(pad + "}");
+	
+	return content.join("\n");
+}
+
+// MESH: TODO
+// MESH2: TODO
+
+// OVUS
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "ovus {");
+    content.push(pad + "    " + this.topRadius + ", " + this.bottomRadius);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// PARAMETRIC: TODO
+
+// PLANE
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "sphere {");
+    content.push(pad + "    " + this.center + ", " + this.radius);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// POLY: TODO
+// POLYGON: TODO
+// POLYNOMIAL: TODO
+// PRISM: TODO
+// QUADRIC: TODO
+// QUARTIC: TODO
+
+// SPHERE
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "sphere {");
+    content.push(pad + "    " + this.center + ", " + this.radius);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+
+// SPHERESWEEP: TODO
+// SUPERQUADRIC: TODO
+// SOR: TODO
+// TEXTOBJECT: TODO
+
+// TORUS
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "torus {");
+    content.push(pad + "    " + this.majorRadius + ", " + this.minorRadius);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// TRIANGLE
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "triangle {");
+    content.push(pad + "    " + this.corner1 + ", " + this.corner2 + ", " + this.corner3);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+// UNION
+
+toString(indent) {
+	var pad  = $CP.tab(indent);
+	var content = [];
+	
+	content.push(pad + "merge {");
+	for(var i = 0; i < this._objects.length; i++) {
+		content.push(pad + "    " + this._objects[i].toString(indent + 1));
+	}
+	content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
+	content.push(super.toString(indent + 1));
+	content.push(pad + "}");
+	
+	return content.join("\n");
+}
+
+// SMOOTHTRIANGLE
+
+toString(indent) {
+    var pad  = $CP.tab(indent);
+    var content = [];
+
+    content.push(pad + "smooth_triangle {");
+    content.push(pad + "    "
+    	+ this.corner1 + ", " + this.normal1 + ", "
+    	+ this.corner2 + ", " + this.normal2 + ", "
+    	+ this.corner3 + ", " + this.normal3);
+    content.push(super.toString(indent + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//[cf]
+*/
 
 
 
