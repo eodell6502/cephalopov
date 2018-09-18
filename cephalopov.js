@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 //[of]:LICENSE
 //##############################################################################
 //# Copyright 2018 Eric O'Dell and subsequent contributors                     #
@@ -125,8 +127,12 @@ break them if you try hard enough.
 /*
 
 Node
-	CLI: https://www.npmjs.com/package/commander
+	CLI
+        Output basename
+        Input file(s) 
+        Additional SDL include(s)
 	File I/O: https://nodejs.org/api/fs.html
+        Revised file interface wrapper
 
 Scene
 	Come up with generic SDL test include file
@@ -178,7 +184,6 @@ Node:
 */
 //[cf]
 
-
 //[of]:% $CP
 //##############################################################################
 //# $CP is the master CephaloPOV object.
@@ -187,9 +192,19 @@ Node:
 var $CP = {
     currentScene: null,
     objectSerial: 0,
+    inputFiles: [ ]
 };
 //[cf]
+//[of]:* DEPENDENCIES/INIT
+$CP.getopt = require('commander');
 
+$CP.getopt
+    .version("0.1.0", "-v, --version")
+    .option("-Q, --quiet", "Suppress terminal output")
+    .option("-D, --debug", "Enable debugging mode")
+    .parse(process.argv);
+    
+//[cf]
 //[of]:D $CP.colorsInc
 //==============================================================================
 // CephaloPOVified versions of the colors from colors.inc.
@@ -2921,8 +2936,8 @@ Matrix.prototype.apply = function(obj) {
     obj.transform = this.xMatrix(obj.transform);
 }
 //[cf]
-//[of]:F Matrix.copy()
-F Matrix.copy()
+//[of]:F Matrix.copy() [TODO]
+
 //[cf]
 //[of]:F Matrix.toSDL(stops)
 Matrix.prototype.toSDL = function(stops) {
