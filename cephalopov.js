@@ -126,8 +126,8 @@ break them if you try hard enough.
 //[of]:TODO
 /*
 
-Primitive: 
-	toSDL()
+Primitive:
+	toSDL() -- box, cylinder, sphere, cone, plane
 	Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform
 
 Scene
@@ -166,7 +166,7 @@ Cameras cannot be part of CSG unions, so come up with a way to link
 a camera to an object so that transformations applied to the object
 are automatically applied to the camera.
 
-Node: 
+Node:
     Still operable without special changes in browser
 
 
@@ -186,7 +186,7 @@ var $CP = {
     debugMode:      false,
     verbosity:      0,
     sdlIncludes:    { },
-	outputBasename: null,    
+	outputBasename: null,
 };
 //[cf]
 //[of]:* DEPENDENCIES
@@ -439,13 +439,13 @@ $CP.ioDef = {
     bitsPerColor:          { type: "int",                       test: "5-16" },
     bounding:              { type: "boolean",                   test: null },
     boundingMethod:        { type: "int(1|2)",                  test: null },
-    boundingThreshold:     { type: "int",                       test: ">=0" },  
+    boundingThreshold:     { type: "int",                       test: ">=0" },
     bspBaseAccessCost:     { type: "float",                     test: null },
     bspChildAccessCost:    { type: "float",                     test: null },
     bspIsectCost:          { type: "float",                     test: null },
     bspMaxDepth:           { type: "int",                       test: ">0" },
     bspMissChance:         { type: "float",                     test: null },
-//  constants:             { type: "",                          test: null }, 
+//  constants:             { type: "",                          test: null },
     continueTrace:         { type: "boolean",                   test: null },
     createIni:             { type: "mixed(boolean|string)",     test: "nonempty" },
     debugConsole:          { type: "boolean",                   test: null },
@@ -454,8 +454,8 @@ $CP.ioDef = {
     displayGamma:          { type: "mixed(float|'sRGB')",       test: null },
     dither:                { type: "boolean",                   test: null },
     ditherMethod:          { type: "ditherType",                test: null },
-    endColumn:             { type: "int",                       test: "0-" }, 
-    endRow:                { type: "int",                       test: "0-" }, 
+    endColumn:             { type: "int",                       test: "0-" },
+    endRow:                { type: "int",                       test: "0-" },
 	exePath:               { type: "string",                    test: "nonempty" },
     fatalConsole:          { type: "boolean",                   test: null },
     fatalErrorCommand:     { type: "string",                    test: "nonempty" },
@@ -499,8 +499,8 @@ $CP.ioDef = {
     renderPattern:         { type: "int",                       test: "0-5" },
     samplingMethod:        { type: "int",                       test: "1-2" },
     splitUnions:           { type: "boolean",                   test: null },
-    startColumn:           { type: "int",                       test: "0-" },  
-    startRow:              { type: "int",                       test: "0-" },  
+    startColumn:           { type: "int",                       test: "0-" },
+    startRow:              { type: "int",                       test: "0-" },
     statisticConsole:      { type: "boolean",                   test: null },
     statisticFile:         { type: "mixed(boolean|string)",     test: "nonempty" },
     testAbort:             { type: "boolean",                   test: null },
@@ -540,14 +540,14 @@ $CP.objCommon = {
 	noReflection:     { type: "boolean",   test: null },
 //	normal:           { type: "",          test: null },  // FIXME
 	noShadow:         { type: "boolean",   test: null },
-	parent:           { type: "Primitive", test: null },  // CP internal/non-SDL: ref to parent CSG object	
+	parent:           { type: "Primitive", test: null },  // CP internal/non-SDL: ref to parent CSG object
 //	photons:          { type: "",          test: null },  // FIXME
 //	pigment:          { type: "",          test: null },  // FIXME
 //	radiosity:        { type: "",          test: null },  // FIXME
 	serial:           { type: "int",       test: null },  // CP internal/non-SDL, read-only
 	scene:            { type: "Scene",     test: null },  // CP internal/non-SDL, reference to current scene
 	sturm:            { type: "boolean",   test: null },
-	texture:          { type: "Texture",   test: null }, 
+	texture:          { type: "Texture",   test: null },
 	transform:        { type: "Matrix",    test: null },
 }
 
@@ -691,7 +691,7 @@ $CP.objDef = {
         optional: [
             { name: "adaptive",         type: "float",    test: ">=0" },
             { name: "areaIllumination", type: "boolean"   },
-            { name: "areaLight",        type: "boolean"   },     
+            { name: "areaLight",        type: "boolean"   },
             { name: "axis1",            type: "VectorXYZ" },
             { name: "axis2",            type: "VectorXYZ" },
             { name: "circular",         type: "boolean"   },
@@ -1236,12 +1236,12 @@ $CP.deg2rad = function(deg) {
 $CP.errmsg = function(src, msg, severity) {
 	if($CP.quietMode)
 		return;
-		
+
 	var message = "[" + src + "]: " + msg;
-	
+
 	if(severity === undefined)
 		severity = "info";
-		
+
 	switch(severity) {
 		case "error":
 			console.log($CP.chalk.bgRed.yellowBright(message));
@@ -1291,14 +1291,14 @@ $CP.factory = function(type, ...args) {
 			if(args[0] == "scale" || args[0] == "translate") {
 				var obj = new Matrix(args[0], args[1], args[2], args[3])
 			} else if(args[0] == "rotate") {
-				// TODO		
+				// TODO
 			} else if(args[0] == "skew") {
 				// TODO
 			} else {
-				var obj = new Matrix(args[0], args[1], args[2], args[3], args[4], 
+				var obj = new Matrix(args[0], args[1], args[2], args[3], args[4],
 					args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
 			}
-			
+
 			break;
 
         case "Primitive":
@@ -1323,7 +1323,7 @@ $CP.factory = function(type, ...args) {
 			obj.active = true;
 
 			$CP.currentScene.addObject(obj);
-			
+
             break;
 
         case 'GlobalSettings':
@@ -1344,7 +1344,7 @@ $CP.factory = function(type, ...args) {
             break;
 
 		case 'Scene':
-		
+
 			var obj = new Scene();
 			break;
 
@@ -1398,7 +1398,7 @@ $CP.init = function() {
 	    .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
 	    .option("-Q, --quiet", "suppress terminal output")
     	.parse(process.argv);
-    
+
 	// Load SDL include files --------------------------------------------------
 
 	for(var filename in $CP.sdlIncludes) {
@@ -1412,20 +1412,20 @@ $CP.init = function() {
 	}
 
 	// Put $CP and other objects into global scope -----------------------------
-	
+
 	global.$CP = $CP;
 
 	// Load and execute user programs ------------------------------------------
-	
+
 	if($CP.inputFiles.length == 0) {
 		$CP.errmsg("INIT", "No input file(s) specified.", "error");
 		return;
 	}
-	
+
 	// TODO: Right now, these are loaded and executed immediately in sequence.
 	// It may be useful to some people to load all files first and then hit a
 	// single entry point.
-	
+
 	for(var i = 0; i < $CP.inputFiles.length; i++) {
 		var prog = require($CP.inputFiles[i]);
 	}
@@ -1752,7 +1752,7 @@ $CP.typeFormatDescription = function(fmt) {
     }
 
     if(fmt.name == "mixed") {
-    
+
         var tmp = fmt.alternatives.slice(0);
         tmp[tmp.length - 1] = "or " + tmp[tmp.length - 1];
 
@@ -1767,7 +1767,7 @@ $CP.typeFormatDescription = function(fmt) {
         } else {
             contents.push(tmp.join(" "));
         }
-        
+
     } else if(fmt.name == "string") {
         if(fmt.alternatives) {
             if(fmt.range) {
@@ -1779,19 +1779,19 @@ $CP.typeFormatDescription = function(fmt) {
         } else {
             contents.push("a string");
         }
-        
+
     } else if(fmt.name == "list") {
-    
+
         contents.push("an array of the form [" + fmt.sequence.join(", ") + "]");
-    
+
     } else {
-    
+
         if(fmt.array) {
             contents.push(fmt.name + "s");
         } else {
             contents.push((initialVowels.indexOf(fmt.name.substr(0, 1)) == -1 ? "a" : "an") + " " + fmt.name);
         }
-        
+
     }
 
     if(fmt.alternatives)
@@ -2110,19 +2110,19 @@ function File(path, mode, serial) {
     this.serial = serial === undefined ? null : serial;
     this.open   = false;
     this.handle = null;
-	
+
 	if(this.serial !== null) {
 		var parts = this.path.split(/[\/\\]/);
-		var match = parts[parts.length - 1].match(/0+/); 
+		var match = parts[parts.length - 1].match(/0+/);
 		if(match !== null) {
 			parts[parts.length - 1] = parts[parts.length - 1].replace(/0+/, $CP.zeroPad(this.serial, match[0].length));
 		}
 		this.path = parts.join("/");
 	}
-	
+
 	this.handle = $CP.fs.openSync(this.path, this.mode);
 	if(this.handle)
-		this.open = true;	
+		this.open = true;
 }
 //[cf]
 //[of]:F File.read()
@@ -2680,8 +2680,8 @@ ManagedObject.prototype.toIniFile = function() {
 //==============================================================================
 // Returns the SDL for the object *if* the type is GlobalSettings. (ImageOptions
 // produces either commandline flags or the contents of a .ini file, neither of
-// which is SDL.) Unlike other toSDL methods, this one does not take a stops 
-// argument because the SDL global_settings declaration always happens at the 
+// which is SDL.) Unlike other toSDL methods, this one does not take a stops
+// argument because the SDL global_settings declaration always happens at the
 // top level.
 //==============================================================================
 
@@ -2806,8 +2806,8 @@ ManagedObject.prototype.toSDL = function() {
 
 function Matrix(v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32) {
 
-	this._v00 = this._v01 = this._v02 = this._v10 = this._v11 = this._v12 
-		= this._v20 = this._v21 = this._v22 = this._v30 = this._v31 
+	this._v00 = this._v01 = this._v02 = this._v10 = this._v11 = this._v12
+		= this._v20 = this._v21 = this._v22 = this._v30 = this._v31
 		= this._v32 = 0;
 
     if(v00 == "scale") {
@@ -3049,7 +3049,7 @@ function Primitive(type) {
     this._val     = { };
 	this._uval    = { };
     this._defs    = $CP.objDef[type];
- 
+
 }
 //[cf]
 //[of]:D Primitive.handler
@@ -3081,7 +3081,7 @@ Primitive.prototype.handler = {
 					return undefined;
 		}
     },
-    
+
     set: function(target, property, value, receiver) {
 
 		if(property == "ptype" || property == "solid" || property == "finite" || property == "csg" || property == "toSDL")
@@ -3090,15 +3090,15 @@ Primitive.prototype.handler = {
 		var type = target.propertyType(property);
 		var test = target.propertyTest(property);
 		var errmsg;
-		
+
 		if(type) {
-		
+
 			if($CP.typeFormatTestError(type, value))
 				throw new TypeError("[Primitive." + target._subtype + "]: " + property + " must be " + $CP.typeFormatDescription(type) + ".");
-			
+
 			if(test != null && (errmsg = $CP.valueTestError(test, value)))
 				throw new RangeError("[Primitive." + target._subtype + "]: " + property + errmsg + ".");
-			
+
 			if(property == "transform") {
 				if(target._val.baseTransform === undefined) {
 					target._val.baseTransform = value;
@@ -3114,14 +3114,14 @@ Primitive.prototype.handler = {
 			} else {
 				target._val[property] = value;
 			}
-			
+
 		} else {
 			target._uval[property] = value;
 		}
 
 		return value;
     },
-    
+
 }
 //[cf]
 //[of]:F Primitive.proxify()
@@ -3148,7 +3148,7 @@ Primitive.prototype.propertyTest = function(property) {
         if(this._defs.optional[i].name == property && this._defs.optional[i].test !== undefined)
             return this._defs.optional[i].type;
     if($CP.objCommon[property] !== undefined)
-        return $CP.objCommon[property].test;            
+        return $CP.objCommon[property].test;
     return null;
 }
 //[cf]
@@ -3166,7 +3166,7 @@ Primitive.prototype.propertyType = function(property) {
         if(this._defs.optional[i].name == property)
             return this._defs.optional[i].type;
     if($CP.objCommon[property] !== undefined)
-        return $CP.objCommon[property].type;            
+        return $CP.objCommon[property].type;
     return false;
 }
 //[cf]
@@ -3198,7 +3198,7 @@ function Scene() {
 	this._frame          = 0;                     // Current frame number
 	this._activeCamera   = null;
 	this._baseName       = null;                  // If set, this becomes the base name for all output files
-	
+
 	if($CP.currentScene === null)
 		$CP.currentScene = this;
 }
@@ -3597,7 +3597,7 @@ toString(indent) {
 toString(indent) {
 	var pad  = $CP.tab(indent);
 	var content = [];
-	
+
 	content.push(pad + "difference {");
 	content.push(pad + "    " + this._positiveObject.toString(indent + 1));
 	for(var i = 0; i < this._negativeObjects.length; i++) {
@@ -3605,7 +3605,7 @@ toString(indent) {
 	}
 	content.push(super.toString(indent + 1));
 	content.push(pad + "}");
-	
+
 	return content.join("\n");
 }
 
@@ -3644,14 +3644,14 @@ toString(indent) {
 toString(indent) {
 	var pad  = $CP.tab(indent);
 	var content = [];
-	
+
 	content.push(pad + "intersection {");
 	for(var i = 0; i < this._objects.length; i++) {
 		content.push(pad + "    " + this._objects[i].toString(indent + 1));
 	}
 	content.push(super.toString(indent + 1));
 	content.push(pad + "}");
-	
+
 	return content.join("\n");
 }
 
@@ -3664,14 +3664,14 @@ toString(indent) {
 toString(indent) {
 	var pad  = $CP.tab(indent);
 	var content = [];
-	
+
 	content.push(pad + "merge {");
 	for(var i = 0; i < this._objects.length; i++) {
 		content.push(pad + "    " + this._objects[i].toString(indent + 1));
 	}
 	content.push(super.toString(indent + 1));
 	content.push(pad + "}");
-	
+
 	return content.join("\n");
 }
 
@@ -3768,7 +3768,7 @@ toString(indent) {
 toString(indent) {
 	var pad  = $CP.tab(indent);
 	var content = [];
-	
+
 	content.push(pad + "merge {");
 	for(var i = 0; i < this._objects.length; i++) {
 		content.push(pad + "    " + this._objects[i].toString(indent + 1));
@@ -3776,7 +3776,7 @@ toString(indent) {
 	content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
 	content.push(super.toString(indent + 1));
 	content.push(pad + "}");
-	
+
 	return content.join("\n");
 }
 
