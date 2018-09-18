@@ -169,7 +169,6 @@ a camera to an object so that transformations applied to the object
 are automatically applied to the camera.
 
 Node: 
-    Colored text output: https://www.npmjs.com/package/chalk
     Still operable without special changes in browser
 
 
@@ -193,8 +192,9 @@ var $CP = {
 };
 //[cf]
 //[of]:* DEPENDENCIES
-$CP.fs = require("fs");
+$CP.fs     = require("fs");
 $CP.getopt = require("commander");
+$CP.chalk  = require("chalk");
 
 //[cf]
 //[of]:D $CP.colorsInc
@@ -1224,6 +1224,44 @@ $CP.deg2rad = function(deg) {
     return deg * (Math.PI / 180);
 }
 //[cf]
+//[of]:F $CP.errmsg(src, msg, severity, color)
+//==============================================================================
+// Generic console error message interface. Will not produce output if quiet
+// mode is set.
+//
+// Output format is "[src]: msg"
+//
+// The severity arg can be one of "error", "warn", "info", or "debug". The
+// default is "error".
+//==============================================================================
+
+$CP.errmsg = function(src, msg, severity) {
+	if($CP.quietMode)
+		return;
+		
+	var message = "[" + src + "]: " + msg;
+	
+	if(severity === undefined)
+		severity = "info";
+		
+	switch(severity) {
+		case "error":
+			console.log($CP.chalk.bgRed.yellowBright(message));
+			break;
+		case "warn":
+			console.log($CP.chalk.bgYellow.black(message));
+			break;
+		case "info":
+			if($CP.verbosity)
+				console.log($CP.chalk.greenBright(message));
+			break;
+		case "debug":
+			if($CP.debugMode)
+				console.log(message);
+			break;
+	}
+}
+//[cf]
 //[of]:F $CP.factory(type, ...args)
 //==============================================================================
 // The object factory.
@@ -1354,22 +1392,24 @@ $CP.init = function() {
 	    .option("-i, --input <file>", "input file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.inputFiles)
 		.option("-o, --output [name]", "output base name", function(v) { $CP.outputBasename = v.trim(); })
 		.option("-s, --sdl [name]", "include SDL file (can be used multiple times)", function(val, memo) { memo[val] = null; return memo; }, $CP.sdlIncludes)
-	    .option("-D, --debug", "enable debugging mode")
+	    .option("-D, --debug", "enable debugging mode", function() { $CP.debugMode = true; })
 	    .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
 	    .option("-Q, --quiet", "suppress terminal output")
     	.parse(process.argv);
+    
+    	// Load SDL include files
     
 		for(var filename in $CP.sdlIncludes) {
 			try {
 				var file = new File(filename, "r");
 			} catch(e) {
-				console.log("[FATAL ERROR]: Unable to open file '" + filename + "'.");
+				$CP.errmsg("INIT", "Unable to open SDL include file '" + filename + "'.", "error");
 				return;
 			}
 			$CP.sdlIncludes[filename] = file.read();
 		}
 
-	console.log($CP.sdlIncludes);
+
 }
 //[cf]
 //[of]:F $CP.isFloat(val)
