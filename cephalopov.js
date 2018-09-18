@@ -126,10 +126,6 @@ break them if you try hard enough.
 //[of]:TODO
 /*
 
-Load user modules
-
-Vector: Allow entire vector to be produced by a JS or SDL function
-
 Primitive: 
 	toSDL()
 	Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform
@@ -143,6 +139,8 @@ Matrix
 	rotate and skew
 
 ----------------
+
+Vector: Allow entire vector to be produced by a JS or SDL function
 
 restoreBaseTransform() / null handling for properties generally
 
@@ -1395,7 +1393,7 @@ $CP.init = function() {
 	    .version("0.1.0")
 	    .option("-i, --input <file>", "input file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.inputFiles)
 		.option("-o, --output [name]", "output base name", function(v) { $CP.outputBasename = v.trim(); })
-		.option("-s, --sdl [name]", "include SDL file (can be used multiple times)", function(val, memo) { memo[val] = null; return memo; }, $CP.sdlIncludes)
+		.option("-s, --sdl <name>", "include SDL file (can be used multiple times)", function(val, memo) { memo[val] = null; return memo; }, $CP.sdlIncludes)
 	    .option("-D, --debug", "enable debugging mode", function() { $CP.debugMode = true; })
 	    .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
 	    .option("-Q, --quiet", "suppress terminal output")
@@ -1413,14 +1411,24 @@ $CP.init = function() {
 		$CP.sdlIncludes[filename] = file.read();
 	}
 
-	//--------------------------------------------------------------------------
+	// Put $CP and other objects into global scope -----------------------------
 	
-	var scene = $CP.factory("Scene");
-	var x = $CP.factory("box");
-	var m = new Matrix("translate", 2, 3, 4);
-	x.transform = m;
-	x.transform = m;
+	global.$CP = $CP;
 
+	// Load and execute user programs ------------------------------------------
+	
+	if($CP.inputFiles.length == 0) {
+		$CP.errmsg("INIT", "No input file(s) specified.", "error");
+		return;
+	}
+	
+	// TODO: Right now, these are loaded and executed immediately in sequence.
+	// It may be useful to some people to load all files first and then hit a
+	// single entry point.
+	
+	for(var i = 0; i < $CP.inputFiles.length; i++) {
+		var prog = require($CP.inputFiles[i]);
+	}
 }
 //[cf]
 //[of]:F $CP.isFloat(val)
