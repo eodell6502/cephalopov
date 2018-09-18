@@ -126,19 +126,25 @@ break them if you try hard enough.
 //[of]:TODO
 /*
 
-Scene
-	Come up with generic SDL test include file
-
-Work out details of transformations
-	baseTransform
-	transform -- on write, applies new transformations
-	restoreBaseTransform()
+Load user modules
 
 Vector: Allow entire vector to be produced by a JS or SDL function
 
 Primitive: 
 	toSDL()
 	Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform
+
+Scene
+	Come up with generic SDL test include file
+
+Output loop
+
+Matrix
+	rotate and skew
+
+----------------
+
+restoreBaseTransform() / null handling for properties generally
 
 ImageOptions
 // TODO: boundingThreshold: convert zero to boolean on output
@@ -148,14 +154,8 @@ ImageOptions
 // TODO: startColumn: post check endColumn
 // TODO: startRow: post check endRow
 
-Matrix
-	rotate and skew
 
-Output loop
-
-----------------
-
-Docs to HTML/Wiki
+Docs to HTML
 Feature and Maintenance tracks
 
 Material
@@ -1385,6 +1385,10 @@ $CP.inArray = function(a, k) {
 }
 //[cf]
 //[of]:F $CP.init()
+//==============================================================================
+// CephaloPOV main loop.
+//==============================================================================
+
 $CP.init = function() {
 
 	$CP.getopt
@@ -1397,18 +1401,25 @@ $CP.init = function() {
 	    .option("-Q, --quiet", "suppress terminal output")
     	.parse(process.argv);
     
-    	// Load SDL include files
-    
-		for(var filename in $CP.sdlIncludes) {
-			try {
-				var file = new File(filename, "r");
-			} catch(e) {
-				$CP.errmsg("INIT", "Unable to open SDL include file '" + filename + "'.", "error");
-				return;
-			}
-			$CP.sdlIncludes[filename] = file.read();
-		}
+	// Load SDL include files --------------------------------------------------
 
+	for(var filename in $CP.sdlIncludes) {
+		try {
+			var file = new File(filename, "r");
+		} catch(e) {
+			$CP.errmsg("INIT", "Unable to open SDL include file '" + filename + "'.", "error");
+			return;
+		}
+		$CP.sdlIncludes[filename] = file.read();
+	}
+
+	//--------------------------------------------------------------------------
+	
+	var scene = $CP.factory("Scene");
+	var x = $CP.factory("box");
+	var m = new Matrix("translate", 2, 3, 4);
+	x.transform = m;
+	x.transform = m;
 
 }
 //[cf]
@@ -3081,10 +3092,16 @@ Primitive.prototype.handler = {
 				throw new RangeError("[Primitive." + target._subtype + "]: " + property + errmsg + ".");
 			
 			if(property == "transform") {
-				if(target._val.baseTransform === null) {
-				
+				if(target._val.baseTransform === undefined) {
+					target._val.baseTransform = value;
 				} else {
-				
+					if($CP.isFunction(value) || $CP.isFunction(target._val.baseTransform)) {
+						target._val.transform = value;
+					} else if(target._val.transform === undefined) {
+						target._val.transform = target._val.baseTransform.xMatrix(value);
+					} else {
+						target._val.transform = target._val.transform.xMatrix(value);
+					}
 				}
 			} else {
 				target._val[property] = value;
