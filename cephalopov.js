@@ -127,16 +127,16 @@ break them if you try hard enough.
 /*
 
 Primitive:
-	toSDL() -- box, cylinder, sphere, cone, plane
-	Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform
+    toSDL() -- box, cylinder, sphere, cone, plane
+    Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform
 
 Scene
-	Come up with generic SDL test include file
+    Come up with generic SDL test include file
 
 Output loop
 
 Matrix
-	rotate and skew
+    rotate and skew
 
 ----------------
 
@@ -186,7 +186,7 @@ var $CP = {
     debugMode:      false,
     verbosity:      0,
     sdlIncludes:    { },
-	outputBasename: null,
+    outputBasename: null,
 };
 //[cf]
 //[of]:* DEPENDENCIES
@@ -456,7 +456,7 @@ $CP.ioDef = {
     ditherMethod:          { type: "ditherType",                test: null },
     endColumn:             { type: "int",                       test: "0-" },
     endRow:                { type: "int",                       test: "0-" },
-	exePath:               { type: "string",                    test: "nonempty" },
+    exePath:               { type: "string",                    test: "nonempty" },
     fatalConsole:          { type: "boolean",                   test: null },
     fatalErrorCommand:     { type: "string",                    test: "nonempty" },
     fatalErrorReturn:      { type: "returnAction",              test: null },
@@ -523,32 +523,32 @@ $CP.ioDef = {
 //==============================================================================
 
 $CP.objCommon = {
-	active:           { type: "boolean",   test: null },  // CP internal/non-SDL
-	baseTransform:    { type: "Matrix",    test: null },  // CP internal/non-SDL
-	boundedBy:        { type: "Primitive", test: null },
-//	children:         { type: "",          test: null },  // FIXME: CP internal/non-SDL, list of other primitives for CSG objects
-	clippedBy:        { type: "Primitive", test: null },
-	doubleIlluminate: { type: "boolean",   test: null },
-	finish:           { type: "Finish",    test: null },
-	hierarchy:        { type: "boolean",   test: null },
-	hollow:           { type: "boolean",   test: null },
-	interior:         { type: "Interior",  test: null },
-	inverse:          { type: "boolean",   test: null },
-	material:         { type: "Material",  test: null },
-	noImage:          { type: "boolean",   test: null },
-	noRadiosity:      { type: "boolean",   test: null },
-	noReflection:     { type: "boolean",   test: null },
-//	normal:           { type: "",          test: null },  // FIXME
-	noShadow:         { type: "boolean",   test: null },
-	parent:           { type: "Primitive", test: null },  // CP internal/non-SDL: ref to parent CSG object
-//	photons:          { type: "",          test: null },  // FIXME
-//	pigment:          { type: "",          test: null },  // FIXME
-//	radiosity:        { type: "",          test: null },  // FIXME
-	serial:           { type: "int",       test: null },  // CP internal/non-SDL, read-only
-	scene:            { type: "Scene",     test: null },  // CP internal/non-SDL, reference to current scene
-	sturm:            { type: "boolean",   test: null },
-	texture:          { type: "Texture",   test: null },
-	transform:        { type: "Matrix",    test: null },
+    active:           { type: "boolean",   test: null },  // CP internal/non-SDL
+    baseTransform:    { type: "Matrix",    test: null },  // CP internal/non-SDL
+    boundedBy:        { type: "Primitive", test: null },
+//  children:         { type: "",          test: null },  // FIXME: CP internal/non-SDL, list of other primitives for CSG objects
+    clippedBy:        { type: "Primitive", test: null },
+    doubleIlluminate: { type: "boolean",   test: null },
+    finish:           { type: "Finish",    test: null },
+    hierarchy:        { type: "boolean",   test: null },
+    hollow:           { type: "boolean",   test: null },
+    interior:         { type: "Interior",  test: null },
+    inverse:          { type: "boolean",   test: null },
+    material:         { type: "Material",  test: null },
+    noImage:          { type: "boolean",   test: null },
+    noRadiosity:      { type: "boolean",   test: null },
+    noReflection:     { type: "boolean",   test: null },
+//  normal:           { type: "",          test: null },  // FIXME
+    noShadow:         { type: "boolean",   test: null },
+    parent:           { type: "Primitive", test: null },  // CP internal/non-SDL: ref to parent CSG object
+//  photons:          { type: "",          test: null },  // FIXME
+//  pigment:          { type: "",          test: null },  // FIXME
+//  radiosity:        { type: "",          test: null },  // FIXME
+    serial:           { type: "int",       test: null },  // CP internal/non-SDL, read-only
+    scene:            { type: "Scene",     test: null },  // CP internal/non-SDL, reference to current scene
+    sturm:            { type: "boolean",   test: null },
+    texture:          { type: "Texture",   test: null },
+    transform:        { type: "Matrix",    test: null },
 }
 
 //[cf]
@@ -1210,7 +1210,7 @@ $CP.baseClassName = function(obj) {
 //==============================================================================
 
 $CP.className = function(obj) {
-	return obj.constructor.name;
+    return obj.constructor.name;
 }
 //[cf]
 //[of]:F $CP.deg2rad(deg)
@@ -1234,30 +1234,30 @@ $CP.deg2rad = function(deg) {
 //==============================================================================
 
 $CP.errmsg = function(src, msg, severity) {
-	if($CP.quietMode)
-		return;
+    if($CP.quietMode)
+        return;
 
-	var message = "[" + src + "]: " + msg;
+    var message = "[" + src + "]: " + msg;
 
-	if(severity === undefined)
-		severity = "info";
+    if(severity === undefined)
+        severity = "info";
 
-	switch(severity) {
-		case "error":
-			console.log($CP.chalk.bgRed.yellowBright(message));
-			break;
-		case "warn":
-			console.log($CP.chalk.bgYellow.black(message));
-			break;
-		case "info":
-			if($CP.verbosity)
-				console.log($CP.chalk.greenBright(message));
-			break;
-		case "debug":
-			if($CP.debugMode)
-				console.log(message);
-			break;
-	}
+    switch(severity) {
+        case "error":
+            console.log($CP.chalk.bgRed.yellowBright(message));
+            break;
+        case "warn":
+            console.log($CP.chalk.bgYellow.black(message));
+            break;
+        case "info":
+            if($CP.verbosity)
+                console.log($CP.chalk.greenBright(message));
+            break;
+        case "debug":
+            if($CP.debugMode)
+                console.log(message);
+            break;
+    }
 }
 //[cf]
 //[of]:F $CP.factory(type, ...args)
@@ -1274,40 +1274,40 @@ $CP.factory = function(type, ...args) {
 
     switch(type) {
 
-		case "VectorUV":
-		case "VectorXY":
-		case "VectorXYZ":
-		case "VectorXYZW":
-		case "VectorRGB":
-		case "VectorSRGB":
+        case "VectorUV":
+        case "VectorXY":
+        case "VectorXYZ":
+        case "VectorXYZW":
+        case "VectorRGB":
+        case "VectorSRGB":
 
-			var subtype = type.substr(6);
-			var obj = new Vector(subtype, args[0]).proxify();
+            var subtype = type.substr(6);
+            var obj = new Vector(subtype, args[0]).proxify();
 
-			break;
+            break;
 
-		case "Matrix":
+        case "Matrix":
 
-			if(args[0] == "scale" || args[0] == "translate") {
-				var obj = new Matrix(args[0], args[1], args[2], args[3])
-			} else if(args[0] == "rotate") {
-				// TODO
-			} else if(args[0] == "skew") {
-				// TODO
-			} else {
-				var obj = new Matrix(args[0], args[1], args[2], args[3], args[4],
-					args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
-			}
+            if(args[0] == "scale" || args[0] == "translate") {
+                var obj = new Matrix(args[0], args[1], args[2], args[3])
+            } else if(args[0] == "rotate") {
+                // TODO
+            } else if(args[0] == "skew") {
+                // TODO
+            } else {
+                var obj = new Matrix(args[0], args[1], args[2], args[3], args[4],
+                    args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
+            }
 
-			break;
+            break;
 
         case "Primitive":
 
-			if($CP.currentScene === null)
-				throw new Error("[Primitive]: Objects cannot be instantiated without a current scene.");
+            if($CP.currentScene === null)
+                throw new Error("[Primitive]: Objects cannot be instantiated without a current scene.");
 
-			if(!this.inArray(this.primitives, origType))
-				throw new TypeError("[CEPHALOPOV]: Unknown primitive type '" + origType + "'. Legal values are: " + this.primitives.join(", ") + ".");
+            if(!this.inArray(this.primitives, origType))
+                throw new TypeError("[CEPHALOPOV]: Unknown primitive type '" + origType + "'. Legal values are: " + this.primitives.join(", ") + ".");
 
             var obj = new Primitive(origType).proxify();
 
@@ -1318,11 +1318,11 @@ $CP.factory = function(type, ...args) {
                 obj[this.objDef[origType].optional[i].name] = null;
             }
 
-			obj.serial = $CP.objectSerial++;
-			obj.scene  = $CP.currentScene;
-			obj.active = true;
+            obj.serial = $CP.objectSerial++;
+            obj.scene  = $CP.currentScene;
+            obj.active = true;
 
-			$CP.currentScene.addObject(obj);
+            $CP.currentScene.addObject(obj);
 
             break;
 
@@ -1343,10 +1343,10 @@ $CP.factory = function(type, ...args) {
             obj = obj.proxify();
             break;
 
-		case 'Scene':
+        case 'Scene':
 
-			var obj = new Scene();
-			break;
+            var obj = new Scene();
+            break;
 
         default:
             throw new TypeError("[CEPHALOPOV]: The factory does not support type '" + type + "'.");
@@ -1366,7 +1366,7 @@ $CP.factory = function(type, ...args) {
 //==============================================================================
 
 $CP.fileSerial = function(template, serial) {
-	return template.replace(/%+/, function(match) { return this.zeroPad(serial, match.length); });
+    return template.replace(/%+/, function(match) { return this.zeroPad(serial, match.length); });
 }
 //[cf]
 //[of]:F $CP.inArray(a, k)
@@ -1389,46 +1389,46 @@ $CP.inArray = function(a, k) {
 
 $CP.init = function() {
 
-	$CP.getopt
-	    .version("0.1.0")
-	    .option("-i, --input <file>", "input file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.inputFiles)
-		.option("-o, --output [name]", "output base name", function(v) { $CP.outputBasename = v.trim(); })
-		.option("-s, --sdl <name>", "include SDL file (can be used multiple times)", function(val, memo) { memo[val] = null; return memo; }, $CP.sdlIncludes)
-	    .option("-D, --debug", "enable debugging mode", function() { $CP.debugMode = true; })
-	    .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
-	    .option("-Q, --quiet", "suppress terminal output")
-    	.parse(process.argv);
+    $CP.getopt
+        .version("0.1.0")
+        .option("-i, --input <file>", "input file (can be used multiple times)", function(val, memo) { memo.push(val); return memo; }, $CP.inputFiles)
+        .option("-o, --output [name]", "output base name", function(v) { $CP.outputBasename = v.trim(); })
+        .option("-s, --sdl <name>", "include SDL file (can be used multiple times)", function(val, memo) { memo[val] = null; return memo; }, $CP.sdlIncludes)
+        .option("-D, --debug", "enable debugging mode", function() { $CP.debugMode = true; })
+        .option("-v, --verbose", "increase verbosity", function() { return ++$CP.verbosity; })
+        .option("-Q, --quiet", "suppress terminal output")
+        .parse(process.argv);
 
-	// Load SDL include files --------------------------------------------------
+    // Load SDL include files --------------------------------------------------
 
-	for(var filename in $CP.sdlIncludes) {
-		try {
-			var file = new File(filename, "r");
-		} catch(e) {
-			$CP.errmsg("INIT", "Unable to open SDL include file '" + filename + "'.", "error");
-			return;
-		}
-		$CP.sdlIncludes[filename] = file.read();
-	}
+    for(var filename in $CP.sdlIncludes) {
+        try {
+            var file = new File(filename, "r");
+        } catch(e) {
+            $CP.errmsg("INIT", "Unable to open SDL include file '" + filename + "'.", "error");
+            return;
+        }
+        $CP.sdlIncludes[filename] = file.read();
+    }
 
-	// Put $CP and other objects into global scope -----------------------------
+    // Put $CP and other objects into global scope -----------------------------
 
-	global.$CP = $CP;
+    global.$CP = $CP;
 
-	// Load and execute user programs ------------------------------------------
+    // Load and execute user programs ------------------------------------------
 
-	if($CP.inputFiles.length == 0) {
-		$CP.errmsg("INIT", "No input file(s) specified.", "error");
-		return;
-	}
+    if($CP.inputFiles.length == 0) {
+        $CP.errmsg("INIT", "No input file(s) specified.", "error");
+        return;
+    }
 
-	// TODO: Right now, these are loaded and executed immediately in sequence.
-	// It may be useful to some people to load all files first and then hit a
-	// single entry point.
+    // TODO: Right now, these are loaded and executed immediately in sequence.
+    // It may be useful to some people to load all files first and then hit a
+    // single entry point.
 
-	for(var i = 0; i < $CP.inputFiles.length; i++) {
-		var prog = require($CP.inputFiles[i]);
-	}
+    for(var i = 0; i < $CP.inputFiles.length; i++) {
+        var prog = require($CP.inputFiles[i]);
+    }
 }
 //[cf]
 //[of]:F $CP.isFloat(val)
@@ -1436,7 +1436,7 @@ $CP.init = function() {
 //==============================================================================
 
 $CP.isFloat = function(val) {
-	return (typeof val == "number") ? true : false;
+    return (typeof val == "number") ? true : false;
 }
 //[cf]
 //[of]:F $CP.isFunction(val)
@@ -1495,7 +1495,7 @@ $CP.isFunctionOrNumber = function(val, objname, fieldname) {
 //==============================================================================
 
 $CP.isInt = function(val) {
-	return (typeof val == "number" && val == Math.floor(val)) ? true : false;
+    return (typeof val == "number" && val == Math.floor(val)) ? true : false;
 }
 //[cf]
 //[of]:F $CP.materialize(val)
@@ -1506,13 +1506,13 @@ $CP.isInt = function(val) {
 //==============================================================================
 
 $CP.materialize = function(val) {
-	if(typeof val == "function") {
-		return val();
-	} else if(typeof val == "string" && val.substr(0, 1) == "&") {
-		return val.substr(1);
-	} else {
-		return val;
-	}
+    if(typeof val == "function") {
+        return val();
+    } else if(typeof val == "string" && val.substr(0, 1) == "&") {
+        return val.substr(1);
+    } else {
+        return val;
+    }
 }
 //[cf]
 //[of]:F $CP.parseTypeFormat(fmt)
@@ -1651,10 +1651,10 @@ $CP.rad2deg = function(rad) {
 //==============================================================================
 
 $CP.tab = function(stops) {
-	if(stops)
-    	return new Array(stops).fill("    ").join("");
+    if(stops)
+        return new Array(stops).fill("    ").join("");
     else
-    	return "";
+        return "";
 }
 //[cf]
 //[of]:F $CP.typeCoerce(type, val)
@@ -1825,15 +1825,15 @@ mixed(string|SDLFunction)
 
 $CP.typeFormatTestError = function(fmt, val) {
 
-	if(val === null)
-		return false;
+    if(val === null)
+        return false;
 
     if(typeof fmt == "string")
         var pfmt = this.parseTypeFormat(fmt);
     else
         var pfmt = fmt;
 
-	// Is this an Array, and if so, does it have the correct number of elements?
+    // Is this an Array, and if so, does it have the correct number of elements?
 
     if(pfmt.array) {
         if(!Array.isArray(val) || (pfmt.range && (val.length < pfmt.min || val.length > pfmt.max))) {
@@ -1916,11 +1916,11 @@ $CP.typeFormatTestError = function(fmt, val) {
 
         for(var i = 0; i < val.length; i++) {
             if(val[i] === null                                                                                // null is always valid as a way of emptying a property
-				|| this.isFunction(val[i])                                                                    // Functions are always valid values
+                || this.isFunction(val[i])                                                                    // Functions are always valid values
                 || (this.inArray(pfmt.alternatives, typeof val[i]))                                           // Okay if the value type matches one of the alternatives.
                 || (typeof val[i] == "string" && this.inArray(pfmt.alternatives, "'" + val[i] + "'"))         // Okay if we're looking for one of the string literals and the value matches
                 || (this.isInt(val[i]) && this.inArray(pfmt.alternatives, "int"))                             // Okay if we're looking for an int and the value is a whole number
-				|| (this.isFloat(val[i]) && this.inArray(pfmt.alternatives, "float"))                         // Okay if we're looking for a float and the value is any number
+                || (this.isFloat(val[i]) && this.inArray(pfmt.alternatives, "float"))                         // Okay if we're looking for a float and the value is any number
                 || this.inArray(pfmt.alternatives, this.prototypeName(val[i]))                                // Okay if the value's prototype name matches one of the alternatives
                 || (val[i]._subtype !== undefined && (val[i]._subtype === null || this.inArray(pfmt.alternatives, val[i]._subtype))))  // Okay if the value is a Primitive and the subtype matches one of the alternatives
                 continue;
@@ -1934,7 +1934,7 @@ $CP.typeFormatTestError = function(fmt, val) {
 
         for(var i = 0; i < val.length; i++) {
             if((val[i] === null                                                                                                  // null is always valid as a way of emptying a property
-				|| this.isFunction(val[i])                                                                                       // Functions are always valid values
+                || this.isFunction(val[i])                                                                                       // Functions are always valid values
                 || (pfmt.sequence[i].substr(0, 1) == "'" && val[i] == pfmt.sequence[i].substr(1, pfmt.sequence[i].length - 2))   // Okay if we're looking for one of the string literals and the value matches
                 || (pfmt.sequence[i] == typeof val[i])                                                                           // Okay if the value type matches
                 || (this.isInt(val[i]) && pfmt.sequence[i] == "int")                                                             // Okay if we're looking for an int and the value is a whole number
@@ -1950,7 +1950,7 @@ $CP.typeFormatTestError = function(fmt, val) {
 
         for(var i = 0; i < val.length; i++) {
             if(val[i] === null                                       // null is always valid as a way of emptying a property
-				|| this.isFunction(val[i])                           // Functions are always valid values
+                || this.isFunction(val[i])                           // Functions are always valid values
                 || (pfmt.name == typeof val[i])                      // Okay if the value type matches
                 || (pfmt.name == "int" && this.isInt(val[i]))        // Okay if we're looking for an int and the value is a whole number
                 || (pfmt.name == "float" && this.isFloat(val[i]))    // Okay if we're looking for a float and the value is any number
@@ -2056,9 +2056,9 @@ $CP.valueTestError = function(test, val) {
                                 return "must be greater than or equal to " + cmp;
                             break;
                         case "a<":
-                        	if(!(Math.abs(val[v]) < cmp))
-                        		return "'s absolute value must be less than " + cmp;
-                        	break;
+                            if(!(Math.abs(val[v]) < cmp))
+                                return "'s absolute value must be less than " + cmp;
+                            break;
                         default:
                             throw new Error("[CEPHALOPOV]: Internal error in $CP.valueTestError");
                             break;
@@ -2083,10 +2083,10 @@ $CP.valueTestError = function(test, val) {
 //==============================================================================
 
 $CP.zeroPad = function(num, pad) {
-	var result = num.toString().split('');
-	while(result.length < pad)
-		result.unshift('0');
-	return result.join('');
+    var result = num.toString().split('');
+    while(result.length < pad)
+        result.unshift('0');
+    return result.join('');
 }
 //[cf]
 
@@ -2111,18 +2111,18 @@ function File(path, mode, serial) {
     this.open   = false;
     this.handle = null;
 
-	if(this.serial !== null) {
-		var parts = this.path.split(/[\/\\]/);
-		var match = parts[parts.length - 1].match(/0+/);
-		if(match !== null) {
-			parts[parts.length - 1] = parts[parts.length - 1].replace(/0+/, $CP.zeroPad(this.serial, match[0].length));
-		}
-		this.path = parts.join("/");
-	}
+    if(this.serial !== null) {
+        var parts = this.path.split(/[\/\\]/);
+        var match = parts[parts.length - 1].match(/0+/);
+        if(match !== null) {
+            parts[parts.length - 1] = parts[parts.length - 1].replace(/0+/, $CP.zeroPad(this.serial, match[0].length));
+        }
+        this.path = parts.join("/");
+    }
 
-	this.handle = $CP.fs.openSync(this.path, this.mode);
-	if(this.handle)
-		this.open = true;
+    this.handle = $CP.fs.openSync(this.path, this.mode);
+    if(this.handle)
+        this.open = true;
 }
 //[cf]
 //[of]:F File.read()
@@ -2132,7 +2132,7 @@ function File(path, mode, serial) {
 File.prototype.read = function() {
     if(!this.open)
         throw new Error("[File.read]: No file is currently open.");
-	return $CP.fs.readFileSync(this.handle).toString();
+    return $CP.fs.readFileSync(this.handle).toString();
 }
 //[cf]
 //[of]:F File.write(data)
@@ -2631,9 +2631,9 @@ ManagedObject.prototype.ioValidate = function() {
         }
     }
 
-	cli.unshift(this.exePath === null ? "povray" : this.exePath);
+    cli.unshift(this.exePath === null ? "povray" : this.exePath);
 
-	return { ini: ini.join("\n"), cli: cli.join(" ") };
+    return { ini: ini.join("\n"), cli: cli.join(" ") };
 
 }
 //[cf]
@@ -2655,10 +2655,10 @@ ManagedObject.prototype.proxify = function() {
 
 ManagedObject.prototype.toCLI = function() {
 
-	if(this._type == "GlobalSettings")
-		throw new TypeError("[ManagedObject]: toCLI is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
+    if(this._type == "GlobalSettings")
+        throw new TypeError("[ManagedObject]: toCLI is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
 
-	return this.ioValidate()["cli"];
+    return this.ioValidate()["cli"];
 }
 //[cf]
 //[of]:F ManagedObject.toFileContents()
@@ -2668,10 +2668,10 @@ ManagedObject.prototype.toCLI = function() {
 
 ManagedObject.prototype.toIniFile = function() {
 
-	if(this._type == "GlobalSettings")
-		throw new TypeError("[ManagedObject]: toIniFile is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
+    if(this._type == "GlobalSettings")
+        throw new TypeError("[ManagedObject]: toIniFile is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
 
-	return this.ioValidate()["ini"];
+    return this.ioValidate()["ini"];
 
 }
 
@@ -2688,8 +2688,8 @@ ManagedObject.prototype.toIniFile = function() {
 ManagedObject.prototype.toSDL = function() {
     var contents = [ ];
 
-	if(this._type == "ImageOptions")
-		throw new TypeError("[ManagedObject]: toSDL is a method for GlobalSettings, not ImageOptions. Did you mean toCLI or toFileContents?");
+    if(this._type == "ImageOptions")
+        throw new TypeError("[ManagedObject]: toSDL is a method for GlobalSettings, not ImageOptions. Did you mean toCLI or toFileContents?");
 
     contents.push("global_settings {");
 
@@ -2806,9 +2806,9 @@ ManagedObject.prototype.toSDL = function() {
 
 function Matrix(v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32) {
 
-	this._v00 = this._v01 = this._v02 = this._v10 = this._v11 = this._v12
-		= this._v20 = this._v21 = this._v22 = this._v30 = this._v31
-		= this._v32 = 0;
+    this._v00 = this._v01 = this._v02 = this._v10 = this._v11 = this._v12
+        = this._v20 = this._v21 = this._v22 = this._v30 = this._v31
+        = this._v32 = 0;
 
     if(v00 == "scale") {
 
@@ -3000,12 +3000,12 @@ Matrix.prototype.apply = function(obj) {
 //[cf]
 //[of]:F Matrix.toSDL(stops)
 Matrix.prototype.toSDL = function(stops) {
-	var pad = $CP.tab(stops);
+    var pad = $CP.tab(stops);
 
-	return pad + "matrix <" + $CP.materialize(this.v00) + ", " + $CP.materialize(this.v01) + ", " + $CP.materialize(this.v02) + "\n"
-		+ pad + "    " + $CP.materialize(this.v10) + ", " + $CP.materialize(this.v11) + ", " + $CP.materialize(this.v12) + "\n"
-		+ pad + "    " + $CP.materialize(this.v20) + ", " + $CP.materialize(this.v21) + ", " + $CP.materialize(this.v22) + "\n"
-		+ pad + "    " + $CP.materialize(this.v30) + ", " + $CP.materialize(this.v31) + ", " + $CP.materialize(this.v32) + ">";
+    return pad + "matrix <" + $CP.materialize(this.v00) + ", " + $CP.materialize(this.v01) + ", " + $CP.materialize(this.v02) + "\n"
+        + pad + "    " + $CP.materialize(this.v10) + ", " + $CP.materialize(this.v11) + ", " + $CP.materialize(this.v12) + "\n"
+        + pad + "    " + $CP.materialize(this.v20) + ", " + $CP.materialize(this.v21) + ", " + $CP.materialize(this.v22) + "\n"
+        + pad + "    " + $CP.materialize(this.v30) + ", " + $CP.materialize(this.v31) + ", " + $CP.materialize(this.v32) + ">";
 }
 //[cf]
 //[of]:F Matrix.xMatrix(that)
@@ -3028,11 +3028,11 @@ Matrix.prototype.xMatrix = function(that) {
 //[cf]
 //[of]:F Matrix.xPoint(point)
 Matrix.prototype.xPoint = function(point) {
-	return new VectorXYZ(
-		this.v00 * point.x + this.v10 * point.y + this.v20 * point.z + this.v30,
-		this.v01 * point.x + this.v11 * point.y + this.v21 * point.z + this.v31,
-		this.v02 * point.x + this.v12 * point.y + this.v22 * point.z + this.v32
-	);
+    return new VectorXYZ(
+        this.v00 * point.x + this.v10 * point.y + this.v20 * point.z + this.v30,
+        this.v01 * point.x + this.v11 * point.y + this.v21 * point.z + this.v31,
+        this.v02 * point.x + this.v12 * point.y + this.v22 * point.z + this.v32
+    );
 }
 //[cf]
 
@@ -3047,7 +3047,7 @@ function Primitive(type) {
     this._type    = "Primitive";
     this._subtype = type;
     this._val     = { };
-	this._uval    = { };
+    this._uval    = { };
     this._defs    = $CP.objDef[type];
 
 }
@@ -3061,65 +3061,65 @@ function Primitive(type) {
 Primitive.prototype.handler = {
 
     get: function(target, property, receiver) {
-		switch(property) {
-			case "ptype":
-				return target._subtype;
-			case "solid":
-				return target._defs.solid;
-			case "finite":
-				return target._defs.finite;
-			case "csg":
-				return target._defs.csg;
-    		case "toSDL":
-	    		return target.toSDL;
-			default:
-				if(target._val[property] !== undefined)
-					return (typeof target._val[property] == "function" ? target._val[property]() : target._val[property]);
-				else if(target._uval[property] !== undefined)
-					return (typeof target._uval[property] == "function" ? target._uval[property]() : target._uval[property]);
-				else
-					return undefined;
-		}
+        switch(property) {
+            case "ptype":
+                return target._subtype;
+            case "solid":
+                return target._defs.solid;
+            case "finite":
+                return target._defs.finite;
+            case "csg":
+                return target._defs.csg;
+            case "toSDL":
+                return target.toSDL;
+            default:
+                if(target._val[property] !== undefined)
+                    return (typeof target._val[property] == "function" ? target._val[property]() : target._val[property]);
+                else if(target._uval[property] !== undefined)
+                    return (typeof target._uval[property] == "function" ? target._uval[property]() : target._uval[property]);
+                else
+                    return undefined;
+        }
     },
 
     set: function(target, property, value, receiver) {
 
-		if(property == "ptype" || property == "solid" || property == "finite" || property == "csg" || property == "toSDL")
-			throw new Error("[Primitive." + target._subtype + "]: " + property + " is read-only.");
+        if(property == "ptype" || property == "solid" || property == "finite" || property == "csg" || property == "toSDL")
+            throw new Error("[Primitive." + target._subtype + "]: " + property + " is read-only.");
 
-		var type = target.propertyType(property);
-		var test = target.propertyTest(property);
-		var errmsg;
+        var type = target.propertyType(property);
+        var test = target.propertyTest(property);
+        var errmsg;
 
-		if(type) {
+        if(type) {
 
-			if($CP.typeFormatTestError(type, value))
-				throw new TypeError("[Primitive." + target._subtype + "]: " + property + " must be " + $CP.typeFormatDescription(type) + ".");
+            if($CP.typeFormatTestError(type, value))
+                throw new TypeError("[Primitive." + target._subtype + "]: " + property + " must be " + $CP.typeFormatDescription(type) + ".");
 
-			if(test != null && (errmsg = $CP.valueTestError(test, value)))
-				throw new RangeError("[Primitive." + target._subtype + "]: " + property + errmsg + ".");
+            if(test != null && (errmsg = $CP.valueTestError(test, value)))
+                throw new RangeError("[Primitive." + target._subtype + "]: " + property + errmsg + ".");
 
-			if(property == "transform") {
-				if(target._val.baseTransform === undefined) {
-					target._val.baseTransform = value;
-				} else {
-					if($CP.isFunction(value) || $CP.isFunction(target._val.baseTransform)) {
-						target._val.transform = value;
-					} else if(target._val.transform === undefined) {
-						target._val.transform = target._val.baseTransform.xMatrix(value);
-					} else {
-						target._val.transform = target._val.transform.xMatrix(value);
-					}
-				}
-			} else {
-				target._val[property] = value;
-			}
+            if(property == "transform") {
+                if(target._val.baseTransform === undefined) {
+                    target._val.baseTransform = value;
+                } else {
+                    if($CP.isFunction(value) || $CP.isFunction(target._val.baseTransform)) {
+                        target._val.transform = value;
+                    } else if(target._val.transform === undefined) {
+                        target._val.transform = target._val.baseTransform.xMatrix(value);
+                    } else {
+                        target._val.transform = target._val.transform.xMatrix(value);
+                    }
+                }
+            } else {
+                target._val[property] = value;
+            }
 
-		} else {
-			target._uval[property] = value;
-		}
+        } else {
+            target._uval[property] = value;
+        }
 
-		return value;
+        return value;
     },
 
 }
@@ -3170,14 +3170,257 @@ Primitive.prototype.propertyType = function(property) {
     return false;
 }
 //[cf]
-//[of]:F Primitive.toSDL(stops)
+//[of]:F Primitive.toSDL(stops) [WIP]
 //==============================================================================
+// Output to SDL happens here, mostly in a giant switch statement. The one
+// exception is the output of parameters which are common to nearly all of the
+// primitives, which is found in the commonSDL method.
 //==============================================================================
 
 Primitive.prototype.toSDL = function(stops) {
 
-	stops = $CP.tab(stops);
+    var pad = $CP.tab(stops);
+    var content = [ ];
 
+    switch(this.ptype) {
+
+        case "bicubicPatch": //-------------------------------------------------
+            // TODO
+            break;
+
+        case "blob": //---------------------------------------------------------
+            // TODO
+            break;
+
+        case "box": //----------------------------------------------------------
+
+            content.push(pad + "box {");
+            content.push(pad + "    " + this.corner1 + ", " + this.corner2);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "cone": //---------------------------------------------------------
+
+            content.push(pad + "cone {");
+            content.push(pad + "    " + this.basePoint + ", " + this.baseRadius + ", " + this.capPoint + ", " + this.capRadius);
+            if(this.open)
+                content.push(pad + "    open");
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "cubic": //--------------------------------------------------------
+            // TODO
+            break;
+
+        case "cylinder": //-----------------------------------------------------
+
+            content.push(pad + "cylinder {");
+            content.push(pad + "    " + this.basePoint + ", " + this.capPoint + ", " + this.radius);
+            if(this.open)
+                content.push(pad + "    open");
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "disc": //--------------------------------------------------------
+
+            content.push(pad + "disc {");
+            content.push(pad + "    " + this.center + ", " + this.normal + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "difference": //--------------------------------------------------
+
+            content.push(pad + "difference {");
+            content.push(pad + "    " + this._positiveObject.toString(indent + 1));
+            for(var i = 0; i < this._negativeObjects.length; i++) {
+                content.push(pad + "    " + this._negativeObjects[i].toString(indent + 1));
+            }
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "heightField": //--------------------------------------------------
+
+            content.push(pad + "height_field {");
+            if(this._userFunc !== null) {
+                content.push(pad + "    function FieldResolution_X, FieldResolution_Y { " + this.userFunc + " }");
+            } else if(this._filename !== null) {
+                content.push(
+                    pad + "    "
+                    + (this.hfType === null ? "" : (this.hfType + " "))
+                    + '"' + this.filename + '" '
+                    + (this.gamma === null ? "" : ("gamma " + this.gamma + " "))
+                    + (this.premultiplied === null ? "" : (this.premultiplied ? "on" : "off"))
+                );
+            } else {
+                throw new Error("[HeightField]: Neither filename nor userFunc is defined.");
+            }
+            if(this.smooth === true)
+                content.push(pad + "    smooth");
+            if(this.waterLevel !== null)
+                content.push(pad + "    water_level " + this._waterLevel);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "intersection": //-------------------------------------------------
+
+            content.push(pad + "intersection {");
+            for(var i = 0; i < this._objects.length; i++) {
+                content.push(pad + "    " + this._objects[i].toString(indent + 1));
+            }
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "isoSurface": //---------------------------------------------------
+            // TODO
+            break;
+
+        case "juliaFractal": //-------------------------------------------------
+            // TODO
+            break;
+
+        case "lathe": //--------------------------------------------------------
+            // TODO
+            break;
+
+        case "merge": //--------------------------------------------------------
+
+            content.push(pad + "merge {");
+            for(var i = 0; i < this._objects.length; i++) {
+                content.push(pad + "    " + this._objects[i].toString(indent + 1));
+            }
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "mesh":
+            // TODO
+            break;
+
+        case "mesh2":
+            // TODO
+            break;
+
+        case "ovus": //---------------------------------------------------------
+
+            content.push(pad + "ovus {");
+            content.push(pad + "    " + this.topRadius + ", " + this.bottomRadius);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "parametric":
+            // TODO
+            break;
+
+        case "plane": //--------------------------------------------------------
+
+            content.push(pad + "sphere {");
+            content.push(pad + "    " + this.center + ", " + this.radius);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "poly":
+            // TODO
+            break;
+
+        case "polygon":
+            // TODO
+            break;
+
+        case "polynomial":
+            // TODO
+            break;
+
+        case "prism":
+            // TODO
+            break;
+
+        case "quadric":
+            // TODO
+            break;
+
+        case "quartic":
+            // TODO
+            break;
+
+        case "sphere": //-------------------------------------------------------
+
+            content.push(pad + "sphere {");
+            content.push(pad + "    " + this.center + ", " + this.radius);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "sphereSweep":
+            // TODO
+            break;
+
+        case "superellipsoid":
+            // TODO
+            break;
+
+        case "sor":
+            // TODO
+            break;
+
+        case "text":
+            // TODO
+            break;
+
+        case "torus": //--------------------------------------------------------
+
+            content.push(pad + "torus {");
+            content.push(pad + "    " + this.majorRadius + ", " + this.minorRadius);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "triangle": //-----------------------------------------------------
+
+            content.push(pad + "triangle {");
+            content.push(pad + "    " + this.corner1 + ", " + this.corner2 + ", " + this.corner3);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "union": //--------------------------------------------------------
+
+            content.push(pad + "merge {");
+            for(var i = 0; i < this._objects.length; i++) {
+                content.push(pad + "    " + this._objects[i].toString(indent + 1));
+            }
+            content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        case "smoothTriangle": //-----------------------------------------------
+
+            content.push(pad + "smooth_triangle {");
+            content.push(pad + "    "
+                + this.corner1 + ", " + this.normal1 + ", "
+                + this.corner2 + ", " + this.normal2 + ", "
+                + this.corner3 + ", " + this.normal3);
+//          content.push(super.toString(indent + 1));
+            content.push(pad + "}");
+            break;
+
+        default: //-------------------------------------------------------------
+
+            throw new Error("[CEPHALOPOV]: Unknown primitive object type '" + this.ptype + "'.");
+            break;
+
+    }
+
+    return content.join("\n");
 
 }
 //[cf]
@@ -3191,16 +3434,16 @@ Primitive.prototype.toSDL = function(stops) {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
 function Scene() {
-	this._objSerial      = 0;                     // Incremented for each new object
-	this._objDict        = { };                   // Maps serials to their objects
-	this._imageOptions   = $CP.factory("ImageOptions");
-	this._globalSettings = $CP.factory("GlobalSettings");
-	this._frame          = 0;                     // Current frame number
-	this._activeCamera   = null;
-	this._baseName       = null;                  // If set, this becomes the base name for all output files
+    this._objSerial      = 0;                     // Incremented for each new object
+    this._objDict        = { };                   // Maps serials to their objects
+    this._imageOptions   = $CP.factory("ImageOptions");
+    this._globalSettings = $CP.factory("GlobalSettings");
+    this._frame          = 0;                     // Current frame number
+    this._activeCamera   = null;
+    this._baseName       = null;                  // If set, this becomes the base name for all output files
 
-	if($CP.currentScene === null)
-		$CP.currentScene = this;
+    if($CP.currentScene === null)
+        $CP.currentScene = this;
 }
 
 //------------------------------------------------------------------------------
@@ -3211,8 +3454,8 @@ Object.defineProperty(Scene.prototype, "baseName", {
     },
     set: function(val) {
         if(typeof val != "string" || val.length == 0)
-        	throw new TypeError("[Scene]: basename must be a non-empty string.");
-       	this._baseName = val;
+            throw new TypeError("[Scene]: basename must be a non-empty string.");
+        this._baseName = val;
     }
 });
 
@@ -3234,8 +3477,8 @@ Object.defineProperty(Scene.prototype, "globalSettings", {
         return this._globalSettings;
     },
     set: function(val) {
-    	if($CP.prototypeName(val) !== "GlobalSettings")
-    		throw new TypeError("[Scene]: globalSettings must be an GlobalSettings object.");
+        if($CP.prototypeName(val) !== "GlobalSettings")
+            throw new TypeError("[Scene]: globalSettings must be an GlobalSettings object.");
         this._globalSettings = val;
     }
 });
@@ -3247,8 +3490,8 @@ Object.defineProperty(Scene.prototype, "imageOptions", {
         return this._imageOptions;
     },
     set: function(val) {
-    	if($CP.prototypeName(val) !== "ImageOptions")
-    		throw new TypeError("[Scene]: imageOptions must be an ImageOptions object.");
+        if($CP.prototypeName(val) !== "ImageOptions")
+            throw new TypeError("[Scene]: imageOptions must be an ImageOptions object.");
         this._imageOptions = val;
     }
 });
@@ -3258,91 +3501,91 @@ Object.defineProperty(Scene.prototype, "imageOptions", {
 //[cf]
 //[of]:F Scene.addObject(obj)
 Scene.prototype.addObject = function(obj) {
-	this._objDict[obj.serial] = obj;
+    this._objDict[obj.serial] = obj;
 }
 //[cf]
 //[of]:F Scene.makeCurrent()
 Scene.prototype.makeCurrent = function() {
-	$CP.currentScene = this;
+    $CP.currentScene = this;
 }
 //[cf]
 //[of]:F Scene.nextFrame()
 Scene.prototype.nextFrame = function() {
-	this._frame++;
-	// TODO: Call object prepare callbacks
-	// TODO: Call object update callbacks
+    this._frame++;
+    // TODO: Call object prepare callbacks
+    // TODO: Call object update callbacks
 }
 //[cf]
 
 //[of]:F Vector(type, args)
 function Vector(type, args) {
 
-	if(typeof type != "string")
-		throw new TypeError("[Vector]: type must be a string in the set (UV, XY, XYZ, XYZW, RGB, SRGB)");
+    if(typeof type != "string")
+        throw new TypeError("[Vector]: type must be a string in the set (UV, XY, XYZ, XYZW, RGB, SRGB)");
 
-	type = type.toLocaleUpperCase();
+    type = type.toLocaleUpperCase();
 
-	if(this._def[type] === undefined)
-		throw new TypeError("[Vector]: type must be a string in the set (UV, XY, XYZ, XYZW, RGB, SRGB)");
+    if(this._def[type] === undefined)
+        throw new TypeError("[Vector]: type must be a string in the set (UV, XY, XYZ, XYZW, RGB, SRGB)");
 
-	this._type = type;
-	this._val  = [ ];
-	this._uval = [ ];
+    this._type = type;
+    this._val  = [ ];
+    this._uval = [ ];
 
 
-	for(var i = 0; i < this._def[type].max; i++) {
-		this._val.push(null);
-	}
+    for(var i = 0; i < this._def[type].max; i++) {
+        this._val.push(null);
+    }
 
-	if(args === undefined) {
+    if(args === undefined) {
 
-		return;
+        return;
 
-	} else if(Array.isArray(args)) {
+    } else if(Array.isArray(args)) {
 
-		var min = this._def[type].min;
-		var max = this._def[type].max;
+        var min = this._def[type].min;
+        var max = this._def[type].max;
 
-		if(args.length < min || args.length > max) {
-			throw new RangeError("[Vector" + type + "]: When initialized with an array, the array must have "
-				+ ( min == max ? ("exactly " + min ) : (min + " to " + max)) + " elements.");
-		}
+        if(args.length < min || args.length > max) {
+            throw new RangeError("[Vector" + type + "]: When initialized with an array, the array must have "
+                + ( min == max ? ("exactly " + min ) : (min + " to " + max)) + " elements.");
+        }
 
-		for(var i = 0; i < args.length; i++) {
-			if($CP.isFunctionOrNumber(args[i])) {
-				this._val[i] = args[i];
-			} else {
-				throw new TypeError("[Vector" + type + "]: All initializer values must be floats or functions returning floats.");
-			}
-		}
+        for(var i = 0; i < args.length; i++) {
+            if($CP.isFunctionOrNumber(args[i])) {
+                this._val[i] = args[i];
+            } else {
+                throw new TypeError("[Vector" + type + "]: All initializer values must be floats or functions returning floats.");
+            }
+        }
 
-	} else if(typeof args == "object") {
+    } else if(typeof args == "object") {
 
-		var required = this._def[type].required;
-		for(var i = 0; i < required.length; i++) {
-			if(args[required[i]] === undefined) {
-				throw new RangeError("[Vector" + type + "]: Required initializer '" + required[i] + "' is missing.");
-			} else if(!$CP.isFunctionOrNumber(args[required[i]])) {
-				throw new TypeError("[Vector" + type + "]: All initializer values must be floats or functions returning floats.");
-			} else {
-				this._val[i] = args[required[i]];
-			}
-			i++;
-		}
+        var required = this._def[type].required;
+        for(var i = 0; i < required.length; i++) {
+            if(args[required[i]] === undefined) {
+                throw new RangeError("[Vector" + type + "]: Required initializer '" + required[i] + "' is missing.");
+            } else if(!$CP.isFunctionOrNumber(args[required[i]])) {
+                throw new TypeError("[Vector" + type + "]: All initializer values must be floats or functions returning floats.");
+            } else {
+                this._val[i] = args[required[i]];
+            }
+            i++;
+        }
 
-		var optional = this._def[type].optional;
-		for(var i = 0; i < optional.length; i++) {
-			if(args[optional[i]] === undefined) {
-				// do nothing
-			} else if(!$CP.isFunctionOrNumber(args[optional[i]])) {
-				throw new TypeError("[Vector" + type + "]: All initializer values must be floats or functions returning floats.");
-			} else {
-				this._val[i + required.length] = args[optional[i]];
-			}
-			i++;
-		}
+        var optional = this._def[type].optional;
+        for(var i = 0; i < optional.length; i++) {
+            if(args[optional[i]] === undefined) {
+                // do nothing
+            } else if(!$CP.isFunctionOrNumber(args[optional[i]])) {
+                throw new TypeError("[Vector" + type + "]: All initializer values must be floats or functions returning floats.");
+            } else {
+                this._val[i + required.length] = args[optional[i]];
+            }
+            i++;
+        }
 
-	}
+    }
 
 
 
@@ -3350,59 +3593,59 @@ function Vector(type, args) {
 //[cf]
 //[of]:D Vector._def
 Vector.prototype._def = {
-	UV:   { min: 2, max: 2, required: [ 'u', 'v' ],           optional: [],           offsets: { u: 0, v: 1 } },
-	XY:   { min: 2, max: 2, required: [ 'x', 'y' ],           optional: [],           offsets: { x: 0, y: 1 } },
-	XYZ:  { min: 3, max: 3, required: [ 'x', 'y', 'z' ],      optional: [],           offsets: { x: 0, y: 1, z: 2 } },
-	XYZW: { min: 4, max: 4, required: [ 'x', 'y', 'z', 'w' ], optional: [],           offsets: { x: 0, y: 1, z: 2, w: 3 } },
-	RGB:  { min: 3, max: 5, required: [ 'r', 'g', 'b' ],      optional: [ 'f', 't' ], offsets: { r: 0, g: 1, b: 2, f: 3, t: 4 } },
-	SRGB: { min: 3, max: 5, required: [ 'r', 'g', 'b' ],      optional: [ 'f', 't' ], offsets: { r: 0, g: 1, b: 2, f: 3, t: 4 } }
+    UV:   { min: 2, max: 2, required: [ 'u', 'v' ],           optional: [],           offsets: { u: 0, v: 1 } },
+    XY:   { min: 2, max: 2, required: [ 'x', 'y' ],           optional: [],           offsets: { x: 0, y: 1 } },
+    XYZ:  { min: 3, max: 3, required: [ 'x', 'y', 'z' ],      optional: [],           offsets: { x: 0, y: 1, z: 2 } },
+    XYZW: { min: 4, max: 4, required: [ 'x', 'y', 'z', 'w' ], optional: [],           offsets: { x: 0, y: 1, z: 2, w: 3 } },
+    RGB:  { min: 3, max: 5, required: [ 'r', 'g', 'b' ],      optional: [ 'f', 't' ], offsets: { r: 0, g: 1, b: 2, f: 3, t: 4 } },
+    SRGB: { min: 3, max: 5, required: [ 'r', 'g', 'b' ],      optional: [ 'f', 't' ], offsets: { r: 0, g: 1, b: 2, f: 3, t: 4 } }
 };
 //[cf]
 //[of]:D Vector.handler
 Vector.prototype.handler = {
     get: function(target, property, receiver) {
-    	var proto = Object.getPrototypeOf(target);
+        var proto = Object.getPrototypeOf(target);
 
-    	if(property == "type") {
-    		return "Vector" + target._type;
-    	} else if(property == "toSDL") {
-    		return target.toSDL;
-    	} else if(target._uval[property] !== undefined) {
-    		return target._uval[property];
-    	} else if(proto._def[target._type].offsets[property] === undefined) {
-    		return undefined;
-    	} else {
-    		var result = target._val[proto._def[target._type].offsets[property]];
-    		if(typeof result == "function")
-    			return result();
-    		else
-    			return result;
-    	}
+        if(property == "type") {
+            return "Vector" + target._type;
+        } else if(property == "toSDL") {
+            return target.toSDL;
+        } else if(target._uval[property] !== undefined) {
+            return target._uval[property];
+        } else if(proto._def[target._type].offsets[property] === undefined) {
+            return undefined;
+        } else {
+            var result = target._val[proto._def[target._type].offsets[property]];
+            if(typeof result == "function")
+                return result();
+            else
+                return result;
+        }
 
 
 
     },
     set: function(target, property, value, receiver) {
-		if(property == "type") {
-			throw new Error("[Vector." + target._type + "]: type is read-only.");
-		} else if(target._def[target._type].offsets[property] !== undefined) {
-			if($CP.isFunctionOrNumber(value)) {
-				target._val[target._def[target._type].offsets[property]] = value;
-			} else {
-				throw new TypeError("[Vector" + target._type + "]: " + property + " must be a float or a function returning a float.");
-			}
-		} else if(target._uval[property] !== undefined) {
-			return target._uval[property];
-		} else {
-			return undefined;
-		}
+        if(property == "type") {
+            throw new Error("[Vector." + target._type + "]: type is read-only.");
+        } else if(target._def[target._type].offsets[property] !== undefined) {
+            if($CP.isFunctionOrNumber(value)) {
+                target._val[target._def[target._type].offsets[property]] = value;
+            } else {
+                throw new TypeError("[Vector" + target._type + "]: " + property + " must be a float or a function returning a float.");
+            }
+        } else if(target._uval[property] !== undefined) {
+            return target._uval[property];
+        } else {
+            return undefined;
+        }
 
     },
 }
 //[cf]
 //[of]:F Vector.proxify()
 Vector.prototype.proxify = function() {
-	return new Proxy(this, this.handler);
+    return new Proxy(this, this.handler);
 }
 //[cf]
 //[of]:F Vector.toSDL(stops)
@@ -3414,44 +3657,44 @@ Vector.prototype.proxify = function() {
 
 Vector.prototype.toSDL = function(stops) {
 
-	stops = $CP.tab(stops);
+    stops = $CP.tab(stops);
 
-	switch(this.type) {
+    switch(this.type) {
 
-		case "VectorUV":
-			return stops + "<" + this.u + ", " + this.v + ">";
-			break;
+        case "VectorUV":
+            return stops + "<" + this.u + ", " + this.v + ">";
+            break;
 
-		case "VectorXY":
-			return stops + "<" + this.x + ", " + this.y + ">";
-			break;
+        case "VectorXY":
+            return stops + "<" + this.x + ", " + this.y + ">";
+            break;
 
-		case "VectorXYZ":
-			return stops + "<" + this.x + ", " + this.y + ", " + this.z + ">";
-			break;
+        case "VectorXYZ":
+            return stops + "<" + this.x + ", " + this.y + ", " + this.z + ">";
+            break;
 
-		case "VectorXYZW":
-			return stops + "<" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + ">";
-			break;
+        case "VectorXYZW":
+            return stops + "<" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + ">";
+            break;
 
-		default: // RGB and SRGB
+        default: // RGB and SRGB
 
-			var form = (this.type == "VectorSRGB" ? "s" : "") + "rgb";
-			var args = [this.r, this.g, this.b];
+            var form = (this.type == "VectorSRGB" ? "s" : "") + "rgb";
+            var args = [this.r, this.g, this.b];
 
-			if(this.f !== null) {
-			    form += "f";
-			    args.push(this.f);
-			    if(this.t !== null) {
-				    form += "t";
-				    args.push(this.t);
-				}
-			}
+            if(this.f !== null) {
+                form += "f";
+                args.push(this.f);
+                if(this.t !== null) {
+                    form += "t";
+                    args.push(this.t);
+                }
+            }
 
-			return stops + form + " <" + args.join(", ") + ">";
+            return stops + form + " <" + args.join(", ") + ">";
 
-			break;
-	}
+            break;
+    }
 
 
 }
@@ -3525,310 +3768,6 @@ toString(indent) {
 
     return contents.join("\n");
 }
-
-
-// BICUBIC PATCH: TODO
-// BLOB: TODO
-
-// BOX
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "box {");
-    content.push(pad + "    " + this.corner1 + ", " + this.corner2);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// CONE
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "cone {");
-    content.push(pad + "    " + this.basePoint + ", " + this.baseRadius + ", " + this.capPoint + ", " + this.capRadius);
-    if(this.open)
-        content.push(pad + "    open");
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// CUBIC: TODO
-
-// CYLINDER
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "cylinder {");
-    content.push(pad + "    " + this.basePoint + ", " + this.capPoint + ", " + this.radius);
-    if(this.open)
-        content.push(pad + "    open");
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// DISC
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "disc {");
-    content.push(pad + "    " + this.center + ", " + this.normal + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// DIFFERENCE
-
-toString(indent) {
-	var pad  = $CP.tab(indent);
-	var content = [];
-
-	content.push(pad + "difference {");
-	content.push(pad + "    " + this._positiveObject.toString(indent + 1));
-	for(var i = 0; i < this._negativeObjects.length; i++) {
-		content.push(pad + "    " + this._negativeObjects[i].toString(indent + 1));
-	}
-	content.push(super.toString(indent + 1));
-	content.push(pad + "}");
-
-	return content.join("\n");
-}
-
-// HEIGHTFIELD
-
-toString(indent) {
-	var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "height_field {");
-    if(this._userFunc !== null) {
-    	content.push(pad + "    function FieldResolution_X, FieldResolution_Y { " + this.userFunc + " }});
-    } else if(this._filename !== null) {
-    	content.push(
-    		pad + "    "
-    		+ (this.hfType === null ? "" : (this.hfType + " "))
-    		+ '"' + this.filename + '" '
-    		+ (this.gamma === null ? "" : ("gamma " + this.gamma + " "))
-    		+ (this.premultiplied === null ? "" : (this.premultiplied ? "on" : "off"))
-    	);
-    } else {
-    	throw new Error("[HeightField]: Neither filename nor userFunc is defined.");
-    }
-    if(this.smooth === true)
-    	content.push(pad + "    smooth");
-    if(this.waterLevel !== null)
-    	content.push(pad + "    water_level " + this._waterLevel);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// INTERSECTION
-
-toString(indent) {
-	var pad  = $CP.tab(indent);
-	var content = [];
-
-	content.push(pad + "intersection {");
-	for(var i = 0; i < this._objects.length; i++) {
-		content.push(pad + "    " + this._objects[i].toString(indent + 1));
-	}
-	content.push(super.toString(indent + 1));
-	content.push(pad + "}");
-
-	return content.join("\n");
-}
-
-// ISOSURFACE: TODO
-// JULIAFRACTAL: TODO
-// LATHE: TODO
-
-// MERGE
-
-toString(indent) {
-	var pad  = $CP.tab(indent);
-	var content = [];
-
-	content.push(pad + "merge {");
-	for(var i = 0; i < this._objects.length; i++) {
-		content.push(pad + "    " + this._objects[i].toString(indent + 1));
-	}
-	content.push(super.toString(indent + 1));
-	content.push(pad + "}");
-
-	return content.join("\n");
-}
-
-// MESH: TODO
-// MESH2: TODO
-
-// OVUS
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "ovus {");
-    content.push(pad + "    " + this.topRadius + ", " + this.bottomRadius);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// PARAMETRIC: TODO
-
-// PLANE
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "sphere {");
-    content.push(pad + "    " + this.center + ", " + this.radius);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// POLY: TODO
-// POLYGON: TODO
-// POLYNOMIAL: TODO
-// PRISM: TODO
-// QUADRIC: TODO
-// QUARTIC: TODO
-
-// SPHERE
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "sphere {");
-    content.push(pad + "    " + this.center + ", " + this.radius);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-
-// SPHERESWEEP: TODO
-// SUPERQUADRIC: TODO
-// SOR: TODO
-// TEXTOBJECT: TODO
-
-// TORUS
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "torus {");
-    content.push(pad + "    " + this.majorRadius + ", " + this.minorRadius);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// TRIANGLE
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "triangle {");
-    content.push(pad + "    " + this.corner1 + ", " + this.corner2 + ", " + this.corner3);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-// UNION
-
-toString(indent) {
-	var pad  = $CP.tab(indent);
-	var content = [];
-
-	content.push(pad + "merge {");
-	for(var i = 0; i < this._objects.length; i++) {
-		content.push(pad + "    " + this._objects[i].toString(indent + 1));
-	}
-	content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
-	content.push(super.toString(indent + 1));
-	content.push(pad + "}");
-
-	return content.join("\n");
-}
-
-// SMOOTHTRIANGLE
-
-toString(indent) {
-    var pad  = $CP.tab(indent);
-    var content = [];
-
-    content.push(pad + "smooth_triangle {");
-    content.push(pad + "    "
-    	+ this.corner1 + ", " + this.normal1 + ", "
-    	+ this.corner2 + ", " + this.normal2 + ", "
-    	+ this.corner3 + ", " + this.normal3);
-    content.push(super.toString(indent + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //[cf]
 */
