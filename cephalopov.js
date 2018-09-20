@@ -30,7 +30,7 @@ Prototypes/Classes/Global Objects:----------------------------------------------
 
 $CP                 -- CephaloPOV global object
 File()              -- File I/O interface
-ManagedObject(type) -- used for global settings and image options
+ConfigObject(type) -- used for global settings and image options
 Primitive(type)     -- wraps POV-Ray geometric primitives
 VectorColor()
 VectorUV()
@@ -43,14 +43,14 @@ Functions/Methods:--------------------------------------------------------------
 $CP._typeDescriptionTestDump() -- runs typeFormatDescription against the global objects utilizing type formats.
 $CP.baseClassName(obj) -- returns name of obj's base class.
 $CP.className(obj) -- returns obj's class name.
-$CP.configHandler -- proxy handler for GlobalSettings and ImageOptions as ManagedObjects.
+$CP.configHandler -- proxy handler for GlobalSettings and ImageOptions as ConfigObjects.
 $CP.deg2rad(deg) -- given degrees, returns radians
-$CP.factory -- object factory for ManagedObjects.
+$CP.factory -- object factory for ConfigObjects.
 $CP.fileSerial(template, serial) -- returns filename template with first sequence of %'s replaced by zero-padded serial.
 $CP.inArray(a, k) -- returns a boolean indicating whether element k appears in array a.
 $CP.isFunctionOrNumber(val, objname, fieldname) -- tests whether val is a function, an &-SDL function, or a number/numeric string.
 $CP.parseTypeFormat(fmt) -- parses a type format into a data structure.
-$CP.primitiveHandler -- proxy handler for Primitives as ManagedObjects.
+$CP.primitiveHandler -- proxy handler for Primitives as ConfigObjects.
 $CP.prototypeName(obj) -- returns name of obj's prototype.
 $CP.rad2deg(rad) -- given radians, returns degrees
 $CP.tab(stops) -- returns a string of 4 x stops spaces.
@@ -60,7 +60,7 @@ $CP.typeFormatTestError(fmt, val) -- given a type format, tests whether val comp
 $CP.valueTestError(test, val) -- runs test against val.
 $CP.zeroTab(num, pad) -- returns num zero-padded to pad digits.
 
-ManagedObject.proxify(handler) -- wraps object with the a Proxy handler.
+ConfigObject.proxify(handler) -- wraps object with the a Proxy handler.
 
 Primitive.proxify() -- wraps object with primitiveHandler proxy.
 
@@ -125,6 +125,10 @@ break them if you try hard enough.
 //[cf]
 //[of]:TODO
 /*
+
+$CP.typeCoerce:
+	handle Vectors and simple Matrix types
+	incorporate this into the Primitive set handler
 
 Primitive:
     toSDL() -- box, cylinder, sphere, cone, plane
@@ -1328,7 +1332,7 @@ $CP.factory = function(type, ...args) {
 
         case 'GlobalSettings':
 
-            var obj = new ManagedObject(type);
+            var obj = new ConfigObject(type);
 
             for(var k in this.gsDef)
                 obj._val[k] = null;
@@ -1337,7 +1341,7 @@ $CP.factory = function(type, ...args) {
 
         case 'ImageOptions':
 
-            var obj = new ManagedObject(type);
+            var obj = new ConfigObject(type);
             for(var k in this.ioDef)
                 obj._val[k] = null;
             obj = obj.proxify();
@@ -1690,7 +1694,10 @@ $CP.typeCoerce = function(type, val) {
 
     if(type == "string") {
 
-        result = val.toString();
+		if(val.toSDL === undefined)
+        	result = val.toString();
+        else
+        	result = val.toSDL();
 
     } else if(type == "int") {
 
@@ -1911,6 +1918,14 @@ $CP.typeFormatTestError = function(fmt, val) {
             }
 
         }
+
+	} else if(pfmt.name.substr(0, 6) == "Vector") {
+
+		    for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && val[i].type != pfmt.name) {
+                    return true;
+                }
+            }
 
     } else if(pfmt.name == "mixed") {
 
@@ -2150,13 +2165,13 @@ File.prototype.close = function() {
 }
 //[cf]
 
-//[of]:% ManagedObject(type)
+//[of]:% ConfigObject(type)
 //==============================================================================
-// The ManagedObject type represents -- with help from a Proxy -- k/v config
+// The ConfigObject type represents -- with help from a Proxy -- k/v config
 // sets like ImageOptions and GlobalSettings.
 //==============================================================================
 
-function ManagedObject(type) {
+function ConfigObject(type) {
     this._type    = type;
     this._subtype = null;
     this._val     = { };
@@ -2169,20 +2184,20 @@ function ManagedObject(type) {
             this._defs = $CP.gsDef;
             break;
         default:
-            throw new TypeError("[CEPHALOPOV]: ManagedObject type '" + type + "' does not exist.");
+            throw new TypeError("[CEPHALOPOV]: ConfigObject type '" + type + "' does not exist.");
             break;
     }
 
 }
 //[cf]
-//[of]:D ManagedObject.handler
+//[of]:D ConfigObject.handler
 //==============================================================================
-// ManagedObject.prototype.handler provides the proxy handlers for
-// GlobalSettings and ImageOptions as ManagedObjects, eliminating the need for
+// ConfigObject.prototype.handler provides the proxy handlers for
+// GlobalSettings and ImageOptions as ConfigObjects, eliminating the need for
 // an enormous amount of boilerplate accessor method and input validation code.
 //==============================================================================
 
-ManagedObject.prototype.handler = {
+ConfigObject.prototype.handler = {
     get: function(target, property, receiver) {
         if(target._val[property] === undefined)
             return target[property];
@@ -2205,7 +2220,7 @@ ManagedObject.prototype.handler = {
     },
 }
 //[cf]
-//[of]:F ManagedObject.ioValidate()
+//[of]:F ConfigObject.ioValidate()
 //==============================================================================
 // Performs some aggregate tests on the final state of the image options, and
 // if none are found, returns an object containing two members, ini and cli,
@@ -2213,7 +2228,7 @@ ManagedObject.prototype.handler = {
 // respectively.
 //==============================================================================
 
-ManagedObject.prototype.ioValidate = function() {
+ConfigObject.prototype.ioValidate = function() {
     var ini     = [];
     var cli     = [];
     var iniWarn = [];
@@ -2637,46 +2652,46 @@ ManagedObject.prototype.ioValidate = function() {
 
 }
 //[cf]
-//[of]:F ManagedObject.proxify()
+//[of]:F ConfigObject.proxify()
 //==============================================================================
-// Wraps the ManagedObject in a Proxy using ManagedObject.handler and returns
+// Wraps the ConfigObject in a Proxy using ConfigObject.handler and returns
 // the Proxy.
 //==============================================================================
 
-ManagedObject.prototype.proxify = function() {
+ConfigObject.prototype.proxify = function() {
     return new Proxy(this, this.handler);
 }
 
 //[cf]
-//[of]:F ManagedObject.toCLI()
+//[of]:F ConfigObject.toCLI()
 //==============================================================================
 // Wrapper around the validate method to return only the CLI string.
 //==============================================================================
 
-ManagedObject.prototype.toCLI = function() {
+ConfigObject.prototype.toCLI = function() {
 
     if(this._type == "GlobalSettings")
-        throw new TypeError("[ManagedObject]: toCLI is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
+        throw new TypeError("[ConfigObject]: toCLI is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
 
     return this.ioValidate()["cli"];
 }
 //[cf]
-//[of]:F ManagedObject.toFileContents()
+//[of]:F ConfigObject.toFileContents()
 //==============================================================================
 // Wrapper around the validate method to return only the .ini file contents.
 //==============================================================================
 
-ManagedObject.prototype.toIniFile = function() {
+ConfigObject.prototype.toIniFile = function() {
 
     if(this._type == "GlobalSettings")
-        throw new TypeError("[ManagedObject]: toIniFile is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
+        throw new TypeError("[ConfigObject]: toIniFile is a method for ImageOptions, not GlobalSettings. Did you mean toSDL?");
 
     return this.ioValidate()["ini"];
 
 }
 
 //[cf]
-//[of]:F ManagedObject.toSDL()
+//[of]:F ConfigObject.toSDL()
 //==============================================================================
 // Returns the SDL for the object *if* the type is GlobalSettings. (ImageOptions
 // produces either commandline flags or the contents of a .ini file, neither of
@@ -2685,11 +2700,11 @@ ManagedObject.prototype.toIniFile = function() {
 // top level.
 //==============================================================================
 
-ManagedObject.prototype.toSDL = function() {
+ConfigObject.prototype.toSDL = function() {
     var contents = [ ];
 
     if(this._type == "ImageOptions")
-        throw new TypeError("[ManagedObject]: toSDL is a method for GlobalSettings, not ImageOptions. Did you mean toCLI or toFileContents?");
+        throw new TypeError("[ConfigObject]: toSDL is a method for GlobalSettings, not ImageOptions. Did you mean toCLI or toFileContents?");
 
     contents.push("global_settings {");
 
@@ -3195,7 +3210,7 @@ Primitive.prototype.toSDL = function(stops) {
         case "box": //----------------------------------------------------------
 
             content.push(pad + "box {");
-            content.push(pad + "    " + this.corner1 + ", " + this.corner2);
+            content.push(pad + "    " + this.corner1.toSDL() + ", " + this.corner2.toSDL());
 //          content.push(super.toString(indent + 1));
             content.push(pad + "}");
             break;
@@ -3570,7 +3585,6 @@ function Vector(type, args) {
             } else {
                 this._val[i] = args[required[i]];
             }
-            i++;
         }
 
         var optional = this._def[type].optional;
@@ -3582,7 +3596,6 @@ function Vector(type, args) {
             } else {
                 this._val[i + required.length] = args[optional[i]];
             }
-            i++;
         }
 
     }
@@ -3621,8 +3634,6 @@ Vector.prototype.handler = {
             else
                 return result;
         }
-
-
 
     },
     set: function(target, property, value, receiver) {
