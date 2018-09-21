@@ -1373,6 +1373,27 @@ $CP.fileSerial = function(template, serial) {
     return template.replace(/%+/, function(match) { return this.zeroPad(serial, match.length); });
 }
 //[cf]
+//[of]:F $CP.forceVector(type, arg)
+//==============================================================================
+// Given a vector type, e.g., "VectorXYZ" and a valid initializer (array or
+// object), returns a new vector. If arg is already a vector, the reference is
+// returned instead, unless it is the wrong type of vector, in which case a
+// TypeError is thrown.
+//==============================================================================
+
+$CP.forceVector = function(type, arg) {
+    
+    if($CP.prototypeName(arg) == "Vector") {
+        if(arg.type == type)
+            return arg;
+        else
+            throw new TypeError("[CEPHALOPOV]: " + arg.type + " passed where " + type + " expected.");
+    }
+    
+    return $CP.factory(type, arg);
+    
+}
+//[cf]
 //[of]:F $CP.inArray(a, k)
 //==============================================================================
 // Returns a boolean indicating whether value k is in array a.
@@ -1716,7 +1737,7 @@ $CP.typeCoerce = function(type, val) {
     } else if(type == "boolean") {
 
         result = val ? true : false;
-
+        
     } else if(window[this.prototypeName(val)] !== undefined && typeof window[this.prototypeName(val)] == "function") {
 
         try {
