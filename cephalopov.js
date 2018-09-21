@@ -3092,6 +3092,8 @@ Primitive.prototype.handler = {
                     return (typeof target._val[property] == "function" ? target._val[property]() : target._val[property]);
                 else if(target._uval[property] !== undefined)
                     return (typeof target._uval[property] == "function" ? target._uval[property]() : target._uval[property]);
+                else if(target[property] !== undefined)
+                    return target[property];
                 else
                     return undefined;
         }
@@ -3138,6 +3140,70 @@ Primitive.prototype.handler = {
     },
 
 }
+//[cf]
+//[of]:F Primitive.commonToSDL(stops)
+Primitive.prototype.commonToSDL = function(stops = 0) {
+
+    var pad = $CP.tab(stops);
+    var contents = [ ];
+
+    if(this.clippedBy !== undefined && this.clippedBy !== null) {
+        contents.push(pad + "clipped_by {");
+        contents.push(this.clippedBy.toSDL(stops + 1));
+        contents.push(pad + "}");
+    }
+
+    if(this.boundedBy !== undefined && this.boundedBy !== null) {
+        contents.push(pad + "bounded_by {");
+        if(this.boundedBy === this.clippedBy) {
+            contents.push(pad + "    clipped_by");
+        } else {
+            contents.push(this.boundedBy.toString(stops + 1));
+        }
+        contents.push(pad + "}");
+    }
+
+    if(this.noShadow)
+        contents.push(pad + "no_shadow");
+
+    if(this.noImage)
+        contents.push(pad + "no_image");
+
+    if(this.noRadiosity)
+        contents.push(pad + "no_radiosity");
+
+    if(this.noReflection)
+        contents.push(pad + "no_reflection");
+
+    if(this.inverse)
+        contents.push(pad + "inverse");
+
+    if(this.sturm)
+        contents.push(pad + "sturm");
+
+    if(this.hierarchy)
+        contents.push(pad + "hierarchy");
+
+    if(this.double_illuminate)
+        contents.push(pad + "double_illuminate");
+
+    if(this.hollow)
+        contents.push(pad + "hollow");
+
+    // TODO: interior
+    // TODO: interior_texture
+    // TODO: pigment
+    // TODO: normal
+    // TODO: finish
+    // TODO: photons
+    // TODO: radiosity
+
+    if(this.transform !== undefined && this.transform !== null)
+        contents.push(pad + this.transform.toSDL(stops + 1));
+
+    return contents.join("\n");
+}
+
 //[cf]
 //[of]:F Primitive.proxify()
 //==============================================================================
@@ -3192,9 +3258,10 @@ Primitive.prototype.propertyType = function(property) {
 // primitives, which is found in the commonSDL method.
 //==============================================================================
 
-Primitive.prototype.toSDL = function(stops) {
+Primitive.prototype.toSDL = function(stops = 0) {
 
-    var pad = $CP.tab(stops);
+    var pad     = $CP.tab(stops);
+    var ppad    = $CP.tab(stops + 1);
     var content = [ ];
 
     switch(this.ptype) {
@@ -3210,18 +3277,18 @@ Primitive.prototype.toSDL = function(stops) {
         case "box": //----------------------------------------------------------
 
             content.push(pad + "box {");
-            content.push(pad + "    " + this.corner1.toSDL() + ", " + this.corner2.toSDL());
-//          content.push(super.toString(indent + 1));
+            content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
         case "cone": //---------------------------------------------------------
 
             content.push(pad + "cone {");
-            content.push(pad + "    " + this.basePoint + ", " + this.baseRadius + ", " + this.capPoint + ", " + this.capRadius);
+            content.push(ppad + this.basePoint + ", " + this.baseRadius + ", " + this.capPoint + ", " + this.capRadius);
             if(this.open)
                 content.push(pad + "    open");
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3232,29 +3299,29 @@ Primitive.prototype.toSDL = function(stops) {
         case "cylinder": //-----------------------------------------------------
 
             content.push(pad + "cylinder {");
-            content.push(pad + "    " + this.basePoint + ", " + this.capPoint + ", " + this.radius);
+            content.push(ppad + this.basePoint + ", " + this.capPoint + ", " + this.radius);
             if(this.open)
                 content.push(pad + "    open");
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
         case "disc": //--------------------------------------------------------
 
             content.push(pad + "disc {");
-            content.push(pad + "    " + this.center + ", " + this.normal + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
-//          content.push(super.toString(indent + 1));
+            content.push(ppad + this.center + ", " + this.normal + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
         case "difference": //--------------------------------------------------
 
             content.push(pad + "difference {");
-            content.push(pad + "    " + this._positiveObject.toString(indent + 1));
+            content.push(ppad + this._positiveObject.toString(stops + 1));
             for(var i = 0; i < this._negativeObjects.length; i++) {
-                content.push(pad + "    " + this._negativeObjects[i].toString(indent + 1));
+                content.push(ppad + this._negativeObjects[i].toString(stops + 1));
             }
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3265,7 +3332,7 @@ Primitive.prototype.toSDL = function(stops) {
                 content.push(pad + "    function FieldResolution_X, FieldResolution_Y { " + this.userFunc + " }");
             } else if(this._filename !== null) {
                 content.push(
-                    pad + "    "
+                    ppad
                     + (this.hfType === null ? "" : (this.hfType + " "))
                     + '"' + this.filename + '" '
                     + (this.gamma === null ? "" : ("gamma " + this.gamma + " "))
@@ -3278,7 +3345,7 @@ Primitive.prototype.toSDL = function(stops) {
                 content.push(pad + "    smooth");
             if(this.waterLevel !== null)
                 content.push(pad + "    water_level " + this._waterLevel);
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3286,9 +3353,9 @@ Primitive.prototype.toSDL = function(stops) {
 
             content.push(pad + "intersection {");
             for(var i = 0; i < this._objects.length; i++) {
-                content.push(pad + "    " + this._objects[i].toString(indent + 1));
+                content.push(ppad + this._objects[i].toString(stops + 1));
             }
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3308,9 +3375,9 @@ Primitive.prototype.toSDL = function(stops) {
 
             content.push(pad + "merge {");
             for(var i = 0; i < this._objects.length; i++) {
-                content.push(pad + "    " + this._objects[i].toString(indent + 1));
+                content.push(ppad + this._objects[i].toString(stops + 1));
             }
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3325,8 +3392,8 @@ Primitive.prototype.toSDL = function(stops) {
         case "ovus": //---------------------------------------------------------
 
             content.push(pad + "ovus {");
-            content.push(pad + "    " + this.topRadius + ", " + this.bottomRadius);
-//          content.push(super.toString(indent + 1));
+            content.push(ppad + this.topRadius + ", " + this.bottomRadius);
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3337,8 +3404,8 @@ Primitive.prototype.toSDL = function(stops) {
         case "plane": //--------------------------------------------------------
 
             content.push(pad + "sphere {");
-            content.push(pad + "    " + this.center + ", " + this.radius);
-//          content.push(super.toString(indent + 1));
+            content.push(ppad + this.center + ", " + this.radius);
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3369,8 +3436,8 @@ Primitive.prototype.toSDL = function(stops) {
         case "sphere": //-------------------------------------------------------
 
             content.push(pad + "sphere {");
-            content.push(pad + "    " + this.center + ", " + this.radius);
-//          content.push(super.toString(indent + 1));
+            content.push(ppad + this.center + ", " + this.radius);
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3393,16 +3460,16 @@ Primitive.prototype.toSDL = function(stops) {
         case "torus": //--------------------------------------------------------
 
             content.push(pad + "torus {");
-            content.push(pad + "    " + this.majorRadius + ", " + this.minorRadius);
-//          content.push(super.toString(indent + 1));
+            content.push(ppad + this.majorRadius + ", " + this.minorRadius);
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
         case "triangle": //-----------------------------------------------------
 
             content.push(pad + "triangle {");
-            content.push(pad + "    " + this.corner1 + ", " + this.corner2 + ", " + this.corner3);
-//          content.push(super.toString(indent + 1));
+            content.push(ppad + this.corner1 + ", " + this.corner2 + ", " + this.corner3);
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
@@ -3410,21 +3477,21 @@ Primitive.prototype.toSDL = function(stops) {
 
             content.push(pad + "merge {");
             for(var i = 0; i < this._objects.length; i++) {
-                content.push(pad + "    " + this._objects[i].toString(indent + 1));
+                content.push(ppad + this._objects[i].toString(stops + 1));
             }
             content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 
         case "smoothTriangle": //-----------------------------------------------
 
             content.push(pad + "smooth_triangle {");
-            content.push(pad + "    "
+            content.push(ppad
                 + this.corner1 + ", " + this.normal1 + ", "
                 + this.corner2 + ", " + this.normal2 + ", "
                 + this.corner3 + ", " + this.normal3);
-//          content.push(super.toString(indent + 1));
+            content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
 

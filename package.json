@@ -1,12 +1,12 @@
 {
   "name": "cephalopov",
   "version": "0.1.0",
-  "description": "A JavaScript wrapper library for POV-Ray 3.7+",
+  "description": "A JavaScript library for POV-Ray 3.7+.",
   "main": "cephalopov.js",
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.18.0",
-    "fs": "^0.0.1-security"
+    "package.json": "^2.0.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -17,9 +17,10 @@
     "url": "git+https://github.com/eodell/CephaloPOV.git"
   },
   "keywords": [
-    "POV-ray",
+    "pov-ray",
+    "ray-tracing",
     "povray",
-    "ray-tracing"
+    "pov"
   ],
   "author": "Eric O'Dell",
   "license": "MIT",
