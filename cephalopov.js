@@ -131,8 +131,10 @@ $CP.typeCoerce:
 	incorporate this into the Primitive set handler
 
 Primitive:
-    toSDL() -- box, cylinder, sphere, cone, plane
     Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform
+    Generic validation, type-specific validation
+    Camera pseudo-primitive transform integration
+    Find a way to suppress commonToSDL if there are no common attributes set
 
 Scene
     Come up with generic SDL test include file
@@ -1107,7 +1109,7 @@ $CP.outputFile = {
 // name in their _type attribute.
 //==============================================================================
 
-$CP.primitives = [ "bicubicPatch", "blob", "box", "cone", "cubic",
+$CP.primitives = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
     "cylinder", "difference", "disc", "heightField", "intersection",
     "isoSurface", "juliaFractal", "lathe", "merge", "mesh", "ovus",
     "parametric", "plane", "poly", "polygon", "polynomial", "prism", "quadric",
@@ -3333,6 +3335,38 @@ Primitive.prototype.toSDL = function(stops = 0) {
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
+
+		case "camera": //-------------------------------------------------------
+		
+			content.push(pad + "camera {");
+    		content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
+		    if(this.location !== null)
+		        content.push(ppad + "location " + this.location);
+		    if(this.right !== null)
+		        content.push(ppad + "right " + this.right);
+		    if(this.up !== null)
+		        content.push(ppad + "up " + this.up);
+		    if(this.direction !== null)
+		        content.push(ppad + "direction " + this.direction);
+		    if(this.angle !== null)
+		        content.push(ppad + "look_at " + this.lookAt);
+		    if(this.lookAt !== null)
+		        content.push(ppad + "look_at " + this.lookAt);
+		    if(this.blurSamples !== null)
+		        content.push(ppad + "blur_samples " + this.blurSamples.join(", "));		    
+		    if(this.apertureSize !== null)
+		        content.push(ppad + "aperture_size " + this.apertureSize);
+		    if(this.focalPoint !== null)
+		        content.push(ppad + "focal_point " + this.focalPoint);
+		    if(this.confidence !== null)
+		        content.push(ppad + "confidence " + this.confidence);
+		    if(this.variance !== null)
+		        content.push(ppad + "variance " + this.variance);
+		    if(this.bokeh !== null)
+		        content.push(ppad + "bokeh " + this.bokeh);			
+            content.push(this.commonToSDL(stops + 1));			
+			content.push(pad + "}");
+			break;
 
         case "cone": //---------------------------------------------------------
 
