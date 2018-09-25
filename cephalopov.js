@@ -590,6 +590,37 @@ $CP.objDef = {
         optional: [ ],
     },
 
+	//--------------------------------------------------------------------------
+	// The camera type isn't really a primitive in SDL, but we're going to
+	// treat it as one for most purposes and fake it in CSG objects.
+	//--------------------------------------------------------------------------
+	
+	camera: { 
+		finite: true,
+		solid: false,
+		csg: false,
+		required: [
+			{ name: "type", type: "string(perspective|orthographic|fisheye|ultra_wide_angle|omnimax|panoramic|spherical|cylinder|mesh_camera)" },
+		],
+		optional: [
+			{ name: "angle",        type: "FIXME" },
+			{ name: "apertureSize", type: "float" },
+			{ name: "blurSamples",  type: "@float[2]" },  // TODO: needs test: both must be >= 0
+			{ name: "bokeh",        type: "VectorRGB" },  // TODO: needs test: must be in the range <0,0,0> to <1,1,0>
+			{ name: "confidence",   type: "float" },
+			{ name: "cylinderType", type: "int(1|2|3|4)" },
+			{ name: "direction",    type: "VectorXYZ" },
+			{ name: "focalPoint",   type: "VectorXYZ" },
+			{ name: "location",     type: "VectorXYZ" },
+			{ name: "lookAt",       type: "VectorXYZ" },
+			{ name: "right",        type: "VectorXYZ" },
+			{ name: "sky",          type: "VectorXYZ" },			
+			{ name: "up",           type: "VectorXYZ" },
+			{ name: "variance",     type: "float" },
+			{ name: "vertAngle",    type: "int" },
+		]
+	},
+
     cone: {
         finite: true,
         solid: true,
@@ -3803,73 +3834,6 @@ Vector.prototype.toSDL = function(stops) {
 $CP.init();
 //[cf]
 
-/*
-//[of]:toSDL code from prev version
-// Generic/Common
-
-toString(indent) {
-    var pad = $CP.tab(indent);
-    var contents = [ ];
-
-    if(this._clippedBy !== null) {
-        contents.push(pad + "clipped_by {");
-        contents.push(this._clippedBy.toString(indent + 1));
-        contents.push(pad + "}");
-    }
-
-    if(this._boundedBy !== null) {
-        contents.push(pad + "bounded_by {");
-        if(this._boundedBy === this._clippedBy) {
-            contents.push(pad + "    clipped_by");
-        } else {
-            contents.push(this._boundedBy.toString(indent + 1));
-        }
-        contents.push(pad + "}");
-    }
-
-    if(this._noShadow)
-        contents.push(pad + "no_shadow");
-
-    if(this._noImage)
-        contents.push(pad + "no_image");
-
-    if(this._noRadiosity)
-        contents.push(pad + "no_radiosity");
-
-    if(this._noReflection)
-        contents.push(pad + "no_reflection");
-
-    if(this._inverse)
-        contents.push(pad + "inverse");
-
-    if(this._sturm)
-        contents.push(pad + "sturm");
-
-    if(this._hierarchy)
-        contents.push(pad + "hierarchy");
-
-    if(this._double_illuminate)
-        contents.push(pad + "double_illuminate");
-
-    if(this._hollow)
-        contents.push(pad + "hollow");
-
-    // TODO: interior
-    // TODO: interior_texture
-    // TODO: pigment
-    // TODO: normal
-    // TODO: finish
-    // TODO: photons
-    // TODO: radiosity
-
-    if(this._transform !== null)
-        contents.push(pad + this._transform.toString(indent + 1));
-
-    return contents.join("\n");
-}
-
-//[cf]
-*/
 
 
 
