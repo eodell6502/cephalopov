@@ -126,37 +126,6 @@ break them if you try hard enough.
 //[of]:TODO
 /*
 
-$CP.typeCoerce:
-	handle Vectors and simple Matrix types
-	incorporate this into the Primitive set handler
-
-Primitive:
-    Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform
-    Generic validation, type-specific validation
-    Camera pseudo-primitive transform integration
-    Find a way to suppress commonToSDL if there are no common attributes set
-
-Scene
-    Come up with generic SDL test include file
-
-Output loop
-
-Matrix
-    rotate and skew
-
-----------------
-
-//[of]:Camera validation
-if(this.type === null) {
-    throw new Error("[Camera]: Camera type is undefined.");
-} else if(this.type == "cylinder" && this.cylinderType === null) {
-    throw new Error("[Camera]: Camera type is cylinder but cylinderType is undefined.");
-} else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null))) {
-    throw new Error("[Camera]: The orthographic camera requires either angle or up and right to be defined.");
-}
-    
-//[cf]
-
 //[of]:Old notes
 //[of]:Raw TODO
 I. Finish enumeration/epitome
@@ -404,34 +373,6 @@ Figure out Scene object
 Full test of ImageOptions
 //[cf]
 
-Vector: Allow entire vector to be produced by a JS or SDL function
-
-restoreBaseTransform() / null handling for properties generally
-
-ImageOptions
-// TODO: boundingThreshold: convert zero to boolean on output
-// TODO: constants: gets special handling
-// TODO: endColumn: post check startColumn
-// TODO: endRow: post check startRow
-// TODO: startColumn: post check endColumn
-// TODO: startRow: post check endRow
-
-
-Docs to HTML
-Feature and Maintenance tracks
-
-Material
-Texture
-Interior
-Camera
-
-
-Cameras cannot be part of CSG unions, so come up with a way to link
-a camera to an object so that transformations applied to the object
-are automatically applied to the camera.
-
-Node:
-    Still operable without special changes in browser
 
 
 */

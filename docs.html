@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CephaloPOV Documentation</title>
+<style type="text/css">
+	body,table,input { font: 10pt Arial,Helvetica,sans-serif; }
+	div.code { white-space: pre; font: 10pt Consolas,Courier,fixed; background-color: #EEF; border: 1px solid #CCF; margin-top: 1em; padding: 1em; }
+</style>
+</head>
+<body>
+<h1>CephaloPOV Documentation</h1>
+
+<div class='code'>var mk = $CP.factory;
+
+console.log("$CP.currentScene = " + $CP.currentScene);
+var s = mk("Scene");
+console.log("$CP.currentScene = " + $CP.currentScene);
+var b = mk("box");
+var c1 = mk("VectorXYZ", [1,2,10]);
+console.log(c1);
+var c2 = mk("VectorXYZ");
+c2.x = 3; c2.y = 5; c2.z = 15;
+b.corner1 = c1;
+b.corner2 = c2;
+console.log(s.frame);
+console.log(b.toSDL());
+
+console.log("-------------------------------");
+
+var cam = mk("camera");
+cam.type = "perspective";
+console.log(cam.toSDL());</div>
+
+<h2>TODO</h2>
+
+<h3>C+0</h3>
+
+<ul>
+	<li>$CP.typeCoerce:</li>
+		<ul>
+			<li>handle Vectors and simple Matrix types</li>
+			<li>incorporate this into the Primitive set handler</li>
+		</ul>
+	<li>Primitive:</li>
+		<ul>
+		    <li>Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform</li>
+		    <li>Generic validation, type-specific validation</li>
+		    <li>Camera pseudo-primitive transform integration</li>
+		    <li>Find a way to suppress commonToSDL if there are no common attributes set</li>
+		</ul>
+	<li>Scene</li>
+		<ul>
+		    <li>Come up with generic SDL test include file</li>
+		</ul>
+	<li>Output loop</li>
+	<li>Matrix</li>
+		<ul>
+		    <li>rotate and skew</li>
+		</ul>
+</ul>
+
+<h3>C+1</h3>
+
+<h4>Camera validation</h4>
+<div class='code'>if(this.type === null) {
+    throw new Error("[Camera]: Camera type is undefined.");
+} else if(this.type == "cylinder" && this.cylinderType === null) {
+    throw new Error("[Camera]: Camera type is cylinder but cylinderType is undefined.");
+} else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null))) {
+    throw new Error("[Camera]: The orthographic camera requires either angle or up and right to be defined.");
+}</div>
+
+
+<pre>Vector: Allow entire vector to be produced by a JS or SDL function
+
+restoreBaseTransform() / null handling for properties generally
+
+ImageOptions
+// TODO: boundingThreshold: convert zero to boolean on output
+// TODO: constants: gets special handling
+// TODO: endColumn: post check startColumn
+// TODO: endRow: post check startRow
+// TODO: startColumn: post check endColumn
+// TODO: startRow: post check endRow
+
+Docs to HTML
+Feature and Maintenance tracks
+
+Material
+Texture
+Interior
+Camera
+
+Cameras cannot be part of CSG unions, so come up with a way to link
+a camera to an object so that transformations applied to the object
+are automatically applied to the camera.</pre>
+
+<h2>Changelog</h2>
+
+
+</body>
+</html>
