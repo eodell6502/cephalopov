@@ -1272,7 +1272,7 @@ $CP.errmsg = function(src, msg, severity) {
 $CP.factory = function(type, ...args) {
 
     var origType = type;
-    if(this.objDef[type] !== undefined)
+    if($CP.objDef[type] !== undefined)
         type = "Primitive";
 
 
@@ -1310,16 +1310,16 @@ $CP.factory = function(type, ...args) {
             if($CP.currentScene === null)
                 throw new Error("[Primitive]: Objects cannot be instantiated without a current scene.");
 
-            if(!this.inArray(this.primitives, origType))
-                throw new TypeError("[CEPHALOPOV]: Unknown primitive type '" + origType + "'. Legal values are: " + this.primitives.join(", ") + ".");
+            if(!$CP.inArray($CP.primitives, origType))
+                throw new TypeError("[CEPHALOPOV]: Unknown primitive type '" + origType + "'. Legal values are: " + $CP.primitives.join(", ") + ".");
 
             var obj = new Primitive(origType).proxify();
 
-            for(var i = 0; i < this.objDef[origType].required.length; i++) {
-                obj[this.objDef[origType].required[i].name] = null;
+            for(var i = 0; i < $CP.objDef[origType].required.length; i++) {
+                obj[$CP.objDef[origType].required[i].name] = null;
             }
-            for(var i = 0; i < this.objDef[origType].optional.length; i++) {
-                obj[this.objDef[origType].optional[i].name] = null;
+            for(var i = 0; i < $CP.objDef[origType].optional.length; i++) {
+                obj[$CP.objDef[origType].optional[i].name] = null;
             }
 
             obj.serial = $CP.objectSerial++;
@@ -1334,7 +1334,7 @@ $CP.factory = function(type, ...args) {
 
             var obj = new ConfigObject(type);
 
-            for(var k in this.gsDef)
+            for(var k in $CP.gsDef)
                 obj._val[k] = null;
             obj = obj.proxify();
             break;
@@ -1342,7 +1342,7 @@ $CP.factory = function(type, ...args) {
         case 'ImageOptions':
 
             var obj = new ConfigObject(type);
-            for(var k in this.ioDef)
+            for(var k in $CP.ioDef)
                 obj._val[k] = null;
             obj = obj.proxify();
             break;
