@@ -125,6 +125,7 @@ break them if you try hard enough.
 //[cf]
 
 //[of]:% $CP
+//[of]:% $CP
 //##############################################################################
 //# $CP is the master CephaloPOV object.
 //##############################################################################
@@ -137,7 +138,6 @@ var $CP = {
     debugMode:      false,
     verbosity:      0,
     sdlIncludes:    { },
-    outputBasename: null,
 };
 //[cf]
 //[of]:* DEPENDENCIES
@@ -329,10 +329,10 @@ $CP.ditherTypes = {
 $CP.gsDef = {
 
     adcBailout:             { type: "float",                  test: ">=0"           },
-    ambientLight:           { type: "VectorColor",            test: null            },
+    ambientLight:           { type: "VectorRGB|VectorSRGB",   test: null            },
     assumedGamma:           { type: "float",                  test: null            },
     charset:                { type: "string(ascii|utf8|sys)", test: null            },
-    iridWavelength:         { type: "VectorColor",            test: null            },
+    iridWavelength:         { type: "VectorRGB|VectorSRGB",   test: null            },
     maxIntersections:       { type: "int",                    test: ">=0"           },
     maxTraceLevel:          { type: "int",                    test: ">=0"           },
     mmPerUnit:              { type: "float",                  test: ">=0"           },
@@ -684,8 +684,8 @@ $CP.objDef = {
             { name: "falloff",          type: "float",    test: "a<90" },
             { name: "jitter",           type: "boolean"   },
             { name: "looksLike",        type: "Primitive" },
-            { name: "mediaAttenuation", type: ""          }, // TODO
-            { name: "mediaInteraction", type: ""          }, // TODO
+            { name: "mediaAttenuation", type: "boolean"   }, // TODO
+            { name: "mediaInteraction", type: "boolean"   }, // TODO
             { name: "orient",           type: "boolean"   },
             { name: "parallel",         type: "boolean"   },
             { name: "pointAt",          type: "VectorXYZ" },
@@ -1058,7 +1058,7 @@ $CP.outputFile = {
 
 $CP.primitives = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
     "cylinder", "difference", "disc", "heightField", "intersection",
-    "isoSurface", "juliaFractal", "lathe", "merge", "mesh", "ovus",
+    "isoSurface", "juliaFractal", "lathe", "lightSource", "merge", "mesh", "ovus",
     "parametric", "plane", "poly", "polygon", "polynomial", "prism", "quadric",
     "quartic", "sor", "sphere", "sphereSweep", "superellipsoid", "text",
     "torus", "triangle", "union" ];
@@ -1480,8 +1480,10 @@ $CP.isFunctionOrNumber = function(val, objname, fieldname) {
 //==============================================================================
 
 $CP.isFunctionOrNumber = function(val, objname, fieldname) {
+    
     if(typeof val == "function")
         return val;
+    
     if(typeof val == "string") {
         if(val.substr(0, 1) == "&")
             return val;
@@ -1489,6 +1491,7 @@ $CP.isFunctionOrNumber = function(val, objname, fieldname) {
         if(!isNaN(val))
             return val;
     }
+    
     if(typeof val == "number")
         return val;
 
@@ -2003,7 +2006,7 @@ $CP.typeFormatTestError = function(fmt, val) {
 
 $CP.valueTestError = function(test, val) {
 
-    if(test == null)
+    if(test === undefined || test === null)
         return false;
 
     if(!Array.isArray(test))
@@ -2105,7 +2108,8 @@ $CP.zeroPad = function(num, pad) {
     return result.join('');
 }
 //[cf]
-
+//[cf]
+//[of]:% File(path, mode)
 //[of]:% File(path, mode)
 //==============================================================================
 // File I/O wrappers. CephaloPOV doesn't do anything fancy with files presently,
@@ -2155,7 +2159,7 @@ File.prototype.read = function() {
 File.prototype.write = function(data) {
     if(!this.open)
         throw new Error("[File.write]: No file is currently open.");
-    $CP.fs.writeFileSync(this.handle, data);
+    $CP.fs.writeSync(this.handle, data);
 }
 //[cf]
 //[of]:F File.close()
@@ -2165,7 +2169,8 @@ File.prototype.close = function() {
     this.handle = null;
 }
 //[cf]
-
+//[cf]
+//[of]:% ConfigObject(type)
 //[of]:% ConfigObject(type)
 //==============================================================================
 // The ConfigObject type represents -- with help from a Proxy -- k/v config
@@ -2677,7 +2682,7 @@ ConfigObject.prototype.toCLI = function() {
     return this.ioValidate()["cli"];
 }
 //[cf]
-//[of]:F ConfigObject.toFileContents()
+//[of]:F ConfigObject.toIniFile()
 //==============================================================================
 // Wrapper around the validate method to return only the .ini file contents.
 //==============================================================================
@@ -2798,7 +2803,8 @@ ConfigObject.prototype.toSDL = function() {
     return contents.join("\n");
 }
 //[cf]
-
+//[cf]
+//[of]:% Matrix
 //[of]:% Matrix
 //==============================================================================
 // These floats specify the elements of a 4 by 4 matrix with the fourth column
@@ -3051,7 +3057,8 @@ Matrix.prototype.xPoint = function(point) {
     );
 }
 //[cf]
-
+//[cf]
+//[of]:% Primitive(type)
 //[of]:% Primitive(type)
 //==============================================================================
 // The Primitive type serves, along with the primitiveHandler proxy, as a
@@ -3109,13 +3116,13 @@ Primitive.prototype.handler = {
         var test = target.propertyTest(property);
         var errmsg;
 
-        if(type) {
+        if(type && value !== null) {
 
             if($CP.typeFormatTestError(type, value))
                 throw new TypeError("[Primitive." + target._subtype + "]: " + property + " must be " + $CP.typeFormatDescription(type) + ".");
 
-            if(test != null && (errmsg = $CP.valueTestError(test, value)))
-                throw new RangeError("[Primitive." + target._subtype + "]: " + property + errmsg + ".");
+            if(test !== null && (errmsg = $CP.valueTestError(test, value)))
+                throw new RangeError("[Primitive." + target._subtype + "]: " + property + " " + errmsg + ".");
 
             if(property == "transform") {
                 if(target._val.baseTransform === undefined) {
@@ -3223,14 +3230,22 @@ Primitive.prototype.proxify = function() {
 //==============================================================================
 
 Primitive.prototype.propertyTest = function(property) {
-    for(var i = 0; i < this._defs.required.length; i++)
-        if(this._defs.required[i].name == property && this._defs.required[i].test !== undefined)
-            return this._defs.required[i].type;
-    for(var i = 0; i < this._defs.optional.length; i++)
-        if(this._defs.optional[i].name == property && this._defs.optional[i].test !== undefined)
-            return this._defs.optional[i].type;
+    
+    for(var i = 0; i < this._defs.required.length; i++) {
+        if(this._defs.required[i].name == property && this._defs.required[i].test !== undefined) {
+            return this._defs.required[i].test;
+        }
+    }
+    
+    for(var i = 0; i < this._defs.optional.length; i++) {
+        if(this._defs.optional[i].name == property && this._defs.optional[i].test !== undefined) {
+            return this._defs.optional[i].test;
+        }
+    }
+    
     if($CP.objCommon[property] !== undefined)
         return $CP.objCommon[property].test;
+    
     return null;
 }
 //[cf]
@@ -3283,7 +3298,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
             content.push(pad + "box {");
             content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
             content.push(this.commonToSDL(stops + 1));
-            content.push(pad + "}");
+            content.push(pad + "}"); 
             break;
 
 		case "camera": //-------------------------------------------------------
@@ -3291,23 +3306,23 @@ Primitive.prototype.toSDL = function(stops = 0) {
 			content.push(pad + "camera {");
     		content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
 		    if(this.location !== null)
-		        content.push(ppad + "location " + this.location);
+		        content.push(ppad + "location " + this.location.toSDL());
 		    if(this.right !== null)
-		        content.push(ppad + "right " + this.right);
+		        content.push(ppad + "right " + this.right.toSDL());
 		    if(this.up !== null)
-		        content.push(ppad + "up " + this.up);
+		        content.push(ppad + "up " + this.up.toSDL());
 		    if(this.direction !== null)
-		        content.push(ppad + "direction " + this.direction);
+		        content.push(ppad + "direction " + this.direction.toSDL());
 		    if(this.angle !== null)
-		        content.push(ppad + "look_at " + this.lookAt);
+		        content.push(ppad + "angle " + this.angle);
 		    if(this.lookAt !== null)
-		        content.push(ppad + "look_at " + this.lookAt);
+		        content.push(ppad + "look_at " + this.lookAt.toSDL());
 		    if(this.blurSamples !== null)
 		        content.push(ppad + "blur_samples " + this.blurSamples.join(", "));		    
 		    if(this.apertureSize !== null)
 		        content.push(ppad + "aperture_size " + this.apertureSize);
 		    if(this.focalPoint !== null)
-		        content.push(ppad + "focal_point " + this.focalPoint);
+		        content.push(ppad + "focal_point " + this.focalPoint.toSDL());
 		    if(this.confidence !== null)
 		        content.push(ppad + "confidence " + this.confidence);
 		    if(this.variance !== null)
@@ -3321,7 +3336,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
         case "cone": //---------------------------------------------------------
 
             content.push(pad + "cone {");
-            content.push(ppad + this.basePoint + ", " + this.baseRadius + ", " + this.capPoint + ", " + this.capRadius);
+            content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
             if(this.open)
                 content.push(pad + "    open");
             content.push(this.commonToSDL(stops + 1));
@@ -3335,7 +3350,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
         case "cylinder": //-----------------------------------------------------
 
             content.push(pad + "cylinder {");
-            content.push(ppad + this.basePoint + ", " + this.capPoint + ", " + this.radius);
+            content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
             if(this.open)
                 content.push(pad + "    open");
             content.push(this.commonToSDL(stops + 1));
@@ -3345,7 +3360,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
         case "disc": //--------------------------------------------------------
 
             content.push(pad + "disc {");
-            content.push(ppad + this.center + ", " + this.normal + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
+            content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
@@ -3353,9 +3368,9 @@ Primitive.prototype.toSDL = function(stops = 0) {
         case "difference": //--------------------------------------------------
 
             content.push(pad + "difference {");
-            content.push(ppad + this._positiveObject.toString(stops + 1));
+            content.push(ppad + this._positiveObject.toSDL(stops + 1));
             for(var i = 0; i < this._negativeObjects.length; i++) {
-                content.push(ppad + this._negativeObjects[i].toString(stops + 1));
+                content.push(ppad + this._negativeObjects[i].toSDL(stops + 1));
             }
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
@@ -3380,7 +3395,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
             if(this.smooth === true)
                 content.push(pad + "    smooth");
             if(this.waterLevel !== null)
-                content.push(pad + "    water_level " + this._waterLevel);
+                content.push(pad + "    water_level " + this.waterLevel);
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
@@ -3389,7 +3404,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
 
             content.push(pad + "intersection {");
             for(var i = 0; i < this._objects.length; i++) {
-                content.push(ppad + this._objects[i].toString(stops + 1));
+                content.push(ppad + this._objects[i].toSDL(stops + 1));
             }
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
@@ -3407,11 +3422,74 @@ Primitive.prototype.toSDL = function(stops = 0) {
             // TODO
             break;
 
+		case "lightSource": //--------------------------------------------------
+
+		    content.push(pad + "light_source {");
+		    if(this.location === null)
+		        throw new Error("[Light]: location is unspecified.");
+		    if(this.color === null)
+		        throw new Error("[Light]: color is unspecified.");
+		    content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
+		
+		    if(this.type !== null)
+		        content.push(ppad + this.type);
+		
+		    if(this.type == "spotlight" || this.type == "cylindrical") {
+		        if(this.pointAt === null)
+		            throw new Error("[Light]: pointAt must be specified.");
+		        if(this.radius !== null)
+		            content.push(ppad + "radius " + this.radius);
+		        if(this.falloff !== null)
+		            content.push(ppad + "falloff " + this.falloff);
+		        if(this.tightness !== null)
+		            content.push(ppad + "tightness " + this.tightness);
+		    }
+		
+		    if(this.parallel)
+		        content.push(ppad + "parallel");
+		
+		    if(this.pointAt !== null)
+		        content.push(ppad + "point_at " + this.pointAt);
+		
+		    if(this.areaLight) {
+		        if(this.axis1 === null || this.axis2 === null || this.size1 === null || this.size2 === null)
+		            throw new Error("[Light]: Area lights require axis1, axis2, size1, and size2 to be defined.");
+		        content.push(ppad + "area_light");
+		        content.push(ppad + this.axis1 + ", " + this.axis2 + ", " + this.size1 + ", " + this.size2);
+		        if(this.adaptive !== null)
+		            content.push(ppad + "adaptive " + this.adaptive);
+		        if(this.jitter)
+		            content.push(ppad + "jitter");
+		        if(this.circular)
+		            content.push(ppad + "circular");
+		        if(this.orient)
+		            content.push(ppad + "orient");
+		    }
+		
+		    if(this.shadowless)
+		        content.push(ppad + "shadowless");
+		
+		    // TODO: looksLike
+		    // TODO: projectedThrough
+		
+		    if(this.fadeDistance !== null)
+		        content.push(ppad + "fade_distance " + this.fadeDistance);
+		    if(this.fadePower !== null)
+		        content.push(ppad + "fade_power " + this.fadePower);
+		
+		    if(this.mediaInteraction === false)
+		        content.push(ppad + "media_interaction off");
+		    if(this.mediaAttenuation === true)
+		        content.push(ppad + "media_attenuation on");
+		
+		    content.push(pad + "}");
+		   	break;
+
         case "merge": //--------------------------------------------------------
 
             content.push(pad + "merge {");
             for(var i = 0; i < this._objects.length; i++) {
-                content.push(ppad + this._objects[i].toString(stops + 1));
+                content.push(ppad + this._objects[i].toSDL(stops + 1));
             }
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
@@ -3440,7 +3518,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
         case "plane": //--------------------------------------------------------
 
             content.push(pad + "sphere {");
-            content.push(ppad + this.center + ", " + this.radius);
+            content.push(ppad + this.center.toSDL() + ", " + this.radius);
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
@@ -3472,7 +3550,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
         case "sphere": //-------------------------------------------------------
 
             content.push(pad + "sphere {");
-            content.push(ppad + this.center + ", " + this.radius);
+            content.push(ppad + this.center.toSDL() + ", " + this.radius);
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
@@ -3504,7 +3582,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
         case "triangle": //-----------------------------------------------------
 
             content.push(pad + "triangle {");
-            content.push(ppad + this.corner1 + ", " + this.corner2 + ", " + this.corner3);
+            content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
@@ -3513,7 +3591,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
 
             content.push(pad + "merge {");
             for(var i = 0; i < this._objects.length; i++) {
-                content.push(ppad + this._objects[i].toString(stops + 1));
+                content.push(ppad + this._objects[i].toSDL(stops + 1));
             }
             content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
             content.push(this.commonToSDL(stops + 1));
@@ -3524,9 +3602,9 @@ Primitive.prototype.toSDL = function(stops = 0) {
 
             content.push(pad + "smooth_triangle {");
             content.push(ppad
-                + this.corner1 + ", " + this.normal1 + ", "
-                + this.corner2 + ", " + this.normal2 + ", "
-                + this.corner3 + ", " + this.normal3);
+                + this.corner1.toSDL() + ", " + this.normal1.toSDL() + ", "
+                + this.corner2.toSDL() + ", " + this.normal2.toSDL() + ", "
+                + this.corner3.toSDL() + ", " + this.normal3.toSDL());
             content.push(this.commonToSDL(stops + 1));
             content.push(pad + "}");
             break;
@@ -3542,7 +3620,8 @@ Primitive.prototype.toSDL = function(stops = 0) {
 
 }
 //[cf]
-
+//[cf]
+//[of]:% Scene
 //[of]:% Scene
 //==============================================================================
 // The Scene object is a container for the various objects in a scene, as well
@@ -3558,7 +3637,7 @@ function Scene() {
     this._globalSettings = $CP.factory("GlobalSettings");
     this._frame          = 0;                     // Current frame number
     this._activeCamera   = null;
-    this._baseName       = null;                  // If set, this becomes the base name for all output files
+    this._baseName       = "cpout0000";          // If set, this becomes the base name for all output files
     this._frameBegin     = null;
     this._frameEnd       = null;
 
@@ -3660,21 +3739,22 @@ Scene.prototype.makeCurrent = function() {
 //[of]:F Scene.nextFrame()
 Scene.prototype.nextFrame = function() {
 
-    var iniFile = new File($CP.fileSerial($CP.outputBasename, this._frame) + ".ini", "w"); 
-    iniFile.write(this.imageOptions.toFileContents() + "\n");
+    var iniFile = new File($CP.fileSerial(this.basename, this._frame) + ".ini", "w"); 
+    iniFile.write(this.imageOptions.toIniFile() + "\n");
     iniFile.close();
 
     // .pov file
     
-    var povFile = new File($CP.fileSerial($CP.outputBasename, this._frame) + ".pov", "w"); 
+    var povFile = new File($CP.fileSerial(this.basename, this._frame) + ".pov", "w"); 
     
     // TODO: emit preamble
     
+    povFile.write(this.globalSettings.toSDL() + "\n\n");
+    
     // for each object, write results of .toSDL unless null
         // Skip CSG children; TODO: parent.toSDL takes care of calling its children
-        
     for(var k in this._objDict) {
-        if(this._objDict[k].parent === null )
+        if(this._objDict[k].parent !== undefined)
             continue;
         var content = this._objDict[k].toSDL();
         if(content === null) {
@@ -3690,8 +3770,9 @@ Scene.prototype.nextFrame = function() {
         this.frameEnd();
     
     for(var k in this._objDict) {
-        if(this._objDict[k].frameEnd !== null)
+        if(this._objDict[k].frameEnd !== undefined && this._objDict[k].frameEnd !== null) {
             this._objDict[k].frameEnd();
+        }
     }
 
     this._frame++;
@@ -3700,12 +3781,13 @@ Scene.prototype.nextFrame = function() {
         this.frameBegin();
         
     for(var k in this._objDict) {
-        if(this._objDict[k].frameBegin !== null)
+        if(this._objDict[k].frameBegin !== undefined && this._objDict[k].frameBegin !== null)
             this._objDict[k].frameBegin();
     }
 }
 //[cf]
-
+//[cf]
+//[of]:F Vector(type, args)
 //[of]:F Vector(type, args)
 function Vector(type, args) {
 
@@ -3731,7 +3813,6 @@ function Vector(type, args) {
         return;
 
     } else if(Array.isArray(args)) {
-
         var min = this._def[type].min;
         var max = this._def[type].max;
 
@@ -3741,9 +3822,9 @@ function Vector(type, args) {
         }
 
         for(var i = 0; i < args.length; i++) {
-            if($CP.isFunctionOrNumber(args[i])) {
-                this._val[i] = args[i];
-            } else {
+        	try {
+            	this._val[i] = $CP.isFunctionOrNumber(args[i]);
+            } catch(e) {
                 throw new TypeError("[Vector" + type + "]: All initializer values must be floats or functions returning floats.");
             }
         }
@@ -3883,6 +3964,7 @@ Vector.prototype.toSDL = function(stops) {
 
 
 }
+//[cf]
 //[cf]
 
 //[of]:* INIT [WIP]
