@@ -123,260 +123,6 @@ break them if you try hard enough.
 
 
 //[cf]
-//[of]:TODO
-/*
-
-//[of]:Old notes
-//[of]:Raw TODO
-I. Finish enumeration/epitome
-II. World
-    A. Types
-    B. Camera
-    C. Lights (basic)
-    D. Textures
-    E. Objects (plane, box, cylinder, sphere) + re-eval for complex objects
-    F. CSG Objects (generic)
-    G. Macro generation
-
-Basic pigment textures
-
-Camera [...partial...]
-Transformation [...partial...]
-Lights [...partial...]
-Matrices [...partial...]
-    Transforms.inc
-Include Files
-    colors.inc [...partial...] (see bottom of this comment)
-
-Test routines
-
-
-Identifiers
-
-    * 40 chars
-    * /[A-Za-z][A-Za-z0-9_]{0,39}/
-
-    Keywords are all lowercase, so a capital letter avoids potential collisions
-
-TODO: Comments -- add emitter
-
-    // single line
-    /* multi
-        line */
-/*
-
-Numeric Expressions
-Vector Expressions
-
-    <a, b, c, d, e>
-
-Color Expressions
-TODO: User-Defined Functions
-TODO: Strings
-TODO: Arrays
-TODO: Splines
-
---------------------------------------------------------------------------------
-
-Defer ATMOSPHERIC EFFECTS until later
-
---------------------------------------------------------------------------------
-
-Objects/CSG...
-Texture...
-
-Pattern...
-Media...
-
-*Colors.inc
-
-Color-space conversions
-Chars.inc
-Consts.inc
-Debug.inc
-Finish.inc
-Functions.inc
-Glass.inc
-Golds.inc
-Logo.inc
-...etc.
-//[cf]
-//[of]:Color manipulation macros TODO
-// Color manipulation macros
-
-// Takes Hue value as input, returns RGB vector.
-#macro CH2RGB (HH)
-   #local H = mod(HH, 360);
-   #local H = (H < 0 ? H+360 : H);
-   #switch (H)
-      #range (0, 120)
-         #local R = (120-  H) / 60;
-         #local G = (  H-  0) / 60;
-         #local B = 0;
-      #break
-      #range (120, 240)
-         #local R = 0;
-         #local G = (240-  H) / 60;
-         #local B = (  H-120) / 60;
-      #break
-      #range (240, 360)
-         #local R = (  H-240) / 60;
-         #local G = 0;
-         #local B = (360-  H) / 60;
-      #break
-   #end
-   <min(R,1), min(G,1), min(B,1)>
-#end
-
-// Takes RGB vector, Max component, and Span as input,
-// returns Hue value.
-#macro CRGB2H (RGB, Max, Span)
-   #local H = 0;
-   #local R = RGB.red;
-   #local G = RGB.green;
-   #local B = RGB.blue;
-   #if (Span>0)
-      #local H = (
-         + (R = Max & G != Max ? 0 + (G - B)/Span : 0)
-         + (G = Max & B != Max ? 2 + (B - R)/Span : 0)
-         + (B = Max & R != Max ? 4 + (R - G)/Span : 0)
-      )*60;
-   #end
-   H
-#end
-
-// Converts a color in HSL color space to a color in RGB color space.
-// Input:  < Hue, Saturation, Lightness, Filter, Transmit >
-// Output: < Red, Green, Blue, Filter, Transmit >
-#macro CHSL2RGB(Color)
-   #local HSLFT = color Color;
-   #local H = (HSLFT.red);
-   #local S = (HSLFT.green);
-   #local L = (HSLFT.blue);
-   #local SatRGB = CH2RGB(H);
-   #local Col = 2*S*SatRGB + (1-S)*<1,1,1>;
-   #if (L<0.5)
-      #local RGB = L*Col;
-   #else
-      #local RGB = (1-L)*Col + (2*L-1)*<1,1,1>;
-   #end
-   <RGB.red,RGB.green,RGB.blue,(HSLFT.filter),(HSLFT.transmit)>
-#end
-
-// Converts a color in RGB color space to a color in HSL color space.
-// Input:  < Red, Green, Blue, Filter, Transmit >
-// Output: < Hue, Saturation, Lightness, Filter, Transmit >
-#macro CRGB2HSL(Color)
-   #local RGBFT = color Color;
-   #local R = (RGBFT.red);
-   #local G = (RGBFT.green);
-   #local B = (RGBFT.blue);
-   #local Min = min(R,min(G,B));
-   #local Max = max(R,max(G,B));
-   #local Span = Max-Min;
-   #local L = (Min+Max)/2;
-   #local S = 0;
-   #if( L!=0 & L!=1 )
-      #local S = Span / ( L<0.5 ? (L*2) : (2-L*2) );
-   #end
-   #local H = CRGB2H (<R,G,B>, Max, Span);
-   <H,S,L,(RGBFT.filter),(RGBFT.transmit)>
-#end
-
-// Converts a color in HSV color space to a color in RGB color space.
-// Input:  < Hue, Saturation, Value, Filter, Transmit >
-// Output: < Red, Green, Blue, Filter, Transmit >
-#macro CHSV2RGB(Color)
-   #local HSVFT = color Color;
-   #local H = (HSVFT.red);
-   #local S = (HSVFT.green);
-   #local V = (HSVFT.blue);
-   #local SatRGB = CH2RGB(H);
-   #local RGB = ( ((1-S)*<1,1,1> + S*SatRGB) * V );
-   <RGB.red,RGB.green,RGB.blue,(HSVFT.filter),(HSVFT.transmit)>
-#end
-
-// Converts a color in RGB color space to a color in HSV color space.
-// Input:  < Red, Green, Blue, Filter, Transmit >
-// Output: < Hue, Saturation, Value, Filter, Transmit >
-#macro CRGB2HSV(Color)
-   #local RGBFT = color Color;
-   #local R = (RGBFT.red);
-   #local G = (RGBFT.green);
-   #local B = (RGBFT.blue);
-   #local Min = min(R,min(G,B));
-   #local Max = max(R,max(G,B));
-   #local Span = Max-Min;
-   #local H = CRGB2H (<R,G,B>, Max, Span);
-   #local S = 0; #if (Max!=0) #local S = Span/Max; #end
-   <H,S,Max,(RGBFT.filter),(RGBFT.transmit)>
-#end
-
-#version Colors_Inc_Temp;
-#end
-//[cf]
-//[of]:Scene Graph notes
-Master objects are defined relative to the origin. More precisely, the origin is
-their primary point of articulation. In each frame, they are transformed to
-their current frame-state.
-
-Possibly, a relationship between A and B is stated in the form of B's point of
-articulation relative to some explicit or implicit point in A. In its most basic
-form, this would amount to free movement of B relative to its attachment point
-to A. PSII could provide a set of standard constraints, e.g., ball joint, hinge,
-track, etc., which could be built upon or supplanted by the user.
-
-This suggests a separate assembly process for objects with moving parts, which
-means that ordinary native CSG objects can go ahead just fine. Converting them
-into master objects amounts to just positioning them appropriately relative to
-the origin after construction.
-//[cf]
-//[of]:Advanced Features
-In no particular order:
-
-* Scene graph
-* Spline calculations, including Catmull-Rom
-* Color calculations from colors.inc, plus others from JS mixers
-* Eric Haines' table of object intersections, collision detection
-* Derivative relative points
-* Callbacks in lieu of literal values
-* SDL macro generation
-* Stereo camera type
-* Parametric type factory using predefined parameters
-* Composite types
-* Inclusion of all include types
-* Level-of-Detail system
-* Particle systems
-//[cf]
-
-TODO:
-
-.clone
-.materialize
-Generate:
-    Scene files .pov
-    Ini files
-    Shell script (.sh/.bat)
-
-
-
-npm install -g sloc        ... cronify
-
-Primitive.toString()
-	add identifier/name, plus autogenerated defaults
-    tie into subclass toString() methods
-	add CSG parent reference
-    respect active flag
-Figure out Scene object
-	object containing identifier: object relations
-
-Full test of ImageOptions
-//[cf]
-
-
-
-*/
-//[cf]
 
 //[of]:% $CP
 //##############################################################################
@@ -735,6 +481,8 @@ $CP.objCommon = {
     clippedBy:        { type: "Primitive", test: null },
     doubleIlluminate: { type: "boolean",   test: null },
     finish:           { type: "Finish",    test: null },
+    frameBegin:       { type: "function",  test: null },
+    frameEnd:         { type: "function",  test: null },
     hierarchy:        { type: "boolean",   test: null },
     hollow:           { type: "boolean",   test: null },
     interior:         { type: "Interior",  test: null },
@@ -3513,6 +3261,9 @@ Primitive.prototype.propertyType = function(property) {
 
 Primitive.prototype.toSDL = function(stops = 0) {
 
+    if(!this.active)
+        return null;
+
     var pad     = $CP.tab(stops);
     var ppad    = $CP.tab(stops + 1);
     var content = [ ];
@@ -3808,10 +3559,40 @@ function Scene() {
     this._frame          = 0;                     // Current frame number
     this._activeCamera   = null;
     this._baseName       = null;                  // If set, this becomes the base name for all output files
+    this._frameBegin     = null;
+    this._frameEnd       = null;
 
     if($CP.currentScene === null)
         $CP.currentScene = this;
 }
+
+
+
+//------------------------------------------------------------------------------
+
+Object.defineProperty(Scene.prototype, "frameBegin", {
+    get: function() {
+        return this._frameBegin;
+    },
+    set: function(val) {
+        if(typeof val != "function")
+            throw new TypeError("[Scene]: frameBegin must be a JavaScript function.");
+        this._frameBegin = val;
+    }
+});
+
+//------------------------------------------------------------------------------
+
+Object.defineProperty(Scene.prototype, "frameEnd", {
+    get: function() {
+        return this._frameEnd;
+    },
+    set: function(val) {
+        if(typeof val != "function")
+            throw new TypeError("[Scene]: frameEnd must be a JavaScript function.");
+        this._frameEnd = val;
+    }
+});
 
 //------------------------------------------------------------------------------
 
@@ -3878,9 +3659,50 @@ Scene.prototype.makeCurrent = function() {
 //[cf]
 //[of]:F Scene.nextFrame()
 Scene.prototype.nextFrame = function() {
+
+    var iniFile = new File($CP.fileSerial($CP.outputBasename, this._frame) + ".ini", "w"); 
+    iniFile.write(this.imageOptions.toFileContents() + "\n");
+    iniFile.close();
+
+    // .pov file
+    
+    var povFile = new File($CP.fileSerial($CP.outputBasename, this._frame) + ".pov", "w"); 
+    
+    // TODO: emit preamble
+    
+    // for each object, write results of .toSDL unless null
+        // Skip CSG children; TODO: parent.toSDL takes care of calling its children
+        
+    for(var k in this._objDict) {
+        if(this._objDict[k].parent === null )
+            continue;
+        var content = this._objDict[k].toSDL();
+        if(content === null) {
+            continue;
+        } else {
+            povFile.write(content + "\n\n");
+        }
+    }
+        
+    povFile.close();
+
+    if(this.frameEnd !== null)
+        this.frameEnd();
+    
+    for(var k in this._objDict) {
+        if(this._objDict[k].frameEnd !== null)
+            this._objDict[k].frameEnd();
+    }
+
     this._frame++;
-    // TODO: Call object prepare callbacks
-    // TODO: Call object update callbacks
+
+    if(this.frameBegin !== null)
+        this.frameBegin();
+        
+    for(var k in this._objDict) {
+        if(this._objDict[k].frameBegin !== null)
+            this._objDict[k].frameBegin();
+    }
 }
 //[cf]
 
