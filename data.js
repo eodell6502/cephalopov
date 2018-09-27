@@ -1,8 +1,20 @@
 //==============================================================================
+// The ClassBuilder object generates code for a JavaScript class from a set of
+// parameters.
+//==============================================================================
+
+function ClassBuilder(name, fixed, mutable, superclass) {
+    this.name       = name;
+    this.superclass = superclass;
+    this.fixed      = fixed;
+    this.mutable    = mutable;
+}
+
+//==============================================================================
 // Legal dither types mapped to textual descriptions.
 //==============================================================================
 
-var ditherTypes = {
+ClassBuilder.prototype.ditherTypes = {
     "B2": "Bayer pattern 2x2",
     "B3": "Bayer pattern 3x3",
     "B4": "Bayer pattern 4x4",
@@ -16,179 +28,185 @@ var ditherTypes = {
 // centralize validation.
 //==============================================================================
 
-var gsDef = {
+ClassBuilder.prototype.gsDef = {
+    mutable: [
+        { name: "adcBailout",              type: "float",                  test: ">=0"           },
+        { name: "ambientLight",            type: "VectorRGB|VectorSRGB",   test: null            },
+        { name: "assumedGamma",            type: "float",                  test: null            },
+        { name: "charset",                 type: "string(ascii|utf8|sys)", test: null            },
+        { name: "iridWavelength",          type: "VectorRGB|VectorSRGB",   test: null            },
+        { name: "maxIntersections",        type: "int",                    test: ">=0"           },
+        { name: "maxTraceLevel",           type: "int",                    test: ">=0"           },
+        { name: "mmPerUnit",               type: "float",                  test: ">=0"           },
+        { name: "noiseGenerator",          type: "int(1|2|3)",             test: null            },
+        { name: "numberOfWaves",           type: "int",                    test: ">=0"           },
+        { name: "photon",                  type: "boolean",                test: null            },
+        { name: "photonAdcBailout",        type: "float",                  test: ">=0"           },
+        { name: "photonAutostop",          type: "float",                  test: "unitInterval"  },
+        { name: "photonCount",             type: "int",                    test: ">=0"           },  // TODO: cannot be used with photonSpacing
+        { name: "photonExpandThresholds",  type: "list(float,int)",        test: null            },
+        { name: "photonGather",            type: "@int[2]",                test: [">=0", "a<=b"] },
+        { name: "photonJitter",            type: "float",                  test: null            },
+        { name: "photonLoadFile",          type: "string",                 test: "nonempty"      },
+        { name: "photonMaxTraceLevel",     type: "int",                    test: ">=0"           },
+        { name: "photonMedia",             type: "@float[2]",              test: null            },
+        { name: "photonRadius",            type: "@float[4]",              test: null            },
+        { name: "photonSaveFile",          type: "string",                 test: "nonempty"      },
+        { name: "photonSpacing",           type: "float",                  test: ">0"            }, // TODO: cannot be used with photonCount
+        { name: "radAdcBailout",           type: "float",                  test: null            },
+        { name: "radAlwaysSample",         type: "boolean",                test: null            },
+        { name: "radBrightness",           type: "float",                  test: null            },
+        { name: "radCount",                type: "@int[1-2]",              test: ">=1"           },
+        { name: "radErrorBound",           type: "float",                  test: null            },
+        { name: "radGrayThreshold",        type: "float",                  test: "unitInterval"  },
+        { name: "radiosity",               type: "boolean",                test: null            },
+        { name: "radLowErrorFactor",       type: "float",                  test: null            },
+        { name: "radMaximumReuse",         type: "float",                  test: null            },
+        { name: "radMaxSample",            type: "float",                  test: null            },
+        { name: "radMinimumReuse",         type: "float",                  test: null            },
+        { name: "radNearestCount",         type: "int",                    test: "1-20"          },
+        { name: "radNormal",               type: "boolean",                test: null            },
+        { name: "radPretraceEnd",          type: "float",                  test: "unitInterval"  },
+        { name: "radPretraceStart",        type: "float",                  test: "unitInterval"  },
+        { name: "radRecursionLimit",       type: "int",                    test: "1-20"          },
+        { name: "radSubsurface",           type: "boolean",                test: null            },
+        { name: "subRadiosity",            type: "boolean",                test: null            },
+        { name: "subSamples",              type: "@int[2]",                test: null            },
+        { name: "subsurface",              type: "boolean",                test: null            },
+    ]
+};
 
-    adcBailout:             { type: "float",                  test: ">=0"           },
-    ambientLight:           { type: "VectorRGB|VectorSRGB",   test: null            },
-    assumedGamma:           { type: "float",                  test: null            },
-    charset:                { type: "string(ascii|utf8|sys)", test: null            },
-    iridWavelength:         { type: "VectorRGB|VectorSRGB",   test: null            },
-    maxIntersections:       { type: "int",                    test: ">=0"           },
-    maxTraceLevel:          { type: "int",                    test: ">=0"           },
-    mmPerUnit:              { type: "float",                  test: ">=0"           },
-    noiseGenerator:         { type: "int(1|2|3)",             test: null            },
-    numberOfWaves:          { type: "int",                    test: ">=0"           },
-    photon:                 { type: "boolean",                test: null            },
-    photonAdcBailout:       { type: "float",                  test: ">=0"           },
-    photonAutostop:         { type: "float",                  test: "unitInterval"  },
-    photonCount:            { type: "int",                    test: ">=0"           },  // TODO: cannot be used with photonSpacing
-    photonExpandThresholds: { type: "list(float,int)",        test: null            },
-    photonGather:           { type: "@int[2]",                test: [">=0", "a<=b"] },
-    photonJitter:           { type: "float",                  test: null            },
-    photonLoadFile:         { type: "string",                 test: "nonempty"      },
-    photonMaxTraceLevel:    { type: "int",                    test: ">=0"           },
-    photonMedia:            { type: "@float[2]",              test: null            },
-    photonRadius:           { type: "@float[4]",              test: null            },
-    photonSaveFile:         { type: "string",                 test: "nonempty"      },
-    photonSpacing:          { type: "float",                  test: ">0"            }, // TODO: cannot be used with photonCount
-    radAdcBailout:          { type: "float",                  test: null            },
-    radAlwaysSample:        { type: "boolean",                test: null            },
-    radBrightness:          { type: "float",                  test: null            },
-    radCount:               { type: "@int[1-2]",              test: ">=1"           },
-    radErrorBound:          { type: "float",                  test: null            },
-    radGrayThreshold:       { type: "float",                  test: "unitInterval"  },
-    radiosity:              { type: "boolean",                test: null            },
-    radLowErrorFactor:      { type: "float",                  test: null            },
-    radMaximumReuse:        { type: "float",                  test: null            },
-    radMaxSample:           { type: "float",                  test: null            },
-    radMinimumReuse:        { type: "float",                  test: null            },
-    radNearestCount:        { type: "int",                    test: "1-20"          },
-    radNormal:              { type: "boolean",                test: null            },
-    radPretraceEnd:         { type: "float",                  test: "unitInterval"  },
-    radPretraceStart:       { type: "float",                  test: "unitInterval"  },
-    radRecursionLimit:      { type: "int",                    test: "1-20"          },
-    radSubsurface:          { type: "boolean",                test: null            },
-    subRadiosity:           { type: "boolean",                test: null            },
-    subSamples:             { type: "@int[2]",                test: null            },
-    subsurface:             { type: "boolean",                test: null            },
-}
 //==============================================================================
 // As with objDef and gsDef, ioDef defines the validation params for
 // ImageOptions objects.
 //==============================================================================
 
-var ioDef = {
-    allConsole:            { type: "boolean",                   test: null },
-    allFile:               { type: "mixed(boolean|string)",     test: null },
-    antialias:             { type: "boolean",                   test: null },
-    antialiasDepth:        { type: "int",                       test: "1-9" },
-    antialiasGamma:        { type: "float",                     test: null },
-    antialiasThreshold:    { type: "float",                     test: ">=0" },
-    appendFile:            { type: "boolean",                   test: null },
-    bitsPerColor:          { type: "int",                       test: "5-16" },
-    bounding:              { type: "boolean",                   test: null },
-    boundingMethod:        { type: "int(1|2)",                  test: null },
-    boundingThreshold:     { type: "int",                       test: ">=0" },
-    bspBaseAccessCost:     { type: "float",                     test: null },
-    bspChildAccessCost:    { type: "float",                     test: null },
-    bspIsectCost:          { type: "float",                     test: null },
-    bspMaxDepth:           { type: "int",                       test: ">0" },
-    bspMissChance:         { type: "float",                     test: null },
-//  constants:             { type: "",                          test: null },   // not currently planning to implement; not useful in this context
-    continueTrace:         { type: "boolean",                   test: null },
-    createIni:             { type: "mixed(boolean|string)",     test: "nonempty" },
-    debugConsole:          { type: "boolean",                   test: null },
-    debugFile:             { type: "mixed(boolean|string)",     test: "nonempty" },
-    display:               { type: "boolean",                   test: null },
-    displayGamma:          { type: "mixed(float|'sRGB')",       test: null },
-    dither:                { type: "boolean",                   test: null },
-    ditherMethod:          { type: "ditherType",                test: null },
-    endColumn:             { type: "int",                       test: "0-" },
-    endRow:                { type: "int",                       test: "0-" },
-    exePath:               { type: "string",                    test: "nonempty" },
-    fatalConsole:          { type: "boolean",                   test: null },
-    fatalErrorCommand:     { type: "string",                    test: "nonempty" },
-    fatalErrorReturn:      { type: "returnAction",              test: null },
-    fatalFile:             { type: "mixed(boolean|string)",     test: "nonempty" },
-    fileGamma:             { type: "mixed(float|'sRGB')",       test: null },
-    height:                { type: "int",                       test: ">0", default: 480 },
-    highReproducibility:   { type: "boolean",                   test: null },
-    includeHeader:         { type: "string",                    test: "nonempty" },
-    inputFileName:         { type: "string",                    test: "nonempty" },
-    jitter:                { type: "boolean",                   test: null },
-    jitterAmount:          { type: "float",                     test: null },
-    libraryPath:           { type: "string",                    test: "nonempty" },
-    maxImageBufferMemory:  { type: "int",                       test: ">0" },
-    outputAlpha:           { type: "boolean",                   test: null },
-    outputFileName:        { type: "string",                    test: "nonempty" },
-    outputFileType:        { type: "string(B|C|E|H|J|N|P|S|T)", test: null },
-    outputToFile:          { type: "boolean",                   test: null },
-    palette:               { type: "char",                      test: null },
-    pauseWhenDone:         { type: "boolean",                   test: null },
-    postFrameCommand:      { type: "string",                    test: "nonempty" },
-    postFrameReturn:       { type: "returnAction",              test: null },
-    postSceneCommand:      { type: "string",                    test: "nonempty" },
-    postSceneReturn:       { type: "returnAction",              test: null },
-    preFrameCommand:       { type: "string",                    test: "nonempty" },
-    preFrameReturn:        { type: "returnAction",              test: null },
-    preSceneCommand:       { type: "string",                    test: "nonempty" },
-    preSceneReturn:        { type: "returnAction",              test: null },
-    previewEndSize:        { type: "int",                       test: ">0" },
-    previewStartSize:      { type: "int",                       test: ">0" },
-    quality:               { type: "int",                       test: "0-11" },
-    radiosityFileName:     { type: "string",                    test: "nonempty" },
-    radiosityFromFile:     { type: "string",                    test: "nonempty" },
-    radiosityToFile:       { type: "string",                    test: "nonempty" },
-    radiosityVainPretrace: { type: "boolean",                   test: null },
-    removeBounds:          { type: "boolean",                   test: null },
-    renderBlockSize:       { type: "int",                       test: "4-" },
-    renderBlockStep:       { type: "int",                       test: "1-" },
-    renderConsole:         { type: "boolean",                   test: null },
-    renderFile:            { type: "mixed(boolean|string)",     test: "nonempty" },
-    renderPattern:         { type: "int",                       test: "0-5" },
-    samplingMethod:        { type: "int",                       test: "1-2" },
-    splitUnions:           { type: "boolean",                   test: null },
-    startColumn:           { type: "int",                       test: "0-" },
-    startRow:              { type: "int",                       test: "0-" },
-    statisticConsole:      { type: "boolean",                   test: null },
-    statisticFile:         { type: "mixed(boolean|string)",     test: "nonempty" },
-    testAbort:             { type: "boolean",                   test: null },
-    testAbortCount:        { type: "int",                       test: "1-" },
-    userAbortCommand:      { type: "string",                    test: "nonempty" },
-    userAbortReturn:       { type: "returnAction",              test: null },
-    verbose:               { type: "boolean",                   test: null },
-    videoMode:             { type: "char",                      test: null },
-    warningConsole:        { type: "boolean",                   test: null },
-    warningFile:           { type: "mixed(boolean|string)",     test: "nonempty" },
-    warningLevel:          { type: "int(0|5|10)",               test: null },
-    width:                 { type: "int",                       test: ">0", default: 640 },
-    workThreads:           { type: "int",                       test: "1-512" },
-}
+ClassBuilder.prototype.ioDef = {
+    mutable: [
+        { name: "allConsole",             type: "boolean",                   test: null },
+        { name: "allFile",                type: "mixed(boolean|string)",     test: null },
+        { name: "antialias",              type: "boolean",                   test: null },
+        { name: "antialiasDepth",         type: "int",                       test: "1-9" },
+        { name: "antialiasGamma",         type: "float",                     test: null },
+        { name: "antialiasThreshold",     type: "float",                     test: ">=0" },
+        { name: "appendFile",             type: "boolean",                   test: null },
+        { name: "bitsPerColor",           type: "int",                       test: "5-16" },
+        { name: "bounding",               type: "boolean",                   test: null },
+        { name: "boundingMethod",         type: "int(1|2)",                  test: null },
+        { name: "boundingThreshold",      type: "int",                       test: ">=0" },
+        { name: "bspBaseAccessCost",      type: "float",                     test: null },
+        { name: "bspChildAccessCost",     type: "float",                     test: null },
+        { name: "bspIsectCost",           type: "float",                     test: null },
+        { name: "bspMaxDepth",            type: "int",                       test: ">0" },
+        { name: "bspMissChance",          type: "float",                     test: null },
+        { name: "continueTrace",          type: "boolean",                   test: null },
+        { name: "createIni",              type: "mixed(boolean|string)",     test: "nonempty" },
+        { name: "debugConsole",           type: "boolean",                   test: null },
+        { name: "debugFile",              type: "mixed(boolean|string)",     test: "nonempty" },
+        { name: "display",                type: "boolean",                   test: null },
+        { name: "displayGamma",           type: "mixed(float|'sRGB')",       test: null },
+        { name: "dither",                 type: "boolean",                   test: null },
+        { name: "ditherMethod",           type: "ditherType",                test: null },
+        { name: "endColumn",              type: "int",                       test: "0-" },
+        { name: "endRow",                 type: "int",                       test: "0-" },
+        { name: "exePath",                type: "string",                    test: "nonempty" },
+        { name: "fatalConsole",           type: "boolean",                   test: null },
+        { name: "fatalErrorCommand",      type: "string",                    test: "nonempty" },
+        { name: "fatalErrorReturn",       type: "returnAction",              test: null },
+        { name: "fatalFile",              type: "mixed(boolean|string)",     test: "nonempty" },
+        { name: "fileGamma",              type: "mixed(float|'sRGB')",       test: null },
+        { name: "height",                 type: "int",                       test: ">0", default: 480 },
+        { name: "highReproducibility",    type: "boolean",                   test: null },
+        { name: "includeHeader",          type: "string",                    test: "nonempty" },
+        { name: "inputFileName",          type: "string",                    test: "nonempty" },
+        { name: "jitter",                 type: "boolean",                   test: null },
+        { name: "jitterAmount",           type: "float",                     test: null },
+        { name: "libraryPath",            type: "string",                    test: "nonempty" },
+        { name: "maxImageBufferMemory",   type: "int",                       test: ">0" },
+        { name: "outputAlpha",            type: "boolean",                   test: null },
+        { name: "outputFileName",         type: "string",                    test: "nonempty" },
+        { name: "outputFileType",         type: "string(B|C|E|H|J|N|P|S|T)", test: null },
+        { name: "outputToFile",           type: "boolean",                   test: null },
+        { name: "palette",                type: "char",                      test: null },
+        { name: "pauseWhenDone",          type: "boolean",                   test: null },
+        { name: "postFrameCommand",       type: "string",                    test: "nonempty" },
+        { name: "postFrameReturn",        type: "returnAction",              test: null },
+        { name: "postSceneCommand",       type: "string",                    test: "nonempty" },
+        { name: "postSceneReturn",        type: "returnAction",              test: null },
+        { name: "preFrameCommand",        type: "string",                    test: "nonempty" },
+        { name: "preFrameReturn",         type: "returnAction",              test: null },
+        { name: "preSceneCommand",        type: "string",                    test: "nonempty" },
+        { name: "preSceneReturn",         type: "returnAction",              test: null },
+        { name: "previewEndSize",         type: "int",                       test: ">0" },
+        { name: "previewStartSize",       type: "int",                       test: ">0" },
+        { name: "quality",                type: "int",                       test: "0-11" },
+        { name: "radiosityFileName",      type: "string",                    test: "nonempty" },
+        { name: "radiosityFromFile",      type: "string",                    test: "nonempty" },
+        { name: "radiosityToFile",        type: "string",                    test: "nonempty" },
+        { name: "radiosityVainPretrace",  type: "boolean",                   test: null },
+        { name: "removeBounds",           type: "boolean",                   test: null },
+        { name: "renderBlockSize",        type: "int",                       test: "4-" },
+        { name: "renderBlockStep",        type: "int",                       test: "1-" },
+        { name: "renderConsole",          type: "boolean",                   test: null },
+        { name: "renderFile",             type: "mixed(boolean|string)",     test: "nonempty" },
+        { name: "renderPattern",          type: "int",                       test: "0-5" },
+        { name: "samplingMethod",         type: "int",                       test: "1-2" },
+        { name: "splitUnions",            type: "boolean",                   test: null },
+        { name: "startColumn",            type: "int",                       test: "0-" },
+        { name: "startRow",               type: "int",                       test: "0-" },
+        { name: "statisticConsole",       type: "boolean",                   test: null },
+        { name: "statisticFile",          type: "mixed(boolean|string)",     test: "nonempty" },
+        { name: "testAbort",              type: "boolean",                   test: null },
+        { name: "testAbortCount",         type: "int",                       test: "1-" },
+        { name: "userAbortCommand",       type: "string",                    test: "nonempty" },
+        { name: "userAbortReturn",        type: "returnAction",              test: null },
+        { name: "verbose",                type: "boolean",                   test: null },
+        { name: "videoMode",              type: "char",                      test: null },
+        { name: "warningConsole",         type: "boolean",                   test: null },
+        { name: "warningFile",            type: "mixed(boolean|string)",     test: "nonempty" },
+        { name: "warningLevel",           type: "int(0|5|10)",               test: null },
+        { name: "width",                  type: "int",                       test: ">0", default: 640 },
+        { name: "workThreads",            type: "int",                       test: "1-512" },
+    ]
+};
+
 //==============================================================================
 // Defines the types and validity tests for properties which are common to all
 // primitive objects.
 //==============================================================================
 
-var objCommon = {
-    active:           { type: "boolean",    test: null, default: true },  // CP internal/non-SDL
-    baseTransform:    { type: "Matrix",     test: null },  // CP internal/non-SDL
-    boundedBy:        { type: "Primitive",  test: null },
-    children:         { type: "@Primitive", test: null },  // FIXME: CP internal/non-SDL, list of other primitives for CSG objects
-    clippedBy:        { type: "Primitive",  test: null },
-    doubleIlluminate: { type: "boolean",    test: null },
-    finish:           { type: "Finish",     test: null },
-    frameBegin:       { type: "function",   test: null },
-    frameEnd:         { type: "function",   test: null },
-    hierarchy:        { type: "boolean",    test: null },
-    hollow:           { type: "boolean",    test: null },
-    id:               { type: "String",     test: "nonempty" }, // CP internal/non-SDL: unique identifier
-    interior:         { type: "Interior",   test: null },
-    inverse:          { type: "boolean",    test: null },
-    material:         { type: "Material",   test: null },
-    noImage:          { type: "boolean",    test: null },
-    noRadiosity:      { type: "boolean",    test: null },
-    noReflection:     { type: "boolean",    test: null },
-    normal:           { type: "VectorXYZ",  test: null },
-    noShadow:         { type: "boolean",    test: null },
-    parent:           { type: "Primitive",  test: null },  // CP internal/non-SDL: ref to parent CSG object
-    photons:          { type: "Photons",    test: null },
-    radiosity:        { type: "Radiosity",  test: null },
-    serial:           { type: "int",        test: null },  // CP internal/non-SDL, read-only
-    scene:            { type: "Scene",      test: null },  // CP internal/non-SDL, reference to current scene
-    sturm:            { type: "boolean",    test: null },
-    texture:          { type: "Texture",    test: null },
-    transform:        { type: "Matrix",     test: null },
-}
+ClassBuilder.prototype.objCommon = {
+    mutable: [
+        { name: "active",           type: "boolean",    test: null, default: true },  // CP internal/non-SDL
+        { name: "baseTransform",    type: "Matrix",     test: null },  // CP internal/non-SDL
+        { name: "boundedBy",        type: "Primitive",  test: null },
+        { name: "children",         type: "@Primitive", test: null },  // FIXME: CP internal/non-SDL, list of other primitives for CSG objects
+        { name: "clippedBy",        type: "Primitive",  test: null },
+        { name: "doubleIlluminate", type: "boolean",    test: null },
+        { name: "finish",           type: "Finish",     test: null },
+        { name: "frameBegin",       type: "function",   test: null },
+        { name: "frameEnd",         type: "function",   test: null },
+        { name: "hierarchy",        type: "boolean",    test: null },
+        { name: "hollow",           type: "boolean",    test: null },
+        { name: "id",               type: "String",     test: "nonempty" }, // CP internal/non-SDL: unique identifier
+        { name: "interior",         type: "Interior",   test: null },
+        { name: "inverse",          type: "boolean",    test: null },
+        { name: "material",         type: "Material",   test: null },
+        { name: "noImage",          type: "boolean",    test: null },
+        { name: "noRadiosity",      type: "boolean",    test: null },
+        { name: "noReflection",     type: "boolean",    test: null },
+        { name: "normal",           type: "VectorXYZ",  test: null },
+        { name: "noShadow",         type: "boolean",    test: null },
+        { name: "parent",           type: "Primitive",  test: null },  // CP internal/non-SDL: ref to parent CSG object
+        { name: "photons",          type: "Photons",    test: null },
+        { name: "radiosity",        type: "Radiosity",  test: null },
+        { name: "serial",           type: "int",        test: null },  // CP internal/non-SDL, read-only
+        { name: "scene",            type: "Scene",      test: null },  // CP internal/non-SDL, reference to current scene
+        { name: "sturm",            type: "boolean",    test: null },
+        { name: "texture",          type: "Texture",    test: null },
+        { name: "transform",        type: "Matrix",     test: null },
+    ]
+};
 
 //==============================================================================
 // Definitions of parameters for primitive geometric objects.
@@ -196,14 +214,14 @@ var objCommon = {
 // TODO: "mesh2" needs to be added once I understand it better.
 //==============================================================================
 
-var objDef = {
+ClassBuilder.prototype.objDef = {
 
     // TODO: need way to specify special methods, e.g., editing the components array
 
     blob: {
         fixed: { finite: true, solid: true, csg: false },
         mutable: [
-            { name: "components", type: "@mixed(Sphere|Cylinder)[1-]", required: true }
+            { name: "components", type: "@mixed(Sphere|Cylinder)[1-]", required: true },
             { name: "threshold", type: "float" },
             { name: "sturm",     type: "boolean" },
             { name: "hierarchy", type: "boolean" },
@@ -539,8 +557,8 @@ var objDef = {
         ],
     },
 
-    polynomial: {             // this will require better understanding of the
-        fixed: { finite: false,     // underlying maths than I currently have to validate solid: true, csg: false },
+    polynomial: {                                             // this will require better understanding of the
+        fixed: { finite: false, solid: true, csg: false },    // underlying maths than I currently have to validate
         mutable: [
             { name: "order", type: "int", required: true },
             { name: "coefficients", type: "@VectorXYZW", required: true },
@@ -595,12 +613,13 @@ var objDef = {
         ],
     },
 
-}
+};
+
 //==============================================================================
 // All (graphics) output file formats, mapped to textual descriptions.
 //==============================================================================
 
-var outputFile = {
+ClassBuilder.prototype.outputFile = {
     "B": "BMP",
     "C": "TGA, RLE compression",
     "E": "OpenEXR HDR",
@@ -611,13 +630,12 @@ var outputFile = {
     "S": "System default",
     "T": "TGA, uncompressed"
 };
+
 //==============================================================================
-// List of geometric primitive type names. All primitives are actually
-// instances of the Primitive prototype; their "type" in a CP context is the
-// name in their _type attribute.
+// List of geometric primitive type names.
 //==============================================================================
 
-var primitives = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
+ClassBuilder.prototype.primitives = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
     "cylinder", "difference", "disc", "heightField", "intersection",
     "isoSurface", "juliaFractal", "lathe", "lightSource", "merge", "mesh", "ovus",
     "parametric", "plane", "poly", "polygon", "polynomial", "prism", "quadric",
@@ -628,7 +646,7 @@ var primitives = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
 // All supported return actions mapped to textual descriptions.
 //==============================================================================
 
-var returnActions = {
+ClassBuilder.prototype.returnActions = {
     "I":  "ignore code",
     "S":  "skip one step",
     "A":  "all steps skipped",
@@ -648,11 +666,12 @@ var returnActions = {
     "!U": "[invert] generate a user abort in POV-Ray",
     "!F": "[invert] generate a fatal error in POV-Ray",
 };
+
 //==============================================================================
 // List of SDL keywords.
 //==============================================================================
 
-var sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accuracy",
+ClassBuilder.prototype.sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accuracy",
     "acos", "acosh", "adaptive", "adc_bailout", "agate", "agate_turb", "albedo",
     "all", "all_intersections", "alpha", "altitude", "always_sample", "ambient",
     "ambient_light", "angle", "aoi", "aperture", "append", "arc_angle",
@@ -735,11 +754,380 @@ var sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accuracy",
     "warp", "water_level", "waves", "while", "width", "wood", "wrinkles",
     "write", "x", "y", "yes", "z" ];
 
+
+
+
+//==============================================================================
+// Parses the type formats used in objDef, gsDef, ioDef, etc., and returns them
+// as a convenient data structure. The results are cached.
+//
+// The formats follow the basic form:
+//
+//     @name(alternative1|alternative2)[m-n]
+//
+// where
+//
+//     @ ....... if present, indicates that an array is expected
+//     [m] ..... array must have m elements
+//     [m-n] ... array must have between m and n elements, inclusive
+//     [m-] .... array must have at least m elements
+//     [-n] .... array may not have more than n elements
+//
+// In general, the name portion will either be capitalized, indicating a
+// geometric primitive, or lowercase, indicating a Javascript primitive type.
+// Currently used pfmt.alternatives are:
+//
+//     Geometric primitives: Box, Cylinder, Sphere, Triangle, and the Vector*
+//         pfmt.alternatives, as well as Primitive for any object with Primitive as its
+//         superclass. While not a primitive, SDL functions can be (and
+//         sometimes must be) wrapped in an SDLFunction object.
+//
+//     Javascript primitives: boolean, float, int (the result of
+//         Number.floor(someFloat), and string.
+//
+//     Other: mixed(...|...) indicates any of the parenthesized pfmt.alternatives are valid,
+//         e.g., mixed(string|SDLFunction). Single quoted "pfmt.alternatives" indicate a
+//         literal string.
+//
+//         string(...|...) indicates any of the parenthesized literal strings.
+//         Unlike with mixed(), the strings are not quoted.
+//
+//         list(a,b,...) indicates an array with the pfmt.alternatives listed the order in
+//         which they must be given.
+//
+// Many pfmt.alternatives can be submitted in various shorthand forms, parallel to their
+// initializers.
+//
+//     Vector* ... an array with the proper number of floats
+//
+// You may also pass a function returning the correct type, which will be
+// evaluated in the context of the object to which it is assigned. Such
+// functions should be free of side effects because they can be called at any
+// time by CephaloPOV, not just when outputting SDL.
+//
+// Finally, strings containing SDL functions may be passed (almost) anywhere it
+// is legal to do so in SDL. As a safeguard against type mishaps, those strings
+// should begin with '&', which will be stripped before generating output. Since
+// CephaloPOV does not presently contain an SDL parser and cannot therefore
+// execute SDL functions internally, there are two big caveats:
+//
+//     1. If the attribute in question is used in calculations while CephaloPOV
+//         is running, it will result in a fatal error.
+//
+//     2. CephaloPOV has no way of checking that the function returns the
+//        correct type or even if it is syntactically correct SDL.
+//
+//==============================================================================
+
+ClassBuilder.prototype.parseTypeFormat = function(fmt) {
+
+    if(this.__ptfCache === undefined) {
+        this.__ptfCache = { };
+    } else if(this.__ptfCache[fmt] !== undefined) {
+        return this.__ptfCache[fmt];
+    }
+
+
+    var result = { };
+
+    var m = fmt.match(/^(@?)([A-Za-z]+)(\(([^\)]+)\))?(\[([-0-9]+)\])?/);
+    if(!Array.isArray(m))
+        throw new Error("[TypeFormat]: Invalid type format \"" + fmt + "\"");
+
+    result.array        = m[1] == "@" ? true : false;
+    result.name         = m[2];
+    result.alternatives = m[4];
+    result.range        = m[6];
+    result.min          = null;
+    result.max          = null;
+    result.sequence     = null;
+
+    if(result.name == "list") {
+        result.sequence = result.alternatives.split(",");
+        result.alternatives = null;
+    } else if(result.alternatives !== undefined) {
+        result.alternatives = result.alternatives.split("|");
+    }
+
+    if(result.range) {
+        var m = result.range.match(/^([0-9]+)?(-?)([0-9]+)?/);
+        result.range = true;
+        if(m[2] == "-") {
+            result.min = m[1] === undefined ? -Infinity : parseInt(m[1]);
+            result.max = m[3] === undefined ? +Infinity : parseInt(m[3]);
+        } else {
+            result.min = m[1];
+            result.max = m[1];
+        }
+    } else {
+        result.range = false;
+    }
+
+    this.__ptfCache[fmt] = result;
+
+    return result;
+}
+
+
+//==============================================================================
+// Returns a natural-language description of the supplied (parsed) type format.
+//==============================================================================
+
+ClassBuilder.prototype.typeFormatDescription = function(fmt) {
+    var contents = [];
+
+    var initialVowels = "AEIOUaeiou";
+    if(typeof fmt == "string")
+        fmt = this.parseTypeFormat(fmt);
+
+    if(fmt.array) {
+        contents.push("an array of");
+        if(fmt.range) {
+            if(fmt.min == fmt.max) {
+                contents.push("exactly " + fmt.max);
+            } else if(fmt.min == -Infinity) {
+                contents.push("up to " + fmt.max);
+            } else if(fmt.max == +Infinity) {
+                contents.push("at least " + fmt.min);
+            } else {
+                contents.push(fmt.min + " to " + fmt.max);
+            }
+        }
+    }
+
+    if(fmt.name == "mixed") {
+
+        var tmp = fmt.alternatives.slice(0);
+        tmp[tmp.length - 1] = "or " + tmp[tmp.length - 1];
+
+        if(fmt.range) {
+            for(var i = 0; i < tmp.length; tmp[i] += "s", i++);
+        } else {
+            contents.push("a");
+        }
+
+        if(tmp.length > 2) {
+            contents.push(tmp.join(", "));
+        } else {
+            contents.push(tmp.join(" "));
+        }
+
+    } else if(fmt.name == "string") {
+        if(fmt.alternatives) {
+            if(fmt.range) {
+                contents.push("strings");
+            } else {
+                contents.push("a string");
+            }
+            contents.push("containing one of ('" + fmt.alternatives.join("', '") + "')");
+        } else {
+            contents.push("a string");
+        }
+
+    } else if(fmt.name == "list") {
+
+        contents.push("an array of the form [" + fmt.sequence.join(", ") + "]");
+
+    } else {
+
+        if(fmt.array) {
+            contents.push(fmt.name + "s");
+        } else {
+            contents.push((initialVowels.indexOf(fmt.name.substr(0, 1)) == -1 ? "a" : "an") + " " + fmt.name);
+        }
+
+    }
+
+    if(fmt.alternatives)
+        contents.push("set to one of (" + fmt.alternatives.join(", ") + ")");
+
+    return contents.join(" ");
+}
+
+
+//==============================================================================
+// Tests an input value against a type format of the sort used in objDef and its
+// siblings. If an error is found, it returns a string to include in the error
+// message. Otherwise, it returns false.
+//
+// And yes, it's a clusterfuck that needs refactoring, but it will work for now.
+//
+// TODO: Support for initializers, Primitive validator
+//
+//==============================================================================
+
+/* TODO Verify:
+
+
+Primitive
+SDLFunction
+mixed(Sphere|Box)
+mixed(string|SDLFunction)
+
+*/
+
+
+ClassBuilder.prototype.typeFormatTestError = function(fmt, val) {
+
+    if(val === null)
+        return false;
+
+    if(typeof fmt == "string")
+        var pfmt = this.parseTypeFormat(fmt);
+    else
+        var pfmt = fmt;
+
+    // Is this an Array, and if so, does it have the correct number of elements?
+
+    if(pfmt.array) {
+        if(!Array.isArray(val) || (pfmt.range && (val.length < pfmt.min || val.length > pfmt.max))) {
+            return true;
+        }
+    } else {
+        val = [ val ];
+    }
+
+    // Actual type and aggregate type tests ------------------------------------
+
+    if(pfmt.name == "float") {
+
+        if(pfmt.alternatives) {
+
+            for(var i = 0; i < pfmt.alternatives.length; i++)
+                pfmt.alternatives[i] = parseFloat(pfmt.alternatives[i]);
+
+            for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && (!this.isFloat(val[i]) || !this.inArray(pfmt.alternatives, val[i]))) {
+                    return true;
+                }
+            }
+
+        } else {
+
+            for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && !this.isFloat(val[i])) {
+                    return true;
+                }
+            }
+
+        }
+
+
+    } else if(pfmt.name == "int") {
+
+        if(pfmt.alternatives) {
+
+            for(var i = 0; i < pfmt.alternatives.length; i++)
+                pfmt.alternatives[i] = parseFloat(pfmt.alternatives[i]);
+
+            for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && (!this.isInt(val[i]) || !this.inArray(pfmt.alternatives, val[i]))) {
+                    return true;
+                }
+            }
+
+        } else {
+
+            for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && !this.isInt(val[i])) {
+                    return true;
+                }
+            }
+
+        }
+
+    } else if(pfmt.name == "string") {
+
+        if(pfmt.alternatives) {
+
+            for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && (typeof val[i] != "string" || !this.inArray(pfmt.alternatives, val[i]))) {
+                    return true;
+                }
+            }
+
+        } else {
+
+            for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && typeof val[i] != "string") {
+                    return true;
+                }
+            }
+
+        }
+
+	} else if(pfmt.name.substr(0, 6) == "Vector") {
+
+		    for(var i = 0; i < val.length; i++) {
+                if(!this.isFunction(val[i]) && val[i].type != pfmt.name) {
+                    return true;
+                }
+            }
+
+    } else if(pfmt.name == "mixed") {
+
+        for(var i = 0; i < val.length; i++) {
+            if(val[i] === null                                                                                // null is always valid as a way of emptying a property
+                || this.isFunction(val[i])                                                                    // Functions are always valid values
+                || (this.inArray(pfmt.alternatives, typeof val[i]))                                           // Okay if the value type matches one of the alternatives.
+                || (typeof val[i] == "string" && this.inArray(pfmt.alternatives, "'" + val[i] + "'"))         // Okay if we're looking for one of the string literals and the value matches
+                || (this.isInt(val[i]) && this.inArray(pfmt.alternatives, "int"))                             // Okay if we're looking for an int and the value is a whole number
+                || (this.isFloat(val[i]) && this.inArray(pfmt.alternatives, "float"))                         // Okay if we're looking for a float and the value is any number
+                || this.inArray(pfmt.alternatives, this.prototypeName(val[i]))                                // Okay if the value's prototype name matches one of the alternatives
+                || (val[i]._subtype !== undefined && (val[i]._subtype === null || this.inArray(pfmt.alternatives, val[i]._subtype))))  // Okay if the value is a Primitive and the subtype matches one of the alternatives
+                continue;
+            else
+                return true;
+        }
+
+    } else if(pfmt.name == "list") {
+
+        val = val[0];
+
+        for(var i = 0; i < val.length; i++) {
+            if((val[i] === null                                                                                                  // null is always valid as a way of emptying a property
+                || this.isFunction(val[i])                                                                                       // Functions are always valid values
+                || (pfmt.sequence[i].substr(0, 1) == "'" && val[i] == pfmt.sequence[i].substr(1, pfmt.sequence[i].length - 2))   // Okay if we're looking for one of the string literals and the value matches
+                || (pfmt.sequence[i] == typeof val[i])                                                                           // Okay if the value type matches
+                || (this.isInt(val[i]) && pfmt.sequence[i] == "int")                                                             // Okay if we're looking for an int and the value is a whole number
+                || (this.isFloat(val[i]) && pfmt.sequence[i] == "float")                                                         // Okay if we're looking for a float and the value is any number
+                || (pfmt.sequence[i] == this.prototypeName(val[i]))                                                              // Okay if the prototype matches
+                || (val[i]._subtype !== undefined && (val[i]._subtype === null || this.inArray(pfmt.alternatives, val[i]._subtype)))))  // Okay if it's a Primitive and the subtype matches
+                continue;
+            else
+                return true;
+        }
+
+    } else {
+
+        for(var i = 0; i < val.length; i++) {
+            if(val[i] === null                                       // null is always valid as a way of emptying a property
+                || this.isFunction(val[i])                           // Functions are always valid values
+                || (pfmt.name == typeof val[i])                      // Okay if the value type matches
+                || (pfmt.name == "int" && this.isInt(val[i]))        // Okay if we're looking for an int and the value is a whole number
+                || (pfmt.name == "float" && this.isFloat(val[i]))    // Okay if we're looking for a float and the value is any number
+                || (pfmt.name == "char" && typeof val[i] == "string" && val[i].length == 1) // Okay if we're looking for a char and the value is a single-character string
+                || (pfmt.name == "returnAction" && $CP.returnActions[val[i]] !== undefined) // Okay if a valid returnAction
+                || (pfmt.name == "ditherType" && $CP.ditherTypes[val[i]] !== undefined)     // Okay if a valid ditherType
+                || (val[i] && pfmt.name == this.prototypeName(val[i]))         // Okay if the prototype matches
+                || (val[i]._subtype !== undefined && (val[i]._subtype === null || this.inArray(pfmt.alternatives, val[i]._subtype))))   // Okay if it's a Primitive and the subtype matches
+                continue;
+            else
+                return true;
+        }
+
+    }
+
+    return false;
+}
+
+
+
 //==============================================================================
 // Outputs a string with stops * 4 spaces. Used in output formatting.
 //==============================================================================
 
-function tab(stops) {
+ClassBuilder.prototype.tab = function tab(stops) {
     if(stops)
         return new Array(stops).fill("    ").join("");
     else
@@ -747,21 +1135,43 @@ function tab(stops) {
 }
 
 
-//==============================================================================
-// The ClassBuilder object generates code for a JavaScript class from a set of
-// parameters.
-//==============================================================================
+//------------------------------------------------------------------------------
+// Returns validation code for use in toString().
+//------------------------------------------------------------------------------
 
-function ClassBuilder(name, superclass = null) {
-    this.name       = name;
-    this.superclass = null;
+ClassBuilder.prototype.validator = function(varname, type, stops) {
+	var pfmt = this.parseTypeFormat(type);
 }
 
 
+//==============================================================================
+// Returns the name of obj's prototype/class.
+//==============================================================================
+
+ClassBuilder.prototype.prototypeName = function(obj) {
+    return Object.getPrototypeOf(obj).constructor.name;
+}
+
+ClassBuilder.prototype.className = ClassBuilder.prototype.prototypeName;
+
+
+//==============================================================================
+// Returns the name of obj's base class.
+//==============================================================================
+
+ClassBuilder.prototype.baseClassName = function(obj) {
+    return Object.getPrototypeOf(obj.constructor).name;
+}
+
+
+//------------------------------------------------------------------------------
+// Generates source code for class.
+//------------------------------------------------------------------------------
+
 ClassBuilder.prototype.toString = function() {
     var src = [];
-    var tab1 = tab(1);
-    var tab2 = tab(2);
+    var tab1 = this.tab(1);
+    var tab2 = this.tab(2);
 
     // Class opening -----------------------------------------------------------
 
@@ -769,14 +1179,60 @@ ClassBuilder.prototype.toString = function() {
 
     // Constructor -------------------------------------------------------------
 
-    src.push(
-        tab1 + "constructor(...args) {\n"
-        + tab2 + "super(args);\n"
-        // TODO: custom code
-        + tab1 + "}\n";
-    );
+    src.push(tab1 + "constructor(objType, args) {\n"
+        + tab2 + "super(args);\n");
+
+    // Fixed properties --------------------------------------------------------
+
+    if(this.fixed) {
+        for(var i in this.fixed) {
+            src.push(tab2 + "this._" + i + " = " + this.fixed[i] + ";");
+        }
+    }
+
+    // Mutable properties ------------------------------------------------------
+
+    if(this.mutable) {
+        for(var i = 0; i < this.mutable.length; i++) {
+            if(this.mutable[i].type.substr(0, 1) == '@') {
+                var init = "[ ]";
+            } else {
+                var init = "null";
+            }
+            src.push(tab2 + "this._" + this.mutable[i].name + " = " + init + ";");
+        }
+    }
+
+    src.push(tab1 + "}\n");
 
     // Accessors and Mutators --------------------------------------------------
+
+    if(this.fixed) {
+        for(var i in this.fixed) {
+            src.push(
+                tab1 + "get " + i + "() {\n"
+                + tab2 + "return this._" + i + ";\n"
+                + tab1 + "}\n\n"
+                + tab1 + "set " + i + "(val) {\n"
+                + tab2 + "throw new TypeError(\"[" + this.name + "]: " + i + " is a read-only property.\");\n"
+                + tab1 + "}\n"
+            );
+        }
+    }
+
+    if(this.mutable) {
+        for(var i = 0; i < this.mutable.length; i++) {
+            var item = this.mutable[i];
+            src.push(
+                tab1 + "get " + item.name + "() {\n"
+                + tab2 + "return this._" + item.name + ";\n"
+                + tab1 + "}\n\n"
+                + tab1 + "set " + item.name + "(val) {\n"
+                + tab2 + "// TODO\n"
+                + tab1 + "}\n"
+            );
+        }
+    }
 
     // Class closing -----------------------------------------------------------
 
@@ -784,3 +1240,31 @@ ClassBuilder.prototype.toString = function() {
 
     return src.join("\n");
 }
+
+
+function allTypesAndTests() {
+    var types = { };
+    var tests = { };
+
+    var table = ClassBuilder.prototype.gsDef;
+    for(var section in table) {
+        var subset = table[section];
+        for(var i = 0; i < subset.length; i++) {
+            if(types[subset[i].type] === undefined) {
+                types[subset[i].type] = 1;
+            } else {
+                types[subset[i].type]++;
+            }
+            if(tests[subset[i].test] === undefined) {
+                tests[subset[i].test] = 1;
+            } else {
+                tests[subset[i].test]++;
+            }
+        }
+    }
+
+    console.log(types);
+    console.log(tests);
+}
+
+
