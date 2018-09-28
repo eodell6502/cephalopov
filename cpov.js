@@ -223,125 +223,125 @@ var cpov = {
     ioDef: {
         mutable: [
             {
-                name:  "allConsole", //             type: "boolean",                   test: null },
-                valid: "",
-                err:   "allConsole"
+                name:  "allConsole",
+                valid: "cpov.isBoolean(val)",
+                err:   "allConsole must be a boolean."
             }, {
-                name:  "allFile", //                type: "mixed(boolean|string)",     test: null },
-                valid: "",
-                err:   "allFile"
+                name:  "allFile",
+                valid: "cpov.isBoolean(val) || cpov.isNonEmptyString(val)",
+                err:   "allFile must be either a boolean or a non-empty string."
             }, {
-                name:  "antialias", //              type: "boolean",                   test: null },
-                valid: "",
-                err:   "antialias"
+                name:  "antialias",
+                valid: "cpov.isBoolean(val)",
+                err:   "antialias must be a boolean."
             }, {
-                name:  "antialiasDepth", //         type: "int",                       test: "1-9" },
-                valid: "",
-                err:   "antialiasDepth"
+                name:  "antialiasDepth",
+                valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 9)",
+                err:   "antialiasDepth must be an integer in the range 1-9."
             }, {
-                name:  "antialiasGamma", //         type: "float",                     test: null },
-                valid: "",
-                err:   "antialiasGamma"
+                name:  "antialiasGamma",
+                valid: "cpov.isFloat(val)",
+                err:   "antialiasGamma must be a float."
             }, {
-                name:  "antialiasThreshold", //     type: "float",                     test: ">=0" },
-                valid: "",
-                err:   "antialiasThreshold"
+                name:  "antialiasThreshold",
+                valid: "cpov.isFloat(val) && val >= 0",
+                err:   "antialiasThreshold must be a float greater than or equal to zero."
             }, {
-                name:  "appendFile", //             type: "boolean",                   test: null },
-                valid: "",
-                err:   "appendFile"
+                name:  "appendFile",
+                valid: "cpov.isBoolean(val)",
+                err:   "appendFile must be a boolean."
             }, {
-                name:  "bitsPerColor", //           type: "int",                       test: "5-16" },
-                valid: "",
-                err:   "bitsPerColor"
+                name:  "bitsPerColor",
+                valid: "cpov.isInt(val) && cpov.isWithin(5, 16)",
+                err:   "bitsPerColor must be an integer in the range 5-16."
             }, {
-                name:  "bounding", //               type: "boolean",                   test: null },
-                valid: "",
-                err:   "bounding"
+                name:  "bounding",
+                valid: "cpov.isBoolean(val)",
+                err:   "bounding must be a boolean."
             }, {
-                name:  "boundingMethod", //         type: "int(1|2)",                  test: null },
-                valid: "",
-                err:   "boundingMethod"
+                name:  "boundingMethod",
+                valid: "cpov.isInt(val) && cpov.isWithin(1, 2)",
+                err:   "boundingMethod must be either 1 or 2."
             }, {
-                name:  "boundingThreshold", //      type: "int",                       test: ">=0" },
-                valid: "",
-                err:   "boundingThreshold"
+                name:  "boundingThreshold",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "boundingThreshold must be an integer greater than or equal to zero."
             }, {
-                name:  "bspBaseAccessCost", //      type: "float",                     test: null },
-                valid: "",
-                err:   "bspBaseAccessCost"
+                name:  "bspBaseAccessCost",
+                valid: "cpov.isFloat(val)",
+                err:   "bspBaseAccessCost must be a float."
             }, {
-                name:  "bspChildAccessCost", //     type: "float",                     test: null },
-                valid: "",
-                err:   "bspChildAccessCost"
+                name:  "bspChildAccessCost",
+                valid: "cpov.isFloat(val)",
+                err:   "bspChildAccessCost must be a float."
             }, {
-                name:  "bspIsectCost", //           type: "float",                     test: null },
-                valid: "",
-                err:   "bspIsectCost"
+                name:  "bspIsectCost",
+                valid: "cpov.isFloat(val)",
+                err:   "bspIsectCost must be a float."
             }, {
-                name:  "bspMaxDepth", //            type: "int",                       test: ">0" },
-                valid: "",
-                err:   "bspMaxDepth"
+                name:  "bspMaxDepth",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "bspMaxDepth must be an integer greater than zero."
             }, {
-                name:  "bspMissChance", //          type: "float",                     test: null },
-                valid: "",
-                err:   "bspMissChance"
+                name:  "bspMissChance",
+                valid: "cpov.isFloat(val)",
+                err:   "bspMissChance must be a float."
             }, {
-                name:  "continueTrace", //          type: "boolean",                   test: null },
-                valid: "",
-                err:   "continueTrace"
+                name:  "continueTrace",
+                valid: "cpov.isBoolean(val)",
+                err:   "continueTrace must be a boolean"
             }, {
-                name:  "createIni", //              type: "mixed(boolean|string)",     test: "nonempty" },
-                valid: "",
-                err:   "createIni"
+                name:  "createIni",
+                valid: "cpov.isBoolean(val) || cpov.isNonEmptyString(val)",
+                err:   "createIni must be either a boolean or a non-empty string."
             }, {
-                name:  "debugConsole", //           type: "boolean",                   test: null },
-                valid: "",
-                err:   "debugConsole"
+                name:  "debugConsole",
+                valid: "cpov.isBoolean(val)",
+                err:   "debugConsole must be a boolean."
             }, {
-                name:  "debugFile", //              type: "mixed(boolean|string)",     test: "nonempty" },
-                valid: "",
-                err:   "debugFile"
+                name:  "debugFile",
+                valid: "cpov.isBoolean(val) || cpov.isNonEmptyString(val)",
+                err:   "debugFile must be either a boolean or a non-empty string."
             }, {
-                name:  "display", //                type: "boolean",                   test: null },
-                valid: "",
-                err:   "display"
+                name:  "display",
+                valid: "cpov.isBoolean(val)",
+                err:   "display must be a boolean"
             }, {
-                name:  "displayGamma", //           type: "mixed(float|'sRGB')",       test: null },
-                valid: "",
-                err:   "displayGamma"
+                name:  "displayGamma",
+                valid: "cpov.isFloat(val) || (cpov.isString(val) && val == 'sRGB')",
+                err:   "displayGamma must be either a float or the string 'sRGB'."
             }, {
-                name:  "dither", //                 type: "boolean",                   test: null },
-                valid: "",
-                err:   "dither"
+                name:  "dither",
+                valid: "cpov.isBoolean(val)",
+                err:   "dither must be a boolean."
             }, {
-                name:  "ditherMethod", //           type: "ditherType",                test: null },
-                valid: "",
-                err:   "ditherMethod"
+                name:  "ditherMethod",
+                valid: "cpov.isKey(val, cpov.ditherTypes)",
+                err:   "ditherMethod must be one of " + cpov.keysToTextList(cpov.ditherTypes) + "."
             }, {
-                name:  "endColumn", //              type: "int",                       test: "0-" },
-                valid: "",
-                err:   "endColumn"
+                name:  "endColumn",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "endColumn must be an integer greater than zero."
             }, {
-                name:  "endRow", //                 type: "int",                       test: "0-" },
-                valid: "",
-                err:   "endRow"
+                name:  "endRow",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "endRow must be an integer greater than zero."
             }, {
-                name:  "exePath", //                type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "exePath"
+                name:  "exePath",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "exePath must be a non-empty string."
             }, {
-                name:  "fatalConsole", //           type: "boolean",                   test: null },
-                valid: "",
-                err:   "fatalConsole"
+                name:  "fatalConsole",
+                valid: "cpov.isBoolean(val)",
+                err:   "fatalConsole must be a boolean."
             }, {
-                name:  "fatalErrorCommand", //      type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "fatalErrorCommand"
+                name:  "fatalErrorCommand",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "fatalErrorCommand must be a non-empty string."
             }, {
-                name:  "fatalErrorReturn", //       type: "returnAction",              test: null },
-                valid: "",
-                err:   "fatalErrorReturn"
+                name:  "fatalErrorReturn",
+                valid: "cpov.isKey(val, cpov.returnActions)",
+                err:   "fatalErrorReturn must be one of " + cpov.keysToTextList(cpov.returnActions) + "."
             }, {
                 name:  "fatalFile", //              type: "mixed(boolean|string)",     test: "nonempty" },
                 valid: "",
@@ -1983,6 +1983,16 @@ cpov.isClass = function(val, classname) {
 
 cpov.inheritsFrom = function(val, classname) {
     return Object.getPrototypeOf(val.constructor).name == classname ? true : false;
+}
+
+//==============================================================================
+
+cpov.keysToTextList = function(obj) {
+    var items = [ ];
+    for(var k in obj)
+        items.push(k);
+    items[items.length - 1] = "or " + items[items.length - 1];
+    return items.join(", ");
 }
 
 
