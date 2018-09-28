@@ -1,26 +1,5 @@
 var cpov = require("cpov.js");
 
-/*
-
-Generic rules:
-
-1. Any value can be replaced by a JavaScript function that returns the expected type.
-2. An SDL function (prefixed with '&') can be used for any value in CPov where it is legal in SDL.
-3. JS functions may return SDL functions (again, prefixed with '&')
-
-Caveats:
-
-1. SDL functions obviously can't be used in calculations at runtime in CPov.
-2. CPov exposes the details of the current frame -- frame number and which phase of the
-   frame process is active -- so that user functions can act accordingly.
-3. CPov may call user functions at any time to test their return values. They should
-   therefore be free of side effects. This only applies to object attributes. The pre- and
-   post- functions are only called at the appropriate times.
-
-
-
-
-*/
 
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of
