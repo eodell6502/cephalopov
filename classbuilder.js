@@ -1,5 +1,4 @@
-var cpov = require("cpov.js");
-
+var cpov    = require("./cpov.js").cpov;
 
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of
@@ -14,8 +13,20 @@ function ClassBuilder(name, fixed, mutable, superclass) {
 }
 
 
+//------------------------------------------------------------------------------
+// Produces comment divider lines up to 132 characters long.
+//------------------------------------------------------------------------------
 
+ClassBuilder.prototype.divider = function(stops, type, maxLength = 80) {
+    var line = {
+        "-": "//----------------------------------------------------------------------------------------------------------------------------------",
+        "=": "//=================================================================================================================================="
+    }
 
+    var tabs = cpov.tab(stops);
+
+    return tabs + line[type].substr(0, maxLength - tabs.length);
+}
 
 
 //------------------------------------------------------------------------------
@@ -24,11 +35,14 @@ function ClassBuilder(name, fixed, mutable, superclass) {
 
 ClassBuilder.prototype.toString = function() {
     var src = [];
-    var tab1 = this.tab(1);
-    var tab2 = this.tab(2);
+    var tab1 = cpov.tab(1);
+    var tab2 = cpov.tab(2);
+    var tab3 = cpov.tab(3);
 
     // Class opening -----------------------------------------------------------
 
+    src.push(this.divider(0, "="));
+    src.push(this.divider(0, "=") + "\n");
     src.push("class " + this.name + (this.superclass ? (" extends " + this.superclass) : '') + " {\n");
 
     // Constructor -------------------------------------------------------------
@@ -48,8 +62,8 @@ ClassBuilder.prototype.toString = function() {
 
     if(this.mutable) {
         for(var i = 0; i < this.mutable.length; i++) {
-            if(this.mutable[i].type.substr(0, 1) == '@') {
-                var init = "[ ]";
+            if(this.mutable[i].default) {
+                var init = this.mutable[i].default;
             } else {
                 var init = "null";
             }
@@ -64,9 +78,11 @@ ClassBuilder.prototype.toString = function() {
     if(this.fixed) {
         for(var i in this.fixed) {
             src.push(
-                tab1 + "get " + i + "() {\n"
+                this.divider(1, "-") + "\n\n"
+                + tab1 + "get " + i + "() {\n"
                 + tab2 + "return this._" + i + ";\n"
                 + tab1 + "}\n\n"
+                + this.divider(1, "-") + "\n\n"
                 + tab1 + "set " + i + "(val) {\n"
                 + tab2 + "throw new TypeError(\"[" + this.name + "]: " + i + " is a read-only property.\");\n"
                 + tab1 + "}\n"
@@ -78,11 +94,17 @@ ClassBuilder.prototype.toString = function() {
         for(var i = 0; i < this.mutable.length; i++) {
             var item = this.mutable[i];
             src.push(
-                tab1 + "get " + item.name + "() {\n"
+                this.divider(1, "-") + "\n\n"
+                + tab1 + "get " + item.name + "() {\n"
                 + tab2 + "return this._" + item.name + ";\n"
                 + tab1 + "}\n\n"
+                + this.divider(1, "-") + "\n\n"
                 + tab1 + "set " + item.name + "(val) {\n"
-                + tab2 + "// TODO\n"
+                + tab2 + "if(" + item.valid + ") {\n"
+                + tab3 + "this._" + item.name + " = val;\n"
+                + tab2 + "else {\n"
+                + tab3 + "cpov.error(\"fatal\", \"" + item.err + "\", \"" + this.name + "\");\n"
+                + tab2 + "}\n"
                 + tab1 + "}\n"
             );
         }
@@ -97,4 +119,5 @@ ClassBuilder.prototype.toString = function() {
 
 
 
-
+var test = new ClassBuilder("globalSettings", false, cpov.gsDef.mutable, false);
+console.log(test.toString());

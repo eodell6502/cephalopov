@@ -1,11 +1,25 @@
-exports.cpov = cpov;
-
 //==============================================================================
 // The cpov object contains all of the data structures and generic methods in
 // CephaloPOV that do not appear in other specialized classes.
 //==============================================================================
 
 var cpov = {
+
+    //--------------------------------------------------------------------------
+    // Internal global state.
+    //--------------------------------------------------------------------------
+
+    quietMode: false,
+    verbosity: 1,
+    debug:     true,
+
+    //--------------------------------------------------------------------------
+    // Module wrappers.
+    //--------------------------------------------------------------------------
+
+    fs:      require("fs"),
+    chalk:   require("chalk"),
+    process: require("process"),
 
     //--------------------------------------------------------------------------
     // Legal dither types mapped to textual descriptions.
@@ -26,49 +40,179 @@ var cpov = {
 
     gsDef: {
         mutable: [
-            { name: "adcBailout",              type: "float",                  test: ">=0"           },
-            { name: "ambientLight",            type: "VectorRGB|VectorSRGB",   test: null            },
-            { name: "assumedGamma",            type: "float",                  test: null            },
-            { name: "charset",                 type: "string(ascii|utf8|sys)", test: null            },
-            { name: "iridWavelength",          type: "VectorRGB|VectorSRGB",   test: null            },
-            { name: "maxIntersections",        type: "int",                    test: ">=0"           },
-            { name: "maxTraceLevel",           type: "int",                    test: ">=0"           },
-            { name: "mmPerUnit",               type: "float",                  test: ">=0"           },
-            { name: "noiseGenerator",          type: "int(1|2|3)",             test: null            },
-            { name: "numberOfWaves",           type: "int",                    test: ">=0"           },
-            { name: "photon",                  type: "boolean",                test: null            },
-            { name: "photonAdcBailout",        type: "float",                  test: ">=0"           },
-            { name: "photonAutostop",          type: "float",                  test: "unitInterval"  },
-            { name: "photonCount",             type: "int",                    test: ">=0"           },  // TODO: cannot be used with photonSpacing
-            { name: "photonExpandThresholds",  type: "list(float,int)",        test: null            },
-            { name: "photonGather",            type: "@int[2]",                test: [">=0", "a<=b"] },
-            { name: "photonJitter",            type: "float",                  test: null            },
-            { name: "photonLoadFile",          type: "string",                 test: "nonempty"      },
-            { name: "photonMaxTraceLevel",     type: "int",                    test: ">=0"           },
-            { name: "photonMedia",             type: "@float[2]",              test: null            },
-            { name: "photonRadius",            type: "@float[4]",              test: null            },
-            { name: "photonSaveFile",          type: "string",                 test: "nonempty"      },
-            { name: "photonSpacing",           type: "float",                  test: ">0"            }, // TODO: cannot be used with photonCount
-            { name: "radAdcBailout",           type: "float",                  test: null            },
-            { name: "radAlwaysSample",         type: "boolean",                test: null            },
-            { name: "radBrightness",           type: "float",                  test: null            },
-            { name: "radCount",                type: "@int[1-2]",              test: ">=1"           },
-            { name: "radErrorBound",           type: "float",                  test: null            },
-            { name: "radGrayThreshold",        type: "float",                  test: "unitInterval"  },
-            { name: "radiosity",               type: "boolean",                test: null            },
-            { name: "radLowErrorFactor",       type: "float",                  test: null            },
-            { name: "radMaximumReuse",         type: "float",                  test: null            },
-            { name: "radMaxSample",            type: "float",                  test: null            },
-            { name: "radMinimumReuse",         type: "float",                  test: null            },
-            { name: "radNearestCount",         type: "int",                    test: "1-20"          },
-            { name: "radNormal",               type: "boolean",                test: null            },
-            { name: "radPretraceEnd",          type: "float",                  test: "unitInterval"  },
-            { name: "radPretraceStart",        type: "float",                  test: "unitInterval"  },
-            { name: "radRecursionLimit",       type: "int",                    test: "1-20"          },
-            { name: "radSubsurface",           type: "boolean",                test: null            },
-            { name: "subRadiosity",            type: "boolean",                test: null            },
-            { name: "subSamples",              type: "@int[2]",                test: null            },
-            { name: "subsurface",              type: "boolean",                test: null            },
+            {
+                name:  "adcBailout",
+                valid: "cpov.isFloat(val) && val >= 0",
+                err:   "adcBailout must be a float greater than or equal to zero."
+            }, {
+                name:  "ambientLight",
+                valid: "cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB')",
+                err:   "ambientLight must be a VectorRGB or VectorSRGB."
+            }, {
+                name:  "assumedGamma",
+                valid: "cpov.isFloat(val)",
+                err:   "assumedGamma must be a float."
+            }, {
+                name:  "charset",
+                valid: "cpov.isInArray(val, ['ascii', 'utf8', 'sys'])",
+                err:   "charset must be one of 'ascii', 'utf8', or 'sys'."
+            }, {
+                name:  "iridWavelength",
+                valid: "cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB')",
+                err:   "iridWavelength must be a VectorRGB or VectorSRGB"
+            }, {
+                name:  "maxIntersections",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "maxIntersections must be an integer greater than or equal to zero."
+            }, {
+                name:  "maxTraceLevel",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "maxTraceLevel must be an integer greater than or equal to zero."
+            }, {
+                name:  "mmPerUnit",
+                valid: "cpov.isFloat(val) && val >= 0",
+                err:   "mmPerUnit must be a float greater than or equal to zero."
+            }, {
+                name:  "noiseGenerator",
+                valid: "cpov.isInt(val) && cpov.inArray(val, [1, 2, 3])",
+                err:   "noiseGenerator must be an integer and one of 1, 2, or 3."
+            }, {
+                name:  "numberOfWaves",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "numberOfWaves must be an integer greater than or equal to zero."
+            }, {
+                name:  "photon",
+                valid: "cpov.isBoolean(val)",
+                err:   "photon must be a boolean."
+            }, {
+                name:  "photonAdcBailout",
+                valid: "cpov.isFloat(val) && val >= 0",
+                err:   "photonAdcBailout must be a float greater than or equal to zero."
+            }, {
+                name:  "photonAutostop",
+                valid: "cpov.isFloat(val) && cpov.within(val, 0, 1)",
+                err:   "photonAutostop must be a float within the unit interval (0.0 - 1.0)"
+            }, {
+                name:  "photonCount",                                                                          // TODO: cannot be used with photonSpacing
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "photonCount must be an integer greater than or equal to zero"
+            }, {
+                name:  "photonExpandThresholds",
+                valid: "Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isInt(val[1])",
+                err:   "photonExpandThresholds must be an array consisting of a float and and integer."
+            }, {
+                name:  "photonGather",
+                valid: "cpov.isArrayOfInts(val, 2, 2) && val[0] >= 0 && val[1] >= 0 && val[0] <= val[1]",
+                err:   "photonGather must be an array of two integers greater than zero in ascending order."
+            }, {
+                name:  "photonJitter",
+                valid: "cpov.isFloat(val)",
+                err:   "photonJitter must be a float."
+            }, {
+                name:  "photonLoadFile",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "photonLoadFile must be a non-empty string."
+            }, {
+                name:  "photonMaxTraceLevel",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "photonMaxTraceLevel must be an integer greater than or equal to zero."
+            }, {
+                name:  "photonMedia",
+                valid: "cpov.isArrayOfFloats(val, 2, 2)",
+                err:   "photonMedia must be an array of two floats."
+            }, {
+                name:  "photonRadius", //            type: "@float[4]",              test: null            },
+                valid: "cpov.isArrayOfFloats(val, 4, 4)",
+                err:   "photonRadius must be an array of four floats."
+            }, {
+                name:  "photonSaveFile", //          type: "string",                 test: "nonempty"      },
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "photonSaveFile must be a non-empty string."
+            }, {
+                name:  "photonSpacing",                                                                       // TODO: cannot be used with photonCount
+                valid: "cpov.isFloat(val) && val > 0",
+                err:   "photonSpacing must be a float greater than zero."
+            }, {
+                name:  "radAdcBailout",
+                valid: "cpov.isFloat(val)",
+                err:   "radAdcBailout must be a float."
+            }, {
+                name:  "radAlwaysSample",
+                valid: "cpov.isBoolean(val)",
+                err:   "radAlwaysSample must be a boolean."
+            }, {
+                name:  "radBrightness",
+                valid: "cpov.isFloat(val)",
+                err:   "radBrightness must be a float."
+            }, {
+                name:  "radCount",
+                valid: "cpov.isArrayOfInts(val, 1, 2) && val[0] >= 1 && (val[1] === undefined || val[1] >= 1)",
+                err:   "radCount must be an array of one or two integers, both of which must be greater than or equal to one."
+            }, {
+                name:  "radErrorBound",
+                valid: "cpov.isFloat(val)",
+                err:   "radErrorBound must be a float."
+            }, {
+                name:  "radGrayThreshold",
+                valid: "cpov.isFloat(val) && cpov.isWithin(val, 0, 1)",
+                err:   "radGrayThreshold must be a float in the unit interval (0.0 - 1.0)."
+            }, {
+                name:  "radiosity",
+                valid: "cpov.isBoolean(val)",
+                err:   "radiosity must be a boolean."
+            }, {
+                name:  "radLowErrorFactor",
+                valid: "cpov.isFloat(val)",
+                err:   "radLowErrorFactor must be a float."
+            }, {
+                name:  "radMaximumReuse",
+                valid: "cpov.isFloat(val)",
+                err:   "radMaximumReuse must be a float."
+            }, {
+                name:  "radMaxSample",
+                valid: "cpov.isFloat(val)",
+                err:   "radMaxSample must be a float."
+            }, {
+                name:  "radMinimumReuse",
+                valid: "cpov.isFloat(val)",
+                err:   "radMinimumReuse must be a float."
+            }, {
+                name:  "radNearestCount",
+                valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 20)",
+                err:   "radNearestCount must be an integer in the range 1-20."
+            }, {
+                name:  "radNormal",
+                valid: "cpov.isBoolean(val)",
+                err:   "radNormal must be a boolean."
+            }, {
+                name:  "radPretraceEnd",
+                valid: "cpov.isFloat(val) && cpov.isWithin(0, 1)",
+                err:   "radPretraceEnd must be a float in the unit interval (0.0 - 1.0)"
+            }, {
+                name:  "radPretraceStart",
+                valid: "cpov.isFloat(val) && cpov.isWithin(0, 1)",
+                err:   "radPretraceStart must be a float in the unit interval (0.0 - 1.0)"
+            }, {
+                name:  "radRecursionLimit",
+                valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 20).",
+                err:   "radRecursionLimit must be an integer in the range 1-20."
+            }, {
+                name:  "radSubsurface",
+                valid: "cpov.isBoolean(val)",
+                err:   "radSubsurface must be a boolean."
+            }, {
+                name:  "subRadiosity",
+                valid: "cpov.isBoolean(val)",
+                err:   "subRadiosity must be a boolean"
+            }, {
+                name:  "subSamples",
+                valid: "cpov.isArrayOfInts(val, 2, 2)",
+                err:   "subSamples must be an array of two integers."
+            }, {
+                name:  "subsurface",
+                valid: "cpov.isBoolean(val)",
+                err:   "subsurface must be a boolean."
+            }
         ]
     },
 
@@ -78,90 +222,343 @@ var cpov = {
 
     ioDef: {
         mutable: [
-            { name: "allConsole",             type: "boolean",                   test: null },
-            { name: "allFile",                type: "mixed(boolean|string)",     test: null },
-            { name: "antialias",              type: "boolean",                   test: null },
-            { name: "antialiasDepth",         type: "int",                       test: "1-9" },
-            { name: "antialiasGamma",         type: "float",                     test: null },
-            { name: "antialiasThreshold",     type: "float",                     test: ">=0" },
-            { name: "appendFile",             type: "boolean",                   test: null },
-            { name: "bitsPerColor",           type: "int",                       test: "5-16" },
-            { name: "bounding",               type: "boolean",                   test: null },
-            { name: "boundingMethod",         type: "int(1|2)",                  test: null },
-            { name: "boundingThreshold",      type: "int",                       test: ">=0" },
-            { name: "bspBaseAccessCost",      type: "float",                     test: null },
-            { name: "bspChildAccessCost",     type: "float",                     test: null },
-            { name: "bspIsectCost",           type: "float",                     test: null },
-            { name: "bspMaxDepth",            type: "int",                       test: ">0" },
-            { name: "bspMissChance",          type: "float",                     test: null },
-            { name: "continueTrace",          type: "boolean",                   test: null },
-            { name: "createIni",              type: "mixed(boolean|string)",     test: "nonempty" },
-            { name: "debugConsole",           type: "boolean",                   test: null },
-            { name: "debugFile",              type: "mixed(boolean|string)",     test: "nonempty" },
-            { name: "display",                type: "boolean",                   test: null },
-            { name: "displayGamma",           type: "mixed(float|'sRGB')",       test: null },
-            { name: "dither",                 type: "boolean",                   test: null },
-            { name: "ditherMethod",           type: "ditherType",                test: null },
-            { name: "endColumn",              type: "int",                       test: "0-" },
-            { name: "endRow",                 type: "int",                       test: "0-" },
-            { name: "exePath",                type: "string",                    test: "nonempty" },
-            { name: "fatalConsole",           type: "boolean",                   test: null },
-            { name: "fatalErrorCommand",      type: "string",                    test: "nonempty" },
-            { name: "fatalErrorReturn",       type: "returnAction",              test: null },
-            { name: "fatalFile",              type: "mixed(boolean|string)",     test: "nonempty" },
-            { name: "fileGamma",              type: "mixed(float|'sRGB')",       test: null },
-            { name: "height",                 type: "int",                       test: ">0", default: 480 },
-            { name: "highReproducibility",    type: "boolean",                   test: null },
-            { name: "includeHeader",          type: "string",                    test: "nonempty" },
-            { name: "inputFileName",          type: "string",                    test: "nonempty" },
-            { name: "jitter",                 type: "boolean",                   test: null },
-            { name: "jitterAmount",           type: "float",                     test: null },
-            { name: "libraryPath",            type: "string",                    test: "nonempty" },
-            { name: "maxImageBufferMemory",   type: "int",                       test: ">0" },
-            { name: "outputAlpha",            type: "boolean",                   test: null },
-            { name: "outputFileName",         type: "string",                    test: "nonempty" },
-            { name: "outputFileType",         type: "string(B|C|E|H|J|N|P|S|T)", test: null },
-            { name: "outputToFile",           type: "boolean",                   test: null },
-            { name: "palette",                type: "char",                      test: null },
-            { name: "pauseWhenDone",          type: "boolean",                   test: null },
-            { name: "postFrameCommand",       type: "string",                    test: "nonempty" },
-            { name: "postFrameReturn",        type: "returnAction",              test: null },
-            { name: "postSceneCommand",       type: "string",                    test: "nonempty" },
-            { name: "postSceneReturn",        type: "returnAction",              test: null },
-            { name: "preFrameCommand",        type: "string",                    test: "nonempty" },
-            { name: "preFrameReturn",         type: "returnAction",              test: null },
-            { name: "preSceneCommand",        type: "string",                    test: "nonempty" },
-            { name: "preSceneReturn",         type: "returnAction",              test: null },
-            { name: "previewEndSize",         type: "int",                       test: ">0" },
-            { name: "previewStartSize",       type: "int",                       test: ">0" },
-            { name: "quality",                type: "int",                       test: "0-11" },
-            { name: "radiosityFileName",      type: "string",                    test: "nonempty" },
-            { name: "radiosityFromFile",      type: "string",                    test: "nonempty" },
-            { name: "radiosityToFile",        type: "string",                    test: "nonempty" },
-            { name: "radiosityVainPretrace",  type: "boolean",                   test: null },
-            { name: "removeBounds",           type: "boolean",                   test: null },
-            { name: "renderBlockSize",        type: "int",                       test: "4-" },
-            { name: "renderBlockStep",        type: "int",                       test: "1-" },
-            { name: "renderConsole",          type: "boolean",                   test: null },
-            { name: "renderFile",             type: "mixed(boolean|string)",     test: "nonempty" },
-            { name: "renderPattern",          type: "int",                       test: "0-5" },
-            { name: "samplingMethod",         type: "int",                       test: "1-2" },
-            { name: "splitUnions",            type: "boolean",                   test: null },
-            { name: "startColumn",            type: "int",                       test: "0-" },
-            { name: "startRow",               type: "int",                       test: "0-" },
-            { name: "statisticConsole",       type: "boolean",                   test: null },
-            { name: "statisticFile",          type: "mixed(boolean|string)",     test: "nonempty" },
-            { name: "testAbort",              type: "boolean",                   test: null },
-            { name: "testAbortCount",         type: "int",                       test: "1-" },
-            { name: "userAbortCommand",       type: "string",                    test: "nonempty" },
-            { name: "userAbortReturn",        type: "returnAction",              test: null },
-            { name: "verbose",                type: "boolean",                   test: null },
-            { name: "videoMode",              type: "char",                      test: null },
-            { name: "warningConsole",         type: "boolean",                   test: null },
-            { name: "warningFile",            type: "mixed(boolean|string)",     test: "nonempty" },
-            { name: "warningLevel",           type: "int(0|5|10)",               test: null },
-            { name: "width",                  type: "int",                       test: ">0", default: 640 },
-            { name: "workThreads",            type: "int",                       test: "1-512" },
+            {
+                name:  "allConsole", //             type: "boolean",                   test: null },
+                valid: "",
+                err:   "allConsole"
+            }, {
+                name:  "allFile", //                type: "mixed(boolean|string)",     test: null },
+                valid: "",
+                err:   "allFile"
+            }, {
+                name:  "antialias", //              type: "boolean",                   test: null },
+                valid: "",
+                err:   "antialias"
+            }, {
+                name:  "antialiasDepth", //         type: "int",                       test: "1-9" },
+                valid: "",
+                err:   "antialiasDepth"
+            }, {
+                name:  "antialiasGamma", //         type: "float",                     test: null },
+                valid: "",
+                err:   "antialiasGamma"
+            }, {
+                name:  "antialiasThreshold", //     type: "float",                     test: ">=0" },
+                valid: "",
+                err:   "antialiasThreshold"
+            }, {
+                name:  "appendFile", //             type: "boolean",                   test: null },
+                valid: "",
+                err:   "appendFile"
+            }, {
+                name:  "bitsPerColor", //           type: "int",                       test: "5-16" },
+                valid: "",
+                err:   "bitsPerColor"
+            }, {
+                name:  "bounding", //               type: "boolean",                   test: null },
+                valid: "",
+                err:   "bounding"
+            }, {
+                name:  "boundingMethod", //         type: "int(1|2)",                  test: null },
+                valid: "",
+                err:   "boundingMethod"
+            }, {
+                name:  "boundingThreshold", //      type: "int",                       test: ">=0" },
+                valid: "",
+                err:   "boundingThreshold"
+            }, {
+                name:  "bspBaseAccessCost", //      type: "float",                     test: null },
+                valid: "",
+                err:   "bspBaseAccessCost"
+            }, {
+                name:  "bspChildAccessCost", //     type: "float",                     test: null },
+                valid: "",
+                err:   "bspChildAccessCost"
+            }, {
+                name:  "bspIsectCost", //           type: "float",                     test: null },
+                valid: "",
+                err:   "bspIsectCost"
+            }, {
+                name:  "bspMaxDepth", //            type: "int",                       test: ">0" },
+                valid: "",
+                err:   "bspMaxDepth"
+            }, {
+                name:  "bspMissChance", //          type: "float",                     test: null },
+                valid: "",
+                err:   "bspMissChance"
+            }, {
+                name:  "continueTrace", //          type: "boolean",                   test: null },
+                valid: "",
+                err:   "continueTrace"
+            }, {
+                name:  "createIni", //              type: "mixed(boolean|string)",     test: "nonempty" },
+                valid: "",
+                err:   "createIni"
+            }, {
+                name:  "debugConsole", //           type: "boolean",                   test: null },
+                valid: "",
+                err:   "debugConsole"
+            }, {
+                name:  "debugFile", //              type: "mixed(boolean|string)",     test: "nonempty" },
+                valid: "",
+                err:   "debugFile"
+            }, {
+                name:  "display", //                type: "boolean",                   test: null },
+                valid: "",
+                err:   "display"
+            }, {
+                name:  "displayGamma", //           type: "mixed(float|'sRGB')",       test: null },
+                valid: "",
+                err:   "displayGamma"
+            }, {
+                name:  "dither", //                 type: "boolean",                   test: null },
+                valid: "",
+                err:   "dither"
+            }, {
+                name:  "ditherMethod", //           type: "ditherType",                test: null },
+                valid: "",
+                err:   "ditherMethod"
+            }, {
+                name:  "endColumn", //              type: "int",                       test: "0-" },
+                valid: "",
+                err:   "endColumn"
+            }, {
+                name:  "endRow", //                 type: "int",                       test: "0-" },
+                valid: "",
+                err:   "endRow"
+            }, {
+                name:  "exePath", //                type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "exePath"
+            }, {
+                name:  "fatalConsole", //           type: "boolean",                   test: null },
+                valid: "",
+                err:   "fatalConsole"
+            }, {
+                name:  "fatalErrorCommand", //      type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "fatalErrorCommand"
+            }, {
+                name:  "fatalErrorReturn", //       type: "returnAction",              test: null },
+                valid: "",
+                err:   "fatalErrorReturn"
+            }, {
+                name:  "fatalFile", //              type: "mixed(boolean|string)",     test: "nonempty" },
+                valid: "",
+                err:   "fatalFile"
+            }, {
+                name:  "fileGamma", //              type: "mixed(float|'sRGB')",       test: null },
+                valid: "",
+                err:   "fileGamma"
+            }, {
+                name:  "height", //                 type: "int",                       test: ">0", default: 480 },
+                valid: "",
+                err:   "height"
+            }, {
+                name:  "highReproducibility", //    type: "boolean",                   test: null },
+                valid: "",
+                err:   "highReproducibility"
+            }, {
+                name:  "includeHeader", //          type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "includeHeader"
+            }, {
+                name:  "inputFileName", //          type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "inputFileName"
+            }, {
+                name:  "jitter", //                 type: "boolean",                   test: null },
+                valid: "",
+                err:   "jitter"
+            }, {
+                name:  "jitterAmount", //           type: "float",                     test: null },
+                valid: "",
+                err:   "jitterAmount"
+            }, {
+                name:  "libraryPath", //            type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "libraryPath"
+            }, {
+                name:  "maxImageBufferMemory", //   type: "int",                       test: ">0" },
+                valid: "",
+                err:   "maxImageBufferMemory"
+            }, {
+                name:  "outputAlpha", //            type: "boolean",                   test: null },
+                valid: "",
+                err:   "outputAlpha"
+            }, {
+                name:  "outputFileName", //         type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "outputFileName"
+            }, {
+                name:  "outputFileType", //         type: "string(B|C|E|H|J|N|P|S|T)", test: null },
+                valid: "",
+                err:   "outputFileType"
+            }, {
+                name:  "outputToFile", //           type: "boolean",                   test: null },
+                valid: "",
+                err:   "outputToFile"
+            }, {
+                name:  "palette", //                type: "char",                      test: null },
+                valid: "",
+                err:   "palette"
+            }, {
+                name:  "pauseWhenDone", //          type: "boolean",                   test: null },
+                valid: "",
+                err:   "pauseWhenDone"
+            }, {
+                name:  "postFrameCommand", //       type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "postFrameCommand"
+            }, {
+                name:  "postFrameReturn", //        type: "returnAction",              test: null },
+                valid: "",
+                err:   "postFrameReturn"
+            }, {
+                name:  "postSceneCommand", //       type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "postSceneCommand"
+            }, {
+                name:  "postSceneReturn", //        type: "returnAction",              test: null },
+                valid: "",
+                err:   "postSceneReturn"
+            }, {
+                name:  "preFrameCommand", //        type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "preFrameCommand"
+            }, {
+                name:  "preFrameReturn", //         type: "returnAction",              test: null },
+                valid: "",
+                err:   "preFrameReturn"
+            }, {
+                name:  "preSceneCommand", //        type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "preSceneCommand"
+            }, {
+                name:  "preSceneReturn", //         type: "returnAction",              test: null },
+                valid: "",
+                err:   "preSceneReturn"
+            }, {
+                name:  "previewEndSize", //         type: "int",                       test: ">0" },
+                valid: "",
+                err:   "previewEndSize"
+            }, {
+                name:  "previewStartSize", //       type: "int",                       test: ">0" },
+                valid: "",
+                err:   "previewStartSize"
+            }, {
+                name:  "quality", //                type: "int",                       test: "0-11" },
+                valid: "",
+                err:   "quality"
+            }, {
+                name:  "radiosityFileName", //      type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "radiosityFileName"
+            }, {
+                name:  "radiosityFromFile", //      type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "radiosityFromFile"
+            }, {
+                name:  "radiosityToFile", //        type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "radiosityToFile"
+            }, {
+                name:  "radiosityVainPretrace", //  type: "boolean",                   test: null },
+                valid: "",
+                err:   "radiosityVainPretrace"
+            }, {
+                name:  "removeBounds", //           type: "boolean",                   test: null },
+                valid: "",
+                err:   "removeBounds"
+            }, {
+                name:  "renderBlockSize", //        type: "int",                       test: "4-" },
+                valid: "",
+                err:   "renderBlockSize"
+            }, {
+                name:  "renderBlockStep", //        type: "int",                       test: "1-" },
+                valid: "",
+                err:   "renderBlockStep"
+            }, {
+                name:  "renderConsole", //          type: "boolean",                   test: null },
+                valid: "",
+                err:   "renderConsole"
+            }, {
+                name:  "renderFile", //             type: "mixed(boolean|string)",     test: "nonempty" },
+                valid: "",
+                err:   "renderFile"
+            }, {
+                name:  "renderPattern", //          type: "int",                       test: "0-5" },
+                valid: "",
+                err:   "renderPattern"
+            }, {
+                name:  "samplingMethod", //         type: "int",                       test: "1-2" },
+                valid: "",
+                err:   "samplingMethod"
+            }, {
+                name:  "splitUnions", //            type: "boolean",                   test: null },
+                valid: "",
+                err:   "splitUnions"
+            }, {
+                name:  "startColumn", //            type: "int",                       test: "0-" },
+                valid: "",
+                err:   "startColumn"
+            }, {
+                name:  "startRow", //               type: "int",                       test: "0-" },
+                valid: "",
+                err:   "startRow"
+            }, {
+                name:  "statisticConsole", //       type: "boolean",                   test: null },
+                valid: "",
+                err:   "statisticConsole"
+            }, {
+                name:  "statisticFile", //          type: "mixed(boolean|string)",     test: "nonempty" },
+                valid: "",
+                err:   "statisticFile"
+            }, {
+                name:  "testAbort", //              type: "boolean",                   test: null },
+                valid: "",
+                err:   "testAbort"
+            }, {
+                name:  "testAbortCount", //         type: "int",                       test: "1-" },
+                valid: "",
+                err:   "testAbortCount"
+            }, {
+                name:  "userAbortCommand", //       type: "string",                    test: "nonempty" },
+                valid: "",
+                err:   "userAbortCommand"
+            }, {
+                name:  "userAbortReturn", //        type: "returnAction",              test: null },
+                valid: "",
+                err:   "userAbortReturn"
+            }, {
+                name:  "verbose", //                type: "boolean",                   test: null },
+                valid: "",
+                err:   "verbose"
+            }, {
+                name:  "videoMode", //              type: "char",                      test: null },
+                valid: "",
+                err:   "videoMode"
+            }, {
+                name:  "warningConsole", //         type: "boolean",                   test: null },
+                valid: "",
+                err:   "warningConsole"
+            }, {
+                name:  "warningFile", //            type: "mixed(boolean|string)",     test: "nonempty" },
+                valid: "",
+                err:   "warningFile"
+            }, {
+                name:  "warningLevel", //           type: "int(0|5|10)",               test: null },
+                valid: "",
+                err:   "warningLevel"
+            }, {
+                name:  "width", //                  type: "int",                       test: ">0", default: 640 },
+                valid: "",
+                err:   "width"
+            }, {
+                name:  "workThreads", //            type: "int",                       test: "1-512" },
+                valid: "",
+                err:   "workThreads"
+            }
         ]
     },
 
@@ -172,34 +569,119 @@ var cpov = {
 
     objCommon: {
         mutable: [
-            { name: "active",           type: "boolean",    test: null, default: true },  // CP internal/non-SDL
-            { name: "baseTransform",    type: "Matrix",     test: null },  // CP internal/non-SDL
-            { name: "boundedBy",        type: "Primitive",  test: null },
-            { name: "children",         type: "@Primitive", test: null },  // FIXME: CP internal/non-SDL, list of other primitives for CSG objects
-            { name: "clippedBy",        type: "Primitive",  test: null },
-            { name: "doubleIlluminate", type: "boolean",    test: null },
-            { name: "finish",           type: "Finish",     test: null },
-            { name: "frameBegin",       type: "function",   test: null },
-            { name: "frameEnd",         type: "function",   test: null },
-            { name: "hierarchy",        type: "boolean",    test: null },
-            { name: "hollow",           type: "boolean",    test: null },
-            { name: "id",               type: "String",     test: "nonempty" }, // CP internal/non-SDL: unique identifier
-            { name: "interior",         type: "Interior",   test: null },
-            { name: "inverse",          type: "boolean",    test: null },
-            { name: "material",         type: "Material",   test: null },
-            { name: "noImage",          type: "boolean",    test: null },
-            { name: "noRadiosity",      type: "boolean",    test: null },
-            { name: "noReflection",     type: "boolean",    test: null },
-            { name: "normal",           type: "VectorXYZ",  test: null },
-            { name: "noShadow",         type: "boolean",    test: null },
-            { name: "parent",           type: "Primitive",  test: null },  // CP internal/non-SDL: ref to parent CSG object
-            { name: "photons",          type: "Photons",    test: null },
-            { name: "radiosity",        type: "Radiosity",  test: null },
-            { name: "serial",           type: "int",        test: null },  // CP internal/non-SDL, read-only
-            { name: "scene",            type: "Scene",      test: null },  // CP internal/non-SDL, reference to current scene
-            { name: "sturm",            type: "boolean",    test: null },
-            { name: "texture",          type: "Texture",    test: null },
-            { name: "transform",        type: "Matrix",     test: null },
+            {
+                name:  "active", //           type: "boolean",    test: null, default: true },  // CP internal/non-SDL
+                valid: "",
+                err:   "active"
+            }, {
+                name:  "baseTransform", //    type: "Matrix",     test: null },  // CP internal/non-SDL
+                valid: "",
+                err:   "baseTransform"
+            }, {
+                name:  "boundedBy", //        type: "Primitive",  test: null },
+                valid: "",
+                err:   "boundedBy"
+            }, {
+                name:  "children", //         type: "@Primitive", test: null },  // FIXME: CP internal/non-SDL, list of other primitives for CSG objects
+                valid: "",
+                err:   "children"
+            }, {
+                name:  "clippedBy", //        type: "Primitive",  test: null },
+                valid: "",
+                err:   "clippedBy"
+            }, {
+                name:  "doubleIlluminate", // type: "boolean",    test: null },
+                valid: "",
+                err:   "doubleIlluminate"
+            }, {
+                name:  "finish", //           type: "Finish",     test: null },
+                valid: "",
+                err:   "finish"
+            }, {
+                name:  "frameBegin", //       type: "function",   test: null },
+                valid: "",
+                err:   "frameBegin"
+            }, {
+                name:  "frameEnd", //         type: "function",   test: null },
+                valid: "",
+                err:   "frameEnd"
+            }, {
+                name:  "hierarchy", //        type: "boolean",    test: null },
+                valid: "",
+                err:   "hierarchy"
+            }, {
+                name:  "hollow", //           type: "boolean",    test: null },
+                valid: "",
+                err:   "hollow"
+            }, {
+                name:  "id", //               type: "String",     test: "nonempty" }, // CP internal/non-SDL: unique identifier
+                valid: "",
+                err:   "id"
+            }, {
+                name:  "interior", //         type: "Interior",   test: null },
+                valid: "",
+                err:   "interior"
+            }, {
+                name:  "inverse", //          type: "boolean",    test: null },
+                valid: "",
+                err:   "inverse"
+            }, {
+                name:  "material", //         type: "Material",   test: null },
+                valid: "",
+                err:   "material"
+            }, {
+                name:  "noImage", //          type: "boolean",    test: null },
+                valid: "",
+                err:   "noImage"
+            }, {
+                name:  "noRadiosity", //      type: "boolean",    test: null },
+                valid: "",
+                err:   "noRadiosity"
+            }, {
+                name:  "noReflection", //     type: "boolean",    test: null },
+                valid: "",
+                err:   "noReflection"
+            }, {
+                name:  "normal", //           type: "VectorXYZ",  test: null },
+                valid: "",
+                err:   "normal"
+            }, {
+                name:  "noShadow", //         type: "boolean",    test: null },
+                valid: "",
+                err:   "noShadow"
+            }, {
+                name:  "parent", //           type: "Primitive",  test: null },  // CP internal/non-SDL: ref to parent CSG object
+                valid: "",
+                err:   "parent"
+            }, {
+                name:  "photons", //          type: "Photons",    test: null },
+                valid: "",
+                err:   "photons"
+            }, {
+                name:  "radiosity", //        type: "Radiosity",  test: null },
+                valid: "",
+                err:   "radiosity"
+            }, {
+                name:  "serial", //           type: "int",        test: null },  // CP internal/non-SDL, read-only
+                valid: "",
+                err:   "serial"
+            }, {
+                name:  "scene", //            type: "Scene",      test: null },  // CP internal/non-SDL, reference to current scene
+                valid: "",
+                err:   "scene"
+            }, {
+                name:  "sturm", //            type: "boolean",    test: null },
+                valid: "",
+                err:   "sturm"
+            }, {
+                name:  "texture", //          type: "Texture",    test: null },
+                valid: "",
+                err:   "texture"
+            }, {
+                name:  "transform", //        type: "Matrix",     test: null },
+                valid: "",
+                err:   "transform"
+            }
         ]
     },
 
@@ -216,18 +698,41 @@ var cpov = {
         blob: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "components", type: "@mixed(Sphere|Cylinder)[1-]", required: true },
-                { name: "threshold", type: "float" },
-                { name: "sturm",     type: "boolean" },
-                { name: "hierarchy", type: "boolean" },
+                {
+                    name:  "components", // type: "@mixed(Sphere|Cylinder)[1-]",
+                    req:   true,
+                    valid: "",
+                    req:   true,
+                    err:   "components"
+                }, {
+                    name:  "threshold", // type: "float" },
+                    valid: "",
+                    err:   "threshold"
+                }, {
+                    name:  "sturm", //     type: "boolean" },
+                    valid: "",
+                    err:   "sturm"
+                }, {
+                    name:  "hierarchy", // type: "boolean" },
+                    valid: "",
+                    err:   "hierarchy"
+                }
             ],
         },
 
         box: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "corner1", type: "VectorXYZ", required: true },
-                { name: "corner2", type: "VectorXYZ", required: true }
+                {
+                    name:  "corner1", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "corner1"
+                }, {
+                    name:  "corner2", // type: "VectorXYZ", required: true }
+                    valid: "",
+                    err:   "corner2"
+                }
             ],
 
         },
@@ -240,131 +745,388 @@ var cpov = {
         camera: {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
-                { name: "type", type: "string(perspective|orthographic|fisheye|ultra_wide_angle|omnimax|panoramic|spherical|cylinder|mesh_camera)", required: true },
-                { name: "angle",        type: "FIXME" },
-                { name: "apertureSize", type: "float" },
-                { name: "blurSamples",  type: "@float[2]" },  // TODO: needs test: both must be >= 0
-                { name: "bokeh",        type: "VectorRGB" },  // TODO: needs test: must be in the range <0,0,0> to <1,1,0>
-                { name: "confidence",   type: "float" },
-                { name: "cylinderType", type: "int(1|2|3|4)" },
-                { name: "direction",    type: "VectorXYZ" },
-                { name: "focalPoint",   type: "VectorXYZ" },
-                { name: "location",     type: "VectorXYZ" },
-                { name: "lookAt",       type: "VectorXYZ" },
-                { name: "right",        type: "VectorXYZ" },
-                { name: "sky",          type: "VectorXYZ" },
-                { name: "up",           type: "VectorXYZ" },
-                { name: "variance",     type: "float" },
-                { name: "vertAngle",    type: "int" },
+                {
+                    name:  "type", // type: "string(perspective|orthographic|fisheye|ultra_wide_angle|omnimax|panoramic|spherical|cylinder|mesh_camera)",
+                    req:   true,
+                    valid: "",
+                    err:   "type"
+                }, {
+                    name:  "angle", //        type: "FIXME" },
+                    valid: "",
+                    err:   "angle"
+                }, {
+                    name:  "apertureSize", // type: "float" },
+                    valid: "",
+                    err:   "apertureSize"
+                }, {
+                    name:  "blurSamples", //  type: "@float[2]" },  // TODO: needs test: both must be >= 0
+                    valid: "",
+                    err:   "blurSamples"
+                }, {
+                    name:  "bokeh", //        type: "VectorRGB" },  // TODO: needs test: must be in the range <0,0,0> to <1,1,0>
+                    valid: "",
+                    err:   "bokeh"
+                }, {
+                    name:  "confidence", //   type: "float" },
+                    valid: "",
+                    err:   "confidence"
+                }, {
+                    name:  "cylinderType", // type: "int(1|2|3|4)" },
+                    valid: "",
+                    err:   "cylinderType"
+                }, {
+                    name:  "direction", //    type: "VectorXYZ" },
+                    valid: "",
+                    err:   "direction"
+                }, {
+                    name:  "focalPoint", //   type: "VectorXYZ" },
+                    valid: "",
+                    err:   "focalPoint"
+                }, {
+                    name:  "location", //     type: "VectorXYZ" },
+                    valid: "",
+                    err:   "location"
+                }, {
+                    name:  "lookAt", //       type: "VectorXYZ" },
+                    valid: "",
+                    err:   "lookAt"
+                }, {
+                    name:  "right", //        type: "VectorXYZ" },
+                    valid: "",
+                    err:   "right"
+                }, {
+                    name:  "sky", //          type: "VectorXYZ" },
+                    valid: "",
+                    err:   "sky"
+                }, {
+                    name:  "up", //           type: "VectorXYZ" },
+                    valid: "",
+                    err:   "up"
+                }, {
+                    name:  "variance", //     type: "float" },
+                    valid: "",
+                    err:   "variance"
+                }, {
+                    name:  "vertAngle", //    type: "int" },
+                    valid: "",
+                    err:   "vertAngle"
+                }
             ]
         },
 
         cone: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "basePoint",  type: "VectorXYZ", required: true },
-                { name: "baseRadius", type: "float", required: true },
-                { name: "capPoint",   type: "VectorXYZ", required: true },
-                { name: "capRadius",  type: "float", required: true },
-                { name: "open", type: "boolean" },
+                {
+                    name:  "basePoint", //  type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "basePoint"
+                }, {
+                    name:  "baseRadius", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "baseRadius"
+                }, {
+                    name:  "capPoint", //   type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "capPoint"
+                }, {
+                    name:  "capRadius", //  type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "capRadius"
+                }, {
+                    name:  "open", // type: "boolean" },
+                    valid: "",
+                    err:   "open"
+                }
             ],
         },
 
         cylinder: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "basePoint", type: "VectorXYZ", required: true },
-                { name: "capPoint",  type: "VectorXYZ", required: true },
-                { name: "radius",    type: "float", required: true },
-                { name: "open",     type: "boolean" },
-                { name: "strength", type: "float" },    // only used when the cylinder is a blob component
+                {
+                    name:  "basePoint", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "basePoint"
+                }, {
+                    name:  "capPoint", //  type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "capPoint"
+                }, {
+                    name:  "radius", //    type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "radius"
+                }, {
+                    name:  "open", //     type: "boolean" },
+                    valid: "",
+                    err:   "open"
+                }, {
+                    name:  "strength", // type: "float" },    // only used when the cylinder is a blob component
+                    valid: "",
+                    err:   "strength"
+                }
             ],
         },
 
         heightField: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "source", type: "mixed(string|SDLFunction)", required: true },
-                { name: "hfType",     type: "string(exr|gif|hdr|iff|jpeg|pgm|png|pot|ppm|sys|tga|tiff)" },      // only used source is image instead of function
-                { name: "smooth",     type: "boolean" },
-                { name: "waterLevel", type: "float"   },
-                { name: "hierarchy",  type: "boolean" },
-                { name: "gamma",      type: "float"   },
-                { name: "premult",    type: "boolean" },
+                {
+                    name:  "source", // type: "mixed(string|SDLFunction)",
+                    req:   true,
+                    valid: "",
+                    err:   "source"
+                }, {
+                    name:  "hfType", //     type: "string(exr|gif|hdr|iff|jpeg|pgm|png|pot|ppm|sys|tga|tiff)" },      // only used source is image instead of function
+                    valid: "",
+                    err:   "hfType"
+                }, {
+                    name:  "smooth", //     type: "boolean" },
+                    valid: "",
+                    err:   "smooth"
+                }, {
+                    name:  "waterLevel", // type: "float"   },
+                    valid: "",
+                    err:   "waterLevel"
+                }, {
+                    name:  "hierarchy", //  type: "boolean" },
+                    valid: "",
+                    err:   "hierarchy"
+                }, {
+                    name:  "gamma", //      type: "float"   },
+                    valid: "",
+                    err:   "gamma"
+                }, {
+                    name:  "premult", //    type: "boolean" },
+                    valid: "",
+                    err:   "premult"
+                }
             ],
         },
 
         isoSurface: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "source", type: "SDLFunction", required: true },
-                { name: "containedBy", type: "mixed(Sphere|Box)" },
-                { name: "threshold",   type: "float" },
-                { name: "accuracy",    type: "float" },
-                { name: "maxGradient", type: "float" },
-                { name: "evaluate",    type: "@float[3]" },
-                { name: "open",        type: "boolean" },
-                { name: "maxTrace",    type: "mixed(int|'all_intersections')" },
+                {
+                    name:  "source", // type: "SDLFunction",
+                    req:   true,
+                    valid: "",
+                    err:   "source"
+                }, {
+                    name:  "containedBy", // type: "mixed(Sphere|Box)" },
+                    valid: "",
+                    err:   "containedBy"
+                }, {
+                    name:  "threshold", //   type: "float" },
+                    valid: "",
+                    err:   "threshold"
+                }, {
+                    name:  "accuracy", //    type: "float" },
+                    valid: "",
+                    err:   "accuracy"
+                }, {
+                    name:  "maxGradient", // type: "float" },
+                    valid: "",
+                    err:   "maxGradient"
+                }, {
+                    name:  "evaluate", //    type: "@float[3]" },
+                    valid: "",
+                    err:   "evaluate"
+                }, {
+                    name:  "open", //        type: "boolean" },
+                    valid: "",
+                    err:   "open"
+                }, {
+                    name:  "maxTrace", //    type: "mixed(int|'all_intersections')" },
+                    valid: "",
+                    err:   "maxTrace"
+                }
             ],
         },
 
         juliaFractal: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "type", type: "string(quaternion:sqr|quaternion:cube|hypercomplex:sqr|hypercomplex:cube|hypercomplex:exp|hypercomplex:reciprocal|hypercomplex:sin|hypercomplex:asin|hypercomplex:sinh|hypercomplex:cos|hypercomplex:acos|hypercomplex:cosh|hypercomplex:acosh|hypercomplex:tan|hypercomplex:atan|hypercomplex:tanh|hypercomplex:atanh|hypercomplex:ln|hypercomplex:pwr)", required: true },
-                { name: "power",     type: "VectorXY" },  // needed for hypercomplex:pwr -- come up with default
-                { name: "maxIter",   type: "int" },
-                { name: "precision", type: "int" },
-                { name: "slice",     type: "VectorXYZW" },
-                { name: "distance",  type: "float" },
+                {
+                    name:  "type", // type: "string(quaternion:sqr|quaternion:cube|hypercomplex:sqr|hypercomplex:cube|hypercomplex:exp|hypercomplex:reciprocal|hypercomplex:sin|hypercomplex:asin|hypercomplex:sinh|hypercomplex:cos|hypercomplex:acos|hypercomplex:cosh|hypercomplex:acosh|hypercomplex:tan|hypercomplex:atan|hypercomplex:tanh|hypercomplex:atanh|hypercomplex:ln|hypercomplex:pwr)",
+                    req:   true,
+                    valid: "",
+                    err:   "type"
+                }, {
+                    name:  "power", //     type: "VectorXY" },  // needed for hypercomplex:pwr -- come up with default
+                    valid: "",
+                    err:   "power"
+                }, {
+                    name:  "maxIter", //   type: "int" },
+                    valid: "",
+                    err:   "maxIter"
+                }, {
+                    name:  "precision", // type: "int" },
+                    valid: "",
+                    err:   "precision"
+                }, {
+                    name:  "slice", //     type: "VectorXYZW" },
+                    valid: "",
+                    err:   "slice"
+                }, {
+                    name:  "distance", //  type: "float" },
+                    valid: "",
+                    err:   "distance"
+                }
             ],
         },
 
         lathe: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "type",   type: "string(linear_spline|quadratic_spline|cubic_spline|bezier_spline)", required: true },
-                { name: "points", type: "@VectorXY[2-]", required: true },
-                { name: "sturm", type: "boolean" }
+                {
+                    name:  "type", //   type: "string(linear_spline|quadratic_spline|cubic_spline|bezier_spline)",
+                    req:   true,
+                    valid: "",
+                    err:   "type"
+                }, {
+                    name:  "points", // type: "@VectorXY[2-]",
+                    req:   true,
+                    valid: "",
+                    err:   "points"
+                }, {
+                    name:  "sturm", // type: "boolean" }
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         lightSource: {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
-                { name: "location", type: "VectorXYZ", required: true },
-                { name: "color",    type: "VectorRGB", required: true },
-                { name: "adaptive",         type: "float",    test: ">=0" },
-                { name: "areaIllumination", type: "boolean"   },
-                { name: "areaLight",        type: "boolean"   },
-                { name: "axis1",            type: "VectorXYZ" },
-                { name: "axis2",            type: "VectorXYZ" },
-                { name: "circular",         type: "boolean"   },
-                { name: "fadeDistance",     type: "float",    test: ">0" },
-                { name: "fadePower",        type: "float"     },
-                { name: "falloff",          type: "float",    test: "a<90" },
-                { name: "jitter",           type: "boolean"   },
-                { name: "looksLike",        type: "Primitive" },
-                { name: "mediaAttenuation", type: "boolean"   }, // TODO
-                { name: "mediaInteraction", type: "boolean"   }, // TODO
-                { name: "orient",           type: "boolean"   },
-                { name: "parallel",         type: "boolean"   },
-                { name: "pointAt",          type: "VectorXYZ" },
-                { name: "projectedThrough", type: "Primitive" },
-                { name: "radius",           type: "float",    test: "a<90" },
-                { name: "shadowless",       type: "boolean"   },
-                { name: "size1",            type: "float",    test: ">0" },
-                { name: "size2",            type: "float",    test: ">0" },
-                { name: "tightness",        type: "float",    test: "0-100" },
-                { name: "type",             type: "string(spotlight|cylinder)" },
+                {
+                    name:  "location", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "location"
+                }, {
+                    name:  "color", //    type: "VectorRGB",
+                    req:   true,
+                    valid: "",
+                    err:   "color"
+                }, {
+                    name:  "adaptive", //         type: "float",    test: ">=0" },
+                    valid: "",
+                    err:   "adaptive"
+                }, {
+                    name:  "areaIllumination", // type: "boolean"   },
+                    valid: "",
+                    err:   "areaIllumination"
+                }, {
+                    name:  "areaLight", //        type: "boolean"   },
+                    valid: "",
+                    err:   "areaLight"
+                }, {
+                    name:  "axis1", //            type: "VectorXYZ" },
+                    valid: "",
+                    err:   "axis1"
+                }, {
+                    name:  "axis2", //            type: "VectorXYZ" },
+                    valid: "",
+                    err:   "axis2"
+                }, {
+                    name:  "circular", //         type: "boolean"   },
+                    valid: "",
+                    err:   "circular"
+                }, {
+                    name:  "fadeDistance", //     type: "float",    test: ">0" },
+                    valid: "",
+                    err:   "fadeDistance"
+                }, {
+                    name:  "fadePower", //        type: "float"     },
+                    valid: "",
+                    err:   "fadePower"
+                }, {
+                    name:  "falloff", //          type: "float",    test: "a<90" },
+                    valid: "",
+                    err:   "falloff"
+                }, {
+                    name:  "jitter", //           type: "boolean"   },
+                    valid: "",
+                    err:   "jitter"
+                }, {
+                    name:  "looksLike", //        type: "Primitive" },
+                    valid: "",
+                    err:   "looksLike"
+                }, {
+                    name:  "mediaAttenuation", // type: "boolean"   }, // TODO
+                    valid: "",
+                    err:   "mediaAttenuation"
+                }, {
+                    name:  "mediaInteraction", // type: "boolean"   }, // TODO
+                    valid: "",
+                    err:   "mediaInteraction"
+                }, {
+                    name:  "orient", //           type: "boolean"   },
+                    valid: "",
+                    err:   "orient"
+                }, {
+                    name:  "parallel", //         type: "boolean"   },
+                    valid: "",
+                    err:   "parallel"
+                }, {
+                    name:  "pointAt", //          type: "VectorXYZ" },
+                    valid: "",
+                    err:   "pointAt"
+                }, {
+                    name:  "projectedThrough", // type: "Primitive" },
+                    valid: "",
+                    err:   "projectedThrough"
+                }, {
+                    name:  "radius", //           type: "float",    test: "a<90" },
+                    valid: "",
+                    err:   "radius"
+                }, {
+                    name:  "shadowless", //       type: "boolean"   },
+                    valid: "",
+                    err:   "shadowless"
+                }, {
+                    name:  "size1", //            type: "float",    test: ">0" },
+                    valid: "",
+                    err:   "size1"
+                }, {
+                    name:  "size2", //            type: "float",    test: ">0" },
+                    valid: "",
+                    err:   "size2"
+                }, {
+                    name:  "tightness", //        type: "float",    test: "0-100" },
+                    valid: "",
+                    err:   "tightness"
+                }, {
+                    name:  "type", //             type: "string(spotlight|cylinder)" },
+                    valid: "",
+                    err:   "type"
+                }
             ],
         },
 
         ovus: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "bottomRadius", type: "float", required: true },
-                { name: "topRadius",    type: "float", required: true },
+            {
+                name:  "bottomRadius", // type: "float",
+                    req:   true,
+                valid: "",
+                err:   "bottomRadius"
+            }, {
+                name:  "topRadius", //    type: "float",
+                    req:   true,
+                valid: "",
+                err:   "topRadius"
+            }
             ],
 
         },
@@ -372,55 +1134,149 @@ var cpov = {
         parametric: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "funcX",  type: "SDLFunction", required: true },
-                { name: "funcY",  type: "SDLFunction", required: true },
-                { name: "funcZ",  type: "SDLFunction", required: true },
-                { name: "uv1",    type: "VectorUV", required: true },
-                { name: "uv2",    type: "VectorUV", required: true },
-                { name: "containedBy",     type: "mixed(Sphere|Box)" },
-                { name: "maxGradient",     type: "float" },
-                { name: "accuracy",        type: "float" },
-                { name: "precomputeDepth", type: "int" },
-                { name: "precomputeX",     type: "boolean" },
-                { name: "precomputeY",     type: "boolean" },
-                { name: "precomputeZ",     type: "boolean" },
+                {
+                    name:  "funcX", //  type: "SDLFunction",
+                    req:   true,
+                    valid: "",
+                    err:   "funcX"
+                }, {
+                    name:  "funcY", //  type: "SDLFunction",
+                    req:   true,
+                    valid: "",
+                    err:   "funcY"
+                }, {
+                    name:  "funcZ", //  type: "SDLFunction",
+                    req:   true,
+                    valid: "",
+                    err:   "funcZ"
+                }, {
+                    name:  "uv1", //    type: "VectorUV",
+                    req:   true,
+                    valid: "",
+                    err:   "uv1"
+                }, {
+                    name:  "uv2", //    type: "VectorUV",
+                    req:   true,
+                    valid: "",
+                    err:   "uv2"
+                }, {
+                    name:  "containedBy", //     type: "mixed(Sphere|Box)" },
+                    valid: "",
+                    err:   "containedBy"
+                }, {
+                    name:  "maxGradient", //     type: "float" },
+                    valid: "",
+                    err:   "maxGradient"
+                }, {
+                    name:  "accuracy", //        type: "float" },
+                    valid: "",
+                    err:   "accuracy"
+                }, {
+                    name:  "precomputeDepth", // type: "int" },
+                    valid: "",
+                    err:   "precomputeDepth"
+                }, {
+                    name:  "precomputeX", //     type: "boolean" },
+                    valid: "",
+                    err:   "precomputeX"
+                }, {
+                    name:  "precomputeY", //     type: "boolean" },
+                    valid: "",
+                    err:   "precomputeY"
+                }, {
+                    name:  "precomputeZ", //     type: "boolean" },
+                    valid: "",
+                    err:   "precomputeZ"
+                }
             ],
         },
 
         prism: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "type",    type: "string(linear_spline|quadratic_spline|cubic_spline|bezier_spline|linear_sweep|conic_sweep)", required: true },
-                { name: "height1", type: "float", required: true },
-                { name: "height2", type: "float", required: true },
-                { name: "points",  type: "@VectorXY", required: true },
-                { name: "open",  type: "boolean" },
-                { name: "sturm", type: "boolean" }
+                {
+                    name:  "type", //    type: "string(linear_spline|quadratic_spline|cubic_spline|bezier_spline|linear_sweep|conic_sweep)",
+                    req:   true,
+                    valid: "",
+                    err:   "type"
+                }, {
+                    name:  "height1", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "height1"
+                }, {
+                    name:  "height2", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "height2"
+                }, {
+                    name:  "points", //  type: "@VectorXY",
+                    req:   true,
+                    valid: "",
+                    err:   "points"
+                }, {
+                    name:  "open", //  type: "boolean" },
+                    valid: "",
+                    err:   "open"
+                }, {
+                    name:  "sturm", // type: "boolean" }
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         sphere: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "center", type: "VectorXYZ", required: true },
-                { name: "radius", type: "float", required: true },
-                { name: "strength", type: "float" },    // only used when used as a blob component
+                {
+                    name:  "center", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "center"
+                }, {
+                    name:  "radius", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "radius"
+                }, {
+                    name:  "strength", // type: "float" },    // only used when used as a blob component
+                    valid: "",
+                    err:   "strength"
+                }
             ],
         },
 
         sphereSweep: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "type", type: "string(linear_spline|b_spline|cubic_spline)", required: true },
-                { name: "spheres", type: "@Sphere[2-]", required: true },
-                { name: "tolerance", type: "float" }
+                {
+                    name:  "type", // type: "string(linear_spline|b_spline|cubic_spline)",
+                    req:   true,
+                    valid: "",
+                    err:   "type"
+                }, {
+                    name:  "spheres", // type: "@Sphere[2-]",
+                    req:   true,
+                    valid: "",
+                    err:   "spheres"
+                }, {
+                    name:  "tolerance", // type: "float" }
+                    valid: "",
+                    err:   "tolerance"
+                }
             ],
         },
 
         superellipsoid: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "vector", type: "VectorXY", required: true },
+                {
+                    name:  "vector", // type: "VectorXY",
+                    req:   true,
+                    valid: "",
+                    err:   "vector"
+                }
             ],
 
         },
@@ -428,19 +1284,47 @@ var cpov = {
         sor: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "points", type: "@VectorXY[2-]", required: true },
-                { name: "open",  type: "boolean" },
-                { name: "sturm", type: "boolean" },
+                {
+                    name:  "points", // type: "@VectorXY[2-]",
+                    req:   true,
+                    valid: "",
+                    err:   "points"
+                }, {
+                    name:  "open", //  type: "boolean" },
+                    valid: "",
+                    err:   "open"
+                }, {
+                    name:  "sturm", // type: "boolean" },
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         text: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "font",        type: "string", required: true },
-                { name: "displayText", type: "string", required: true },
-                { name: "thickness",   type: "float", required: true },
-                { name: "offset",      type: "float", required: true },
+                {
+                    name:  "font", //        type: "string",
+                    req:   true,
+                    valid: "",
+                    err:   "font"
+                }, {
+                    name:  "displayText", // type: "string",
+                    req:   true,
+                    valid: "",
+                    err:   "displayText"
+                }, {
+                    name:  "thickness", //   type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "thickness"
+                }, {
+                    name:  "offset", //      type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "offset"
+                }
             ],
 
         },
@@ -448,41 +1332,96 @@ var cpov = {
         torus: {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
-                { name: "majorRadius", type: "float", required: true },
-                { name: "minorRadius", type: "float", required: true },
-                { name: "sturm",       type: "boolean" },
+                {
+                    name:  "majorRadius", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "majorRadius"
+                }, {
+                    name:  "minorRadius", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "minorRadius"
+                }, {
+                    name:  "sturm", //       type: "boolean" },
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         bicubicPatch: {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
-                { name: "type",  type: "int(0|1)", required: true },
-                { name: "points", type: "@VectorXYZ[16]", required: true },
-            ],
-            optional: [
-                { name: "uSteps",   type: "int" },
-                { name: "vSteps",   type: "int" },
-                { name: "flatness", type: "float" },
+                {
+                    name:  "type", //  type: "int(0|1)",
+                    req:   true,
+                    valid: "",
+                    err:   "type"
+                }, {
+                    name:  "points", // type: "@VectorXYZ[16]",
+                    req:   true,
+                    valid: "",
+                    err:   "points"
+                }, {
+                    name:  "uSteps", //   type: "int" },
+                    valid: "",
+                    err:   "uSteps"
+                }, {
+                    name:  "vSteps", //   type: "int" },
+                    valid: "",
+                    err:   "vSteps"
+                }, {
+                    name:  "flatness", // type: "float" },
+                    valid: "",
+                    err:   "flatness"
+                }
             ],
         },
 
         disc: {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
-                { name: "center", type: "VectorXYZ", required: true },
-                { name: "normal", type: "VectorXYZ", required: true },
-                { name: "radius", type: "float", required: true },
-                { name: "holeRadius", type: "float" },
+                {
+                    name:  "center", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "center"
+                }, {
+                    name:  "normal", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "normal"
+                }, {
+                    name:  "radius", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "radius"
+                }, {
+                    name:  "holeRadius", // type: "float" },
+                    valid: "",
+                    err:   "holeRadius"
+                }
             ],
         },
 
         mesh: {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
-                { name: "triangles", type: "@Triangle[1-]", required: true },
-                { name: "insideVector", type: "VectorXYZ" },
-                { name: "hierarchy",    type: "boolean" },
+                {
+                    name:  "triangles", // type: "@Triangle[1-]",
+                    req:   true,
+                    valid: "",
+                    err:   "triangles"
+                }, {
+                    name:  "insideVector", // type: "VectorXYZ" },
+                    valid: "",
+                    err:   "insideVector"
+                }, {
+                    name:  "hierarchy", //    type: "boolean" },
+                    valid: "",
+                    err:   "hierarchy"
+                }
             ],
         },
 
@@ -500,7 +1439,12 @@ var cpov = {
         polygon: {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
-                { name: "points", type: "@VectorXY[3-]", required: true },
+                {
+                    name:  "points", // type: "@VectorXY[3-]",
+                    req:   true,
+                    valid: "",
+                    err:   "points"
+                }
             ],
 
         },
@@ -508,22 +1452,59 @@ var cpov = {
         triangle: {               // combines triangle and smooth_triangle
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
-                { name: "corner1", type: "VectorXYZ", required: true },
-                { name: "corner2", type: "VectorXYZ", required: true },
-                { name: "corner3", type: "VectorXYZ", required: true },
-                { name: "smooth",   type: "boolean" },    // if smooth and normal1...3 are defined, it's a smooth triangle
-                { name: "normal1",  type: "VectorXYZ" },
-                { name: "normal2",  type: "VectorXYZ" },
-                { name: "normal3",  type: "VectorXYZ" },
-                { name: "textures", type: "@int" }
+                {
+                    name:  "corner1", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "corner1"
+                }, {
+                    name:  "corner2", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "corner2"
+                }, {
+                    name:  "corner3", // type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "corner3"
+                }, {
+                    name:  "smooth", //   type: "boolean" },    // if smooth and normal1...3 are defined, it's a smooth triangle
+                    valid: "",
+                    err:   "smooth"
+                }, {
+                    name:  "normal1", //  type: "VectorXYZ" },
+                    valid: "",
+                    err:   "normal1"
+                }, {
+                    name:  "normal2", //  type: "VectorXYZ" },
+                    valid: "",
+                    err:   "normal2"
+                }, {
+                    name:  "normal3", //  type: "VectorXYZ" },
+                    valid: "",
+                    err:   "normal3"
+                }, {
+                    name:  "textures", // type: "@int" }
+                    valid: "",
+                    err:   "textures"
+                }
             ],
         },
 
         plane: {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
-                { name: "normal",   type: "VectorXYZ", required: true },
-                { name: "distance", type: "float", required: true },
+                {
+                    name:  "normal", //   type: "VectorXYZ",
+                    req:   true,
+                    valid: "",
+                    err:   "normal"
+                }, {
+                    name:  "distance", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "distance"
+                }
             ],
 
         },
@@ -531,49 +1512,126 @@ var cpov = {
         poly: {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
-                { name: "coefficients", type: "@float[2-35]", required: true },
-                { name: "sturm", type: "boolean" },
+                {
+                    name:  "coefficients", // type: "@float[2-35]",
+                    req:   true,
+                    valid: "",
+                    err:   "coefficients"
+                }, {
+                    name:  "sturm", // type: "boolean" },
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         cubic: {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
-                { name: "coefficients", type: "@float[20]", required: true },
-                { name: "sturm", type: "boolean" }
+                {
+                    name:  "coefficients", // type: "@float[20]",
+                    req:   true,
+                    valid: "",
+                    err:   "coefficients"
+                }, {
+                    name:  "sturm", // type: "boolean" }
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         quartic: {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
-                { name: "coefficients", type: "@float[20]", required: true },
-                { name: "sturm", type: "boolean" }
+                {
+                    name:  "coefficients", // type: "@float[20]",
+                    req:   true,
+                    valid: "",
+                    err:   "coefficients"
+                }, {
+                    name:  "sturm", // type: "boolean" }
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         polynomial: {                                             // this will require better understanding of the
             fixed: { finite: false, solid: true, csg: false },    // underlying maths than I currently have to validate
             mutable: [
-                { name: "order", type: "int", required: true },
-                { name: "coefficients", type: "@VectorXYZW", required: true },
-                { name: "sturm", type: "boolean" }
+                {
+                    name:  "order", // type: "int",
+                    req:   true,
+                    valid: "",
+                    err:   "order"
+                }, {
+                    name:  "coefficients", // type: "@VectorXYZW",
+                    req:   true,
+                    valid: "",
+                    err:   "coefficients"
+                }, {
+                    name:  "sturm", // type: "boolean" }
+                    valid: "",
+                    err:   "sturm"
+                }
             ],
         },
 
         quadric: {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
-                { name: "a", type: "float", required: true },
-                { name: "b", type: "float", required: true },
-                { name: "c", type: "float", required: true },
-                { name: "d", type: "float", required: true },
-                { name: "e", type: "float", required: true },
-                { name: "f", type: "float", required: true },
-                { name: "g", type: "float", required: true },
-                { name: "h", type: "float", required: true },
-                { name: "i", type: "float", required: true },
-                { name: "j", type: "float", required: true },
+                {
+                    name:  "a", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "a"
+                }, {
+                    name:  "b", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "b"
+                }, {
+                    name:  "c", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "c"
+                }, {
+                    name:  "d", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "d"
+                }, {
+                    name:  "e", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "e"
+                }, {
+                    name:  "f", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "f"
+                }, {
+                    name:  "g", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "g"
+                }, {
+                    name:  "h", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "h"
+                }, {
+                    name:  "i", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "i"
+                }, {
+                    name:  "j", // type: "float",
+                    req:   true,
+                    valid: "",
+                    err:   "j"
+                }
             ],
 
         },
@@ -581,30 +1639,54 @@ var cpov = {
         union: {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
-                { name: "objects", type: "@Primitive", required: true },
-                { name: "splitUnion", type: "boolean" }
+                {
+                    name:  "objects", // type: "@Primitive",
+                    req:   true,
+                    valid: "",
+                    err:   "objects"
+                }, {
+                    name:  "splitUnion", // type: "boolean" }
+                    valid: "",
+                    err:   "splitUnion"
+                }
             ]
         },
 
         intersection: {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
-                { name: "objects", type: "@Primitive", required: true }
+                {
+                    name:  "objects", // type: "@Primitive", required: true }
+                    valid: "",
+                    err:   "objects"
+                }
             ],
         },
 
         difference: {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
-                { name: "positiveObject", type: "Primitive"  , required: true },
-                { name: "negativeObjects", type: "@Primitive", required: true }
+                {
+                    name:  "positiveObject", // type: "Primitive"  ,
+                    req:   true,
+                    valid: "",
+                    err:   "positiveObject"
+                }, {
+                    name:  "negativeObjects", // type: "@Primitive", required: true }
+                    valid: "",
+                    err:   "negativeObjects"
+                }
             ],
         },
 
         merge: {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
-                { name: "objects", type: "@Primitive", required: true }
+                {
+                    name:  "objects", // type: "@Primitive", required: true }
+                    valid: "",
+                    err:   "objects"
+                }
             ],
         },
 
@@ -756,8 +1838,6 @@ var cpov = {
 // Returns a string consisting of stops copies of four space characters.
 //==============================================================================
 
-//------------------------------------------------------------------------------
-
 cpov.tab = function tab(stops) {
     if(stops)
         return new Array(stops).fill("    ").join("");
@@ -767,16 +1847,46 @@ cpov.tab = function tab(stops) {
 
 
 //==============================================================================
+// Prints an error message to console if permitted by the current verbosity
+// level, and if the error is fatal, terminates the process.
+//==============================================================================
+
+cpov.error = function(level, message, location = "CEPHALOPOV") {
+
+    switch(level) {
+        case "fatal":
+            if(!cpov.quietMode)
+                console.log("[" + location + "]: " + message);
+            cpov.process.exit(1);
+            break;
+        case "warn":
+            if(!cpov.quietMode && cpov.verbosity >= 1)
+                console.log("[" + location + "]: " + message);
+            break;
+        case "info":
+            if(!cpov.quietMode && cpov.verbosity >= 2)
+                console.log("[" + location + "]: " + message);
+            break;
+        case "debug":
+            if(!cpov.quietMode && (cpov.verbosity >= 3 || cpov.debug))
+                console.log("[" + location + "]: " + message);
+            break;
+    }
+
+}
+
+
+//==============================================================================
 // Validation functions, mainly to be leveraged by generated classes.
 //==============================================================================
 
-function isFloat(val) {
+cpov.isFloat = function(val) {
     return typeof val == "number" ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isArrayOfFloats(val, min, max) {
+cpov.isArrayOfFloats = function(val, min, max) {
     if(!Array.isArray(val))
         return false;
     if(val.length < min || val.length > max)
@@ -789,25 +1899,25 @@ function isArrayOfFloats(val, min, max) {
 
 //------------------------------------------------------------------------------
 
-function isWithin(val, min, max) {
+cpov.isWithin = function(val, min, max) {
     return val >= min && val <= max ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isBetween(val, min, max) {
+cpov.isBetween = function(val, min, max) {
     return val > min && val < max ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isInt(val) {
+cpov.isInt = function(val) {
     return typeof val == "number" && val == Math.floor(val) ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isArrayOfInts(val, min, max) {
+cpov.isArrayOfInts = function(val, min, max) {
     if(!Array.isArray(val))
         return false;
     if(val.length < min || val.length > max)
@@ -820,25 +1930,25 @@ function isArrayOfInts(val, min, max) {
 
 //------------------------------------------------------------------------------
 
-function isString(val) {
+cpov.isString = function(val) {
     return typeof val == "string" ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isNonEmptyString(val) {
+cpov.isNonEmptyString = function(val) {
     return typeof val == "string" && val.length ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isChar(val) {
+cpov.isChar = function(val) {
     return typeof val == "string" && val.length == 1 ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isInArray(val, array) {
+cpov.isInArray = function(val, array) {
     for(var i = 0; i < array.length; i++)
         if(array[i] === val)
             return true;
@@ -847,31 +1957,37 @@ function isInArray(val, array) {
 
 //------------------------------------------------------------------------------
 
-function isKey(val, object) {
+cpov.isKey = function(val, object) {
     return object[val] !== undefined ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isBoolean(val) {
+cpov.isBoolean = function(val) {
     return typeof val == "boolean" ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isNull(val) {
+cpov.isNull = function(val) {
     return val === null ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function isClass(val, classname) {
+cpov.isClass = function(val, classname) {
     return Object.getPrototypeOf(val).constructor.name == classname ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
-function inheritsFrom(val, classname) {
+cpov.inheritsFrom = function(val, classname) {
     return Object.getPrototypeOf(val.constructor).name == classname ? true : false;
 }
 
+
+//==============================================================================
+// Fly my pretties, fly! =======================================================
+//==============================================================================
+
+exports.cpov = cpov;
