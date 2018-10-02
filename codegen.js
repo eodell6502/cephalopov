@@ -1,4 +1,6 @@
 var cpov    = require("./cpov.js").cpov;
+var File    = require("./file.js").File;
+
 
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of
@@ -96,13 +98,18 @@ ClassBuilder.prototype.toString = function() {
             src.push(
                 this.divider(1, "-") + "\n\n"
                 + tab1 + "get " + item.name + "() {\n"
-                + tab2 + "return this._" + item.name + ";\n"
+                + tab2 + "if(typeof this._" + item.name + " == \"function\")\n"
+                + tab3 + "return this._" + item.name + "();\n"
+                + tab2 + "else if(typeof this._" + item.name + " == \"string\" && this._" + item.name + ".substr(0, 1) == \"&\")\n"
+                + tab3 + "return this._" + item.name + ".substr(1);\n"
+                + tab2 + "else\n"
+                + tab3 + "return this._" + item.name + ";\n"
                 + tab1 + "}\n\n"
                 + this.divider(1, "-") + "\n\n"
                 + tab1 + "set " + item.name + "(val) {\n"
                 + tab2 + "if(" + item.valid + ") {\n"
                 + tab3 + "this._" + item.name + " = val;\n"
-                + tab2 + "else {\n"
+                + tab2 + "} else {\n"
                 + tab3 + "cpov.error(\"fatal\", \"" + item.err + "\", \"" + this.name + "\");\n"
                 + tab2 + "}\n"
                 + tab1 + "}\n"
@@ -118,6 +125,35 @@ ClassBuilder.prototype.toString = function() {
 }
 
 
+//==============================================================================
+// We don't currently use ClassBuilder anywhere else -- a lot of it is very
+// CephaloPOV-specific, so when executed, this file just outputs the various
+// class modules used by CephaloPOV.
+//==============================================================================
 
-var test = new ClassBuilder("globalSettings", false, cpov.gsDef.mutable, false);
-console.log(test.toString());
+var fp = new File("./GlobalSettings.js", "w");
+fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
+fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false) + "\n\n");
+fp.write("exports.GlobalSettings = GlobalSettings;\n\n");
+fp.close();
+
+var fp = new File("./ImageOptions.js", "w");
+fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
+fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false) + "\n\n");
+fp.write("exports.ImageOptions = ImageOptions;\n\n");
+fp.close();
+
+var fp = new File("./Primitive.js", "w");
+fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
+fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false) + "\n\n");
+fp.write("exports.Primitive = Primitive;\n\n");
+
+for(var pname in cpov.objDef) {
+    var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
+    fp.write(new ClassBuilder(cname, cpov.objDef[pname].fixed, cpov.objDef[pname].mutable, "Primitive") + "\n\n");
+    fp.write("exports." + cname + " = " + cname + ";\n\n");
+}
+
+fp.close();
+
+
