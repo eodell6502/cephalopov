@@ -343,53 +343,53 @@ var cpov = {
                 valid: "cpov.isKey(val, cpov.returnActions)",
                 err:   "fatalErrorReturn must be one of " + cpov.keysToTextList(cpov.returnActions) + "."
             }, {
-                name:  "fatalFile", //              type: "mixed(boolean|string)",     test: "nonempty" },
-                valid: "",
-                err:   "fatalFile"
+                name:  "fatalFile",
+                valid: "cpov.isBoolean(val) || cpov.isNonEmptyString(val)",
+                err:   "fatalFile must be either a boolean or a non-empty string."
             }, {
-                name:  "fileGamma", //              type: "mixed(float|'sRGB')",       test: null },
-                valid: "",
+                name:  "fileGamma",
+                valid: "cpov.isFloat(val) || val === 'sRGB'",
                 err:   "fileGamma"
             }, {
-                name:  "height", //                 type: "int",                       test: ">0", default: 480 },
-                valid: "",
-                err:   "height"
+                name:  "height",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "height must be an integer greater than zero."
             }, {
-                name:  "highReproducibility", //    type: "boolean",                   test: null },
-                valid: "",
-                err:   "highReproducibility"
+                name:  "highReproducibility",
+                valid: "cpov.isBoolean(val)",
+                err:   "highReproducibility must be a boolean"
             }, {
-                name:  "includeHeader", //          type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "includeHeader"
+                name:  "includeHeader",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "includeHeader must be a non-empty string."
             }, {
-                name:  "inputFileName", //          type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "inputFileName"
+                name:  "inputFileName",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "inputFileName must be a non-empty string."
             }, {
-                name:  "jitter", //                 type: "boolean",                   test: null },
-                valid: "",
-                err:   "jitter"
+                name:  "jitter",
+                valid: "cpov.isBoolean(val)",
+                err:   "jitter must be a boolean."
             }, {
-                name:  "jitterAmount", //           type: "float",                     test: null },
-                valid: "",
-                err:   "jitterAmount"
+                name:  "jitterAmount",
+                valid: "cpov.isFloat(val)",
+                err:   "jitterAmount must be a float."
             }, {
-                name:  "libraryPath", //            type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "libraryPath"
+                name:  "libraryPath",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "libraryPath must be a non-empty string."
             }, {
-                name:  "maxImageBufferMemory", //   type: "int",                       test: ">0" },
-                valid: "",
-                err:   "maxImageBufferMemory"
+                name:  "maxImageBufferMemory",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "maxImageBufferMemory must be an integer greater than zero."
             }, {
-                name:  "outputAlpha", //            type: "boolean",                   test: null },
-                valid: "",
-                err:   "outputAlpha"
+                name:  "outputAlpha",
+                valid: "cpov.isBoolean(val)",
+                err:   "outputAlpha must be a boolean."
             }, {
-                name:  "outputFileName", //         type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "outputFileName"
+                name:  "outputFileName",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "outputFileName must be a non-empty string."
             }, {
                 name:  "outputFileType", //         type: "string(B|C|E|H|J|N|P|S|T)", test: null },
                 valid: "",
