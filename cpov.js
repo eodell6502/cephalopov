@@ -1504,12 +1504,12 @@ var cpov = {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "coefficients", // type: "@float[2-35]",
+                    name:  "coefficients",
                     req:   true,
-                    valid: "",
-                    err:   "coefficients"
+                    valid: "cpov.isArrayOfFloats(val, 2, 35)",
+                    err:   "coefficients must be an array of 2 to 35 floats."
                 }, {
-                    name:  "sturm", // type: "boolean" },
+                    name:  "sturm",
                     valid: "cpov.isBoolean(val)",
                     err:   "sturm must be a boolean."
                 }
@@ -1520,12 +1520,12 @@ var cpov = {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "coefficients", // type: "@float[20]",
+                    name:  "coefficients",
                     req:   true,
-                    valid: "",
-                    err:   "coefficients"
+                    valid: "cpov.isArrayOfFloats(val, 20, 20)",
+                    err:   "coefficients must be an array of 20 floats."
                 }, {
-                    name:  "sturm", // type: "boolean" }
+                    name:  "sturm",
                     valid: "cpov.isBoolean(val)",
                     err:   "sturm must be a boolean."
                 }
@@ -1536,12 +1536,12 @@ var cpov = {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "coefficients", // type: "@float[20]",
+                    name:  "coefficients",
                     req:   true,
-                    valid: "",
-                    err:   "coefficients"
+                    valid: "cpov.isArrayOfFloats(val, 20, 20)",
+                    err:   "coefficients must be an array of 20 floats."
                 }, {
-                    name:  "sturm", // type: "boolean" }
+                    name:  "sturm",
                     valid: "cpov.isBoolean(val)",
                     err:   "sturm must be a boolean."
                 }
@@ -1552,17 +1552,17 @@ var cpov = {
             fixed: { finite: false, solid: true, csg: false },    // underlying maths than I currently have to validate
             mutable: [
                 {
-                    name:  "order", // type: "int",
+                    name:  "order",
                     req:   true,
-                    valid: "",
-                    err:   "order"
+                    valid: "cpov.isInt(val)",
+                    err:   "order must be an integer."
                 }, {
-                    name:  "coefficients", // type: "@VectorXYZW",
+                    name:  "coefficients",
                     req:   true,
-                    valid: "",
-                    err:   "coefficients"
+                    valid: "cpov.isClass(val, 'VectorXYZW')",
+                    err:   "coefficients must be a VectorXYZW."
                 }, {
-                    name:  "sturm", // type: "boolean" }
+                    name:  "sturm",
                     valid: "cpov.isBoolean(val)",
                     err:   "sturm must be a boolean."
                 }
@@ -1573,55 +1573,55 @@ var cpov = {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "a", // type: "float",
+                    name:  "a",
                     req:   true,
-                    valid: "",
-                    err:   "a"
+                    valid: "cpov.isFloat(val)",
+                    err:   "a must be a float."
                 }, {
-                    name:  "b", // type: "float",
+                    name:  "b",
                     req:   true,
-                    valid: "",
-                    err:   "b"
+                    valid: "cpov.isFloat(val)",
+                    err:   "b must be a float."
                 }, {
-                    name:  "c", // type: "float",
+                    name:  "c",
                     req:   true,
-                    valid: "",
-                    err:   "c"
+                    valid: "cpov.isFloat(val)",
+                    err:   "c must be a float."
                 }, {
-                    name:  "d", // type: "float",
+                    name:  "d",
                     req:   true,
-                    valid: "",
-                    err:   "d"
+                    valid: "cpov.isFloat(val)",
+                    err:   "d must be a float."
                 }, {
-                    name:  "e", // type: "float",
+                    name:  "e",
                     req:   true,
-                    valid: "",
-                    err:   "e"
+                    valid: "cpov.isFloat(val)",
+                    err:   "e must be a float."
                 }, {
-                    name:  "f", // type: "float",
+                    name:  "f",
                     req:   true,
-                    valid: "",
-                    err:   "f"
+                    valid: "cpov.isFloat(val)",
+                    err:   "f must be a float."
                 }, {
-                    name:  "g", // type: "float",
+                    name:  "g",
                     req:   true,
-                    valid: "",
-                    err:   "g"
+                    valid: "cpov.isFloat(val)",
+                    err:   "g must be a float."
                 }, {
-                    name:  "h", // type: "float",
+                    name:  "h",
                     req:   true,
-                    valid: "",
-                    err:   "h"
+                    valid: "cpov.isFloat(val)",
+                    err:   "h must be a float."
                 }, {
-                    name:  "i", // type: "float",
+                    name:  "i",
                     req:   true,
-                    valid: "",
-                    err:   "i"
+                    valid: "cpov.isFloat(val)",
+                    err:   "i must be a float."
                 }, {
-                    name:  "j", // type: "float",
+                    name:  "j",
                     req:   true,
-                    valid: "",
-                    err:   "j"
+                    valid: "cpov.isFloat(val)",
+                    err:   "j must be a float."
                 }
             ],
 
@@ -1631,12 +1631,12 @@ var cpov = {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
                 {
-                    name:  "objects", // type: "@Primitive",
+                    name:  "objects",
                     req:   true,
-                    valid: "",
-                    err:   "objects"
+                    valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                    err:   "objects must be an array of Primitives."
                 }, {
-                    name:  "splitUnion", // type: "boolean" }
+                    name:  "splitUnion",
                     valid: "cpov.isBoolean(val)",
                     err:   "splitUnion must be a boolean."
                 }
@@ -1647,9 +1647,9 @@ var cpov = {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
                 {
-                    name:  "objects", // type: "@Primitive", required: true }
-                    valid: "",
-                    err:   "objects"
+                    name:  "objects",
+                    valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                    err:   "objects must be an array of Primitives."
                 }
             ],
         },
@@ -1658,14 +1658,14 @@ var cpov = {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
                 {
-                    name:  "positiveObject", // type: "Primitive"  ,
+                    name:  "positiveObject",
                     req:   true,
-                    valid: "",
-                    err:   "positiveObject"
+                    valid: "cpov.isClass(val, 'Primitive')",
+                    err:   "positiveObject must be a Primitive."
                 }, {
-                    name:  "negativeObjects", // type: "@Primitive", required: true }
-                    valid: "",
-                    err:   "negativeObjects"
+                    name:  "negativeObjects",
+                    valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                    err:   "negativeObjects must be an array of Primitives."
                 }
             ],
         },
@@ -1674,9 +1674,9 @@ var cpov = {
             fixed: { finite: null, solid: true, csg: true },
             mutable: [
                 {
-                    name:  "objects", // type: "@Primitive", required: true }
-                    valid: "",
-                    err:   "objects"
+                    name:  "objects",
+                    valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                    err:   "objects must be an array of Primitives."
                 }
             ],
         },
@@ -1978,6 +1978,20 @@ cpov.isClass = function(val, classname) {
         return okay;
     }
     return Object.getPrototypeOf(val).constructor.name == classname ? true : false;
+}
+
+//------------------------------------------------------------------------------
+
+cpov.isArrayOfClass = function(val, classname) {
+    if(Array.isArray(val)) {
+        for(var i = 0; i < val.length; i++) {
+            if(Object.getPrototypeOf(val).constructor.name != classname)
+                return false;
+        }
+        return true;
+    } else {
+        return false;
+    }
 }
 
 //------------------------------------------------------------------------------
