@@ -392,12 +392,12 @@ var cpov = {
                 err:   "outputFileName must be a non-empty string."
             }, {
                 name:  "outputFileType", //         type: "string(B|C|E|H|J|N|P|S|T)", test: null },
-                valid: "",
-                err:   "outputFileType"
+                valid: "cpov.isKey(val, cpov.outputFileTypes)",
+                err:   "outputFileType must be one of " + cpov.keysToTextList(cpov.outputFileTypes)
             }, {
                 name:  "outputToFile", //           type: "boolean",                   test: null },
-                valid: "",
-                err:   "outputToFile"
+                valid: "cpov.isBoolean(val)",
+                err:   "outputToFile must be a boolean."
             }, {
                 name:  "palette", //                type: "char",                      test: null },
                 valid: "",
@@ -1696,7 +1696,7 @@ var cpov = {
     // All (graphics) output file formats, mapped to textual descriptions.
     //------------------------------------------------------------------------------
 
-    outputFile: {
+    outputFileTypes: {
         "B": "BMP",
         "C": "TGA, RLE compression",
         "E": "OpenEXR HDR",
