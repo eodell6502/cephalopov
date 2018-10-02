@@ -391,173 +391,173 @@ var cpov = {
                 valid: "cpov.isNonEmptyString(val)",
                 err:   "outputFileName must be a non-empty string."
             }, {
-                name:  "outputFileType", //         type: "string(B|C|E|H|J|N|P|S|T)", test: null },
+                name:  "outputFileType",
                 valid: "cpov.isKey(val, cpov.outputFileTypes)",
                 err:   "outputFileType must be one of " + cpov.keysToTextList(cpov.outputFileTypes)
             }, {
-                name:  "outputToFile", //           type: "boolean",                   test: null },
+                name:  "outputToFile",
                 valid: "cpov.isBoolean(val)",
                 err:   "outputToFile must be a boolean."
             }, {
-                name:  "palette", //                type: "char",                      test: null },
-                valid: "",
+                name:  "palette",
+                valid: "cpov.isString(val) && val.length == 1",
                 err:   "palette"
             }, {
-                name:  "pauseWhenDone", //          type: "boolean",                   test: null },
-                valid: "",
-                err:   "pauseWhenDone"
+                name:  "pauseWhenDone",
+                valid: "cpov.isBoolean(val)",
+                err:   "pauseWhenDone must be a boolean."
             }, {
-                name:  "postFrameCommand", //       type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "postFrameCommand"
+                name:  "postFrameCommand",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "postFrameCommand must be a non-empty string."
             }, {
-                name:  "postFrameReturn", //        type: "returnAction",              test: null },
-                valid: "",
-                err:   "postFrameReturn"
+                name:  "postFrameReturn",
+                valid: "cpov.isKey(val, cpov.returnActions)",
+                err:   "postFrameReturn must be one of " + cpov.keysToList(cpov.returnActions) + "."
             }, {
-                name:  "postSceneCommand", //       type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "postSceneCommand"
+                name:  "postSceneCommand",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "postSceneCommand must be a non-empty string."
             }, {
-                name:  "postSceneReturn", //        type: "returnAction",              test: null },
-                valid: "",
-                err:   "postSceneReturn"
+                name:  "postSceneReturn",
+                valid: "cpov.isKey(val, cpov.returnActions)",
+                err:   "postSceneReturn must be one of " + cpov.keysToList(cpov.returnActions) + "."
             }, {
-                name:  "preFrameCommand", //        type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "preFrameCommand"
+                name:  "preFrameCommand",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "preFrameCommand must be a non-empty string."
             }, {
-                name:  "preFrameReturn", //         type: "returnAction",              test: null },
-                valid: "",
-                err:   "preFrameReturn"
+                name:  "preFrameReturn",
+                valid: "cpov.isKey(val, cpov.returnActions)",
+                err:   "preFrameReturn must be one of " + cpov.keysToList(cpov.returnActions) + "."
             }, {
-                name:  "preSceneCommand", //        type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "preSceneCommand"
+                name:  "preSceneCommand",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "preSceneCommand must be a non-empty string."
             }, {
-                name:  "preSceneReturn", //         type: "returnAction",              test: null },
-                valid: "",
-                err:   "preSceneReturn"
+                name:  "preSceneReturn",
+                valid: "cpov.isKey(val, cpov.returnActions)",
+                err:   "preSceneReturn must be one of " + cpov.keysToList(cpov.returnActions) + "."
             }, {
-                name:  "previewEndSize", //         type: "int",                       test: ">0" },
-                valid: "",
-                err:   "previewEndSize"
+                name:  "previewEndSize",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "previewEndSize must be an integer greater than zero"
             }, {
-                name:  "previewStartSize", //       type: "int",                       test: ">0" },
-                valid: "",
-                err:   "previewStartSize"
+                name:  "previewStartSize",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "previewStartSize must be an integer greater than zero."
             }, {
-                name:  "quality", //                type: "int",                       test: "0-11" },
-                valid: "",
-                err:   "quality"
+                name:  "quality",
+                valid: "cpov.isInt(val) && val >= 0 && val <= 11",
+                err:   "quality must be an integer in the range (0 - 11)"
             }, {
-                name:  "radiosityFileName", //      type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "radiosityFileName"
+                name:  "radiosityFileName",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "radiosityFileName must be a non-empty string."
             }, {
-                name:  "radiosityFromFile", //      type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "radiosityFromFile"
+                name:  "radiosityFromFile",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "radiosityFromFile must be a non-empty string."
             }, {
-                name:  "radiosityToFile", //        type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "radiosityToFile"
+                name:  "radiosityToFile",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "radiosityToFile must be a non-empty string."
             }, {
-                name:  "radiosityVainPretrace", //  type: "boolean",                   test: null },
-                valid: "",
-                err:   "radiosityVainPretrace"
+                name:  "radiosityVainPretrace",
+                valid: "cpov.isBoolean(val)",
+                err:   "radiosityVainPretrace must be a boolean."
             }, {
-                name:  "removeBounds", //           type: "boolean",                   test: null },
-                valid: "",
-                err:   "removeBounds"
+                name:  "removeBounds",
+                valid: "cpov.isBoolean(val)",
+                err:   "removeBounds must be a boolean."
             }, {
-                name:  "renderBlockSize", //        type: "int",                       test: "4-" },
-                valid: "",
-                err:   "renderBlockSize"
+                name:  "renderBlockSize",
+                valid: "cpov.isInt(val) && val >= 4",
+                err:   "renderBlockSize must be an integer greater than or equal to 4."
             }, {
-                name:  "renderBlockStep", //        type: "int",                       test: "1-" },
-                valid: "",
-                err:   "renderBlockStep"
+                name:  "renderBlockStep",
+                valid: "cpov.isInt(val) && val >= 1",
+                err:   "renderBlockStep must be an integer greater than or equal to 1."
             }, {
-                name:  "renderConsole", //          type: "boolean",                   test: null },
-                valid: "",
-                err:   "renderConsole"
+                name:  "renderConsole",
+                valid: "cpov.isBoolean(val)",
+                err:   "renderConsole must be a boolean."
             }, {
-                name:  "renderFile", //             type: "mixed(boolean|string)",     test: "nonempty" },
-                valid: "",
-                err:   "renderFile"
+                name:  "renderFile",
+                valid: "cpov.isBoolean(val) && cpov.isNonEmptyString(val)",
+                err:   "renderFile must be a boolean or a non-empty string."
             }, {
-                name:  "renderPattern", //          type: "int",                       test: "0-5" },
-                valid: "",
-                err:   "renderPattern"
+                name:  "renderPattern",
+                valid: "cpov.isInt(val) && val >= 0 && val <= 5",
+                err:   "renderPattern must be an integer in the range (0 - 5)."
             }, {
-                name:  "samplingMethod", //         type: "int",                       test: "1-2" },
-                valid: "",
-                err:   "samplingMethod"
+                name:  "samplingMethod",
+                valid: "cpov.isInt(val) && val >= 1 && val <= 2",
+                err:   "samplingMethod must be an integer in the range (1 - 2)."
             }, {
-                name:  "splitUnions", //            type: "boolean",                   test: null },
-                valid: "",
-                err:   "splitUnions"
+                name:  "splitUnions",
+                valid: "cpov.isBoolean(val)",
+                err:   "splitUnions must be a boolean."
             }, {
-                name:  "startColumn", //            type: "int",                       test: "0-" },
-                valid: "",
-                err:   "startColumn"
+                name:  "startColumn",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "startColumn must be an integer greater than or equal to zero."
             }, {
-                name:  "startRow", //               type: "int",                       test: "0-" },
-                valid: "",
-                err:   "startRow"
+                name:  "startRow",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "startRow must be an integer greater than or equal to zero."
             }, {
-                name:  "statisticConsole", //       type: "boolean",                   test: null },
-                valid: "",
-                err:   "statisticConsole"
+                name:  "statisticConsole",
+                valid: "cpov.isBoolean(val)",
+                err:   "statisticConsole must be a boolean."
             }, {
-                name:  "statisticFile", //          type: "mixed(boolean|string)",     test: "nonempty" },
-                valid: "",
-                err:   "statisticFile"
+                name:  "statisticFile",
+                valid: "cpov.isBoolean || cpov.isNonEmptyString(val)",
+                err:   "statisticFile must be a boolean or a non-empty string."
             }, {
-                name:  "testAbort", //              type: "boolean",                   test: null },
-                valid: "",
-                err:   "testAbort"
+                name:  "testAbort",
+                valid: "cpov.isBoolean(val)",
+                err:   "testAbort must be a boolean."
             }, {
-                name:  "testAbortCount", //         type: "int",                       test: "1-" },
-                valid: "",
-                err:   "testAbortCount"
+                name:  "testAbortCount",
+                valid: "cpov.isInt(val) && val >= 1",
+                err:   "testAbortCount must be an integer greater than or equal to one."
             }, {
-                name:  "userAbortCommand", //       type: "string",                    test: "nonempty" },
-                valid: "",
-                err:   "userAbortCommand"
+                name:  "userAbortCommand",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "userAbortCommand must be a non-empty string."
             }, {
-                name:  "userAbortReturn", //        type: "returnAction",              test: null },
-                valid: "",
-                err:   "userAbortReturn"
+                name:  "userAbortReturn",
+                valid: "cpov.isKey(val, cpov.returnActions)",
+                err:   "userAbortReturn must be one of " + cpov.keysToTextList(cpov.returnActions) + "."
             }, {
-                name:  "verbose", //                type: "boolean",                   test: null },
-                valid: "",
-                err:   "verbose"
+                name:  "verbose",
+                valid: "cpov.isBoolean(val)",
+                err:   "verbose must be a boolean."
             }, {
-                name:  "videoMode", //              type: "char",                      test: null },
-                valid: "",
-                err:   "videoMode"
+                name:  "videoMode",
+                valid: "cpov.isString(val) && val.length == 1",
+                err:   "videoMode must be a single character."
             }, {
-                name:  "warningConsole", //         type: "boolean",                   test: null },
-                valid: "",
-                err:   "warningConsole"
+                name:  "warningConsole",
+                valid: "cpov.isBoolean(val)",
+                err:   "warningConsole must be a boolean."
             }, {
-                name:  "warningFile", //            type: "mixed(boolean|string)",     test: "nonempty" },
-                valid: "",
-                err:   "warningFile"
+                name:  "warningFile",
+                valid: "cpov.isBoolean(val) || cpov.isNonEmptyString(val)",
+                err:   "warningFile must be a boolean or a non-empty string."
             }, {
-                name:  "warningLevel", //           type: "int(0|5|10)",               test: null },
-                valid: "",
-                err:   "warningLevel"
+                name:  "warningLevel",
+                valid: "cpov.isInt(val) && (val == 0 || val == 5 || val == 10)",
+                err:   "warningLevel must be one of 0, 5, or 10."
             }, {
-                name:  "width", //                  type: "int",                       test: ">0", default: 640 },
-                valid: "",
-                err:   "width"
+                name:  "width",
+                valid: "cpov.isInt(val) && val > 0",
+                err:   "width must be an integer greater than zero."
             }, {
-                name:  "workThreads", //            type: "int",                       test: "1-512" },
-                valid: "",
-                err:   "workThreads"
+                name:  "workThreads",
+                valid: "cpov.isInt(val) && val >= 1 && val <= 512.",
+                err:   "workThreads must be an integer in the range (1 - 512)."
             }
         ]
     },
@@ -570,117 +570,109 @@ var cpov = {
     objCommon: {
         mutable: [
             {
-                name:  "active", //           type: "boolean",    test: null, default: true },  // CP internal/non-SDL
-                valid: "",
-                err:   "active"
+                name:  "active",
+                valid: "cpov.isBoolean(val)",
+                err:   "active must be a boolean."
             }, {
-                name:  "baseTransform", //    type: "Matrix",     test: null },  // CP internal/non-SDL
-                valid: "",
-                err:   "baseTransform"
+                name:  "baseTransform",
+                valid: "cpov.isClass(val, 'Matrix')",
+                err:   "baseTransform must be a Matrix."
             }, {
-                name:  "boundedBy", //        type: "Primitive",  test: null },
-                valid: "",
-                err:   "boundedBy"
+                name:  "boundedBy",
+                valid: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.
+                err:   "boundedBy must be a Primitive."
             }, {
-                name:  "children", //         type: "@Primitive", test: null },  // FIXME: CP internal/non-SDL, list of other primitives for CSG objects
-                valid: "",
-                err:   "children"
+                name:  "children",
+                valid: "cpov.isArrayOfSubclass(val, 'Primitive')",
+                err:   "children must be an array of Primitives."
             }, {
-                name:  "clippedBy", //        type: "Primitive",  test: null },
-                valid: "",
+                name:  "clippedBy",
+                valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "clippedBy"
             }, {
-                name:  "doubleIlluminate", // type: "boolean",    test: null },
-                valid: "",
-                err:   "doubleIlluminate"
+                name:  "doubleIlluminate",
+                valid: "cpov.isBoolean(val)",
+                err:   "doubleIlluminate must be a boolean."
             }, {
-                name:  "finish", //           type: "Finish",     test: null },
-                valid: "",
-                err:   "finish"
+                name:  "finish",
+                valid: "cpov.isClass(val, 'Finish')",
+                err:   "finish must be a Finish."
             }, {
-                name:  "frameBegin", //       type: "function",   test: null },
-                valid: "",
-                err:   "frameBegin"
+                name:  "frameBegin",
+                valid: "typeof val == 'function'",
+                err:   "frameBegin must be a JavaScript function."
             }, {
-                name:  "frameEnd", //         type: "function",   test: null },
-                valid: "",
-                err:   "frameEnd"
+                name:  "frameEnd",
+                valid: "typeof val == 'function'",
+                err:   "frameEnd must be a JavaScript function."
             }, {
-                name:  "hierarchy", //        type: "boolean",    test: null },
-                valid: "",
-                err:   "hierarchy"
+                name:  "hierarchy",
+                valid: "cpov.isBoolean(val)",
+                err:   "hierarchy must be a boolean."
             }, {
-                name:  "hollow", //           type: "boolean",    test: null },
-                valid: "",
-                err:   "hollow"
+                name:  "hollow",
+                valid: "cpov.isBoolean(val)",
+                err:   "hollow must be a boolean."
             }, {
-                name:  "id", //               type: "String",     test: "nonempty" }, // CP internal/non-SDL: unique identifier
-                valid: "",
-                err:   "id"
+                name:  "id",
+                valid: "cpov.isNonEmptyString(val)",
+                err:   "id must be a non-empty string."
             }, {
-                name:  "interior", //         type: "Interior",   test: null },
-                valid: "",
-                err:   "interior"
+                name:  "interior",
+                valid: "cpov.isClass(val, 'Interior')",
+                err:   "interior must be an Interior."
             }, {
-                name:  "inverse", //          type: "boolean",    test: null },
-                valid: "",
-                err:   "inverse"
+                name:  "inverse",
+                valid: "cpov.isBoolean(val)",
+                err:   "inverse must be a boolean."
             }, {
-                name:  "material", //         type: "Material",   test: null },
-                valid: "",
-                err:   "material"
+                name:  "material",
+                valid: "cpov.isClass(val, 'Material')",
+                err:   "material must be a Material."
             }, {
-                name:  "noImage", //          type: "boolean",    test: null },
-                valid: "",
-                err:   "noImage"
+                name:  "noImage",
+                valid: "cpov.isBoolean(val)",
+                err:   "noImage must be a boolean."
             }, {
-                name:  "noRadiosity", //      type: "boolean",    test: null },
-                valid: "",
-                err:   "noRadiosity"
+                name:  "noRadiosity",
+                valid: "cpov.isBoolean(val)",
+                err:   "noRadiosity must be a boolean."
             }, {
-                name:  "noReflection", //     type: "boolean",    test: null },
-                valid: "",
-                err:   "noReflection"
+                name:  "noReflection",
+                valid: "cpov.isBoolean(val)",
+                err:   "noReflection must be a boolean."
             }, {
-                name:  "normal", //           type: "VectorXYZ",  test: null },
-                valid: "",
-                err:   "normal"
+                name:  "normal",
+                valid: "cpov.isClass(val, 'VectorXYZ')",
+                err:   "normal must be a VectorXYZ."
             }, {
-                name:  "noShadow", //         type: "boolean",    test: null },
-                valid: "",
-                err:   "noShadow"
+                name:  "noShadow",
+                valid: "cpov.isBoolean(val)",
+                err:   "noShadow must be a boolean."
             }, {
-                name:  "parent", //           type: "Primitive",  test: null },  // CP internal/non-SDL: ref to parent CSG object
-                valid: "",
-                err:   "parent"
+                name:  "parent",
+                valid: "cpov.inheritsFrom(val, 'Primitive')",
+                err:   "parent must be a Primitive."
             }, {
-                name:  "photons", //          type: "Photons",    test: null },
+                name:  "photons", //          type: "Photons",    test: null }, TODO FIXME
                 valid: "",
                 err:   "photons"
             }, {
-                name:  "radiosity", //        type: "Radiosity",  test: null },
+                name:  "radiosity", //        type: "Radiosity",  test: null }, TODO FIXME
                 valid: "",
                 err:   "radiosity"
             }, {
-                name:  "serial", //           type: "int",        test: null },  // CP internal/non-SDL, read-only
-                valid: "",
-                err:   "serial"
+                name:  "serial",
+                valid: "cpov.isInt(val)",
+                err:   "serial must be an integer."
             }, {
-                name:  "scene", //            type: "Scene",      test: null },  // CP internal/non-SDL, reference to current scene
-                valid: "",
-                err:   "scene"
+                name:  "texture",
+                valid: "cpov.isClass(val, 'Texture')",
+                err:   "texture must be a Texture."
             }, {
-                name:  "sturm", //            type: "boolean",    test: null },
-                valid: "",
-                err:   "sturm"
-            }, {
-                name:  "texture", //          type: "Texture",    test: null },
-                valid: "",
-                err:   "texture"
-            }, {
-                name:  "transform", //        type: "Matrix",     test: null },
-                valid: "",
-                err:   "transform"
+                name:  "transform",
+                valid: "cpov.isClass(val, 'Matrix')",
+                err:   "transform must be a Matrix."
             }
         ]
     },
@@ -699,23 +691,22 @@ var cpov = {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "components", // type: "@mixed(Sphere|Cylinder)[1-]",
+                    name:  "components",
                     req:   true,
-                    valid: "",
-                    req:   true,
-                    err:   "components"
+                    valid: "cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length",
+                    err:   "components must be an array of Spheres and/or Cylinders."
                 }, {
-                    name:  "threshold", // type: "float" },
-                    valid: "",
+                    name:  "threshold",
+                    valid: "cpov.isFloat(val)",
                     err:   "threshold"
                 }, {
-                    name:  "sturm", //     type: "boolean" },
-                    valid: "",
-                    err:   "sturm"
+                    name:  "sturm",
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }, {
-                    name:  "hierarchy", // type: "boolean" },
-                    valid: "",
-                    err:   "hierarchy"
+                    name:  "hierarchy",
+                    valid: "cpov.isBoolean(val)",
+                    err:   "hierarchy must be a boolean."
                 }
             ],
         },
@@ -724,13 +715,13 @@ var cpov = {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "corner1", // type: "VectorXYZ",
+                    name:  "corner1",
                     req:   true,
-                    valid: "",
-                    err:   "corner1"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "corner1 must be a VectorXYZ."
                 }, {
-                    name:  "corner2", // type: "VectorXYZ", required: true }
-                    valid: "",
+                    name:  "corner2",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
                     err:   "corner2"
                 }
             ],
@@ -748,68 +739,68 @@ var cpov = {
                 {
                     name:  "type", // type: "string(perspective|orthographic|fisheye|ultra_wide_angle|omnimax|panoramic|spherical|cylinder|mesh_camera)",
                     req:   true,
-                    valid: "",
-                    err:   "type"
+                    valid: "cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera'])",
+                    err:   "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera."
                 }, {
-                    name:  "angle", //        type: "FIXME" },
+                    name:  "angle", //        type: "FIXME" }, // TODO
                     valid: "",
                     err:   "angle"
                 }, {
-                    name:  "apertureSize", // type: "float" },
-                    valid: "",
-                    err:   "apertureSize"
+                    name:  "apertureSize",
+                    valid: "cpov.isFloat(val)",
+                    err:   "apertureSize must be a float."
                 }, {
-                    name:  "blurSamples", //  type: "@float[2]" },  // TODO: needs test: both must be >= 0
-                    valid: "",
-                    err:   "blurSamples"
+                    name:  "blurSamples",
+                    valid: "cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0",
+                    err:   "blurSamples must be an array of two floats greater than or equal to zero."
                 }, {
-                    name:  "bokeh", //        type: "VectorRGB" },  // TODO: needs test: must be in the range <0,0,0> to <1,1,0>
-                    valid: "",
-                    err:   "bokeh"
+                    name:  "bokeh",
+                    valid: "cpov.isClass(val, 'VectorRGB') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
+                    err:   "bokeh must be a VectorRGB in the range <0, 0, 0> to <1, 1, 0>."
                 }, {
-                    name:  "confidence", //   type: "float" },
-                    valid: "",
-                    err:   "confidence"
+                    name:  "confidence",
+                    valid: "cpov.isFloat(val)",
+                    err:   "confidence must be a float."
                 }, {
-                    name:  "cylinderType", // type: "int(1|2|3|4)" },
-                    valid: "",
-                    err:   "cylinderType"
+                    name:  "cylinderType",
+                    valid: "cpov.isInt(val) && val > 0 && val < 5",
+                    err:   "cylinderType must be an integer in the range (1 - 4)."
                 }, {
-                    name:  "direction", //    type: "VectorXYZ" },
-                    valid: "",
-                    err:   "direction"
+                    name:  "direction",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "direction must be a VectorXYZ."
                 }, {
-                    name:  "focalPoint", //   type: "VectorXYZ" },
-                    valid: "",
-                    err:   "focalPoint"
+                    name:  "focalPoint",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "focalPoint must be a VectorXYZ."
                 }, {
-                    name:  "location", //     type: "VectorXYZ" },
-                    valid: "",
-                    err:   "location"
+                    name:  "location",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "location must be a VectorXYZ."
                 }, {
-                    name:  "lookAt", //       type: "VectorXYZ" },
-                    valid: "",
-                    err:   "lookAt"
+                    name:  "lookAt",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "lookAt must be a VectorXYZ."
                 }, {
-                    name:  "right", //        type: "VectorXYZ" },
-                    valid: "",
-                    err:   "right"
+                    name:  "right",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "right must be a VectorXYZ."
                 }, {
-                    name:  "sky", //          type: "VectorXYZ" },
-                    valid: "",
-                    err:   "sky"
+                    name:  "sky",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "sky must be a VectorXYZ."
                 }, {
-                    name:  "up", //           type: "VectorXYZ" },
-                    valid: "",
-                    err:   "up"
+                    name:  "up",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "up must be a VectorXYZ."
                 }, {
-                    name:  "variance", //     type: "float" },
-                    valid: "",
-                    err:   "variance"
+                    name:  "variance",
+                    valid: "cpov.isFloat(val)",
+                    err:   "variance must be a float."
                 }, {
-                    name:  "vertAngle", //    type: "int" },
-                    valid: "",
-                    err:   "vertAngle"
+                    name:  "vertAngle",
+                    valid: "cpov.isInt(val)",
+                    err:   "vertAngle must be an integer."
                 }
             ]
         },
@@ -818,20 +809,20 @@ var cpov = {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "basePoint", //  type: "VectorXYZ",
+                    name:  "basePoint",
                     req:   true,
-                    valid: "",
-                    err:   "basePoint"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "basePoint must be a VectorXYZ."
                 }, {
-                    name:  "baseRadius", // type: "float",
+                    name:  "baseRadius",
                     req:   true,
-                    valid: "",
-                    err:   "baseRadius"
+                    valid: "cpov.isFloat(val)",
+                    err:   "baseRadius must be a float."
                 }, {
-                    name:  "capPoint", //   type: "VectorXYZ",
+                    name:  "capPoint",
                     req:   true,
-                    valid: "",
-                    err:   "capPoint"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "capPoint must be a VectorXYZ."
                 }, {
                     name:  "capRadius", //  type: "float",
                     req:   true,
@@ -839,8 +830,8 @@ var cpov = {
                     err:   "capRadius"
                 }, {
                     name:  "open", // type: "boolean" },
-                    valid: "",
-                    err:   "open"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "open must be a boolean."
                 }
             ],
         },
@@ -849,15 +840,15 @@ var cpov = {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "basePoint", // type: "VectorXYZ",
+                    name:  "basePoint",
                     req:   true,
-                    valid: "",
-                    err:   "basePoint"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "basePoint must be a VectorXYZ."
                 }, {
-                    name:  "capPoint", //  type: "VectorXYZ",
+                    name:  "capPoint",
                     req:   true,
-                    valid: "",
-                    err:   "capPoint"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "capPoint must be a VectorXYZ."
                 }, {
                     name:  "radius", //    type: "float",
                     req:   true,
@@ -865,8 +856,8 @@ var cpov = {
                     err:   "radius"
                 }, {
                     name:  "open", //     type: "boolean" },
-                    valid: "",
-                    err:   "open"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "open must be a boolean."
                 }, {
                     name:  "strength", // type: "float" },    // only used when the cylinder is a blob component
                     valid: "",
@@ -889,24 +880,24 @@ var cpov = {
                     err:   "hfType"
                 }, {
                     name:  "smooth", //     type: "boolean" },
-                    valid: "",
-                    err:   "smooth"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "smooth must be a boolean."
                 }, {
                     name:  "waterLevel", // type: "float"   },
                     valid: "",
                     err:   "waterLevel"
                 }, {
                     name:  "hierarchy", //  type: "boolean" },
-                    valid: "",
-                    err:   "hierarchy"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "hierarchy must be a boolean."
                 }, {
                     name:  "gamma", //      type: "float"   },
                     valid: "",
                     err:   "gamma"
                 }, {
                     name:  "premult", //    type: "boolean" },
-                    valid: "",
-                    err:   "premult"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "premult must be a boolean."
                 }
             ],
         },
@@ -941,8 +932,8 @@ var cpov = {
                     err:   "evaluate"
                 }, {
                     name:  "open", //        type: "boolean" },
-                    valid: "",
-                    err:   "open"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "open must be a boolean."
                 }, {
                     name:  "maxTrace", //    type: "mixed(int|'all_intersections')" },
                     valid: "",
@@ -961,8 +952,8 @@ var cpov = {
                     err:   "type"
                 }, {
                     name:  "power", //     type: "VectorXY" },  // needed for hypercomplex:pwr -- come up with default
-                    valid: "",
-                    err:   "power"
+                    valid: "cpov.isClass(val, 'VectorXY')",
+                    err:   "power must be a VectorXY."
                 }, {
                     name:  "maxIter", //   type: "int" },
                     valid: "",
@@ -972,9 +963,9 @@ var cpov = {
                     valid: "",
                     err:   "precision"
                 }, {
-                    name:  "slice", //     type: "VectorXYZW" },
-                    valid: "",
-                    err:   "slice"
+                    name:  "slice",
+                    valid: "cpov.isClass(val, 'VectorXYZW')",
+                    err:   "slice must be a VectorXYZW."
                 }, {
                     name:  "distance", //  type: "float" },
                     valid: "",
@@ -998,8 +989,8 @@ var cpov = {
                     err:   "points"
                 }, {
                     name:  "sturm", // type: "boolean" }
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1008,10 +999,10 @@ var cpov = {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
                 {
-                    name:  "location", // type: "VectorXYZ",
+                    name:  "location",
                     req:   true,
-                    valid: "",
-                    err:   "location"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "location must be a VectorXYZ."
                 }, {
                     name:  "color", //    type: "VectorRGB",
                     req:   true,
@@ -1023,24 +1014,24 @@ var cpov = {
                     err:   "adaptive"
                 }, {
                     name:  "areaIllumination", // type: "boolean"   },
-                    valid: "",
-                    err:   "areaIllumination"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "areaIllumination must be a boolean."
                 }, {
                     name:  "areaLight", //        type: "boolean"   },
-                    valid: "",
-                    err:   "areaLight"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "areaLight must be a boolean."
                 }, {
-                    name:  "axis1", //            type: "VectorXYZ" },
-                    valid: "",
-                    err:   "axis1"
+                    name:  "axis1",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "axis1 must be a VectorXYZ."
                 }, {
-                    name:  "axis2", //            type: "VectorXYZ" },
-                    valid: "",
-                    err:   "axis2"
+                    name:  "axis2",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "axis2 must be a VectorXYZ."
                 }, {
                     name:  "circular", //         type: "boolean"   },
-                    valid: "",
-                    err:   "circular"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "circular must be a boolean."
                 }, {
                     name:  "fadeDistance", //     type: "float",    test: ">0" },
                     valid: "",
@@ -1055,32 +1046,32 @@ var cpov = {
                     err:   "falloff"
                 }, {
                     name:  "jitter", //           type: "boolean"   },
-                    valid: "",
-                    err:   "jitter"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "jitter must be a boolean."
                 }, {
                     name:  "looksLike", //        type: "Primitive" },
                     valid: "",
                     err:   "looksLike"
                 }, {
                     name:  "mediaAttenuation", // type: "boolean"   }, // TODO
-                    valid: "",
-                    err:   "mediaAttenuation"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "mediaAttenuation must be a boolean."
                 }, {
                     name:  "mediaInteraction", // type: "boolean"   }, // TODO
-                    valid: "",
-                    err:   "mediaInteraction"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "mediaInteraction must be a boolean."
                 }, {
                     name:  "orient", //           type: "boolean"   },
-                    valid: "",
-                    err:   "orient"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "orient must be a boolean."
                 }, {
                     name:  "parallel", //         type: "boolean"   },
-                    valid: "",
-                    err:   "parallel"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "parallel must be a boolean."
                 }, {
-                    name:  "pointAt", //          type: "VectorXYZ" },
-                    valid: "",
-                    err:   "pointAt"
+                    name:  "pointAt",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "pointAt must be a VectorXYZ."
                 }, {
                     name:  "projectedThrough", // type: "Primitive" },
                     valid: "",
@@ -1091,8 +1082,8 @@ var cpov = {
                     err:   "radius"
                 }, {
                     name:  "shadowless", //       type: "boolean"   },
-                    valid: "",
-                    err:   "shadowless"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "shadowless must be a boolean."
                 }, {
                     name:  "size1", //            type: "float",    test: ">0" },
                     valid: "",
@@ -1150,15 +1141,15 @@ var cpov = {
                     valid: "",
                     err:   "funcZ"
                 }, {
-                    name:  "uv1", //    type: "VectorUV",
+                    name:  "uv1",
                     req:   true,
-                    valid: "",
-                    err:   "uv1"
+                    valid: "cpov.isClass(val, 'VectorUV')",
+                    err:   "uv1 must be a VectorUV."
                 }, {
-                    name:  "uv2", //    type: "VectorUV",
+                    name:  "uv2",
                     req:   true,
-                    valid: "",
-                    err:   "uv2"
+                    valid: "cpov.isClass(val, 'VectorUV')",
+                    err:   "uv2 must be a VectorUV."
                 }, {
                     name:  "containedBy", //     type: "mixed(Sphere|Box)" },
                     valid: "",
@@ -1177,16 +1168,16 @@ var cpov = {
                     err:   "precomputeDepth"
                 }, {
                     name:  "precomputeX", //     type: "boolean" },
-                    valid: "",
-                    err:   "precomputeX"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "precomputeX must be a boolean."
                 }, {
                     name:  "precomputeY", //     type: "boolean" },
-                    valid: "",
-                    err:   "precomputeY"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "precomputeY must be a boolean."
                 }, {
                     name:  "precomputeZ", //     type: "boolean" },
-                    valid: "",
-                    err:   "precomputeZ"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "precomputeZ must be a boolean."
                 }
             ],
         },
@@ -1216,12 +1207,12 @@ var cpov = {
                     err:   "points"
                 }, {
                     name:  "open", //  type: "boolean" },
-                    valid: "",
-                    err:   "open"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "open must be a boolean."
                 }, {
                     name:  "sturm", // type: "boolean" }
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1230,10 +1221,10 @@ var cpov = {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "center", // type: "VectorXYZ",
+                    name:  "center",
                     req:   true,
-                    valid: "",
-                    err:   "center"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "center must be a VectorXYZ."
                 }, {
                     name:  "radius", // type: "float",
                     req:   true,
@@ -1272,10 +1263,10 @@ var cpov = {
             fixed: { finite: true, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "vector", // type: "VectorXY",
+                    name:  "vector",
                     req:   true,
-                    valid: "",
-                    err:   "vector"
+                    valid: "cpov.isClass(val, 'VectorXY')",
+                    err:   "vector must be a VectorXY."
                 }
             ],
 
@@ -1291,12 +1282,12 @@ var cpov = {
                     err:   "points"
                 }, {
                     name:  "open", //  type: "boolean" },
-                    valid: "",
-                    err:   "open"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "open must be a boolean."
                 }, {
                     name:  "sturm", // type: "boolean" },
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1344,8 +1335,8 @@ var cpov = {
                     err:   "minorRadius"
                 }, {
                     name:  "sturm", //       type: "boolean" },
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1383,15 +1374,15 @@ var cpov = {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
                 {
-                    name:  "center", // type: "VectorXYZ",
+                    name:  "center",
                     req:   true,
-                    valid: "",
-                    err:   "center"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "center must be a VectorXYZ."
                 }, {
-                    name:  "normal", // type: "VectorXYZ",
+                    name:  "normal",
                     req:   true,
-                    valid: "",
-                    err:   "normal"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "normal must be a VectorXYZ."
                 }, {
                     name:  "radius", // type: "float",
                     req:   true,
@@ -1414,13 +1405,13 @@ var cpov = {
                     valid: "",
                     err:   "triangles"
                 }, {
-                    name:  "insideVector", // type: "VectorXYZ" },
-                    valid: "",
-                    err:   "insideVector"
+                    name:  "insideVector",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "insideVector must be a VectorXYZ."
                 }, {
                     name:  "hierarchy", //    type: "boolean" },
-                    valid: "",
-                    err:   "hierarchy"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "hierarchy must be a boolean."
                 }
             ],
         },
@@ -1453,36 +1444,36 @@ var cpov = {
             fixed: { finite: true, solid: false, csg: false },
             mutable: [
                 {
-                    name:  "corner1", // type: "VectorXYZ",
+                    name:  "corner1",
                     req:   true,
-                    valid: "",
-                    err:   "corner1"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "corner1 must be a VectorXYZ."
                 }, {
-                    name:  "corner2", // type: "VectorXYZ",
+                    name:  "corner2",
                     req:   true,
-                    valid: "",
-                    err:   "corner2"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "corner2 must be a VectorXYZ."
                 }, {
-                    name:  "corner3", // type: "VectorXYZ",
+                    name:  "corner3",
                     req:   true,
-                    valid: "",
-                    err:   "corner3"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "corner3 must be a VectorXYZ."
                 }, {
                     name:  "smooth", //   type: "boolean" },    // if smooth and normal1...3 are defined, it's a smooth triangle
                     valid: "",
                     err:   "smooth"
                 }, {
-                    name:  "normal1", //  type: "VectorXYZ" },
-                    valid: "",
-                    err:   "normal1"
+                    name:  "normal1",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "normal1 must be a VectorXYZ."
                 }, {
-                    name:  "normal2", //  type: "VectorXYZ" },
-                    valid: "",
-                    err:   "normal2"
+                    name:  "normal2",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "normal2 must be a VectorXYZ."
                 }, {
-                    name:  "normal3", //  type: "VectorXYZ" },
-                    valid: "",
-                    err:   "normal3"
+                    name:  "normal3",
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "normal3 must be a VectorXYZ."
                 }, {
                     name:  "textures", // type: "@int" }
                     valid: "",
@@ -1495,10 +1486,10 @@ var cpov = {
             fixed: { finite: false, solid: true, csg: false },
             mutable: [
                 {
-                    name:  "normal", //   type: "VectorXYZ",
+                    name:  "normal",
                     req:   true,
-                    valid: "",
-                    err:   "normal"
+                    valid: "cpov.isClass(val, 'VectorXYZ')",
+                    err:   "normal must be a VectorXYZ."
                 }, {
                     name:  "distance", // type: "float",
                     req:   true,
@@ -1519,8 +1510,8 @@ var cpov = {
                     err:   "coefficients"
                 }, {
                     name:  "sturm", // type: "boolean" },
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1535,8 +1526,8 @@ var cpov = {
                     err:   "coefficients"
                 }, {
                     name:  "sturm", // type: "boolean" }
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1551,8 +1542,8 @@ var cpov = {
                     err:   "coefficients"
                 }, {
                     name:  "sturm", // type: "boolean" }
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1572,8 +1563,8 @@ var cpov = {
                     err:   "coefficients"
                 }, {
                     name:  "sturm", // type: "boolean" }
-                    valid: "",
-                    err:   "sturm"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "sturm must be a boolean."
                 }
             ],
         },
@@ -1646,8 +1637,8 @@ var cpov = {
                     err:   "objects"
                 }, {
                     name:  "splitUnion", // type: "boolean" }
-                    valid: "",
-                    err:   "splitUnion"
+                    valid: "cpov.isBoolean(val)",
+                    err:   "splitUnion must be a boolean."
                 }
             ]
         },
@@ -1976,6 +1967,16 @@ cpov.isNull = function(val) {
 //------------------------------------------------------------------------------
 
 cpov.isClass = function(val, classname) {
+    if(Array.isArray(classname)) {
+        var okay = false;
+        for(var c = 0; c < classname.length; c++) {
+            if(Object.getPrototypeOf(val).constructor.name == classname[c]) {
+                okay = true;
+                break;
+            }
+        }
+        return okay;
+    }
     return Object.getPrototypeOf(val).constructor.name == classname ? true : false;
 }
 
@@ -1983,6 +1984,34 @@ cpov.isClass = function(val, classname) {
 
 cpov.inheritsFrom = function(val, classname) {
     return Object.getPrototypeOf(val.constructor).name == classname ? true : false;
+}
+
+//------------------------------------------------------------------------------
+
+cpov.isArrayOfSubclass = function(val, classname) {
+    if(!Array.isArray(val))
+        return false;
+    if(Array.isArray(classname)) {
+        for(var i = 0; i < val.length) {
+            var okay = false;
+            for(var c = 0; c < classname.length; c++) {
+                if(cpov.inheritsFrom(val, classname[i]) {
+                    okay = true;
+                    break;
+                }
+            }
+            if(!okay) {
+                return false;
+            }
+        }
+    } else {
+        for(var i = 0; i < val.length) {
+            if(!cpov.inheritsFrom(val, classname)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 //==============================================================================
