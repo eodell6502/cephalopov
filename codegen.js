@@ -162,4 +162,26 @@ for(var pname in cpov.objDef) {
 
 fp.close();
 
+/*
+
+TODO:
+
+    * ClassBuilder: routine to import files with chunks of code by name (xgen-ish markup),
+      left-pad, and add to generated classes. This is for final validation and output
+      methods (at least at first).
+
+        // @blockname ------------...
+
+    * Fixed attribute to distinguish pseudo-primitives like the Camera type?
+
+    * Add serial and other bookkeeping to constructor (base class)
+    * Vector and Matrix -- generated?
+    * Other major types
+    * Report output in HTML.
+    * Cosmetic: line up assignment operators in constructors.
+    * Constructor arguments.
+
+
+
+*/
 
