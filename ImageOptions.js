@@ -6,8 +6,6 @@ var cpov = require("./cpov.js").cpov;
 class ImageOptions {
 
     constructor(objType, args) {
-        super(args);
-
         this._allConsole = null;
         this._allFile = null;
         this._antialias = null;
@@ -108,7 +106,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set allConsole(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._allConsole = val;
         } else {
             cpov.error("fatal", "allConsole must be a boolean.", "ImageOptions");
@@ -129,7 +127,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set allFile(val) {
-        if(cpov.isBoolean(val) || cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._allFile = val;
         } else {
             cpov.error("fatal", "allFile must be either a boolean or a non-empty string.", "ImageOptions");
@@ -150,7 +148,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set antialias(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._antialias = val;
         } else {
             cpov.error("fatal", "antialias must be a boolean.", "ImageOptions");
@@ -171,7 +169,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set antialiasDepth(val) {
-        if(cpov.isInt(val) && cpov.isWithin(val, 1, 9)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 9))) {
             this._antialiasDepth = val;
         } else {
             cpov.error("fatal", "antialiasDepth must be an integer in the range 1-9.", "ImageOptions");
@@ -192,7 +190,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set antialiasGamma(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._antialiasGamma = val;
         } else {
             cpov.error("fatal", "antialiasGamma must be a float.", "ImageOptions");
@@ -213,7 +211,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set antialiasThreshold(val) {
-        if(cpov.isFloat(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._antialiasThreshold = val;
         } else {
             cpov.error("fatal", "antialiasThreshold must be a float greater than or equal to zero.", "ImageOptions");
@@ -234,7 +232,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set appendFile(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._appendFile = val;
         } else {
             cpov.error("fatal", "appendFile must be a boolean.", "ImageOptions");
@@ -255,7 +253,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set bitsPerColor(val) {
-        if(cpov.isInt(val) && cpov.isWithin(5, 16)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(5, 16))) {
             this._bitsPerColor = val;
         } else {
             cpov.error("fatal", "bitsPerColor must be an integer in the range 5-16.", "ImageOptions");
@@ -276,7 +274,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set bounding(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._bounding = val;
         } else {
             cpov.error("fatal", "bounding must be a boolean.", "ImageOptions");
@@ -297,7 +295,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set boundingMethod(val) {
-        if(cpov.isInt(val) && cpov.isWithin(1, 2)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(1, 2))) {
             this._boundingMethod = val;
         } else {
             cpov.error("fatal", "boundingMethod must be either 1 or 2.", "ImageOptions");
@@ -318,7 +316,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set boundingThreshold(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._boundingThreshold = val;
         } else {
             cpov.error("fatal", "boundingThreshold must be an integer greater than or equal to zero.", "ImageOptions");
@@ -339,7 +337,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set bspBaseAccessCost(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspBaseAccessCost = val;
         } else {
             cpov.error("fatal", "bspBaseAccessCost must be a float.", "ImageOptions");
@@ -360,7 +358,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set bspChildAccessCost(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspChildAccessCost = val;
         } else {
             cpov.error("fatal", "bspChildAccessCost must be a float.", "ImageOptions");
@@ -381,7 +379,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set bspIsectCost(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspIsectCost = val;
         } else {
             cpov.error("fatal", "bspIsectCost must be a float.", "ImageOptions");
@@ -402,7 +400,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set bspMaxDepth(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._bspMaxDepth = val;
         } else {
             cpov.error("fatal", "bspMaxDepth must be an integer greater than zero.", "ImageOptions");
@@ -423,7 +421,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set bspMissChance(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspMissChance = val;
         } else {
             cpov.error("fatal", "bspMissChance must be a float.", "ImageOptions");
@@ -444,7 +442,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set continueTrace(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._continueTrace = val;
         } else {
             cpov.error("fatal", "continueTrace must be a boolean", "ImageOptions");
@@ -465,7 +463,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set createIni(val) {
-        if(cpov.isBoolean(val) || cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._createIni = val;
         } else {
             cpov.error("fatal", "createIni must be either a boolean or a non-empty string.", "ImageOptions");
@@ -486,7 +484,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set debugConsole(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._debugConsole = val;
         } else {
             cpov.error("fatal", "debugConsole must be a boolean.", "ImageOptions");
@@ -507,7 +505,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set debugFile(val) {
-        if(cpov.isBoolean(val) || cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._debugFile = val;
         } else {
             cpov.error("fatal", "debugFile must be either a boolean or a non-empty string.", "ImageOptions");
@@ -528,7 +526,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set display(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._display = val;
         } else {
             cpov.error("fatal", "display must be a boolean", "ImageOptions");
@@ -549,7 +547,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set displayGamma(val) {
-        if(cpov.isFloat(val) || (cpov.isString(val) && val == 'sRGB')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) || (cpov.isString(val) && val == 'sRGB'))) {
             this._displayGamma = val;
         } else {
             cpov.error("fatal", "displayGamma must be either a float or the string 'sRGB'.", "ImageOptions");
@@ -570,7 +568,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set dither(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._dither = val;
         } else {
             cpov.error("fatal", "dither must be a boolean.", "ImageOptions");
@@ -591,7 +589,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set ditherMethod(val) {
-        if(cpov.isKey(val, cpov.ditherTypes)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.ditherTypes))) {
             this._ditherMethod = val;
         } else {
             cpov.error("fatal", "ditherMethod must be one of 'B2', 'B3', 'B4', 'D1', 'D2', or 'FS'.", "ImageOptions");
@@ -612,7 +610,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set endColumn(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._endColumn = val;
         } else {
             cpov.error("fatal", "endColumn must be an integer greater than zero.", "ImageOptions");
@@ -633,7 +631,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set endRow(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._endRow = val;
         } else {
             cpov.error("fatal", "endRow must be an integer greater than zero.", "ImageOptions");
@@ -654,7 +652,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set exePath(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._exePath = val;
         } else {
             cpov.error("fatal", "exePath must be a non-empty string.", "ImageOptions");
@@ -675,7 +673,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set fatalConsole(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._fatalConsole = val;
         } else {
             cpov.error("fatal", "fatalConsole must be a boolean.", "ImageOptions");
@@ -696,7 +694,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set fatalErrorCommand(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._fatalErrorCommand = val;
         } else {
             cpov.error("fatal", "fatalErrorCommand must be a non-empty string.", "ImageOptions");
@@ -717,7 +715,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set fatalErrorReturn(val) {
-        if(cpov.isKey(val, cpov.returnActions)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._fatalErrorReturn = val;
         } else {
             cpov.error("fatal", "fatalErrorReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
@@ -738,7 +736,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set fatalFile(val) {
-        if(cpov.isBoolean(val) || cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._fatalFile = val;
         } else {
             cpov.error("fatal", "fatalFile must be either a boolean or a non-empty string.", "ImageOptions");
@@ -759,7 +757,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set fileGamma(val) {
-        if(cpov.isFloat(val) || val === 'sRGB') {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) || val === 'sRGB')) {
             this._fileGamma = val;
         } else {
             cpov.error("fatal", "fileGamma", "ImageOptions");
@@ -780,7 +778,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set height(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._height = val;
         } else {
             cpov.error("fatal", "height must be an integer greater than zero.", "ImageOptions");
@@ -801,7 +799,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set highReproducibility(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._highReproducibility = val;
         } else {
             cpov.error("fatal", "highReproducibility must be a boolean", "ImageOptions");
@@ -822,7 +820,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set includeHeader(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._includeHeader = val;
         } else {
             cpov.error("fatal", "includeHeader must be a non-empty string.", "ImageOptions");
@@ -843,7 +841,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set inputFileName(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._inputFileName = val;
         } else {
             cpov.error("fatal", "inputFileName must be a non-empty string.", "ImageOptions");
@@ -864,7 +862,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set jitter(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._jitter = val;
         } else {
             cpov.error("fatal", "jitter must be a boolean.", "ImageOptions");
@@ -885,7 +883,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set jitterAmount(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._jitterAmount = val;
         } else {
             cpov.error("fatal", "jitterAmount must be a float.", "ImageOptions");
@@ -906,7 +904,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set libraryPath(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._libraryPath = val;
         } else {
             cpov.error("fatal", "libraryPath must be a non-empty string.", "ImageOptions");
@@ -927,7 +925,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set maxImageBufferMemory(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._maxImageBufferMemory = val;
         } else {
             cpov.error("fatal", "maxImageBufferMemory must be an integer greater than zero.", "ImageOptions");
@@ -948,7 +946,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set outputAlpha(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._outputAlpha = val;
         } else {
             cpov.error("fatal", "outputAlpha must be a boolean.", "ImageOptions");
@@ -969,7 +967,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set outputFileName(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._outputFileName = val;
         } else {
             cpov.error("fatal", "outputFileName must be a non-empty string.", "ImageOptions");
@@ -990,7 +988,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set outputFileType(val) {
-        if(cpov.isKey(val, cpov.outputFileTypes)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.outputFileTypes))) {
             this._outputFileType = val;
         } else {
             cpov.error("fatal", "outputFileType must be one of 'B', 'C', 'E', 'H', 'J', 'N', 'P', 'S', or 'T'", "ImageOptions");
@@ -1011,7 +1009,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set outputToFile(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._outputToFile = val;
         } else {
             cpov.error("fatal", "outputToFile must be a boolean.", "ImageOptions");
@@ -1032,7 +1030,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set palette(val) {
-        if(cpov.isString(val) && val.length == 1) {
+        if(cpov.isNullOrFunction(val) || (cpov.isString(val) && val.length == 1)) {
             this._palette = val;
         } else {
             cpov.error("fatal", "palette", "ImageOptions");
@@ -1053,7 +1051,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set pauseWhenDone(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._pauseWhenDone = val;
         } else {
             cpov.error("fatal", "pauseWhenDone must be a boolean.", "ImageOptions");
@@ -1074,7 +1072,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set postFrameCommand(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._postFrameCommand = val;
         } else {
             cpov.error("fatal", "postFrameCommand must be a non-empty string.", "ImageOptions");
@@ -1095,7 +1093,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set postFrameReturn(val) {
-        if(cpov.isKey(val, cpov.returnActions)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._postFrameReturn = val;
         } else {
             cpov.error("fatal", "postFrameReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
@@ -1116,7 +1114,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set postSceneCommand(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._postSceneCommand = val;
         } else {
             cpov.error("fatal", "postSceneCommand must be a non-empty string.", "ImageOptions");
@@ -1137,7 +1135,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set postSceneReturn(val) {
-        if(cpov.isKey(val, cpov.returnActions)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._postSceneReturn = val;
         } else {
             cpov.error("fatal", "postSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
@@ -1158,7 +1156,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set preFrameCommand(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._preFrameCommand = val;
         } else {
             cpov.error("fatal", "preFrameCommand must be a non-empty string.", "ImageOptions");
@@ -1179,7 +1177,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set preFrameReturn(val) {
-        if(cpov.isKey(val, cpov.returnActions)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._preFrameReturn = val;
         } else {
             cpov.error("fatal", "preFrameReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
@@ -1200,7 +1198,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set preSceneCommand(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._preSceneCommand = val;
         } else {
             cpov.error("fatal", "preSceneCommand must be a non-empty string.", "ImageOptions");
@@ -1221,7 +1219,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set preSceneReturn(val) {
-        if(cpov.isKey(val, cpov.returnActions)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._preSceneReturn = val;
         } else {
             cpov.error("fatal", "preSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
@@ -1242,7 +1240,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set previewEndSize(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._previewEndSize = val;
         } else {
             cpov.error("fatal", "previewEndSize must be an integer greater than zero", "ImageOptions");
@@ -1263,7 +1261,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set previewStartSize(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._previewStartSize = val;
         } else {
             cpov.error("fatal", "previewStartSize must be an integer greater than zero.", "ImageOptions");
@@ -1284,7 +1282,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set quality(val) {
-        if(cpov.isInt(val) && val >= 0 && val <= 11) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0 && val <= 11)) {
             this._quality = val;
         } else {
             cpov.error("fatal", "quality must be an integer in the range (0 - 11)", "ImageOptions");
@@ -1305,7 +1303,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set radiosityFileName(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityFileName = val;
         } else {
             cpov.error("fatal", "radiosityFileName must be a non-empty string.", "ImageOptions");
@@ -1326,7 +1324,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set radiosityFromFile(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityFromFile = val;
         } else {
             cpov.error("fatal", "radiosityFromFile must be a non-empty string.", "ImageOptions");
@@ -1347,7 +1345,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set radiosityToFile(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityToFile = val;
         } else {
             cpov.error("fatal", "radiosityToFile must be a non-empty string.", "ImageOptions");
@@ -1368,7 +1366,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set radiosityVainPretrace(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radiosityVainPretrace = val;
         } else {
             cpov.error("fatal", "radiosityVainPretrace must be a boolean.", "ImageOptions");
@@ -1389,7 +1387,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set removeBounds(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._removeBounds = val;
         } else {
             cpov.error("fatal", "removeBounds must be a boolean.", "ImageOptions");
@@ -1410,7 +1408,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set renderBlockSize(val) {
-        if(cpov.isInt(val) && val >= 4) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 4)) {
             this._renderBlockSize = val;
         } else {
             cpov.error("fatal", "renderBlockSize must be an integer greater than or equal to 4.", "ImageOptions");
@@ -1431,7 +1429,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set renderBlockStep(val) {
-        if(cpov.isInt(val) && val >= 1) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1)) {
             this._renderBlockStep = val;
         } else {
             cpov.error("fatal", "renderBlockStep must be an integer greater than or equal to 1.", "ImageOptions");
@@ -1452,7 +1450,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set renderConsole(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._renderConsole = val;
         } else {
             cpov.error("fatal", "renderConsole must be a boolean.", "ImageOptions");
@@ -1473,7 +1471,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set renderFile(val) {
-        if(cpov.isBoolean(val) && cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) && cpov.isNonEmptyString(val))) {
             this._renderFile = val;
         } else {
             cpov.error("fatal", "renderFile must be a boolean or a non-empty string.", "ImageOptions");
@@ -1494,7 +1492,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set renderPattern(val) {
-        if(cpov.isInt(val) && val >= 0 && val <= 5) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0 && val <= 5)) {
             this._renderPattern = val;
         } else {
             cpov.error("fatal", "renderPattern must be an integer in the range (0 - 5).", "ImageOptions");
@@ -1515,7 +1513,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set samplingMethod(val) {
-        if(cpov.isInt(val) && val >= 1 && val <= 2) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1 && val <= 2)) {
             this._samplingMethod = val;
         } else {
             cpov.error("fatal", "samplingMethod must be an integer in the range (1 - 2).", "ImageOptions");
@@ -1536,7 +1534,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set splitUnions(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._splitUnions = val;
         } else {
             cpov.error("fatal", "splitUnions must be a boolean.", "ImageOptions");
@@ -1557,7 +1555,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set startColumn(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._startColumn = val;
         } else {
             cpov.error("fatal", "startColumn must be an integer greater than or equal to zero.", "ImageOptions");
@@ -1578,7 +1576,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set startRow(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._startRow = val;
         } else {
             cpov.error("fatal", "startRow must be an integer greater than or equal to zero.", "ImageOptions");
@@ -1599,7 +1597,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set statisticConsole(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._statisticConsole = val;
         } else {
             cpov.error("fatal", "statisticConsole must be a boolean.", "ImageOptions");
@@ -1620,7 +1618,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set statisticFile(val) {
-        if(cpov.isBoolean || cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean || cpov.isNonEmptyString(val))) {
             this._statisticFile = val;
         } else {
             cpov.error("fatal", "statisticFile must be a boolean or a non-empty string.", "ImageOptions");
@@ -1641,7 +1639,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set testAbort(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._testAbort = val;
         } else {
             cpov.error("fatal", "testAbort must be a boolean.", "ImageOptions");
@@ -1662,7 +1660,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set testAbortCount(val) {
-        if(cpov.isInt(val) && val >= 1) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1)) {
             this._testAbortCount = val;
         } else {
             cpov.error("fatal", "testAbortCount must be an integer greater than or equal to one.", "ImageOptions");
@@ -1683,7 +1681,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set userAbortCommand(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._userAbortCommand = val;
         } else {
             cpov.error("fatal", "userAbortCommand must be a non-empty string.", "ImageOptions");
@@ -1704,7 +1702,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set userAbortReturn(val) {
-        if(cpov.isKey(val, cpov.returnActions)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._userAbortReturn = val;
         } else {
             cpov.error("fatal", "userAbortReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
@@ -1725,7 +1723,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set verbose(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._verbose = val;
         } else {
             cpov.error("fatal", "verbose must be a boolean.", "ImageOptions");
@@ -1746,7 +1744,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set videoMode(val) {
-        if(cpov.isString(val) && val.length == 1) {
+        if(cpov.isNullOrFunction(val) || (cpov.isString(val) && val.length == 1)) {
             this._videoMode = val;
         } else {
             cpov.error("fatal", "videoMode must be a single character.", "ImageOptions");
@@ -1767,7 +1765,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set warningConsole(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._warningConsole = val;
         } else {
             cpov.error("fatal", "warningConsole must be a boolean.", "ImageOptions");
@@ -1788,7 +1786,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set warningFile(val) {
-        if(cpov.isBoolean(val) || cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._warningFile = val;
         } else {
             cpov.error("fatal", "warningFile must be a boolean or a non-empty string.", "ImageOptions");
@@ -1809,7 +1807,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set warningLevel(val) {
-        if(cpov.isInt(val) && (val == 0 || val == 5 || val == 10)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && (val == 0 || val == 5 || val == 10))) {
             this._warningLevel = val;
         } else {
             cpov.error("fatal", "warningLevel must be one of 0, 5, or 10.", "ImageOptions");
@@ -1830,7 +1828,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set width(val) {
-        if(cpov.isInt(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._width = val;
         } else {
             cpov.error("fatal", "width must be an integer greater than zero.", "ImageOptions");
@@ -1851,7 +1849,7 @@ class ImageOptions {
     //--------------------------------------------------------------------------
 
     set workThreads(val) {
-        if(cpov.isInt(val) && val >= 1 && val <= 512) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1 && val <= 512)) {
             this._workThreads = val;
         } else {
             cpov.error("fatal", "workThreads must be an integer in the range (1 - 512).", "ImageOptions");

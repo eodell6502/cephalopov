@@ -6,8 +6,6 @@ var cpov = require("./cpov.js").cpov;
 class GlobalSettings {
 
     constructor(objType, args) {
-        super(args);
-
         this._adcBailout = null;
         this._ambientLight = null;
         this._assumedGamma = null;
@@ -67,7 +65,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set adcBailout(val) {
-        if(cpov.isFloat(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._adcBailout = val;
         } else {
             cpov.error("fatal", "adcBailout must be a float greater than or equal to zero.", "GlobalSettings");
@@ -88,7 +86,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set ambientLight(val) {
-        if(cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB'))) {
             this._ambientLight = val;
         } else {
             cpov.error("fatal", "ambientLight must be a VectorRGB or VectorSRGB.", "GlobalSettings");
@@ -109,7 +107,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set assumedGamma(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._assumedGamma = val;
         } else {
             cpov.error("fatal", "assumedGamma must be a float.", "GlobalSettings");
@@ -130,7 +128,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set charset(val) {
-        if(cpov.isInArray(val, ['ascii', 'utf8', 'sys'])) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, ['ascii', 'utf8', 'sys']))) {
             this._charset = val;
         } else {
             cpov.error("fatal", "charset must be one of 'ascii', 'utf8', or 'sys'.", "GlobalSettings");
@@ -151,7 +149,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set iridWavelength(val) {
-        if(cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB'))) {
             this._iridWavelength = val;
         } else {
             cpov.error("fatal", "iridWavelength must be a VectorRGB or VectorSRGB", "GlobalSettings");
@@ -172,7 +170,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set maxIntersections(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._maxIntersections = val;
         } else {
             cpov.error("fatal", "maxIntersections must be an integer greater than or equal to zero.", "GlobalSettings");
@@ -193,7 +191,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set maxTraceLevel(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._maxTraceLevel = val;
         } else {
             cpov.error("fatal", "maxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings");
@@ -214,7 +212,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set mmPerUnit(val) {
-        if(cpov.isFloat(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._mmPerUnit = val;
         } else {
             cpov.error("fatal", "mmPerUnit must be a float greater than or equal to zero.", "GlobalSettings");
@@ -235,7 +233,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set noiseGenerator(val) {
-        if(cpov.isInt(val) && cpov.inArray(val, [1, 2, 3])) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.inArray(val, [1, 2, 3]))) {
             this._noiseGenerator = val;
         } else {
             cpov.error("fatal", "noiseGenerator must be an integer and one of 1, 2, or 3.", "GlobalSettings");
@@ -256,7 +254,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set numberOfWaves(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._numberOfWaves = val;
         } else {
             cpov.error("fatal", "numberOfWaves must be an integer greater than or equal to zero.", "GlobalSettings");
@@ -277,7 +275,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photon(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._photon = val;
         } else {
             cpov.error("fatal", "photon must be a boolean.", "GlobalSettings");
@@ -298,7 +296,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonAdcBailout(val) {
-        if(cpov.isFloat(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._photonAdcBailout = val;
         } else {
             cpov.error("fatal", "photonAdcBailout must be a float greater than or equal to zero.", "GlobalSettings");
@@ -319,7 +317,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonAutostop(val) {
-        if(cpov.isFloat(val) && cpov.within(val, 0, 1)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.within(val, 0, 1))) {
             this._photonAutostop = val;
         } else {
             cpov.error("fatal", "photonAutostop must be a float within the unit interval (0.0 - 1.0)", "GlobalSettings");
@@ -340,7 +338,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonCount(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._photonCount = val;
         } else {
             cpov.error("fatal", "photonCount must be an integer greater than or equal to zero", "GlobalSettings");
@@ -361,7 +359,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonExpandThresholds(val) {
-        if(Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isInt(val[1])) {
+        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isInt(val[1]))) {
             this._photonExpandThresholds = val;
         } else {
             cpov.error("fatal", "photonExpandThresholds must be an array consisting of a float and and integer.", "GlobalSettings");
@@ -382,7 +380,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonGather(val) {
-        if(cpov.isArrayOfInts(val, 2, 2) && val[0] >= 0 && val[1] >= 0 && val[0] <= val[1]) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 2, 2) && val[0] >= 0 && val[1] >= 0 && val[0] <= val[1])) {
             this._photonGather = val;
         } else {
             cpov.error("fatal", "photonGather must be an array of two integers greater than zero in ascending order.", "GlobalSettings");
@@ -403,7 +401,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonJitter(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._photonJitter = val;
         } else {
             cpov.error("fatal", "photonJitter must be a float.", "GlobalSettings");
@@ -424,7 +422,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonLoadFile(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._photonLoadFile = val;
         } else {
             cpov.error("fatal", "photonLoadFile must be a non-empty string.", "GlobalSettings");
@@ -445,7 +443,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonMaxTraceLevel(val) {
-        if(cpov.isInt(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._photonMaxTraceLevel = val;
         } else {
             cpov.error("fatal", "photonMaxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings");
@@ -466,7 +464,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonMedia(val) {
-        if(cpov.isArrayOfFloats(val, 2, 2)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 2))) {
             this._photonMedia = val;
         } else {
             cpov.error("fatal", "photonMedia must be an array of two floats.", "GlobalSettings");
@@ -487,7 +485,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonRadius(val) {
-        if(cpov.isArrayOfFloats(val, 4, 4)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 4, 4))) {
             this._photonRadius = val;
         } else {
             cpov.error("fatal", "photonRadius must be an array of four floats.", "GlobalSettings");
@@ -508,7 +506,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonSaveFile(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._photonSaveFile = val;
         } else {
             cpov.error("fatal", "photonSaveFile must be a non-empty string.", "GlobalSettings");
@@ -529,7 +527,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set photonSpacing(val) {
-        if(cpov.isFloat(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._photonSpacing = val;
         } else {
             cpov.error("fatal", "photonSpacing must be a float greater than zero.", "GlobalSettings");
@@ -550,7 +548,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radAdcBailout(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radAdcBailout = val;
         } else {
             cpov.error("fatal", "radAdcBailout must be a float.", "GlobalSettings");
@@ -571,7 +569,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radAlwaysSample(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radAlwaysSample = val;
         } else {
             cpov.error("fatal", "radAlwaysSample must be a boolean.", "GlobalSettings");
@@ -592,7 +590,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radBrightness(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radBrightness = val;
         } else {
             cpov.error("fatal", "radBrightness must be a float.", "GlobalSettings");
@@ -613,7 +611,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radCount(val) {
-        if(cpov.isArrayOfInts(val, 1, 2) && val[0] >= 1 && (val[1] === undefined || val[1] >= 1)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 1, 2) && val[0] >= 1 && (val[1] === undefined || val[1] >= 1))) {
             this._radCount = val;
         } else {
             cpov.error("fatal", "radCount must be an array of one or two integers, both of which must be greater than or equal to one.", "GlobalSettings");
@@ -634,7 +632,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radErrorBound(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radErrorBound = val;
         } else {
             cpov.error("fatal", "radErrorBound must be a float.", "GlobalSettings");
@@ -655,7 +653,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radGrayThreshold(val) {
-        if(cpov.isFloat(val) && cpov.isWithin(val, 0, 1)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._radGrayThreshold = val;
         } else {
             cpov.error("fatal", "radGrayThreshold must be a float in the unit interval (0.0 - 1.0).", "GlobalSettings");
@@ -676,7 +674,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radiosity(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radiosity = val;
         } else {
             cpov.error("fatal", "radiosity must be a boolean.", "GlobalSettings");
@@ -697,7 +695,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radLowErrorFactor(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radLowErrorFactor = val;
         } else {
             cpov.error("fatal", "radLowErrorFactor must be a float.", "GlobalSettings");
@@ -718,7 +716,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radMaximumReuse(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMaximumReuse = val;
         } else {
             cpov.error("fatal", "radMaximumReuse must be a float.", "GlobalSettings");
@@ -739,7 +737,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radMaxSample(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMaxSample = val;
         } else {
             cpov.error("fatal", "radMaxSample must be a float.", "GlobalSettings");
@@ -760,7 +758,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radMinimumReuse(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMinimumReuse = val;
         } else {
             cpov.error("fatal", "radMinimumReuse must be a float.", "GlobalSettings");
@@ -781,7 +779,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radNearestCount(val) {
-        if(cpov.isInt(val) && cpov.isWithin(val, 1, 20)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 20))) {
             this._radNearestCount = val;
         } else {
             cpov.error("fatal", "radNearestCount must be an integer in the range 1-20.", "GlobalSettings");
@@ -802,7 +800,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radNormal(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radNormal = val;
         } else {
             cpov.error("fatal", "radNormal must be a boolean.", "GlobalSettings");
@@ -823,7 +821,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radPretraceEnd(val) {
-        if(cpov.isFloat(val) && cpov.isWithin(0, 1)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(0, 1))) {
             this._radPretraceEnd = val;
         } else {
             cpov.error("fatal", "radPretraceEnd must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
@@ -844,7 +842,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radPretraceStart(val) {
-        if(cpov.isFloat(val) && cpov.isWithin(0, 1)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(0, 1))) {
             this._radPretraceStart = val;
         } else {
             cpov.error("fatal", "radPretraceStart must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
@@ -865,7 +863,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radRecursionLimit(val) {
-        if(cpov.isInt(val) && cpov.isWithin(val, 1, 20).) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 20))) {
             this._radRecursionLimit = val;
         } else {
             cpov.error("fatal", "radRecursionLimit must be an integer in the range 1-20.", "GlobalSettings");
@@ -886,7 +884,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set radSubsurface(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radSubsurface = val;
         } else {
             cpov.error("fatal", "radSubsurface must be a boolean.", "GlobalSettings");
@@ -907,7 +905,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set subRadiosity(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._subRadiosity = val;
         } else {
             cpov.error("fatal", "subRadiosity must be a boolean", "GlobalSettings");
@@ -928,7 +926,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set subSamples(val) {
-        if(cpov.isArrayOfInts(val, 2, 2)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 2, 2))) {
             this._subSamples = val;
         } else {
             cpov.error("fatal", "subSamples must be an array of two integers.", "GlobalSettings");
@@ -949,7 +947,7 @@ class GlobalSettings {
     //--------------------------------------------------------------------------
 
     set subsurface(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._subsurface = val;
         } else {
             cpov.error("fatal", "subsurface must be a boolean.", "GlobalSettings");

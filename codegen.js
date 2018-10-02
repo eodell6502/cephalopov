@@ -49,8 +49,9 @@ ClassBuilder.prototype.toString = function() {
 
     // Constructor -------------------------------------------------------------
 
-    src.push(tab1 + "constructor(objType, args) {\n"
-        + tab2 + "super(args);\n");
+    src.push(tab1 + "constructor(objType, args) {")
+    if(this.superClass)
+        src.push(tab2 + "super(args);\n");
 
     // Fixed properties --------------------------------------------------------
 
@@ -106,9 +107,14 @@ ClassBuilder.prototype.toString = function() {
                 + tab3 + "return this._" + item.name + ";\n"
                 + tab1 + "}\n\n"
                 + this.divider(1, "-") + "\n\n"
-                + tab1 + "set " + item.name + "(val) {\n"
-                + tab2 + "if(" + item.valid + ") {\n"
-                + tab3 + "this._" + item.name + " = val;\n"
+                + tab1 + "set " + item.name + "(val) {"
+            );
+            if(item.valid)
+                src.push(tab2 + "if(cpov.isNullOrFunction(val) || (" + item.valid + ")) {");
+            else
+                src.push(tab2 + "if(true) { // FIXME");
+            src.push(
+                tab3 + "this._" + item.name + " = val;\n"
                 + tab2 + "} else {\n"
                 + tab3 + "cpov.error(\"fatal\", \"" + item.err + "\", \"" + this.name + "\");\n"
                 + tab2 + "}\n"
@@ -143,7 +149,7 @@ fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false) + "\
 fp.write("exports.ImageOptions = ImageOptions;\n\n");
 fp.close();
 
-var fp = new File("./Primitive.js", "w");
+var fp = new File("./Primitives.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false) + "\n\n");
 fp.write("exports.Primitive = Primitive;\n\n");

@@ -608,7 +608,7 @@ cpov.gsDef = {
             err:   "radPretraceStart must be a float in the unit interval (0.0 - 1.0)"
         }, {
             name:  "radRecursionLimit",
-            valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 20).",
+            valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 20)",
             err:   "radRecursionLimit must be an integer in the range 1-20."
         }, {
             name:  "radSubsurface",

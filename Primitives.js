@@ -6,8 +6,6 @@ var cpov = require("./cpov.js").cpov;
 class Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._active = null;
         this._baseTransform = null;
         this._boundedBy = null;
@@ -50,7 +48,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set active(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._active = val;
         } else {
             cpov.error("fatal", "active must be a boolean.", "Primitive");
@@ -71,7 +69,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set baseTransform(val) {
-        if(cpov.isClass(val, 'Matrix')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Matrix'))) {
             this._baseTransform = val;
         } else {
             cpov.error("fatal", "baseTransform must be a Matrix.", "Primitive");
@@ -92,7 +90,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set boundedBy(val) {
-        if(cpov.inheritsFrom('Primitive') ) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom('Primitive') )) {
             this._boundedBy = val;
         } else {
             cpov.error("fatal", "boundedBy must be a Primitive.", "Primitive");
@@ -113,7 +111,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set children(val) {
-        if(cpov.isArrayOfSubclass(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfSubclass(val, 'Primitive'))) {
             this._children = val;
         } else {
             cpov.error("fatal", "children must be an array of Primitives.", "Primitive");
@@ -134,7 +132,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set clippedBy(val) {
-        if(cpov.inheritsFrom(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._clippedBy = val;
         } else {
             cpov.error("fatal", "clippedBy", "Primitive");
@@ -155,7 +153,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set doubleIlluminate(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._doubleIlluminate = val;
         } else {
             cpov.error("fatal", "doubleIlluminate must be a boolean.", "Primitive");
@@ -176,7 +174,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set finish(val) {
-        if(cpov.isClass(val, 'Finish')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Finish'))) {
             this._finish = val;
         } else {
             cpov.error("fatal", "finish must be a Finish.", "Primitive");
@@ -197,7 +195,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set frameBegin(val) {
-        if(typeof val == 'function') {
+        if(cpov.isNullOrFunction(val) || (typeof val == 'function')) {
             this._frameBegin = val;
         } else {
             cpov.error("fatal", "frameBegin must be a JavaScript function.", "Primitive");
@@ -218,7 +216,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set frameEnd(val) {
-        if(typeof val == 'function') {
+        if(cpov.isNullOrFunction(val) || (typeof val == 'function')) {
             this._frameEnd = val;
         } else {
             cpov.error("fatal", "frameEnd must be a JavaScript function.", "Primitive");
@@ -239,7 +237,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set hierarchy(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
         } else {
             cpov.error("fatal", "hierarchy must be a boolean.", "Primitive");
@@ -260,7 +258,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set hollow(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hollow = val;
         } else {
             cpov.error("fatal", "hollow must be a boolean.", "Primitive");
@@ -281,7 +279,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set id(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._id = val;
         } else {
             cpov.error("fatal", "id must be a non-empty string.", "Primitive");
@@ -302,7 +300,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set interior(val) {
-        if(cpov.isClass(val, 'Interior')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Interior'))) {
             this._interior = val;
         } else {
             cpov.error("fatal", "interior must be an Interior.", "Primitive");
@@ -323,7 +321,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set inverse(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._inverse = val;
         } else {
             cpov.error("fatal", "inverse must be a boolean.", "Primitive");
@@ -344,7 +342,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set material(val) {
-        if(cpov.isClass(val, 'Material')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Material'))) {
             this._material = val;
         } else {
             cpov.error("fatal", "material must be a Material.", "Primitive");
@@ -365,7 +363,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set noImage(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noImage = val;
         } else {
             cpov.error("fatal", "noImage must be a boolean.", "Primitive");
@@ -386,7 +384,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set noRadiosity(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noRadiosity = val;
         } else {
             cpov.error("fatal", "noRadiosity must be a boolean.", "Primitive");
@@ -407,7 +405,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set noReflection(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noReflection = val;
         } else {
             cpov.error("fatal", "noReflection must be a boolean.", "Primitive");
@@ -428,7 +426,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set normal(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal = val;
         } else {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Primitive");
@@ -449,7 +447,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set noShadow(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noShadow = val;
         } else {
             cpov.error("fatal", "noShadow must be a boolean.", "Primitive");
@@ -470,7 +468,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set parent(val) {
-        if(cpov.inheritsFrom(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._parent = val;
         } else {
             cpov.error("fatal", "parent must be a Primitive.", "Primitive");
@@ -491,7 +489,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set photons(val) {
-        if() {
+        if(true) { // FIXME
             this._photons = val;
         } else {
             cpov.error("fatal", "photons", "Primitive");
@@ -512,7 +510,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set radiosity(val) {
-        if() {
+        if(true) { // FIXME
             this._radiosity = val;
         } else {
             cpov.error("fatal", "radiosity", "Primitive");
@@ -533,7 +531,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set serial(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._serial = val;
         } else {
             cpov.error("fatal", "serial must be an integer.", "Primitive");
@@ -554,7 +552,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set texture(val) {
-        if(cpov.isClass(val, 'Texture')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Texture'))) {
             this._texture = val;
         } else {
             cpov.error("fatal", "texture must be a Texture.", "Primitive");
@@ -575,7 +573,7 @@ class Primitive {
     //--------------------------------------------------------------------------
 
     set transform(val) {
-        if(cpov.isClass(val, 'Matrix')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Matrix'))) {
             this._transform = val;
         } else {
             cpov.error("fatal", "transform must be a Matrix.", "Primitive");
@@ -593,8 +591,6 @@ exports.Primitive = Primitive;
 class Blob extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -654,7 +650,7 @@ class Blob extends Primitive {
     //--------------------------------------------------------------------------
 
     set components(val) {
-        if(cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length)) {
             this._components = val;
         } else {
             cpov.error("fatal", "components must be an array of Spheres and/or Cylinders.", "Blob");
@@ -675,7 +671,7 @@ class Blob extends Primitive {
     //--------------------------------------------------------------------------
 
     set threshold(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._threshold = val;
         } else {
             cpov.error("fatal", "threshold", "Blob");
@@ -696,7 +692,7 @@ class Blob extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Blob");
@@ -717,7 +713,7 @@ class Blob extends Primitive {
     //--------------------------------------------------------------------------
 
     set hierarchy(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
         } else {
             cpov.error("fatal", "hierarchy must be a boolean.", "Blob");
@@ -735,8 +731,6 @@ exports.Blob = Blob;
 class Box extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -794,7 +788,7 @@ class Box extends Primitive {
     //--------------------------------------------------------------------------
 
     set corner1(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner1 = val;
         } else {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Box");
@@ -815,7 +809,7 @@ class Box extends Primitive {
     //--------------------------------------------------------------------------
 
     set corner2(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner2 = val;
         } else {
             cpov.error("fatal", "corner2", "Box");
@@ -833,8 +827,6 @@ exports.Box = Box;
 class Camera extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = false;
         this._csg = false;
@@ -906,7 +898,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set type(val) {
-        if(cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera'])) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera']))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera.", "Camera");
@@ -927,7 +919,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set angle(val) {
-        if() {
+        if(true) { // FIXME
             this._angle = val;
         } else {
             cpov.error("fatal", "angle", "Camera");
@@ -948,7 +940,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set apertureSize(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._apertureSize = val;
         } else {
             cpov.error("fatal", "apertureSize must be a float.", "Camera");
@@ -969,7 +961,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set blurSamples(val) {
-        if(cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0)) {
             this._blurSamples = val;
         } else {
             cpov.error("fatal", "blurSamples must be an array of two floats greater than or equal to zero.", "Camera");
@@ -990,7 +982,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set bokeh(val) {
-        if(cpov.isClass(val, 'VectorRGB') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0)) {
             this._bokeh = val;
         } else {
             cpov.error("fatal", "bokeh must be a VectorRGB in the range <0, 0, 0> to <1, 1, 0>.", "Camera");
@@ -1011,7 +1003,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set confidence(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._confidence = val;
         } else {
             cpov.error("fatal", "confidence must be a float.", "Camera");
@@ -1032,7 +1024,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set cylinderType(val) {
-        if(cpov.isInt(val) && val > 0 && val < 5) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0 && val < 5)) {
             this._cylinderType = val;
         } else {
             cpov.error("fatal", "cylinderType must be an integer in the range (1 - 4).", "Camera");
@@ -1053,7 +1045,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set direction(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._direction = val;
         } else {
             cpov.error("fatal", "direction must be a VectorXYZ.", "Camera");
@@ -1074,7 +1066,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set focalPoint(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._focalPoint = val;
         } else {
             cpov.error("fatal", "focalPoint must be a VectorXYZ.", "Camera");
@@ -1095,7 +1087,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set location(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._location = val;
         } else {
             cpov.error("fatal", "location must be a VectorXYZ.", "Camera");
@@ -1116,7 +1108,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set lookAt(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._lookAt = val;
         } else {
             cpov.error("fatal", "lookAt must be a VectorXYZ.", "Camera");
@@ -1137,7 +1129,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set right(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._right = val;
         } else {
             cpov.error("fatal", "right must be a VectorXYZ.", "Camera");
@@ -1158,7 +1150,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set sky(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._sky = val;
         } else {
             cpov.error("fatal", "sky must be a VectorXYZ.", "Camera");
@@ -1179,7 +1171,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set up(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._up = val;
         } else {
             cpov.error("fatal", "up must be a VectorXYZ.", "Camera");
@@ -1200,7 +1192,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set variance(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._variance = val;
         } else {
             cpov.error("fatal", "variance must be a float.", "Camera");
@@ -1221,7 +1213,7 @@ class Camera extends Primitive {
     //--------------------------------------------------------------------------
 
     set vertAngle(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._vertAngle = val;
         } else {
             cpov.error("fatal", "vertAngle must be an integer.", "Camera");
@@ -1239,8 +1231,6 @@ exports.Camera = Camera;
 class Cone extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -1301,7 +1291,7 @@ class Cone extends Primitive {
     //--------------------------------------------------------------------------
 
     set basePoint(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._basePoint = val;
         } else {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cone");
@@ -1322,7 +1312,7 @@ class Cone extends Primitive {
     //--------------------------------------------------------------------------
 
     set baseRadius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._baseRadius = val;
         } else {
             cpov.error("fatal", "baseRadius must be a float.", "Cone");
@@ -1343,7 +1333,7 @@ class Cone extends Primitive {
     //--------------------------------------------------------------------------
 
     set capPoint(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._capPoint = val;
         } else {
             cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cone");
@@ -1364,7 +1354,7 @@ class Cone extends Primitive {
     //--------------------------------------------------------------------------
 
     set capRadius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._capRadius = val;
         } else {
             cpov.error("fatal", "capRadius must be a float.", "Cone");
@@ -1385,7 +1375,7 @@ class Cone extends Primitive {
     //--------------------------------------------------------------------------
 
     set open(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
             cpov.error("fatal", "open must be a boolean.", "Cone");
@@ -1403,8 +1393,6 @@ exports.Cone = Cone;
 class Cylinder extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -1465,7 +1453,7 @@ class Cylinder extends Primitive {
     //--------------------------------------------------------------------------
 
     set basePoint(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._basePoint = val;
         } else {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cylinder");
@@ -1486,7 +1474,7 @@ class Cylinder extends Primitive {
     //--------------------------------------------------------------------------
 
     set capPoint(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._capPoint = val;
         } else {
             cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cylinder");
@@ -1507,7 +1495,7 @@ class Cylinder extends Primitive {
     //--------------------------------------------------------------------------
 
     set radius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
         } else {
             cpov.error("fatal", "radius must be a float.", "Cylinder");
@@ -1528,7 +1516,7 @@ class Cylinder extends Primitive {
     //--------------------------------------------------------------------------
 
     set open(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
             cpov.error("fatal", "open must be a boolean.", "Cylinder");
@@ -1549,7 +1537,7 @@ class Cylinder extends Primitive {
     //--------------------------------------------------------------------------
 
     set strength(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._strength = val;
         } else {
             cpov.error("fatal", "strength must be a float", "Cylinder");
@@ -1567,8 +1555,6 @@ exports.Cylinder = Cylinder;
 class HeightField extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -1631,7 +1617,7 @@ class HeightField extends Primitive {
     //--------------------------------------------------------------------------
 
     set source(val) {
-        if(cpov.isSdlFunction(val) || cpov.isString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val) || cpov.isString(val))) {
             this._source = val;
         } else {
             cpov.error("fatal", "source", "HeightField");
@@ -1652,7 +1638,7 @@ class HeightField extends Primitive {
     //--------------------------------------------------------------------------
 
     set hfType(val) {
-        if(cpov.isInArray(val, cpov.hfTypes)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, cpov.hfTypes))) {
             this._hfType = val;
         } else {
             cpov.error("fatal", "hfType must be one of exr, gif, hdr, iff, jpeg, pgm, png, pot, ppm, sys, tga, or tiff.", "HeightField");
@@ -1673,7 +1659,7 @@ class HeightField extends Primitive {
     //--------------------------------------------------------------------------
 
     set smooth(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._smooth = val;
         } else {
             cpov.error("fatal", "smooth must be a boolean.", "HeightField");
@@ -1694,7 +1680,7 @@ class HeightField extends Primitive {
     //--------------------------------------------------------------------------
 
     set waterLevel(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._waterLevel = val;
         } else {
             cpov.error("fatal", "waterLevel must be a float.", "HeightField");
@@ -1715,7 +1701,7 @@ class HeightField extends Primitive {
     //--------------------------------------------------------------------------
 
     set hierarchy(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
         } else {
             cpov.error("fatal", "hierarchy must be a boolean.", "HeightField");
@@ -1736,7 +1722,7 @@ class HeightField extends Primitive {
     //--------------------------------------------------------------------------
 
     set gamma(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._gamma = val;
         } else {
             cpov.error("fatal", "gamma must be a float.", "HeightField");
@@ -1757,7 +1743,7 @@ class HeightField extends Primitive {
     //--------------------------------------------------------------------------
 
     set premult(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._premult = val;
         } else {
             cpov.error("fatal", "premult must be a boolean.", "HeightField");
@@ -1775,8 +1761,6 @@ exports.HeightField = HeightField;
 class IsoSurface extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -1840,7 +1824,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set source(val) {
-        if(cpov.isSdlFunction(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._source = val;
         } else {
             cpov.error("fatal", "source must be an SDL function.", "IsoSurface");
@@ -1861,7 +1845,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set containedBy(val) {
-        if(cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
             this._containedBy = val;
         } else {
             cpov.error("fatal", "containedBy must be a Sphere or a Box.", "IsoSurface");
@@ -1882,7 +1866,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set threshold(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._threshold = val;
         } else {
             cpov.error("fatal", "threshold", "IsoSurface");
@@ -1903,7 +1887,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set accuracy(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._accuracy = val;
         } else {
             cpov.error("fatal", "accuracy must be a float.", "IsoSurface");
@@ -1924,7 +1908,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set maxGradient(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._maxGradient = val;
         } else {
             cpov.error("fatal", "maxGradient must be a float.", "IsoSurface");
@@ -1945,7 +1929,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set evaluate(val) {
-        if(cpov.isArrayOfFloats(val, 3, 3)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 3, 3))) {
             this._evaluate = val;
         } else {
             cpov.error("fatal", "evaluate must be an array of three floats.", "IsoSurface");
@@ -1966,7 +1950,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set open(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
             cpov.error("fatal", "open must be a boolean.", "IsoSurface");
@@ -1987,7 +1971,7 @@ class IsoSurface extends Primitive {
     //--------------------------------------------------------------------------
 
     set maxTrace(val) {
-        if(cpov.isInt(val) || (typeof val == 'string' && val == 'allIntersections')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) || (typeof val == 'string' && val == 'allIntersections'))) {
             this._maxTrace = val;
         } else {
             cpov.error("fatal", "maxTrace must be either an integer or 'allIntersections'.", "IsoSurface");
@@ -2005,8 +1989,6 @@ exports.IsoSurface = IsoSurface;
 class JuliaFractal extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -2068,7 +2050,7 @@ class JuliaFractal extends Primitive {
     //--------------------------------------------------------------------------
 
     set type(val) {
-        if(cpov.inArray(val, cpov.juliaFractalTypes)) {
+        if(cpov.isNullOrFunction(val) || (cpov.inArray(val, cpov.juliaFractalTypes))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be one of hypercomplex:acos, hypercomplex:acosh, hypercomplex:asin, hypercomplex:atan, hypercomplex:atanh, hypercomplex:cos, hypercomplex:cosh, hypercomplex:cube, hypercomplex:exp, hypercomplex:ln, hypercomplex:pwr, hypercomplex:reciprocal, hypercomplex:sin, hypercomplex:sinh, hypercomplex:sqr, hypercomplex:tan, hypercomplex:tanh, quaternion:cube, or quaternion:sqr.", "JuliaFractal");
@@ -2089,7 +2071,7 @@ class JuliaFractal extends Primitive {
     //--------------------------------------------------------------------------
 
     set power(val) {
-        if(cpov.isClass(val, 'VectorXY')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXY'))) {
             this._power = val;
         } else {
             cpov.error("fatal", "power must be a VectorXY.", "JuliaFractal");
@@ -2110,7 +2092,7 @@ class JuliaFractal extends Primitive {
     //--------------------------------------------------------------------------
 
     set maxIter(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._maxIter = val;
         } else {
             cpov.error("fatal", "maxIter must be an integer.", "JuliaFractal");
@@ -2131,7 +2113,7 @@ class JuliaFractal extends Primitive {
     //--------------------------------------------------------------------------
 
     set precision(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._precision = val;
         } else {
             cpov.error("fatal", "precision must be an integer.", "JuliaFractal");
@@ -2152,7 +2134,7 @@ class JuliaFractal extends Primitive {
     //--------------------------------------------------------------------------
 
     set slice(val) {
-        if(cpov.isClass(val, 'VectorXYZW')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW'))) {
             this._slice = val;
         } else {
             cpov.error("fatal", "slice must be a VectorXYZW.", "JuliaFractal");
@@ -2173,7 +2155,7 @@ class JuliaFractal extends Primitive {
     //--------------------------------------------------------------------------
 
     set distance(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._distance = val;
         } else {
             cpov.error("fatal", "distance must be a float.", "JuliaFractal");
@@ -2191,8 +2173,6 @@ exports.JuliaFractal = JuliaFractal;
 class Lathe extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -2251,7 +2231,7 @@ class Lathe extends Primitive {
     //--------------------------------------------------------------------------
 
     set type(val) {
-        if(cpov.isKey(val, cpov.splineTypes)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.splineTypes))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be one of 'bezierSpline', 'cubicSpline', 'linearSpline', or 'quadraticSpline'.", "Lathe");
@@ -2272,7 +2252,7 @@ class Lathe extends Primitive {
     //--------------------------------------------------------------------------
 
     set points(val) {
-        if(cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of two or more VectorXY.", "Lathe");
@@ -2293,7 +2273,7 @@ class Lathe extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Lathe");
@@ -2311,8 +2291,6 @@ exports.Lathe = Lathe;
 class LightSource extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = false;
         this._csg = false;
@@ -2393,7 +2371,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set location(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._location = val;
         } else {
             cpov.error("fatal", "location must be a VectorXYZ.", "LightSource");
@@ -2414,7 +2392,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set color(val) {
-        if(cpov.isClass(val, 'VectorRGB')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB'))) {
             this._color = val;
         } else {
             cpov.error("fatal", "color must be a VectorRGB.", "LightSource");
@@ -2435,7 +2413,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set adaptive(val) {
-        if(cpov.isFloat(val) && val >= 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._adaptive = val;
         } else {
             cpov.error("fatal", "adaptive must be a float greater than or equal to zero.", "LightSource");
@@ -2456,7 +2434,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set areaIllumination(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._areaIllumination = val;
         } else {
             cpov.error("fatal", "areaIllumination must be a boolean.", "LightSource");
@@ -2477,7 +2455,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set areaLight(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._areaLight = val;
         } else {
             cpov.error("fatal", "areaLight must be a boolean.", "LightSource");
@@ -2498,7 +2476,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set axis1(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._axis1 = val;
         } else {
             cpov.error("fatal", "axis1 must be a VectorXYZ.", "LightSource");
@@ -2519,7 +2497,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set axis2(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._axis2 = val;
         } else {
             cpov.error("fatal", "axis2 must be a VectorXYZ.", "LightSource");
@@ -2540,7 +2518,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set circular(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._circular = val;
         } else {
             cpov.error("fatal", "circular must be a boolean.", "LightSource");
@@ -2561,7 +2539,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set fadeDistance(val) {
-        if(cpov.isFloat(val) && val > 0.) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0.)) {
             this._fadeDistance = val;
         } else {
             cpov.error("fatal", "fadeDistance must be a float greater than zero.", "LightSource");
@@ -2582,7 +2560,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set fadePower(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._fadePower = val;
         } else {
             cpov.error("fatal", "fadePower must be a float.", "LightSource");
@@ -2603,7 +2581,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set falloff(val) {
-        if(cpov.isFloat(val) && val < 90.) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val < 90.)) {
             this._falloff = val;
         } else {
             cpov.error("fatal", "falloff must be a float less than 90.", "LightSource");
@@ -2624,7 +2602,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set jitter(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._jitter = val;
         } else {
             cpov.error("fatal", "jitter must be a boolean.", "LightSource");
@@ -2645,7 +2623,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set looksLike(val) {
-        if(cpov.inheritsFrom(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._looksLike = val;
         } else {
             cpov.error("fatal", "looksLike must be a Primitive.", "LightSource");
@@ -2666,7 +2644,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set mediaAttenuation(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._mediaAttenuation = val;
         } else {
             cpov.error("fatal", "mediaAttenuation must be a boolean.", "LightSource");
@@ -2687,7 +2665,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set mediaInteraction(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._mediaInteraction = val;
         } else {
             cpov.error("fatal", "mediaInteraction must be a boolean.", "LightSource");
@@ -2708,7 +2686,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set orient(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._orient = val;
         } else {
             cpov.error("fatal", "orient must be a boolean.", "LightSource");
@@ -2729,7 +2707,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set parallel(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._parallel = val;
         } else {
             cpov.error("fatal", "parallel must be a boolean.", "LightSource");
@@ -2750,7 +2728,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set pointAt(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._pointAt = val;
         } else {
             cpov.error("fatal", "pointAt must be a VectorXYZ.", "LightSource");
@@ -2771,7 +2749,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set projectedThrough(val) {
-        if(cpov.inheritsFrom(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._projectedThrough = val;
         } else {
             cpov.error("fatal", "projectedThrough", "LightSource");
@@ -2792,7 +2770,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set radius(val) {
-        if(cpov.isFloat(val) && val < 90) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val < 90)) {
             this._radius = val;
         } else {
             cpov.error("fatal", "radius must be a float less than 90.", "LightSource");
@@ -2813,7 +2791,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set shadowless(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._shadowless = val;
         } else {
             cpov.error("fatal", "shadowless must be a boolean.", "LightSource");
@@ -2834,7 +2812,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set size1(val) {
-        if(cpov.isFloat(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._size1 = val;
         } else {
             cpov.error("fatal", "size1 must be a float greater than zero.", "LightSource");
@@ -2855,7 +2833,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set size2(val) {
-        if(cpov.isFloat(val) && val > 0) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._size2 = val;
         } else {
             cpov.error("fatal", "size2 must be a float greater than zero.", "LightSource");
@@ -2876,7 +2854,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set tightness(val) {
-        if(cpov.isFloat(val) && val >= 0 && val <= 100) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 100)) {
             this._tightness = val;
         } else {
             cpov.error("fatal", "tightness must be a float in the range (0 - 100).", "LightSource");
@@ -2897,7 +2875,7 @@ class LightSource extends Primitive {
     //--------------------------------------------------------------------------
 
     set type(val) {
-        if(cpov.isString(val) && (val == 'spotlight' || val == 'cylinder')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isString(val) && (val == 'spotlight' || val == 'cylinder'))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be either 'spotlight' or 'cylinder'.", "LightSource");
@@ -2915,8 +2893,6 @@ exports.LightSource = LightSource;
 class Ovus extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -2974,7 +2950,7 @@ class Ovus extends Primitive {
     //--------------------------------------------------------------------------
 
     set bottomRadius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bottomRadius = val;
         } else {
             cpov.error("fatal", "bottomRadius must be a float.", "Ovus");
@@ -2995,7 +2971,7 @@ class Ovus extends Primitive {
     //--------------------------------------------------------------------------
 
     set topRadius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._topRadius = val;
         } else {
             cpov.error("fatal", "topRadius must be a float.", "Ovus");
@@ -3013,8 +2989,6 @@ exports.Ovus = Ovus;
 class Parametric extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -3082,7 +3056,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set funcX(val) {
-        if(cpov.isSdlFunction(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._funcX = val;
         } else {
             cpov.error("fatal", "funcX must be an SDL function.", "Parametric");
@@ -3103,7 +3077,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set funcY(val) {
-        if(cpov.isSdlFunction(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._funcY = val;
         } else {
             cpov.error("fatal", "funcY must be an SDL function.", "Parametric");
@@ -3124,7 +3098,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set funcZ(val) {
-        if(cpov.isSdlFunction(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._funcZ = val;
         } else {
             cpov.error("fatal", "funcZ must be an SDL function.", "Parametric");
@@ -3145,7 +3119,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set uv1(val) {
-        if(cpov.isClass(val, 'VectorUV')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV'))) {
             this._uv1 = val;
         } else {
             cpov.error("fatal", "uv1 must be a VectorUV.", "Parametric");
@@ -3166,7 +3140,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set uv2(val) {
-        if(cpov.isClass(val, 'VectorUV')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV'))) {
             this._uv2 = val;
         } else {
             cpov.error("fatal", "uv2 must be a VectorUV.", "Parametric");
@@ -3187,7 +3161,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set containedBy(val) {
-        if(cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
             this._containedBy = val;
         } else {
             cpov.error("fatal", "containedBy must be a Sphere or Box.", "Parametric");
@@ -3208,7 +3182,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set maxGradient(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._maxGradient = val;
         } else {
             cpov.error("fatal", "maxGradient must be a float.", "Parametric");
@@ -3229,7 +3203,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set accuracy(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._accuracy = val;
         } else {
             cpov.error("fatal", "accuracy must be a float.", "Parametric");
@@ -3250,7 +3224,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set precomputeDepth(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._precomputeDepth = val;
         } else {
             cpov.error("fatal", "precomputeDepth must be an integer.", "Parametric");
@@ -3271,7 +3245,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set precomputeX(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeX = val;
         } else {
             cpov.error("fatal", "precomputeX must be a boolean.", "Parametric");
@@ -3292,7 +3266,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set precomputeY(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeY = val;
         } else {
             cpov.error("fatal", "precomputeY must be a boolean.", "Parametric");
@@ -3313,7 +3287,7 @@ class Parametric extends Primitive {
     //--------------------------------------------------------------------------
 
     set precomputeZ(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeZ = val;
         } else {
             cpov.error("fatal", "precomputeZ must be a boolean.", "Parametric");
@@ -3331,8 +3305,6 @@ exports.Parametric = Parametric;
 class Prism extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -3394,7 +3366,7 @@ class Prism extends Primitive {
     //--------------------------------------------------------------------------
 
     set type(val) {
-        if(cpov.isKey(val, cpov.prismTypes)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.prismTypes))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be one of 'bezierSpline', 'conicSweep', 'cubicSpline', 'linearSpline', 'linearSweep', or 'quadraticSpline'.", "Prism");
@@ -3415,7 +3387,7 @@ class Prism extends Primitive {
     //--------------------------------------------------------------------------
 
     set height1(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._height1 = val;
         } else {
             cpov.error("fatal", "height1 must be a float.", "Prism");
@@ -3436,7 +3408,7 @@ class Prism extends Primitive {
     //--------------------------------------------------------------------------
 
     set height2(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._height2 = val;
         } else {
             cpov.error("fatal", "height2 must be a float", "Prism");
@@ -3457,7 +3429,7 @@ class Prism extends Primitive {
     //--------------------------------------------------------------------------
 
     set points(val) {
-        if(cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of VectorXY.", "Prism");
@@ -3478,7 +3450,7 @@ class Prism extends Primitive {
     //--------------------------------------------------------------------------
 
     set open(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
             cpov.error("fatal", "open must be a boolean.", "Prism");
@@ -3499,7 +3471,7 @@ class Prism extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Prism");
@@ -3517,8 +3489,6 @@ exports.Prism = Prism;
 class Sphere extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -3577,7 +3547,7 @@ class Sphere extends Primitive {
     //--------------------------------------------------------------------------
 
     set center(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._center = val;
         } else {
             cpov.error("fatal", "center must be a VectorXYZ.", "Sphere");
@@ -3598,7 +3568,7 @@ class Sphere extends Primitive {
     //--------------------------------------------------------------------------
 
     set radius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
         } else {
             cpov.error("fatal", "radius must be a float.", "Sphere");
@@ -3619,7 +3589,7 @@ class Sphere extends Primitive {
     //--------------------------------------------------------------------------
 
     set strength(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._strength = val;
         } else {
             cpov.error("fatal", "strength must be a float.", "Sphere");
@@ -3637,8 +3607,6 @@ exports.Sphere = Sphere;
 class SphereSweep extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -3697,7 +3665,7 @@ class SphereSweep extends Primitive {
     //--------------------------------------------------------------------------
 
     set type(val) {
-        if(cpov.isKey(val, cpov.internalSplineTypes)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.internalSplineTypes))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be one of 'linearSpline', 'bSpline', or 'cubicSpline'.", "SphereSweep");
@@ -3718,7 +3686,7 @@ class SphereSweep extends Primitive {
     //--------------------------------------------------------------------------
 
     set spheres(val) {
-        if(cpov.isArrayOfClass(val, 'Sphere', 2, infinity)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Sphere', 2, infinity))) {
             this._spheres = val;
         } else {
             cpov.error("fatal", "spheres must be an an array of two or more Sphere.", "SphereSweep");
@@ -3739,7 +3707,7 @@ class SphereSweep extends Primitive {
     //--------------------------------------------------------------------------
 
     set tolerance(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._tolerance = val;
         } else {
             cpov.error("fatal", "tolerance must be a float.", "SphereSweep");
@@ -3757,8 +3725,6 @@ exports.SphereSweep = SphereSweep;
 class Superellipsoid extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -3815,7 +3781,7 @@ class Superellipsoid extends Primitive {
     //--------------------------------------------------------------------------
 
     set vector(val) {
-        if(cpov.isClass(val, 'VectorXY')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXY'))) {
             this._vector = val;
         } else {
             cpov.error("fatal", "vector must be a VectorXY.", "Superellipsoid");
@@ -3833,8 +3799,6 @@ exports.Superellipsoid = Superellipsoid;
 class Sor extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -3893,7 +3857,7 @@ class Sor extends Primitive {
     //--------------------------------------------------------------------------
 
     set points(val) {
-        if(cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of two or more VectorXY.", "Sor");
@@ -3914,7 +3878,7 @@ class Sor extends Primitive {
     //--------------------------------------------------------------------------
 
     set open(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
             cpov.error("fatal", "open must be a boolean.", "Sor");
@@ -3935,7 +3899,7 @@ class Sor extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Sor");
@@ -3953,8 +3917,6 @@ exports.Sor = Sor;
 class Text extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -4014,7 +3976,7 @@ class Text extends Primitive {
     //--------------------------------------------------------------------------
 
     set font(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._font = val;
         } else {
             cpov.error("fatal", "font must be a non-empty string.", "Text");
@@ -4035,7 +3997,7 @@ class Text extends Primitive {
     //--------------------------------------------------------------------------
 
     set displayText(val) {
-        if(cpov.isNonEmptyString(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._displayText = val;
         } else {
             cpov.error("fatal", "displayText must be a non-empty string.", "Text");
@@ -4056,7 +4018,7 @@ class Text extends Primitive {
     //--------------------------------------------------------------------------
 
     set thickness(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._thickness = val;
         } else {
             cpov.error("fatal", "thickness must be a float.", "Text");
@@ -4077,7 +4039,7 @@ class Text extends Primitive {
     //--------------------------------------------------------------------------
 
     set offset(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._offset = val;
         } else {
             cpov.error("fatal", "offset must be a float.", "Text");
@@ -4095,8 +4057,6 @@ exports.Text = Text;
 class Torus extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = true;
         this._csg = false;
@@ -4155,7 +4115,7 @@ class Torus extends Primitive {
     //--------------------------------------------------------------------------
 
     set majorRadius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._majorRadius = val;
         } else {
             cpov.error("fatal", "majorRadius must be a float.", "Torus");
@@ -4176,7 +4136,7 @@ class Torus extends Primitive {
     //--------------------------------------------------------------------------
 
     set minorRadius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._minorRadius = val;
         } else {
             cpov.error("fatal", "minorRadius must be a float.", "Torus");
@@ -4197,7 +4157,7 @@ class Torus extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Torus");
@@ -4215,8 +4175,6 @@ exports.Torus = Torus;
 class BicubicPatch extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = false;
         this._csg = false;
@@ -4277,7 +4235,7 @@ class BicubicPatch extends Primitive {
     //--------------------------------------------------------------------------
 
     set type(val) {
-        if(cpov.isInt(val) && (val == 0 || val == 1)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && (val == 0 || val == 1))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be either 0 or 1.", "BicubicPatch");
@@ -4298,7 +4256,7 @@ class BicubicPatch extends Primitive {
     //--------------------------------------------------------------------------
 
     set points(val) {
-        if(cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of 16 VectorXYZ.", "BicubicPatch");
@@ -4319,7 +4277,7 @@ class BicubicPatch extends Primitive {
     //--------------------------------------------------------------------------
 
     set uSteps(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._uSteps = val;
         } else {
             cpov.error("fatal", "uSteps must be an integer.", "BicubicPatch");
@@ -4340,7 +4298,7 @@ class BicubicPatch extends Primitive {
     //--------------------------------------------------------------------------
 
     set vSteps(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._vSteps = val;
         } else {
             cpov.error("fatal", "vSteps must be an integer.", "BicubicPatch");
@@ -4361,7 +4319,7 @@ class BicubicPatch extends Primitive {
     //--------------------------------------------------------------------------
 
     set flatness(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._flatness = val;
         } else {
             cpov.error("fatal", "flatness must be a float.", "BicubicPatch");
@@ -4379,8 +4337,6 @@ exports.BicubicPatch = BicubicPatch;
 class Disc extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = false;
         this._csg = false;
@@ -4440,7 +4396,7 @@ class Disc extends Primitive {
     //--------------------------------------------------------------------------
 
     set center(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._center = val;
         } else {
             cpov.error("fatal", "center must be a VectorXYZ.", "Disc");
@@ -4461,7 +4417,7 @@ class Disc extends Primitive {
     //--------------------------------------------------------------------------
 
     set normal(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal = val;
         } else {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Disc");
@@ -4482,7 +4438,7 @@ class Disc extends Primitive {
     //--------------------------------------------------------------------------
 
     set radius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
         } else {
             cpov.error("fatal", "radius must be a float.", "Disc");
@@ -4503,7 +4459,7 @@ class Disc extends Primitive {
     //--------------------------------------------------------------------------
 
     set holeRadius(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._holeRadius = val;
         } else {
             cpov.error("fatal", "holeRadius must be a float.", "Disc");
@@ -4521,8 +4477,6 @@ exports.Disc = Disc;
 class Mesh extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = false;
         this._csg = false;
@@ -4581,7 +4535,7 @@ class Mesh extends Primitive {
     //--------------------------------------------------------------------------
 
     set triangles(val) {
-        if(cpov.isArrayOfClass(val, 'Triangle', 1, Infinity)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Triangle', 1, Infinity))) {
             this._triangles = val;
         } else {
             cpov.error("fatal", "triangles", "Mesh");
@@ -4602,7 +4556,7 @@ class Mesh extends Primitive {
     //--------------------------------------------------------------------------
 
     set insideVector(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._insideVector = val;
         } else {
             cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh");
@@ -4623,7 +4577,7 @@ class Mesh extends Primitive {
     //--------------------------------------------------------------------------
 
     set hierarchy(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
         } else {
             cpov.error("fatal", "hierarchy must be a boolean.", "Mesh");
@@ -4641,8 +4595,6 @@ exports.Mesh = Mesh;
 class Polygon extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = false;
         this._csg = false;
@@ -4699,7 +4651,7 @@ class Polygon extends Primitive {
     //--------------------------------------------------------------------------
 
     set points(val) {
-        if(cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of three or more VectorXY.", "Polygon");
@@ -4717,8 +4669,6 @@ exports.Polygon = Polygon;
 class Triangle extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = true;
         this._solid = false;
         this._csg = false;
@@ -4782,7 +4732,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set corner1(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner1 = val;
         } else {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Triangle");
@@ -4803,7 +4753,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set corner2(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner2 = val;
         } else {
             cpov.error("fatal", "corner2 must be a VectorXYZ.", "Triangle");
@@ -4824,7 +4774,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set corner3(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner3 = val;
         } else {
             cpov.error("fatal", "corner3 must be a VectorXYZ.", "Triangle");
@@ -4845,7 +4795,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set smooth(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._smooth = val;
         } else {
             cpov.error("fatal", "smooth must be a boolean.", "Triangle");
@@ -4866,7 +4816,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set normal1(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal1 = val;
         } else {
             cpov.error("fatal", "normal1 must be a VectorXYZ.", "Triangle");
@@ -4887,7 +4837,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set normal2(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal2 = val;
         } else {
             cpov.error("fatal", "normal2 must be a VectorXYZ.", "Triangle");
@@ -4908,7 +4858,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set normal3(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal3 = val;
         } else {
             cpov.error("fatal", "normal3 must be a VectorXYZ.", "Triangle");
@@ -4929,7 +4879,7 @@ class Triangle extends Primitive {
     //--------------------------------------------------------------------------
 
     set textures(val) {
-        if(cpov.isArrayOfInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInt(val))) {
             this._textures = val;
         } else {
             cpov.error("fatal", "textures must be an array of integers.", "Triangle");
@@ -4947,8 +4897,6 @@ exports.Triangle = Triangle;
 class Plane extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = false;
         this._solid = true;
         this._csg = false;
@@ -5006,7 +4954,7 @@ class Plane extends Primitive {
     //--------------------------------------------------------------------------
 
     set normal(val) {
-        if(cpov.isClass(val, 'VectorXYZ')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal = val;
         } else {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Plane");
@@ -5027,7 +4975,7 @@ class Plane extends Primitive {
     //--------------------------------------------------------------------------
 
     set distance(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._distance = val;
         } else {
             cpov.error("fatal", "distance must be a float.", "Plane");
@@ -5045,8 +4993,6 @@ exports.Plane = Plane;
 class Poly extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = false;
         this._solid = true;
         this._csg = false;
@@ -5104,7 +5050,7 @@ class Poly extends Primitive {
     //--------------------------------------------------------------------------
 
     set coefficients(val) {
-        if(cpov.isArrayOfFloats(val, 2, 35)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 35))) {
             this._coefficients = val;
         } else {
             cpov.error("fatal", "coefficients must be an array of 2 to 35 floats.", "Poly");
@@ -5125,7 +5071,7 @@ class Poly extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Poly");
@@ -5143,8 +5089,6 @@ exports.Poly = Poly;
 class Cubic extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = false;
         this._solid = true;
         this._csg = false;
@@ -5202,7 +5146,7 @@ class Cubic extends Primitive {
     //--------------------------------------------------------------------------
 
     set coefficients(val) {
-        if(cpov.isArrayOfFloats(val, 20, 20)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
             this._coefficients = val;
         } else {
             cpov.error("fatal", "coefficients must be an array of 20 floats.", "Cubic");
@@ -5223,7 +5167,7 @@ class Cubic extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Cubic");
@@ -5241,8 +5185,6 @@ exports.Cubic = Cubic;
 class Quartic extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = false;
         this._solid = true;
         this._csg = false;
@@ -5300,7 +5242,7 @@ class Quartic extends Primitive {
     //--------------------------------------------------------------------------
 
     set coefficients(val) {
-        if(cpov.isArrayOfFloats(val, 20, 20)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
             this._coefficients = val;
         } else {
             cpov.error("fatal", "coefficients must be an array of 20 floats.", "Quartic");
@@ -5321,7 +5263,7 @@ class Quartic extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Quartic");
@@ -5339,8 +5281,6 @@ exports.Quartic = Quartic;
 class Polynomial extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = false;
         this._solid = true;
         this._csg = false;
@@ -5399,7 +5339,7 @@ class Polynomial extends Primitive {
     //--------------------------------------------------------------------------
 
     set order(val) {
-        if(cpov.isInt(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._order = val;
         } else {
             cpov.error("fatal", "order must be an integer.", "Polynomial");
@@ -5420,7 +5360,7 @@ class Polynomial extends Primitive {
     //--------------------------------------------------------------------------
 
     set coefficients(val) {
-        if(cpov.isClass(val, 'VectorXYZW')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW'))) {
             this._coefficients = val;
         } else {
             cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial");
@@ -5441,7 +5381,7 @@ class Polynomial extends Primitive {
     //--------------------------------------------------------------------------
 
     set sturm(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Polynomial");
@@ -5459,8 +5399,6 @@ exports.Polynomial = Polynomial;
 class Quadric extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = false;
         this._solid = true;
         this._csg = false;
@@ -5526,7 +5464,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set a(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._a = val;
         } else {
             cpov.error("fatal", "a must be a float.", "Quadric");
@@ -5547,7 +5485,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set b(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._b = val;
         } else {
             cpov.error("fatal", "b must be a float.", "Quadric");
@@ -5568,7 +5506,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set c(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._c = val;
         } else {
             cpov.error("fatal", "c must be a float.", "Quadric");
@@ -5589,7 +5527,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set d(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._d = val;
         } else {
             cpov.error("fatal", "d must be a float.", "Quadric");
@@ -5610,7 +5548,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set e(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._e = val;
         } else {
             cpov.error("fatal", "e must be a float.", "Quadric");
@@ -5631,7 +5569,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set f(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._f = val;
         } else {
             cpov.error("fatal", "f must be a float.", "Quadric");
@@ -5652,7 +5590,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set g(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._g = val;
         } else {
             cpov.error("fatal", "g must be a float.", "Quadric");
@@ -5673,7 +5611,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set h(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._h = val;
         } else {
             cpov.error("fatal", "h must be a float.", "Quadric");
@@ -5694,7 +5632,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set i(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._i = val;
         } else {
             cpov.error("fatal", "i must be a float.", "Quadric");
@@ -5715,7 +5653,7 @@ class Quadric extends Primitive {
     //--------------------------------------------------------------------------
 
     set j(val) {
-        if(cpov.isFloat(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._j = val;
         } else {
             cpov.error("fatal", "j must be a float.", "Quadric");
@@ -5733,8 +5671,6 @@ exports.Quadric = Quadric;
 class Union extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = null;
         this._solid = true;
         this._csg = true;
@@ -5792,7 +5728,7 @@ class Union extends Primitive {
     //--------------------------------------------------------------------------
 
     set objects(val) {
-        if(cpov.isArrayOfClass(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._objects = val;
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Union");
@@ -5813,7 +5749,7 @@ class Union extends Primitive {
     //--------------------------------------------------------------------------
 
     set splitUnion(val) {
-        if(cpov.isBoolean(val)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._splitUnion = val;
         } else {
             cpov.error("fatal", "splitUnion must be a boolean.", "Union");
@@ -5831,8 +5767,6 @@ exports.Union = Union;
 class Intersection extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = null;
         this._solid = true;
         this._csg = true;
@@ -5889,7 +5823,7 @@ class Intersection extends Primitive {
     //--------------------------------------------------------------------------
 
     set objects(val) {
-        if(cpov.isArrayOfClass(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._objects = val;
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Intersection");
@@ -5907,8 +5841,6 @@ exports.Intersection = Intersection;
 class Difference extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = null;
         this._solid = true;
         this._csg = true;
@@ -5966,7 +5898,7 @@ class Difference extends Primitive {
     //--------------------------------------------------------------------------
 
     set positiveObject(val) {
-        if(cpov.inheritsFrom(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._positiveObject = val;
         } else {
             cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
@@ -5987,7 +5919,7 @@ class Difference extends Primitive {
     //--------------------------------------------------------------------------
 
     set negativeObjects(val) {
-        if(cpov.isArrayOfClass(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._negativeObjects = val;
         } else {
             cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference");
@@ -6005,8 +5937,6 @@ exports.Difference = Difference;
 class Merge extends Primitive {
 
     constructor(objType, args) {
-        super(args);
-
         this._finite = null;
         this._solid = true;
         this._csg = true;
@@ -6063,7 +5993,7 @@ class Merge extends Primitive {
     //--------------------------------------------------------------------------
 
     set objects(val) {
-        if(cpov.isArrayOfClass(val, 'Primitive')) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._objects = val;
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Merge");
