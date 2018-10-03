@@ -3127,6 +3127,73 @@ class Primitive {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Generates SDL from parameters.
+    //--------------------------------------------------------------------------
+    
+    function toSDL(stops = 0) {
+    
+        var pad = cpov.tab(stops);
+        var contents = [ ];
+    
+        if(this.clippedBy !== null) {
+            contents.push(pad + "clipped_by {");
+            contents.push(this.clippedBy.toSDL(stops + 1));
+            contents.push(pad + "}");
+        }
+    
+        if(this.boundedBy !== null) {
+            contents.push(pad + "bounded_by {");
+            if(this.boundedBy === this.clippedBy) {
+                contents.push(pad + "    clipped_by");
+            } else {
+                contents.push(this.boundedBy.toSDL(stops + 1));
+            }
+            contents.push(pad + "}");
+        }
+    
+        if(this.noShadow)
+            contents.push(pad + "no_shadow");
+    
+        if(this.noImage)
+            contents.push(pad + "no_image");
+    
+        if(this.noRadiosity)
+            contents.push(pad + "no_radiosity");
+    
+        if(this.noReflection)
+            contents.push(pad + "no_reflection");
+    
+        if(this.inverse)
+            contents.push(pad + "inverse");
+    
+        if(this.sturm)
+            contents.push(pad + "sturm");
+    
+        if(this.hierarchy)
+            contents.push(pad + "hierarchy");
+    
+        if(this.double_illuminate)
+            contents.push(pad + "double_illuminate");
+    
+        if(this.hollow)
+            contents.push(pad + "hollow");
+    
+        // TODO: interior
+        // TODO: interior_texture
+        // TODO: pigment
+        // TODO: normal
+        // TODO: finish
+        // TODO: photons
+        // TODO: radiosity
+    
+        if(this.transform !== undefined && this.transform !== null)
+            contents.push(pad + this.transform.toSDL(stops + 1));
+    
+        return contents.join("\n");
+    }
+
+
 
 }
 

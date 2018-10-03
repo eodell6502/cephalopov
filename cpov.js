@@ -1004,7 +1004,7 @@ cpov.objCommon = {
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: false,
-    snippets: false,
+    snippets: [ "Primitive.toSDL" ],
     mutable: [
         {
             name:  "active",

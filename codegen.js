@@ -221,6 +221,18 @@ ClassBuilder.prototype.toString = function() {
         }
     }
 
+    // Snippet code ------------------------------------------------------------
+
+    if(this.obj.snippets) {
+        for(var i = 0; i < this.obj.snippets.length; i++) {
+            if(this.snippets[this.obj.snippets[i]] === undefined) {
+                throw new Error("Cannot find snippet " + this.obj.snippets[i]);
+            } else {
+                src.push(cpov.indentTextBlock(this.snippets[this.obj.snippets[i]], 1) + "\n\n");
+            }
+        }
+    }
+
     // Class closing -----------------------------------------------------------
 
     src.push("\n}");
