@@ -180,7 +180,6 @@ ClassBuilder.prototype.toString = function() {
                 + tab1 + "get " + i + "() {\n"
                 + tab2 + "return this._" + i + ";\n"
                 + tab1 + "}\n\n"
-                + this.divider(1, "-") + "\n\n"
                 + tab1 + "set " + i + "(val) {\n"
                 + tab2 + "throw new TypeError(\"[" + this.name + "]: " + i + " is a read-only property.\");\n"
                 + tab1 + "}\n"
@@ -192,7 +191,8 @@ ClassBuilder.prototype.toString = function() {
         for(var i = 0; i < this.mutable.length; i++) {
             var item = this.mutable[i];
             src.push(
-                  tab1 + "get " + item.name + "() {\n"
+                this.divider(1, "-") + "\n\n"
+                + tab1 + "get " + item.name + "() {\n"
                 + tab2 + "if(typeof this._" + item.name + " == \"function\")\n"
                 + tab3 + "return this._" + item.name + "();\n"
                 + tab2 + "else if(typeof this._" + item.name + " == \"string\" && this._" + item.name + ".substr(0, 1) == \"&\")\n"
@@ -200,7 +200,6 @@ ClassBuilder.prototype.toString = function() {
                 + tab2 + "else\n"
                 + tab3 + "return this._" + item.name + ";\n"
                 + tab1 + "}\n\n"
-                + this.divider(1, "-") + "\n\n"
                 + tab1 + "set " + item.name + "(val) {"
             );
             if(item.valid)

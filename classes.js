@@ -61,6 +61,8 @@ class GlobalSettings {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get adcBailout() {
         if(typeof this._adcBailout == "function")
             return this._adcBailout();
@@ -70,8 +72,6 @@ class GlobalSettings {
             return this._adcBailout;
     }
 
-    //--------------------------------------------------------------------------
-
     set adcBailout(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._adcBailout = val;
@@ -79,6 +79,8 @@ class GlobalSettings {
             cpov.error("fatal", "adcBailout must be a float greater than or equal to zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get ambientLight() {
         if(typeof this._ambientLight == "function")
@@ -89,8 +91,6 @@ class GlobalSettings {
             return this._ambientLight;
     }
 
-    //--------------------------------------------------------------------------
-
     set ambientLight(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB'))) {
             this._ambientLight = val;
@@ -98,6 +98,8 @@ class GlobalSettings {
             cpov.error("fatal", "ambientLight must be a VectorRGB or VectorSRGB.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get assumedGamma() {
         if(typeof this._assumedGamma == "function")
@@ -108,8 +110,6 @@ class GlobalSettings {
             return this._assumedGamma;
     }
 
-    //--------------------------------------------------------------------------
-
     set assumedGamma(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._assumedGamma = val;
@@ -117,6 +117,8 @@ class GlobalSettings {
             cpov.error("fatal", "assumedGamma must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get charset() {
         if(typeof this._charset == "function")
@@ -127,8 +129,6 @@ class GlobalSettings {
             return this._charset;
     }
 
-    //--------------------------------------------------------------------------
-
     set charset(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, ['ascii', 'utf8', 'sys']))) {
             this._charset = val;
@@ -136,6 +136,8 @@ class GlobalSettings {
             cpov.error("fatal", "charset must be one of 'ascii', 'utf8', or 'sys'.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get iridWavelength() {
         if(typeof this._iridWavelength == "function")
@@ -146,8 +148,6 @@ class GlobalSettings {
             return this._iridWavelength;
     }
 
-    //--------------------------------------------------------------------------
-
     set iridWavelength(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB'))) {
             this._iridWavelength = val;
@@ -155,6 +155,8 @@ class GlobalSettings {
             cpov.error("fatal", "iridWavelength must be a VectorRGB or VectorSRGB", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get maxIntersections() {
         if(typeof this._maxIntersections == "function")
@@ -165,8 +167,6 @@ class GlobalSettings {
             return this._maxIntersections;
     }
 
-    //--------------------------------------------------------------------------
-
     set maxIntersections(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._maxIntersections = val;
@@ -174,6 +174,8 @@ class GlobalSettings {
             cpov.error("fatal", "maxIntersections must be an integer greater than or equal to zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get maxTraceLevel() {
         if(typeof this._maxTraceLevel == "function")
@@ -184,8 +186,6 @@ class GlobalSettings {
             return this._maxTraceLevel;
     }
 
-    //--------------------------------------------------------------------------
-
     set maxTraceLevel(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._maxTraceLevel = val;
@@ -193,6 +193,8 @@ class GlobalSettings {
             cpov.error("fatal", "maxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get mmPerUnit() {
         if(typeof this._mmPerUnit == "function")
@@ -203,8 +205,6 @@ class GlobalSettings {
             return this._mmPerUnit;
     }
 
-    //--------------------------------------------------------------------------
-
     set mmPerUnit(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._mmPerUnit = val;
@@ -212,6 +212,8 @@ class GlobalSettings {
             cpov.error("fatal", "mmPerUnit must be a float greater than or equal to zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get noiseGenerator() {
         if(typeof this._noiseGenerator == "function")
@@ -222,8 +224,6 @@ class GlobalSettings {
             return this._noiseGenerator;
     }
 
-    //--------------------------------------------------------------------------
-
     set noiseGenerator(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.inArray(val, [1, 2, 3]))) {
             this._noiseGenerator = val;
@@ -231,6 +231,8 @@ class GlobalSettings {
             cpov.error("fatal", "noiseGenerator must be an integer and one of 1, 2, or 3.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get numberOfWaves() {
         if(typeof this._numberOfWaves == "function")
@@ -241,8 +243,6 @@ class GlobalSettings {
             return this._numberOfWaves;
     }
 
-    //--------------------------------------------------------------------------
-
     set numberOfWaves(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._numberOfWaves = val;
@@ -250,6 +250,8 @@ class GlobalSettings {
             cpov.error("fatal", "numberOfWaves must be an integer greater than or equal to zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photon() {
         if(typeof this._photon == "function")
@@ -260,8 +262,6 @@ class GlobalSettings {
             return this._photon;
     }
 
-    //--------------------------------------------------------------------------
-
     set photon(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._photon = val;
@@ -269,6 +269,8 @@ class GlobalSettings {
             cpov.error("fatal", "photon must be a boolean.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonAdcBailout() {
         if(typeof this._photonAdcBailout == "function")
@@ -279,8 +281,6 @@ class GlobalSettings {
             return this._photonAdcBailout;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonAdcBailout(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._photonAdcBailout = val;
@@ -288,6 +288,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonAdcBailout must be a float greater than or equal to zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonAutostop() {
         if(typeof this._photonAutostop == "function")
@@ -298,8 +300,6 @@ class GlobalSettings {
             return this._photonAutostop;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonAutostop(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.within(val, 0, 1))) {
             this._photonAutostop = val;
@@ -307,6 +307,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonAutostop must be a float within the unit interval (0.0 - 1.0)", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonCount() {
         if(typeof this._photonCount == "function")
@@ -317,8 +319,6 @@ class GlobalSettings {
             return this._photonCount;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonCount(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._photonCount = val;
@@ -326,6 +326,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonCount must be an integer greater than or equal to zero", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonExpandThresholds() {
         if(typeof this._photonExpandThresholds == "function")
@@ -336,8 +338,6 @@ class GlobalSettings {
             return this._photonExpandThresholds;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonExpandThresholds(val) {
         if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isInt(val[1]))) {
             this._photonExpandThresholds = val;
@@ -345,6 +345,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonExpandThresholds must be an array consisting of a float and and integer.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonGather() {
         if(typeof this._photonGather == "function")
@@ -355,8 +357,6 @@ class GlobalSettings {
             return this._photonGather;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonGather(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 2, 2) && val[0] >= 0 && val[1] >= 0 && val[0] <= val[1])) {
             this._photonGather = val;
@@ -364,6 +364,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonGather must be an array of two integers greater than zero in ascending order.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonJitter() {
         if(typeof this._photonJitter == "function")
@@ -374,8 +376,6 @@ class GlobalSettings {
             return this._photonJitter;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonJitter(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._photonJitter = val;
@@ -383,6 +383,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonJitter must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonLoadFile() {
         if(typeof this._photonLoadFile == "function")
@@ -393,8 +395,6 @@ class GlobalSettings {
             return this._photonLoadFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonLoadFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._photonLoadFile = val;
@@ -402,6 +402,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonLoadFile must be a non-empty string.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonMaxTraceLevel() {
         if(typeof this._photonMaxTraceLevel == "function")
@@ -412,8 +414,6 @@ class GlobalSettings {
             return this._photonMaxTraceLevel;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonMaxTraceLevel(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._photonMaxTraceLevel = val;
@@ -421,6 +421,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonMaxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonMedia() {
         if(typeof this._photonMedia == "function")
@@ -431,8 +433,6 @@ class GlobalSettings {
             return this._photonMedia;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonMedia(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 2))) {
             this._photonMedia = val;
@@ -440,6 +440,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonMedia must be an array of two floats.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonRadius() {
         if(typeof this._photonRadius == "function")
@@ -450,8 +452,6 @@ class GlobalSettings {
             return this._photonRadius;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 4, 4))) {
             this._photonRadius = val;
@@ -459,6 +459,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonRadius must be an array of four floats.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonSaveFile() {
         if(typeof this._photonSaveFile == "function")
@@ -469,8 +471,6 @@ class GlobalSettings {
             return this._photonSaveFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonSaveFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._photonSaveFile = val;
@@ -478,6 +478,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonSaveFile must be a non-empty string.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photonSpacing() {
         if(typeof this._photonSpacing == "function")
@@ -488,8 +490,6 @@ class GlobalSettings {
             return this._photonSpacing;
     }
 
-    //--------------------------------------------------------------------------
-
     set photonSpacing(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._photonSpacing = val;
@@ -497,6 +497,8 @@ class GlobalSettings {
             cpov.error("fatal", "photonSpacing must be a float greater than zero.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radAdcBailout() {
         if(typeof this._radAdcBailout == "function")
@@ -507,8 +509,6 @@ class GlobalSettings {
             return this._radAdcBailout;
     }
 
-    //--------------------------------------------------------------------------
-
     set radAdcBailout(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radAdcBailout = val;
@@ -516,6 +516,8 @@ class GlobalSettings {
             cpov.error("fatal", "radAdcBailout must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radAlwaysSample() {
         if(typeof this._radAlwaysSample == "function")
@@ -526,8 +528,6 @@ class GlobalSettings {
             return this._radAlwaysSample;
     }
 
-    //--------------------------------------------------------------------------
-
     set radAlwaysSample(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radAlwaysSample = val;
@@ -535,6 +535,8 @@ class GlobalSettings {
             cpov.error("fatal", "radAlwaysSample must be a boolean.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radBrightness() {
         if(typeof this._radBrightness == "function")
@@ -545,8 +547,6 @@ class GlobalSettings {
             return this._radBrightness;
     }
 
-    //--------------------------------------------------------------------------
-
     set radBrightness(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radBrightness = val;
@@ -554,6 +554,8 @@ class GlobalSettings {
             cpov.error("fatal", "radBrightness must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radCount() {
         if(typeof this._radCount == "function")
@@ -564,8 +566,6 @@ class GlobalSettings {
             return this._radCount;
     }
 
-    //--------------------------------------------------------------------------
-
     set radCount(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 1, 2) && val[0] >= 1 && (val[1] === undefined || val[1] >= 1))) {
             this._radCount = val;
@@ -573,6 +573,8 @@ class GlobalSettings {
             cpov.error("fatal", "radCount must be an array of one or two integers, both of which must be greater than or equal to one.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radErrorBound() {
         if(typeof this._radErrorBound == "function")
@@ -583,8 +585,6 @@ class GlobalSettings {
             return this._radErrorBound;
     }
 
-    //--------------------------------------------------------------------------
-
     set radErrorBound(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radErrorBound = val;
@@ -592,6 +592,8 @@ class GlobalSettings {
             cpov.error("fatal", "radErrorBound must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radGrayThreshold() {
         if(typeof this._radGrayThreshold == "function")
@@ -602,8 +604,6 @@ class GlobalSettings {
             return this._radGrayThreshold;
     }
 
-    //--------------------------------------------------------------------------
-
     set radGrayThreshold(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._radGrayThreshold = val;
@@ -611,6 +611,8 @@ class GlobalSettings {
             cpov.error("fatal", "radGrayThreshold must be a float in the unit interval (0.0 - 1.0).", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radiosity() {
         if(typeof this._radiosity == "function")
@@ -621,8 +623,6 @@ class GlobalSettings {
             return this._radiosity;
     }
 
-    //--------------------------------------------------------------------------
-
     set radiosity(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radiosity = val;
@@ -630,6 +630,8 @@ class GlobalSettings {
             cpov.error("fatal", "radiosity must be a boolean.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radLowErrorFactor() {
         if(typeof this._radLowErrorFactor == "function")
@@ -640,8 +642,6 @@ class GlobalSettings {
             return this._radLowErrorFactor;
     }
 
-    //--------------------------------------------------------------------------
-
     set radLowErrorFactor(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radLowErrorFactor = val;
@@ -649,6 +649,8 @@ class GlobalSettings {
             cpov.error("fatal", "radLowErrorFactor must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radMaximumReuse() {
         if(typeof this._radMaximumReuse == "function")
@@ -659,8 +661,6 @@ class GlobalSettings {
             return this._radMaximumReuse;
     }
 
-    //--------------------------------------------------------------------------
-
     set radMaximumReuse(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMaximumReuse = val;
@@ -668,6 +668,8 @@ class GlobalSettings {
             cpov.error("fatal", "radMaximumReuse must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radMaxSample() {
         if(typeof this._radMaxSample == "function")
@@ -678,8 +680,6 @@ class GlobalSettings {
             return this._radMaxSample;
     }
 
-    //--------------------------------------------------------------------------
-
     set radMaxSample(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMaxSample = val;
@@ -687,6 +687,8 @@ class GlobalSettings {
             cpov.error("fatal", "radMaxSample must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radMinimumReuse() {
         if(typeof this._radMinimumReuse == "function")
@@ -697,8 +699,6 @@ class GlobalSettings {
             return this._radMinimumReuse;
     }
 
-    //--------------------------------------------------------------------------
-
     set radMinimumReuse(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMinimumReuse = val;
@@ -706,6 +706,8 @@ class GlobalSettings {
             cpov.error("fatal", "radMinimumReuse must be a float.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radNearestCount() {
         if(typeof this._radNearestCount == "function")
@@ -716,8 +718,6 @@ class GlobalSettings {
             return this._radNearestCount;
     }
 
-    //--------------------------------------------------------------------------
-
     set radNearestCount(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 20))) {
             this._radNearestCount = val;
@@ -725,6 +725,8 @@ class GlobalSettings {
             cpov.error("fatal", "radNearestCount must be an integer in the range 1-20.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radNormal() {
         if(typeof this._radNormal == "function")
@@ -735,8 +737,6 @@ class GlobalSettings {
             return this._radNormal;
     }
 
-    //--------------------------------------------------------------------------
-
     set radNormal(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radNormal = val;
@@ -744,6 +744,8 @@ class GlobalSettings {
             cpov.error("fatal", "radNormal must be a boolean.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radPretraceEnd() {
         if(typeof this._radPretraceEnd == "function")
@@ -754,8 +756,6 @@ class GlobalSettings {
             return this._radPretraceEnd;
     }
 
-    //--------------------------------------------------------------------------
-
     set radPretraceEnd(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(0, 1))) {
             this._radPretraceEnd = val;
@@ -763,6 +763,8 @@ class GlobalSettings {
             cpov.error("fatal", "radPretraceEnd must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radPretraceStart() {
         if(typeof this._radPretraceStart == "function")
@@ -773,8 +775,6 @@ class GlobalSettings {
             return this._radPretraceStart;
     }
 
-    //--------------------------------------------------------------------------
-
     set radPretraceStart(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(0, 1))) {
             this._radPretraceStart = val;
@@ -782,6 +782,8 @@ class GlobalSettings {
             cpov.error("fatal", "radPretraceStart must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radRecursionLimit() {
         if(typeof this._radRecursionLimit == "function")
@@ -792,8 +794,6 @@ class GlobalSettings {
             return this._radRecursionLimit;
     }
 
-    //--------------------------------------------------------------------------
-
     set radRecursionLimit(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 20))) {
             this._radRecursionLimit = val;
@@ -801,6 +801,8 @@ class GlobalSettings {
             cpov.error("fatal", "radRecursionLimit must be an integer in the range 1-20.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radSubsurface() {
         if(typeof this._radSubsurface == "function")
@@ -811,8 +813,6 @@ class GlobalSettings {
             return this._radSubsurface;
     }
 
-    //--------------------------------------------------------------------------
-
     set radSubsurface(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radSubsurface = val;
@@ -820,6 +820,8 @@ class GlobalSettings {
             cpov.error("fatal", "radSubsurface must be a boolean.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get subRadiosity() {
         if(typeof this._subRadiosity == "function")
@@ -830,8 +832,6 @@ class GlobalSettings {
             return this._subRadiosity;
     }
 
-    //--------------------------------------------------------------------------
-
     set subRadiosity(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._subRadiosity = val;
@@ -839,6 +839,8 @@ class GlobalSettings {
             cpov.error("fatal", "subRadiosity must be a boolean", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get subSamples() {
         if(typeof this._subSamples == "function")
@@ -849,8 +851,6 @@ class GlobalSettings {
             return this._subSamples;
     }
 
-    //--------------------------------------------------------------------------
-
     set subSamples(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 2, 2))) {
             this._subSamples = val;
@@ -858,6 +858,8 @@ class GlobalSettings {
             cpov.error("fatal", "subSamples must be an array of two integers.", "GlobalSettings");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get subsurface() {
         if(typeof this._subsurface == "function")
@@ -867,8 +869,6 @@ class GlobalSettings {
         else
             return this._subsurface;
     }
-
-    //--------------------------------------------------------------------------
 
     set subsurface(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -987,6 +987,8 @@ class ImageOptions {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get allConsole() {
         if(typeof this._allConsole == "function")
             return this._allConsole();
@@ -996,8 +998,6 @@ class ImageOptions {
             return this._allConsole;
     }
 
-    //--------------------------------------------------------------------------
-
     set allConsole(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._allConsole = val;
@@ -1005,6 +1005,8 @@ class ImageOptions {
             cpov.error("fatal", "allConsole must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get allFile() {
         if(typeof this._allFile == "function")
@@ -1015,8 +1017,6 @@ class ImageOptions {
             return this._allFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set allFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._allFile = val;
@@ -1024,6 +1024,8 @@ class ImageOptions {
             cpov.error("fatal", "allFile must be either a boolean or a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get antialias() {
         if(typeof this._antialias == "function")
@@ -1034,8 +1036,6 @@ class ImageOptions {
             return this._antialias;
     }
 
-    //--------------------------------------------------------------------------
-
     set antialias(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._antialias = val;
@@ -1043,6 +1043,8 @@ class ImageOptions {
             cpov.error("fatal", "antialias must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get antialiasDepth() {
         if(typeof this._antialiasDepth == "function")
@@ -1053,8 +1055,6 @@ class ImageOptions {
             return this._antialiasDepth;
     }
 
-    //--------------------------------------------------------------------------
-
     set antialiasDepth(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 9))) {
             this._antialiasDepth = val;
@@ -1062,6 +1062,8 @@ class ImageOptions {
             cpov.error("fatal", "antialiasDepth must be an integer in the range 1-9.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get antialiasGamma() {
         if(typeof this._antialiasGamma == "function")
@@ -1072,8 +1074,6 @@ class ImageOptions {
             return this._antialiasGamma;
     }
 
-    //--------------------------------------------------------------------------
-
     set antialiasGamma(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._antialiasGamma = val;
@@ -1081,6 +1081,8 @@ class ImageOptions {
             cpov.error("fatal", "antialiasGamma must be a float.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get antialiasThreshold() {
         if(typeof this._antialiasThreshold == "function")
@@ -1091,8 +1093,6 @@ class ImageOptions {
             return this._antialiasThreshold;
     }
 
-    //--------------------------------------------------------------------------
-
     set antialiasThreshold(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._antialiasThreshold = val;
@@ -1100,6 +1100,8 @@ class ImageOptions {
             cpov.error("fatal", "antialiasThreshold must be a float greater than or equal to zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get appendFile() {
         if(typeof this._appendFile == "function")
@@ -1110,8 +1112,6 @@ class ImageOptions {
             return this._appendFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set appendFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._appendFile = val;
@@ -1119,6 +1119,8 @@ class ImageOptions {
             cpov.error("fatal", "appendFile must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bitsPerColor() {
         if(typeof this._bitsPerColor == "function")
@@ -1129,8 +1131,6 @@ class ImageOptions {
             return this._bitsPerColor;
     }
 
-    //--------------------------------------------------------------------------
-
     set bitsPerColor(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(5, 16))) {
             this._bitsPerColor = val;
@@ -1138,6 +1138,8 @@ class ImageOptions {
             cpov.error("fatal", "bitsPerColor must be an integer in the range 5-16.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bounding() {
         if(typeof this._bounding == "function")
@@ -1148,8 +1150,6 @@ class ImageOptions {
             return this._bounding;
     }
 
-    //--------------------------------------------------------------------------
-
     set bounding(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._bounding = val;
@@ -1157,6 +1157,8 @@ class ImageOptions {
             cpov.error("fatal", "bounding must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get boundingMethod() {
         if(typeof this._boundingMethod == "function")
@@ -1167,8 +1169,6 @@ class ImageOptions {
             return this._boundingMethod;
     }
 
-    //--------------------------------------------------------------------------
-
     set boundingMethod(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(1, 2))) {
             this._boundingMethod = val;
@@ -1176,6 +1176,8 @@ class ImageOptions {
             cpov.error("fatal", "boundingMethod must be either 1 or 2.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get boundingThreshold() {
         if(typeof this._boundingThreshold == "function")
@@ -1186,8 +1188,6 @@ class ImageOptions {
             return this._boundingThreshold;
     }
 
-    //--------------------------------------------------------------------------
-
     set boundingThreshold(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._boundingThreshold = val;
@@ -1195,6 +1195,8 @@ class ImageOptions {
             cpov.error("fatal", "boundingThreshold must be an integer greater than or equal to zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bspBaseAccessCost() {
         if(typeof this._bspBaseAccessCost == "function")
@@ -1205,8 +1207,6 @@ class ImageOptions {
             return this._bspBaseAccessCost;
     }
 
-    //--------------------------------------------------------------------------
-
     set bspBaseAccessCost(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspBaseAccessCost = val;
@@ -1214,6 +1214,8 @@ class ImageOptions {
             cpov.error("fatal", "bspBaseAccessCost must be a float.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bspChildAccessCost() {
         if(typeof this._bspChildAccessCost == "function")
@@ -1224,8 +1226,6 @@ class ImageOptions {
             return this._bspChildAccessCost;
     }
 
-    //--------------------------------------------------------------------------
-
     set bspChildAccessCost(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspChildAccessCost = val;
@@ -1233,6 +1233,8 @@ class ImageOptions {
             cpov.error("fatal", "bspChildAccessCost must be a float.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bspIsectCost() {
         if(typeof this._bspIsectCost == "function")
@@ -1243,8 +1245,6 @@ class ImageOptions {
             return this._bspIsectCost;
     }
 
-    //--------------------------------------------------------------------------
-
     set bspIsectCost(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspIsectCost = val;
@@ -1252,6 +1252,8 @@ class ImageOptions {
             cpov.error("fatal", "bspIsectCost must be a float.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bspMaxDepth() {
         if(typeof this._bspMaxDepth == "function")
@@ -1262,8 +1264,6 @@ class ImageOptions {
             return this._bspMaxDepth;
     }
 
-    //--------------------------------------------------------------------------
-
     set bspMaxDepth(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._bspMaxDepth = val;
@@ -1271,6 +1271,8 @@ class ImageOptions {
             cpov.error("fatal", "bspMaxDepth must be an integer greater than zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bspMissChance() {
         if(typeof this._bspMissChance == "function")
@@ -1281,8 +1283,6 @@ class ImageOptions {
             return this._bspMissChance;
     }
 
-    //--------------------------------------------------------------------------
-
     set bspMissChance(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bspMissChance = val;
@@ -1290,6 +1290,8 @@ class ImageOptions {
             cpov.error("fatal", "bspMissChance must be a float.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get continueTrace() {
         if(typeof this._continueTrace == "function")
@@ -1300,8 +1302,6 @@ class ImageOptions {
             return this._continueTrace;
     }
 
-    //--------------------------------------------------------------------------
-
     set continueTrace(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._continueTrace = val;
@@ -1309,6 +1309,8 @@ class ImageOptions {
             cpov.error("fatal", "continueTrace must be a boolean", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get createIni() {
         if(typeof this._createIni == "function")
@@ -1319,8 +1321,6 @@ class ImageOptions {
             return this._createIni;
     }
 
-    //--------------------------------------------------------------------------
-
     set createIni(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._createIni = val;
@@ -1328,6 +1328,8 @@ class ImageOptions {
             cpov.error("fatal", "createIni must be either a boolean or a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get debugConsole() {
         if(typeof this._debugConsole == "function")
@@ -1338,8 +1340,6 @@ class ImageOptions {
             return this._debugConsole;
     }
 
-    //--------------------------------------------------------------------------
-
     set debugConsole(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._debugConsole = val;
@@ -1347,6 +1347,8 @@ class ImageOptions {
             cpov.error("fatal", "debugConsole must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get debugFile() {
         if(typeof this._debugFile == "function")
@@ -1357,8 +1359,6 @@ class ImageOptions {
             return this._debugFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set debugFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._debugFile = val;
@@ -1366,6 +1366,8 @@ class ImageOptions {
             cpov.error("fatal", "debugFile must be either a boolean or a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get display() {
         if(typeof this._display == "function")
@@ -1376,8 +1378,6 @@ class ImageOptions {
             return this._display;
     }
 
-    //--------------------------------------------------------------------------
-
     set display(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._display = val;
@@ -1385,6 +1385,8 @@ class ImageOptions {
             cpov.error("fatal", "display must be a boolean", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get displayGamma() {
         if(typeof this._displayGamma == "function")
@@ -1395,8 +1397,6 @@ class ImageOptions {
             return this._displayGamma;
     }
 
-    //--------------------------------------------------------------------------
-
     set displayGamma(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) || (cpov.isString(val) && val == 'sRGB'))) {
             this._displayGamma = val;
@@ -1404,6 +1404,8 @@ class ImageOptions {
             cpov.error("fatal", "displayGamma must be either a float or the string 'sRGB'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get dither() {
         if(typeof this._dither == "function")
@@ -1414,8 +1416,6 @@ class ImageOptions {
             return this._dither;
     }
 
-    //--------------------------------------------------------------------------
-
     set dither(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._dither = val;
@@ -1423,6 +1423,8 @@ class ImageOptions {
             cpov.error("fatal", "dither must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get ditherMethod() {
         if(typeof this._ditherMethod == "function")
@@ -1433,8 +1435,6 @@ class ImageOptions {
             return this._ditherMethod;
     }
 
-    //--------------------------------------------------------------------------
-
     set ditherMethod(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.ditherTypes))) {
             this._ditherMethod = val;
@@ -1442,6 +1442,8 @@ class ImageOptions {
             cpov.error("fatal", "ditherMethod must be one of 'B2', 'B3', 'B4', 'D1', 'D2', or 'FS'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get endColumn() {
         if(typeof this._endColumn == "function")
@@ -1452,8 +1454,6 @@ class ImageOptions {
             return this._endColumn;
     }
 
-    //--------------------------------------------------------------------------
-
     set endColumn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._endColumn = val;
@@ -1461,6 +1461,8 @@ class ImageOptions {
             cpov.error("fatal", "endColumn must be an integer greater than zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get endRow() {
         if(typeof this._endRow == "function")
@@ -1471,8 +1473,6 @@ class ImageOptions {
             return this._endRow;
     }
 
-    //--------------------------------------------------------------------------
-
     set endRow(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._endRow = val;
@@ -1480,6 +1480,8 @@ class ImageOptions {
             cpov.error("fatal", "endRow must be an integer greater than zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get exePath() {
         if(typeof this._exePath == "function")
@@ -1490,8 +1492,6 @@ class ImageOptions {
             return this._exePath;
     }
 
-    //--------------------------------------------------------------------------
-
     set exePath(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._exePath = val;
@@ -1499,6 +1499,8 @@ class ImageOptions {
             cpov.error("fatal", "exePath must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get fatalConsole() {
         if(typeof this._fatalConsole == "function")
@@ -1509,8 +1511,6 @@ class ImageOptions {
             return this._fatalConsole;
     }
 
-    //--------------------------------------------------------------------------
-
     set fatalConsole(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._fatalConsole = val;
@@ -1518,6 +1518,8 @@ class ImageOptions {
             cpov.error("fatal", "fatalConsole must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get fatalErrorCommand() {
         if(typeof this._fatalErrorCommand == "function")
@@ -1528,8 +1530,6 @@ class ImageOptions {
             return this._fatalErrorCommand;
     }
 
-    //--------------------------------------------------------------------------
-
     set fatalErrorCommand(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._fatalErrorCommand = val;
@@ -1537,6 +1537,8 @@ class ImageOptions {
             cpov.error("fatal", "fatalErrorCommand must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get fatalErrorReturn() {
         if(typeof this._fatalErrorReturn == "function")
@@ -1547,8 +1549,6 @@ class ImageOptions {
             return this._fatalErrorReturn;
     }
 
-    //--------------------------------------------------------------------------
-
     set fatalErrorReturn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._fatalErrorReturn = val;
@@ -1556,6 +1556,8 @@ class ImageOptions {
             cpov.error("fatal", "fatalErrorReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get fatalFile() {
         if(typeof this._fatalFile == "function")
@@ -1566,8 +1568,6 @@ class ImageOptions {
             return this._fatalFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set fatalFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._fatalFile = val;
@@ -1575,6 +1575,8 @@ class ImageOptions {
             cpov.error("fatal", "fatalFile must be either a boolean or a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get fileGamma() {
         if(typeof this._fileGamma == "function")
@@ -1585,8 +1587,6 @@ class ImageOptions {
             return this._fileGamma;
     }
 
-    //--------------------------------------------------------------------------
-
     set fileGamma(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) || val === 'sRGB')) {
             this._fileGamma = val;
@@ -1594,6 +1594,8 @@ class ImageOptions {
             cpov.error("fatal", "fileGamma", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get height() {
         if(typeof this._height == "function")
@@ -1604,8 +1606,6 @@ class ImageOptions {
             return this._height;
     }
 
-    //--------------------------------------------------------------------------
-
     set height(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._height = val;
@@ -1613,6 +1613,8 @@ class ImageOptions {
             cpov.error("fatal", "height must be an integer greater than zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get highReproducibility() {
         if(typeof this._highReproducibility == "function")
@@ -1623,8 +1625,6 @@ class ImageOptions {
             return this._highReproducibility;
     }
 
-    //--------------------------------------------------------------------------
-
     set highReproducibility(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._highReproducibility = val;
@@ -1632,6 +1632,8 @@ class ImageOptions {
             cpov.error("fatal", "highReproducibility must be a boolean", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get includeHeader() {
         if(typeof this._includeHeader == "function")
@@ -1642,8 +1644,6 @@ class ImageOptions {
             return this._includeHeader;
     }
 
-    //--------------------------------------------------------------------------
-
     set includeHeader(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._includeHeader = val;
@@ -1651,6 +1651,8 @@ class ImageOptions {
             cpov.error("fatal", "includeHeader must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get inputFileName() {
         if(typeof this._inputFileName == "function")
@@ -1661,8 +1663,6 @@ class ImageOptions {
             return this._inputFileName;
     }
 
-    //--------------------------------------------------------------------------
-
     set inputFileName(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._inputFileName = val;
@@ -1670,6 +1670,8 @@ class ImageOptions {
             cpov.error("fatal", "inputFileName must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get jitter() {
         if(typeof this._jitter == "function")
@@ -1680,8 +1682,6 @@ class ImageOptions {
             return this._jitter;
     }
 
-    //--------------------------------------------------------------------------
-
     set jitter(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._jitter = val;
@@ -1689,6 +1689,8 @@ class ImageOptions {
             cpov.error("fatal", "jitter must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get jitterAmount() {
         if(typeof this._jitterAmount == "function")
@@ -1699,8 +1701,6 @@ class ImageOptions {
             return this._jitterAmount;
     }
 
-    //--------------------------------------------------------------------------
-
     set jitterAmount(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._jitterAmount = val;
@@ -1708,6 +1708,8 @@ class ImageOptions {
             cpov.error("fatal", "jitterAmount must be a float.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get libraryPath() {
         if(typeof this._libraryPath == "function")
@@ -1718,8 +1720,6 @@ class ImageOptions {
             return this._libraryPath;
     }
 
-    //--------------------------------------------------------------------------
-
     set libraryPath(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._libraryPath = val;
@@ -1727,6 +1727,8 @@ class ImageOptions {
             cpov.error("fatal", "libraryPath must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get maxImageBufferMemory() {
         if(typeof this._maxImageBufferMemory == "function")
@@ -1737,8 +1739,6 @@ class ImageOptions {
             return this._maxImageBufferMemory;
     }
 
-    //--------------------------------------------------------------------------
-
     set maxImageBufferMemory(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._maxImageBufferMemory = val;
@@ -1746,6 +1746,8 @@ class ImageOptions {
             cpov.error("fatal", "maxImageBufferMemory must be an integer greater than zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get outputAlpha() {
         if(typeof this._outputAlpha == "function")
@@ -1756,8 +1758,6 @@ class ImageOptions {
             return this._outputAlpha;
     }
 
-    //--------------------------------------------------------------------------
-
     set outputAlpha(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._outputAlpha = val;
@@ -1765,6 +1765,8 @@ class ImageOptions {
             cpov.error("fatal", "outputAlpha must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get outputFileName() {
         if(typeof this._outputFileName == "function")
@@ -1775,8 +1777,6 @@ class ImageOptions {
             return this._outputFileName;
     }
 
-    //--------------------------------------------------------------------------
-
     set outputFileName(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._outputFileName = val;
@@ -1784,6 +1784,8 @@ class ImageOptions {
             cpov.error("fatal", "outputFileName must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get outputFileType() {
         if(typeof this._outputFileType == "function")
@@ -1794,8 +1796,6 @@ class ImageOptions {
             return this._outputFileType;
     }
 
-    //--------------------------------------------------------------------------
-
     set outputFileType(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.outputFileTypes))) {
             this._outputFileType = val;
@@ -1803,6 +1803,8 @@ class ImageOptions {
             cpov.error("fatal", "outputFileType must be one of 'B', 'C', 'E', 'H', 'J', 'N', 'P', 'S', or 'T'", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get outputToFile() {
         if(typeof this._outputToFile == "function")
@@ -1813,8 +1815,6 @@ class ImageOptions {
             return this._outputToFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set outputToFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._outputToFile = val;
@@ -1822,6 +1822,8 @@ class ImageOptions {
             cpov.error("fatal", "outputToFile must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get palette() {
         if(typeof this._palette == "function")
@@ -1832,8 +1834,6 @@ class ImageOptions {
             return this._palette;
     }
 
-    //--------------------------------------------------------------------------
-
     set palette(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isString(val) && val.length == 1)) {
             this._palette = val;
@@ -1841,6 +1841,8 @@ class ImageOptions {
             cpov.error("fatal", "palette", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get pauseWhenDone() {
         if(typeof this._pauseWhenDone == "function")
@@ -1851,8 +1853,6 @@ class ImageOptions {
             return this._pauseWhenDone;
     }
 
-    //--------------------------------------------------------------------------
-
     set pauseWhenDone(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._pauseWhenDone = val;
@@ -1860,6 +1860,8 @@ class ImageOptions {
             cpov.error("fatal", "pauseWhenDone must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get postFrameCommand() {
         if(typeof this._postFrameCommand == "function")
@@ -1870,8 +1872,6 @@ class ImageOptions {
             return this._postFrameCommand;
     }
 
-    //--------------------------------------------------------------------------
-
     set postFrameCommand(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._postFrameCommand = val;
@@ -1879,6 +1879,8 @@ class ImageOptions {
             cpov.error("fatal", "postFrameCommand must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get postFrameReturn() {
         if(typeof this._postFrameReturn == "function")
@@ -1889,8 +1891,6 @@ class ImageOptions {
             return this._postFrameReturn;
     }
 
-    //--------------------------------------------------------------------------
-
     set postFrameReturn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._postFrameReturn = val;
@@ -1898,6 +1898,8 @@ class ImageOptions {
             cpov.error("fatal", "postFrameReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get postSceneCommand() {
         if(typeof this._postSceneCommand == "function")
@@ -1908,8 +1910,6 @@ class ImageOptions {
             return this._postSceneCommand;
     }
 
-    //--------------------------------------------------------------------------
-
     set postSceneCommand(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._postSceneCommand = val;
@@ -1917,6 +1917,8 @@ class ImageOptions {
             cpov.error("fatal", "postSceneCommand must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get postSceneReturn() {
         if(typeof this._postSceneReturn == "function")
@@ -1927,8 +1929,6 @@ class ImageOptions {
             return this._postSceneReturn;
     }
 
-    //--------------------------------------------------------------------------
-
     set postSceneReturn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._postSceneReturn = val;
@@ -1936,6 +1936,8 @@ class ImageOptions {
             cpov.error("fatal", "postSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get preFrameCommand() {
         if(typeof this._preFrameCommand == "function")
@@ -1946,8 +1948,6 @@ class ImageOptions {
             return this._preFrameCommand;
     }
 
-    //--------------------------------------------------------------------------
-
     set preFrameCommand(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._preFrameCommand = val;
@@ -1955,6 +1955,8 @@ class ImageOptions {
             cpov.error("fatal", "preFrameCommand must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get preFrameReturn() {
         if(typeof this._preFrameReturn == "function")
@@ -1965,8 +1967,6 @@ class ImageOptions {
             return this._preFrameReturn;
     }
 
-    //--------------------------------------------------------------------------
-
     set preFrameReturn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._preFrameReturn = val;
@@ -1974,6 +1974,8 @@ class ImageOptions {
             cpov.error("fatal", "preFrameReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get preSceneCommand() {
         if(typeof this._preSceneCommand == "function")
@@ -1984,8 +1986,6 @@ class ImageOptions {
             return this._preSceneCommand;
     }
 
-    //--------------------------------------------------------------------------
-
     set preSceneCommand(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._preSceneCommand = val;
@@ -1993,6 +1993,8 @@ class ImageOptions {
             cpov.error("fatal", "preSceneCommand must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get preSceneReturn() {
         if(typeof this._preSceneReturn == "function")
@@ -2003,8 +2005,6 @@ class ImageOptions {
             return this._preSceneReturn;
     }
 
-    //--------------------------------------------------------------------------
-
     set preSceneReturn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._preSceneReturn = val;
@@ -2012,6 +2012,8 @@ class ImageOptions {
             cpov.error("fatal", "preSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get previewEndSize() {
         if(typeof this._previewEndSize == "function")
@@ -2022,8 +2024,6 @@ class ImageOptions {
             return this._previewEndSize;
     }
 
-    //--------------------------------------------------------------------------
-
     set previewEndSize(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._previewEndSize = val;
@@ -2031,6 +2031,8 @@ class ImageOptions {
             cpov.error("fatal", "previewEndSize must be an integer greater than zero", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get previewStartSize() {
         if(typeof this._previewStartSize == "function")
@@ -2041,8 +2043,6 @@ class ImageOptions {
             return this._previewStartSize;
     }
 
-    //--------------------------------------------------------------------------
-
     set previewStartSize(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._previewStartSize = val;
@@ -2050,6 +2050,8 @@ class ImageOptions {
             cpov.error("fatal", "previewStartSize must be an integer greater than zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get quality() {
         if(typeof this._quality == "function")
@@ -2060,8 +2062,6 @@ class ImageOptions {
             return this._quality;
     }
 
-    //--------------------------------------------------------------------------
-
     set quality(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0 && val <= 11)) {
             this._quality = val;
@@ -2069,6 +2069,8 @@ class ImageOptions {
             cpov.error("fatal", "quality must be an integer in the range (0 - 11)", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radiosityFileName() {
         if(typeof this._radiosityFileName == "function")
@@ -2079,8 +2081,6 @@ class ImageOptions {
             return this._radiosityFileName;
     }
 
-    //--------------------------------------------------------------------------
-
     set radiosityFileName(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityFileName = val;
@@ -2088,6 +2088,8 @@ class ImageOptions {
             cpov.error("fatal", "radiosityFileName must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radiosityFromFile() {
         if(typeof this._radiosityFromFile == "function")
@@ -2098,8 +2100,6 @@ class ImageOptions {
             return this._radiosityFromFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set radiosityFromFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityFromFile = val;
@@ -2107,6 +2107,8 @@ class ImageOptions {
             cpov.error("fatal", "radiosityFromFile must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radiosityToFile() {
         if(typeof this._radiosityToFile == "function")
@@ -2117,8 +2119,6 @@ class ImageOptions {
             return this._radiosityToFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set radiosityToFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityToFile = val;
@@ -2126,6 +2126,8 @@ class ImageOptions {
             cpov.error("fatal", "radiosityToFile must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radiosityVainPretrace() {
         if(typeof this._radiosityVainPretrace == "function")
@@ -2136,8 +2138,6 @@ class ImageOptions {
             return this._radiosityVainPretrace;
     }
 
-    //--------------------------------------------------------------------------
-
     set radiosityVainPretrace(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radiosityVainPretrace = val;
@@ -2145,6 +2145,8 @@ class ImageOptions {
             cpov.error("fatal", "radiosityVainPretrace must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get removeBounds() {
         if(typeof this._removeBounds == "function")
@@ -2155,8 +2157,6 @@ class ImageOptions {
             return this._removeBounds;
     }
 
-    //--------------------------------------------------------------------------
-
     set removeBounds(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._removeBounds = val;
@@ -2164,6 +2164,8 @@ class ImageOptions {
             cpov.error("fatal", "removeBounds must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get renderBlockSize() {
         if(typeof this._renderBlockSize == "function")
@@ -2174,8 +2176,6 @@ class ImageOptions {
             return this._renderBlockSize;
     }
 
-    //--------------------------------------------------------------------------
-
     set renderBlockSize(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 4)) {
             this._renderBlockSize = val;
@@ -2183,6 +2183,8 @@ class ImageOptions {
             cpov.error("fatal", "renderBlockSize must be an integer greater than or equal to 4.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get renderBlockStep() {
         if(typeof this._renderBlockStep == "function")
@@ -2193,8 +2195,6 @@ class ImageOptions {
             return this._renderBlockStep;
     }
 
-    //--------------------------------------------------------------------------
-
     set renderBlockStep(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1)) {
             this._renderBlockStep = val;
@@ -2202,6 +2202,8 @@ class ImageOptions {
             cpov.error("fatal", "renderBlockStep must be an integer greater than or equal to 1.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get renderConsole() {
         if(typeof this._renderConsole == "function")
@@ -2212,8 +2214,6 @@ class ImageOptions {
             return this._renderConsole;
     }
 
-    //--------------------------------------------------------------------------
-
     set renderConsole(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._renderConsole = val;
@@ -2221,6 +2221,8 @@ class ImageOptions {
             cpov.error("fatal", "renderConsole must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get renderFile() {
         if(typeof this._renderFile == "function")
@@ -2231,8 +2233,6 @@ class ImageOptions {
             return this._renderFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set renderFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) && cpov.isNonEmptyString(val))) {
             this._renderFile = val;
@@ -2240,6 +2240,8 @@ class ImageOptions {
             cpov.error("fatal", "renderFile must be a boolean or a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get renderPattern() {
         if(typeof this._renderPattern == "function")
@@ -2250,8 +2252,6 @@ class ImageOptions {
             return this._renderPattern;
     }
 
-    //--------------------------------------------------------------------------
-
     set renderPattern(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0 && val <= 5)) {
             this._renderPattern = val;
@@ -2259,6 +2259,8 @@ class ImageOptions {
             cpov.error("fatal", "renderPattern must be an integer in the range (0 - 5).", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get samplingMethod() {
         if(typeof this._samplingMethod == "function")
@@ -2269,8 +2271,6 @@ class ImageOptions {
             return this._samplingMethod;
     }
 
-    //--------------------------------------------------------------------------
-
     set samplingMethod(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1 && val <= 2)) {
             this._samplingMethod = val;
@@ -2278,6 +2278,8 @@ class ImageOptions {
             cpov.error("fatal", "samplingMethod must be an integer in the range (1 - 2).", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get splitUnions() {
         if(typeof this._splitUnions == "function")
@@ -2288,8 +2290,6 @@ class ImageOptions {
             return this._splitUnions;
     }
 
-    //--------------------------------------------------------------------------
-
     set splitUnions(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._splitUnions = val;
@@ -2297,6 +2297,8 @@ class ImageOptions {
             cpov.error("fatal", "splitUnions must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get startColumn() {
         if(typeof this._startColumn == "function")
@@ -2307,8 +2309,6 @@ class ImageOptions {
             return this._startColumn;
     }
 
-    //--------------------------------------------------------------------------
-
     set startColumn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._startColumn = val;
@@ -2316,6 +2316,8 @@ class ImageOptions {
             cpov.error("fatal", "startColumn must be an integer greater than or equal to zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get startRow() {
         if(typeof this._startRow == "function")
@@ -2326,8 +2328,6 @@ class ImageOptions {
             return this._startRow;
     }
 
-    //--------------------------------------------------------------------------
-
     set startRow(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._startRow = val;
@@ -2335,6 +2335,8 @@ class ImageOptions {
             cpov.error("fatal", "startRow must be an integer greater than or equal to zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get statisticConsole() {
         if(typeof this._statisticConsole == "function")
@@ -2345,8 +2347,6 @@ class ImageOptions {
             return this._statisticConsole;
     }
 
-    //--------------------------------------------------------------------------
-
     set statisticConsole(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._statisticConsole = val;
@@ -2354,6 +2354,8 @@ class ImageOptions {
             cpov.error("fatal", "statisticConsole must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get statisticFile() {
         if(typeof this._statisticFile == "function")
@@ -2364,8 +2366,6 @@ class ImageOptions {
             return this._statisticFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set statisticFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean || cpov.isNonEmptyString(val))) {
             this._statisticFile = val;
@@ -2373,6 +2373,8 @@ class ImageOptions {
             cpov.error("fatal", "statisticFile must be a boolean or a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get testAbort() {
         if(typeof this._testAbort == "function")
@@ -2383,8 +2385,6 @@ class ImageOptions {
             return this._testAbort;
     }
 
-    //--------------------------------------------------------------------------
-
     set testAbort(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._testAbort = val;
@@ -2392,6 +2392,8 @@ class ImageOptions {
             cpov.error("fatal", "testAbort must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get testAbortCount() {
         if(typeof this._testAbortCount == "function")
@@ -2402,8 +2404,6 @@ class ImageOptions {
             return this._testAbortCount;
     }
 
-    //--------------------------------------------------------------------------
-
     set testAbortCount(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1)) {
             this._testAbortCount = val;
@@ -2411,6 +2411,8 @@ class ImageOptions {
             cpov.error("fatal", "testAbortCount must be an integer greater than or equal to one.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get userAbortCommand() {
         if(typeof this._userAbortCommand == "function")
@@ -2421,8 +2423,6 @@ class ImageOptions {
             return this._userAbortCommand;
     }
 
-    //--------------------------------------------------------------------------
-
     set userAbortCommand(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._userAbortCommand = val;
@@ -2430,6 +2430,8 @@ class ImageOptions {
             cpov.error("fatal", "userAbortCommand must be a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get userAbortReturn() {
         if(typeof this._userAbortReturn == "function")
@@ -2440,8 +2442,6 @@ class ImageOptions {
             return this._userAbortReturn;
     }
 
-    //--------------------------------------------------------------------------
-
     set userAbortReturn(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._userAbortReturn = val;
@@ -2449,6 +2449,8 @@ class ImageOptions {
             cpov.error("fatal", "userAbortReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get verbose() {
         if(typeof this._verbose == "function")
@@ -2459,8 +2461,6 @@ class ImageOptions {
             return this._verbose;
     }
 
-    //--------------------------------------------------------------------------
-
     set verbose(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._verbose = val;
@@ -2468,6 +2468,8 @@ class ImageOptions {
             cpov.error("fatal", "verbose must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get videoMode() {
         if(typeof this._videoMode == "function")
@@ -2478,8 +2480,6 @@ class ImageOptions {
             return this._videoMode;
     }
 
-    //--------------------------------------------------------------------------
-
     set videoMode(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isString(val) && val.length == 1)) {
             this._videoMode = val;
@@ -2487,6 +2487,8 @@ class ImageOptions {
             cpov.error("fatal", "videoMode must be a single character.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get warningConsole() {
         if(typeof this._warningConsole == "function")
@@ -2497,8 +2499,6 @@ class ImageOptions {
             return this._warningConsole;
     }
 
-    //--------------------------------------------------------------------------
-
     set warningConsole(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._warningConsole = val;
@@ -2506,6 +2506,8 @@ class ImageOptions {
             cpov.error("fatal", "warningConsole must be a boolean.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get warningFile() {
         if(typeof this._warningFile == "function")
@@ -2516,8 +2518,6 @@ class ImageOptions {
             return this._warningFile;
     }
 
-    //--------------------------------------------------------------------------
-
     set warningFile(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._warningFile = val;
@@ -2525,6 +2525,8 @@ class ImageOptions {
             cpov.error("fatal", "warningFile must be a boolean or a non-empty string.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get warningLevel() {
         if(typeof this._warningLevel == "function")
@@ -2535,8 +2537,6 @@ class ImageOptions {
             return this._warningLevel;
     }
 
-    //--------------------------------------------------------------------------
-
     set warningLevel(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && (val == 0 || val == 5 || val == 10))) {
             this._warningLevel = val;
@@ -2544,6 +2544,8 @@ class ImageOptions {
             cpov.error("fatal", "warningLevel must be one of 0, 5, or 10.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get width() {
         if(typeof this._width == "function")
@@ -2554,8 +2556,6 @@ class ImageOptions {
             return this._width;
     }
 
-    //--------------------------------------------------------------------------
-
     set width(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._width = val;
@@ -2563,6 +2563,8 @@ class ImageOptions {
             cpov.error("fatal", "width must be an integer greater than zero.", "ImageOptions");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get workThreads() {
         if(typeof this._workThreads == "function")
@@ -2572,8 +2574,6 @@ class ImageOptions {
         else
             return this._workThreads;
     }
-
-    //--------------------------------------------------------------------------
 
     set workThreads(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 1 && val <= 512)) {
@@ -2633,6 +2633,8 @@ class Primitive {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get active() {
         if(typeof this._active == "function")
             return this._active();
@@ -2642,8 +2644,6 @@ class Primitive {
             return this._active;
     }
 
-    //--------------------------------------------------------------------------
-
     set active(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._active = val;
@@ -2651,6 +2651,8 @@ class Primitive {
             cpov.error("fatal", "active must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get baseTransform() {
         if(typeof this._baseTransform == "function")
@@ -2661,8 +2663,6 @@ class Primitive {
             return this._baseTransform;
     }
 
-    //--------------------------------------------------------------------------
-
     set baseTransform(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Matrix'))) {
             this._baseTransform = val;
@@ -2670,6 +2670,8 @@ class Primitive {
             cpov.error("fatal", "baseTransform must be a Matrix.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get boundedBy() {
         if(typeof this._boundedBy == "function")
@@ -2680,8 +2682,6 @@ class Primitive {
             return this._boundedBy;
     }
 
-    //--------------------------------------------------------------------------
-
     set boundedBy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom('Primitive') )) {
             this._boundedBy = val;
@@ -2689,6 +2689,8 @@ class Primitive {
             cpov.error("fatal", "boundedBy must be a Primitive.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get children() {
         if(typeof this._children == "function")
@@ -2699,8 +2701,6 @@ class Primitive {
             return this._children;
     }
 
-    //--------------------------------------------------------------------------
-
     set children(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfSubclass(val, 'Primitive'))) {
             this._children = val;
@@ -2708,6 +2708,8 @@ class Primitive {
             cpov.error("fatal", "children must be an array of Primitives.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get clippedBy() {
         if(typeof this._clippedBy == "function")
@@ -2718,8 +2720,6 @@ class Primitive {
             return this._clippedBy;
     }
 
-    //--------------------------------------------------------------------------
-
     set clippedBy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._clippedBy = val;
@@ -2727,6 +2727,8 @@ class Primitive {
             cpov.error("fatal", "clippedBy", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get doubleIlluminate() {
         if(typeof this._doubleIlluminate == "function")
@@ -2737,8 +2739,6 @@ class Primitive {
             return this._doubleIlluminate;
     }
 
-    //--------------------------------------------------------------------------
-
     set doubleIlluminate(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._doubleIlluminate = val;
@@ -2746,6 +2746,8 @@ class Primitive {
             cpov.error("fatal", "doubleIlluminate must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get finish() {
         if(typeof this._finish == "function")
@@ -2756,8 +2758,6 @@ class Primitive {
             return this._finish;
     }
 
-    //--------------------------------------------------------------------------
-
     set finish(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Finish'))) {
             this._finish = val;
@@ -2765,6 +2765,8 @@ class Primitive {
             cpov.error("fatal", "finish must be a Finish.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get frameBegin() {
         if(typeof this._frameBegin == "function")
@@ -2775,8 +2777,6 @@ class Primitive {
             return this._frameBegin;
     }
 
-    //--------------------------------------------------------------------------
-
     set frameBegin(val) {
         if(cpov.isNullOrFunction(val) || (typeof val == 'function')) {
             this._frameBegin = val;
@@ -2784,6 +2784,8 @@ class Primitive {
             cpov.error("fatal", "frameBegin must be a JavaScript function.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get frameEnd() {
         if(typeof this._frameEnd == "function")
@@ -2794,8 +2796,6 @@ class Primitive {
             return this._frameEnd;
     }
 
-    //--------------------------------------------------------------------------
-
     set frameEnd(val) {
         if(cpov.isNullOrFunction(val) || (typeof val == 'function')) {
             this._frameEnd = val;
@@ -2803,6 +2803,8 @@ class Primitive {
             cpov.error("fatal", "frameEnd must be a JavaScript function.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get hierarchy() {
         if(typeof this._hierarchy == "function")
@@ -2813,8 +2815,6 @@ class Primitive {
             return this._hierarchy;
     }
 
-    //--------------------------------------------------------------------------
-
     set hierarchy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
@@ -2822,6 +2822,8 @@ class Primitive {
             cpov.error("fatal", "hierarchy must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get hollow() {
         if(typeof this._hollow == "function")
@@ -2832,8 +2834,6 @@ class Primitive {
             return this._hollow;
     }
 
-    //--------------------------------------------------------------------------
-
     set hollow(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hollow = val;
@@ -2841,6 +2841,8 @@ class Primitive {
             cpov.error("fatal", "hollow must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get id() {
         if(typeof this._id == "function")
@@ -2851,8 +2853,6 @@ class Primitive {
             return this._id;
     }
 
-    //--------------------------------------------------------------------------
-
     set id(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._id = val;
@@ -2860,6 +2860,8 @@ class Primitive {
             cpov.error("fatal", "id must be a non-empty string.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get interior() {
         if(typeof this._interior == "function")
@@ -2870,8 +2872,6 @@ class Primitive {
             return this._interior;
     }
 
-    //--------------------------------------------------------------------------
-
     set interior(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Interior'))) {
             this._interior = val;
@@ -2879,6 +2879,8 @@ class Primitive {
             cpov.error("fatal", "interior must be an Interior.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get inverse() {
         if(typeof this._inverse == "function")
@@ -2889,8 +2891,6 @@ class Primitive {
             return this._inverse;
     }
 
-    //--------------------------------------------------------------------------
-
     set inverse(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._inverse = val;
@@ -2898,6 +2898,8 @@ class Primitive {
             cpov.error("fatal", "inverse must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get material() {
         if(typeof this._material == "function")
@@ -2908,8 +2910,6 @@ class Primitive {
             return this._material;
     }
 
-    //--------------------------------------------------------------------------
-
     set material(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Material'))) {
             this._material = val;
@@ -2917,6 +2917,8 @@ class Primitive {
             cpov.error("fatal", "material must be a Material.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get noImage() {
         if(typeof this._noImage == "function")
@@ -2927,8 +2929,6 @@ class Primitive {
             return this._noImage;
     }
 
-    //--------------------------------------------------------------------------
-
     set noImage(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noImage = val;
@@ -2936,6 +2936,8 @@ class Primitive {
             cpov.error("fatal", "noImage must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get noRadiosity() {
         if(typeof this._noRadiosity == "function")
@@ -2946,8 +2948,6 @@ class Primitive {
             return this._noRadiosity;
     }
 
-    //--------------------------------------------------------------------------
-
     set noRadiosity(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noRadiosity = val;
@@ -2955,6 +2955,8 @@ class Primitive {
             cpov.error("fatal", "noRadiosity must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get noReflection() {
         if(typeof this._noReflection == "function")
@@ -2965,8 +2967,6 @@ class Primitive {
             return this._noReflection;
     }
 
-    //--------------------------------------------------------------------------
-
     set noReflection(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noReflection = val;
@@ -2974,6 +2974,8 @@ class Primitive {
             cpov.error("fatal", "noReflection must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get normal() {
         if(typeof this._normal == "function")
@@ -2984,8 +2986,6 @@ class Primitive {
             return this._normal;
     }
 
-    //--------------------------------------------------------------------------
-
     set normal(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal = val;
@@ -2993,6 +2993,8 @@ class Primitive {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get noShadow() {
         if(typeof this._noShadow == "function")
@@ -3003,8 +3005,6 @@ class Primitive {
             return this._noShadow;
     }
 
-    //--------------------------------------------------------------------------
-
     set noShadow(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noShadow = val;
@@ -3012,6 +3012,8 @@ class Primitive {
             cpov.error("fatal", "noShadow must be a boolean.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get parent() {
         if(typeof this._parent == "function")
@@ -3022,8 +3024,6 @@ class Primitive {
             return this._parent;
     }
 
-    //--------------------------------------------------------------------------
-
     set parent(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._parent = val;
@@ -3031,6 +3031,8 @@ class Primitive {
             cpov.error("fatal", "parent must be a Primitive.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get photons() {
         if(typeof this._photons == "function")
@@ -3041,8 +3043,6 @@ class Primitive {
             return this._photons;
     }
 
-    //--------------------------------------------------------------------------
-
     set photons(val) {
         if(true) { // FIXME
             this._photons = val;
@@ -3050,6 +3050,8 @@ class Primitive {
             cpov.error("fatal", "photons", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radiosity() {
         if(typeof this._radiosity == "function")
@@ -3060,8 +3062,6 @@ class Primitive {
             return this._radiosity;
     }
 
-    //--------------------------------------------------------------------------
-
     set radiosity(val) {
         if(true) { // FIXME
             this._radiosity = val;
@@ -3069,6 +3069,8 @@ class Primitive {
             cpov.error("fatal", "radiosity", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get serial() {
         if(typeof this._serial == "function")
@@ -3079,8 +3081,6 @@ class Primitive {
             return this._serial;
     }
 
-    //--------------------------------------------------------------------------
-
     set serial(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._serial = val;
@@ -3088,6 +3088,8 @@ class Primitive {
             cpov.error("fatal", "serial must be an integer.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get texture() {
         if(typeof this._texture == "function")
@@ -3098,8 +3100,6 @@ class Primitive {
             return this._texture;
     }
 
-    //--------------------------------------------------------------------------
-
     set texture(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Texture'))) {
             this._texture = val;
@@ -3107,6 +3107,8 @@ class Primitive {
             cpov.error("fatal", "texture must be a Texture.", "Primitive");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get transform() {
         if(typeof this._transform == "function")
@@ -3116,8 +3118,6 @@ class Primitive {
         else
             return this._transform;
     }
-
-    //--------------------------------------------------------------------------
 
     set transform(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Matrix'))) {
@@ -3167,8 +3167,6 @@ class Blob extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Blob]: finite is a read-only property.");
     }
@@ -3178,8 +3176,6 @@ class Blob extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Blob]: solid is a read-only property.");
@@ -3191,11 +3187,11 @@ class Blob extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Blob]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get components() {
         if(typeof this._components == "function")
@@ -3206,8 +3202,6 @@ class Blob extends Primitive {
             return this._components;
     }
 
-    //--------------------------------------------------------------------------
-
     set components(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length)) {
             this._components = val;
@@ -3215,6 +3209,8 @@ class Blob extends Primitive {
             cpov.error("fatal", "components must be an array of Spheres and/or Cylinders.", "Blob");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get threshold() {
         if(typeof this._threshold == "function")
@@ -3225,8 +3221,6 @@ class Blob extends Primitive {
             return this._threshold;
     }
 
-    //--------------------------------------------------------------------------
-
     set threshold(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._threshold = val;
@@ -3234,6 +3228,8 @@ class Blob extends Primitive {
             cpov.error("fatal", "threshold", "Blob");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -3244,8 +3240,6 @@ class Blob extends Primitive {
             return this._sturm;
     }
 
-    //--------------------------------------------------------------------------
-
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
@@ -3253,6 +3247,8 @@ class Blob extends Primitive {
             cpov.error("fatal", "sturm must be a boolean.", "Blob");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get hierarchy() {
         if(typeof this._hierarchy == "function")
@@ -3262,8 +3258,6 @@ class Blob extends Primitive {
         else
             return this._hierarchy;
     }
-
-    //--------------------------------------------------------------------------
 
     set hierarchy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -3311,8 +3305,6 @@ class Box extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Box]: finite is a read-only property.");
     }
@@ -3322,8 +3314,6 @@ class Box extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Box]: solid is a read-only property.");
@@ -3335,11 +3325,11 @@ class Box extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Box]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get corner1() {
         if(typeof this._corner1 == "function")
@@ -3350,8 +3340,6 @@ class Box extends Primitive {
             return this._corner1;
     }
 
-    //--------------------------------------------------------------------------
-
     set corner1(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner1 = val;
@@ -3359,6 +3347,8 @@ class Box extends Primitive {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Box");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get corner2() {
         if(typeof this._corner2 == "function")
@@ -3368,8 +3358,6 @@ class Box extends Primitive {
         else
             return this._corner2;
     }
-
-    //--------------------------------------------------------------------------
 
     set corner2(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
@@ -3431,8 +3419,6 @@ class Camera extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Camera]: finite is a read-only property.");
     }
@@ -3442,8 +3428,6 @@ class Camera extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Camera]: solid is a read-only property.");
@@ -3455,11 +3439,11 @@ class Camera extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Camera]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -3470,8 +3454,6 @@ class Camera extends Primitive {
             return this._type;
     }
 
-    //--------------------------------------------------------------------------
-
     set type(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera']))) {
             this._type = val;
@@ -3479,6 +3461,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get angle() {
         if(typeof this._angle == "function")
@@ -3489,8 +3473,6 @@ class Camera extends Primitive {
             return this._angle;
     }
 
-    //--------------------------------------------------------------------------
-
     set angle(val) {
         if(true) { // FIXME
             this._angle = val;
@@ -3498,6 +3480,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "angle", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get apertureSize() {
         if(typeof this._apertureSize == "function")
@@ -3508,8 +3492,6 @@ class Camera extends Primitive {
             return this._apertureSize;
     }
 
-    //--------------------------------------------------------------------------
-
     set apertureSize(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._apertureSize = val;
@@ -3517,6 +3499,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "apertureSize must be a float.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get blurSamples() {
         if(typeof this._blurSamples == "function")
@@ -3527,8 +3511,6 @@ class Camera extends Primitive {
             return this._blurSamples;
     }
 
-    //--------------------------------------------------------------------------
-
     set blurSamples(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0)) {
             this._blurSamples = val;
@@ -3536,6 +3518,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "blurSamples must be an array of two floats greater than or equal to zero.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get bokeh() {
         if(typeof this._bokeh == "function")
@@ -3546,8 +3530,6 @@ class Camera extends Primitive {
             return this._bokeh;
     }
 
-    //--------------------------------------------------------------------------
-
     set bokeh(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0)) {
             this._bokeh = val;
@@ -3555,6 +3537,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "bokeh must be a VectorRGB in the range <0, 0, 0> to <1, 1, 0>.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get confidence() {
         if(typeof this._confidence == "function")
@@ -3565,8 +3549,6 @@ class Camera extends Primitive {
             return this._confidence;
     }
 
-    //--------------------------------------------------------------------------
-
     set confidence(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._confidence = val;
@@ -3574,6 +3556,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "confidence must be a float.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get cylinderType() {
         if(typeof this._cylinderType == "function")
@@ -3584,8 +3568,6 @@ class Camera extends Primitive {
             return this._cylinderType;
     }
 
-    //--------------------------------------------------------------------------
-
     set cylinderType(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0 && val < 5)) {
             this._cylinderType = val;
@@ -3593,6 +3575,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "cylinderType must be an integer in the range (1 - 4).", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get direction() {
         if(typeof this._direction == "function")
@@ -3603,8 +3587,6 @@ class Camera extends Primitive {
             return this._direction;
     }
 
-    //--------------------------------------------------------------------------
-
     set direction(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._direction = val;
@@ -3612,6 +3594,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "direction must be a VectorXYZ.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get focalPoint() {
         if(typeof this._focalPoint == "function")
@@ -3622,8 +3606,6 @@ class Camera extends Primitive {
             return this._focalPoint;
     }
 
-    //--------------------------------------------------------------------------
-
     set focalPoint(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._focalPoint = val;
@@ -3631,6 +3613,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "focalPoint must be a VectorXYZ.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get location() {
         if(typeof this._location == "function")
@@ -3641,8 +3625,6 @@ class Camera extends Primitive {
             return this._location;
     }
 
-    //--------------------------------------------------------------------------
-
     set location(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._location = val;
@@ -3650,6 +3632,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "location must be a VectorXYZ.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get lookAt() {
         if(typeof this._lookAt == "function")
@@ -3660,8 +3644,6 @@ class Camera extends Primitive {
             return this._lookAt;
     }
 
-    //--------------------------------------------------------------------------
-
     set lookAt(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._lookAt = val;
@@ -3669,6 +3651,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "lookAt must be a VectorXYZ.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get right() {
         if(typeof this._right == "function")
@@ -3679,8 +3663,6 @@ class Camera extends Primitive {
             return this._right;
     }
 
-    //--------------------------------------------------------------------------
-
     set right(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._right = val;
@@ -3688,6 +3670,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "right must be a VectorXYZ.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sky() {
         if(typeof this._sky == "function")
@@ -3698,8 +3682,6 @@ class Camera extends Primitive {
             return this._sky;
     }
 
-    //--------------------------------------------------------------------------
-
     set sky(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._sky = val;
@@ -3707,6 +3689,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "sky must be a VectorXYZ.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get up() {
         if(typeof this._up == "function")
@@ -3717,8 +3701,6 @@ class Camera extends Primitive {
             return this._up;
     }
 
-    //--------------------------------------------------------------------------
-
     set up(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._up = val;
@@ -3726,6 +3708,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "up must be a VectorXYZ.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get variance() {
         if(typeof this._variance == "function")
@@ -3736,8 +3720,6 @@ class Camera extends Primitive {
             return this._variance;
     }
 
-    //--------------------------------------------------------------------------
-
     set variance(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._variance = val;
@@ -3745,6 +3727,8 @@ class Camera extends Primitive {
             cpov.error("fatal", "variance must be a float.", "Camera");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get vertAngle() {
         if(typeof this._vertAngle == "function")
@@ -3754,8 +3738,6 @@ class Camera extends Primitive {
         else
             return this._vertAngle;
     }
-
-    //--------------------------------------------------------------------------
 
     set vertAngle(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
@@ -3806,8 +3788,6 @@ class Cone extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Cone]: finite is a read-only property.");
     }
@@ -3817,8 +3797,6 @@ class Cone extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Cone]: solid is a read-only property.");
@@ -3830,11 +3808,11 @@ class Cone extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Cone]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get basePoint() {
         if(typeof this._basePoint == "function")
@@ -3845,8 +3823,6 @@ class Cone extends Primitive {
             return this._basePoint;
     }
 
-    //--------------------------------------------------------------------------
-
     set basePoint(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._basePoint = val;
@@ -3854,6 +3830,8 @@ class Cone extends Primitive {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cone");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get baseRadius() {
         if(typeof this._baseRadius == "function")
@@ -3864,8 +3842,6 @@ class Cone extends Primitive {
             return this._baseRadius;
     }
 
-    //--------------------------------------------------------------------------
-
     set baseRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._baseRadius = val;
@@ -3873,6 +3849,8 @@ class Cone extends Primitive {
             cpov.error("fatal", "baseRadius must be a float.", "Cone");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get capPoint() {
         if(typeof this._capPoint == "function")
@@ -3883,8 +3861,6 @@ class Cone extends Primitive {
             return this._capPoint;
     }
 
-    //--------------------------------------------------------------------------
-
     set capPoint(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._capPoint = val;
@@ -3892,6 +3868,8 @@ class Cone extends Primitive {
             cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cone");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get capRadius() {
         if(typeof this._capRadius == "function")
@@ -3902,8 +3880,6 @@ class Cone extends Primitive {
             return this._capRadius;
     }
 
-    //--------------------------------------------------------------------------
-
     set capRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._capRadius = val;
@@ -3911,6 +3887,8 @@ class Cone extends Primitive {
             cpov.error("fatal", "capRadius must be a float.", "Cone");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get open() {
         if(typeof this._open == "function")
@@ -3920,8 +3898,6 @@ class Cone extends Primitive {
         else
             return this._open;
     }
-
-    //--------------------------------------------------------------------------
 
     set open(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -3972,8 +3948,6 @@ class Cylinder extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Cylinder]: finite is a read-only property.");
     }
@@ -3983,8 +3957,6 @@ class Cylinder extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Cylinder]: solid is a read-only property.");
@@ -3996,11 +3968,11 @@ class Cylinder extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Cylinder]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get basePoint() {
         if(typeof this._basePoint == "function")
@@ -4011,8 +3983,6 @@ class Cylinder extends Primitive {
             return this._basePoint;
     }
 
-    //--------------------------------------------------------------------------
-
     set basePoint(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._basePoint = val;
@@ -4020,6 +3990,8 @@ class Cylinder extends Primitive {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cylinder");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get capPoint() {
         if(typeof this._capPoint == "function")
@@ -4030,8 +4002,6 @@ class Cylinder extends Primitive {
             return this._capPoint;
     }
 
-    //--------------------------------------------------------------------------
-
     set capPoint(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._capPoint = val;
@@ -4039,6 +4009,8 @@ class Cylinder extends Primitive {
             cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cylinder");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radius() {
         if(typeof this._radius == "function")
@@ -4049,8 +4021,6 @@ class Cylinder extends Primitive {
             return this._radius;
     }
 
-    //--------------------------------------------------------------------------
-
     set radius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
@@ -4058,6 +4028,8 @@ class Cylinder extends Primitive {
             cpov.error("fatal", "radius must be a float.", "Cylinder");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get open() {
         if(typeof this._open == "function")
@@ -4068,8 +4040,6 @@ class Cylinder extends Primitive {
             return this._open;
     }
 
-    //--------------------------------------------------------------------------
-
     set open(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
@@ -4077,6 +4047,8 @@ class Cylinder extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "Cylinder");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get strength() {
         if(typeof this._strength == "function")
@@ -4086,8 +4058,6 @@ class Cylinder extends Primitive {
         else
             return this._strength;
     }
-
-    //--------------------------------------------------------------------------
 
     set strength(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -4140,8 +4110,6 @@ class HeightField extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[HeightField]: finite is a read-only property.");
     }
@@ -4151,8 +4119,6 @@ class HeightField extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[HeightField]: solid is a read-only property.");
@@ -4164,11 +4130,11 @@ class HeightField extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[HeightField]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get source() {
         if(typeof this._source == "function")
@@ -4179,8 +4145,6 @@ class HeightField extends Primitive {
             return this._source;
     }
 
-    //--------------------------------------------------------------------------
-
     set source(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val) || cpov.isString(val))) {
             this._source = val;
@@ -4188,6 +4152,8 @@ class HeightField extends Primitive {
             cpov.error("fatal", "source", "HeightField");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get hfType() {
         if(typeof this._hfType == "function")
@@ -4198,8 +4164,6 @@ class HeightField extends Primitive {
             return this._hfType;
     }
 
-    //--------------------------------------------------------------------------
-
     set hfType(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, cpov.hfTypes))) {
             this._hfType = val;
@@ -4207,6 +4171,8 @@ class HeightField extends Primitive {
             cpov.error("fatal", "hfType must be one of exr, gif, hdr, iff, jpeg, pgm, png, pot, ppm, sys, tga, or tiff.", "HeightField");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get smooth() {
         if(typeof this._smooth == "function")
@@ -4217,8 +4183,6 @@ class HeightField extends Primitive {
             return this._smooth;
     }
 
-    //--------------------------------------------------------------------------
-
     set smooth(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._smooth = val;
@@ -4226,6 +4190,8 @@ class HeightField extends Primitive {
             cpov.error("fatal", "smooth must be a boolean.", "HeightField");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get waterLevel() {
         if(typeof this._waterLevel == "function")
@@ -4236,8 +4202,6 @@ class HeightField extends Primitive {
             return this._waterLevel;
     }
 
-    //--------------------------------------------------------------------------
-
     set waterLevel(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._waterLevel = val;
@@ -4245,6 +4209,8 @@ class HeightField extends Primitive {
             cpov.error("fatal", "waterLevel must be a float.", "HeightField");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get hierarchy() {
         if(typeof this._hierarchy == "function")
@@ -4255,8 +4221,6 @@ class HeightField extends Primitive {
             return this._hierarchy;
     }
 
-    //--------------------------------------------------------------------------
-
     set hierarchy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
@@ -4264,6 +4228,8 @@ class HeightField extends Primitive {
             cpov.error("fatal", "hierarchy must be a boolean.", "HeightField");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get gamma() {
         if(typeof this._gamma == "function")
@@ -4274,8 +4240,6 @@ class HeightField extends Primitive {
             return this._gamma;
     }
 
-    //--------------------------------------------------------------------------
-
     set gamma(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._gamma = val;
@@ -4283,6 +4247,8 @@ class HeightField extends Primitive {
             cpov.error("fatal", "gamma must be a float.", "HeightField");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get premult() {
         if(typeof this._premult == "function")
@@ -4292,8 +4258,6 @@ class HeightField extends Primitive {
         else
             return this._premult;
     }
-
-    //--------------------------------------------------------------------------
 
     set premult(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -4347,8 +4311,6 @@ class IsoSurface extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[IsoSurface]: finite is a read-only property.");
     }
@@ -4358,8 +4320,6 @@ class IsoSurface extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[IsoSurface]: solid is a read-only property.");
@@ -4371,11 +4331,11 @@ class IsoSurface extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[IsoSurface]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get source() {
         if(typeof this._source == "function")
@@ -4386,8 +4346,6 @@ class IsoSurface extends Primitive {
             return this._source;
     }
 
-    //--------------------------------------------------------------------------
-
     set source(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._source = val;
@@ -4395,6 +4353,8 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "source must be an SDL function.", "IsoSurface");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get containedBy() {
         if(typeof this._containedBy == "function")
@@ -4405,8 +4365,6 @@ class IsoSurface extends Primitive {
             return this._containedBy;
     }
 
-    //--------------------------------------------------------------------------
-
     set containedBy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
             this._containedBy = val;
@@ -4414,6 +4372,8 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "containedBy must be a Sphere or a Box.", "IsoSurface");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get threshold() {
         if(typeof this._threshold == "function")
@@ -4424,8 +4384,6 @@ class IsoSurface extends Primitive {
             return this._threshold;
     }
 
-    //--------------------------------------------------------------------------
-
     set threshold(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._threshold = val;
@@ -4433,6 +4391,8 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "threshold", "IsoSurface");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get accuracy() {
         if(typeof this._accuracy == "function")
@@ -4443,8 +4403,6 @@ class IsoSurface extends Primitive {
             return this._accuracy;
     }
 
-    //--------------------------------------------------------------------------
-
     set accuracy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._accuracy = val;
@@ -4452,6 +4410,8 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "accuracy must be a float.", "IsoSurface");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get maxGradient() {
         if(typeof this._maxGradient == "function")
@@ -4462,8 +4422,6 @@ class IsoSurface extends Primitive {
             return this._maxGradient;
     }
 
-    //--------------------------------------------------------------------------
-
     set maxGradient(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._maxGradient = val;
@@ -4471,6 +4429,8 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "maxGradient must be a float.", "IsoSurface");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get evaluate() {
         if(typeof this._evaluate == "function")
@@ -4481,8 +4441,6 @@ class IsoSurface extends Primitive {
             return this._evaluate;
     }
 
-    //--------------------------------------------------------------------------
-
     set evaluate(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 3, 3))) {
             this._evaluate = val;
@@ -4490,6 +4448,8 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "evaluate must be an array of three floats.", "IsoSurface");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get open() {
         if(typeof this._open == "function")
@@ -4500,8 +4460,6 @@ class IsoSurface extends Primitive {
             return this._open;
     }
 
-    //--------------------------------------------------------------------------
-
     set open(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
@@ -4509,6 +4467,8 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "IsoSurface");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get maxTrace() {
         if(typeof this._maxTrace == "function")
@@ -4518,8 +4478,6 @@ class IsoSurface extends Primitive {
         else
             return this._maxTrace;
     }
-
-    //--------------------------------------------------------------------------
 
     set maxTrace(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) || (typeof val == 'string' && val == 'allIntersections'))) {
@@ -4571,8 +4529,6 @@ class JuliaFractal extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[JuliaFractal]: finite is a read-only property.");
     }
@@ -4582,8 +4538,6 @@ class JuliaFractal extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[JuliaFractal]: solid is a read-only property.");
@@ -4595,11 +4549,11 @@ class JuliaFractal extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[JuliaFractal]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -4610,8 +4564,6 @@ class JuliaFractal extends Primitive {
             return this._type;
     }
 
-    //--------------------------------------------------------------------------
-
     set type(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inArray(val, cpov.juliaFractalTypes))) {
             this._type = val;
@@ -4619,6 +4571,8 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "type must be one of hypercomplex:acos, hypercomplex:acosh, hypercomplex:asin, hypercomplex:atan, hypercomplex:atanh, hypercomplex:cos, hypercomplex:cosh, hypercomplex:cube, hypercomplex:exp, hypercomplex:ln, hypercomplex:pwr, hypercomplex:reciprocal, hypercomplex:sin, hypercomplex:sinh, hypercomplex:sqr, hypercomplex:tan, hypercomplex:tanh, quaternion:cube, or quaternion:sqr.", "JuliaFractal");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get power() {
         if(typeof this._power == "function")
@@ -4629,8 +4583,6 @@ class JuliaFractal extends Primitive {
             return this._power;
     }
 
-    //--------------------------------------------------------------------------
-
     set power(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXY'))) {
             this._power = val;
@@ -4638,6 +4590,8 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "power must be a VectorXY.", "JuliaFractal");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get maxIter() {
         if(typeof this._maxIter == "function")
@@ -4648,8 +4602,6 @@ class JuliaFractal extends Primitive {
             return this._maxIter;
     }
 
-    //--------------------------------------------------------------------------
-
     set maxIter(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._maxIter = val;
@@ -4657,6 +4609,8 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "maxIter must be an integer.", "JuliaFractal");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get precision() {
         if(typeof this._precision == "function")
@@ -4667,8 +4621,6 @@ class JuliaFractal extends Primitive {
             return this._precision;
     }
 
-    //--------------------------------------------------------------------------
-
     set precision(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._precision = val;
@@ -4676,6 +4628,8 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "precision must be an integer.", "JuliaFractal");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get slice() {
         if(typeof this._slice == "function")
@@ -4686,8 +4640,6 @@ class JuliaFractal extends Primitive {
             return this._slice;
     }
 
-    //--------------------------------------------------------------------------
-
     set slice(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW'))) {
             this._slice = val;
@@ -4695,6 +4647,8 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "slice must be a VectorXYZW.", "JuliaFractal");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get distance() {
         if(typeof this._distance == "function")
@@ -4704,8 +4658,6 @@ class JuliaFractal extends Primitive {
         else
             return this._distance;
     }
-
-    //--------------------------------------------------------------------------
 
     set distance(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -4754,8 +4706,6 @@ class Lathe extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Lathe]: finite is a read-only property.");
     }
@@ -4765,8 +4715,6 @@ class Lathe extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Lathe]: solid is a read-only property.");
@@ -4778,11 +4726,11 @@ class Lathe extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Lathe]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -4793,8 +4741,6 @@ class Lathe extends Primitive {
             return this._type;
     }
 
-    //--------------------------------------------------------------------------
-
     set type(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.splineTypes))) {
             this._type = val;
@@ -4802,6 +4748,8 @@ class Lathe extends Primitive {
             cpov.error("fatal", "type must be one of 'bezierSpline', 'cubicSpline', 'linearSpline', or 'quadraticSpline'.", "Lathe");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get points() {
         if(typeof this._points == "function")
@@ -4812,8 +4760,6 @@ class Lathe extends Primitive {
             return this._points;
     }
 
-    //--------------------------------------------------------------------------
-
     set points(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity))) {
             this._points = val;
@@ -4821,6 +4767,8 @@ class Lathe extends Primitive {
             cpov.error("fatal", "points must be an array of two or more VectorXY.", "Lathe");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -4830,8 +4778,6 @@ class Lathe extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -4902,8 +4848,6 @@ class LightSource extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[LightSource]: finite is a read-only property.");
     }
@@ -4913,8 +4857,6 @@ class LightSource extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[LightSource]: solid is a read-only property.");
@@ -4926,11 +4868,11 @@ class LightSource extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[LightSource]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get location() {
         if(typeof this._location == "function")
@@ -4941,8 +4883,6 @@ class LightSource extends Primitive {
             return this._location;
     }
 
-    //--------------------------------------------------------------------------
-
     set location(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._location = val;
@@ -4950,6 +4890,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "location must be a VectorXYZ.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get color() {
         if(typeof this._color == "function")
@@ -4960,8 +4902,6 @@ class LightSource extends Primitive {
             return this._color;
     }
 
-    //--------------------------------------------------------------------------
-
     set color(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorRGB'))) {
             this._color = val;
@@ -4969,6 +4909,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "color must be a VectorRGB.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get adaptive() {
         if(typeof this._adaptive == "function")
@@ -4979,8 +4921,6 @@ class LightSource extends Primitive {
             return this._adaptive;
     }
 
-    //--------------------------------------------------------------------------
-
     set adaptive(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._adaptive = val;
@@ -4988,6 +4928,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "adaptive must be a float greater than or equal to zero.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get areaIllumination() {
         if(typeof this._areaIllumination == "function")
@@ -4998,8 +4940,6 @@ class LightSource extends Primitive {
             return this._areaIllumination;
     }
 
-    //--------------------------------------------------------------------------
-
     set areaIllumination(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._areaIllumination = val;
@@ -5007,6 +4947,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "areaIllumination must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get areaLight() {
         if(typeof this._areaLight == "function")
@@ -5017,8 +4959,6 @@ class LightSource extends Primitive {
             return this._areaLight;
     }
 
-    //--------------------------------------------------------------------------
-
     set areaLight(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._areaLight = val;
@@ -5026,6 +4966,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "areaLight must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get axis1() {
         if(typeof this._axis1 == "function")
@@ -5036,8 +4978,6 @@ class LightSource extends Primitive {
             return this._axis1;
     }
 
-    //--------------------------------------------------------------------------
-
     set axis1(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._axis1 = val;
@@ -5045,6 +4985,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "axis1 must be a VectorXYZ.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get axis2() {
         if(typeof this._axis2 == "function")
@@ -5055,8 +4997,6 @@ class LightSource extends Primitive {
             return this._axis2;
     }
 
-    //--------------------------------------------------------------------------
-
     set axis2(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._axis2 = val;
@@ -5064,6 +5004,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "axis2 must be a VectorXYZ.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get circular() {
         if(typeof this._circular == "function")
@@ -5074,8 +5016,6 @@ class LightSource extends Primitive {
             return this._circular;
     }
 
-    //--------------------------------------------------------------------------
-
     set circular(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._circular = val;
@@ -5083,6 +5023,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "circular must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get fadeDistance() {
         if(typeof this._fadeDistance == "function")
@@ -5093,8 +5035,6 @@ class LightSource extends Primitive {
             return this._fadeDistance;
     }
 
-    //--------------------------------------------------------------------------
-
     set fadeDistance(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0.)) {
             this._fadeDistance = val;
@@ -5102,6 +5042,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "fadeDistance must be a float greater than zero.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get fadePower() {
         if(typeof this._fadePower == "function")
@@ -5112,8 +5054,6 @@ class LightSource extends Primitive {
             return this._fadePower;
     }
 
-    //--------------------------------------------------------------------------
-
     set fadePower(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._fadePower = val;
@@ -5121,6 +5061,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "fadePower must be a float.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get falloff() {
         if(typeof this._falloff == "function")
@@ -5131,8 +5073,6 @@ class LightSource extends Primitive {
             return this._falloff;
     }
 
-    //--------------------------------------------------------------------------
-
     set falloff(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val < 90.)) {
             this._falloff = val;
@@ -5140,6 +5080,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "falloff must be a float less than 90.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get jitter() {
         if(typeof this._jitter == "function")
@@ -5150,8 +5092,6 @@ class LightSource extends Primitive {
             return this._jitter;
     }
 
-    //--------------------------------------------------------------------------
-
     set jitter(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._jitter = val;
@@ -5159,6 +5099,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "jitter must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get looksLike() {
         if(typeof this._looksLike == "function")
@@ -5169,8 +5111,6 @@ class LightSource extends Primitive {
             return this._looksLike;
     }
 
-    //--------------------------------------------------------------------------
-
     set looksLike(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._looksLike = val;
@@ -5178,6 +5118,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "looksLike must be a Primitive.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get mediaAttenuation() {
         if(typeof this._mediaAttenuation == "function")
@@ -5188,8 +5130,6 @@ class LightSource extends Primitive {
             return this._mediaAttenuation;
     }
 
-    //--------------------------------------------------------------------------
-
     set mediaAttenuation(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._mediaAttenuation = val;
@@ -5197,6 +5137,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "mediaAttenuation must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get mediaInteraction() {
         if(typeof this._mediaInteraction == "function")
@@ -5207,8 +5149,6 @@ class LightSource extends Primitive {
             return this._mediaInteraction;
     }
 
-    //--------------------------------------------------------------------------
-
     set mediaInteraction(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._mediaInteraction = val;
@@ -5216,6 +5156,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "mediaInteraction must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get orient() {
         if(typeof this._orient == "function")
@@ -5226,8 +5168,6 @@ class LightSource extends Primitive {
             return this._orient;
     }
 
-    //--------------------------------------------------------------------------
-
     set orient(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._orient = val;
@@ -5235,6 +5175,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "orient must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get parallel() {
         if(typeof this._parallel == "function")
@@ -5245,8 +5187,6 @@ class LightSource extends Primitive {
             return this._parallel;
     }
 
-    //--------------------------------------------------------------------------
-
     set parallel(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._parallel = val;
@@ -5254,6 +5194,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "parallel must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get pointAt() {
         if(typeof this._pointAt == "function")
@@ -5264,8 +5206,6 @@ class LightSource extends Primitive {
             return this._pointAt;
     }
 
-    //--------------------------------------------------------------------------
-
     set pointAt(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._pointAt = val;
@@ -5273,6 +5213,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "pointAt must be a VectorXYZ.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get projectedThrough() {
         if(typeof this._projectedThrough == "function")
@@ -5283,8 +5225,6 @@ class LightSource extends Primitive {
             return this._projectedThrough;
     }
 
-    //--------------------------------------------------------------------------
-
     set projectedThrough(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._projectedThrough = val;
@@ -5292,6 +5232,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "projectedThrough", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radius() {
         if(typeof this._radius == "function")
@@ -5302,8 +5244,6 @@ class LightSource extends Primitive {
             return this._radius;
     }
 
-    //--------------------------------------------------------------------------
-
     set radius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val < 90)) {
             this._radius = val;
@@ -5311,6 +5251,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "radius must be a float less than 90.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get shadowless() {
         if(typeof this._shadowless == "function")
@@ -5321,8 +5263,6 @@ class LightSource extends Primitive {
             return this._shadowless;
     }
 
-    //--------------------------------------------------------------------------
-
     set shadowless(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._shadowless = val;
@@ -5330,6 +5270,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "shadowless must be a boolean.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get size1() {
         if(typeof this._size1 == "function")
@@ -5340,8 +5282,6 @@ class LightSource extends Primitive {
             return this._size1;
     }
 
-    //--------------------------------------------------------------------------
-
     set size1(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._size1 = val;
@@ -5349,6 +5289,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "size1 must be a float greater than zero.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get size2() {
         if(typeof this._size2 == "function")
@@ -5359,8 +5301,6 @@ class LightSource extends Primitive {
             return this._size2;
     }
 
-    //--------------------------------------------------------------------------
-
     set size2(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._size2 = val;
@@ -5368,6 +5308,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "size2 must be a float greater than zero.", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get tightness() {
         if(typeof this._tightness == "function")
@@ -5378,8 +5320,6 @@ class LightSource extends Primitive {
             return this._tightness;
     }
 
-    //--------------------------------------------------------------------------
-
     set tightness(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 100)) {
             this._tightness = val;
@@ -5387,6 +5327,8 @@ class LightSource extends Primitive {
             cpov.error("fatal", "tightness must be a float in the range (0 - 100).", "LightSource");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -5396,8 +5338,6 @@ class LightSource extends Primitive {
         else
             return this._type;
     }
-
-    //--------------------------------------------------------------------------
 
     set type(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isString(val) && (val == 'spotlight' || val == 'cylinder'))) {
@@ -5445,8 +5385,6 @@ class Ovus extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Ovus]: finite is a read-only property.");
     }
@@ -5456,8 +5394,6 @@ class Ovus extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Ovus]: solid is a read-only property.");
@@ -5469,11 +5405,11 @@ class Ovus extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Ovus]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get bottomRadius() {
         if(typeof this._bottomRadius == "function")
@@ -5484,8 +5420,6 @@ class Ovus extends Primitive {
             return this._bottomRadius;
     }
 
-    //--------------------------------------------------------------------------
-
     set bottomRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bottomRadius = val;
@@ -5493,6 +5427,8 @@ class Ovus extends Primitive {
             cpov.error("fatal", "bottomRadius must be a float.", "Ovus");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get topRadius() {
         if(typeof this._topRadius == "function")
@@ -5502,8 +5438,6 @@ class Ovus extends Primitive {
         else
             return this._topRadius;
     }
-
-    //--------------------------------------------------------------------------
 
     set topRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -5561,8 +5495,6 @@ class Parametric extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Parametric]: finite is a read-only property.");
     }
@@ -5572,8 +5504,6 @@ class Parametric extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Parametric]: solid is a read-only property.");
@@ -5585,11 +5515,11 @@ class Parametric extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Parametric]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get funcX() {
         if(typeof this._funcX == "function")
@@ -5600,8 +5530,6 @@ class Parametric extends Primitive {
             return this._funcX;
     }
 
-    //--------------------------------------------------------------------------
-
     set funcX(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._funcX = val;
@@ -5609,6 +5537,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "funcX must be an SDL function.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get funcY() {
         if(typeof this._funcY == "function")
@@ -5619,8 +5549,6 @@ class Parametric extends Primitive {
             return this._funcY;
     }
 
-    //--------------------------------------------------------------------------
-
     set funcY(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._funcY = val;
@@ -5628,6 +5556,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "funcY must be an SDL function.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get funcZ() {
         if(typeof this._funcZ == "function")
@@ -5638,8 +5568,6 @@ class Parametric extends Primitive {
             return this._funcZ;
     }
 
-    //--------------------------------------------------------------------------
-
     set funcZ(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
             this._funcZ = val;
@@ -5647,6 +5575,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "funcZ must be an SDL function.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get uv1() {
         if(typeof this._uv1 == "function")
@@ -5657,8 +5587,6 @@ class Parametric extends Primitive {
             return this._uv1;
     }
 
-    //--------------------------------------------------------------------------
-
     set uv1(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV'))) {
             this._uv1 = val;
@@ -5666,6 +5594,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "uv1 must be a VectorUV.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get uv2() {
         if(typeof this._uv2 == "function")
@@ -5676,8 +5606,6 @@ class Parametric extends Primitive {
             return this._uv2;
     }
 
-    //--------------------------------------------------------------------------
-
     set uv2(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV'))) {
             this._uv2 = val;
@@ -5685,6 +5613,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "uv2 must be a VectorUV.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get containedBy() {
         if(typeof this._containedBy == "function")
@@ -5695,8 +5625,6 @@ class Parametric extends Primitive {
             return this._containedBy;
     }
 
-    //--------------------------------------------------------------------------
-
     set containedBy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
             this._containedBy = val;
@@ -5704,6 +5632,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "containedBy must be a Sphere or Box.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get maxGradient() {
         if(typeof this._maxGradient == "function")
@@ -5714,8 +5644,6 @@ class Parametric extends Primitive {
             return this._maxGradient;
     }
 
-    //--------------------------------------------------------------------------
-
     set maxGradient(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._maxGradient = val;
@@ -5723,6 +5651,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "maxGradient must be a float.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get accuracy() {
         if(typeof this._accuracy == "function")
@@ -5733,8 +5663,6 @@ class Parametric extends Primitive {
             return this._accuracy;
     }
 
-    //--------------------------------------------------------------------------
-
     set accuracy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._accuracy = val;
@@ -5742,6 +5670,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "accuracy must be a float.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get precomputeDepth() {
         if(typeof this._precomputeDepth == "function")
@@ -5752,8 +5682,6 @@ class Parametric extends Primitive {
             return this._precomputeDepth;
     }
 
-    //--------------------------------------------------------------------------
-
     set precomputeDepth(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._precomputeDepth = val;
@@ -5761,6 +5689,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "precomputeDepth must be an integer.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get precomputeX() {
         if(typeof this._precomputeX == "function")
@@ -5771,8 +5701,6 @@ class Parametric extends Primitive {
             return this._precomputeX;
     }
 
-    //--------------------------------------------------------------------------
-
     set precomputeX(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeX = val;
@@ -5780,6 +5708,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "precomputeX must be a boolean.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get precomputeY() {
         if(typeof this._precomputeY == "function")
@@ -5790,8 +5720,6 @@ class Parametric extends Primitive {
             return this._precomputeY;
     }
 
-    //--------------------------------------------------------------------------
-
     set precomputeY(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeY = val;
@@ -5799,6 +5727,8 @@ class Parametric extends Primitive {
             cpov.error("fatal", "precomputeY must be a boolean.", "Parametric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get precomputeZ() {
         if(typeof this._precomputeZ == "function")
@@ -5808,8 +5738,6 @@ class Parametric extends Primitive {
         else
             return this._precomputeZ;
     }
-
-    //--------------------------------------------------------------------------
 
     set precomputeZ(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -5861,8 +5789,6 @@ class Prism extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Prism]: finite is a read-only property.");
     }
@@ -5872,8 +5798,6 @@ class Prism extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Prism]: solid is a read-only property.");
@@ -5885,11 +5809,11 @@ class Prism extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Prism]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -5900,8 +5824,6 @@ class Prism extends Primitive {
             return this._type;
     }
 
-    //--------------------------------------------------------------------------
-
     set type(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.prismTypes))) {
             this._type = val;
@@ -5909,6 +5831,8 @@ class Prism extends Primitive {
             cpov.error("fatal", "type must be one of 'bezierSpline', 'conicSweep', 'cubicSpline', 'linearSpline', 'linearSweep', or 'quadraticSpline'.", "Prism");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get height1() {
         if(typeof this._height1 == "function")
@@ -5919,8 +5843,6 @@ class Prism extends Primitive {
             return this._height1;
     }
 
-    //--------------------------------------------------------------------------
-
     set height1(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._height1 = val;
@@ -5928,6 +5850,8 @@ class Prism extends Primitive {
             cpov.error("fatal", "height1 must be a float.", "Prism");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get height2() {
         if(typeof this._height2 == "function")
@@ -5938,8 +5862,6 @@ class Prism extends Primitive {
             return this._height2;
     }
 
-    //--------------------------------------------------------------------------
-
     set height2(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._height2 = val;
@@ -5947,6 +5869,8 @@ class Prism extends Primitive {
             cpov.error("fatal", "height2 must be a float", "Prism");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get points() {
         if(typeof this._points == "function")
@@ -5957,8 +5881,6 @@ class Prism extends Primitive {
             return this._points;
     }
 
-    //--------------------------------------------------------------------------
-
     set points(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity))) {
             this._points = val;
@@ -5966,6 +5888,8 @@ class Prism extends Primitive {
             cpov.error("fatal", "points must be an array of VectorXY.", "Prism");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get open() {
         if(typeof this._open == "function")
@@ -5976,8 +5900,6 @@ class Prism extends Primitive {
             return this._open;
     }
 
-    //--------------------------------------------------------------------------
-
     set open(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
@@ -5985,6 +5907,8 @@ class Prism extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "Prism");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -5994,8 +5918,6 @@ class Prism extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -6044,8 +5966,6 @@ class Sphere extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Sphere]: finite is a read-only property.");
     }
@@ -6055,8 +5975,6 @@ class Sphere extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Sphere]: solid is a read-only property.");
@@ -6068,11 +5986,11 @@ class Sphere extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Sphere]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get center() {
         if(typeof this._center == "function")
@@ -6083,8 +6001,6 @@ class Sphere extends Primitive {
             return this._center;
     }
 
-    //--------------------------------------------------------------------------
-
     set center(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._center = val;
@@ -6092,6 +6008,8 @@ class Sphere extends Primitive {
             cpov.error("fatal", "center must be a VectorXYZ.", "Sphere");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radius() {
         if(typeof this._radius == "function")
@@ -6102,8 +6020,6 @@ class Sphere extends Primitive {
             return this._radius;
     }
 
-    //--------------------------------------------------------------------------
-
     set radius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
@@ -6111,6 +6027,8 @@ class Sphere extends Primitive {
             cpov.error("fatal", "radius must be a float.", "Sphere");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get strength() {
         if(typeof this._strength == "function")
@@ -6120,8 +6038,6 @@ class Sphere extends Primitive {
         else
             return this._strength;
     }
-
-    //--------------------------------------------------------------------------
 
     set strength(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -6170,8 +6086,6 @@ class SphereSweep extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[SphereSweep]: finite is a read-only property.");
     }
@@ -6181,8 +6095,6 @@ class SphereSweep extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[SphereSweep]: solid is a read-only property.");
@@ -6194,11 +6106,11 @@ class SphereSweep extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[SphereSweep]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -6209,8 +6121,6 @@ class SphereSweep extends Primitive {
             return this._type;
     }
 
-    //--------------------------------------------------------------------------
-
     set type(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.internalSplineTypes))) {
             this._type = val;
@@ -6218,6 +6128,8 @@ class SphereSweep extends Primitive {
             cpov.error("fatal", "type must be one of 'linearSpline', 'bSpline', or 'cubicSpline'.", "SphereSweep");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get spheres() {
         if(typeof this._spheres == "function")
@@ -6228,8 +6140,6 @@ class SphereSweep extends Primitive {
             return this._spheres;
     }
 
-    //--------------------------------------------------------------------------
-
     set spheres(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Sphere', 2, infinity))) {
             this._spheres = val;
@@ -6237,6 +6147,8 @@ class SphereSweep extends Primitive {
             cpov.error("fatal", "spheres must be an an array of two or more Sphere.", "SphereSweep");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get tolerance() {
         if(typeof this._tolerance == "function")
@@ -6246,8 +6158,6 @@ class SphereSweep extends Primitive {
         else
             return this._tolerance;
     }
-
-    //--------------------------------------------------------------------------
 
     set tolerance(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -6294,8 +6204,6 @@ class Superellipsoid extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Superellipsoid]: finite is a read-only property.");
     }
@@ -6305,8 +6213,6 @@ class Superellipsoid extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Superellipsoid]: solid is a read-only property.");
@@ -6318,11 +6224,11 @@ class Superellipsoid extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Superellipsoid]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get vector() {
         if(typeof this._vector == "function")
@@ -6332,8 +6238,6 @@ class Superellipsoid extends Primitive {
         else
             return this._vector;
     }
-
-    //--------------------------------------------------------------------------
 
     set vector(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXY'))) {
@@ -6382,8 +6286,6 @@ class Sor extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Sor]: finite is a read-only property.");
     }
@@ -6393,8 +6295,6 @@ class Sor extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Sor]: solid is a read-only property.");
@@ -6406,11 +6306,11 @@ class Sor extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Sor]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get points() {
         if(typeof this._points == "function")
@@ -6421,8 +6321,6 @@ class Sor extends Primitive {
             return this._points;
     }
 
-    //--------------------------------------------------------------------------
-
     set points(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity))) {
             this._points = val;
@@ -6430,6 +6328,8 @@ class Sor extends Primitive {
             cpov.error("fatal", "points must be an array of two or more VectorXY.", "Sor");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get open() {
         if(typeof this._open == "function")
@@ -6440,8 +6340,6 @@ class Sor extends Primitive {
             return this._open;
     }
 
-    //--------------------------------------------------------------------------
-
     set open(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
@@ -6449,6 +6347,8 @@ class Sor extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "Sor");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -6458,8 +6358,6 @@ class Sor extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -6509,8 +6407,6 @@ class Text extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Text]: finite is a read-only property.");
     }
@@ -6520,8 +6416,6 @@ class Text extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Text]: solid is a read-only property.");
@@ -6533,11 +6427,11 @@ class Text extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Text]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get font() {
         if(typeof this._font == "function")
@@ -6548,8 +6442,6 @@ class Text extends Primitive {
             return this._font;
     }
 
-    //--------------------------------------------------------------------------
-
     set font(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._font = val;
@@ -6557,6 +6449,8 @@ class Text extends Primitive {
             cpov.error("fatal", "font must be a non-empty string.", "Text");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get displayText() {
         if(typeof this._displayText == "function")
@@ -6567,8 +6461,6 @@ class Text extends Primitive {
             return this._displayText;
     }
 
-    //--------------------------------------------------------------------------
-
     set displayText(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._displayText = val;
@@ -6576,6 +6468,8 @@ class Text extends Primitive {
             cpov.error("fatal", "displayText must be a non-empty string.", "Text");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get thickness() {
         if(typeof this._thickness == "function")
@@ -6586,8 +6480,6 @@ class Text extends Primitive {
             return this._thickness;
     }
 
-    //--------------------------------------------------------------------------
-
     set thickness(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._thickness = val;
@@ -6595,6 +6487,8 @@ class Text extends Primitive {
             cpov.error("fatal", "thickness must be a float.", "Text");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get offset() {
         if(typeof this._offset == "function")
@@ -6604,8 +6498,6 @@ class Text extends Primitive {
         else
             return this._offset;
     }
-
-    //--------------------------------------------------------------------------
 
     set offset(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -6654,8 +6546,6 @@ class Torus extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Torus]: finite is a read-only property.");
     }
@@ -6665,8 +6555,6 @@ class Torus extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Torus]: solid is a read-only property.");
@@ -6678,11 +6566,11 @@ class Torus extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Torus]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get majorRadius() {
         if(typeof this._majorRadius == "function")
@@ -6693,8 +6581,6 @@ class Torus extends Primitive {
             return this._majorRadius;
     }
 
-    //--------------------------------------------------------------------------
-
     set majorRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._majorRadius = val;
@@ -6702,6 +6588,8 @@ class Torus extends Primitive {
             cpov.error("fatal", "majorRadius must be a float.", "Torus");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get minorRadius() {
         if(typeof this._minorRadius == "function")
@@ -6712,8 +6600,6 @@ class Torus extends Primitive {
             return this._minorRadius;
     }
 
-    //--------------------------------------------------------------------------
-
     set minorRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._minorRadius = val;
@@ -6721,6 +6607,8 @@ class Torus extends Primitive {
             cpov.error("fatal", "minorRadius must be a float.", "Torus");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -6730,8 +6618,6 @@ class Torus extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -6782,8 +6668,6 @@ class BicubicPatch extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[BicubicPatch]: finite is a read-only property.");
     }
@@ -6793,8 +6677,6 @@ class BicubicPatch extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[BicubicPatch]: solid is a read-only property.");
@@ -6806,11 +6688,11 @@ class BicubicPatch extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[BicubicPatch]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -6821,8 +6703,6 @@ class BicubicPatch extends Primitive {
             return this._type;
     }
 
-    //--------------------------------------------------------------------------
-
     set type(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && (val == 0 || val == 1))) {
             this._type = val;
@@ -6830,6 +6710,8 @@ class BicubicPatch extends Primitive {
             cpov.error("fatal", "type must be either 0 or 1.", "BicubicPatch");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get points() {
         if(typeof this._points == "function")
@@ -6840,8 +6722,6 @@ class BicubicPatch extends Primitive {
             return this._points;
     }
 
-    //--------------------------------------------------------------------------
-
     set points(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16))) {
             this._points = val;
@@ -6849,6 +6729,8 @@ class BicubicPatch extends Primitive {
             cpov.error("fatal", "points must be an array of 16 VectorXYZ.", "BicubicPatch");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get uSteps() {
         if(typeof this._uSteps == "function")
@@ -6859,8 +6741,6 @@ class BicubicPatch extends Primitive {
             return this._uSteps;
     }
 
-    //--------------------------------------------------------------------------
-
     set uSteps(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._uSteps = val;
@@ -6868,6 +6748,8 @@ class BicubicPatch extends Primitive {
             cpov.error("fatal", "uSteps must be an integer.", "BicubicPatch");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get vSteps() {
         if(typeof this._vSteps == "function")
@@ -6878,8 +6760,6 @@ class BicubicPatch extends Primitive {
             return this._vSteps;
     }
 
-    //--------------------------------------------------------------------------
-
     set vSteps(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._vSteps = val;
@@ -6887,6 +6767,8 @@ class BicubicPatch extends Primitive {
             cpov.error("fatal", "vSteps must be an integer.", "BicubicPatch");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get flatness() {
         if(typeof this._flatness == "function")
@@ -6896,8 +6778,6 @@ class BicubicPatch extends Primitive {
         else
             return this._flatness;
     }
-
-    //--------------------------------------------------------------------------
 
     set flatness(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -6947,8 +6827,6 @@ class Disc extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Disc]: finite is a read-only property.");
     }
@@ -6958,8 +6836,6 @@ class Disc extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Disc]: solid is a read-only property.");
@@ -6971,11 +6847,11 @@ class Disc extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Disc]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get center() {
         if(typeof this._center == "function")
@@ -6986,8 +6862,6 @@ class Disc extends Primitive {
             return this._center;
     }
 
-    //--------------------------------------------------------------------------
-
     set center(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._center = val;
@@ -6995,6 +6869,8 @@ class Disc extends Primitive {
             cpov.error("fatal", "center must be a VectorXYZ.", "Disc");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get normal() {
         if(typeof this._normal == "function")
@@ -7005,8 +6881,6 @@ class Disc extends Primitive {
             return this._normal;
     }
 
-    //--------------------------------------------------------------------------
-
     set normal(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal = val;
@@ -7014,6 +6888,8 @@ class Disc extends Primitive {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Disc");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get radius() {
         if(typeof this._radius == "function")
@@ -7024,8 +6900,6 @@ class Disc extends Primitive {
             return this._radius;
     }
 
-    //--------------------------------------------------------------------------
-
     set radius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
@@ -7033,6 +6907,8 @@ class Disc extends Primitive {
             cpov.error("fatal", "radius must be a float.", "Disc");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get holeRadius() {
         if(typeof this._holeRadius == "function")
@@ -7042,8 +6918,6 @@ class Disc extends Primitive {
         else
             return this._holeRadius;
     }
-
-    //--------------------------------------------------------------------------
 
     set holeRadius(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -7092,8 +6966,6 @@ class Mesh extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Mesh]: finite is a read-only property.");
     }
@@ -7103,8 +6975,6 @@ class Mesh extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Mesh]: solid is a read-only property.");
@@ -7116,11 +6986,11 @@ class Mesh extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Mesh]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get triangles() {
         if(typeof this._triangles == "function")
@@ -7131,8 +7001,6 @@ class Mesh extends Primitive {
             return this._triangles;
     }
 
-    //--------------------------------------------------------------------------
-
     set triangles(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Triangle', 1, Infinity))) {
             this._triangles = val;
@@ -7140,6 +7008,8 @@ class Mesh extends Primitive {
             cpov.error("fatal", "triangles", "Mesh");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get insideVector() {
         if(typeof this._insideVector == "function")
@@ -7150,8 +7020,6 @@ class Mesh extends Primitive {
             return this._insideVector;
     }
 
-    //--------------------------------------------------------------------------
-
     set insideVector(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._insideVector = val;
@@ -7159,6 +7027,8 @@ class Mesh extends Primitive {
             cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get hierarchy() {
         if(typeof this._hierarchy == "function")
@@ -7168,8 +7038,6 @@ class Mesh extends Primitive {
         else
             return this._hierarchy;
     }
-
-    //--------------------------------------------------------------------------
 
     set hierarchy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -7216,8 +7084,6 @@ class Polygon extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Polygon]: finite is a read-only property.");
     }
@@ -7227,8 +7093,6 @@ class Polygon extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Polygon]: solid is a read-only property.");
@@ -7240,11 +7104,11 @@ class Polygon extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Polygon]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get points() {
         if(typeof this._points == "function")
@@ -7254,8 +7118,6 @@ class Polygon extends Primitive {
         else
             return this._points;
     }
-
-    //--------------------------------------------------------------------------
 
     set points(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity))) {
@@ -7309,8 +7171,6 @@ class Triangle extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Triangle]: finite is a read-only property.");
     }
@@ -7320,8 +7180,6 @@ class Triangle extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Triangle]: solid is a read-only property.");
@@ -7333,11 +7191,11 @@ class Triangle extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Triangle]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get corner1() {
         if(typeof this._corner1 == "function")
@@ -7348,8 +7206,6 @@ class Triangle extends Primitive {
             return this._corner1;
     }
 
-    //--------------------------------------------------------------------------
-
     set corner1(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner1 = val;
@@ -7357,6 +7213,8 @@ class Triangle extends Primitive {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Triangle");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get corner2() {
         if(typeof this._corner2 == "function")
@@ -7367,8 +7225,6 @@ class Triangle extends Primitive {
             return this._corner2;
     }
 
-    //--------------------------------------------------------------------------
-
     set corner2(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner2 = val;
@@ -7376,6 +7232,8 @@ class Triangle extends Primitive {
             cpov.error("fatal", "corner2 must be a VectorXYZ.", "Triangle");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get corner3() {
         if(typeof this._corner3 == "function")
@@ -7386,8 +7244,6 @@ class Triangle extends Primitive {
             return this._corner3;
     }
 
-    //--------------------------------------------------------------------------
-
     set corner3(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._corner3 = val;
@@ -7395,6 +7251,8 @@ class Triangle extends Primitive {
             cpov.error("fatal", "corner3 must be a VectorXYZ.", "Triangle");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get smooth() {
         if(typeof this._smooth == "function")
@@ -7405,8 +7263,6 @@ class Triangle extends Primitive {
             return this._smooth;
     }
 
-    //--------------------------------------------------------------------------
-
     set smooth(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._smooth = val;
@@ -7414,6 +7270,8 @@ class Triangle extends Primitive {
             cpov.error("fatal", "smooth must be a boolean.", "Triangle");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get normal1() {
         if(typeof this._normal1 == "function")
@@ -7424,8 +7282,6 @@ class Triangle extends Primitive {
             return this._normal1;
     }
 
-    //--------------------------------------------------------------------------
-
     set normal1(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal1 = val;
@@ -7433,6 +7289,8 @@ class Triangle extends Primitive {
             cpov.error("fatal", "normal1 must be a VectorXYZ.", "Triangle");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get normal2() {
         if(typeof this._normal2 == "function")
@@ -7443,8 +7301,6 @@ class Triangle extends Primitive {
             return this._normal2;
     }
 
-    //--------------------------------------------------------------------------
-
     set normal2(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal2 = val;
@@ -7452,6 +7308,8 @@ class Triangle extends Primitive {
             cpov.error("fatal", "normal2 must be a VectorXYZ.", "Triangle");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get normal3() {
         if(typeof this._normal3 == "function")
@@ -7462,8 +7320,6 @@ class Triangle extends Primitive {
             return this._normal3;
     }
 
-    //--------------------------------------------------------------------------
-
     set normal3(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal3 = val;
@@ -7471,6 +7327,8 @@ class Triangle extends Primitive {
             cpov.error("fatal", "normal3 must be a VectorXYZ.", "Triangle");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get textures() {
         if(typeof this._textures == "function")
@@ -7480,8 +7338,6 @@ class Triangle extends Primitive {
         else
             return this._textures;
     }
-
-    //--------------------------------------------------------------------------
 
     set textures(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInt(val))) {
@@ -7529,8 +7385,6 @@ class Plane extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Plane]: finite is a read-only property.");
     }
@@ -7540,8 +7394,6 @@ class Plane extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Plane]: solid is a read-only property.");
@@ -7553,11 +7405,11 @@ class Plane extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Plane]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get normal() {
         if(typeof this._normal == "function")
@@ -7568,8 +7420,6 @@ class Plane extends Primitive {
             return this._normal;
     }
 
-    //--------------------------------------------------------------------------
-
     set normal(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
             this._normal = val;
@@ -7577,6 +7427,8 @@ class Plane extends Primitive {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Plane");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get distance() {
         if(typeof this._distance == "function")
@@ -7586,8 +7438,6 @@ class Plane extends Primitive {
         else
             return this._distance;
     }
-
-    //--------------------------------------------------------------------------
 
     set distance(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -7635,8 +7485,6 @@ class Poly extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Poly]: finite is a read-only property.");
     }
@@ -7646,8 +7494,6 @@ class Poly extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Poly]: solid is a read-only property.");
@@ -7659,11 +7505,11 @@ class Poly extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Poly]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get coefficients() {
         if(typeof this._coefficients == "function")
@@ -7674,8 +7520,6 @@ class Poly extends Primitive {
             return this._coefficients;
     }
 
-    //--------------------------------------------------------------------------
-
     set coefficients(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 35))) {
             this._coefficients = val;
@@ -7683,6 +7527,8 @@ class Poly extends Primitive {
             cpov.error("fatal", "coefficients must be an array of 2 to 35 floats.", "Poly");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -7692,8 +7538,6 @@ class Poly extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -7741,8 +7585,6 @@ class Cubic extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Cubic]: finite is a read-only property.");
     }
@@ -7752,8 +7594,6 @@ class Cubic extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Cubic]: solid is a read-only property.");
@@ -7765,11 +7605,11 @@ class Cubic extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Cubic]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get coefficients() {
         if(typeof this._coefficients == "function")
@@ -7780,8 +7620,6 @@ class Cubic extends Primitive {
             return this._coefficients;
     }
 
-    //--------------------------------------------------------------------------
-
     set coefficients(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
             this._coefficients = val;
@@ -7789,6 +7627,8 @@ class Cubic extends Primitive {
             cpov.error("fatal", "coefficients must be an array of 20 floats.", "Cubic");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -7798,8 +7638,6 @@ class Cubic extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -7847,8 +7685,6 @@ class Quartic extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Quartic]: finite is a read-only property.");
     }
@@ -7858,8 +7694,6 @@ class Quartic extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Quartic]: solid is a read-only property.");
@@ -7871,11 +7705,11 @@ class Quartic extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Quartic]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get coefficients() {
         if(typeof this._coefficients == "function")
@@ -7886,8 +7720,6 @@ class Quartic extends Primitive {
             return this._coefficients;
     }
 
-    //--------------------------------------------------------------------------
-
     set coefficients(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
             this._coefficients = val;
@@ -7895,6 +7727,8 @@ class Quartic extends Primitive {
             cpov.error("fatal", "coefficients must be an array of 20 floats.", "Quartic");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -7904,8 +7738,6 @@ class Quartic extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -7954,8 +7786,6 @@ class Polynomial extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Polynomial]: finite is a read-only property.");
     }
@@ -7965,8 +7795,6 @@ class Polynomial extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Polynomial]: solid is a read-only property.");
@@ -7978,11 +7806,11 @@ class Polynomial extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Polynomial]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get order() {
         if(typeof this._order == "function")
@@ -7993,8 +7821,6 @@ class Polynomial extends Primitive {
             return this._order;
     }
 
-    //--------------------------------------------------------------------------
-
     set order(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._order = val;
@@ -8002,6 +7828,8 @@ class Polynomial extends Primitive {
             cpov.error("fatal", "order must be an integer.", "Polynomial");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get coefficients() {
         if(typeof this._coefficients == "function")
@@ -8012,8 +7840,6 @@ class Polynomial extends Primitive {
             return this._coefficients;
     }
 
-    //--------------------------------------------------------------------------
-
     set coefficients(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW'))) {
             this._coefficients = val;
@@ -8021,6 +7847,8 @@ class Polynomial extends Primitive {
             cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -8030,8 +7858,6 @@ class Polynomial extends Primitive {
         else
             return this._sturm;
     }
-
-    //--------------------------------------------------------------------------
 
     set sturm(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -8087,8 +7913,6 @@ class Quadric extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Quadric]: finite is a read-only property.");
     }
@@ -8098,8 +7922,6 @@ class Quadric extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Quadric]: solid is a read-only property.");
@@ -8111,11 +7933,11 @@ class Quadric extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Quadric]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get a() {
         if(typeof this._a == "function")
@@ -8126,8 +7948,6 @@ class Quadric extends Primitive {
             return this._a;
     }
 
-    //--------------------------------------------------------------------------
-
     set a(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._a = val;
@@ -8135,6 +7955,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "a must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get b() {
         if(typeof this._b == "function")
@@ -8145,8 +7967,6 @@ class Quadric extends Primitive {
             return this._b;
     }
 
-    //--------------------------------------------------------------------------
-
     set b(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._b = val;
@@ -8154,6 +7974,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "b must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get c() {
         if(typeof this._c == "function")
@@ -8164,8 +7986,6 @@ class Quadric extends Primitive {
             return this._c;
     }
 
-    //--------------------------------------------------------------------------
-
     set c(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._c = val;
@@ -8173,6 +7993,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "c must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get d() {
         if(typeof this._d == "function")
@@ -8183,8 +8005,6 @@ class Quadric extends Primitive {
             return this._d;
     }
 
-    //--------------------------------------------------------------------------
-
     set d(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._d = val;
@@ -8192,6 +8012,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "d must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get e() {
         if(typeof this._e == "function")
@@ -8202,8 +8024,6 @@ class Quadric extends Primitive {
             return this._e;
     }
 
-    //--------------------------------------------------------------------------
-
     set e(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._e = val;
@@ -8211,6 +8031,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "e must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get f() {
         if(typeof this._f == "function")
@@ -8221,8 +8043,6 @@ class Quadric extends Primitive {
             return this._f;
     }
 
-    //--------------------------------------------------------------------------
-
     set f(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._f = val;
@@ -8230,6 +8050,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "f must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get g() {
         if(typeof this._g == "function")
@@ -8240,8 +8062,6 @@ class Quadric extends Primitive {
             return this._g;
     }
 
-    //--------------------------------------------------------------------------
-
     set g(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._g = val;
@@ -8249,6 +8069,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "g must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get h() {
         if(typeof this._h == "function")
@@ -8259,8 +8081,6 @@ class Quadric extends Primitive {
             return this._h;
     }
 
-    //--------------------------------------------------------------------------
-
     set h(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._h = val;
@@ -8268,6 +8088,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "h must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get i() {
         if(typeof this._i == "function")
@@ -8278,8 +8100,6 @@ class Quadric extends Primitive {
             return this._i;
     }
 
-    //--------------------------------------------------------------------------
-
     set i(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._i = val;
@@ -8287,6 +8107,8 @@ class Quadric extends Primitive {
             cpov.error("fatal", "i must be a float.", "Quadric");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get j() {
         if(typeof this._j == "function")
@@ -8296,8 +8118,6 @@ class Quadric extends Primitive {
         else
             return this._j;
     }
-
-    //--------------------------------------------------------------------------
 
     set j(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -8345,8 +8165,6 @@ class Union extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Union]: finite is a read-only property.");
     }
@@ -8356,8 +8174,6 @@ class Union extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Union]: solid is a read-only property.");
@@ -8369,11 +8185,11 @@ class Union extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Union]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get objects() {
         if(typeof this._objects == "function")
@@ -8384,8 +8200,6 @@ class Union extends Primitive {
             return this._objects;
     }
 
-    //--------------------------------------------------------------------------
-
     set objects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._objects = val;
@@ -8393,6 +8207,8 @@ class Union extends Primitive {
             cpov.error("fatal", "objects must be an array of Primitives.", "Union");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get splitUnion() {
         if(typeof this._splitUnion == "function")
@@ -8402,8 +8218,6 @@ class Union extends Primitive {
         else
             return this._splitUnion;
     }
-
-    //--------------------------------------------------------------------------
 
     set splitUnion(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -8450,8 +8264,6 @@ class Intersection extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Intersection]: finite is a read-only property.");
     }
@@ -8461,8 +8273,6 @@ class Intersection extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Intersection]: solid is a read-only property.");
@@ -8474,11 +8284,11 @@ class Intersection extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Intersection]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get objects() {
         if(typeof this._objects == "function")
@@ -8488,8 +8298,6 @@ class Intersection extends Primitive {
         else
             return this._objects;
     }
-
-    //--------------------------------------------------------------------------
 
     set objects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
@@ -8537,8 +8345,6 @@ class Difference extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Difference]: finite is a read-only property.");
     }
@@ -8548,8 +8354,6 @@ class Difference extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Difference]: solid is a read-only property.");
@@ -8561,11 +8365,11 @@ class Difference extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Difference]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get positiveObject() {
         if(typeof this._positiveObject == "function")
@@ -8576,8 +8380,6 @@ class Difference extends Primitive {
             return this._positiveObject;
     }
 
-    //--------------------------------------------------------------------------
-
     set positiveObject(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._positiveObject = val;
@@ -8585,6 +8387,8 @@ class Difference extends Primitive {
             cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get negativeObjects() {
         if(typeof this._negativeObjects == "function")
@@ -8594,8 +8398,6 @@ class Difference extends Primitive {
         else
             return this._negativeObjects;
     }
-
-    //--------------------------------------------------------------------------
 
     set negativeObjects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
@@ -8642,8 +8444,6 @@ class Merge extends Primitive {
         return this._finite;
     }
 
-    //--------------------------------------------------------------------------
-
     set finite(val) {
         throw new TypeError("[Merge]: finite is a read-only property.");
     }
@@ -8653,8 +8453,6 @@ class Merge extends Primitive {
     get solid() {
         return this._solid;
     }
-
-    //--------------------------------------------------------------------------
 
     set solid(val) {
         throw new TypeError("[Merge]: solid is a read-only property.");
@@ -8666,11 +8464,11 @@ class Merge extends Primitive {
         return this._csg;
     }
 
-    //--------------------------------------------------------------------------
-
     set csg(val) {
         throw new TypeError("[Merge]: csg is a read-only property.");
     }
+
+    //--------------------------------------------------------------------------
 
     get objects() {
         if(typeof this._objects == "function")
@@ -8680,8 +8478,6 @@ class Merge extends Primitive {
         else
             return this._objects;
     }
-
-    //--------------------------------------------------------------------------
 
     set objects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
@@ -8716,6 +8512,8 @@ class VectorXY {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get x() {
         if(typeof this._x == "function")
             return this._x();
@@ -8725,8 +8523,6 @@ class VectorXY {
             return this._x;
     }
 
-    //--------------------------------------------------------------------------
-
     set x(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
@@ -8734,6 +8530,8 @@ class VectorXY {
             cpov.error("fatal", "x must be a float.", "VectorXY");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get y() {
         if(typeof this._y == "function")
@@ -8743,8 +8541,6 @@ class VectorXY {
         else
             return this._y;
     }
-
-    //--------------------------------------------------------------------------
 
     set y(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -8779,6 +8575,8 @@ class VectorUV {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get u() {
         if(typeof this._u == "function")
             return this._u();
@@ -8788,8 +8586,6 @@ class VectorUV {
             return this._u;
     }
 
-    //--------------------------------------------------------------------------
-
     set u(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._u = val;
@@ -8797,6 +8593,8 @@ class VectorUV {
             cpov.error("fatal", "u must be a float.", "VectorUV");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v() {
         if(typeof this._v == "function")
@@ -8806,8 +8604,6 @@ class VectorUV {
         else
             return this._v;
     }
-
-    //--------------------------------------------------------------------------
 
     set v(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -8843,6 +8639,8 @@ class VectorXYZ {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get x() {
         if(typeof this._x == "function")
             return this._x();
@@ -8852,8 +8650,6 @@ class VectorXYZ {
             return this._x;
     }
 
-    //--------------------------------------------------------------------------
-
     set x(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
@@ -8861,6 +8657,8 @@ class VectorXYZ {
             cpov.error("fatal", "x must be a float.", "VectorXYZ");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get y() {
         if(typeof this._y == "function")
@@ -8871,8 +8669,6 @@ class VectorXYZ {
             return this._y;
     }
 
-    //--------------------------------------------------------------------------
-
     set y(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
@@ -8880,6 +8676,8 @@ class VectorXYZ {
             cpov.error("fatal", "y must be a float.", "VectorXYZ");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get z() {
         if(typeof this._z == "function")
@@ -8889,8 +8687,6 @@ class VectorXYZ {
         else
             return this._z;
     }
-
-    //--------------------------------------------------------------------------
 
     set z(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -8927,6 +8723,8 @@ class VectorXYZW {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get x() {
         if(typeof this._x == "function")
             return this._x();
@@ -8936,8 +8734,6 @@ class VectorXYZW {
             return this._x;
     }
 
-    //--------------------------------------------------------------------------
-
     set x(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
@@ -8945,6 +8741,8 @@ class VectorXYZW {
             cpov.error("fatal", "x must be a float.", "VectorXYZW");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get y() {
         if(typeof this._y == "function")
@@ -8955,8 +8753,6 @@ class VectorXYZW {
             return this._y;
     }
 
-    //--------------------------------------------------------------------------
-
     set y(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
@@ -8964,6 +8760,8 @@ class VectorXYZW {
             cpov.error("fatal", "y must be a float.", "VectorXYZW");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get z() {
         if(typeof this._z == "function")
@@ -8974,8 +8772,6 @@ class VectorXYZW {
             return this._z;
     }
 
-    //--------------------------------------------------------------------------
-
     set z(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._z = val;
@@ -8983,6 +8779,8 @@ class VectorXYZW {
             cpov.error("fatal", "z must be a float.", "VectorXYZW");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get w() {
         if(typeof this._w == "function")
@@ -8992,8 +8790,6 @@ class VectorXYZW {
         else
             return this._w;
     }
-
-    //--------------------------------------------------------------------------
 
     set w(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
@@ -9032,6 +8828,8 @@ class Color {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get r() {
         if(typeof this._r == "function")
             return this._r();
@@ -9041,8 +8839,6 @@ class Color {
             return this._r;
     }
 
-    //--------------------------------------------------------------------------
-
     set r(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._r = val;
@@ -9050,6 +8846,8 @@ class Color {
             cpov.error("fatal", "r must be a float.", "Color");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get g() {
         if(typeof this._g == "function")
@@ -9060,8 +8858,6 @@ class Color {
             return this._g;
     }
 
-    //--------------------------------------------------------------------------
-
     set g(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._g = val;
@@ -9069,6 +8865,8 @@ class Color {
             cpov.error("fatal", "g must be a float.", "Color");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get b() {
         if(typeof this._b == "function")
@@ -9079,8 +8877,6 @@ class Color {
             return this._b;
     }
 
-    //--------------------------------------------------------------------------
-
     set b(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._b = val;
@@ -9088,6 +8884,8 @@ class Color {
             cpov.error("fatal", "b must be a float.", "Color");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get f() {
         if(typeof this._f == "function")
@@ -9098,8 +8896,6 @@ class Color {
             return this._f;
     }
 
-    //--------------------------------------------------------------------------
-
     set f(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._f = val;
@@ -9107,6 +8903,8 @@ class Color {
             cpov.error("fatal", "f must be a float.", "Color");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get t() {
         if(typeof this._t == "function")
@@ -9117,8 +8915,6 @@ class Color {
             return this._t;
     }
 
-    //--------------------------------------------------------------------------
-
     set t(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._t = val;
@@ -9126,6 +8922,8 @@ class Color {
             cpov.error("fatal", "t must be a float.", "Color");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get srgb() {
         if(typeof this._srgb == "function")
@@ -9135,8 +8933,6 @@ class Color {
         else
             return this._srgb;
     }
-
-    //--------------------------------------------------------------------------
 
     set srgb(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
@@ -9181,6 +8977,8 @@ class Matrix {
 
     }
 
+    //--------------------------------------------------------------------------
+
     get v00() {
         if(typeof this._v00 == "function")
             return this._v00();
@@ -9190,8 +8988,6 @@ class Matrix {
             return this._v00;
     }
 
-    //--------------------------------------------------------------------------
-
     set v00(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v00 = val;
@@ -9199,6 +8995,8 @@ class Matrix {
             cpov.error("fatal", "v00 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v01() {
         if(typeof this._v01 == "function")
@@ -9209,8 +9007,6 @@ class Matrix {
             return this._v01;
     }
 
-    //--------------------------------------------------------------------------
-
     set v01(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v01 = val;
@@ -9218,6 +9014,8 @@ class Matrix {
             cpov.error("fatal", "v01 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v02() {
         if(typeof this._v02 == "function")
@@ -9228,8 +9026,6 @@ class Matrix {
             return this._v02;
     }
 
-    //--------------------------------------------------------------------------
-
     set v02(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v02 = val;
@@ -9237,6 +9033,8 @@ class Matrix {
             cpov.error("fatal", "v02 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v10() {
         if(typeof this._v10 == "function")
@@ -9247,8 +9045,6 @@ class Matrix {
             return this._v10;
     }
 
-    //--------------------------------------------------------------------------
-
     set v10(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v10 = val;
@@ -9256,6 +9052,8 @@ class Matrix {
             cpov.error("fatal", "v10 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v11() {
         if(typeof this._v11 == "function")
@@ -9266,8 +9064,6 @@ class Matrix {
             return this._v11;
     }
 
-    //--------------------------------------------------------------------------
-
     set v11(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v11 = val;
@@ -9275,6 +9071,8 @@ class Matrix {
             cpov.error("fatal", "v11 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v12() {
         if(typeof this._v12 == "function")
@@ -9285,8 +9083,6 @@ class Matrix {
             return this._v12;
     }
 
-    //--------------------------------------------------------------------------
-
     set v12(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v12 = val;
@@ -9294,6 +9090,8 @@ class Matrix {
             cpov.error("fatal", "v12 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v20() {
         if(typeof this._v20 == "function")
@@ -9304,8 +9102,6 @@ class Matrix {
             return this._v20;
     }
 
-    //--------------------------------------------------------------------------
-
     set v20(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v20 = val;
@@ -9313,6 +9109,8 @@ class Matrix {
             cpov.error("fatal", "v20 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v21() {
         if(typeof this._v21 == "function")
@@ -9323,8 +9121,6 @@ class Matrix {
             return this._v21;
     }
 
-    //--------------------------------------------------------------------------
-
     set v21(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v21 = val;
@@ -9332,6 +9128,8 @@ class Matrix {
             cpov.error("fatal", "v21 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v22() {
         if(typeof this._v22 == "function")
@@ -9342,8 +9140,6 @@ class Matrix {
             return this._v22;
     }
 
-    //--------------------------------------------------------------------------
-
     set v22(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v22 = val;
@@ -9351,6 +9147,8 @@ class Matrix {
             cpov.error("fatal", "v22 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v30() {
         if(typeof this._v30 == "function")
@@ -9361,8 +9159,6 @@ class Matrix {
             return this._v30;
     }
 
-    //--------------------------------------------------------------------------
-
     set v30(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v30 = val;
@@ -9370,6 +9166,8 @@ class Matrix {
             cpov.error("fatal", "v30 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v31() {
         if(typeof this._v31 == "function")
@@ -9380,8 +9178,6 @@ class Matrix {
             return this._v31;
     }
 
-    //--------------------------------------------------------------------------
-
     set v31(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v31 = val;
@@ -9389,6 +9185,8 @@ class Matrix {
             cpov.error("fatal", "v31 must be a float.", "Matrix");
         }
     }
+
+    //--------------------------------------------------------------------------
 
     get v32() {
         if(typeof this._v32 == "function")
@@ -9398,8 +9196,6 @@ class Matrix {
         else
             return this._v32;
     }
-
-    //--------------------------------------------------------------------------
 
     set v32(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
