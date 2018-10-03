@@ -2112,8 +2112,7 @@ cpov.vectorDef = {
                 name:  "x",
                 valid: "cpov.isFloat(val)",
                 err:   "x must be a float."
-            },
-            {
+            }, {
                 name:  "y",
                 valid: "cpov.isFloat(val)",
                 err:   "y must be a float."
@@ -2126,8 +2125,7 @@ cpov.vectorDef = {
                 name:  "u",
                 valid: "cpov.isFloat(val)",
                 err:   "u must be a float."
-            },
-            {
+            }, {
                 name:  "v",
                 valid: "cpov.isFloat(val)",
                 err:   "v must be a float."
@@ -2140,13 +2138,11 @@ cpov.vectorDef = {
                 name:  "x",
                 valid: "cpov.isFloat(val)",
                 err:   "x must be a float."
-            },
-            {
+            }, {
                 name:  "y",
                 valid: "cpov.isFloat(val)",
                 err:   "y must be a float."
-            },
-            {
+            }, {
                 name:  "z",
                 valid: "cpov.isFloat(val)",
                 err:   "z must be a float."
@@ -2159,18 +2155,15 @@ cpov.vectorDef = {
                 name:  "x",
                 valid: "cpov.isFloat(val)",
                 err:   "x must be a float."
-            },
-            {
+            }, {
                 name:  "y",
                 valid: "cpov.isFloat(val)",
                 err:   "y must be a float."
-            },
-            {
+            }, {
                 name:  "z",
                 valid: "cpov.isFloat(val)",
                 err:   "z must be a float."
-            },
-            {
+            }, {
                 name:  "w",
                 valid: "cpov.isFloat(val)",
                 err:   "w must be a float."
@@ -2183,34 +2176,82 @@ cpov.vectorDef = {
                 name:  "r",
                 valid: "cpov.isFloat(val)",
                 err:   "r must be a float."
-            },
-            {
+            }, {
                 name:  "g",
                 valid: "cpov.isFloat(val)",
                 err:   "g must be a float."
-            },
-            {
+            }, {
                 name:  "b",
                 valid: "cpov.isFloat(val)",
                 err:   "b must be a float."
-            },
-            {
+            }, {
                 name:  "f",
                 valid: "cpov.isFloat(val)",
                 err:   "f must be a float."
-            },
-            {
+            }, {
                 name:  "t",
                 valid: "cpov.isFloat(val)",
                 err:   "t must be a float."
-            },
-            {
+            }, {
                 name:  "srgb",
-                valid: "isBoolean(val)",
+                valid: "cpov.isBoolean(val)",
                 err:   "srgb must be a boolean."
             },
         ],
     },
+    Matrix: {
+        mutable: [
+            {
+                name:  "v00",
+                valid: "cpov.isFloat(val)",
+                err:   "v00 must be a float."
+            }, {
+                name:  "v01",
+                valid: "cpov.isFloat(val)",
+                err:   "v01 must be a float."
+            }, {
+                name:  "v02",
+                valid: "cpov.isFloat(val)",
+                err:   "v02 must be a float."
+            }, {
+                name:  "v10",
+                valid: "cpov.isFloat(val)",
+                err:   "v10 must be a float."
+            }, {
+                name:  "v11",
+                valid: "cpov.isFloat(val)",
+                err:   "v11 must be a float."
+            }, {
+                name:  "v12",
+                valid: "cpov.isFloat(val)",
+                err:   "v12 must be a float."
+            }, {
+                name:  "v20",
+                valid: "cpov.isFloat(val)",
+                err:   "v20 must be a float."
+            }, {
+                name:  "v21",
+                valid: "cpov.isFloat(val)",
+                err:   "v21 must be a float."
+            }, {
+                name:  "v22",
+                valid: "cpov.isFloat(val)",
+                err:   "v22 must be a float."
+            }, {
+                name:  "v30",
+                valid: "cpov.isFloat(val)",
+                err:   "v30 must be a float."
+            }, {
+                name:  "v31",
+                valid: "cpov.isFloat(val)",
+                err:   "v31 must be a float."
+            }, {
+                name:  "v32",
+                valid: "cpov.isFloat(val)",
+                err:   "v32 must be a float."
+            },
+        ]
+    }
 }
 
 

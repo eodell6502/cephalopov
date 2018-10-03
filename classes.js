@@ -8959,7 +8959,7 @@ class Color {
     //--------------------------------------------------------------------------
 
     set srgb(val) {
-        if(cpov.isNullOrFunction(val) || (isBoolean(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._srgb = val;
         } else {
             cpov.error("fatal", "srgb must be a boolean.", "Color");
@@ -8970,5 +8970,263 @@ class Color {
 }
 
 exports.Color = Color;
+
+
+//==============================================================================
+//==============================================================================
+
+class Matrix {
+
+    constructor(...args) {
+
+        // Mutable properties //
+
+        this._v00 = null;
+        this._v01 = null;
+        this._v02 = null;
+        this._v10 = null;
+        this._v11 = null;
+        this._v12 = null;
+        this._v20 = null;
+        this._v21 = null;
+        this._v22 = null;
+        this._v30 = null;
+        this._v31 = null;
+        this._v32 = null;
+
+    }
+
+    get v00() {
+        if(typeof this._v00 == "function")
+            return this._v00();
+        else if(typeof this._v00 == "string" && this._v00.substr(0, 1) == "&")
+            return this._v00.substr(1);
+        else
+            return this._v00;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v00(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v00 = val;
+        } else {
+            cpov.error("fatal", "v00 must be a float.", "Matrix");
+        }
+    }
+
+    get v01() {
+        if(typeof this._v01 == "function")
+            return this._v01();
+        else if(typeof this._v01 == "string" && this._v01.substr(0, 1) == "&")
+            return this._v01.substr(1);
+        else
+            return this._v01;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v01(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v01 = val;
+        } else {
+            cpov.error("fatal", "v01 must be a float.", "Matrix");
+        }
+    }
+
+    get v02() {
+        if(typeof this._v02 == "function")
+            return this._v02();
+        else if(typeof this._v02 == "string" && this._v02.substr(0, 1) == "&")
+            return this._v02.substr(1);
+        else
+            return this._v02;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v02(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v02 = val;
+        } else {
+            cpov.error("fatal", "v02 must be a float.", "Matrix");
+        }
+    }
+
+    get v10() {
+        if(typeof this._v10 == "function")
+            return this._v10();
+        else if(typeof this._v10 == "string" && this._v10.substr(0, 1) == "&")
+            return this._v10.substr(1);
+        else
+            return this._v10;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v10(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v10 = val;
+        } else {
+            cpov.error("fatal", "v10 must be a float.", "Matrix");
+        }
+    }
+
+    get v11() {
+        if(typeof this._v11 == "function")
+            return this._v11();
+        else if(typeof this._v11 == "string" && this._v11.substr(0, 1) == "&")
+            return this._v11.substr(1);
+        else
+            return this._v11;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v11(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v11 = val;
+        } else {
+            cpov.error("fatal", "v11 must be a float.", "Matrix");
+        }
+    }
+
+    get v12() {
+        if(typeof this._v12 == "function")
+            return this._v12();
+        else if(typeof this._v12 == "string" && this._v12.substr(0, 1) == "&")
+            return this._v12.substr(1);
+        else
+            return this._v12;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v12(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v12 = val;
+        } else {
+            cpov.error("fatal", "v12 must be a float.", "Matrix");
+        }
+    }
+
+    get v20() {
+        if(typeof this._v20 == "function")
+            return this._v20();
+        else if(typeof this._v20 == "string" && this._v20.substr(0, 1) == "&")
+            return this._v20.substr(1);
+        else
+            return this._v20;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v20(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v20 = val;
+        } else {
+            cpov.error("fatal", "v20 must be a float.", "Matrix");
+        }
+    }
+
+    get v21() {
+        if(typeof this._v21 == "function")
+            return this._v21();
+        else if(typeof this._v21 == "string" && this._v21.substr(0, 1) == "&")
+            return this._v21.substr(1);
+        else
+            return this._v21;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v21(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v21 = val;
+        } else {
+            cpov.error("fatal", "v21 must be a float.", "Matrix");
+        }
+    }
+
+    get v22() {
+        if(typeof this._v22 == "function")
+            return this._v22();
+        else if(typeof this._v22 == "string" && this._v22.substr(0, 1) == "&")
+            return this._v22.substr(1);
+        else
+            return this._v22;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v22(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v22 = val;
+        } else {
+            cpov.error("fatal", "v22 must be a float.", "Matrix");
+        }
+    }
+
+    get v30() {
+        if(typeof this._v30 == "function")
+            return this._v30();
+        else if(typeof this._v30 == "string" && this._v30.substr(0, 1) == "&")
+            return this._v30.substr(1);
+        else
+            return this._v30;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v30(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v30 = val;
+        } else {
+            cpov.error("fatal", "v30 must be a float.", "Matrix");
+        }
+    }
+
+    get v31() {
+        if(typeof this._v31 == "function")
+            return this._v31();
+        else if(typeof this._v31 == "string" && this._v31.substr(0, 1) == "&")
+            return this._v31.substr(1);
+        else
+            return this._v31;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v31(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v31 = val;
+        } else {
+            cpov.error("fatal", "v31 must be a float.", "Matrix");
+        }
+    }
+
+    get v32() {
+        if(typeof this._v32 == "function")
+            return this._v32();
+        else if(typeof this._v32 == "string" && this._v32.substr(0, 1) == "&")
+            return this._v32.substr(1);
+        else
+            return this._v32;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v32(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v32 = val;
+        } else {
+            cpov.error("fatal", "v32 must be a float.", "Matrix");
+        }
+    }
+
+
+}
+
+exports.Matrix = Matrix;
 
 
