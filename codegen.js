@@ -107,8 +107,10 @@ ClassBuilder.prototype.toString = function() {
     // Class opening -----------------------------------------------------------
 
     src.push(this.divider(0, "="));
-    if(this.desc)
+    if(this.obj.desc)
         src.push(cpov.wrap(this.obj.desc, { indent: "// ", width: 77 }));
+    else
+        src.push(cpov.wrap(this.name + " class", { indent: "// ", width: 77 }));
     src.push(this.divider(0, "=") + "\n");
     src.push("class " + this.name + (this.obj.superclass ? (" extends " + this.obj.superclass) : '') + " {\n");
 
@@ -235,18 +237,13 @@ ClassBuilder.prototype.toString = function() {
 
 var fp = new File("./classes.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
-var conArgs  = cpov.gsDef.conArgs  ? cpov.gsDef.conArgs  : false;
-var conBlock = cpov.gsDef.conBlock ? cpov.gsDef.conBlock : false;
+
 fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./snippets.js") + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
-var conArgs  = cpov.ioDef.conArgs  ? cpov.ioDef.conArgs  : false;
-var conBlock = cpov.ioDef.conBlock ? cpov.ioDef.conBlock : false;
 fp.write(new ClassBuilder("ImageOptions", cpov.ioDef, "./snippets.js") + "\n\n");
 fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
-var conArgs  = cpov.objCommon.conArgs  ? cpov.objCommon.conArgs  : false;
-var conBlock = cpov.objCommon.conBlock ? cpov.objCommon.conBlock : false;
 fp.write(new ClassBuilder("Primitive", cpov.objCommon, "./snippets.js") + "\n\n");
 fp.write("exports.Primitive = Primitive;\n\n\n");
 
