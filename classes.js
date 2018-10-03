@@ -5,53 +5,55 @@ var cpov = require("./cpov.js").cpov;
 
 class GlobalSettings {
 
-    constructor(objType, args) {
-        this._adcBailout = null;
-        this._ambientLight = null;
-        this._assumedGamma = null;
-        this._charset = null;
-        this._iridWavelength = null;
-        this._maxIntersections = null;
-        this._maxTraceLevel = null;
-        this._mmPerUnit = null;
-        this._noiseGenerator = null;
-        this._numberOfWaves = null;
-        this._photon = null;
-        this._photonAdcBailout = null;
-        this._photonAutostop = null;
-        this._photonCount = null;
-        this._photonExpandThresholds = null;
-        this._photonGather = null;
-        this._photonJitter = null;
-        this._photonLoadFile = null;
-        this._photonMaxTraceLevel = null;
-        this._photonMedia = null;
-        this._photonRadius = null;
-        this._photonSaveFile = null;
-        this._photonSpacing = null;
-        this._radAdcBailout = null;
-        this._radAlwaysSample = null;
-        this._radBrightness = null;
-        this._radCount = null;
-        this._radErrorBound = null;
-        this._radGrayThreshold = null;
-        this._radiosity = null;
-        this._radLowErrorFactor = null;
-        this._radMaximumReuse = null;
-        this._radMaxSample = null;
-        this._radMinimumReuse = null;
-        this._radNearestCount = null;
-        this._radNormal = null;
-        this._radPretraceEnd = null;
-        this._radPretraceStart = null;
-        this._radRecursionLimit = null;
-        this._radSubsurface = null;
-        this._subRadiosity = null;
-        this._subSamples = null;
-        this._subsurface = null;
-    }
+    constructor(...args) {
 
-    //--------------------------------------------------------------------------
+        // Mutable properties //
+
+        this._adcBailout             = null;
+        this._ambientLight           = null;
+        this._assumedGamma           = null;
+        this._charset                = null;
+        this._iridWavelength         = null;
+        this._maxIntersections       = null;
+        this._maxTraceLevel          = null;
+        this._mmPerUnit              = null;
+        this._noiseGenerator         = null;
+        this._numberOfWaves          = null;
+        this._photon                 = null;
+        this._photonAdcBailout       = null;
+        this._photonAutostop         = null;
+        this._photonCount            = null;
+        this._photonExpandThresholds = null;
+        this._photonGather           = null;
+        this._photonJitter           = null;
+        this._photonLoadFile         = null;
+        this._photonMaxTraceLevel    = null;
+        this._photonMedia            = null;
+        this._photonRadius           = null;
+        this._photonSaveFile         = null;
+        this._photonSpacing          = null;
+        this._radAdcBailout          = null;
+        this._radAlwaysSample        = null;
+        this._radBrightness          = null;
+        this._radCount               = null;
+        this._radErrorBound          = null;
+        this._radGrayThreshold       = null;
+        this._radiosity              = null;
+        this._radLowErrorFactor      = null;
+        this._radMaximumReuse        = null;
+        this._radMaxSample           = null;
+        this._radMinimumReuse        = null;
+        this._radNearestCount        = null;
+        this._radNormal              = null;
+        this._radPretraceEnd         = null;
+        this._radPretraceStart       = null;
+        this._radRecursionLimit      = null;
+        this._radSubsurface          = null;
+        this._subRadiosity           = null;
+        this._subSamples             = null;
+        this._subsurface             = null;
+
+    }
 
     get adcBailout() {
         if(typeof this._adcBailout == "function")
@@ -72,8 +74,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get ambientLight() {
         if(typeof this._ambientLight == "function")
             return this._ambientLight();
@@ -92,8 +92,6 @@ class GlobalSettings {
             cpov.error("fatal", "ambientLight must be a VectorRGB or VectorSRGB.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get assumedGamma() {
         if(typeof this._assumedGamma == "function")
@@ -114,8 +112,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get charset() {
         if(typeof this._charset == "function")
             return this._charset();
@@ -134,8 +130,6 @@ class GlobalSettings {
             cpov.error("fatal", "charset must be one of 'ascii', 'utf8', or 'sys'.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get iridWavelength() {
         if(typeof this._iridWavelength == "function")
@@ -156,8 +150,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get maxIntersections() {
         if(typeof this._maxIntersections == "function")
             return this._maxIntersections();
@@ -176,8 +168,6 @@ class GlobalSettings {
             cpov.error("fatal", "maxIntersections must be an integer greater than or equal to zero.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get maxTraceLevel() {
         if(typeof this._maxTraceLevel == "function")
@@ -198,8 +188,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get mmPerUnit() {
         if(typeof this._mmPerUnit == "function")
             return this._mmPerUnit();
@@ -218,8 +206,6 @@ class GlobalSettings {
             cpov.error("fatal", "mmPerUnit must be a float greater than or equal to zero.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get noiseGenerator() {
         if(typeof this._noiseGenerator == "function")
@@ -240,8 +226,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get numberOfWaves() {
         if(typeof this._numberOfWaves == "function")
             return this._numberOfWaves();
@@ -260,8 +244,6 @@ class GlobalSettings {
             cpov.error("fatal", "numberOfWaves must be an integer greater than or equal to zero.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get photon() {
         if(typeof this._photon == "function")
@@ -282,8 +264,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get photonAdcBailout() {
         if(typeof this._photonAdcBailout == "function")
             return this._photonAdcBailout();
@@ -302,8 +282,6 @@ class GlobalSettings {
             cpov.error("fatal", "photonAdcBailout must be a float greater than or equal to zero.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get photonAutostop() {
         if(typeof this._photonAutostop == "function")
@@ -324,8 +302,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get photonCount() {
         if(typeof this._photonCount == "function")
             return this._photonCount();
@@ -344,8 +320,6 @@ class GlobalSettings {
             cpov.error("fatal", "photonCount must be an integer greater than or equal to zero", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get photonExpandThresholds() {
         if(typeof this._photonExpandThresholds == "function")
@@ -366,8 +340,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get photonGather() {
         if(typeof this._photonGather == "function")
             return this._photonGather();
@@ -386,8 +358,6 @@ class GlobalSettings {
             cpov.error("fatal", "photonGather must be an array of two integers greater than zero in ascending order.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get photonJitter() {
         if(typeof this._photonJitter == "function")
@@ -408,8 +378,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get photonLoadFile() {
         if(typeof this._photonLoadFile == "function")
             return this._photonLoadFile();
@@ -428,8 +396,6 @@ class GlobalSettings {
             cpov.error("fatal", "photonLoadFile must be a non-empty string.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get photonMaxTraceLevel() {
         if(typeof this._photonMaxTraceLevel == "function")
@@ -450,8 +416,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get photonMedia() {
         if(typeof this._photonMedia == "function")
             return this._photonMedia();
@@ -470,8 +434,6 @@ class GlobalSettings {
             cpov.error("fatal", "photonMedia must be an array of two floats.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get photonRadius() {
         if(typeof this._photonRadius == "function")
@@ -492,8 +454,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get photonSaveFile() {
         if(typeof this._photonSaveFile == "function")
             return this._photonSaveFile();
@@ -512,8 +472,6 @@ class GlobalSettings {
             cpov.error("fatal", "photonSaveFile must be a non-empty string.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get photonSpacing() {
         if(typeof this._photonSpacing == "function")
@@ -534,8 +492,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radAdcBailout() {
         if(typeof this._radAdcBailout == "function")
             return this._radAdcBailout();
@@ -554,8 +510,6 @@ class GlobalSettings {
             cpov.error("fatal", "radAdcBailout must be a float.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radAlwaysSample() {
         if(typeof this._radAlwaysSample == "function")
@@ -576,8 +530,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radBrightness() {
         if(typeof this._radBrightness == "function")
             return this._radBrightness();
@@ -596,8 +548,6 @@ class GlobalSettings {
             cpov.error("fatal", "radBrightness must be a float.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radCount() {
         if(typeof this._radCount == "function")
@@ -618,8 +568,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radErrorBound() {
         if(typeof this._radErrorBound == "function")
             return this._radErrorBound();
@@ -638,8 +586,6 @@ class GlobalSettings {
             cpov.error("fatal", "radErrorBound must be a float.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radGrayThreshold() {
         if(typeof this._radGrayThreshold == "function")
@@ -660,8 +606,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radiosity() {
         if(typeof this._radiosity == "function")
             return this._radiosity();
@@ -680,8 +624,6 @@ class GlobalSettings {
             cpov.error("fatal", "radiosity must be a boolean.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radLowErrorFactor() {
         if(typeof this._radLowErrorFactor == "function")
@@ -702,8 +644,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radMaximumReuse() {
         if(typeof this._radMaximumReuse == "function")
             return this._radMaximumReuse();
@@ -722,8 +662,6 @@ class GlobalSettings {
             cpov.error("fatal", "radMaximumReuse must be a float.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radMaxSample() {
         if(typeof this._radMaxSample == "function")
@@ -744,8 +682,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radMinimumReuse() {
         if(typeof this._radMinimumReuse == "function")
             return this._radMinimumReuse();
@@ -764,8 +700,6 @@ class GlobalSettings {
             cpov.error("fatal", "radMinimumReuse must be a float.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radNearestCount() {
         if(typeof this._radNearestCount == "function")
@@ -786,8 +720,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radNormal() {
         if(typeof this._radNormal == "function")
             return this._radNormal();
@@ -806,8 +738,6 @@ class GlobalSettings {
             cpov.error("fatal", "radNormal must be a boolean.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radPretraceEnd() {
         if(typeof this._radPretraceEnd == "function")
@@ -828,8 +758,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radPretraceStart() {
         if(typeof this._radPretraceStart == "function")
             return this._radPretraceStart();
@@ -848,8 +776,6 @@ class GlobalSettings {
             cpov.error("fatal", "radPretraceStart must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radRecursionLimit() {
         if(typeof this._radRecursionLimit == "function")
@@ -870,8 +796,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radSubsurface() {
         if(typeof this._radSubsurface == "function")
             return this._radSubsurface();
@@ -890,8 +814,6 @@ class GlobalSettings {
             cpov.error("fatal", "radSubsurface must be a boolean.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get subRadiosity() {
         if(typeof this._subRadiosity == "function")
@@ -912,8 +834,6 @@ class GlobalSettings {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get subSamples() {
         if(typeof this._subSamples == "function")
             return this._subSamples();
@@ -932,8 +852,6 @@ class GlobalSettings {
             cpov.error("fatal", "subSamples must be an array of two integers.", "GlobalSettings");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get subsurface() {
         if(typeof this._subsurface == "function")
@@ -959,6 +877,7 @@ class GlobalSettings {
 
 exports.GlobalSettings = GlobalSettings;
 
+
 var cpov = require("./cpov.js").cpov;
 
 //==============================================================================
@@ -966,94 +885,96 @@ var cpov = require("./cpov.js").cpov;
 
 class ImageOptions {
 
-    constructor(objType, args) {
-        this._allConsole = null;
-        this._allFile = null;
-        this._antialias = null;
-        this._antialiasDepth = null;
-        this._antialiasGamma = null;
-        this._antialiasThreshold = null;
-        this._appendFile = null;
-        this._bitsPerColor = null;
-        this._bounding = null;
-        this._boundingMethod = null;
-        this._boundingThreshold = null;
-        this._bspBaseAccessCost = null;
-        this._bspChildAccessCost = null;
-        this._bspIsectCost = null;
-        this._bspMaxDepth = null;
-        this._bspMissChance = null;
-        this._continueTrace = null;
-        this._createIni = null;
-        this._debugConsole = null;
-        this._debugFile = null;
-        this._display = null;
-        this._displayGamma = null;
-        this._dither = null;
-        this._ditherMethod = null;
-        this._endColumn = null;
-        this._endRow = null;
-        this._exePath = null;
-        this._fatalConsole = null;
-        this._fatalErrorCommand = null;
-        this._fatalErrorReturn = null;
-        this._fatalFile = null;
-        this._fileGamma = null;
-        this._height = null;
-        this._highReproducibility = null;
-        this._includeHeader = null;
-        this._inputFileName = null;
-        this._jitter = null;
-        this._jitterAmount = null;
-        this._libraryPath = null;
-        this._maxImageBufferMemory = null;
-        this._outputAlpha = null;
-        this._outputFileName = null;
-        this._outputFileType = null;
-        this._outputToFile = null;
-        this._palette = null;
-        this._pauseWhenDone = null;
-        this._postFrameCommand = null;
-        this._postFrameReturn = null;
-        this._postSceneCommand = null;
-        this._postSceneReturn = null;
-        this._preFrameCommand = null;
-        this._preFrameReturn = null;
-        this._preSceneCommand = null;
-        this._preSceneReturn = null;
-        this._previewEndSize = null;
-        this._previewStartSize = null;
-        this._quality = null;
-        this._radiosityFileName = null;
-        this._radiosityFromFile = null;
-        this._radiosityToFile = null;
-        this._radiosityVainPretrace = null;
-        this._removeBounds = null;
-        this._renderBlockSize = null;
-        this._renderBlockStep = null;
-        this._renderConsole = null;
-        this._renderFile = null;
-        this._renderPattern = null;
-        this._samplingMethod = null;
-        this._splitUnions = null;
-        this._startColumn = null;
-        this._startRow = null;
-        this._statisticConsole = null;
-        this._statisticFile = null;
-        this._testAbort = null;
-        this._testAbortCount = null;
-        this._userAbortCommand = null;
-        this._userAbortReturn = null;
-        this._verbose = null;
-        this._videoMode = null;
-        this._warningConsole = null;
-        this._warningFile = null;
-        this._warningLevel = null;
-        this._width = null;
-        this._workThreads = null;
-    }
+    constructor(...args) {
 
-    //--------------------------------------------------------------------------
+        // Mutable properties //
+
+        this._allConsole            = null;
+        this._allFile               = null;
+        this._antialias             = null;
+        this._antialiasDepth        = null;
+        this._antialiasGamma        = null;
+        this._antialiasThreshold    = null;
+        this._appendFile            = null;
+        this._bitsPerColor          = null;
+        this._bounding              = null;
+        this._boundingMethod        = null;
+        this._boundingThreshold     = null;
+        this._bspBaseAccessCost     = null;
+        this._bspChildAccessCost    = null;
+        this._bspIsectCost          = null;
+        this._bspMaxDepth           = null;
+        this._bspMissChance         = null;
+        this._continueTrace         = null;
+        this._createIni             = null;
+        this._debugConsole          = null;
+        this._debugFile             = null;
+        this._display               = null;
+        this._displayGamma          = null;
+        this._dither                = null;
+        this._ditherMethod          = null;
+        this._endColumn             = null;
+        this._endRow                = null;
+        this._exePath               = null;
+        this._fatalConsole          = null;
+        this._fatalErrorCommand     = null;
+        this._fatalErrorReturn      = null;
+        this._fatalFile             = null;
+        this._fileGamma             = null;
+        this._height                = null;
+        this._highReproducibility   = null;
+        this._includeHeader         = null;
+        this._inputFileName         = null;
+        this._jitter                = null;
+        this._jitterAmount          = null;
+        this._libraryPath           = null;
+        this._maxImageBufferMemory  = null;
+        this._outputAlpha           = null;
+        this._outputFileName        = null;
+        this._outputFileType        = null;
+        this._outputToFile          = null;
+        this._palette               = null;
+        this._pauseWhenDone         = null;
+        this._postFrameCommand      = null;
+        this._postFrameReturn       = null;
+        this._postSceneCommand      = null;
+        this._postSceneReturn       = null;
+        this._preFrameCommand       = null;
+        this._preFrameReturn        = null;
+        this._preSceneCommand       = null;
+        this._preSceneReturn        = null;
+        this._previewEndSize        = null;
+        this._previewStartSize      = null;
+        this._quality               = null;
+        this._radiosityFileName     = null;
+        this._radiosityFromFile     = null;
+        this._radiosityToFile       = null;
+        this._radiosityVainPretrace = null;
+        this._removeBounds          = null;
+        this._renderBlockSize       = null;
+        this._renderBlockStep       = null;
+        this._renderConsole         = null;
+        this._renderFile            = null;
+        this._renderPattern         = null;
+        this._samplingMethod        = null;
+        this._splitUnions           = null;
+        this._startColumn           = null;
+        this._startRow              = null;
+        this._statisticConsole      = null;
+        this._statisticFile         = null;
+        this._testAbort             = null;
+        this._testAbortCount        = null;
+        this._userAbortCommand      = null;
+        this._userAbortReturn       = null;
+        this._verbose               = null;
+        this._videoMode             = null;
+        this._warningConsole        = null;
+        this._warningFile           = null;
+        this._warningLevel          = null;
+        this._width                 = null;
+        this._workThreads           = null;
+
+    }
 
     get allConsole() {
         if(typeof this._allConsole == "function")
@@ -1074,8 +995,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get allFile() {
         if(typeof this._allFile == "function")
             return this._allFile();
@@ -1094,8 +1013,6 @@ class ImageOptions {
             cpov.error("fatal", "allFile must be either a boolean or a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get antialias() {
         if(typeof this._antialias == "function")
@@ -1116,8 +1033,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get antialiasDepth() {
         if(typeof this._antialiasDepth == "function")
             return this._antialiasDepth();
@@ -1136,8 +1051,6 @@ class ImageOptions {
             cpov.error("fatal", "antialiasDepth must be an integer in the range 1-9.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get antialiasGamma() {
         if(typeof this._antialiasGamma == "function")
@@ -1158,8 +1071,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get antialiasThreshold() {
         if(typeof this._antialiasThreshold == "function")
             return this._antialiasThreshold();
@@ -1178,8 +1089,6 @@ class ImageOptions {
             cpov.error("fatal", "antialiasThreshold must be a float greater than or equal to zero.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get appendFile() {
         if(typeof this._appendFile == "function")
@@ -1200,8 +1109,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get bitsPerColor() {
         if(typeof this._bitsPerColor == "function")
             return this._bitsPerColor();
@@ -1220,8 +1127,6 @@ class ImageOptions {
             cpov.error("fatal", "bitsPerColor must be an integer in the range 5-16.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get bounding() {
         if(typeof this._bounding == "function")
@@ -1242,8 +1147,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get boundingMethod() {
         if(typeof this._boundingMethod == "function")
             return this._boundingMethod();
@@ -1262,8 +1165,6 @@ class ImageOptions {
             cpov.error("fatal", "boundingMethod must be either 1 or 2.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get boundingThreshold() {
         if(typeof this._boundingThreshold == "function")
@@ -1284,8 +1185,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get bspBaseAccessCost() {
         if(typeof this._bspBaseAccessCost == "function")
             return this._bspBaseAccessCost();
@@ -1304,8 +1203,6 @@ class ImageOptions {
             cpov.error("fatal", "bspBaseAccessCost must be a float.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get bspChildAccessCost() {
         if(typeof this._bspChildAccessCost == "function")
@@ -1326,8 +1223,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get bspIsectCost() {
         if(typeof this._bspIsectCost == "function")
             return this._bspIsectCost();
@@ -1346,8 +1241,6 @@ class ImageOptions {
             cpov.error("fatal", "bspIsectCost must be a float.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get bspMaxDepth() {
         if(typeof this._bspMaxDepth == "function")
@@ -1368,8 +1261,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get bspMissChance() {
         if(typeof this._bspMissChance == "function")
             return this._bspMissChance();
@@ -1388,8 +1279,6 @@ class ImageOptions {
             cpov.error("fatal", "bspMissChance must be a float.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get continueTrace() {
         if(typeof this._continueTrace == "function")
@@ -1410,8 +1299,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get createIni() {
         if(typeof this._createIni == "function")
             return this._createIni();
@@ -1430,8 +1317,6 @@ class ImageOptions {
             cpov.error("fatal", "createIni must be either a boolean or a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get debugConsole() {
         if(typeof this._debugConsole == "function")
@@ -1452,8 +1337,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get debugFile() {
         if(typeof this._debugFile == "function")
             return this._debugFile();
@@ -1472,8 +1355,6 @@ class ImageOptions {
             cpov.error("fatal", "debugFile must be either a boolean or a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get display() {
         if(typeof this._display == "function")
@@ -1494,8 +1375,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get displayGamma() {
         if(typeof this._displayGamma == "function")
             return this._displayGamma();
@@ -1514,8 +1393,6 @@ class ImageOptions {
             cpov.error("fatal", "displayGamma must be either a float or the string 'sRGB'.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get dither() {
         if(typeof this._dither == "function")
@@ -1536,8 +1413,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get ditherMethod() {
         if(typeof this._ditherMethod == "function")
             return this._ditherMethod();
@@ -1556,8 +1431,6 @@ class ImageOptions {
             cpov.error("fatal", "ditherMethod must be one of 'B2', 'B3', 'B4', 'D1', 'D2', or 'FS'.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get endColumn() {
         if(typeof this._endColumn == "function")
@@ -1578,8 +1451,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get endRow() {
         if(typeof this._endRow == "function")
             return this._endRow();
@@ -1598,8 +1469,6 @@ class ImageOptions {
             cpov.error("fatal", "endRow must be an integer greater than zero.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get exePath() {
         if(typeof this._exePath == "function")
@@ -1620,8 +1489,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get fatalConsole() {
         if(typeof this._fatalConsole == "function")
             return this._fatalConsole();
@@ -1640,8 +1507,6 @@ class ImageOptions {
             cpov.error("fatal", "fatalConsole must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get fatalErrorCommand() {
         if(typeof this._fatalErrorCommand == "function")
@@ -1662,8 +1527,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get fatalErrorReturn() {
         if(typeof this._fatalErrorReturn == "function")
             return this._fatalErrorReturn();
@@ -1682,8 +1545,6 @@ class ImageOptions {
             cpov.error("fatal", "fatalErrorReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get fatalFile() {
         if(typeof this._fatalFile == "function")
@@ -1704,8 +1565,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get fileGamma() {
         if(typeof this._fileGamma == "function")
             return this._fileGamma();
@@ -1724,8 +1583,6 @@ class ImageOptions {
             cpov.error("fatal", "fileGamma", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get height() {
         if(typeof this._height == "function")
@@ -1746,8 +1603,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get highReproducibility() {
         if(typeof this._highReproducibility == "function")
             return this._highReproducibility();
@@ -1766,8 +1621,6 @@ class ImageOptions {
             cpov.error("fatal", "highReproducibility must be a boolean", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get includeHeader() {
         if(typeof this._includeHeader == "function")
@@ -1788,8 +1641,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get inputFileName() {
         if(typeof this._inputFileName == "function")
             return this._inputFileName();
@@ -1808,8 +1659,6 @@ class ImageOptions {
             cpov.error("fatal", "inputFileName must be a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get jitter() {
         if(typeof this._jitter == "function")
@@ -1830,8 +1679,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get jitterAmount() {
         if(typeof this._jitterAmount == "function")
             return this._jitterAmount();
@@ -1850,8 +1697,6 @@ class ImageOptions {
             cpov.error("fatal", "jitterAmount must be a float.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get libraryPath() {
         if(typeof this._libraryPath == "function")
@@ -1872,8 +1717,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get maxImageBufferMemory() {
         if(typeof this._maxImageBufferMemory == "function")
             return this._maxImageBufferMemory();
@@ -1892,8 +1735,6 @@ class ImageOptions {
             cpov.error("fatal", "maxImageBufferMemory must be an integer greater than zero.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get outputAlpha() {
         if(typeof this._outputAlpha == "function")
@@ -1914,8 +1755,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get outputFileName() {
         if(typeof this._outputFileName == "function")
             return this._outputFileName();
@@ -1934,8 +1773,6 @@ class ImageOptions {
             cpov.error("fatal", "outputFileName must be a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get outputFileType() {
         if(typeof this._outputFileType == "function")
@@ -1956,8 +1793,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get outputToFile() {
         if(typeof this._outputToFile == "function")
             return this._outputToFile();
@@ -1976,8 +1811,6 @@ class ImageOptions {
             cpov.error("fatal", "outputToFile must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get palette() {
         if(typeof this._palette == "function")
@@ -1998,8 +1831,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get pauseWhenDone() {
         if(typeof this._pauseWhenDone == "function")
             return this._pauseWhenDone();
@@ -2018,8 +1849,6 @@ class ImageOptions {
             cpov.error("fatal", "pauseWhenDone must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get postFrameCommand() {
         if(typeof this._postFrameCommand == "function")
@@ -2040,8 +1869,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get postFrameReturn() {
         if(typeof this._postFrameReturn == "function")
             return this._postFrameReturn();
@@ -2060,8 +1887,6 @@ class ImageOptions {
             cpov.error("fatal", "postFrameReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get postSceneCommand() {
         if(typeof this._postSceneCommand == "function")
@@ -2082,8 +1907,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get postSceneReturn() {
         if(typeof this._postSceneReturn == "function")
             return this._postSceneReturn();
@@ -2102,8 +1925,6 @@ class ImageOptions {
             cpov.error("fatal", "postSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get preFrameCommand() {
         if(typeof this._preFrameCommand == "function")
@@ -2124,8 +1945,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get preFrameReturn() {
         if(typeof this._preFrameReturn == "function")
             return this._preFrameReturn();
@@ -2144,8 +1963,6 @@ class ImageOptions {
             cpov.error("fatal", "preFrameReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get preSceneCommand() {
         if(typeof this._preSceneCommand == "function")
@@ -2166,8 +1983,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get preSceneReturn() {
         if(typeof this._preSceneReturn == "function")
             return this._preSceneReturn();
@@ -2186,8 +2001,6 @@ class ImageOptions {
             cpov.error("fatal", "preSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get previewEndSize() {
         if(typeof this._previewEndSize == "function")
@@ -2208,8 +2021,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get previewStartSize() {
         if(typeof this._previewStartSize == "function")
             return this._previewStartSize();
@@ -2228,8 +2039,6 @@ class ImageOptions {
             cpov.error("fatal", "previewStartSize must be an integer greater than zero.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get quality() {
         if(typeof this._quality == "function")
@@ -2250,8 +2059,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radiosityFileName() {
         if(typeof this._radiosityFileName == "function")
             return this._radiosityFileName();
@@ -2270,8 +2077,6 @@ class ImageOptions {
             cpov.error("fatal", "radiosityFileName must be a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radiosityFromFile() {
         if(typeof this._radiosityFromFile == "function")
@@ -2292,8 +2097,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radiosityToFile() {
         if(typeof this._radiosityToFile == "function")
             return this._radiosityToFile();
@@ -2312,8 +2115,6 @@ class ImageOptions {
             cpov.error("fatal", "radiosityToFile must be a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radiosityVainPretrace() {
         if(typeof this._radiosityVainPretrace == "function")
@@ -2334,8 +2135,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get removeBounds() {
         if(typeof this._removeBounds == "function")
             return this._removeBounds();
@@ -2354,8 +2153,6 @@ class ImageOptions {
             cpov.error("fatal", "removeBounds must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get renderBlockSize() {
         if(typeof this._renderBlockSize == "function")
@@ -2376,8 +2173,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get renderBlockStep() {
         if(typeof this._renderBlockStep == "function")
             return this._renderBlockStep();
@@ -2396,8 +2191,6 @@ class ImageOptions {
             cpov.error("fatal", "renderBlockStep must be an integer greater than or equal to 1.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get renderConsole() {
         if(typeof this._renderConsole == "function")
@@ -2418,8 +2211,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get renderFile() {
         if(typeof this._renderFile == "function")
             return this._renderFile();
@@ -2438,8 +2229,6 @@ class ImageOptions {
             cpov.error("fatal", "renderFile must be a boolean or a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get renderPattern() {
         if(typeof this._renderPattern == "function")
@@ -2460,8 +2249,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get samplingMethod() {
         if(typeof this._samplingMethod == "function")
             return this._samplingMethod();
@@ -2480,8 +2267,6 @@ class ImageOptions {
             cpov.error("fatal", "samplingMethod must be an integer in the range (1 - 2).", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get splitUnions() {
         if(typeof this._splitUnions == "function")
@@ -2502,8 +2287,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get startColumn() {
         if(typeof this._startColumn == "function")
             return this._startColumn();
@@ -2522,8 +2305,6 @@ class ImageOptions {
             cpov.error("fatal", "startColumn must be an integer greater than or equal to zero.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get startRow() {
         if(typeof this._startRow == "function")
@@ -2544,8 +2325,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get statisticConsole() {
         if(typeof this._statisticConsole == "function")
             return this._statisticConsole();
@@ -2564,8 +2343,6 @@ class ImageOptions {
             cpov.error("fatal", "statisticConsole must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get statisticFile() {
         if(typeof this._statisticFile == "function")
@@ -2586,8 +2363,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get testAbort() {
         if(typeof this._testAbort == "function")
             return this._testAbort();
@@ -2606,8 +2381,6 @@ class ImageOptions {
             cpov.error("fatal", "testAbort must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get testAbortCount() {
         if(typeof this._testAbortCount == "function")
@@ -2628,8 +2401,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get userAbortCommand() {
         if(typeof this._userAbortCommand == "function")
             return this._userAbortCommand();
@@ -2648,8 +2419,6 @@ class ImageOptions {
             cpov.error("fatal", "userAbortCommand must be a non-empty string.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get userAbortReturn() {
         if(typeof this._userAbortReturn == "function")
@@ -2670,8 +2439,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get verbose() {
         if(typeof this._verbose == "function")
             return this._verbose();
@@ -2690,8 +2457,6 @@ class ImageOptions {
             cpov.error("fatal", "verbose must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get videoMode() {
         if(typeof this._videoMode == "function")
@@ -2712,8 +2477,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get warningConsole() {
         if(typeof this._warningConsole == "function")
             return this._warningConsole();
@@ -2732,8 +2495,6 @@ class ImageOptions {
             cpov.error("fatal", "warningConsole must be a boolean.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get warningFile() {
         if(typeof this._warningFile == "function")
@@ -2754,8 +2515,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get warningLevel() {
         if(typeof this._warningLevel == "function")
             return this._warningLevel();
@@ -2775,8 +2534,6 @@ class ImageOptions {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get width() {
         if(typeof this._width == "function")
             return this._width();
@@ -2795,8 +2552,6 @@ class ImageOptions {
             cpov.error("fatal", "width must be an integer greater than zero.", "ImageOptions");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get workThreads() {
         if(typeof this._workThreads == "function")
@@ -2822,6 +2577,7 @@ class ImageOptions {
 
 exports.ImageOptions = ImageOptions;
 
+
 var cpov = require("./cpov.js").cpov;
 
 //==============================================================================
@@ -2829,36 +2585,38 @@ var cpov = require("./cpov.js").cpov;
 
 class Primitive {
 
-    constructor(objType, args) {
-        this._active = null;
-        this._baseTransform = null;
-        this._boundedBy = null;
-        this._children = null;
-        this._clippedBy = null;
-        this._doubleIlluminate = null;
-        this._finish = null;
-        this._frameBegin = null;
-        this._frameEnd = null;
-        this._hierarchy = null;
-        this._hollow = null;
-        this._id = null;
-        this._interior = null;
-        this._inverse = null;
-        this._material = null;
-        this._noImage = null;
-        this._noRadiosity = null;
-        this._noReflection = null;
-        this._normal = null;
-        this._noShadow = null;
-        this._parent = null;
-        this._photons = null;
-        this._radiosity = null;
-        this._serial = null;
-        this._texture = null;
-        this._transform = null;
-    }
+    constructor(...args) {
 
-    //--------------------------------------------------------------------------
+        // Mutable properties //
+
+        this._active           = null;
+        this._baseTransform    = null;
+        this._boundedBy        = null;
+        this._children         = null;
+        this._clippedBy        = null;
+        this._doubleIlluminate = null;
+        this._finish           = null;
+        this._frameBegin       = null;
+        this._frameEnd         = null;
+        this._hierarchy        = null;
+        this._hollow           = null;
+        this._id               = null;
+        this._interior         = null;
+        this._inverse          = null;
+        this._material         = null;
+        this._noImage          = null;
+        this._noRadiosity      = null;
+        this._noReflection     = null;
+        this._normal           = null;
+        this._noShadow         = null;
+        this._parent           = null;
+        this._photons          = null;
+        this._radiosity        = null;
+        this._serial           = null;
+        this._texture          = null;
+        this._transform        = null;
+
+    }
 
     get active() {
         if(typeof this._active == "function")
@@ -2879,8 +2637,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get baseTransform() {
         if(typeof this._baseTransform == "function")
             return this._baseTransform();
@@ -2899,8 +2655,6 @@ class Primitive {
             cpov.error("fatal", "baseTransform must be a Matrix.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get boundedBy() {
         if(typeof this._boundedBy == "function")
@@ -2921,8 +2675,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get children() {
         if(typeof this._children == "function")
             return this._children();
@@ -2941,8 +2693,6 @@ class Primitive {
             cpov.error("fatal", "children must be an array of Primitives.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get clippedBy() {
         if(typeof this._clippedBy == "function")
@@ -2963,8 +2713,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get doubleIlluminate() {
         if(typeof this._doubleIlluminate == "function")
             return this._doubleIlluminate();
@@ -2983,8 +2731,6 @@ class Primitive {
             cpov.error("fatal", "doubleIlluminate must be a boolean.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get finish() {
         if(typeof this._finish == "function")
@@ -3005,8 +2751,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get frameBegin() {
         if(typeof this._frameBegin == "function")
             return this._frameBegin();
@@ -3025,8 +2769,6 @@ class Primitive {
             cpov.error("fatal", "frameBegin must be a JavaScript function.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get frameEnd() {
         if(typeof this._frameEnd == "function")
@@ -3047,8 +2789,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get hierarchy() {
         if(typeof this._hierarchy == "function")
             return this._hierarchy();
@@ -3067,8 +2807,6 @@ class Primitive {
             cpov.error("fatal", "hierarchy must be a boolean.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get hollow() {
         if(typeof this._hollow == "function")
@@ -3089,8 +2827,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get id() {
         if(typeof this._id == "function")
             return this._id();
@@ -3109,8 +2845,6 @@ class Primitive {
             cpov.error("fatal", "id must be a non-empty string.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get interior() {
         if(typeof this._interior == "function")
@@ -3131,8 +2865,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get inverse() {
         if(typeof this._inverse == "function")
             return this._inverse();
@@ -3151,8 +2883,6 @@ class Primitive {
             cpov.error("fatal", "inverse must be a boolean.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get material() {
         if(typeof this._material == "function")
@@ -3173,8 +2903,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get noImage() {
         if(typeof this._noImage == "function")
             return this._noImage();
@@ -3193,8 +2921,6 @@ class Primitive {
             cpov.error("fatal", "noImage must be a boolean.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get noRadiosity() {
         if(typeof this._noRadiosity == "function")
@@ -3215,8 +2941,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get noReflection() {
         if(typeof this._noReflection == "function")
             return this._noReflection();
@@ -3235,8 +2959,6 @@ class Primitive {
             cpov.error("fatal", "noReflection must be a boolean.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get normal() {
         if(typeof this._normal == "function")
@@ -3257,8 +2979,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get noShadow() {
         if(typeof this._noShadow == "function")
             return this._noShadow();
@@ -3277,8 +2997,6 @@ class Primitive {
             cpov.error("fatal", "noShadow must be a boolean.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get parent() {
         if(typeof this._parent == "function")
@@ -3299,8 +3017,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get photons() {
         if(typeof this._photons == "function")
             return this._photons();
@@ -3319,8 +3035,6 @@ class Primitive {
             cpov.error("fatal", "photons", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radiosity() {
         if(typeof this._radiosity == "function")
@@ -3341,8 +3055,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get serial() {
         if(typeof this._serial == "function")
             return this._serial();
@@ -3362,8 +3074,6 @@ class Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get texture() {
         if(typeof this._texture == "function")
             return this._texture();
@@ -3382,8 +3092,6 @@ class Primitive {
             cpov.error("fatal", "texture must be a Texture.", "Primitive");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get transform() {
         if(typeof this._transform == "function")
@@ -3409,19 +3117,29 @@ class Primitive {
 
 exports.Primitive = Primitive;
 
+
 //==============================================================================
 //==============================================================================
 
 class Blob extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._components = null;
-        this._threshold = null;
-        this._sturm = null;
-        this._hierarchy = null;
+        this._threshold  = null;
+        this._sturm      = null;
+        this._hierarchy  = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -3460,8 +3178,6 @@ class Blob extends Primitive {
         throw new TypeError("[Blob]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get components() {
         if(typeof this._components == "function")
             return this._components();
@@ -3480,8 +3196,6 @@ class Blob extends Primitive {
             cpov.error("fatal", "components must be an array of Spheres and/or Cylinders.", "Blob");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get threshold() {
         if(typeof this._threshold == "function")
@@ -3502,8 +3216,6 @@ class Blob extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
@@ -3522,8 +3234,6 @@ class Blob extends Primitive {
             cpov.error("fatal", "sturm must be a boolean.", "Blob");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get hierarchy() {
         if(typeof this._hierarchy == "function")
@@ -3549,17 +3259,27 @@ class Blob extends Primitive {
 
 exports.Blob = Blob;
 
+
 //==============================================================================
 //==============================================================================
 
 class Box extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._corner1 = null;
         this._corner2 = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -3598,8 +3318,6 @@ class Box extends Primitive {
         throw new TypeError("[Box]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get corner1() {
         if(typeof this._corner1 == "function")
             return this._corner1();
@@ -3618,8 +3336,6 @@ class Box extends Primitive {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Box");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get corner2() {
         if(typeof this._corner2 == "function")
@@ -3645,31 +3361,41 @@ class Box extends Primitive {
 
 exports.Box = Box;
 
+
 //==============================================================================
 //==============================================================================
 
 class Camera extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = false;
-        this._csg = false;
-        this._type = null;
-        this._angle = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._type         = null;
+        this._angle        = null;
         this._apertureSize = null;
-        this._blurSamples = null;
-        this._bokeh = null;
-        this._confidence = null;
+        this._blurSamples  = null;
+        this._bokeh        = null;
+        this._confidence   = null;
         this._cylinderType = null;
-        this._direction = null;
-        this._focalPoint = null;
-        this._location = null;
-        this._lookAt = null;
-        this._right = null;
-        this._sky = null;
-        this._up = null;
-        this._variance = null;
-        this._vertAngle = null;
+        this._direction    = null;
+        this._focalPoint   = null;
+        this._location     = null;
+        this._lookAt       = null;
+        this._right        = null;
+        this._sky          = null;
+        this._up           = null;
+        this._variance     = null;
+        this._vertAngle    = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -3708,8 +3434,6 @@ class Camera extends Primitive {
         throw new TypeError("[Camera]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type();
@@ -3728,8 +3452,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera.", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get angle() {
         if(typeof this._angle == "function")
@@ -3750,8 +3472,6 @@ class Camera extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get apertureSize() {
         if(typeof this._apertureSize == "function")
             return this._apertureSize();
@@ -3770,8 +3490,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "apertureSize must be a float.", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get blurSamples() {
         if(typeof this._blurSamples == "function")
@@ -3792,8 +3510,6 @@ class Camera extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get bokeh() {
         if(typeof this._bokeh == "function")
             return this._bokeh();
@@ -3812,8 +3528,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "bokeh must be a VectorRGB in the range <0, 0, 0> to <1, 1, 0>.", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get confidence() {
         if(typeof this._confidence == "function")
@@ -3834,8 +3548,6 @@ class Camera extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get cylinderType() {
         if(typeof this._cylinderType == "function")
             return this._cylinderType();
@@ -3854,8 +3566,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "cylinderType must be an integer in the range (1 - 4).", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get direction() {
         if(typeof this._direction == "function")
@@ -3876,8 +3586,6 @@ class Camera extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get focalPoint() {
         if(typeof this._focalPoint == "function")
             return this._focalPoint();
@@ -3896,8 +3604,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "focalPoint must be a VectorXYZ.", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get location() {
         if(typeof this._location == "function")
@@ -3918,8 +3624,6 @@ class Camera extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get lookAt() {
         if(typeof this._lookAt == "function")
             return this._lookAt();
@@ -3938,8 +3642,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "lookAt must be a VectorXYZ.", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get right() {
         if(typeof this._right == "function")
@@ -3960,8 +3662,6 @@ class Camera extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get sky() {
         if(typeof this._sky == "function")
             return this._sky();
@@ -3980,8 +3680,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "sky must be a VectorXYZ.", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get up() {
         if(typeof this._up == "function")
@@ -4002,8 +3700,6 @@ class Camera extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get variance() {
         if(typeof this._variance == "function")
             return this._variance();
@@ -4022,8 +3718,6 @@ class Camera extends Primitive {
             cpov.error("fatal", "variance must be a float.", "Camera");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get vertAngle() {
         if(typeof this._vertAngle == "function")
@@ -4049,20 +3743,30 @@ class Camera extends Primitive {
 
 exports.Camera = Camera;
 
+
 //==============================================================================
 //==============================================================================
 
 class Cone extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._basePoint = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._basePoint  = null;
         this._baseRadius = null;
-        this._capPoint = null;
-        this._capRadius = null;
-        this._open = null;
+        this._capPoint   = null;
+        this._capRadius  = null;
+        this._open       = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -4101,8 +3805,6 @@ class Cone extends Primitive {
         throw new TypeError("[Cone]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get basePoint() {
         if(typeof this._basePoint == "function")
             return this._basePoint();
@@ -4121,8 +3823,6 @@ class Cone extends Primitive {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cone");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get baseRadius() {
         if(typeof this._baseRadius == "function")
@@ -4143,8 +3843,6 @@ class Cone extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get capPoint() {
         if(typeof this._capPoint == "function")
             return this._capPoint();
@@ -4164,8 +3862,6 @@ class Cone extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get capRadius() {
         if(typeof this._capRadius == "function")
             return this._capRadius();
@@ -4184,8 +3880,6 @@ class Cone extends Primitive {
             cpov.error("fatal", "capRadius must be a float.", "Cone");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get open() {
         if(typeof this._open == "function")
@@ -4211,20 +3905,30 @@ class Cone extends Primitive {
 
 exports.Cone = Cone;
 
+
 //==============================================================================
 //==============================================================================
 
 class Cylinder extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._basePoint = null;
-        this._capPoint = null;
-        this._radius = null;
-        this._open = null;
-        this._strength = null;
+        this._capPoint  = null;
+        this._radius    = null;
+        this._open      = null;
+        this._strength  = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -4263,8 +3967,6 @@ class Cylinder extends Primitive {
         throw new TypeError("[Cylinder]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get basePoint() {
         if(typeof this._basePoint == "function")
             return this._basePoint();
@@ -4283,8 +3985,6 @@ class Cylinder extends Primitive {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cylinder");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get capPoint() {
         if(typeof this._capPoint == "function")
@@ -4305,8 +4005,6 @@ class Cylinder extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radius() {
         if(typeof this._radius == "function")
             return this._radius();
@@ -4326,8 +4024,6 @@ class Cylinder extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get open() {
         if(typeof this._open == "function")
             return this._open();
@@ -4346,8 +4042,6 @@ class Cylinder extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "Cylinder");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get strength() {
         if(typeof this._strength == "function")
@@ -4373,22 +4067,32 @@ class Cylinder extends Primitive {
 
 exports.Cylinder = Cylinder;
 
+
 //==============================================================================
 //==============================================================================
 
 class HeightField extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._source = null;
-        this._hfType = null;
-        this._smooth = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._source     = null;
+        this._hfType     = null;
+        this._smooth     = null;
         this._waterLevel = null;
-        this._hierarchy = null;
-        this._gamma = null;
-        this._premult = null;
+        this._hierarchy  = null;
+        this._gamma      = null;
+        this._premult    = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -4427,8 +4131,6 @@ class HeightField extends Primitive {
         throw new TypeError("[HeightField]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get source() {
         if(typeof this._source == "function")
             return this._source();
@@ -4447,8 +4149,6 @@ class HeightField extends Primitive {
             cpov.error("fatal", "source", "HeightField");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get hfType() {
         if(typeof this._hfType == "function")
@@ -4469,8 +4169,6 @@ class HeightField extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get smooth() {
         if(typeof this._smooth == "function")
             return this._smooth();
@@ -4489,8 +4187,6 @@ class HeightField extends Primitive {
             cpov.error("fatal", "smooth must be a boolean.", "HeightField");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get waterLevel() {
         if(typeof this._waterLevel == "function")
@@ -4511,8 +4207,6 @@ class HeightField extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get hierarchy() {
         if(typeof this._hierarchy == "function")
             return this._hierarchy();
@@ -4532,8 +4226,6 @@ class HeightField extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get gamma() {
         if(typeof this._gamma == "function")
             return this._gamma();
@@ -4552,8 +4244,6 @@ class HeightField extends Primitive {
             cpov.error("fatal", "gamma must be a float.", "HeightField");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get premult() {
         if(typeof this._premult == "function")
@@ -4579,23 +4269,33 @@ class HeightField extends Primitive {
 
 exports.HeightField = HeightField;
 
+
 //==============================================================================
 //==============================================================================
 
 class IsoSurface extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._source = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._source      = null;
         this._containedBy = null;
-        this._threshold = null;
-        this._accuracy = null;
+        this._threshold   = null;
+        this._accuracy    = null;
         this._maxGradient = null;
-        this._evaluate = null;
-        this._open = null;
-        this._maxTrace = null;
+        this._evaluate    = null;
+        this._open        = null;
+        this._maxTrace    = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -4634,8 +4334,6 @@ class IsoSurface extends Primitive {
         throw new TypeError("[IsoSurface]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get source() {
         if(typeof this._source == "function")
             return this._source();
@@ -4654,8 +4352,6 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "source must be an SDL function.", "IsoSurface");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get containedBy() {
         if(typeof this._containedBy == "function")
@@ -4676,8 +4372,6 @@ class IsoSurface extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get threshold() {
         if(typeof this._threshold == "function")
             return this._threshold();
@@ -4696,8 +4390,6 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "threshold", "IsoSurface");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get accuracy() {
         if(typeof this._accuracy == "function")
@@ -4718,8 +4410,6 @@ class IsoSurface extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get maxGradient() {
         if(typeof this._maxGradient == "function")
             return this._maxGradient();
@@ -4738,8 +4428,6 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "maxGradient must be a float.", "IsoSurface");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get evaluate() {
         if(typeof this._evaluate == "function")
@@ -4760,8 +4448,6 @@ class IsoSurface extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get open() {
         if(typeof this._open == "function")
             return this._open();
@@ -4780,8 +4466,6 @@ class IsoSurface extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "IsoSurface");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get maxTrace() {
         if(typeof this._maxTrace == "function")
@@ -4807,21 +4491,31 @@ class IsoSurface extends Primitive {
 
 exports.IsoSurface = IsoSurface;
 
+
 //==============================================================================
 //==============================================================================
 
 class JuliaFractal extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._type = null;
-        this._power = null;
-        this._maxIter = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._type      = null;
+        this._power     = null;
+        this._maxIter   = null;
         this._precision = null;
-        this._slice = null;
-        this._distance = null;
+        this._slice     = null;
+        this._distance  = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -4860,8 +4554,6 @@ class JuliaFractal extends Primitive {
         throw new TypeError("[JuliaFractal]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type();
@@ -4880,8 +4572,6 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "type must be one of hypercomplex:acos, hypercomplex:acosh, hypercomplex:asin, hypercomplex:atan, hypercomplex:atanh, hypercomplex:cos, hypercomplex:cosh, hypercomplex:cube, hypercomplex:exp, hypercomplex:ln, hypercomplex:pwr, hypercomplex:reciprocal, hypercomplex:sin, hypercomplex:sinh, hypercomplex:sqr, hypercomplex:tan, hypercomplex:tanh, quaternion:cube, or quaternion:sqr.", "JuliaFractal");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get power() {
         if(typeof this._power == "function")
@@ -4902,8 +4592,6 @@ class JuliaFractal extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get maxIter() {
         if(typeof this._maxIter == "function")
             return this._maxIter();
@@ -4922,8 +4610,6 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "maxIter must be an integer.", "JuliaFractal");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get precision() {
         if(typeof this._precision == "function")
@@ -4944,8 +4630,6 @@ class JuliaFractal extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get slice() {
         if(typeof this._slice == "function")
             return this._slice();
@@ -4964,8 +4648,6 @@ class JuliaFractal extends Primitive {
             cpov.error("fatal", "slice must be a VectorXYZW.", "JuliaFractal");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get distance() {
         if(typeof this._distance == "function")
@@ -4991,18 +4673,28 @@ class JuliaFractal extends Primitive {
 
 exports.JuliaFractal = JuliaFractal;
 
+
 //==============================================================================
 //==============================================================================
 
 class Lathe extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._type = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._type   = null;
         this._points = null;
-        this._sturm = null;
+        this._sturm  = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -5041,8 +4733,6 @@ class Lathe extends Primitive {
         throw new TypeError("[Lathe]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type();
@@ -5062,8 +4752,6 @@ class Lathe extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get points() {
         if(typeof this._points == "function")
             return this._points();
@@ -5082,8 +4770,6 @@ class Lathe extends Primitive {
             cpov.error("fatal", "points must be an array of two or more VectorXY.", "Lathe");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -5109,40 +4795,50 @@ class Lathe extends Primitive {
 
 exports.Lathe = Lathe;
 
+
 //==============================================================================
 //==============================================================================
 
 class LightSource extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = false;
-        this._csg = false;
-        this._location = null;
-        this._color = null;
-        this._adaptive = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._location         = null;
+        this._color            = null;
+        this._adaptive         = null;
         this._areaIllumination = null;
-        this._areaLight = null;
-        this._axis1 = null;
-        this._axis2 = null;
-        this._circular = null;
-        this._fadeDistance = null;
-        this._fadePower = null;
-        this._falloff = null;
-        this._jitter = null;
-        this._looksLike = null;
+        this._areaLight        = null;
+        this._axis1            = null;
+        this._axis2            = null;
+        this._circular         = null;
+        this._fadeDistance     = null;
+        this._fadePower        = null;
+        this._falloff          = null;
+        this._jitter           = null;
+        this._looksLike        = null;
         this._mediaAttenuation = null;
         this._mediaInteraction = null;
-        this._orient = null;
-        this._parallel = null;
-        this._pointAt = null;
+        this._orient           = null;
+        this._parallel         = null;
+        this._pointAt          = null;
         this._projectedThrough = null;
-        this._radius = null;
-        this._shadowless = null;
-        this._size1 = null;
-        this._size2 = null;
-        this._tightness = null;
-        this._type = null;
+        this._radius           = null;
+        this._shadowless       = null;
+        this._size1            = null;
+        this._size2            = null;
+        this._tightness        = null;
+        this._type             = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -5181,8 +4877,6 @@ class LightSource extends Primitive {
         throw new TypeError("[LightSource]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get location() {
         if(typeof this._location == "function")
             return this._location();
@@ -5201,8 +4895,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "location must be a VectorXYZ.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get color() {
         if(typeof this._color == "function")
@@ -5223,8 +4915,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get adaptive() {
         if(typeof this._adaptive == "function")
             return this._adaptive();
@@ -5243,8 +4933,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "adaptive must be a float greater than or equal to zero.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get areaIllumination() {
         if(typeof this._areaIllumination == "function")
@@ -5265,8 +4953,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get areaLight() {
         if(typeof this._areaLight == "function")
             return this._areaLight();
@@ -5285,8 +4971,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "areaLight must be a boolean.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get axis1() {
         if(typeof this._axis1 == "function")
@@ -5307,8 +4991,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get axis2() {
         if(typeof this._axis2 == "function")
             return this._axis2();
@@ -5327,8 +5009,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "axis2 must be a VectorXYZ.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get circular() {
         if(typeof this._circular == "function")
@@ -5349,8 +5029,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get fadeDistance() {
         if(typeof this._fadeDistance == "function")
             return this._fadeDistance();
@@ -5369,8 +5047,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "fadeDistance must be a float greater than zero.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get fadePower() {
         if(typeof this._fadePower == "function")
@@ -5391,8 +5067,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get falloff() {
         if(typeof this._falloff == "function")
             return this._falloff();
@@ -5411,8 +5085,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "falloff must be a float less than 90.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get jitter() {
         if(typeof this._jitter == "function")
@@ -5433,8 +5105,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get looksLike() {
         if(typeof this._looksLike == "function")
             return this._looksLike();
@@ -5453,8 +5123,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "looksLike must be a Primitive.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get mediaAttenuation() {
         if(typeof this._mediaAttenuation == "function")
@@ -5475,8 +5143,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get mediaInteraction() {
         if(typeof this._mediaInteraction == "function")
             return this._mediaInteraction();
@@ -5495,8 +5161,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "mediaInteraction must be a boolean.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get orient() {
         if(typeof this._orient == "function")
@@ -5517,8 +5181,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get parallel() {
         if(typeof this._parallel == "function")
             return this._parallel();
@@ -5537,8 +5199,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "parallel must be a boolean.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get pointAt() {
         if(typeof this._pointAt == "function")
@@ -5559,8 +5219,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get projectedThrough() {
         if(typeof this._projectedThrough == "function")
             return this._projectedThrough();
@@ -5579,8 +5237,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "projectedThrough", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get radius() {
         if(typeof this._radius == "function")
@@ -5601,8 +5257,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get shadowless() {
         if(typeof this._shadowless == "function")
             return this._shadowless();
@@ -5621,8 +5275,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "shadowless must be a boolean.", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get size1() {
         if(typeof this._size1 == "function")
@@ -5643,8 +5295,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get size2() {
         if(typeof this._size2 == "function")
             return this._size2();
@@ -5664,8 +5314,6 @@ class LightSource extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get tightness() {
         if(typeof this._tightness == "function")
             return this._tightness();
@@ -5684,8 +5332,6 @@ class LightSource extends Primitive {
             cpov.error("fatal", "tightness must be a float in the range (0 - 100).", "LightSource");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get type() {
         if(typeof this._type == "function")
@@ -5711,17 +5357,27 @@ class LightSource extends Primitive {
 
 exports.LightSource = LightSource;
 
+
 //==============================================================================
 //==============================================================================
 
 class Ovus extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._bottomRadius = null;
-        this._topRadius = null;
+        this._topRadius    = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -5760,8 +5416,6 @@ class Ovus extends Primitive {
         throw new TypeError("[Ovus]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get bottomRadius() {
         if(typeof this._bottomRadius == "function")
             return this._bottomRadius();
@@ -5780,8 +5434,6 @@ class Ovus extends Primitive {
             cpov.error("fatal", "bottomRadius must be a float.", "Ovus");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get topRadius() {
         if(typeof this._topRadius == "function")
@@ -5807,27 +5459,37 @@ class Ovus extends Primitive {
 
 exports.Ovus = Ovus;
 
+
 //==============================================================================
 //==============================================================================
 
 class Parametric extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._funcX = null;
-        this._funcY = null;
-        this._funcZ = null;
-        this._uv1 = null;
-        this._uv2 = null;
-        this._containedBy = null;
-        this._maxGradient = null;
-        this._accuracy = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._funcX           = null;
+        this._funcY           = null;
+        this._funcZ           = null;
+        this._uv1             = null;
+        this._uv2             = null;
+        this._containedBy     = null;
+        this._maxGradient     = null;
+        this._accuracy        = null;
         this._precomputeDepth = null;
-        this._precomputeX = null;
-        this._precomputeY = null;
-        this._precomputeZ = null;
+        this._precomputeX     = null;
+        this._precomputeY     = null;
+        this._precomputeZ     = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -5866,8 +5528,6 @@ class Parametric extends Primitive {
         throw new TypeError("[Parametric]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get funcX() {
         if(typeof this._funcX == "function")
             return this._funcX();
@@ -5886,8 +5546,6 @@ class Parametric extends Primitive {
             cpov.error("fatal", "funcX must be an SDL function.", "Parametric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get funcY() {
         if(typeof this._funcY == "function")
@@ -5908,8 +5566,6 @@ class Parametric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get funcZ() {
         if(typeof this._funcZ == "function")
             return this._funcZ();
@@ -5928,8 +5584,6 @@ class Parametric extends Primitive {
             cpov.error("fatal", "funcZ must be an SDL function.", "Parametric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get uv1() {
         if(typeof this._uv1 == "function")
@@ -5950,8 +5604,6 @@ class Parametric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get uv2() {
         if(typeof this._uv2 == "function")
             return this._uv2();
@@ -5970,8 +5622,6 @@ class Parametric extends Primitive {
             cpov.error("fatal", "uv2 must be a VectorUV.", "Parametric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get containedBy() {
         if(typeof this._containedBy == "function")
@@ -5992,8 +5642,6 @@ class Parametric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get maxGradient() {
         if(typeof this._maxGradient == "function")
             return this._maxGradient();
@@ -6012,8 +5660,6 @@ class Parametric extends Primitive {
             cpov.error("fatal", "maxGradient must be a float.", "Parametric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get accuracy() {
         if(typeof this._accuracy == "function")
@@ -6034,8 +5680,6 @@ class Parametric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get precomputeDepth() {
         if(typeof this._precomputeDepth == "function")
             return this._precomputeDepth();
@@ -6054,8 +5698,6 @@ class Parametric extends Primitive {
             cpov.error("fatal", "precomputeDepth must be an integer.", "Parametric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get precomputeX() {
         if(typeof this._precomputeX == "function")
@@ -6076,8 +5718,6 @@ class Parametric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get precomputeY() {
         if(typeof this._precomputeY == "function")
             return this._precomputeY();
@@ -6096,8 +5736,6 @@ class Parametric extends Primitive {
             cpov.error("fatal", "precomputeY must be a boolean.", "Parametric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get precomputeZ() {
         if(typeof this._precomputeZ == "function")
@@ -6123,21 +5761,31 @@ class Parametric extends Primitive {
 
 exports.Parametric = Parametric;
 
+
 //==============================================================================
 //==============================================================================
 
 class Prism extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._type = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._type    = null;
         this._height1 = null;
         this._height2 = null;
-        this._points = null;
-        this._open = null;
-        this._sturm = null;
+        this._points  = null;
+        this._open    = null;
+        this._sturm   = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -6176,8 +5824,6 @@ class Prism extends Primitive {
         throw new TypeError("[Prism]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type();
@@ -6196,8 +5842,6 @@ class Prism extends Primitive {
             cpov.error("fatal", "type must be one of 'bezierSpline', 'conicSweep', 'cubicSpline', 'linearSpline', 'linearSweep', or 'quadraticSpline'.", "Prism");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get height1() {
         if(typeof this._height1 == "function")
@@ -6218,8 +5862,6 @@ class Prism extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get height2() {
         if(typeof this._height2 == "function")
             return this._height2();
@@ -6238,8 +5880,6 @@ class Prism extends Primitive {
             cpov.error("fatal", "height2 must be a float", "Prism");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get points() {
         if(typeof this._points == "function")
@@ -6260,8 +5900,6 @@ class Prism extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get open() {
         if(typeof this._open == "function")
             return this._open();
@@ -6280,8 +5918,6 @@ class Prism extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "Prism");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -6307,18 +5943,28 @@ class Prism extends Primitive {
 
 exports.Prism = Prism;
 
+
 //==============================================================================
 //==============================================================================
 
 class Sphere extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._center = null;
-        this._radius = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._center   = null;
+        this._radius   = null;
         this._strength = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -6357,8 +6003,6 @@ class Sphere extends Primitive {
         throw new TypeError("[Sphere]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get center() {
         if(typeof this._center == "function")
             return this._center();
@@ -6378,8 +6022,6 @@ class Sphere extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radius() {
         if(typeof this._radius == "function")
             return this._radius();
@@ -6398,8 +6040,6 @@ class Sphere extends Primitive {
             cpov.error("fatal", "radius must be a float.", "Sphere");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get strength() {
         if(typeof this._strength == "function")
@@ -6425,18 +6065,28 @@ class Sphere extends Primitive {
 
 exports.Sphere = Sphere;
 
+
 //==============================================================================
 //==============================================================================
 
 class SphereSweep extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._type = null;
-        this._spheres = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._type      = null;
+        this._spheres   = null;
         this._tolerance = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -6475,8 +6125,6 @@ class SphereSweep extends Primitive {
         throw new TypeError("[SphereSweep]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type();
@@ -6496,8 +6144,6 @@ class SphereSweep extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get spheres() {
         if(typeof this._spheres == "function")
             return this._spheres();
@@ -6516,8 +6162,6 @@ class SphereSweep extends Primitive {
             cpov.error("fatal", "spheres must be an an array of two or more Sphere.", "SphereSweep");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get tolerance() {
         if(typeof this._tolerance == "function")
@@ -6543,16 +6187,26 @@ class SphereSweep extends Primitive {
 
 exports.SphereSweep = SphereSweep;
 
+
 //==============================================================================
 //==============================================================================
 
 class Superellipsoid extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._vector = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -6591,8 +6245,6 @@ class Superellipsoid extends Primitive {
         throw new TypeError("[Superellipsoid]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get vector() {
         if(typeof this._vector == "function")
             return this._vector();
@@ -6617,18 +6269,28 @@ class Superellipsoid extends Primitive {
 
 exports.Superellipsoid = Superellipsoid;
 
+
 //==============================================================================
 //==============================================================================
 
 class Sor extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._points = null;
-        this._open = null;
-        this._sturm = null;
+        this._open   = null;
+        this._sturm  = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -6667,8 +6329,6 @@ class Sor extends Primitive {
         throw new TypeError("[Sor]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get points() {
         if(typeof this._points == "function")
             return this._points();
@@ -6688,8 +6348,6 @@ class Sor extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get open() {
         if(typeof this._open == "function")
             return this._open();
@@ -6708,8 +6366,6 @@ class Sor extends Primitive {
             cpov.error("fatal", "open must be a boolean.", "Sor");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -6735,19 +6391,29 @@ class Sor extends Primitive {
 
 exports.Sor = Sor;
 
+
 //==============================================================================
 //==============================================================================
 
 class Text extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
-        this._font = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._font        = null;
         this._displayText = null;
-        this._thickness = null;
-        this._offset = null;
+        this._thickness   = null;
+        this._offset      = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -6786,8 +6452,6 @@ class Text extends Primitive {
         throw new TypeError("[Text]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get font() {
         if(typeof this._font == "function")
             return this._font();
@@ -6806,8 +6470,6 @@ class Text extends Primitive {
             cpov.error("fatal", "font must be a non-empty string.", "Text");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get displayText() {
         if(typeof this._displayText == "function")
@@ -6828,8 +6490,6 @@ class Text extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get thickness() {
         if(typeof this._thickness == "function")
             return this._thickness();
@@ -6848,8 +6508,6 @@ class Text extends Primitive {
             cpov.error("fatal", "thickness must be a float.", "Text");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get offset() {
         if(typeof this._offset == "function")
@@ -6875,18 +6533,28 @@ class Text extends Primitive {
 
 exports.Text = Text;
 
+
 //==============================================================================
 //==============================================================================
 
 class Torus extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = true;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._majorRadius = null;
         this._minorRadius = null;
-        this._sturm = null;
+        this._sturm       = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -6925,8 +6593,6 @@ class Torus extends Primitive {
         throw new TypeError("[Torus]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get majorRadius() {
         if(typeof this._majorRadius == "function")
             return this._majorRadius();
@@ -6946,8 +6612,6 @@ class Torus extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get minorRadius() {
         if(typeof this._minorRadius == "function")
             return this._minorRadius();
@@ -6966,8 +6630,6 @@ class Torus extends Primitive {
             cpov.error("fatal", "minorRadius must be a float.", "Torus");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -6993,20 +6655,30 @@ class Torus extends Primitive {
 
 exports.Torus = Torus;
 
+
 //==============================================================================
 //==============================================================================
 
 class BicubicPatch extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = false;
-        this._csg = false;
-        this._type = null;
-        this._points = null;
-        this._uSteps = null;
-        this._vSteps = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._type     = null;
+        this._points   = null;
+        this._uSteps   = null;
+        this._vSteps   = null;
         this._flatness = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7045,8 +6717,6 @@ class BicubicPatch extends Primitive {
         throw new TypeError("[BicubicPatch]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type();
@@ -7065,8 +6735,6 @@ class BicubicPatch extends Primitive {
             cpov.error("fatal", "type must be either 0 or 1.", "BicubicPatch");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get points() {
         if(typeof this._points == "function")
@@ -7087,8 +6755,6 @@ class BicubicPatch extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get uSteps() {
         if(typeof this._uSteps == "function")
             return this._uSteps();
@@ -7108,8 +6774,6 @@ class BicubicPatch extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get vSteps() {
         if(typeof this._vSteps == "function")
             return this._vSteps();
@@ -7128,8 +6792,6 @@ class BicubicPatch extends Primitive {
             cpov.error("fatal", "vSteps must be an integer.", "BicubicPatch");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get flatness() {
         if(typeof this._flatness == "function")
@@ -7155,19 +6817,29 @@ class BicubicPatch extends Primitive {
 
 exports.BicubicPatch = BicubicPatch;
 
+
 //==============================================================================
 //==============================================================================
 
 class Disc extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = false;
-        this._csg = false;
-        this._center = null;
-        this._normal = null;
-        this._radius = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._center     = null;
+        this._normal     = null;
+        this._radius     = null;
         this._holeRadius = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7206,8 +6878,6 @@ class Disc extends Primitive {
         throw new TypeError("[Disc]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get center() {
         if(typeof this._center == "function")
             return this._center();
@@ -7226,8 +6896,6 @@ class Disc extends Primitive {
             cpov.error("fatal", "center must be a VectorXYZ.", "Disc");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get normal() {
         if(typeof this._normal == "function")
@@ -7248,8 +6916,6 @@ class Disc extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get radius() {
         if(typeof this._radius == "function")
             return this._radius();
@@ -7268,8 +6934,6 @@ class Disc extends Primitive {
             cpov.error("fatal", "radius must be a float.", "Disc");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get holeRadius() {
         if(typeof this._holeRadius == "function")
@@ -7295,18 +6959,28 @@ class Disc extends Primitive {
 
 exports.Disc = Disc;
 
+
 //==============================================================================
 //==============================================================================
 
 class Mesh extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = false;
-        this._csg = false;
-        this._triangles = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._triangles    = null;
         this._insideVector = null;
-        this._hierarchy = null;
+        this._hierarchy    = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7345,8 +7019,6 @@ class Mesh extends Primitive {
         throw new TypeError("[Mesh]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get triangles() {
         if(typeof this._triangles == "function")
             return this._triangles();
@@ -7366,8 +7038,6 @@ class Mesh extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get insideVector() {
         if(typeof this._insideVector == "function")
             return this._insideVector();
@@ -7386,8 +7056,6 @@ class Mesh extends Primitive {
             cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get hierarchy() {
         if(typeof this._hierarchy == "function")
@@ -7413,16 +7081,26 @@ class Mesh extends Primitive {
 
 exports.Mesh = Mesh;
 
+
 //==============================================================================
 //==============================================================================
 
 class Polygon extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = false;
-        this._csg = false;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._points = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7461,8 +7139,6 @@ class Polygon extends Primitive {
         throw new TypeError("[Polygon]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get points() {
         if(typeof this._points == "function")
             return this._points();
@@ -7487,23 +7163,33 @@ class Polygon extends Primitive {
 
 exports.Polygon = Polygon;
 
+
 //==============================================================================
 //==============================================================================
 
 class Triangle extends Primitive {
 
-    constructor(objType, args) {
-        this._finite = true;
-        this._solid = false;
-        this._csg = false;
-        this._corner1 = null;
-        this._corner2 = null;
-        this._corner3 = null;
-        this._smooth = null;
-        this._normal1 = null;
-        this._normal2 = null;
-        this._normal3 = null;
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._corner1  = null;
+        this._corner2  = null;
+        this._corner3  = null;
+        this._smooth   = null;
+        this._normal1  = null;
+        this._normal2  = null;
+        this._normal3  = null;
         this._textures = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7542,8 +7228,6 @@ class Triangle extends Primitive {
         throw new TypeError("[Triangle]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get corner1() {
         if(typeof this._corner1 == "function")
             return this._corner1();
@@ -7562,8 +7246,6 @@ class Triangle extends Primitive {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Triangle");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get corner2() {
         if(typeof this._corner2 == "function")
@@ -7584,8 +7266,6 @@ class Triangle extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get corner3() {
         if(typeof this._corner3 == "function")
             return this._corner3();
@@ -7604,8 +7284,6 @@ class Triangle extends Primitive {
             cpov.error("fatal", "corner3 must be a VectorXYZ.", "Triangle");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get smooth() {
         if(typeof this._smooth == "function")
@@ -7626,8 +7304,6 @@ class Triangle extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get normal1() {
         if(typeof this._normal1 == "function")
             return this._normal1();
@@ -7646,8 +7322,6 @@ class Triangle extends Primitive {
             cpov.error("fatal", "normal1 must be a VectorXYZ.", "Triangle");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get normal2() {
         if(typeof this._normal2 == "function")
@@ -7668,8 +7342,6 @@ class Triangle extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get normal3() {
         if(typeof this._normal3 == "function")
             return this._normal3();
@@ -7688,8 +7360,6 @@ class Triangle extends Primitive {
             cpov.error("fatal", "normal3 must be a VectorXYZ.", "Triangle");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get textures() {
         if(typeof this._textures == "function")
@@ -7715,17 +7385,27 @@ class Triangle extends Primitive {
 
 exports.Triangle = Triangle;
 
+
 //==============================================================================
 //==============================================================================
 
 class Plane extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = false;
-        this._solid = true;
-        this._csg = false;
-        this._normal = null;
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._normal   = null;
         this._distance = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7764,8 +7444,6 @@ class Plane extends Primitive {
         throw new TypeError("[Plane]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get normal() {
         if(typeof this._normal == "function")
             return this._normal();
@@ -7784,8 +7462,6 @@ class Plane extends Primitive {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Plane");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get distance() {
         if(typeof this._distance == "function")
@@ -7811,17 +7487,27 @@ class Plane extends Primitive {
 
 exports.Plane = Plane;
 
+
 //==============================================================================
 //==============================================================================
 
 class Poly extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = false;
-        this._solid = true;
-        this._csg = false;
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._coefficients = null;
-        this._sturm = null;
+        this._sturm        = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7860,8 +7546,6 @@ class Poly extends Primitive {
         throw new TypeError("[Poly]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
@@ -7880,8 +7564,6 @@ class Poly extends Primitive {
             cpov.error("fatal", "coefficients must be an array of 2 to 35 floats.", "Poly");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -7907,17 +7589,27 @@ class Poly extends Primitive {
 
 exports.Poly = Poly;
 
+
 //==============================================================================
 //==============================================================================
 
 class Cubic extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = false;
-        this._solid = true;
-        this._csg = false;
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._coefficients = null;
-        this._sturm = null;
+        this._sturm        = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -7956,8 +7648,6 @@ class Cubic extends Primitive {
         throw new TypeError("[Cubic]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
@@ -7976,8 +7666,6 @@ class Cubic extends Primitive {
             cpov.error("fatal", "coefficients must be an array of 20 floats.", "Cubic");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -8003,17 +7691,27 @@ class Cubic extends Primitive {
 
 exports.Cubic = Cubic;
 
+
 //==============================================================================
 //==============================================================================
 
 class Quartic extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = false;
-        this._solid = true;
-        this._csg = false;
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._coefficients = null;
-        this._sturm = null;
+        this._sturm        = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -8052,8 +7750,6 @@ class Quartic extends Primitive {
         throw new TypeError("[Quartic]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
@@ -8072,8 +7768,6 @@ class Quartic extends Primitive {
             cpov.error("fatal", "coefficients must be an array of 20 floats.", "Quartic");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -8099,18 +7793,28 @@ class Quartic extends Primitive {
 
 exports.Quartic = Quartic;
 
+
 //==============================================================================
 //==============================================================================
 
 class Polynomial extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = false;
-        this._solid = true;
-        this._csg = false;
-        this._order = null;
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
+        this._order        = null;
         this._coefficients = null;
-        this._sturm = null;
+        this._sturm        = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -8149,8 +7853,6 @@ class Polynomial extends Primitive {
         throw new TypeError("[Polynomial]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get order() {
         if(typeof this._order == "function")
             return this._order();
@@ -8170,8 +7872,6 @@ class Polynomial extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
@@ -8190,8 +7890,6 @@ class Polynomial extends Primitive {
             cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get sturm() {
         if(typeof this._sturm == "function")
@@ -8217,15 +7915,24 @@ class Polynomial extends Primitive {
 
 exports.Polynomial = Polynomial;
 
+
 //==============================================================================
 //==============================================================================
 
 class Quadric extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = false;
-        this._solid = true;
-        this._csg = false;
+        this._solid  = true; 
+        this._csg    = false;
+
+        // Mutable properties //
+
         this._a = null;
         this._b = null;
         this._c = null;
@@ -8236,6 +7943,7 @@ class Quadric extends Primitive {
         this._h = null;
         this._i = null;
         this._j = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -8274,8 +7982,6 @@ class Quadric extends Primitive {
         throw new TypeError("[Quadric]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get a() {
         if(typeof this._a == "function")
             return this._a();
@@ -8294,8 +8000,6 @@ class Quadric extends Primitive {
             cpov.error("fatal", "a must be a float.", "Quadric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get b() {
         if(typeof this._b == "function")
@@ -8316,8 +8020,6 @@ class Quadric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get c() {
         if(typeof this._c == "function")
             return this._c();
@@ -8336,8 +8038,6 @@ class Quadric extends Primitive {
             cpov.error("fatal", "c must be a float.", "Quadric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get d() {
         if(typeof this._d == "function")
@@ -8358,8 +8058,6 @@ class Quadric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get e() {
         if(typeof this._e == "function")
             return this._e();
@@ -8378,8 +8076,6 @@ class Quadric extends Primitive {
             cpov.error("fatal", "e must be a float.", "Quadric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get f() {
         if(typeof this._f == "function")
@@ -8400,8 +8096,6 @@ class Quadric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get g() {
         if(typeof this._g == "function")
             return this._g();
@@ -8420,8 +8114,6 @@ class Quadric extends Primitive {
             cpov.error("fatal", "g must be a float.", "Quadric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get h() {
         if(typeof this._h == "function")
@@ -8442,8 +8134,6 @@ class Quadric extends Primitive {
         }
     }
 
-    //--------------------------------------------------------------------------
-
     get i() {
         if(typeof this._i == "function")
             return this._i();
@@ -8462,8 +8152,6 @@ class Quadric extends Primitive {
             cpov.error("fatal", "i must be a float.", "Quadric");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get j() {
         if(typeof this._j == "function")
@@ -8489,17 +8177,27 @@ class Quadric extends Primitive {
 
 exports.Quadric = Quadric;
 
+
 //==============================================================================
 //==============================================================================
 
 class Union extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = null;
-        this._solid = true;
-        this._csg = true;
-        this._objects = null;
+        this._solid  = true;
+        this._csg    = true;
+
+        // Mutable properties //
+
+        this._objects    = null;
         this._splitUnion = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -8538,8 +8236,6 @@ class Union extends Primitive {
         throw new TypeError("[Union]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get objects() {
         if(typeof this._objects == "function")
             return this._objects();
@@ -8558,8 +8254,6 @@ class Union extends Primitive {
             cpov.error("fatal", "objects must be an array of Primitives.", "Union");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get splitUnion() {
         if(typeof this._splitUnion == "function")
@@ -8585,16 +8279,26 @@ class Union extends Primitive {
 
 exports.Union = Union;
 
+
 //==============================================================================
 //==============================================================================
 
 class Intersection extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = null;
-        this._solid = true;
-        this._csg = true;
+        this._solid  = true;
+        this._csg    = true;
+
+        // Mutable properties //
+
         this._objects = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -8633,8 +8337,6 @@ class Intersection extends Primitive {
         throw new TypeError("[Intersection]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get objects() {
         if(typeof this._objects == "function")
             return this._objects();
@@ -8659,17 +8361,27 @@ class Intersection extends Primitive {
 
 exports.Intersection = Intersection;
 
+
 //==============================================================================
 //==============================================================================
 
 class Difference extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = null;
-        this._solid = true;
-        this._csg = true;
-        this._positiveObject = null;
+        this._solid  = true;
+        this._csg    = true;
+
+        // Mutable properties //
+
+        this._positiveObject  = null;
         this._negativeObjects = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -8708,8 +8420,6 @@ class Difference extends Primitive {
         throw new TypeError("[Difference]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get positiveObject() {
         if(typeof this._positiveObject == "function")
             return this._positiveObject();
@@ -8728,8 +8438,6 @@ class Difference extends Primitive {
             cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
         }
     }
-
-    //--------------------------------------------------------------------------
 
     get negativeObjects() {
         if(typeof this._negativeObjects == "function")
@@ -8755,16 +8463,26 @@ class Difference extends Primitive {
 
 exports.Difference = Difference;
 
+
 //==============================================================================
 //==============================================================================
 
 class Merge extends Primitive {
 
-    constructor(objType, args) {
+    constructor(...args) {
+
+        super(args);
+
+        // Immutable properties //
+
         this._finite = null;
-        this._solid = true;
-        this._csg = true;
+        this._solid  = true;
+        this._csg    = true;
+
+        // Mutable properties //
+
         this._objects = null;
+
     }
 
     //--------------------------------------------------------------------------
@@ -8803,8 +8521,6 @@ class Merge extends Primitive {
         throw new TypeError("[Merge]: csg is a read-only property.");
     }
 
-    //--------------------------------------------------------------------------
-
     get objects() {
         if(typeof this._objects == "function")
             return this._objects();
@@ -8828,4 +8544,5 @@ class Merge extends Primitive {
 }
 
 exports.Merge = Merge;
+
 

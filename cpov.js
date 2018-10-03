@@ -1105,7 +1105,7 @@ cpov.objDef = {
     // TODO: need way to specify special methods, e.g., editing the components array
 
     blob: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "components",
@@ -1129,7 +1129,7 @@ cpov.objDef = {
     },
 
     box: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "corner1",
@@ -1151,7 +1151,7 @@ cpov.objDef = {
     //--------------------------------------------------------------------------
 
     camera: {
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
                 name:  "type", // type: "string(perspective|orthographic|fisheye|ultra_wide_angle|omnimax|panoramic|spherical|cylinder|mesh_camera)",
@@ -1223,7 +1223,7 @@ cpov.objDef = {
     },
 
     cone: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "basePoint",
@@ -1254,7 +1254,7 @@ cpov.objDef = {
     },
 
     cylinder: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "basePoint",
@@ -1284,7 +1284,7 @@ cpov.objDef = {
     },
 
     heightField: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "source",
@@ -1320,7 +1320,7 @@ cpov.objDef = {
     },
 
     isoSurface: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "source",
@@ -1360,7 +1360,7 @@ cpov.objDef = {
     },
 
     juliaFractal: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "type",
@@ -1392,7 +1392,7 @@ cpov.objDef = {
     },
 
     lathe: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "type",
@@ -1413,7 +1413,7 @@ cpov.objDef = {
     },
 
     lightSource: {
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
                 name:  "location",
@@ -1522,7 +1522,7 @@ cpov.objDef = {
     },
 
     ovus: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
         {
             name:  "bottomRadius",
@@ -1540,7 +1540,7 @@ cpov.objDef = {
     },
 
     parametric: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "funcX",
@@ -1600,7 +1600,7 @@ cpov.objDef = {
     },
 
     prism: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "type",
@@ -1635,7 +1635,7 @@ cpov.objDef = {
     },
 
     sphere: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "center",
@@ -1656,7 +1656,7 @@ cpov.objDef = {
     },
 
     sphereSweep: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "type",
@@ -1677,7 +1677,7 @@ cpov.objDef = {
     },
 
     superellipsoid: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "vector",
@@ -1690,7 +1690,7 @@ cpov.objDef = {
     },
 
     sor: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "points",
@@ -1710,7 +1710,7 @@ cpov.objDef = {
     },
 
     text: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "font",
@@ -1738,7 +1738,7 @@ cpov.objDef = {
     },
 
     torus: {
-        fixed: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
                 name:  "majorRadius",
@@ -1759,7 +1759,7 @@ cpov.objDef = {
     },
 
     bicubicPatch: {
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
                 name:  "type",
@@ -1788,7 +1788,7 @@ cpov.objDef = {
     },
 
     disc: {
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
                 name:  "center",
@@ -1814,7 +1814,7 @@ cpov.objDef = {
     },
 
     mesh: {
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
                 name:  "triangles",
@@ -1838,14 +1838,14 @@ cpov.objDef = {
 // Deferred pending further research
 
     mesh2: {
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [ ],
 
     },
 */
 
     polygon: {
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
                 name:  "points",
@@ -1858,7 +1858,7 @@ cpov.objDef = {
     },
 
     triangle: {               // combines triangle and smooth_triangle
-        fixed: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
                 name:  "corner1",
@@ -1900,7 +1900,7 @@ cpov.objDef = {
     },
 
     plane: {
-        fixed: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
                 name:  "normal",
@@ -1918,7 +1918,7 @@ cpov.objDef = {
     },
 
     poly: {
-        fixed: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
                 name:  "coefficients",
@@ -1934,7 +1934,7 @@ cpov.objDef = {
     },
 
     cubic: {
-        fixed: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
                 name:  "coefficients",
@@ -1950,7 +1950,7 @@ cpov.objDef = {
     },
 
     quartic: {
-        fixed: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
                 name:  "coefficients",
@@ -1966,7 +1966,7 @@ cpov.objDef = {
     },
 
     polynomial: {                                             // this will require better understanding of the
-        fixed: { finite: false, solid: true, csg: false },    // underlying maths than I currently have to validate
+        immutable: { finite: false, solid: true, csg: false },    // underlying maths than I currently have to validate
         mutable: [
             {
                 name:  "order",
@@ -1987,7 +1987,7 @@ cpov.objDef = {
     },
 
     quadric: {
-        fixed: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
                 name:  "a",
@@ -2045,7 +2045,7 @@ cpov.objDef = {
     },
 
     union: {
-        fixed: { finite: null, solid: true, csg: true },
+        immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
                 name:  "objects",
@@ -2061,7 +2061,7 @@ cpov.objDef = {
     },
 
     intersection: {
-        fixed: { finite: null, solid: true, csg: true },
+        immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
                 name:  "objects",
@@ -2072,7 +2072,7 @@ cpov.objDef = {
     },
 
     difference: {
-        fixed: { finite: null, solid: true, csg: true },
+        immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
                 name:  "positiveObject",
@@ -2088,7 +2088,7 @@ cpov.objDef = {
     },
 
     merge: {
-        fixed: { finite: null, solid: true, csg: true },
+        immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
                 name:  "objects",

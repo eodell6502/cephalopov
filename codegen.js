@@ -7,10 +7,10 @@ var File    = require("./file.js").File;
 // parameters.
 //==============================================================================
 
-function ClassBuilder(name, fixed, mutable, superclass) {
+function ClassBuilder(name, immutable, mutable, superclass) {
     this.name       = name;
     this.superclass = superclass;
-    this.fixed      = fixed;
+    this.immutable      = immutable;
     this.mutable    = mutable;
 }
 
@@ -32,6 +32,53 @@ ClassBuilder.prototype.divider = function(stops, type, maxLength = 80) {
 
 
 //------------------------------------------------------------------------------
+// Pads a string with the specified character on the right or left.
+//------------------------------------------------------------------------------
+
+ClassBuilder.prototype.pad = function(str, num, padchar, side) {
+
+	var padding = [ ];
+
+	for(var i = 0; i < num; i++)
+		padding.push(padchar);
+
+	padding = padding.join("");
+
+	return (side == "left" ? padding : "") + str + (side == "right" ? padding : "");
+}
+
+//------------------------------------------------------------------------------
+// Given an array of arrays of strings, right-pads each column to make them all
+// the same width. Assumes each row has the same number of elements. Returns a
+// single string.
+//------------------------------------------------------------------------------
+
+ClassBuilder.prototype.align = function(rows) {
+
+	var width = [ ];
+
+	for(var i = 0; i < rows[0].length; i++)
+		width[i] = 0;
+
+	for(var r = 0; r < rows.length; r++) {
+		for(var c = 0; c < rows[r].length; c++) {
+			width[c] = Math.max(width[c], rows[r][c].length);
+		}
+	}
+
+	for(var r = 0; r < rows.length; r++) {
+		for(var c = 0; c < rows[r].length; c++) {
+			if(rows[r][c].length < width[c])
+				rows[r][c] = this.pad(rows[r][c], width[c] - rows[r][c].length, " ", "right");
+		}
+		rows[r] = rows[r].join("");
+	}
+
+	return rows.join("\n");
+}
+
+
+//------------------------------------------------------------------------------
 // Generates source code for class.
 //------------------------------------------------------------------------------
 
@@ -49,37 +96,51 @@ ClassBuilder.prototype.toString = function() {
 
     // Constructor -------------------------------------------------------------
 
-    src.push(tab1 + "constructor(objType, args) {")
-    if(this.superClass)
+    src.push(tab1 + "constructor(...args) {\n")
+    if(this.superclass)
         src.push(tab2 + "super(args);\n");
 
-    // Fixed properties --------------------------------------------------------
+    // Immutable properties --------------------------------------------------------
 
-    if(this.fixed) {
-        for(var i in this.fixed) {
-            src.push(tab2 + "this._" + i + " = " + this.fixed[i] + ";");
+    if(this.immutable) {
+
+		var rows = [ ];
+
+		src.push(tab2 + "// Immutable properties //\n");
+
+        for(var i in this.immutable) {
+			rows.push([tab2 + "this._" + i, " = ", this.immutable[i] + ";"]);
         }
+
+		src.push(this.align(rows) + "\n");
     }
 
     // Mutable properties ------------------------------------------------------
 
     if(this.mutable) {
+
+		var rows = [ ];
+
+		src.push(tab2 + "// Mutable properties //\n");
+
         for(var i = 0; i < this.mutable.length; i++) {
             if(this.mutable[i].default) {
                 var init = this.mutable[i].default;
             } else {
                 var init = "null";
             }
-            src.push(tab2 + "this._" + this.mutable[i].name + " = " + init + ";");
+			rows.push([tab2 + "this._" + this.mutable[i].name, " = ", init + ";"]);
         }
+
+		src.push(this.align(rows) + "\n");
     }
 
     src.push(tab1 + "}\n");
 
     // Accessors and Mutators --------------------------------------------------
 
-    if(this.fixed) {
-        for(var i in this.fixed) {
+    if(this.immutable) {
+        for(var i in this.immutable) {
             src.push(
                 this.divider(1, "-") + "\n\n"
                 + tab1 + "get " + i + "() {\n"
@@ -97,8 +158,7 @@ ClassBuilder.prototype.toString = function() {
         for(var i = 0; i < this.mutable.length; i++) {
             var item = this.mutable[i];
             src.push(
-                this.divider(1, "-") + "\n\n"
-                + tab1 + "get " + item.name + "() {\n"
+                  tab1 + "get " + item.name + "() {\n"
                 + tab2 + "if(typeof this._" + item.name + " == \"function\")\n"
                 + tab3 + "return this._" + item.name + "();\n"
                 + tab2 + "else if(typeof this._" + item.name + " == \"string\" && this._" + item.name + ".substr(0, 1) == \"&\")\n"
@@ -140,20 +200,20 @@ ClassBuilder.prototype.toString = function() {
 var fp = new File("./classes.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false) + "\n\n");
-fp.write("exports.GlobalSettings = GlobalSettings;\n\n");
+fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false) + "\n\n");
-fp.write("exports.ImageOptions = ImageOptions;\n\n");
+fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false) + "\n\n");
-fp.write("exports.Primitive = Primitive;\n\n");
+fp.write("exports.Primitive = Primitive;\n\n\n");
 
 for(var pname in cpov.objDef) {
     var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-    fp.write(new ClassBuilder(cname, cpov.objDef[pname].fixed, cpov.objDef[pname].mutable, "Primitive") + "\n\n");
-    fp.write("exports." + cname + " = " + cname + ";\n\n");
+    fp.write(new ClassBuilder(cname, cpov.objDef[pname].immutable, cpov.objDef[pname].mutable, "Primitive") + "\n\n");
+    fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }
 
 fp.close();
@@ -168,7 +228,7 @@ TODO:
 
         // @blockname ------------...
 
-    * Fixed attribute to distinguish pseudo-primitives like the Camera type?
+    * immutable attribute to distinguish pseudo-primitives like the Camera type?
 
     * Add serial and other bookkeeping to constructor (base class)
     * Vector and Matrix -- generated?
