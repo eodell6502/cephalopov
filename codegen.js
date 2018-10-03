@@ -5,13 +5,25 @@ var File    = require("./file.js").File;
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of
 // parameters.
+//
+//      name ......... class name
+//      immutable .... object defining immutable attributes
+//      mutable ...... object defining mutable attributes
+//      superclass ... name of superclass or false if none
+//      desc ......... text to put in header comment or false for none
+//      conArgs ...... constructor argument list or false for default (...args)
+//      conBlock ..... code block to put inside constructor or false for default
+//
 //==============================================================================
 
-function ClassBuilder(name, immutable, mutable, superclass) {
+function ClassBuilder(name, immutable, mutable, superclass, desc = false, conArgs = false, conBlock = false) {
     this.name       = name;
     this.superclass = superclass;
-    this.immutable      = immutable;
+    this.immutable  = immutable;
     this.mutable    = mutable;
+    this.desc       = desc;
+    this.conArgs    = conArgs;
+    this.conBlock   = conBlock;
 }
 
 
@@ -87,18 +99,36 @@ ClassBuilder.prototype.toString = function() {
     var tab1 = cpov.tab(1);
     var tab2 = cpov.tab(2);
     var tab3 = cpov.tab(3);
+    var tab4 = cpov.tab(4);
 
     // Class opening -----------------------------------------------------------
 
     src.push(this.divider(0, "="));
+    if(this.desc)
+        src.push(cpov.wrap(this.desc, { indent: "// ", width: 77 }));
     src.push(this.divider(0, "=") + "\n");
     src.push("class " + this.name + (this.superclass ? (" extends " + this.superclass) : '') + " {\n");
 
     // Constructor -------------------------------------------------------------
 
-    src.push(tab1 + "constructor(...args) {\n")
-    if(this.superclass)
-        src.push(tab2 + "super(args);\n");
+    if(this.conArgs) {
+        src.push(tab1 + "constructor(" + this.conArgs + ") {\n");
+    } else {
+        src.push(tab1 + "constructor(options) {\n")
+    }
+
+    if(this.conBlock) {
+        var lines = this.conBlock.split(/\n/);
+        while(lines.length)
+            src.push(tab2 + lines.shift())
+        src.push("\n");
+    } else {
+        if(this.superclass) {
+            src.push(tab2 + "super(options);");
+        }
+        src.push(tab2 + "cpov.initObject(this, options);\n");
+    }
+
 
     // Immutable properties --------------------------------------------------------
 
@@ -199,7 +229,7 @@ ClassBuilder.prototype.toString = function() {
 
 var fp = new File("./classes.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
-fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false) + "\n\n");
+fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false, cpov.gsDef.desc) + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
 fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false) + "\n\n");
@@ -226,12 +256,6 @@ fp.close();
 /*
 
 TODO:
-
-    * ClassBuilder: routine to import files with chunks of code by name (xgen-ish markup),
-      left-pad, and add to generated classes. This is for final validation and output
-      methods (at least at first).
-
-        // @blockname ------------...
 
 	* Temporarily implement Textures that are just SDL strings pulled from a cpov.tempTexture list.
 

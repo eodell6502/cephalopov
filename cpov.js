@@ -28,6 +28,7 @@ cpov.fs      = require("fs");
 cpov.File    = require("./file.js").File;
 cpov.chalk   = require("chalk");
 cpov.process = require("process");
+cpov.wrap    = require("word-wrap"); // https://github.com/jonschlinkert/word-wrap
 
 
 //==============================================================================
@@ -457,6 +458,9 @@ cpov.sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accuracy"
 //------------------------------------------------------------------------------
 
 cpov.gsDef = {
+    desc: "The GlobalSettings class manages the variables that will be output "
+        + "into .ini files for each frame and which can, optionally, be emitted "
+        + "in the form of command line switches.",
     mutable: [
         {
             name:  "adcBailout",
@@ -2339,6 +2343,25 @@ cpov.objectImport = function(filename) {
 
     return result;
 }
+
+
+//==============================================================================
+// Common initialization/load routine for objects. Given an object reference and
+// an object containing named attributes, attempts to assign them to the
+// corresponding object attributes. Attributes that do not exist will be
+// ignored.
+//==============================================================================
+
+cpov.initObject = function(obj, vals) {
+    for(var k in vals) {
+        if(obj[k] != undefined) {
+            obj[k] = vals[k];
+        }
+    }
+}
+
+
+
 
 //==============================================================================
 // Fly my pretties, fly! =======================================================
