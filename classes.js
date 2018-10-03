@@ -3131,7 +3131,7 @@ class Primitive {
     // Generates SDL from parameters.
     //--------------------------------------------------------------------------
     
-    function toSDL(stops = 0) {
+    toSDL(stops = 0) {
     
         var pad = cpov.tab(stops);
         var contents = [ ];
@@ -8583,6 +8583,22 @@ class VectorXY {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the vector. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(this.x === null)
+            cpov.error("fatal", "x is undefined.", "VectorXY.toSDL");
+        if(this.y === null)
+            cpov.error("fatal", "y is undefined.", "VectorXY.toSDL");
+    
+        return cpov.tab(stops) + "<" + this.x + ", " + this.y + ">";
+    }
+
+
 
 }
 
@@ -8645,6 +8661,22 @@ class VectorUV {
             cpov.error("fatal", "v must be a float.", "VectorUV");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the vector. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(this.u === null)
+            cpov.error("fatal", "u is undefined.", "VectorUV.toSDL");
+        if(this.v === null)
+            cpov.error("fatal", "v is undefined.", "VectorUV.toSDL");
+    
+        return cpov.tab(stops) + "<" + this.u + ", " + this.v + ">";
+    }
+
 
 
 }
@@ -8728,6 +8760,24 @@ class VectorXYZ {
             cpov.error("fatal", "z must be a float.", "VectorXYZ");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the vector. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(this.x === null)
+            cpov.error("fatal", "x is undefined.", "VectorXYZ.toSDL");
+        if(this.y === null)
+            cpov.error("fatal", "y is undefined.", "VectorXYZ.toSDL");
+        if(this.z === null)
+            cpov.error("fatal", "z is undefined.", "VectorXYZ.toSDL");
+    
+        return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ">";
+    }
+
 
 
 }
@@ -8831,6 +8881,26 @@ class VectorXYZW {
             cpov.error("fatal", "w must be a float.", "VectorXYZW");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the vector. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(this.x === null)
+            cpov.error("fatal", "x is undefined.", "VectorXYZW.toSDL");
+        if(this.y === null)
+            cpov.error("fatal", "y is undefined.", "VectorXYZW.toSDL");
+        if(this.z === null)
+            cpov.error("fatal", "z is undefined.", "VectorXYZW.toSDL");
+        if(this.w === null)
+            cpov.error("fatal", "w is undefined.", "VectorXYZW.toSDL");
+    
+        return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + ">";
+    }
+
 
 
 }

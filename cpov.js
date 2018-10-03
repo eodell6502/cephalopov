@@ -2267,7 +2267,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["VectorXY.toSDL"],
         mutable: [
             {
                 name:  "x",
@@ -2284,7 +2284,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["VectorUV.toSDL"],
         mutable: [
             {
                 name:  "u",
@@ -2301,7 +2301,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["VectorXYZ.toSDL"],
         mutable: [
             {
                 name:  "x",
@@ -2322,7 +2322,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["VectorXYZW.toSDL"],
         mutable: [
             {
                 name:  "x",
