@@ -7,23 +7,26 @@ var File    = require("./file.js").File;
 // parameters.
 //
 //      name ......... class name
-//      immutable .... object defining immutable attributes
-//      mutable ...... object defining mutable attributes
-//      superclass ... name of superclass or false if none
-//      desc ......... text to put in header comment or false for none
-//      conArgs ...... constructor argument list or false for default (...args)
-//      conBlock ..... code block to put inside constructor or false for default
+//      obj.
+//          immutable .... object defining immutable attributes
+//          mutable ...... object defining mutable attributes
+//          superclass ... name of superclass or false if none
+//          desc ......... text to put in header comment or false for none
+//          conArgs ...... constructor argument list or false for default (...args)
+//          conBlock ..... snippet block to put inside constructor or false for default
+//          snippets ..... snippets to append to class body
 //
 //==============================================================================
 
-function ClassBuilder(name, immutable, mutable, superclass, desc = false, conArgs = false, conBlock = false) {
-    this.name       = name;
-    this.superclass = superclass;
-    this.immutable  = immutable;
-    this.mutable    = mutable;
-    this.desc       = desc;
-    this.conArgs    = conArgs;
-    this.conBlock   = conBlock;
+function ClassBuilder(name, obj, snippets = false) {
+    this.name     = name;
+    this.obj      = obj;
+    this.snippets = snippets;
+
+    if(this.snippets)
+        this.snippets = cpov.objectImport(this.snippets);
+    else
+        this.snippets = { };
 }
 
 
@@ -105,28 +108,28 @@ ClassBuilder.prototype.toString = function() {
 
     src.push(this.divider(0, "="));
     if(this.desc)
-        src.push(cpov.wrap(this.desc, { indent: "// ", width: 77 }));
+        src.push(cpov.wrap(this.obj.desc, { indent: "// ", width: 77 }));
     src.push(this.divider(0, "=") + "\n");
-    src.push("class " + this.name + (this.superclass ? (" extends " + this.superclass) : '') + " {\n");
+    src.push("class " + this.name + (this.obj.superclass ? (" extends " + this.obj.superclass) : '') + " {\n");
 
     // Constructor -------------------------------------------------------------
 
-    if(this.conArgs) {
-        src.push(tab1 + "constructor(" + this.conArgs + ") {\n");
+    if(this.obj.conArgs) {
+        src.push(tab1 + "constructor(" + this.obj.conArgs + ") {\n");
     } else {
         src.push(tab1 + "constructor(options) {\n")
     }
 
     // Immutable properties --------------------------------------------------------
 
-    if(this.immutable) {
+    if(this.obj.immutable) {
 
 		var rows = [ ];
 
 		src.push(tab2 + "// Immutable properties //\n");
 
-        for(var i in this.immutable) {
-			rows.push([tab2 + "this._" + i, " = ", this.immutable[i] + ";"]);
+        for(var i in this.obj.immutable) {
+			rows.push([tab2 + "this._" + i, " = ", this.obj.immutable[i] + ";"]);
         }
 
 		src.push(this.align(rows) + "\n");
@@ -134,19 +137,19 @@ ClassBuilder.prototype.toString = function() {
 
     // Mutable properties ------------------------------------------------------
 
-    if(this.mutable) {
+    if(this.obj.mutable) {
 
 		var rows = [ ];
 
 		src.push(tab2 + "// Mutable properties //\n");
 
-        for(var i = 0; i < this.mutable.length; i++) {
-            if(this.mutable[i].default) {
-                var init = this.mutable[i].default;
+        for(var i = 0; i < this.obj.mutable.length; i++) {
+            if(this.obj.mutable[i].default) {
+                var init = this.obj.mutable[i].default;
             } else {
                 var init = "null";
             }
-			rows.push([tab2 + "this._" + this.mutable[i].name, " = ", init + ";"]);
+			rows.push([tab2 + "this._" + this.obj.mutable[i].name, " = ", init + ";"]);
         }
 
 		src.push(this.align(rows) + "\n");
@@ -156,13 +159,13 @@ ClassBuilder.prototype.toString = function() {
 
 	src.push(tab2 + "// Initialization //\n");
 
-    if(this.conBlock) {
-        var lines = this.conBlock.split(/\n/);
+    if(this.obj.conBlock) {
+        var lines = this.obj.conBlock.split(/\n/);
         while(lines.length)
             src.push(tab2 + lines.shift())
         src.push("\n");
     } else {
-        if(this.superclass) {
+        if(this.obj.superclass) {
             src.push(tab2 + "super(options);");
         }
         src.push(tab2 + "cpov.initObject(this, options);\n");
@@ -173,8 +176,8 @@ ClassBuilder.prototype.toString = function() {
 
     // Accessors and Mutators --------------------------------------------------
 
-    if(this.immutable) {
-        for(var i in this.immutable) {
+    if(this.obj.immutable) {
+        for(var i in this.obj.immutable) {
             src.push(
                 this.divider(1, "-") + "\n\n"
                 + tab1 + "get " + i + "() {\n"
@@ -187,9 +190,9 @@ ClassBuilder.prototype.toString = function() {
         }
     }
 
-    if(this.mutable) {
-        for(var i = 0; i < this.mutable.length; i++) {
-            var item = this.mutable[i];
+    if(this.obj.mutable) {
+        for(var i = 0; i < this.obj.mutable.length; i++) {
+            var item = this.obj.mutable[i];
             src.push(
                 this.divider(1, "-") + "\n\n"
                 + tab1 + "get " + item.name + "() {\n"
@@ -232,26 +235,36 @@ ClassBuilder.prototype.toString = function() {
 
 var fp = new File("./classes.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
-fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false, cpov.gsDef.desc) + "\n\n");
+var conArgs  = cpov.gsDef.conArgs  ? cpov.gsDef.conArgs  : false;
+var conBlock = cpov.gsDef.conBlock ? cpov.gsDef.conBlock : false;
+fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./snippets.js") + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
-fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false, cpov.ioDef.desc) + "\n\n");
+var conArgs  = cpov.ioDef.conArgs  ? cpov.ioDef.conArgs  : false;
+var conBlock = cpov.ioDef.conBlock ? cpov.ioDef.conBlock : false;
+fp.write(new ClassBuilder("ImageOptions", cpov.ioDef, "./snippets.js") + "\n\n");
 fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
-fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false, cpov.objCommon.desc) + "\n\n");
+var conArgs  = cpov.objCommon.conArgs  ? cpov.objCommon.conArgs  : false;
+var conBlock = cpov.objCommon.conBlock ? cpov.objCommon.conBlock : false;
+fp.write(new ClassBuilder("Primitive", cpov.objCommon, "./snippets.js") + "\n\n");
 fp.write("exports.Primitive = Primitive;\n\n\n");
 
 for(var pname in cpov.objDef) {
     var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
     var desc = cpov.objDef[pname].desc ? cpov.objDef[pname].desc : (cname + " class");
-    fp.write(new ClassBuilder(cname, cpov.objDef[pname].immutable, cpov.objDef[pname].mutable, "Primitive", desc) + "\n\n");
+    var conArgs  = cpov.objDef[pname].conArgs  ? cpov.objDef[pname].conArgs  : false;
+    var conBlock = cpov.objDef[pname].conBlock ? cpov.objDef[pname].conBlock : false;
+    fp.write(new ClassBuilder(cname, cpov.objDef[pname], "./snippets.js") + "\n\n");
     fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }
 
 for(var pname in cpov.vectorDef) {
     var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
     var desc = cpov.vectorDef[pname].desc ? cpov.vectorDef[pname].desc :  (cname + " class");
-    fp.write(new ClassBuilder(cname, cpov.vectorDef[pname].immutable, cpov.vectorDef[pname].mutable, false, desc) + "\n\n");
+    var conArgs  = cpov.vectorDef[pname].conArgs  ? cpov.vectorDef[pname].conArgs  : false;
+    var conBlock = cpov.vectorDef[pname].conBlock ? cpov.vectorDef[pname].conBlock : false;
+    fp.write(new ClassBuilder(cname, cpov.vectorDef[pname], "./snippets.js") + "\n\n");
     fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }
 

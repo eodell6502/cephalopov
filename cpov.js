@@ -460,6 +460,9 @@ cpov.sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accuracy"
 cpov.gsDef = {
     desc: "The GlobalSettings class manages the variables that will be output "
         + "into the SDL global_settings block.",
+    conArgs: false,
+    conBlock: false,
+    snippets: false,
     mutable: [
         {
             name:  "adcBailout",
@@ -646,6 +649,9 @@ cpov.ioDef = {
     desc: "The ImageOptions class manages the variables that will be output "
         + "into .ini files for each frame and which can, optionally, be emitted "
         + "in the form of command line switches.",
+    conArgs: false,
+    conBlock: false,
+    snippets: false,
     mutable: [
         {
             name:  "allConsole",
@@ -996,6 +1002,9 @@ cpov.ioDef = {
 cpov.objCommon = {
     desc: "The Primitive class implements parameters and functionality that are "
         + "shared across (nearly) all geometric primitives.",
+    conArgs: false,
+    conBlock: false,
+    snippets: false,
     mutable: [
         {
             name:  "active",
@@ -1117,6 +1126,10 @@ cpov.objDef = {
     // TODO: need way to specify special methods, e.g., editing the components array
 
     blob: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1141,6 +1154,10 @@ cpov.objDef = {
     },
 
     box: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1163,6 +1180,10 @@ cpov.objDef = {
     //--------------------------------------------------------------------------
 
     camera: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1235,6 +1256,10 @@ cpov.objDef = {
     },
 
     cone: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1266,6 +1291,10 @@ cpov.objDef = {
     },
 
     cylinder: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1296,6 +1325,10 @@ cpov.objDef = {
     },
 
     heightField: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1332,6 +1365,10 @@ cpov.objDef = {
     },
 
     isoSurface: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1372,6 +1409,10 @@ cpov.objDef = {
     },
 
     juliaFractal: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1404,6 +1445,10 @@ cpov.objDef = {
     },
 
     lathe: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1425,6 +1470,10 @@ cpov.objDef = {
     },
 
     lightSource: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1534,6 +1583,10 @@ cpov.objDef = {
     },
 
     ovus: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
         {
@@ -1552,6 +1605,10 @@ cpov.objDef = {
     },
 
     parametric: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1612,6 +1669,10 @@ cpov.objDef = {
     },
 
     prism: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1647,6 +1708,10 @@ cpov.objDef = {
     },
 
     sphere: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1668,6 +1733,10 @@ cpov.objDef = {
     },
 
     sphereSweep: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1689,6 +1758,10 @@ cpov.objDef = {
     },
 
     superellipsoid: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1702,6 +1775,10 @@ cpov.objDef = {
     },
 
     sor: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1722,6 +1799,10 @@ cpov.objDef = {
     },
 
     text: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1750,6 +1831,10 @@ cpov.objDef = {
     },
 
     torus: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1771,6 +1856,10 @@ cpov.objDef = {
     },
 
     bicubicPatch: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1800,6 +1889,10 @@ cpov.objDef = {
     },
 
     disc: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1826,6 +1919,10 @@ cpov.objDef = {
     },
 
     mesh: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1850,6 +1947,10 @@ cpov.objDef = {
 // Deferred pending further research
 
     mesh2: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [ ],
 
@@ -1857,6 +1958,10 @@ cpov.objDef = {
 */
 
     polygon: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1870,6 +1975,10 @@ cpov.objDef = {
     },
 
     triangle: {               // combines triangle and smooth_triangle
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1912,6 +2021,10 @@ cpov.objDef = {
     },
 
     plane: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
@@ -1930,6 +2043,10 @@ cpov.objDef = {
     },
 
     poly: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
@@ -1946,6 +2063,10 @@ cpov.objDef = {
     },
 
     cubic: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
@@ -1962,6 +2083,10 @@ cpov.objDef = {
     },
 
     quartic: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
@@ -1978,6 +2103,10 @@ cpov.objDef = {
     },
 
     polynomial: {                                             // this will require better understanding of the
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: false, solid: true, csg: false },    // underlying maths than I currently have to validate
         mutable: [
             {
@@ -1999,6 +2128,10 @@ cpov.objDef = {
     },
 
     quadric: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: false, solid: true, csg: false },
         mutable: [
             {
@@ -2057,6 +2190,10 @@ cpov.objDef = {
     },
 
     union: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
@@ -2073,6 +2210,10 @@ cpov.objDef = {
     },
 
     intersection: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
@@ -2084,6 +2225,10 @@ cpov.objDef = {
     },
 
     difference: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
@@ -2100,6 +2245,10 @@ cpov.objDef = {
     },
 
     merge: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
@@ -2115,6 +2264,10 @@ cpov.objDef = {
 
 cpov.vectorDef = {
     VectorXY: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         mutable: [
             {
                 name:  "x",
@@ -2128,6 +2281,10 @@ cpov.vectorDef = {
         ],
     },
     VectorUV: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         mutable: [
             {
                 name:  "u",
@@ -2141,6 +2298,10 @@ cpov.vectorDef = {
         ],
     },
     VectorXYZ: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         mutable: [
             {
                 name:  "x",
@@ -2158,6 +2319,10 @@ cpov.vectorDef = {
         ],
     },
     VectorXYZW: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         mutable: [
             {
                 name:  "x",
@@ -2179,6 +2344,10 @@ cpov.vectorDef = {
         ],
     },
     Color: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         mutable: [
             {
                 name:  "r",
@@ -2208,6 +2377,10 @@ cpov.vectorDef = {
         ],
     },
     Matrix: {
+        desc: false,
+        conArgs: false,
+        conBlock: false,
+        snippets: false,
         mutable: [
             {
                 name:  "v00",
@@ -2321,6 +2494,7 @@ cpov.error = function(level, message, location = "CEPHALOPOV") {
 cpov.objectImport = function(filename) {
     var fp       = new cpov.File(filename, "r");
     var contents = fp.read().trim().split(/\n/);
+    contents.push("");
     fp.close();
 
     var result   = { };
@@ -2353,7 +2527,7 @@ cpov.objectImport = function(filename) {
 // Common initialization/load routine for objects. Given an object reference and
 // an object containing named attributes, attempts to assign them to the
 // corresponding object attributes. Attributes that do not exist will be
-// ignored.
+// ignored. This routine is used where a conBlock is not defined.
 //==============================================================================
 
 cpov.initObject = function(obj, vals) {
@@ -2365,6 +2539,18 @@ cpov.initObject = function(obj, vals) {
 }
 
 
+//==============================================================================
+// Given a block of text in the form of a single string, preface each line with
+// the specified number of tab stops.
+//==============================================================================
+
+cpov.indentTextBlock = function(block, stops) {
+    block = block.split(/\n/);
+    var tab = cpov.tab(stops);
+    if(block[0] !== undefined)
+        block[0] = tab + block[0];
+    return block.join("\n" + tab);
+}
 
 
 //==============================================================================

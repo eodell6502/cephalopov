@@ -1,8 +1,6 @@
 var cpov = require("./cpov.js").cpov;
 
 //==============================================================================
-// The GlobalSettings class manages the variables that will be output into the 
-// SDL global_settings block.
 //==============================================================================
 
 class GlobalSettings {
@@ -885,9 +883,6 @@ exports.GlobalSettings = GlobalSettings;
 
 
 //==============================================================================
-// The ImageOptions class manages the variables that will be output into .ini 
-// files for each frame and which can, optionally, be emitted in the form of 
-// command line switches.
 //==============================================================================
 
 class ImageOptions {
@@ -2590,8 +2585,6 @@ exports.ImageOptions = ImageOptions;
 
 
 //==============================================================================
-// The Primitive class implements parameters and functionality that are shared 
-// across (nearly) all geometric primitives.
 //==============================================================================
 
 class Primitive {
@@ -3134,10 +3127,9 @@ exports.Primitive = Primitive;
 
 
 //==============================================================================
-// Blob class
 //==============================================================================
 
-class Blob extends Primitive {
+class Blob {
 
     constructor(options) {
 
@@ -3156,7 +3148,6 @@ class Blob extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -3274,10 +3265,9 @@ exports.Blob = Blob;
 
 
 //==============================================================================
-// Box class
 //==============================================================================
 
-class Box extends Primitive {
+class Box {
 
     constructor(options) {
 
@@ -3294,7 +3284,6 @@ class Box extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -3374,10 +3363,9 @@ exports.Box = Box;
 
 
 //==============================================================================
-// Camera class
 //==============================================================================
 
-class Camera extends Primitive {
+class Camera {
 
     constructor(options) {
 
@@ -3408,7 +3396,6 @@ class Camera extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -3754,10 +3741,9 @@ exports.Camera = Camera;
 
 
 //==============================================================================
-// Cone class
 //==============================================================================
 
-class Cone extends Primitive {
+class Cone {
 
     constructor(options) {
 
@@ -3777,7 +3763,6 @@ class Cone extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -3914,10 +3899,9 @@ exports.Cone = Cone;
 
 
 //==============================================================================
-// Cylinder class
 //==============================================================================
 
-class Cylinder extends Primitive {
+class Cylinder {
 
     constructor(options) {
 
@@ -3937,7 +3921,6 @@ class Cylinder extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4074,10 +4057,9 @@ exports.Cylinder = Cylinder;
 
 
 //==============================================================================
-// HeightField class
 //==============================================================================
 
-class HeightField extends Primitive {
+class HeightField {
 
     constructor(options) {
 
@@ -4099,7 +4081,6 @@ class HeightField extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4274,10 +4255,9 @@ exports.HeightField = HeightField;
 
 
 //==============================================================================
-// IsoSurface class
 //==============================================================================
 
-class IsoSurface extends Primitive {
+class IsoSurface {
 
     constructor(options) {
 
@@ -4300,7 +4280,6 @@ class IsoSurface extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4494,10 +4473,9 @@ exports.IsoSurface = IsoSurface;
 
 
 //==============================================================================
-// JuliaFractal class
 //==============================================================================
 
-class JuliaFractal extends Primitive {
+class JuliaFractal {
 
     constructor(options) {
 
@@ -4518,7 +4496,6 @@ class JuliaFractal extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4674,10 +4651,9 @@ exports.JuliaFractal = JuliaFractal;
 
 
 //==============================================================================
-// Lathe class
 //==============================================================================
 
-class Lathe extends Primitive {
+class Lathe {
 
     constructor(options) {
 
@@ -4695,7 +4671,6 @@ class Lathe extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4794,10 +4769,9 @@ exports.Lathe = Lathe;
 
 
 //==============================================================================
-// LightSource class
 //==============================================================================
 
-class LightSource extends Primitive {
+class LightSource {
 
     constructor(options) {
 
@@ -4837,7 +4811,6 @@ class LightSource extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5354,10 +5327,9 @@ exports.LightSource = LightSource;
 
 
 //==============================================================================
-// Ovus class
 //==============================================================================
 
-class Ovus extends Primitive {
+class Ovus {
 
     constructor(options) {
 
@@ -5374,7 +5346,6 @@ class Ovus extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5454,10 +5425,9 @@ exports.Ovus = Ovus;
 
 
 //==============================================================================
-// Parametric class
 //==============================================================================
 
-class Parametric extends Primitive {
+class Parametric {
 
     constructor(options) {
 
@@ -5484,7 +5454,6 @@ class Parametric extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5754,10 +5723,9 @@ exports.Parametric = Parametric;
 
 
 //==============================================================================
-// Prism class
 //==============================================================================
 
-class Prism extends Primitive {
+class Prism {
 
     constructor(options) {
 
@@ -5778,7 +5746,6 @@ class Prism extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5934,10 +5901,9 @@ exports.Prism = Prism;
 
 
 //==============================================================================
-// Sphere class
 //==============================================================================
 
-class Sphere extends Primitive {
+class Sphere {
 
     constructor(options) {
 
@@ -5955,7 +5921,6 @@ class Sphere extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6054,10 +6019,9 @@ exports.Sphere = Sphere;
 
 
 //==============================================================================
-// SphereSweep class
 //==============================================================================
 
-class SphereSweep extends Primitive {
+class SphereSweep {
 
     constructor(options) {
 
@@ -6075,7 +6039,6 @@ class SphereSweep extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6174,10 +6137,9 @@ exports.SphereSweep = SphereSweep;
 
 
 //==============================================================================
-// Superellipsoid class
 //==============================================================================
 
-class Superellipsoid extends Primitive {
+class Superellipsoid {
 
     constructor(options) {
 
@@ -6193,7 +6155,6 @@ class Superellipsoid extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6254,10 +6215,9 @@ exports.Superellipsoid = Superellipsoid;
 
 
 //==============================================================================
-// Sor class
 //==============================================================================
 
-class Sor extends Primitive {
+class Sor {
 
     constructor(options) {
 
@@ -6275,7 +6235,6 @@ class Sor extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6374,10 +6333,9 @@ exports.Sor = Sor;
 
 
 //==============================================================================
-// Text class
 //==============================================================================
 
-class Text extends Primitive {
+class Text {
 
     constructor(options) {
 
@@ -6396,7 +6354,6 @@ class Text extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6514,10 +6471,9 @@ exports.Text = Text;
 
 
 //==============================================================================
-// Torus class
 //==============================================================================
 
-class Torus extends Primitive {
+class Torus {
 
     constructor(options) {
 
@@ -6535,7 +6491,6 @@ class Torus extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6634,10 +6589,9 @@ exports.Torus = Torus;
 
 
 //==============================================================================
-// BicubicPatch class
 //==============================================================================
 
-class BicubicPatch extends Primitive {
+class BicubicPatch {
 
     constructor(options) {
 
@@ -6657,7 +6611,6 @@ class BicubicPatch extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6794,10 +6747,9 @@ exports.BicubicPatch = BicubicPatch;
 
 
 //==============================================================================
-// Disc class
 //==============================================================================
 
-class Disc extends Primitive {
+class Disc {
 
     constructor(options) {
 
@@ -6816,7 +6768,6 @@ class Disc extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6934,10 +6885,9 @@ exports.Disc = Disc;
 
 
 //==============================================================================
-// Mesh class
 //==============================================================================
 
-class Mesh extends Primitive {
+class Mesh {
 
     constructor(options) {
 
@@ -6955,7 +6905,6 @@ class Mesh extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7054,10 +7003,9 @@ exports.Mesh = Mesh;
 
 
 //==============================================================================
-// Polygon class
 //==============================================================================
 
-class Polygon extends Primitive {
+class Polygon {
 
     constructor(options) {
 
@@ -7073,7 +7021,6 @@ class Polygon extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7134,10 +7081,9 @@ exports.Polygon = Polygon;
 
 
 //==============================================================================
-// Triangle class
 //==============================================================================
 
-class Triangle extends Primitive {
+class Triangle {
 
     constructor(options) {
 
@@ -7160,7 +7106,6 @@ class Triangle extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7354,10 +7299,9 @@ exports.Triangle = Triangle;
 
 
 //==============================================================================
-// Plane class
 //==============================================================================
 
-class Plane extends Primitive {
+class Plane {
 
     constructor(options) {
 
@@ -7374,7 +7318,6 @@ class Plane extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7454,10 +7397,9 @@ exports.Plane = Plane;
 
 
 //==============================================================================
-// Poly class
 //==============================================================================
 
-class Poly extends Primitive {
+class Poly {
 
     constructor(options) {
 
@@ -7474,7 +7416,6 @@ class Poly extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7554,10 +7495,9 @@ exports.Poly = Poly;
 
 
 //==============================================================================
-// Cubic class
 //==============================================================================
 
-class Cubic extends Primitive {
+class Cubic {
 
     constructor(options) {
 
@@ -7574,7 +7514,6 @@ class Cubic extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7654,10 +7593,9 @@ exports.Cubic = Cubic;
 
 
 //==============================================================================
-// Quartic class
 //==============================================================================
 
-class Quartic extends Primitive {
+class Quartic {
 
     constructor(options) {
 
@@ -7674,7 +7612,6 @@ class Quartic extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7754,10 +7691,9 @@ exports.Quartic = Quartic;
 
 
 //==============================================================================
-// Polynomial class
 //==============================================================================
 
-class Polynomial extends Primitive {
+class Polynomial {
 
     constructor(options) {
 
@@ -7775,7 +7711,6 @@ class Polynomial extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7874,10 +7809,9 @@ exports.Polynomial = Polynomial;
 
 
 //==============================================================================
-// Quadric class
 //==============================================================================
 
-class Quadric extends Primitive {
+class Quadric {
 
     constructor(options) {
 
@@ -7902,7 +7836,6 @@ class Quadric extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8134,10 +8067,9 @@ exports.Quadric = Quadric;
 
 
 //==============================================================================
-// Union class
 //==============================================================================
 
-class Union extends Primitive {
+class Union {
 
     constructor(options) {
 
@@ -8154,7 +8086,6 @@ class Union extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8234,10 +8165,9 @@ exports.Union = Union;
 
 
 //==============================================================================
-// Intersection class
 //==============================================================================
 
-class Intersection extends Primitive {
+class Intersection {
 
     constructor(options) {
 
@@ -8253,7 +8183,6 @@ class Intersection extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8314,10 +8243,9 @@ exports.Intersection = Intersection;
 
 
 //==============================================================================
-// Difference class
 //==============================================================================
 
-class Difference extends Primitive {
+class Difference {
 
     constructor(options) {
 
@@ -8334,7 +8262,6 @@ class Difference extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8414,10 +8341,9 @@ exports.Difference = Difference;
 
 
 //==============================================================================
-// Merge class
 //==============================================================================
 
-class Merge extends Primitive {
+class Merge {
 
     constructor(options) {
 
@@ -8433,7 +8359,6 @@ class Merge extends Primitive {
 
         // Initialization //
 
-        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8494,7 +8419,6 @@ exports.Merge = Merge;
 
 
 //==============================================================================
-// VectorXY class
 //==============================================================================
 
 class VectorXY {
@@ -8557,7 +8481,6 @@ exports.VectorXY = VectorXY;
 
 
 //==============================================================================
-// VectorUV class
 //==============================================================================
 
 class VectorUV {
@@ -8620,7 +8543,6 @@ exports.VectorUV = VectorUV;
 
 
 //==============================================================================
-// VectorXYZ class
 //==============================================================================
 
 class VectorXYZ {
@@ -8703,7 +8625,6 @@ exports.VectorXYZ = VectorXYZ;
 
 
 //==============================================================================
-// VectorXYZW class
 //==============================================================================
 
 class VectorXYZW {
@@ -8806,7 +8727,6 @@ exports.VectorXYZW = VectorXYZW;
 
 
 //==============================================================================
-// Color class
 //==============================================================================
 
 class Color {
@@ -8949,7 +8869,6 @@ exports.Color = Color;
 
 
 //==============================================================================
-// Matrix class
 //==============================================================================
 
 class Matrix {
