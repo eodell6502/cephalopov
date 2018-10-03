@@ -228,6 +228,8 @@ TODO:
 
         // @blockname ------------...
 
+	* Temporarily implement Textures that are just SDL strings pulled from a cpov.tempTexture list.
+
     * immutable attribute to distinguish pseudo-primitives like the Camera type?
 
     * Add serial and other bookkeeping to constructor (base class)

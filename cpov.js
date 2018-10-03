@@ -445,9 +445,6 @@ cpov.sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accuracy"
     "warp", "water_level", "waves", "while", "width", "wood", "wrinkles",
     "write", "x", "y", "yes", "z" ];
 
-
-
-
 //------------------------------------------------------------------------------
 // Definition of globalSettings parameter validations and error messages.
 //------------------------------------------------------------------------------
