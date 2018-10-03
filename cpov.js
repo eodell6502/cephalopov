@@ -459,8 +459,7 @@ cpov.sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accuracy"
 
 cpov.gsDef = {
     desc: "The GlobalSettings class manages the variables that will be output "
-        + "into .ini files for each frame and which can, optionally, be emitted "
-        + "in the form of command line switches.",
+        + "into the SDL global_settings block.",
     mutable: [
         {
             name:  "adcBailout",
@@ -543,15 +542,15 @@ cpov.gsDef = {
             valid: "cpov.isArrayOfFloats(val, 2, 2)",
             err:   "photonMedia must be an array of two floats."
         }, {
-            name:  "photonRadius", //            type: "@float[4]",              test: null            },
+            name:  "photonRadius",
             valid: "cpov.isArrayOfFloats(val, 4, 4)",
             err:   "photonRadius must be an array of four floats."
         }, {
-            name:  "photonSaveFile", //          type: "string",                 test: "nonempty"      },
+            name:  "photonSaveFile",
             valid: "cpov.isNonEmptyString(val)",
             err:   "photonSaveFile must be a non-empty string."
         }, {
-            name:  "photonSpacing",                                                                       // TODO: cannot be used with photonCount
+            name:  "photonSpacing",                                       // TODO: cannot be used with photonCount
             valid: "cpov.isFloat(val) && val > 0",
             err:   "photonSpacing must be a float greater than zero."
         }, {
@@ -644,6 +643,9 @@ cpov.gsDef = {
 //------------------------------------------------------------------------------
 
 cpov.ioDef = {
+    desc: "The ImageOptions class manages the variables that will be output "
+        + "into .ini files for each frame and which can, optionally, be emitted "
+        + "in the form of command line switches.",
     mutable: [
         {
             name:  "allConsole",
@@ -992,6 +994,8 @@ cpov.ioDef = {
 //------------------------------------------------------------------------------
 
 cpov.objCommon = {
+    desc: "The Primitive class implements parameters and functionality that are "
+        + "shared across (nearly) all geometric primitives.",
     mutable: [
         {
             name:  "active",

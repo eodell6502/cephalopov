@@ -1,16 +1,13 @@
 var cpov = require("./cpov.js").cpov;
 
 //==============================================================================
-// The GlobalSettings class manages the variables that will be output into .ini 
-// files for each frame and which can, optionally, be emitted in the form of 
-// command line switches.
+// The GlobalSettings class manages the variables that will be output into the 
+// SDL global_settings block.
 //==============================================================================
 
 class GlobalSettings {
 
     constructor(options) {
-
-        cpov.initObject(this, options);
 
         // Mutable properties //
 
@@ -57,6 +54,10 @@ class GlobalSettings {
         this._subRadiosity           = null;
         this._subSamples             = null;
         this._subsurface             = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -884,13 +885,14 @@ exports.GlobalSettings = GlobalSettings;
 
 
 //==============================================================================
+// The ImageOptions class manages the variables that will be output into .ini 
+// files for each frame and which can, optionally, be emitted in the form of 
+// command line switches.
 //==============================================================================
 
 class ImageOptions {
 
     constructor(options) {
-
-        cpov.initObject(this, options);
 
         // Mutable properties //
 
@@ -978,6 +980,10 @@ class ImageOptions {
         this._warningLevel          = null;
         this._width                 = null;
         this._workThreads           = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -2584,13 +2590,13 @@ exports.ImageOptions = ImageOptions;
 
 
 //==============================================================================
+// The Primitive class implements parameters and functionality that are shared 
+// across (nearly) all geometric primitives.
 //==============================================================================
 
 class Primitive {
 
     constructor(options) {
-
-        cpov.initObject(this, options);
 
         // Mutable properties //
 
@@ -2620,6 +2626,10 @@ class Primitive {
         this._serial           = null;
         this._texture          = null;
         this._transform        = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -3124,14 +3134,12 @@ exports.Primitive = Primitive;
 
 
 //==============================================================================
+// Blob class
 //==============================================================================
 
 class Blob extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -3145,6 +3153,11 @@ class Blob extends Primitive {
         this._threshold  = null;
         this._sturm      = null;
         this._hierarchy  = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -3267,14 +3280,12 @@ exports.Blob = Blob;
 
 
 //==============================================================================
+// Box class
 //==============================================================================
 
 class Box extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -3286,6 +3297,11 @@ class Box extends Primitive {
 
         this._corner1 = null;
         this._corner2 = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -3370,14 +3386,12 @@ exports.Box = Box;
 
 
 //==============================================================================
+// Camera class
 //==============================================================================
 
 class Camera extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -3403,6 +3417,11 @@ class Camera extends Primitive {
         this._up           = null;
         this._variance     = null;
         this._vertAngle    = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -3753,14 +3772,12 @@ exports.Camera = Camera;
 
 
 //==============================================================================
+// Cone class
 //==============================================================================
 
 class Cone extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -3775,6 +3792,11 @@ class Cone extends Primitive {
         this._capPoint   = null;
         this._capRadius  = null;
         this._open       = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -3916,14 +3938,12 @@ exports.Cone = Cone;
 
 
 //==============================================================================
+// Cylinder class
 //==============================================================================
 
 class Cylinder extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -3938,6 +3958,11 @@ class Cylinder extends Primitive {
         this._radius    = null;
         this._open      = null;
         this._strength  = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -4079,14 +4104,12 @@ exports.Cylinder = Cylinder;
 
 
 //==============================================================================
+// HeightField class
 //==============================================================================
 
 class HeightField extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -4103,6 +4126,11 @@ class HeightField extends Primitive {
         this._hierarchy  = null;
         this._gamma      = null;
         this._premult    = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -4282,14 +4310,12 @@ exports.HeightField = HeightField;
 
 
 //==============================================================================
+// IsoSurface class
 //==============================================================================
 
 class IsoSurface extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -4307,6 +4333,11 @@ class IsoSurface extends Primitive {
         this._evaluate    = null;
         this._open        = null;
         this._maxTrace    = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -4505,14 +4536,12 @@ exports.IsoSurface = IsoSurface;
 
 
 //==============================================================================
+// JuliaFractal class
 //==============================================================================
 
 class JuliaFractal extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -4528,6 +4557,11 @@ class JuliaFractal extends Primitive {
         this._precision = null;
         this._slice     = null;
         this._distance  = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -4688,14 +4722,12 @@ exports.JuliaFractal = JuliaFractal;
 
 
 //==============================================================================
+// Lathe class
 //==============================================================================
 
 class Lathe extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -4708,6 +4740,11 @@ class Lathe extends Primitive {
         this._type   = null;
         this._points = null;
         this._sturm  = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -4811,14 +4848,12 @@ exports.Lathe = Lathe;
 
 
 //==============================================================================
+// LightSource class
 //==============================================================================
 
 class LightSource extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -4853,6 +4888,11 @@ class LightSource extends Primitive {
         this._size2            = null;
         this._tightness        = null;
         this._type             = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -5374,14 +5414,12 @@ exports.LightSource = LightSource;
 
 
 //==============================================================================
+// Ovus class
 //==============================================================================
 
 class Ovus extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -5393,6 +5431,11 @@ class Ovus extends Primitive {
 
         this._bottomRadius = null;
         this._topRadius    = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -5477,14 +5520,12 @@ exports.Ovus = Ovus;
 
 
 //==============================================================================
+// Parametric class
 //==============================================================================
 
 class Parametric extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -5506,6 +5547,11 @@ class Parametric extends Primitive {
         this._precomputeX     = null;
         this._precomputeY     = null;
         this._precomputeZ     = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -5780,14 +5826,12 @@ exports.Parametric = Parametric;
 
 
 //==============================================================================
+// Prism class
 //==============================================================================
 
 class Prism extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -5803,6 +5847,11 @@ class Prism extends Primitive {
         this._points  = null;
         this._open    = null;
         this._sturm   = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -5963,14 +6012,12 @@ exports.Prism = Prism;
 
 
 //==============================================================================
+// Sphere class
 //==============================================================================
 
 class Sphere extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -5983,6 +6030,11 @@ class Sphere extends Primitive {
         this._center   = null;
         this._radius   = null;
         this._strength = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6086,14 +6138,12 @@ exports.Sphere = Sphere;
 
 
 //==============================================================================
+// SphereSweep class
 //==============================================================================
 
 class SphereSweep extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -6106,6 +6156,11 @@ class SphereSweep extends Primitive {
         this._type      = null;
         this._spheres   = null;
         this._tolerance = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6209,14 +6264,12 @@ exports.SphereSweep = SphereSweep;
 
 
 //==============================================================================
+// Superellipsoid class
 //==============================================================================
 
 class Superellipsoid extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -6227,6 +6280,11 @@ class Superellipsoid extends Primitive {
         // Mutable properties //
 
         this._vector = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6292,14 +6350,12 @@ exports.Superellipsoid = Superellipsoid;
 
 
 //==============================================================================
+// Sor class
 //==============================================================================
 
 class Sor extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -6312,6 +6368,11 @@ class Sor extends Primitive {
         this._points = null;
         this._open   = null;
         this._sturm  = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6415,14 +6476,12 @@ exports.Sor = Sor;
 
 
 //==============================================================================
+// Text class
 //==============================================================================
 
 class Text extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -6436,6 +6495,11 @@ class Text extends Primitive {
         this._displayText = null;
         this._thickness   = null;
         this._offset      = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6558,14 +6622,12 @@ exports.Text = Text;
 
 
 //==============================================================================
+// Torus class
 //==============================================================================
 
 class Torus extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -6578,6 +6640,11 @@ class Torus extends Primitive {
         this._majorRadius = null;
         this._minorRadius = null;
         this._sturm       = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6681,14 +6748,12 @@ exports.Torus = Torus;
 
 
 //==============================================================================
+// BicubicPatch class
 //==============================================================================
 
 class BicubicPatch extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -6703,6 +6768,11 @@ class BicubicPatch extends Primitive {
         this._uSteps   = null;
         this._vSteps   = null;
         this._flatness = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6844,14 +6914,12 @@ exports.BicubicPatch = BicubicPatch;
 
 
 //==============================================================================
+// Disc class
 //==============================================================================
 
 class Disc extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -6865,6 +6933,11 @@ class Disc extends Primitive {
         this._normal     = null;
         this._radius     = null;
         this._holeRadius = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -6987,14 +7060,12 @@ exports.Disc = Disc;
 
 
 //==============================================================================
+// Mesh class
 //==============================================================================
 
 class Mesh extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7007,6 +7078,11 @@ class Mesh extends Primitive {
         this._triangles    = null;
         this._insideVector = null;
         this._hierarchy    = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7110,14 +7186,12 @@ exports.Mesh = Mesh;
 
 
 //==============================================================================
+// Polygon class
 //==============================================================================
 
 class Polygon extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7128,6 +7202,11 @@ class Polygon extends Primitive {
         // Mutable properties //
 
         this._points = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7193,14 +7272,12 @@ exports.Polygon = Polygon;
 
 
 //==============================================================================
+// Triangle class
 //==============================================================================
 
 class Triangle extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7218,6 +7295,11 @@ class Triangle extends Primitive {
         this._normal2  = null;
         this._normal3  = null;
         this._textures = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7416,14 +7498,12 @@ exports.Triangle = Triangle;
 
 
 //==============================================================================
+// Plane class
 //==============================================================================
 
 class Plane extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7435,6 +7515,11 @@ class Plane extends Primitive {
 
         this._normal   = null;
         this._distance = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7519,14 +7604,12 @@ exports.Plane = Plane;
 
 
 //==============================================================================
+// Poly class
 //==============================================================================
 
 class Poly extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7538,6 +7621,11 @@ class Poly extends Primitive {
 
         this._coefficients = null;
         this._sturm        = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7622,14 +7710,12 @@ exports.Poly = Poly;
 
 
 //==============================================================================
+// Cubic class
 //==============================================================================
 
 class Cubic extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7641,6 +7727,11 @@ class Cubic extends Primitive {
 
         this._coefficients = null;
         this._sturm        = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7725,14 +7816,12 @@ exports.Cubic = Cubic;
 
 
 //==============================================================================
+// Quartic class
 //==============================================================================
 
 class Quartic extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7744,6 +7833,11 @@ class Quartic extends Primitive {
 
         this._coefficients = null;
         this._sturm        = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7828,14 +7922,12 @@ exports.Quartic = Quartic;
 
 
 //==============================================================================
+// Polynomial class
 //==============================================================================
 
 class Polynomial extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7848,6 +7940,11 @@ class Polynomial extends Primitive {
         this._order        = null;
         this._coefficients = null;
         this._sturm        = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -7951,14 +8048,12 @@ exports.Polynomial = Polynomial;
 
 
 //==============================================================================
+// Quadric class
 //==============================================================================
 
 class Quadric extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -7978,6 +8073,11 @@ class Quadric extends Primitive {
         this._h = null;
         this._i = null;
         this._j = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -8214,14 +8314,12 @@ exports.Quadric = Quadric;
 
 
 //==============================================================================
+// Union class
 //==============================================================================
 
 class Union extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -8233,6 +8331,11 @@ class Union extends Primitive {
 
         this._objects    = null;
         this._splitUnion = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -8317,14 +8420,12 @@ exports.Union = Union;
 
 
 //==============================================================================
+// Intersection class
 //==============================================================================
 
 class Intersection extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -8335,6 +8436,11 @@ class Intersection extends Primitive {
         // Mutable properties //
 
         this._objects = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -8400,14 +8506,12 @@ exports.Intersection = Intersection;
 
 
 //==============================================================================
+// Difference class
 //==============================================================================
 
 class Difference extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -8419,6 +8523,11 @@ class Difference extends Primitive {
 
         this._positiveObject  = null;
         this._negativeObjects = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -8503,14 +8612,12 @@ exports.Difference = Difference;
 
 
 //==============================================================================
+// Merge class
 //==============================================================================
 
 class Merge extends Primitive {
 
     constructor(options) {
-
-        super(options);
-        cpov.initObject(this, options);
 
         // Immutable properties //
 
@@ -8521,6 +8628,11 @@ class Merge extends Primitive {
         // Mutable properties //
 
         this._objects = null;
+
+        // Initialization //
+
+        super(options);
+        cpov.initObject(this, options);
 
     }
 
@@ -8586,18 +8698,21 @@ exports.Merge = Merge;
 
 
 //==============================================================================
+// VectorXY class
 //==============================================================================
 
 class VectorXY {
 
     constructor(options) {
 
-        cpov.initObject(this, options);
-
         // Mutable properties //
 
         this._x = null;
         this._y = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -8646,18 +8761,21 @@ exports.VectorXY = VectorXY;
 
 
 //==============================================================================
+// VectorUV class
 //==============================================================================
 
 class VectorUV {
 
     constructor(options) {
 
-        cpov.initObject(this, options);
-
         // Mutable properties //
 
         this._u = null;
         this._v = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -8706,19 +8824,22 @@ exports.VectorUV = VectorUV;
 
 
 //==============================================================================
+// VectorXYZ class
 //==============================================================================
 
 class VectorXYZ {
 
     constructor(options) {
 
-        cpov.initObject(this, options);
-
         // Mutable properties //
 
         this._x = null;
         this._y = null;
         this._z = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -8786,13 +8907,12 @@ exports.VectorXYZ = VectorXYZ;
 
 
 //==============================================================================
+// VectorXYZW class
 //==============================================================================
 
 class VectorXYZW {
 
     constructor(options) {
-
-        cpov.initObject(this, options);
 
         // Mutable properties //
 
@@ -8800,6 +8920,10 @@ class VectorXYZW {
         this._y = null;
         this._z = null;
         this._w = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -8886,13 +9010,12 @@ exports.VectorXYZW = VectorXYZW;
 
 
 //==============================================================================
+// Color class
 //==============================================================================
 
 class Color {
 
     constructor(options) {
-
-        cpov.initObject(this, options);
 
         // Mutable properties //
 
@@ -8902,6 +9025,10 @@ class Color {
         this._f    = null;
         this._t    = null;
         this._srgb = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 
@@ -9026,13 +9153,12 @@ exports.Color = Color;
 
 
 //==============================================================================
+// Matrix class
 //==============================================================================
 
 class Matrix {
 
     constructor(options) {
-
-        cpov.initObject(this, options);
 
         // Mutable properties //
 
@@ -9048,6 +9174,10 @@ class Matrix {
         this._v30 = null;
         this._v31 = null;
         this._v32 = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
 
     }
 

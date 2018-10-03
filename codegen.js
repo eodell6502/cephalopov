@@ -117,19 +117,6 @@ ClassBuilder.prototype.toString = function() {
         src.push(tab1 + "constructor(options) {\n")
     }
 
-    if(this.conBlock) {
-        var lines = this.conBlock.split(/\n/);
-        while(lines.length)
-            src.push(tab2 + lines.shift())
-        src.push("\n");
-    } else {
-        if(this.superclass) {
-            src.push(tab2 + "super(options);");
-        }
-        src.push(tab2 + "cpov.initObject(this, options);\n");
-    }
-
-
     // Immutable properties --------------------------------------------------------
 
     if(this.immutable) {
@@ -164,6 +151,23 @@ ClassBuilder.prototype.toString = function() {
 
 		src.push(this.align(rows) + "\n");
     }
+
+    // Initialization ----------------------------------------------------------
+
+	src.push(tab2 + "// Initialization //\n");
+
+    if(this.conBlock) {
+        var lines = this.conBlock.split(/\n/);
+        while(lines.length)
+            src.push(tab2 + lines.shift())
+        src.push("\n");
+    } else {
+        if(this.superclass) {
+            src.push(tab2 + "super(options);");
+        }
+        src.push(tab2 + "cpov.initObject(this, options);\n");
+    }
+
 
     src.push(tab1 + "}\n");
 
@@ -232,21 +236,23 @@ fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false, cpov.gsDef.desc) + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
-fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false) + "\n\n");
+fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false, cpov.ioDef.desc) + "\n\n");
 fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
-fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false) + "\n\n");
+fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false, cpov.objCommon.desc) + "\n\n");
 fp.write("exports.Primitive = Primitive;\n\n\n");
 
 for(var pname in cpov.objDef) {
     var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-    fp.write(new ClassBuilder(cname, cpov.objDef[pname].immutable, cpov.objDef[pname].mutable, "Primitive") + "\n\n");
+    var desc = cpov.objDef[pname].desc ? cpov.objDef[pname].desc : (cname + " class");
+    fp.write(new ClassBuilder(cname, cpov.objDef[pname].immutable, cpov.objDef[pname].mutable, "Primitive", desc) + "\n\n");
     fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }
 
 for(var pname in cpov.vectorDef) {
     var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-    fp.write(new ClassBuilder(cname, cpov.vectorDef[pname].immutable, cpov.vectorDef[pname].mutable, false) + "\n\n");
+    var desc = cpov.vectorDef[pname].desc ? cpov.vectorDef[pname].desc :  (cname + " class");
+    fp.write(new ClassBuilder(cname, cpov.vectorDef[pname].immutable, cpov.vectorDef[pname].mutable, false, desc) + "\n\n");
     fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }
 
