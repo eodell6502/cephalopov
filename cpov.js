@@ -5,6 +5,31 @@
 
 var cpov = { };
 
+
+//------------------------------------------------------------------------------
+// Internal global state.
+//------------------------------------------------------------------------------
+
+cpov.quietMode    = false; // CLI switches
+cpov.verbosity    = 1;
+cpov.debug        = true;
+
+cpov.currentFrame = 0;    // current animation frame
+cpov.objectSerial = 0;    // running count of Primitives created
+cpov.serialMap    = { };  // maps serials to objects
+cpov.idMap        = { };  // maps identifiers to maps
+
+
+//------------------------------------------------------------------------------
+// Module wrappers.
+//------------------------------------------------------------------------------
+
+cpov.fs      = require("fs");
+cpov.File    = require("./file.js").File;
+cpov.chalk   = require("chalk");
+cpov.process = require("process");
+
+
 //==============================================================================
 // Validation functions, mainly to be leveraged by generated classes.
 //==============================================================================
@@ -196,24 +221,6 @@ cpov.isSdlFunction = function(val) {
 cpov.isFunctionOrNull = function(val) {
     return (val === null || typeof val == "function" || cpov.isSdlFunction(val)) ? true : false;
 }
-
-
-//------------------------------------------------------------------------------
-// Internal global state.
-//------------------------------------------------------------------------------
-
-cpov.quietMode = false;
-cpov.verbosity = 1;
-cpov.debug     = true;
-
-
-//------------------------------------------------------------------------------
-// Module wrappers.
-//------------------------------------------------------------------------------
-
-cpov.fs      = require("fs");
-cpov.chalk   = require("chalk");
-cpov.process = require("process");
 
 
 //------------------------------------------------------------------------------
@@ -2140,6 +2147,49 @@ cpov.error = function(level, message, location = "CEPHALOPOV") {
 
 }
 
+
+//==============================================================================
+// Reads from the supplied filename and returns an object whose keys are
+// defined by specially formatted comments in the file and whose values are
+// the lines in between those comments, with leading and trailing whitespace
+// trimmed. The comments are formatted thus:
+//
+//          // Keyname // (anything after the second // is ignored)
+//          ^
+//          |
+//          +------------- first column
+//
+//==============================================================================
+
+cpov.objectImport = function(filename) {
+    var fp       = new cpov.File(filename, "r");
+    var contents = fp.read().trim().split(/\n/);
+    fp.close();
+
+    var result   = { };
+    var label    = null;
+    var value    = [ ];
+    var match    = null;
+
+    for(var i = 0; i < contents.length; i++) {
+        if(i == contents.length - 1 || (match = contents[i].match(/^\/\/ +(\S+) +\/\//))) {
+            if(label) {
+                result[label] = value.join("\n").trim();
+            }
+            if(match && match[1]) {
+                label = match[1];
+                value = [ ];
+            }
+            continue;
+        }
+        value.push(contents[i]);
+    }
+    if(label) {
+        result[label] = value.join("\n").trim();
+    }
+
+    return result;
+}
 
 //==============================================================================
 // Fly my pretties, fly! =======================================================
