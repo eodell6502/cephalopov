@@ -137,19 +137,15 @@ ClassBuilder.prototype.toString = function() {
 // class modules used by CephaloPOV.
 //==============================================================================
 
-var fp = new File("./GlobalSettings.js", "w");
+var fp = new File("./classes.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false) + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n");
-fp.close();
 
-var fp = new File("./ImageOptions.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false) + "\n\n");
 fp.write("exports.ImageOptions = ImageOptions;\n\n");
-fp.close();
 
-var fp = new File("./Primitives.js", "w");
 fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false) + "\n\n");
 fp.write("exports.Primitive = Primitive;\n\n");
