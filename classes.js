@@ -878,8 +878,6 @@ class GlobalSettings {
 exports.GlobalSettings = GlobalSettings;
 
 
-var cpov = require("./cpov.js").cpov;
-
 //==============================================================================
 //==============================================================================
 
@@ -2577,8 +2575,6 @@ class ImageOptions {
 
 exports.ImageOptions = ImageOptions;
 
-
-var cpov = require("./cpov.js").cpov;
 
 //==============================================================================
 //==============================================================================
@@ -8544,5 +8540,435 @@ class Merge extends Primitive {
 }
 
 exports.Merge = Merge;
+
+
+//==============================================================================
+//==============================================================================
+
+class VectorXY {
+
+    constructor(...args) {
+
+        // Mutable properties //
+
+        this._x = null;
+        this._y = null;
+
+    }
+
+    get x() {
+        if(typeof this._x == "function")
+            return this._x();
+        else if(typeof this._x == "string" && this._x.substr(0, 1) == "&")
+            return this._x.substr(1);
+        else
+            return this._x;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set x(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._x = val;
+        } else {
+            cpov.error("fatal", "x must be a float.", "VectorXY");
+        }
+    }
+
+    get y() {
+        if(typeof this._y == "function")
+            return this._y();
+        else if(typeof this._y == "string" && this._y.substr(0, 1) == "&")
+            return this._y.substr(1);
+        else
+            return this._y;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set y(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._y = val;
+        } else {
+            cpov.error("fatal", "y must be a float.", "VectorXY");
+        }
+    }
+
+
+}
+
+exports.VectorXY = VectorXY;
+
+
+//==============================================================================
+//==============================================================================
+
+class VectorUV {
+
+    constructor(...args) {
+
+        // Mutable properties //
+
+        this._u = null;
+        this._v = null;
+
+    }
+
+    get u() {
+        if(typeof this._u == "function")
+            return this._u();
+        else if(typeof this._u == "string" && this._u.substr(0, 1) == "&")
+            return this._u.substr(1);
+        else
+            return this._u;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set u(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._u = val;
+        } else {
+            cpov.error("fatal", "u must be a float.", "VectorUV");
+        }
+    }
+
+    get v() {
+        if(typeof this._v == "function")
+            return this._v();
+        else if(typeof this._v == "string" && this._v.substr(0, 1) == "&")
+            return this._v.substr(1);
+        else
+            return this._v;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set v(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._v = val;
+        } else {
+            cpov.error("fatal", "v must be a float.", "VectorUV");
+        }
+    }
+
+
+}
+
+exports.VectorUV = VectorUV;
+
+
+//==============================================================================
+//==============================================================================
+
+class VectorXYZ {
+
+    constructor(...args) {
+
+        // Mutable properties //
+
+        this._x = null;
+        this._y = null;
+        this._z = null;
+
+    }
+
+    get x() {
+        if(typeof this._x == "function")
+            return this._x();
+        else if(typeof this._x == "string" && this._x.substr(0, 1) == "&")
+            return this._x.substr(1);
+        else
+            return this._x;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set x(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._x = val;
+        } else {
+            cpov.error("fatal", "x must be a float.", "VectorXYZ");
+        }
+    }
+
+    get y() {
+        if(typeof this._y == "function")
+            return this._y();
+        else if(typeof this._y == "string" && this._y.substr(0, 1) == "&")
+            return this._y.substr(1);
+        else
+            return this._y;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set y(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._y = val;
+        } else {
+            cpov.error("fatal", "y must be a float.", "VectorXYZ");
+        }
+    }
+
+    get z() {
+        if(typeof this._z == "function")
+            return this._z();
+        else if(typeof this._z == "string" && this._z.substr(0, 1) == "&")
+            return this._z.substr(1);
+        else
+            return this._z;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set z(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._z = val;
+        } else {
+            cpov.error("fatal", "z must be a float.", "VectorXYZ");
+        }
+    }
+
+
+}
+
+exports.VectorXYZ = VectorXYZ;
+
+
+//==============================================================================
+//==============================================================================
+
+class VectorXYZW {
+
+    constructor(...args) {
+
+        // Mutable properties //
+
+        this._x = null;
+        this._y = null;
+        this._z = null;
+        this._w = null;
+
+    }
+
+    get x() {
+        if(typeof this._x == "function")
+            return this._x();
+        else if(typeof this._x == "string" && this._x.substr(0, 1) == "&")
+            return this._x.substr(1);
+        else
+            return this._x;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set x(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._x = val;
+        } else {
+            cpov.error("fatal", "x must be a float.", "VectorXYZW");
+        }
+    }
+
+    get y() {
+        if(typeof this._y == "function")
+            return this._y();
+        else if(typeof this._y == "string" && this._y.substr(0, 1) == "&")
+            return this._y.substr(1);
+        else
+            return this._y;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set y(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._y = val;
+        } else {
+            cpov.error("fatal", "y must be a float.", "VectorXYZW");
+        }
+    }
+
+    get z() {
+        if(typeof this._z == "function")
+            return this._z();
+        else if(typeof this._z == "string" && this._z.substr(0, 1) == "&")
+            return this._z.substr(1);
+        else
+            return this._z;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set z(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._z = val;
+        } else {
+            cpov.error("fatal", "z must be a float.", "VectorXYZW");
+        }
+    }
+
+    get w() {
+        if(typeof this._w == "function")
+            return this._w();
+        else if(typeof this._w == "string" && this._w.substr(0, 1) == "&")
+            return this._w.substr(1);
+        else
+            return this._w;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set w(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._w = val;
+        } else {
+            cpov.error("fatal", "w must be a float.", "VectorXYZW");
+        }
+    }
+
+
+}
+
+exports.VectorXYZW = VectorXYZW;
+
+
+//==============================================================================
+//==============================================================================
+
+class Color {
+
+    constructor(...args) {
+
+        // Mutable properties //
+
+        this._r    = null;
+        this._g    = null;
+        this._b    = null;
+        this._f    = null;
+        this._t    = null;
+        this._srgb = null;
+
+    }
+
+    get r() {
+        if(typeof this._r == "function")
+            return this._r();
+        else if(typeof this._r == "string" && this._r.substr(0, 1) == "&")
+            return this._r.substr(1);
+        else
+            return this._r;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set r(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._r = val;
+        } else {
+            cpov.error("fatal", "r must be a float.", "Color");
+        }
+    }
+
+    get g() {
+        if(typeof this._g == "function")
+            return this._g();
+        else if(typeof this._g == "string" && this._g.substr(0, 1) == "&")
+            return this._g.substr(1);
+        else
+            return this._g;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set g(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._g = val;
+        } else {
+            cpov.error("fatal", "g must be a float.", "Color");
+        }
+    }
+
+    get b() {
+        if(typeof this._b == "function")
+            return this._b();
+        else if(typeof this._b == "string" && this._b.substr(0, 1) == "&")
+            return this._b.substr(1);
+        else
+            return this._b;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set b(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._b = val;
+        } else {
+            cpov.error("fatal", "b must be a float.", "Color");
+        }
+    }
+
+    get f() {
+        if(typeof this._f == "function")
+            return this._f();
+        else if(typeof this._f == "string" && this._f.substr(0, 1) == "&")
+            return this._f.substr(1);
+        else
+            return this._f;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set f(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._f = val;
+        } else {
+            cpov.error("fatal", "f must be a float.", "Color");
+        }
+    }
+
+    get t() {
+        if(typeof this._t == "function")
+            return this._t();
+        else if(typeof this._t == "string" && this._t.substr(0, 1) == "&")
+            return this._t.substr(1);
+        else
+            return this._t;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set t(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._t = val;
+        } else {
+            cpov.error("fatal", "t must be a float.", "Color");
+        }
+    }
+
+    get srgb() {
+        if(typeof this._srgb == "function")
+            return this._srgb();
+        else if(typeof this._srgb == "string" && this._srgb.substr(0, 1) == "&")
+            return this._srgb.substr(1);
+        else
+            return this._srgb;
+    }
+
+    //--------------------------------------------------------------------------
+
+    set srgb(val) {
+        if(cpov.isNullOrFunction(val) || (isBoolean(val))) {
+            this._srgb = val;
+        } else {
+            cpov.error("fatal", "srgb must be a boolean.", "Color");
+        }
+    }
+
+
+}
+
+exports.Color = Color;
 
 

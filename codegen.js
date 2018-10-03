@@ -202,11 +202,9 @@ fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("GlobalSettings", false, cpov.gsDef.mutable, false) + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
-fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("ImageOptions", false, cpov.ioDef.mutable, false) + "\n\n");
 fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
-fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("Primitive", false, cpov.objCommon.mutable, false) + "\n\n");
 fp.write("exports.Primitive = Primitive;\n\n\n");
 
@@ -215,6 +213,13 @@ for(var pname in cpov.objDef) {
     fp.write(new ClassBuilder(cname, cpov.objDef[pname].immutable, cpov.objDef[pname].mutable, "Primitive") + "\n\n");
     fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }
+
+for(var pname in cpov.vectorDef) {
+    var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
+    fp.write(new ClassBuilder(cname, cpov.vectorDef[pname].immutable, cpov.vectorDef[pname].mutable, false) + "\n\n");
+    fp.write("exports." + cname + " = " + cname + ";\n\n\n");
+}
+
 
 fp.close();
 
@@ -236,10 +241,10 @@ TODO:
     * Vector and Matrix -- generated?
     * Other major types
     * Report output in HTML.
-    * Cosmetic: line up assignment operators in constructors.
     * Constructor arguments.
 
 
 
 */
+
 

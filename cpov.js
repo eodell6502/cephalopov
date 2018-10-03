@@ -2105,6 +2105,114 @@ cpov.objDef = {
 };
 
 
+cpov.vectorDef = {
+    VectorXY: {
+        mutable: [
+            {
+                name:  "x",
+                valid: "cpov.isFloat(val)",
+                err:   "x must be a float."
+            },
+            {
+                name:  "y",
+                valid: "cpov.isFloat(val)",
+                err:   "y must be a float."
+            },
+        ],
+    },
+    VectorUV: {
+        mutable: [
+            {
+                name:  "u",
+                valid: "cpov.isFloat(val)",
+                err:   "u must be a float."
+            },
+            {
+                name:  "v",
+                valid: "cpov.isFloat(val)",
+                err:   "v must be a float."
+            },
+        ],
+    },
+    VectorXYZ: {
+        mutable: [
+            {
+                name:  "x",
+                valid: "cpov.isFloat(val)",
+                err:   "x must be a float."
+            },
+            {
+                name:  "y",
+                valid: "cpov.isFloat(val)",
+                err:   "y must be a float."
+            },
+            {
+                name:  "z",
+                valid: "cpov.isFloat(val)",
+                err:   "z must be a float."
+            },
+        ],
+    },
+    VectorXYZW: {
+        mutable: [
+            {
+                name:  "x",
+                valid: "cpov.isFloat(val)",
+                err:   "x must be a float."
+            },
+            {
+                name:  "y",
+                valid: "cpov.isFloat(val)",
+                err:   "y must be a float."
+            },
+            {
+                name:  "z",
+                valid: "cpov.isFloat(val)",
+                err:   "z must be a float."
+            },
+            {
+                name:  "w",
+                valid: "cpov.isFloat(val)",
+                err:   "w must be a float."
+            },
+        ],
+    },
+    Color: {
+        mutable: [
+            {
+                name:  "r",
+                valid: "cpov.isFloat(val)",
+                err:   "r must be a float."
+            },
+            {
+                name:  "g",
+                valid: "cpov.isFloat(val)",
+                err:   "g must be a float."
+            },
+            {
+                name:  "b",
+                valid: "cpov.isFloat(val)",
+                err:   "b must be a float."
+            },
+            {
+                name:  "f",
+                valid: "cpov.isFloat(val)",
+                err:   "f must be a float."
+            },
+            {
+                name:  "t",
+                valid: "cpov.isFloat(val)",
+                err:   "t must be a float."
+            },
+            {
+                name:  "srgb",
+                valid: "isBoolean(val)",
+                err:   "srgb must be a boolean."
+            },
+        ],
+    },
+}
+
 
 //==============================================================================
 // Returns a string consisting of stops copies of four space characters.
