@@ -15,13 +15,18 @@ var File    = require("./file.js").File;
 //          conArgs ...... constructor argument list or false for default (...args)
 //          conBlock ..... snippet block to put inside constructor or false for default
 //          snippets ..... snippets to append to class body
+//      snippets ......... snippets definition file
 //
+// Not in the constructor arguments, but defaulting to true and settable after
+// instantiation is the allowSDL member, which determines whether class values
+// can be defined as SDL functions.
 //==============================================================================
 
 function ClassBuilder(name, obj, snippets = false) {
     this.name     = name;
     this.obj      = obj;
     this.snippets = snippets;
+    this.allowSDL = true;
 
     if(this.snippets)
         this.snippets = cpov.objectImport(this.snippets);
@@ -199,18 +204,27 @@ ClassBuilder.prototype.toString = function() {
                 this.divider(1, "-") + "\n\n"
                 + tab1 + "get " + item.name + "() {\n"
                 + tab2 + "if(typeof this._" + item.name + " == \"function\")\n"
-                + tab3 + "return this._" + item.name + "();\n"
-                + tab2 + "else if(typeof this._" + item.name + " == \"string\" && this._" + item.name + ".substr(0, 1) == \"&\")\n"
-                + tab3 + "return this._" + item.name + ".substr(1);\n"
-                + tab2 + "else\n"
+                + tab3 + "return this._" + item.name + "();");
+            if(this.allowSDL)
+                src.push(
+                    tab2 + "else if(typeof this._" + item.name + " == \"string\" && this._" + item.name + ".substr(0, 1) == \"&\")\n"
+                    + tab3 + "return this._" + item.name + ".substr(1);"
+                );
+            src.push(
+                tab2 + "else\n"
                 + tab3 + "return this._" + item.name + ";\n"
                 + tab1 + "}\n\n"
                 + tab1 + "set " + item.name + "(val) {"
             );
-            if(item.valid)
-                src.push(tab2 + "if(cpov.isNullOrFunction(val) || (" + item.valid + ")) {");
-            else
+            if(item.valid) {
+                if(this.allowSDL) {
+                    src.push(tab2 + "if(cpov.isNullOrFunction(val) || (" + item.valid + ")) {");
+                } else {
+                    src.push(tab2 + "if(cpov.isNullOrJSFunction(val) || (" + item.valid + ")) {");
+                }
+            } else {
                 src.push(tab2 + "if(true) { // FIXME");
+            }
             src.push(
                 tab3 + "this._" + item.name + " = val;\n"
                 + tab2 + "} else {\n"
@@ -253,7 +267,9 @@ fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
 fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./snippets.js") + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
-fp.write(new ClassBuilder("ImageOptions", cpov.ioDef, "./snippets.js") + "\n\n");
+var ioObj = new ClassBuilder("ImageOptions", cpov.ioDef, "./snippets.js");
+ioObj.allowSDL = false;
+fp.write(ioObj + "\n\n");
 fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
 fp.write(new ClassBuilder("Primitive", cpov.objCommon, "./snippets.js") + "\n\n");

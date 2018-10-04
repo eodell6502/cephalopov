@@ -219,8 +219,14 @@ cpov.isSdlFunction = function(val) {
 
 //------------------------------------------------------------------------------
 
-cpov.isFunctionOrNull = function(val) {
+cpov.isNullOrFunction = function(val) {
     return (val === null || typeof val == "function" || cpov.isSdlFunction(val)) ? true : false;
+}
+
+//------------------------------------------------------------------------------
+
+cpov.isNullOrJSFunction = function(val) {
+    return (val === null || typeof val == "function") ? true : false;
 }
 
 
