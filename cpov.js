@@ -2296,7 +2296,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: ["VectorXY.toSDL"],
+        snippets: ["VectorXY.copy", "VectorXY.toSDL"],
         mutable: [
             {
                 name:  "x",
@@ -2313,7 +2313,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: ["VectorUV.toSDL"],
+        snippets: ["VectorUV.copy", "VectorUV.toSDL"],
         mutable: [
             {
                 name:  "u",
@@ -2330,7 +2330,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: ["VectorXYZ.toSDL"],
+        snippets: ["VectorXYZ.copy", "VectorXYZ.toSDL"],
         mutable: [
             {
                 name:  "x",
@@ -2351,7 +2351,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: ["VectorXYZW.toSDL"],
+        snippets: ["VectorXYZW.copy", "VectorXYZW.toSDL"],
         mutable: [
             {
                 name:  "x",
@@ -2376,7 +2376,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: ["Color.toSDL"],
+        snippets: ["Color.copy", "Color.toSDL"],
         mutable: [
             {
                 name:  "r",
@@ -2409,7 +2409,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: ["Matrix-methods"],
+        snippets: ["Matrix.copy", "Matrix-methods"],
         mutable: [
             {
                 name:  "v00",

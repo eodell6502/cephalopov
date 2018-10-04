@@ -23,6 +23,7 @@ there cannot be any spaces in the keyname itself.
 
 */
 
+
 // Primitive.toSDL //-----------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -886,3 +887,126 @@ apply(obj) {
     }
 }
 
+
+// VectorXY.copy //-------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces a copy of the vector. Does so quickly by directly copying
+// "private" members instead of going through get/set methods.
+//--------------------------------------------------------------------------
+
+copy() {
+
+    var that = new VectorXY();
+    that._x = this._x;
+    that._y = this._y;
+
+    return that;
+}
+
+
+
+// VectorUV.copy //-------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces a copy of the vector. Does so quickly by directly copying
+// "private" members instead of going through get/set methods.
+//--------------------------------------------------------------------------
+
+copy() {
+
+    var that = new VectorUV();
+    that._u = this._u;
+    that._v = this._v;
+
+    return that;
+}
+
+
+
+// VectorXYZ.copy //------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces a copy of the vector. Does so quickly by directly copying
+// "private" members instead of going through get/set methods.
+//--------------------------------------------------------------------------
+
+copy() {
+
+    var that = new VectorXYZ();
+    that._x = this._x;
+    that._y = this._y;
+    that._z = this._z;
+
+    return that;
+}
+
+
+
+// VectorXYZW.copy //-----------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces a copy of the vector. Does so quickly by directly copying
+// "private" members instead of going through get/set methods.
+//--------------------------------------------------------------------------
+
+copy() {
+
+    var that = new VectorXYZW();
+    that._x = this._x;
+    that._y = this._y;
+    that._z = this._z;
+    that._w = this._w;
+
+    return that;
+}
+
+
+
+// Color.copy //----------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces a copy of the color. Does so quickly by directly copying
+// "private" members instead of going through get/set methods.
+//--------------------------------------------------------------------------
+
+copy() {
+
+    var that = new Color();
+    that._r    = this._r;
+    that._g    = this._g;
+    that._b    = this._b;
+    that._f    = this._f;
+    that._t    = this._t;
+    that._srgb = this._srgb;
+
+    return that;
+}
+
+
+
+// Matrix.copy //---------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces a copy of the Matrix. Does so quickly by directly copying
+// "private" members instead of going through get/set methods.
+//--------------------------------------------------------------------------
+
+copy() {
+
+    var that = new Matrix();
+    that._v00 = this._v00;
+    that._v01 = this._v01;
+    that._v02 = this._v02;
+    that._v10 = this._v10;
+    that._v11 = this._v11;
+    that._v12 = this._v12;
+    that._v20 = this._v20;
+    that._v21 = this._v21;
+    that._v22 = this._v22;
+    that._v30 = this._v30;
+    that._v31 = this._v31;
+    that._v32 = this._v32;
+
+    return that;
+}
