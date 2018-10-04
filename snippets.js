@@ -792,7 +792,9 @@ toSDL(stops = 0) {
 
 
 
-// Primitive.conBlock ---------------------------------------------------------
+// Primitive.conBlock //-------------------------------------------------------
+
+cpov.initObject(this, options);
 
 // Create serial number and register with cpov object
 

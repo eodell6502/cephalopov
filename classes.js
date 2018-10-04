@@ -2462,7 +2462,14 @@ class Primitive {
         // Initialization //
 
         cpov.initObject(this, options);
-
+        
+        // Create serial number and register with cpov object
+        
+        cpov.objectSerial++;
+        this.serial = cpov.objectSerial;
+        cpov.serialMap[this.serial] = this;
+        
+        
     }
 
     //--------------------------------------------------------------------------
@@ -2686,7 +2693,7 @@ class Primitive {
     }
 
     set id(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val) && cpov.isUnusedId(val, this))) {
             this._id = val;
         } else {
             cpov.error("fatal", "id must be a non-empty string.", "Primitive");
@@ -2914,7 +2921,7 @@ class Primitive {
     }
 
     set serial(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isUnusedSerial(val, this))) {
             this._serial = val;
         } else {
             cpov.error("fatal", "serial must be an integer.", "Primitive");

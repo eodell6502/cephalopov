@@ -169,10 +169,7 @@ ClassBuilder.prototype.toString = function() {
 	src.push(tab2 + "// Initialization //\n");
 
     if(this.obj.conBlock) {
-        var lines = this.obj.conBlock.split(/\n/);
-        while(lines.length)
-            src.push(tab2 + lines.shift())
-        src.push("\n");
+        src.push(cpov.indentTextBlock(this.snippets[this.obj.conBlock] + "\n\n", 2));
     } else {
         if(this.obj.superclass) {
             src.push(tab2 + "super(options);");
