@@ -1163,7 +1163,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Box.toSDL"],
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1189,7 +1189,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Camera.toSDL"],
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1265,7 +1265,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Cone.toSDL"],
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1300,7 +1300,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Cylinder.toSDL"],
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1334,7 +1334,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["HeightField.toSDL"],
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1479,7 +1479,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["LightSource.toSDL"],
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1592,7 +1592,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Ovus.toSDL"],
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
         {
@@ -1717,7 +1717,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Sphere.toSDL"],
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1840,7 +1840,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Torus.toSDL"],
         immutable: { finite: true, solid: true, csg: false },
         mutable: [
             {
@@ -1898,7 +1898,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Disc.toSDL"],
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -1981,10 +1981,11 @@ cpov.objDef = {
     },
 
     triangle: {               // combines triangle and smooth_triangle
-        desc: false,
+        desc: "The Triangle class combines POV-Ray's triangle and smooth_triangle "
+            + "based on the supplied parameters and the smooth flag.",
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Triangle.toSDL"],
         immutable: { finite: true, solid: false, csg: false },
         mutable: [
             {
@@ -2199,7 +2200,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Union.toSDL"],
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
@@ -2219,7 +2220,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Intersection.toSDL"],
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
@@ -2234,7 +2235,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Difference.toSDL"],
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
@@ -2254,7 +2255,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Merge.toSDL"],
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {

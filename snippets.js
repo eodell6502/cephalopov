@@ -762,6 +762,11 @@ toSDL(stops = 0) {
 
 // Union.toSDL //---------------------------------------------------------------
 
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
 toSDL(stops = 0) {
 
     if(!this.active)
