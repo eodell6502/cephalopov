@@ -1136,7 +1136,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "components",
@@ -1164,7 +1164,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Box.toSDL"],
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "corner1",
@@ -1266,7 +1266,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Cone.toSDL"],
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "basePoint",
@@ -1301,7 +1301,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Cylinder.toSDL"],
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "basePoint",
@@ -1335,7 +1335,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["HeightField.toSDL"],
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "source",
@@ -1375,7 +1375,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "source",
@@ -1419,7 +1419,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "type",
@@ -1455,7 +1455,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "type",
@@ -1593,7 +1593,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Ovus.toSDL"],
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
         {
             name:  "bottomRadius",
@@ -1615,7 +1615,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "funcX",
@@ -1679,7 +1679,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "type",
@@ -1718,7 +1718,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Sphere.toSDL"],
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "center",
@@ -1743,7 +1743,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "type",
@@ -1768,7 +1768,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "vector",
@@ -1785,7 +1785,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "points",
@@ -1809,7 +1809,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "font",
@@ -1841,7 +1841,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Torus.toSDL"],
-        immutable: { finite: true, solid: true, csg: false },
+        immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "majorRadius",
@@ -2032,7 +2032,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "normal",
@@ -2054,7 +2054,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "coefficients",
@@ -2074,7 +2074,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "coefficients",
@@ -2094,7 +2094,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "coefficients",
@@ -2114,7 +2114,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: false, solid: true, csg: false },    // underlying maths than I currently have to validate
+        immutable: { finite: false, solid: true, csg: false, pseudo: false },    // underlying maths than I currently have to validate
         mutable: [
             {
                 name:  "order",
@@ -2139,7 +2139,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: false, solid: true, csg: false },
+        immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "a",
