@@ -9,6 +9,18 @@ managing data that will be handled by POV-Ray. But it is far easier to write the
 complex custom CephaloPOV methods by hand, and this snippets file makes it
 relatively painless to integrate those methods with the code generation process.
 
+Keys are defined by specially formatted comments and the values are the lines in
+between those comments, with leading and trailing whitespace trimmed. The
+comments are formatted thus:
+
+         // Keyname // (anything after the second // is ignored)
+         ^
+         |
+         +------------- first column
+
+Note that the spaces on either side of the keyname are mandatory and that
+there cannot be any spaces in the keyname itself.
+
 */
 
 // Primitive.toSDL //-----------------------------------------------------------
@@ -802,6 +814,75 @@ cpov.objectSerial++;
 this.serial = cpov.objectSerial;
 cpov.serialMap[this.serial] = this;
 
+
+
+// Matrix-methods //------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Given another Matrix, that, returns a new Matrix this * that.
+//--------------------------------------------------------------------------
+
+xMatrix(that) {
+
+    if(!cpov.isClass(that, "Matrix"))
+        cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix");
+
+    return new Matrix(
+        /* v00 */ (this.v00 * that.v00 + this.v01 * that.v10 + this.v02 * that.v20),
+        /* v01 */ (this.v00 * that.v01 + this.v01 * that.v11 + this.v02 * that.v21),
+        /* v02 */ (this.v00 * that.v02 + this.v01 * that.v12 + this.v02 * that.v22),
+        /* v10 */ (this.v10 * that.v00 + this.v11 * that.v10 + this.v12 * that.v20),
+        /* v11 */ (this.v10 * that.v01 + this.v11 * that.v11 + this.v12 * that.v21),
+        /* v12 */ (this.v10 * that.v02 + this.v11 * that.v12 + this.v12 * that.v22),
+        /* v20 */ (this.v20 * that.v00 + this.v21 * that.v10 + this.v22 * that.v20),
+        /* v21 */ (this.v20 * that.v01 + this.v21 * that.v11 + this.v22 * that.v21),
+        /* v22 */ (this.v20 * that.v02 + this.v21 * that.v12 + this.v22 * that.v22),
+        /* v30 */ (this.v30 * that.v00 + this.v31 * that.v10 + this.v32 * that.v20 + that.v30),
+        /* v31 */ (this.v30 * that.v01 + this.v31 * that.v11 + this.v32 * that.v21 + that.v31),
+        /* v32 */ (this.v30 * that.v02 + this.v31 * that.v12 + this.v32 * that.v22 + that.v32)
+    );
+}
+
+
+//--------------------------------------------------------------------------
+// Given a VectorXYZ, point, returns a new VectorXYZ this * point.
+//--------------------------------------------------------------------------
+
+xPoint(point) {
+
+    if(!cpov.isClass(point, "VectorXYZ"))
+        cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint");
+
+    return new VectorXYZ(
+        this.v00 * point.x + this.v10 * point.y + this.v20 * point.z + this.v30,
+        this.v01 * point.x + this.v11 * point.y + this.v21 * point.z + this.v31,
+        this.v02 * point.x + this.v12 * point.y + this.v22 * point.z + this.v32
+    );
+}
+
+
+//--------------------------------------------------------------------------
+// Given a Primitive, applies this Matrix to its transform. If
+// this.transform is null, multiplies itself by the baseTransform and stores
+// the result in this.transform, unless this.baseTransform is null, in which
+// case it exits with an error.
+//--------------------------------------------------------------------------
+
+apply(obj) {
+
+    if(!cpov.inheritsFrom(obj, "Primitive")
+        cpov.error("fatal", "obj is not a Primitive.", "Matrix.apply");
+
+    if(obj.transform === null) {
+        if(obj.baseTransform === null) {
+            cpov.error("fatal", cpov.primitiveIdentifier(obj) + " does not have a baseTransform.", "Matrix.apply");
+        } else {
+            obj.transform = this.xMatrix(obj.baseTransform);
+        }
+    } else {
+        obj.transform = this.xMatrix(obj.transform);
+    }
+}
 
 // PENDING //-------------------------------------------------------------------
 

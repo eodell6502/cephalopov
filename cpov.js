@@ -1051,7 +1051,7 @@ cpov.objCommon = {
         }, {
             name:  "clippedBy",
             valid: "cpov.inheritsFrom(val, 'Primitive')",
-            err:   "clippedBy"
+            err:   "clippedBy must be a Primitive."
         }, {
             name:  "doubleIlluminate",
             valid: "cpov.isBoolean(val)",
@@ -2407,7 +2407,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Matrix-methods"],
         mutable: [
             {
                 name:  "v00",
@@ -2516,6 +2516,8 @@ cpov.error = function(level, message, location = "CEPHALOPOV") {
 //          |
 //          +------------- first column
 //
+// Note that the spaces on either side of the keyname are mandatory and that
+// there cannot be any spaces in the keyname itself.
 //==============================================================================
 
 cpov.objectImport = function(filename) {
@@ -2581,6 +2583,19 @@ cpov.indentTextBlock = function(block, stops) {
     return block.join("\n" + tab);
 }
 
+
+//==============================================================================
+// Given a Primitive object, returns a string identifying it by serial and, if
+// available, id.
+//==============================================================================
+
+cpov.primitiveIdentifier = function(obj) {
+    var result = [ ];
+    result.push(obj.serial);
+    if(obj.id !== null)
+        result.push(obj.id);
+    return result.join(":");
+}
 
 //==============================================================================
 // Fly my pretties, fly! =======================================================

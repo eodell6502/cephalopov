@@ -239,7 +239,7 @@ ClassBuilder.prototype.toString = function() {
     if(this.obj.snippets) {
         for(var i = 0; i < this.obj.snippets.length; i++) {
             if(this.snippets[this.obj.snippets[i]] === undefined) {
-                throw new Error("Cannot find snippet " + this.obj.snippets[i]);
+                cpov.error("fatal", "Cannot find snippet \"" + this.obj.snippets[i] + "\".", "ClassBuilder.toString");
             } else {
                 src.push(cpov.indentTextBlock(this.snippets[this.obj.snippets[i]], 1) + "\n\n");
             }
@@ -295,13 +295,10 @@ TODO:
 
 	* Temporarily implement Textures that are just SDL strings pulled from a cpov.tempTexture list.
 
-    * immutable attribute to distinguish pseudo-primitives like the Camera type?
-
-    * Add serial and other bookkeeping to constructor (base class)
-    * Vector and Matrix -- generated?
     * Other major types
     * Report output in HTML.
-    * Constructor arguments.
+    * Special constructor arguments.
+    * copy() method across classes.
 
 
 
