@@ -3314,6 +3314,7 @@ class Camera {
         this._finite = true; 
         this._solid  = false;
         this._csg    = false;
+        this._pseudo = true; 
 
         // Mutable properties //
 
@@ -3368,6 +3369,16 @@ class Camera {
 
     set csg(val) {
         throw new TypeError("[Camera]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Camera]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -4886,6 +4897,7 @@ class LightSource {
         this._finite = true; 
         this._solid  = false;
         this._csg    = false;
+        this._pseudo = false;
 
         // Mutable properties //
 
@@ -4949,6 +4961,16 @@ class LightSource {
 
     set csg(val) {
         throw new TypeError("[LightSource]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[LightSource]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -6879,6 +6901,7 @@ class BicubicPatch {
         this._finite = true; 
         this._solid  = false;
         this._csg    = false;
+        this._pseudo = false;
 
         // Mutable properties //
 
@@ -6922,6 +6945,16 @@ class BicubicPatch {
 
     set csg(val) {
         throw new TypeError("[BicubicPatch]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[BicubicPatch]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -7038,6 +7071,7 @@ class Disc {
         this._finite = true; 
         this._solid  = false;
         this._csg    = false;
+        this._pseudo = false;
 
         // Mutable properties //
 
@@ -7080,6 +7114,16 @@ class Disc {
 
     set csg(val) {
         throw new TypeError("[Disc]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Disc]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -7205,6 +7249,7 @@ class Mesh {
         this._finite = true; 
         this._solid  = false;
         this._csg    = false;
+        this._pseudo = false;
 
         // Mutable properties //
 
@@ -7246,6 +7291,16 @@ class Mesh {
 
     set csg(val) {
         throw new TypeError("[Mesh]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Mesh]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -7324,6 +7379,7 @@ class Polygon {
         this._finite = true; 
         this._solid  = false;
         this._csg    = false;
+        this._pseudo = false;
 
         // Mutable properties //
 
@@ -7367,6 +7423,16 @@ class Polygon {
 
     //--------------------------------------------------------------------------
 
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Polygon]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
     get points() {
         if(typeof this._points == "function")
             return this._points();
@@ -7404,6 +7470,7 @@ class Triangle {
         this._finite = true; 
         this._solid  = false;
         this._csg    = false;
+        this._pseudo = false;
 
         // Mutable properties //
 
@@ -7450,6 +7517,16 @@ class Triangle {
 
     set csg(val) {
         throw new TypeError("[Triangle]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Triangle]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------

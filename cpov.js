@@ -1190,10 +1190,10 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Camera.toSDL"],
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: true },
         mutable: [
             {
-                name:  "type", // type: "string(perspective|orthographic|fisheye|ultra_wide_angle|omnimax|panoramic|spherical|cylinder|mesh_camera)",
+                name:  "type",
                 req:   true,
                 valid: "cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera'])",
                 err:   "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera."
@@ -1480,7 +1480,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["LightSource.toSDL"],
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "location",
@@ -1866,7 +1866,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "type",
@@ -1899,7 +1899,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Disc.toSDL"],
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "center",
@@ -1929,7 +1929,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "triangles",
@@ -1957,7 +1957,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [ ],
 
     },
@@ -1968,7 +1968,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "points",
@@ -1986,7 +1986,7 @@ cpov.objDef = {
         conArgs: false,
         conBlock: false,
         snippets: ["Triangle.toSDL"],
-        immutable: { finite: true, solid: false, csg: false },
+        immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "corner1",
