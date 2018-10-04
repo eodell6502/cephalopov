@@ -1130,8 +1130,10 @@ cpov.objCommon = {
             err:   "serial must be an integer."
         }, {
             name:  "texture",
-            valid: "cpov.isClass(val, 'Texture')",
-            err:   "texture must be a Texture."
+            // valid: "cpov.isClass(val, 'Texture')",         // Temporarily, we will fake having
+            // err:   "texture must be a Texture."            // a texture subsystem by letting users
+            valid: "cpov.isString(val)",                      // just stick an SDL string in its
+            err: "texture must be a string (for now)."        // place.
         }, {
             name:  "transform",
             valid: "cpov.isClass(val, 'Matrix')",

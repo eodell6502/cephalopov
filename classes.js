@@ -2940,10 +2940,10 @@ class Primitive {
     }
 
     set texture(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Texture'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isString(val))) {
             this._texture = val;
         } else {
-            cpov.error("fatal", "texture must be a Texture.", "Primitive");
+            cpov.error("fatal", "texture must be a string (for now).", "Primitive");
         }
     }
 
@@ -3023,9 +3023,11 @@ class Primitive {
     
         // TODO: interior
         // TODO: interior_texture
-        // TODO: pigment
-        // TODO: normal
-        // TODO: finish
+        // TODO: texture (real)
+    
+        if(this.texture)
+            contents.push(pad + this.texture);
+    
         // TODO: photons
         // TODO: radiosity
     

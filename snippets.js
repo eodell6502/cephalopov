@@ -82,9 +82,11 @@ toSDL(stops = 0) {
 
     // TODO: interior
     // TODO: interior_texture
-    // TODO: pigment
-    // TODO: normal
-    // TODO: finish
+    // TODO: texture (real)
+
+    if(this.texture)
+        contents.push(pad + this.texture);
+
     // TODO: photons
     // TODO: radiosity
 
@@ -884,34 +886,3 @@ apply(obj) {
     }
 }
 
-// PENDING //-------------------------------------------------------------------
-
-/*
-
-
-toSDL TODO:
-    bicubicPatch
-    blob
-    cubic
-    isoSurface
-    juliaFractal
-    lathe
-    mesh
-    mesh2
-    parametric
-!!! plane
-    poly
-    polygon
-    polynomial
-    prism
-    quadric
-    quartic
-    sphereSweep
-    superellipsoid
-    sor
-    text
-
-add object identifier, if any, to error output
-
-
-*/
