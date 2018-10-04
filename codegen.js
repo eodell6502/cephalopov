@@ -1,5 +1,7 @@
-var cpov    = require("./cpov.js").cpov;
-var File    = require("./file.js").File;
+var cpov  = require("./cpov.js").cpov;
+var File  = require("./file.js").File;
+var cli   = require("commander");
+var chalk = require("chalk");
 
 
 //==============================================================================
@@ -277,18 +279,12 @@ fp.write("exports.Primitive = Primitive;\n\n\n");
 
 for(var pname in cpov.objDef) {
     var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-    var desc = cpov.objDef[pname].desc ? cpov.objDef[pname].desc : (cname + " class");
-    var conArgs  = cpov.objDef[pname].conArgs  ? cpov.objDef[pname].conArgs  : false;
-    var conBlock = cpov.objDef[pname].conBlock ? cpov.objDef[pname].conBlock : false;
     fp.write(new ClassBuilder(cname, cpov.objDef[pname], "./snippets.js") + "\n\n");
     fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }
 
 for(var pname in cpov.vectorDef) {
     var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-    var desc = cpov.vectorDef[pname].desc ? cpov.vectorDef[pname].desc :  (cname + " class");
-    var conArgs  = cpov.vectorDef[pname].conArgs  ? cpov.vectorDef[pname].conArgs  : false;
-    var conBlock = cpov.vectorDef[pname].conBlock ? cpov.vectorDef[pname].conBlock : false;
     fp.write(new ClassBuilder(cname, cpov.vectorDef[pname], "./snippets.js") + "\n\n");
     fp.write("exports." + cname + " = " + cname + ";\n\n\n");
 }

@@ -229,6 +229,26 @@ cpov.isNullOrJSFunction = function(val) {
     return (val === null || typeof val == "function") ? true : false;
 }
 
+//------------------------------------------------------------------------------
+
+cpov.isUnusedSerial = function(val, obj) {
+    var result = (obj.serial == val || cpov.serialMap[val] === undefined) ? true : false;
+    if(obj.serial != val)
+        delete cpov.serialMap[obj.serial];
+    cpov.serialMap[val] = obj;
+    return result;
+}
+
+//------------------------------------------------------------------------------
+
+cpov.isUnusedId = function(val, obj) {
+    var result = (obj.id == val || cpov.idMap[val] === undefined) ? true : false;
+    if(obj.id != val)
+        delete cpov.idMap[obj.id];
+    cpov.idMap[val] = obj;
+    return result;
+}
+
 
 //------------------------------------------------------------------------------
 // Legal dither types mapped to textual descriptions.
@@ -1009,7 +1029,7 @@ cpov.objCommon = {
     desc: "The Primitive class implements parameters and functionality that are "
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
-    conBlock: false,
+    conBlock: "Primitive.conBlock",
     snippets: [ "Primitive.toSDL" ],
     mutable: [
         {
@@ -1058,7 +1078,7 @@ cpov.objCommon = {
             err:   "hollow must be a boolean."
         }, {
             name:  "id",
-            valid: "cpov.isNonEmptyString(val)",
+            valid: "cpov.isNonEmptyString(val) && cpov.isUnusedId(val, this)",
             err:   "id must be a non-empty string."
         }, {
             name:  "interior",
@@ -1106,7 +1126,7 @@ cpov.objCommon = {
             err:   "radiosity"
         }, {
             name:  "serial",
-            valid: "cpov.isInt(val)",
+            valid: "cpov.isInt(val) && cpov.isUnusedSerial(val, this)",
             err:   "serial must be an integer."
         }, {
             name:  "texture",
@@ -2539,6 +2559,8 @@ cpov.objectImport = function(filename) {
 
 cpov.initObject = function(obj, vals) {
     for(var k in vals) {
+        if(k == "serial")
+            continue;
         if(obj[k] != undefined) {
             obj[k] = vals[k];
         }

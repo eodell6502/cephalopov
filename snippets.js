@@ -791,6 +791,16 @@ toSDL(stops = 0) {
 }
 
 
+
+// Primitive.conBlock ---------------------------------------------------------
+
+// Create serial number and register with cpov object
+
+cpov.objectSerial++;
+this.serial = cpov.objectSerial;
+cpov.serialMap[this.serial] = this;
+
+
 // PENDING //-------------------------------------------------------------------
 
 /*
