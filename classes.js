@@ -8877,6 +8877,39 @@ class Color {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the vector. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        stops = cpov.tab(stops);
+    
+        if(this.r === null)
+            cpov.error("fatal", "r is undefined.", "Color.toSDL");
+        if(this.g === null)
+            cpov.error("fatal", "g is undefined.", "Color.toSDL");
+        if(this.b === null)
+            cpov.error("fatal", "b is undefined.", "Color.toSDL");
+    
+        var form = (this.srgb ? "s" : "") + "rgb";
+        var args = [this.r, this.g, this.b];
+    
+        if(this.f) {
+            form += "f";
+            args.push(this.f);
+            if(this.t) {
+                form += "t";
+                args.push(this.t);
+            }
+        }
+    
+        return stops + form + " <" + args.join(", ") + ">";
+    
+    }
+
+
 
 }
 

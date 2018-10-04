@@ -2353,7 +2353,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Color.toSDL"],
         mutable: [
             {
                 name:  "r",
