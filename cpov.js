@@ -10,9 +10,12 @@ var cpov = { };
 // Internal global state.
 //------------------------------------------------------------------------------
 
-cpov.quietMode    = false; // CLI switches
+cpov.quietMode    = false; // CLI switches ...
 cpov.verbosity    = 1;
-cpov.debug        = true;
+cpov.debug        = false;
+cpov.preamble     = false;     // contents of file to include
+cpov.outputBase   = "cpov0000" // output base name template
+cpov.infile       = false;     // input file
 
 cpov.currentFrame = 0;    // current animation frame
 cpov.objectSerial = 0;    // running count of Primitives created
@@ -2495,15 +2498,15 @@ cpov.error = function(level, message, location = "CEPHALOPOV", obj = null) {
     if(!cpov.quietMode) {
         switch(level) {
             case "fatal":
-                console.log(chalk.bgRed.yellowBright("[" + location + "]") + chalk.redBright("FATAL ERROR: ") + chalk.whiteBright(message + instance));
+                console.log(cpov.chalk.bgRed.yellowBright("[" + location + "]") + cpov.chalk.redBright(" FATAL ERROR: ") + cpov.chalk.yellowBright(message + instance));
                 break;
             case "warn":
                 if(cpov.verbosity >= 1)
-                    console.log(chalk.bgMagenta.whiteBright("[" + location + "]") + chalk.whiteBright("Warning: ") + message + instance);
+                    console.log(cpov.chalk.bgMagenta.whiteBright("[" + location + "]") + cpov.chalk.whiteBright(" Warning: ") + message + instance);
                 break;
             case "info":
                 if(cpov.verbosity >= 2)
-                    console.log(chalk.whiteBright("[" + location + "] INFO: ") + message + instance);
+                    console.log(cpov.chalk.whiteBright("[" + location + "] INFO: ") + message + instance);
                 break;
             case "debug":
                 if(cpov.verbosity >= 3 || cpov.debug)

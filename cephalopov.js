@@ -27,7 +27,6 @@
 //[of]:NOTES/SCRATCH
 /*
 Prototypes/Classes/Global Objects:----------------------------------------------
-
 $CP                 -- CephaloPOV global object
 File()              -- File I/O interface
 ConfigObject(type) -- used for global settings and image options
@@ -37,9 +36,7 @@ VectorUV()
 VectorXY()
 VectorXYZ()
 VectorXYZW()
-
 Functions/Methods:--------------------------------------------------------------
-
 $CP._typeDescriptionTestDump() -- runs typeFormatDescription against the global objects utilizing type formats.
 $CP.baseClassName(obj) -- returns name of obj's base class.
 $CP.className(obj) -- returns obj's class name.
@@ -59,66 +56,44 @@ $CP.typeFormatDescription(fmt) -- given a parsed type format, returns a human-la
 $CP.typeFormatTestError(fmt, val) -- given a type format, tests whether val complies with it.
 $CP.valueTestError(test, val) -- runs test against val.
 $CP.zeroTab(num, pad) -- returns num zero-padded to pad digits.
-
 ConfigObject.proxify(handler) -- wraps object with the a Proxy handler.
-
 Primitive.proxify() -- wraps object with primitiveHandler proxy.
-
-
 There are a lot of compromises here where convenience is traded for type safety.
-
 * Many parameters can be specified in multiple forms. For example, where a 3D
   vector is required, you can pass either a Vector3D object or a simple [x,y,z]
   JavaScript Array type. It is important to note that the Array will be
   automatically converted into a VectorXYZ by CephaloPOV, so if you read the
   value back, you'll get that instead of the original raw Array.
-
 * In most places where it would be legal to do so in SDL, you can pass a string
   containing a user-defined SDL function. You should only do this where you
   don't expect CephaloPOV to be able to perform calculations with the
   parameter. This may change in the future, but it will require writing a
   parser for SDL functions, so don't hold your breath.
-
 * This creates situations where CP has to assume you know what you're doing and
   cannot check a parameter for validity. So know what you're doing.
-
 * Objects are implemented with a fair amount of ES6 black magic. To make this as
   painless as possible for users, object creation is handled by a factory
   method, $CP.obj(id, type, {named_args})
-
 The underlying code is as generic as possible, in service of which goal the
 bulk of the properties of (POV-Ray) objects are implemented in a data structure
 that is easily maintainable and extendable. It's not meant to provide for an
 exhaustive validation pass that can catch all conceivable errors in the generated
 SDL, but it covers the majority of cases adequately.
-
     finite:   boolean indicating whether the object is finite, null for CSG
               containers because it is undecideable at present
     solid:    boolean indicating whether the object is solid
     csg:      boolean indicating whether the object is a CSG container
     required: ordered array of required arguments containing their names and pfmt.alternatives
     optional: as required, but for optional arguments
-
 For details of the type argument, see the comment above $CP.typeFormatTestError.
-
 It should be noted that the table-driven validation tests are designed to make
 the code more compact and maintainable by eliminating tons of boilerplate code.
 The tests themselves are not exhaustive, so you can certainly find a way to
 break them if you try hard enough.
-
 // Primitives should have handlers for CephaloPOV events.
 // { name: "", type: ""},
 // list of permitted/relevant object modifiers?
 // output spec?
-
-
-
-
-
-
-
-
-
 */
 
 
@@ -543,8 +518,8 @@ $CP.objDef = {
 	// The camera type isn't really a primitive in SDL, but we're going to
 	// treat it as one for most purposes and fake it in CSG objects.
 	//--------------------------------------------------------------------------
-	
-	camera: { 
+
+	camera: {
 		finite: true,
 		solid: false,
 		csg: false,
@@ -563,7 +538,7 @@ $CP.objDef = {
 			{ name: "location",     type: "VectorXYZ" },
 			{ name: "lookAt",       type: "VectorXYZ" },
 			{ name: "right",        type: "VectorXYZ" },
-			{ name: "sky",          type: "VectorXYZ" },			
+			{ name: "sky",          type: "VectorXYZ" },
 			{ name: "up",           type: "VectorXYZ" },
 			{ name: "variance",     type: "float" },
 			{ name: "vertAngle",    type: "int" },
@@ -868,9 +843,7 @@ $CP.objDef = {
     },
 
 /*
-
 // Deferred pending further research
-
     mesh2: {
         finite: true,
         solid: false,
@@ -1362,16 +1335,16 @@ $CP.fileSerial = function(template, serial) {
 //==============================================================================
 
 $CP.forceVector = function(type, arg) {
-    
+
     if($CP.prototypeName(arg) == "Vector") {
         if(arg.type == type)
             return arg;
         else
             throw new TypeError("[CEPHALOPOV]: " + arg.type + " passed where " + type + " expected.");
     }
-    
+
     return $CP.factory(type, arg);
-    
+
 }
 //[cf]
 //[of]:F $CP.inArray(a, k)
@@ -1480,10 +1453,10 @@ $CP.isFunctionOrNumber = function(val, objname, fieldname) {
 //==============================================================================
 
 $CP.isFunctionOrNumber = function(val, objname, fieldname) {
-    
+
     if(typeof val == "function")
         return val;
-    
+
     if(typeof val == "string") {
         if(val.substr(0, 1) == "&")
             return val;
@@ -1491,7 +1464,7 @@ $CP.isFunctionOrNumber = function(val, objname, fieldname) {
         if(!isNaN(val))
             return val;
     }
-    
+
     if(typeof val == "number")
         return val;
 
@@ -1720,7 +1693,7 @@ $CP.typeCoerce = function(type, val) {
     } else if(type == "boolean") {
 
         result = val ? true : false;
-        
+
     } else if(window[this.prototypeName(val)] !== undefined && typeof window[this.prototypeName(val)] == "function") {
 
         try {
@@ -1824,13 +1797,10 @@ $CP.typeFormatDescription = function(fmt) {
 //==============================================================================
 
 /* TODO Verify:
-
-
 Primitive
 SDLFunction
 mixed(Sphere|Box)
 mixed(string|SDLFunction)
-
 */
 
 
@@ -3230,22 +3200,22 @@ Primitive.prototype.proxify = function() {
 //==============================================================================
 
 Primitive.prototype.propertyTest = function(property) {
-    
+
     for(var i = 0; i < this._defs.required.length; i++) {
         if(this._defs.required[i].name == property && this._defs.required[i].test !== undefined) {
             return this._defs.required[i].test;
         }
     }
-    
+
     for(var i = 0; i < this._defs.optional.length; i++) {
         if(this._defs.optional[i].name == property && this._defs.optional[i].test !== undefined) {
             return this._defs.optional[i].test;
         }
     }
-    
+
     if($CP.objCommon[property] !== undefined)
         return $CP.objCommon[property].test;
-    
+
     return null;
 }
 //[cf]
@@ -3298,11 +3268,11 @@ Primitive.prototype.toSDL = function(stops = 0) {
             content.push(pad + "box {");
             content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
             content.push(this.commonToSDL(stops + 1));
-            content.push(pad + "}"); 
+            content.push(pad + "}");
             break;
 
 		case "camera": //-------------------------------------------------------
-		
+
 			content.push(pad + "camera {");
     		content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
 		    if(this.location !== null)
@@ -3318,7 +3288,7 @@ Primitive.prototype.toSDL = function(stops = 0) {
 		    if(this.lookAt !== null)
 		        content.push(ppad + "look_at " + this.lookAt.toSDL());
 		    if(this.blurSamples !== null)
-		        content.push(ppad + "blur_samples " + this.blurSamples.join(", "));		    
+		        content.push(ppad + "blur_samples " + this.blurSamples.join(", "));
 		    if(this.apertureSize !== null)
 		        content.push(ppad + "aperture_size " + this.apertureSize);
 		    if(this.focalPoint !== null)
@@ -3328,8 +3298,8 @@ Primitive.prototype.toSDL = function(stops = 0) {
 		    if(this.variance !== null)
 		        content.push(ppad + "variance " + this.variance);
 		    if(this.bokeh !== null)
-		        content.push(ppad + "bokeh " + this.bokeh);			
-            content.push(this.commonToSDL(stops + 1));			
+		        content.push(ppad + "bokeh " + this.bokeh);
+            content.push(this.commonToSDL(stops + 1));
 			content.push(pad + "}");
 			break;
 
@@ -3430,10 +3400,10 @@ Primitive.prototype.toSDL = function(stops = 0) {
 		    if(this.color === null)
 		        throw new Error("[Light]: color is unspecified.");
 		    content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
-		
+
 		    if(this.type !== null)
 		        content.push(ppad + this.type);
-		
+
 		    if(this.type == "spotlight" || this.type == "cylindrical") {
 		        if(this.pointAt === null)
 		            throw new Error("[Light]: pointAt must be specified.");
@@ -3444,13 +3414,13 @@ Primitive.prototype.toSDL = function(stops = 0) {
 		        if(this.tightness !== null)
 		            content.push(ppad + "tightness " + this.tightness);
 		    }
-		
+
 		    if(this.parallel)
 		        content.push(ppad + "parallel");
-		
+
 		    if(this.pointAt !== null)
 		        content.push(ppad + "point_at " + this.pointAt);
-		
+
 		    if(this.areaLight) {
 		        if(this.axis1 === null || this.axis2 === null || this.size1 === null || this.size2 === null)
 		            throw new Error("[Light]: Area lights require axis1, axis2, size1, and size2 to be defined.");
@@ -3465,23 +3435,23 @@ Primitive.prototype.toSDL = function(stops = 0) {
 		        if(this.orient)
 		            content.push(ppad + "orient");
 		    }
-		
+
 		    if(this.shadowless)
 		        content.push(ppad + "shadowless");
-		
+
 		    // TODO: looksLike
 		    // TODO: projectedThrough
-		
+
 		    if(this.fadeDistance !== null)
 		        content.push(ppad + "fade_distance " + this.fadeDistance);
 		    if(this.fadePower !== null)
 		        content.push(ppad + "fade_power " + this.fadePower);
-		
+
 		    if(this.mediaInteraction === false)
 		        content.push(ppad + "media_interaction off");
 		    if(this.mediaAttenuation === true)
 		        content.push(ppad + "media_attenuation on");
-		
+
 		    content.push(pad + "}");
 		   	break;
 
@@ -3739,18 +3709,18 @@ Scene.prototype.makeCurrent = function() {
 //[of]:F Scene.nextFrame()
 Scene.prototype.nextFrame = function() {
 
-    var iniFile = new File($CP.fileSerial(this.basename, this._frame) + ".ini", "w"); 
+    var iniFile = new File($CP.fileSerial(this.basename, this._frame) + ".ini", "w");
     iniFile.write(this.imageOptions.toIniFile() + "\n");
     iniFile.close();
 
     // .pov file
-    
-    var povFile = new File($CP.fileSerial(this.basename, this._frame) + ".pov", "w"); 
-    
+
+    var povFile = new File($CP.fileSerial(this.basename, this._frame) + ".pov", "w");
+
     // TODO: emit preamble
-    
+
     povFile.write(this.globalSettings.toSDL() + "\n\n");
-    
+
     // for each object, write results of .toSDL unless null
         // Skip CSG children; TODO: parent.toSDL takes care of calling its children
     for(var k in this._objDict) {
@@ -3763,12 +3733,12 @@ Scene.prototype.nextFrame = function() {
             povFile.write(content + "\n\n");
         }
     }
-        
+
     povFile.close();
 
     if(this.frameEnd !== null)
         this.frameEnd();
-    
+
     for(var k in this._objDict) {
         if(this._objDict[k].frameEnd !== undefined && this._objDict[k].frameEnd !== null) {
             this._objDict[k].frameEnd();
@@ -3779,7 +3749,7 @@ Scene.prototype.nextFrame = function() {
 
     if(this.frameBegin !== null)
         this.frameBegin();
-        
+
     for(var k in this._objDict) {
         if(this._objDict[k].frameBegin !== undefined && this._objDict[k].frameBegin !== null)
             this._objDict[k].frameBegin();
@@ -3970,7 +3940,6 @@ Vector.prototype.toSDL = function(stops) {
 //[of]:* INIT [WIP]
 $CP.init();
 //[cf]
-
 
 
 
