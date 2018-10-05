@@ -5,64 +5,56 @@
 <title>CephaloPOV Documentation</title>
 <style type="text/css">
 	body,table,input { font: 10pt Arial,Helvetica,sans-serif; }
+    body { width: 8.5in; margin-left: auto; margin-right: auto; }
 	div.code { white-space: pre; font: 10pt Consolas,Courier,fixed; background-color: #EEF; border: 1px solid #CCF; margin-top: 1em; padding: 1em; }
+    pre { font: 10pt Consolas,Courier,fixed; }
 </style>
 </head>
 <body>
 <h1>CephaloPOV Documentation</h1>
 
-<div class='code'>var mk = $CP.factory;
+<div class='code'>Before CephaloPOV reaches a preliminary beta phase, this will
+be the user manual. Right now, it's mostly notes.</div>
 
-console.log("$CP.currentScene = " + $CP.currentScene);
-var s = mk("Scene");
-console.log("$CP.currentScene = " + $CP.currentScene);
-var b = mk("box");
-var c1 = mk("VectorXYZ", [1,2,10]);
-console.log(c1);
-var c2 = mk("VectorXYZ");
-c2.x = 3; c2.y = 5; c2.z = 15;
-b.corner1 = c1;
-b.corner2 = c2;
-console.log(s.frame);
-console.log(b.toSDL());
-
-console.log("-------------------------------");
-
-var cam = mk("camera");
-cam.type = "perspective";
-console.log(cam.toSDL());</div>
 
 <h2>TODO</h2>
 
-<h3>C+0</h3>
+<h3>Milestone C0</h3>
 
-<ul>
-	<li>$CP.typeCoerce:</li>
-		<ul>
-			<li>handle Vectors and simple Matrix types</li>
-			<li>incorporate this into the Primitive set handler</li>
-		</ul>
-	<li>Primitive:</li>
-		<ul>
-		    <li><b>Recursive toSDL()</b></li>
-		    <li>delete/destructor</li>
-		    <li>Implement children, finish, interior, material, normal, parent, photons, pigment, radiosity, texture, transform</li>
-		    <li>Generic validation, type-specific validation</li>
-		    <li>Camera pseudo-primitive transform integration</li>
-		    <li>Find a way to suppress commonToSDL if there are no common attributes set</li>
-		</ul>
-	<li>Scene</li>
-		<ul>
-		    <li>Come up with generic SDL test include file</li>
-		</ul>
-	<li>Output loop</li>
-	<li>Matrix</li>
-		<ul>
-		    <li>rotate and skew</li>
-		</ul>
-</ul>
+<pre>toSDL() for remaining Primitives and related types
+    bicubicPatch
+    blob
+    cubic
+    isoSurface
+    juliaFractal
+    lathe
+    mesh
+    mesh2
+    parametric
+!!! plane
+    poly
+    polygon
+    polynomial
+    prism
+    quadric
+    quartic
+    sphereSweep
+    superellipsoid
+    sor
+    text
 
-<h3>C+1</h3>
+copy() method across classes, both shallow and deep
+sky_sphere
+parent/child updates for CSG
+transform getter copies baseTransform before returning when needed.
+transform reset
+CSG output
+Primitive destructor
+Special constructor arguments, esp Matrix operations
+Main processing loop and output
+    Real-valued ticks to allow emulation of POV-Ray animation clock
+Colorized error messages
+Add serial/identifier to comments in output</pre>
 
 <h4>Camera validation</h4>
 <div class='code'>if(this.type === null) {
@@ -74,235 +66,67 @@ console.log(cam.toSDL());</div>
 }</div>
 
 
-<pre>Vector: Allow entire vector to be produced by a JS or SDL function
+<h3>Milestone C1</h3>
 
-restoreBaseTransform() / null handling for properties generally
-
+<pre>Matrix
+    rotate and skew
+Matrix, Vector, Color
+    Use JS/SDL func in lieu of individual attributes
+Preamble/SDL include support
+Reorg: move things needed for codegen to separate file not included at runtime
+Camera pseudo-primitive transform integration
+codegen
+    Documentation generation
+    Reports
+Regression tests
+Primitive
+    .photons
+    .radiosity
 ImageOptions
-// TODO: boundingThreshold: convert zero to boolean on output
-// TODO: constants: gets special handling
-// TODO: endColumn: post check startColumn
-// TODO: endRow: post check startRow
-// TODO: startColumn: post check endColumn
-// TODO: startRow: post check endRow
+    boundingThreshold: convert zero to boolean on output
+    constants: gets special handling
+    endColumn: post check startColumn
+    endRow: post check startRow
+    startColumn: post check endColumn
+    startRow: post check endRow
+Execution
+    Optionally generate .sh/.bat files
+    Oversee execution directly
+Solidify understanding of Node modules</pre>
 
-Docs to HTML
-Feature and Maintenance tracks
 
-Material
-Texture
+<h3>Backlog</h3>
+
+<pre>Additional splines, easing functions, esp. Catmull-Rom
 Interior
-Camera
-
-Cameras cannot be part of CSG unions, so come up with a way to link
-a camera to an object so that transformations applied to the object
-are automatically applied to the camera.
-
-Generic rules:
-
-1. Any value can be replaced by a JavaScript function that returns the expected type.
-2. An SDL function (prefixed with '&') can be used for any value in CPov where it is legal in SDL.
-3. JS functions may return SDL functions (again, prefixed with '&')
-
-Caveats:
-
-1. SDL functions obviously can't be used in calculations at runtime in CPov.
-2. CPov exposes the details of the current frame -- frame number and which phase of the
-   frame process is active -- so that user functions can act accordingly.
-3. CPov may call user functions at any time to test their return values. They should
-   therefore be free of side effects. This only applies to object attributes. The pre- and
-   post- functions are only called at the appropriate times.
-</pre>
-
-<h2>Old Notes</h2>
-
-<pre>I. Finish enumeration/epitome
-II. World
-    A. Types
-    B. Camera
-    C. Lights (basic)
-    D. Textures
-    E. Objects (plane, box, cylinder, sphere) + re-eval for complex objects
-    F. CSG Objects (generic)
-    G. Macro generation
-
-Basic pigment textures
-
-Camera [...partial...]
-Transformation [...partial...]
-Lights [...partial...]
-Matrices [...partial...]
-    Transforms.inc
-Include Files
-    colors.inc [...partial...] (see bottom of this comment)
-
-Test routines
+Texture
+Macro/Function generation, i.e., in separate file to use directly with POV-Ray
+Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray
+Script to parse as much as possible of POV-Ray .inc files into JS/cpov
+Porting of functions in .inc files
+Drag in some color libraries, theme generators
+Atmospheric effects
+Spline-builder UI
+Stereo pseudo-cameras
+Parametric types
+Polyhedron library
+Level-of-Detail
+Particle systems
+Geometric query system
+    Eric Haines' table of object intersections, collision detection
+Primitive
+    tick order
+    .materialize -- i.e., copy, executing JS funcs to produce fixed values
+Direct support for ffmpeg
+Script execution on events
+Extensive warn, info, debug output</pre>
 
 
-Identifiers
+<h4>CephaloPOV Scene Graph</h4>
 
-    * 40 chars
-    * /[A-Za-z][A-Za-z0-9_]{0,39}/
-
-    Keywords are all lowercase, so a capital letter avoids potential collisions
-
-TODO: Comments -- add emitter
-
-    // single line
-    /* multi
-        line */
-/*
-
-Numeric Expressions
-Vector Expressions
-
-    <a, b, c, d, e>
-
-Color Expressions
-TODO: User-Defined Functions
-TODO: Strings
-TODO: Arrays
-TODO: Splines
-
---------------------------------------------------------------------------------
-
-Defer ATMOSPHERIC EFFECTS until later
-
---------------------------------------------------------------------------------
-
-Objects/CSG...
-Texture...
-
-Pattern...
-Media...
-
-*Colors.inc
-
-Color-space conversions
-Chars.inc
-Consts.inc
-Debug.inc
-Finish.inc
-Functions.inc
-Glass.inc
-Golds.inc
-Logo.inc
-...etc.
-// Color manipulation macros
-
-// Takes Hue value as input, returns RGB vector.
-#macro CH2RGB (HH)
-   #local H = mod(HH, 360);
-   #local H = (H < 0 ? H+360 : H);
-   #switch (H)
-      #range (0, 120)
-         #local R = (120-  H) / 60;
-         #local G = (  H-  0) / 60;
-         #local B = 0;
-      #break
-      #range (120, 240)
-         #local R = 0;
-         #local G = (240-  H) / 60;
-         #local B = (  H-120) / 60;
-      #break
-      #range (240, 360)
-         #local R = (  H-240) / 60;
-         #local G = 0;
-         #local B = (360-  H) / 60;
-      #break
-   #end
-   <min(R,1), min(G,1), min(B,1)>
-#end
-
-// Takes RGB vector, Max component, and Span as input,
-// returns Hue value.
-#macro CRGB2H (RGB, Max, Span)
-   #local H = 0;
-   #local R = RGB.red;
-   #local G = RGB.green;
-   #local B = RGB.blue;
-   #if (Span>0)
-      #local H = (
-         + (R = Max & G != Max ? 0 + (G - B)/Span : 0)
-         + (G = Max & B != Max ? 2 + (B - R)/Span : 0)
-         + (B = Max & R != Max ? 4 + (R - G)/Span : 0)
-      )*60;
-   #end
-   H
-#end
-
-// Converts a color in HSL color space to a color in RGB color space.
-// Input:  < Hue, Saturation, Lightness, Filter, Transmit >
-// Output: < Red, Green, Blue, Filter, Transmit >
-#macro CHSL2RGB(Color)
-   #local HSLFT = color Color;
-   #local H = (HSLFT.red);
-   #local S = (HSLFT.green);
-   #local L = (HSLFT.blue);
-   #local SatRGB = CH2RGB(H);
-   #local Col = 2*S*SatRGB + (1-S)*<1,1,1>;
-   #if (L<0.5)
-      #local RGB = L*Col;
-   #else
-      #local RGB = (1-L)*Col + (2*L-1)*<1,1,1>;
-   #end
-   <RGB.red,RGB.green,RGB.blue,(HSLFT.filter),(HSLFT.transmit)>
-#end
-
-// Converts a color in RGB color space to a color in HSL color space.
-// Input:  < Red, Green, Blue, Filter, Transmit >
-// Output: < Hue, Saturation, Lightness, Filter, Transmit >
-#macro CRGB2HSL(Color)
-   #local RGBFT = color Color;
-   #local R = (RGBFT.red);
-   #local G = (RGBFT.green);
-   #local B = (RGBFT.blue);
-   #local Min = min(R,min(G,B));
-   #local Max = max(R,max(G,B));
-   #local Span = Max-Min;
-   #local L = (Min+Max)/2;
-   #local S = 0;
-   #if( L!=0 & L!=1 )
-      #local S = Span / ( L<0.5 ? (L*2) : (2-L*2) );
-   #end
-   #local H = CRGB2H (<R,G,B>, Max, Span);
-   <H,S,L,(RGBFT.filter),(RGBFT.transmit)>
-#end
-
-// Converts a color in HSV color space to a color in RGB color space.
-// Input:  < Hue, Saturation, Value, Filter, Transmit >
-// Output: < Red, Green, Blue, Filter, Transmit >
-#macro CHSV2RGB(Color)
-   #local HSVFT = color Color;
-   #local H = (HSVFT.red);
-   #local S = (HSVFT.green);
-   #local V = (HSVFT.blue);
-   #local SatRGB = CH2RGB(H);
-   #local RGB = ( ((1-S)*<1,1,1> + S*SatRGB) * V );
-   <RGB.red,RGB.green,RGB.blue,(HSVFT.filter),(HSVFT.transmit)>
-#end
-
-// Converts a color in RGB color space to a color in HSV color space.
-// Input:  < Red, Green, Blue, Filter, Transmit >
-// Output: < Hue, Saturation, Value, Filter, Transmit >
-#macro CRGB2HSV(Color)
-   #local RGBFT = color Color;
-   #local R = (RGBFT.red);
-   #local G = (RGBFT.green);
-   #local B = (RGBFT.blue);
-   #local Min = min(R,min(G,B));
-   #local Max = max(R,max(G,B));
-   #local Span = Max-Min;
-   #local H = CRGB2H (<R,G,B>, Max, Span);
-   #local S = 0; #if (Max!=0) #local S = Span/Max; #end
-   <H,S,Max,(RGBFT.filter),(RGBFT.transmit)>
-#end
-
-#version Colors_Inc_Temp;
-#end
-Master objects are defined relative to the origin. More precisely, the origin is
+<p>Master objects are defined relative to the origin. More precisely, the origin is
 their primary point of articulation. In each frame, they are transformed to
-their current frame-state.
+their current frame-state.</p>
 
 Possibly, a relationship between A and B is stated in the form of B's point of
 articulation relative to some explicit or implicit point in A. In its most basic
@@ -314,46 +138,13 @@ This suggests a separate assembly process for objects with moving parts, which
 means that ordinary native CSG objects can go ahead just fine. Converting them
 into master objects amounts to just positioning them appropriately relative to
 the origin after construction.
-In no particular order:
-
-* Scene graph
-* Spline calculations, including Catmull-Rom
-* Color calculations from colors.inc, plus others from JS mixers
-* Eric Haines' table of object intersections, collision detection
-* Derivative relative points
-* Callbacks in lieu of literal values
-* SDL macro generation
-* Stereo camera type
-* Parametric type factory using predefined parameters
-* Composite types
-* Inclusion of all include types
-* Level-of-Detail system
-* Particle systems
-
-TODO:
-
-Object t-order
-
-.clone
-.materialize
-Generate:
-    Scene files .pov
-    Ini files
-    Shell script (.sh/.bat)
 
 
+/*
 
 npm install -g sloc        ... cronify
 
-Primitive.toString()
-	add identifier/name, plus autogenerated defaults
-    tie into subclass toString() methods
-	add CSG parent reference
-    respect active flag
-Figure out Scene object
-	object containing identifier: object relations
-
-Full test of ImageOptions
+*/
 </pre>
 
 <h2>Changelog</h2>

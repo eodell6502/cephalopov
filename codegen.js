@@ -289,47 +289,6 @@ for(var pname in cpov.vectorDef) {
 
 fp.close();
 
-/*
 
-TODO:
-
-    * toSDL() for remaining Primitives and related types
-
-        bicubicPatch
-        blob
-        cubic
-        isoSurface
-        juliaFractal
-        lathe
-        mesh
-        mesh2
-        parametric
-    !!! plane
-        poly
-        polygon
-        polynomial
-        prism
-        quadric
-        quartic
-        sphereSweep
-        superellipsoid
-        sor
-        text
-
-    * copy() method across classes.
-    * Special constructor arguments.
-    * main processing loop and output
-    * colorized error messages
-
-    == potential freeze for Capstone ==
-
-    * Other major types
-    * Report output in HTML.
-
-
-
-
-
-*/
 
 
