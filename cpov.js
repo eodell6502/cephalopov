@@ -213,14 +213,14 @@ cpov.arrayToTextList = function(items) {
 
 //------------------------------------------------------------------------------
 
-cpov.isSdlFunction = function(val) {
+cpov.isSDLFunction = function(val) {
     return (typeof val == "string" && val.substr(0, 1) == "&") ? true : false;
 }
 
 //------------------------------------------------------------------------------
 
 cpov.isNullOrFunction = function(val) {
-    return (val === null || typeof val == "function" || cpov.isSdlFunction(val)) ? true : false;
+    return (val === null || typeof val == "function" || cpov.isSDLFunction(val)) ? true : false;
 }
 
 //------------------------------------------------------------------------------
@@ -1030,7 +1030,7 @@ cpov.objCommon = {
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: "Primitive.conBlock",
-    snippets: [ "Primitive.toSDL" ],
+    snippets: [ "Primitive.toSDL", "Primitive.destroy" ],
     mutable: [
         {
             name:  "active",
@@ -1137,7 +1137,8 @@ cpov.objCommon = {
         }, {
             name:  "transform",
             valid: "cpov.isClass(val, 'Matrix')",
-            err:   "transform must be a Matrix."
+            err:   "transform must be a Matrix.",
+            custom: "Primitive.transform.get-set"
         }
     ]
 };
@@ -1362,7 +1363,7 @@ cpov.objDef = {
             {
                 name:  "source",
                 req:   true,
-                valid: "cpov.isSdlFunction(val) || cpov.isString(val)",
+                valid: "cpov.isSDLFunction(val) || cpov.isString(val)",
                 err:   "source"
             }, {
                 name:  "hfType", // only used if source is image instead of function
@@ -1402,7 +1403,7 @@ cpov.objDef = {
             {
                 name:  "source",
                 req:   true,
-                valid: "cpov.isSdlFunction(val)",
+                valid: "cpov.isSDLFunction(val)",
                 err:   "source must be an SDL function."
             }, {
                 name:  "containedBy",
@@ -1642,17 +1643,17 @@ cpov.objDef = {
             {
                 name:  "funcX",
                 req:   true,
-                valid: "cpov.isSdlFunction(val)",
+                valid: "cpov.isSDLFunction(val)",
                 err:   "funcX must be an SDL function."
             }, {
                 name:  "funcY",
                 req:   true,
-                valid: "cpov.isSdlFunction(val)",
+                valid: "cpov.isSDLFunction(val)",
                 err:   "funcY must be an SDL function."
             }, {
                 name:  "funcZ",
                 req:   true,
-                valid: "cpov.isSdlFunction(val)",
+                valid: "cpov.isSDLFunction(val)",
                 err:   "funcZ must be an SDL function."
             }, {
                 name:  "uv1",
@@ -2482,28 +2483,37 @@ cpov.tab = function tab(stops) {
 // level, and if the error is fatal, terminates the process.
 //==============================================================================
 
-cpov.error = function(level, message, location = "CEPHALOPOV") {
+cpov.error = function(level, message, location = "CEPHALOPOV", obj = null) {
 
-    switch(level) {
-        case "fatal":
-            if(!cpov.quietMode)
-                console.log("[" + location + "]: " + message);
-            cpov.process.exit(1);
-            break;
-        case "warn":
-            if(!cpov.quietMode && cpov.verbosity >= 1)
-                console.log("[" + location + "]: " + message);
-            break;
-        case "info":
-            if(!cpov.quietMode && cpov.verbosity >= 2)
-                console.log("[" + location + "]: " + message);
-            break;
-        case "debug":
-            if(!cpov.quietMode && (cpov.verbosity >= 3 || cpov.debug))
-                console.log("[" + location + "]: " + message);
-            break;
+    var instance = '';
+
+    if(obj !== null && cpov.inheritsFrom(obj, "Primitive"))
+        instance = " (" + cpov.primitiveIdentifier(obj) + ")";
+
+
+
+    if(!cpov.quietMode) {
+        switch(level) {
+            case "fatal":
+                console.log(chalk.bgRed.yellowBright("[" + location + "]") + chalk.redBright("FATAL ERROR: ") + chalk.whiteBright(message + instance));
+                break;
+            case "warn":
+                if(cpov.verbosity >= 1)
+                    console.log(chalk.bgMagenta.whiteBright("[" + location + "]") + chalk.whiteBright("Warning: ") + message + instance);
+                break;
+            case "info":
+                if(cpov.verbosity >= 2)
+                    console.log(chalk.whiteBright("[" + location + "] INFO: ") + message + instance);
+                break;
+            case "debug":
+                if(cpov.verbosity >= 3 || cpov.debug)
+                    console.log("[" + location + "] DEBUG: " + message + instance);
+                break;
+        }
     }
 
+    if(level == "fatal")
+        cpov.process.exit(1);
 }
 
 

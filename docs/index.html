@@ -43,27 +43,14 @@ be the user manual. Right now, it's mostly notes.</div>
     sor
     text
 
+Special constructor arguments, esp Matrix operations
 copy() method across classes, both shallow and deep
 sky_sphere
 parent/child updates for CSG
-transform getter copies baseTransform before returning when needed.
-transform reset
 CSG output
-Primitive destructor
-Special constructor arguments, esp Matrix operations
 Main processing loop and output
     Real-valued ticks to allow emulation of POV-Ray animation clock
-Colorized error messages
-Add serial/identifier to comments in output</pre>
-
-<h4>Camera validation</h4>
-<div class='code'>if(this.type === null) {
-    throw new Error("[Camera]: Camera type is undefined.");
-} else if(this.type == "cylinder" && this.cylinderType === null) {
-    throw new Error("[Camera]: Camera type is cylinder but cylinderType is undefined.");
-} else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null))) {
-    throw new Error("[Camera]: The orthographic camera requires either angle or up and right to be defined.");
-}</div>
+Update cpov.error() calls to include this</pre>
 
 
 <h3>Milestone C1</h3>

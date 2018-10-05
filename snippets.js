@@ -98,6 +98,15 @@ toSDL(stops = 0) {
 }
 
 
+// Primitive.destroy //---------------------------------------------------------
+
+destroy() {
+    delete cpov.serialMap(this.serial);
+    if(this.id)
+        delete cpov.idMap(this.id);
+}
+
+
 
 // VectorXY.toSDL //------------------------------------------------------------
 
@@ -265,6 +274,10 @@ toSDL(stops = 0) {
 
     if(this.type === null)
         cpov.error("fatal", "type is undefined.", "Camera.toSDL");
+    else if(this.type == "cylinder" && this.cylinderType === null)
+        cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL");
+    else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
+        cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL");
 
     var pad     = cpov.tab(stops);
     var ppad    = cpov.tab(stops + 1);
@@ -864,29 +877,6 @@ xPoint(point) {
 }
 
 
-//--------------------------------------------------------------------------
-// Given a Primitive, applies this Matrix to its transform. If
-// this.transform is null, multiplies itself by the baseTransform and stores
-// the result in this.transform, unless this.baseTransform is null, in which
-// case it exits with an error.
-//--------------------------------------------------------------------------
-
-apply(obj) {
-
-    if(!cpov.inheritsFrom(obj, "Primitive")
-        cpov.error("fatal", "obj is not a Primitive.", "Matrix.apply");
-
-    if(obj.transform === null) {
-        if(obj.baseTransform === null) {
-            cpov.error("fatal", cpov.primitiveIdentifier(obj) + " does not have a baseTransform.", "Matrix.apply");
-        } else {
-            obj.transform = this.xMatrix(obj.baseTransform);
-        }
-    } else {
-        obj.transform = this.xMatrix(obj.transform);
-    }
-}
-
 
 // VectorXY.copy //-------------------------------------------------------------
 
@@ -1010,3 +1000,57 @@ copy() {
 
     return that;
 }
+
+
+
+// Primitive.transform.get-set //-----------------------------------------------
+
+//--------------------------------------------------------------------------
+// CephaloPOV primitives differ from their SDL substrates in having an
+// immutable baseTransform which is retained even as additional transforms
+// are applied at runtime. The first time transform is read or written, we
+// copy the baseTransform to transform and then perform the requested
+// action.
+//--------------------------------------------------------------------------
+
+get transform() {
+
+    if(this._transform === null) {
+        if(this._baseTransform === null) {
+            cpov.error("fatal", "transform cannot be read until baseTransform is set.", "Primitive.transform", this);
+        } else {
+            this.transform = this.baseTransform;
+        }
+    }
+
+    if(typeof this._transform == "function")
+        return this._transform();
+    else if(typeof this._transform == "string" && this._transform.substr(0, 1) == "&")
+        return this._transform.substr(1);
+    else
+        return this._transform;
+}
+
+set transform(val) {
+
+    if(val === null) {                       // essentially the same as transformReset
+        this._transform = null;
+        return;
+    }
+
+    if(cpov.isSDLFunction(val)) {     // can't do math with SDL functions
+        cpov.error("fatal", "transform cannot be an SDL function.", "Primitive.transform", this);
+        return;
+    }
+
+    if(typeof val == "function") {
+        val = val();
+    }
+
+    if(!cpov.isClass(val, "Matrix"))
+        cpov.error("fatal", "transform value must evaluate to a Matrix.", "Primitive.transform", this);
+
+    this._transform = val.xMatrix(this.transform);
+
+}
+

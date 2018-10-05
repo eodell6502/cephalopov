@@ -2948,8 +2948,23 @@ class Primitive {
     }
 
     //--------------------------------------------------------------------------
-
+    // CephaloPOV primitives differ from their SDL substrates in having an
+    // immutable baseTransform which is retained even as additional transforms
+    // are applied at runtime. The first time transform is read or written, we
+    // copy the baseTransform to transform and then perform the requested
+    // action.
+    //--------------------------------------------------------------------------
+    
     get transform() {
+    
+        if(this._transform === null) {
+            if(this._baseTransform === null) {
+                cpov.error("fatal", "transform cannot be read until baseTransform is set.", "Primitive.transform", this);
+            } else {
+                this.transform = this.baseTransform;
+            }
+        }
+    
         if(typeof this._transform == "function")
             return this._transform();
         else if(typeof this._transform == "string" && this._transform.substr(0, 1) == "&")
@@ -2957,14 +2972,30 @@ class Primitive {
         else
             return this._transform;
     }
-
+    
     set transform(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Matrix'))) {
-            this._transform = val;
-        } else {
-            cpov.error("fatal", "transform must be a Matrix.", "Primitive");
+    
+        if(val === null) {                       // essentially the same as transformReset
+            this._transform = null;
+            return;
         }
+    
+        if(cpov.isSDLFunction(val)) {     // can't do math with SDL functions
+            cpov.error("fatal", "transform cannot be an SDL function.", "Primitive.transform", this);
+            return;
+        }
+    
+        if(typeof val == "function") {
+            val = val();
+        }
+    
+        if(!cpov.isClass(val, "Matrix"))
+            cpov.error("fatal", "transform value must evaluate to a Matrix.", "Primitive.transform", this);
+    
+        this._transform = val.xMatrix(this.transform);
+    
     }
+
 
     //--------------------------------------------------------------------------
     // Generates SDL from parameters.
@@ -3035,6 +3066,13 @@ class Primitive {
             contents.push(pad + this.transform.toSDL(stops + 1));
     
         return contents.join("\n");
+    }
+
+
+    destroy() {
+        delete cpov.serialMap(this.serial);
+        if(this.id)
+            delete cpov.idMap(this.id);
     }
 
 
@@ -3731,6 +3769,10 @@ class Camera {
     
         if(this.type === null)
             cpov.error("fatal", "type is undefined.", "Camera.toSDL");
+        else if(this.type == "cylinder" && this.cylinderType === null)
+            cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL");
+        else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
+            cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL");
     
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
@@ -4264,7 +4306,7 @@ class HeightField {
     }
 
     set source(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val) || cpov.isString(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val) || cpov.isString(val))) {
             this._source = val;
         } else {
             cpov.error("fatal", "source", "HeightField");
@@ -4515,7 +4557,7 @@ class IsoSurface {
     }
 
     set source(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._source = val;
         } else {
             cpov.error("fatal", "source must be an SDL function.", "IsoSurface");
@@ -5856,7 +5898,7 @@ class Parametric {
     }
 
     set funcX(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._funcX = val;
         } else {
             cpov.error("fatal", "funcX must be an SDL function.", "Parametric");
@@ -5875,7 +5917,7 @@ class Parametric {
     }
 
     set funcY(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._funcY = val;
         } else {
             cpov.error("fatal", "funcY must be an SDL function.", "Parametric");
@@ -5894,7 +5936,7 @@ class Parametric {
     }
 
     set funcZ(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isSdlFunction(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._funcZ = val;
         } else {
             cpov.error("fatal", "funcZ must be an SDL function.", "Parametric");
@@ -10212,30 +10254,6 @@ class Matrix {
             this.v01 * point.x + this.v11 * point.y + this.v21 * point.z + this.v31,
             this.v02 * point.x + this.v12 * point.y + this.v22 * point.z + this.v32
         );
-    }
-    
-    
-    //--------------------------------------------------------------------------
-    // Given a Primitive, applies this Matrix to its transform. If
-    // this.transform is null, multiplies itself by the baseTransform and stores
-    // the result in this.transform, unless this.baseTransform is null, in which
-    // case it exits with an error.
-    //--------------------------------------------------------------------------
-    
-    apply(obj) {
-    
-        if(!cpov.inheritsFrom(obj, "Primitive")
-            cpov.error("fatal", "obj is not a Primitive.", "Matrix.apply");
-    
-        if(obj.transform === null) {
-            if(obj.baseTransform === null) {
-                cpov.error("fatal", cpov.primitiveIdentifier(obj) + " does not have a baseTransform.", "Matrix.apply");
-            } else {
-                obj.transform = this.xMatrix(obj.baseTransform);
-            }
-        } else {
-            obj.transform = this.xMatrix(obj.transform);
-        }
     }
 
 
