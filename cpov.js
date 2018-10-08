@@ -349,10 +349,10 @@ cpov.internalSplineTypes = {
 
 cpov.prismTypes = {
     bezierSpline:    "bezier_spline",
-    conicSweep:      "conicSweep",
-    cubicSpline:     "cubicSpline",
+    conicSweep:      "conic_sweep",
+    cubicSpline:     "cubic_spline",
     linearSpline:    "linear_spline",
-    linearSweep:     "linearSweep",
+    linearSweep:     "linear_sweep",
     quadraticSpline: "quadratic_spline",
 };
 
@@ -1646,7 +1646,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Parametric.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -1710,7 +1710,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Prism.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -1822,7 +1822,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Sor.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -1846,7 +1846,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Text.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
 			{
@@ -2010,7 +2010,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Polygon.toSDL"],
         immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {

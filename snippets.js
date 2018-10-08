@@ -303,7 +303,7 @@ toSDL(stops = 0) {
 	if(this.hierarchy)
 		content.push(ppad + "hierarchy on");
 	if(this.sturm)
-		content.push(ppad + "sturm on");
+		content.push(ppad + "sturm");
 	if(this.threshold !== null)
 		content.push(ppad + "threshold " + this.threshold);
     content.push(super.toSDL(stops + 1));
@@ -463,7 +463,7 @@ toSDL(stops = 0) {
     content.push(pad + "cubic {");
     content.push(ppad + this.coefficients.join(", ");
     if(this.sturm)
-        content.push(ppad + "sturn on");
+        content.push(ppad + "sturm");
     content.push(super.toSDL(stops + 1));
     content.push(pad + "}");
 
@@ -723,7 +723,7 @@ toSDL(stops = 0) {
 	content.push(ppad + items.join(", ");
 
 	if(this.sturm)
-		content.push(ppad + "sturm on");
+		content.push(ppad + "sturm");
 
     content.push(super.toSDL(stops + 1));
     content.push(pad + "}");
@@ -877,6 +877,65 @@ toSDL(stops = 0) {
 
 
 
+// Parametric.toSDL //------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+	if(this.funcX === null)
+		cpov.error("fatal", "funcX is undefined.", "Parametric.toSDL", this);
+	if(this.funcY === null)
+		cpov.error("fatal", "funcY is undefined.", "Parametric.toSDL", this);
+	if(this.funcZ === null)
+		cpov.error("fatal", "funcZ is undefined.", "Parametric.toSDL", this);
+	if(this.uv1 === null)
+		cpov.error("fatal", "uv1 is undefined.", "Parametric.toSDL", this);
+	if(this.uv2 === null)
+		cpov.error("fatal", "uv2 is undefined.", "Parametric.toSDL", this);
+
+	content.push(pad + "parametric {");
+	content.push(ppad + this.funcX);
+    content.push(ppad + this.funcY);
+    content.push(ppad + this.funcZ);
+    content.push(ppad + this.uv1.toSDL() + ", " + this.uv2.toSDL());
+
+    if(this.containedBy)
+        content.push(ppad + "contained_by {\n" + this.containedBy.toSDL(stops + 2) + "\n}");
+    if(this.maxGradient !== null)
+        content.push(ppad + "max_gradient " + this.maxGradient);
+    if(this.accuracy !== null)
+        content.push(ppad + "accuracy " + this.accuracy);
+    if(this.precomputeDepth && (this.precomputeX || this.precomputeY || this.precomputeZ)) {
+        var items = [ ];
+        if(this.precomputeX)
+            items.push("x");
+        if(this.precomputeY)
+            items.push("y");
+        if(this.precomputeZ)
+            items.push("z");
+        content.push(ppad + "precompute " + this.precomputeDepth + " " + items.join(", "));
+    }
+
+	content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+
+}
+
+
+
 // Plane.toSDL //---------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -905,6 +964,129 @@ toSDL(stops = 0) {
 
     return content.join("\n");
 
+}
+
+
+
+// Polygon.toSDL //---------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+	if(this.points === null)
+		cpov.error("fatal", "points is undefined.", "Polygon.toSDL", this);
+  	if(this.points.length < 3)
+		cpov.error("fatal", "points must contain at least three VectorXY.", "Polygon.toSDL", this);
+
+	content.push(pad + "polygon {");
+	content.push(ppad + this.points.length + ",");
+    var items = [ ];
+    for(var i = 0; i < this.points.length; i++) {
+        items.push(points[i].toSDL());
+    }
+    content.push(ppad + items.join(", ");
+	content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+
+}
+
+
+
+// Prism.toSDL //-----------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+	if(this.type === null)
+		cpov.error("fatal", "type is undefined.", "Prism.toSDL", this);
+    if(this.height1 === null)
+        cpov.error("fatal", "height1 is undefined.", "Prism.toSDL", this);
+    if(this.height2 === null)
+        cpov.error("fatal", "height2 is undefined.", "Prism.toSDL", this);
+	if(this.points === null)
+		cpov.error("fatal", "points is undefined.", "Prism.toSDL", this);
+  	if(this.points.length < 3)
+		cpov.error("fatal", "points must contain at least three VectorXY.", "Prism.toSDL", this);
+
+	content.push(pad + "prism {");
+    content.push(ppad + cpov.prismTypes(this.type));
+    content.push(ppad + this.height1 + ", " + this.height2 + ", " + this.points.length + ",");
+    var items = [ ];
+    for(var i = 0; i < this.points.length; i++) {
+        items.push(points[i].toSDL());
+    }
+    content.push(ppad + items.join(", ");
+    if(this.open)
+        content.push(ppad + "open");
+    if(this.sturm)
+        content.push(ppad + "sturm");
+	content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+
+}
+
+
+
+// Sor.toSDL //-----------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+    if(this.points === null)
+        cpov.error("fatal", "points is undefined.", "Sor.toSDL", this);
+    if(this.points.length < 2)
+        cpov.error("fatal", "points must contain at least two VectorXY.", "Sor.toSDL", this);
+
+    content.push(pad + "sor {");
+    var items = [ this.points.length ];
+    for(var i = 0; i < this.points.length; i++)
+        items.push(this.points[i].toSDL());
+    content.push(ppad + items.join(", "));
+    if(this.open)
+        content.push(ppad + "open");
+    if(this.sturm)
+        content.push(ppad + "sturm");
+    content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
 }
 
 
@@ -987,12 +1169,22 @@ toSDL(stops = 0) {
     var ppad    = cpov.tab(stops + 1);
     var content = [ ];
 
+    if(this.fontType === null)
+        cpov.error("fatal", "fontType is undefined.", "Text.toSDL", this);
     if(this.font === null)
         cpov.error("fatal", "font is undefined.", "Text.toSDL", this);
+    if(this.displayText === null)
+        cpov.error("fatal", "displayText is undefined.", "Text.toSDL", this);
+    if(this.thickness === null)
+        cpov.error("fatal", "thickness is undefined.", "Text.toSDL", this);
+    if(this.offset === null)
+        cpov.error("fatal", "offset is undefined.", "Text.toSDL", this);
 
+    // TODO: Handle escaping of double quotes in this.displayText
 
-    content.push(pad + "superellipsoid {");
-    content.push(ppad + "<" + this.e + ", " + this.n + ">");
+    content.push(pad + "text {");
+    content.push(ppad + this.fontType + " " + "\"" + this.font + "\"" + "\"" + );
+    content.push(ppad + this.thickness + ", " + this.offset);
     content.push(super.toSDL(stops + 1));
     content.push(pad + "}");
 
