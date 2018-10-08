@@ -2441,7 +2441,6 @@ class Primitive {
         this._finish           = null;
         this._frameBegin       = null;
         this._frameEnd         = null;
-        this._hierarchy        = null;
         this._hollow           = null;
         this._id               = null;
         this._interior         = null;
@@ -2450,7 +2449,6 @@ class Primitive {
         this._noImage          = null;
         this._noRadiosity      = null;
         this._noReflection     = null;
-        this._normal           = null;
         this._noShadow         = null;
         this._parent           = null;
         this._photons          = null;
@@ -2645,25 +2643,6 @@ class Primitive {
 
     //--------------------------------------------------------------------------
 
-    get hierarchy() {
-        if(typeof this._hierarchy == "function")
-            return this._hierarchy();
-        else if(typeof this._hierarchy == "string" && this._hierarchy.substr(0, 1) == "&")
-            return this._hierarchy.substr(1);
-        else
-            return this._hierarchy;
-    }
-
-    set hierarchy(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
-            this._hierarchy = val;
-        } else {
-            cpov.error("fatal", "hierarchy must be a boolean.", "Primitive");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
     get hollow() {
         if(typeof this._hollow == "function")
             return this._hollow();
@@ -2811,25 +2790,6 @@ class Primitive {
             this._noReflection = val;
         } else {
             cpov.error("fatal", "noReflection must be a boolean.", "Primitive");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get normal() {
-        if(typeof this._normal == "function")
-            return this._normal();
-        else if(typeof this._normal == "string" && this._normal.substr(0, 1) == "&")
-            return this._normal.substr(1);
-        else
-            return this._normal;
-    }
-
-    set normal(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ'))) {
-            this._normal = val;
-        } else {
-            cpov.error("fatal", "normal must be a VectorXYZ.", "Primitive");
         }
     }
 
@@ -3226,6 +3186,45 @@ class Blob {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        if(this.components === null)
+            cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "blob {");
+    	var components = this.components;
+    	if(cpov.isSDLFunction(components)) {
+    		content.push(ppad + this.components);
+    	} else { // array
+    		for(var i = 0; i < components.length; i++) {
+    			content.push(components[i].toSDL(stops + 1);
+    		}
+    	}
+    	if(this.hierarchy)
+    		content.push(ppad + "hierarchy on");
+    	if(this.sturm)
+    		content.push(ppad + "sturm on");
+    	if(this.threshold !== null)
+    		content.push(ppad + "threshold " + this.threshold);
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    }
+
+
 
 }
 
@@ -3347,9 +3346,9 @@ class Box {
             return "";
     
         if(this.corner1 === null)
-            cpov.error("fatal", "corner1 is undefined.", "Box.toSDL");
+            cpov.error("fatal", "corner1 is undefined.", "Box.toSDL", this);
         if(this.corner2 === null)
-            cpov.error("fatal", "corner2 is undefined.", "Box.toSDL");
+            cpov.error("fatal", "corner2 is undefined.", "Box.toSDL", this);
     
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
@@ -3768,11 +3767,11 @@ class Camera {
             return "";
     
         if(this.type === null)
-            cpov.error("fatal", "type is undefined.", "Camera.toSDL");
+            cpov.error("fatal", "type is undefined.", "Camera.toSDL", this);
         else if(this.type == "cylinder" && this.cylinderType === null)
-            cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL");
+            cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL", this);
         else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
-            cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL");
+            cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
     
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
@@ -3992,13 +3991,13 @@ class Cone {
             return "";
     
         if(this.basePoint === null)
-            cpov.error("fatal", "basePoint is undefined.", "Cone.toSDL");
+            cpov.error("fatal", "basePoint is undefined.", "Cone.toSDL", this);
         if(this.baseRadius === null)
-            cpov.error("fatal", "baseRadius is undefined.", "Cone.toSDL");
+            cpov.error("fatal", "baseRadius is undefined.", "Cone.toSDL", this);
         if(this.capPoint === null)
-            cpov.error("fatal", "capPoint is undefined.", "Cone.toSDL");
+            cpov.error("fatal", "capPoint is undefined.", "Cone.toSDL", this);
         if(this.capRadius === null)
-            cpov.error("fatal", "capRadius is undefined.", "Cone.toSDL");
+            cpov.error("fatal", "capRadius is undefined.", "Cone.toSDL", this);
     
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
@@ -4200,11 +4199,11 @@ class Cylinder {
         var content = [ ];
     
         if(this.basePoint === null)
-            cpov.error("fatal", "basePoint is undefined.", "Cylinder.toSDL");
+            cpov.error("fatal", "basePoint is undefined.", "Cylinder.toSDL", this);
         if(this.capPoint === null)
-            cpov.error("fatal", "capPoint is undefined.", "Cylinder.toSDL");
+            cpov.error("fatal", "capPoint is undefined.", "Cylinder.toSDL", this);
         if(this.radius === null)
-            cpov.error("fatal", "radius is undefined.", "Cylinder.toSDL");
+            cpov.error("fatal", "radius is undefined.", "Cylinder.toSDL", this);
     
         content.push(pad + "cylinder {");
         content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
@@ -4453,7 +4452,7 @@ class HeightField {
                 + (this.premultiplied === null ? "" : (this.premultiplied ? "on" : "off"))
             );
         } else {
-            cpov.error("fatal", "Neither filename nor userFunc is defined.", "HeightField.toSDL");
+            cpov.error("fatal", "Neither filename nor userFunc is defined.", "HeightField.toSDL", this);
         }
     
         if(this.smooth === true)
@@ -4720,12 +4719,13 @@ class JuliaFractal {
 
         // Mutable properties //
 
-        this._type      = null;
-        this._power     = null;
-        this._maxIter   = null;
-        this._precision = null;
-        this._slice     = null;
-        this._distance  = null;
+        this._type       = null;
+        this._juliaParam = null;
+        this._power      = null;
+        this._maxIter    = null;
+        this._precision  = null;
+        this._slice      = null;
+        this._distance   = null;
 
         // Initialization //
 
@@ -4789,6 +4789,25 @@ class JuliaFractal {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be one of hypercomplex:acos, hypercomplex:acosh, hypercomplex:asin, hypercomplex:atan, hypercomplex:atanh, hypercomplex:cos, hypercomplex:cosh, hypercomplex:cube, hypercomplex:exp, hypercomplex:ln, hypercomplex:pwr, hypercomplex:reciprocal, hypercomplex:sin, hypercomplex:sinh, hypercomplex:sqr, hypercomplex:tan, hypercomplex:tanh, quaternion:cube, or quaternion:sqr.", "JuliaFractal");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get juliaParam() {
+        if(typeof this._juliaParam == "function")
+            return this._juliaParam();
+        else if(typeof this._juliaParam == "string" && this._juliaParam.substr(0, 1) == "&")
+            return this._juliaParam.substr(1);
+        else
+            return this._juliaParam;
+    }
+
+    set juliaParam(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW'))) {
+            this._juliaParam = val;
+        } else {
+            cpov.error("fatal", "juliaParam must be a VectorXYZW.", "JuliaFractal");
         }
     }
 
@@ -4886,6 +4905,49 @@ class JuliaFractal {
             cpov.error("fatal", "distance must be a float.", "JuliaFractal");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.type === null)
+            cpov.error("fatal", "type is undefined.", "JuliaFractal.toSDL", this);
+        if(this.juliaParam === null)
+            cpov.error("fatal", "juliaParam is undefined.", "JuliaFractal.toSDL", this);
+    	if((this.slice !== null && this.distance === null) || (this.slice === null && this.distance !== null))
+    		cpov.error("fatal", "To use either, both slice and distance must be specified together.", "JuliaFractal.toSDL", this);
+    
+    	var parts = this.type.split(/:/);
+    
+        content.push(pad + "julia_fractal {");
+    	content.push(ppad + this.juliaParam.toSDL());
+    	if(this.slice !== null)
+    		content.push(ppad + this.type.toSDL());
+    	content.push(ppad + parts[0]); // algebra type
+    	content.push(ppad + parts[1]); // function type
+    	if(this.maxIter !== null)
+    		content.push(ppad + "max_iteration " + this.maxIter);
+    	if(this.precision !== null)
+    		content.push(ppad + "precision " + this.precision);
+    	if(this.slice !== null)
+    		content.push(ppad + this.slice.toSDL() + ", " + this.distance);
+    
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    }
+
 
 
 }
@@ -5016,6 +5078,44 @@ class Lathe {
             cpov.error("fatal", "sturm must be a boolean.", "Lathe");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.type === null)
+            cpov.error("fatal", "type is undefined.", "Lathe.toSDL", this);
+    	if(this.points === null)
+    		cpov.error("fatal", "points is undefined.", "Lathe.toSDL", this);
+    	// TODO: add check for correct minimum number of points
+    
+        content.push(pad + "lathe {");
+    	content.push(ppad + cpov.splineTypes[this.type]);
+    
+    	var items = [ ];
+    	for(var i = 0; i < this.points.length; i++)
+    		items.push(this.points[i].toSDL());
+    	content.push(ppad + items.join(", ");
+    
+    	if(this.sturm)
+    		content.push(ppad + "sturm on");
+    
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    }
+
 
 
 }
@@ -5602,9 +5702,9 @@ class LightSource {
         var content = [ ];
     
         if(this.location === null)
-            cpov.error("fatal", "location is undefined.", "LightSource.toSDL");
+            cpov.error("fatal", "location is undefined.", "LightSource.toSDL", this);
         if(this.color === null)
-            cpov.error("fatal", "color is undefined.", "LightSource.toSDL");
+            cpov.error("fatal", "color is undefined.", "LightSource.toSDL", this);
     
         content.push(pad + "light_source {");
         content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
@@ -5791,9 +5891,9 @@ class Ovus {
         var content = [ ];
     
         if(this.topRadius === null)
-            cpov.error("fatal", "topRadius is undefined.", "Ovus.toSDL");
+            cpov.error("fatal", "topRadius is undefined.", "Ovus.toSDL", this);
         if(this.bottomRadius === null)
-            cpov.error("fatal", "bottomRadius is undefined.", "Ovus.toSDL");
+            cpov.error("fatal", "bottomRadius is undefined.", "Ovus.toSDL", this);
     
         content.push(pad + "ovus {");
         content.push(ppad + this.topRadius + ", " + this.bottomRadius);
@@ -6449,9 +6549,9 @@ class Sphere {
         var content = [ ];
     
         if(this.center === null)
-            cpov.error("fatal", "center is undefined.", "Sphere.toSDL");
+            cpov.error("fatal", "center is undefined.", "Sphere.toSDL", this);
         if(this.radius === null)
-            cpov.error("fatal", "radius is undefined.", "Sphere.toSDL");
+            cpov.error("fatal", "radius is undefined.", "Sphere.toSDL", this);
     
         content.push(pad + "sphere {");
         content.push(ppad + this.center.toSDL() + ", " + this.radius);
@@ -6615,7 +6715,8 @@ class Superellipsoid {
 
         // Mutable properties //
 
-        this._vector = null;
+        this._e = null;
+        this._n = null;
 
         // Initialization //
 
@@ -6665,20 +6766,39 @@ class Superellipsoid {
 
     //--------------------------------------------------------------------------
 
-    get vector() {
-        if(typeof this._vector == "function")
-            return this._vector();
-        else if(typeof this._vector == "string" && this._vector.substr(0, 1) == "&")
-            return this._vector.substr(1);
+    get e() {
+        if(typeof this._e == "function")
+            return this._e();
+        else if(typeof this._e == "string" && this._e.substr(0, 1) == "&")
+            return this._e.substr(1);
         else
-            return this._vector;
+            return this._e;
     }
 
-    set vector(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXY'))) {
-            this._vector = val;
+    set e(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._e = val;
         } else {
-            cpov.error("fatal", "vector must be a VectorXY.", "Superellipsoid");
+            cpov.error("fatal", "e must be a float.", "Superellipsoid");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get n() {
+        if(typeof this._n == "function")
+            return this._n();
+        else if(typeof this._n == "string" && this._n.substr(0, 1) == "&")
+            return this._n.substr(1);
+        else
+            return this._n;
+    }
+
+    set n(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._n = val;
+        } else {
+            cpov.error("fatal", "n must be a float.", "Superellipsoid");
         }
     }
 
@@ -6835,6 +6955,7 @@ class Text {
 
         // Mutable properties //
 
+        this._fontType    = null;
         this._font        = null;
         this._displayText = null;
         this._thickness   = null;
@@ -6884,6 +7005,25 @@ class Text {
 
     set pseudo(val) {
         throw new TypeError("[Text]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get fontType() {
+        if(typeof this._fontType == "function")
+            return this._fontType();
+        else if(typeof this._fontType == "string" && this._fontType.substr(0, 1) == "&")
+            return this._fontType.substr(1);
+        else
+            return this._fontType;
+    }
+
+    set fontType(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.fontTypes))) {
+            this._fontType = val;
+        } else {
+            cpov.error("fatal", "fontType must be one of 'ttf', or 'ttc'.", "Text");
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -7107,9 +7247,9 @@ class Torus {
         var content = [ ];
     
         if(this.majorRadius === null)
-            cpov.error("fatal", "majorRadius is undefined.", "Torus.toSDL");
+            cpov.error("fatal", "majorRadius is undefined.", "Torus.toSDL", this);
         if(this.minorRadius === null)
-            cpov.error("fatal", "minorRadius is undefined.", "Torus.toSDL");
+            cpov.error("fatal", "minorRadius is undefined.", "Torus.toSDL", this);
     
         content.push(pad + "torus {");
         content.push(ppad + this.majorRadius + ", " + this.minorRadius);
@@ -7290,6 +7430,49 @@ class BicubicPatch {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        if(this.type === null)
+            cpov.error("fatal", "type is undefined.", "BicubicPatch.toSDL", this);
+    	if(this.patch === null)
+            cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "bicubic_patch {");
+    	content.push(ppad + "type " + this.type);
+    	if(this.uSteps !== null)
+    		content.push(ppad + "u_steps " + this.uSteps);
+    	if(this.vSteps !== null)
+    		content.push(ppad + "v_steps " + this.vSteps);
+    	if(this.flatness !== null)
+    		content.push(ppad + "flatness " + this.flatness);
+    
+    	for(var row = 0; row < 4; row++) {
+    		var items = [ ];
+    		for(var col = 0; col < 4; col++) {
+    			items.push(this.points[row * 4 + col].toSDL());
+    		}
+    		content.push(ppad + items.join(", ") + (row == 3 ? "," : ""));
+    	}
+    
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    }
+
+
 
 }
 
@@ -7455,9 +7638,9 @@ class Disc {
         var content = [ ];
     
         if(this.center === null)
-            cpov.error("fatal", "center is undefined.", "Disc.toSDL");
+            cpov.error("fatal", "center is undefined.", "Disc.toSDL", this);
         if(this.radius === null)
-            cpov.error("fatal", "radius is undefined.", "Disc.toSDL");
+            cpov.error("fatal", "radius is undefined.", "Disc.toSDL", this);
     
         content.push(pad + "disc {");
         content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
@@ -7938,11 +8121,11 @@ class Triangle {
         var content = [ ];
     
         if(this.corner1 === null)
-            cpov.error("fatal", "corner1 is undefined.", "Triangle.toSDL");
+            cpov.error("fatal", "corner1 is undefined.", "Triangle.toSDL", this);
         if(this.corner2 === null)
-            cpov.error("fatal", "corner2 is undefined.", "Triangle.toSDL");
+            cpov.error("fatal", "corner2 is undefined.", "Triangle.toSDL", this);
         if(this.corner3 === null)
-            cpov.error("fatal", "corner3 is undefined.", "Triangle.toSDL");
+            cpov.error("fatal", "corner3 is undefined.", "Triangle.toSDL", this);
     
         if(this.smooth) {
     
@@ -7954,11 +8137,11 @@ class Triangle {
         } else {
     
             if(this.normal1 === null)
-                cpov.error("fatal", "normal1 is undefined.", "Triangle.toSDL");
+                cpov.error("fatal", "normal1 is undefined.", "Triangle.toSDL", this);
             if(this.normal2 === null)
-                cpov.error("fatal", "normal2 is undefined.", "Triangle.toSDL");
+                cpov.error("fatal", "normal2 is undefined.", "Triangle.toSDL", this);
             if(this.normal3 === null)
-                cpov.error("fatal", "normal3 is undefined.", "Triangle.toSDL");
+                cpov.error("fatal", "normal3 is undefined.", "Triangle.toSDL", this);
     
             content.push(pad + "smooth_triangle {");
             content.push(ppad
@@ -8083,6 +8266,35 @@ class Plane {
             cpov.error("fatal", "distance must be a float.", "Plane");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+    	if(this.normal === null)
+    		cpov.error("fatal", "normal is undefined.", "Sphere.toSDL", this);
+    	if(this.distance === null)
+    		cpov.error("fatal", "distance is undefined.", "Sphere.toSDL", this);
+    
+    	content.push(pad + "plane {");
+    	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
+    	content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    
+    }
+
 
 
 }
@@ -8303,6 +8515,34 @@ class Cubic {
             cpov.error("fatal", "sturm must be a boolean.", "Cubic");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.coefficients === null)
+            cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
+    
+        content.push(pad + "cubic {");
+        content.push(ppad + this.coefficients.join(", ");
+        if(this.sturm)
+            content.push(ppad + "sturn on");
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    }
+
 
 
 }
@@ -8928,7 +9168,7 @@ class Union {
         var content = [ ];
     
         if(this.objects === null)
-            cpov.error("fatal", "objects is undefined.", "Union.toSDL");
+            cpov.error("fatal", "objects is undefined.", "Union.toSDL", this);
     
         content.push(pad + "merge {");
         for(var i = 0; i < this.objects.length; i++) {
@@ -9036,7 +9276,7 @@ class Intersection {
         var content = [ ];
     
         if(this.objects === null)
-            cpov.error("fatal", "objects is undefined.", "Intersection.toSDL");
+            cpov.error("fatal", "objects is undefined.", "Intersection.toSDL", this);
     
         content.push(pad + "intersection {");
         for(var i = 0; i < this.objects.length; i++) {
@@ -9163,9 +9403,9 @@ class Difference {
         var content = [ ];
     
         if(this.positiveObject === null)
-            cpov.error("fatal", "positiveObject is undefined.", "Difference.toSDL");
+            cpov.error("fatal", "positiveObject is undefined.", "Difference.toSDL", this);
         if(this.negativeObjects === null)
-            cpov.error("fatal", "negativeObjects is undefined.", "Difference.toSDL");
+            cpov.error("fatal", "negativeObjects is undefined.", "Difference.toSDL", this);
     
         content.push(pad + "difference {");
         content.push(ppad + this.positiveObject.toSDL(stops + 1));
@@ -9273,7 +9513,7 @@ class Merge {
         var content = [ ];
     
         if(this.objects === null)
-            cpov.error("fatal", "objects is undefined.", "Merge.toSDL");
+            cpov.error("fatal", "objects is undefined.", "Merge.toSDL", this);
     
         content.push(pad + "merge {");
         for(var i = 0; i < this.objects.length; i++) {
@@ -9372,9 +9612,9 @@ class VectorXY {
     toSDL(stops = 0) {
     
         if(this.x === null)
-            cpov.error("fatal", "x is undefined.", "VectorXY.toSDL");
+            cpov.error("fatal", "x is undefined.", "VectorXY.toSDL", this);
         if(this.y === null)
-            cpov.error("fatal", "y is undefined.", "VectorXY.toSDL");
+            cpov.error("fatal", "y is undefined.", "VectorXY.toSDL", this);
     
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ">";
     }
@@ -9466,9 +9706,9 @@ class VectorUV {
     toSDL(stops = 0) {
     
         if(this.u === null)
-            cpov.error("fatal", "u is undefined.", "VectorUV.toSDL");
+            cpov.error("fatal", "u is undefined.", "VectorUV.toSDL", this);
         if(this.v === null)
-            cpov.error("fatal", "v is undefined.", "VectorUV.toSDL");
+            cpov.error("fatal", "v is undefined.", "VectorUV.toSDL", this);
     
         return cpov.tab(stops) + "<" + this.u + ", " + this.v + ">";
     }
@@ -9581,11 +9821,11 @@ class VectorXYZ {
     toSDL(stops = 0) {
     
         if(this.x === null)
-            cpov.error("fatal", "x is undefined.", "VectorXYZ.toSDL");
+            cpov.error("fatal", "x is undefined.", "VectorXYZ.toSDL", this);
         if(this.y === null)
-            cpov.error("fatal", "y is undefined.", "VectorXYZ.toSDL");
+            cpov.error("fatal", "y is undefined.", "VectorXYZ.toSDL", this);
         if(this.z === null)
-            cpov.error("fatal", "z is undefined.", "VectorXYZ.toSDL");
+            cpov.error("fatal", "z is undefined.", "VectorXYZ.toSDL", this);
     
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ">";
     }
@@ -9719,13 +9959,13 @@ class VectorXYZW {
     toSDL(stops = 0) {
     
         if(this.x === null)
-            cpov.error("fatal", "x is undefined.", "VectorXYZW.toSDL");
+            cpov.error("fatal", "x is undefined.", "VectorXYZW.toSDL", this);
         if(this.y === null)
-            cpov.error("fatal", "y is undefined.", "VectorXYZW.toSDL");
+            cpov.error("fatal", "y is undefined.", "VectorXYZW.toSDL", this);
         if(this.z === null)
-            cpov.error("fatal", "z is undefined.", "VectorXYZW.toSDL");
+            cpov.error("fatal", "z is undefined.", "VectorXYZW.toSDL", this);
         if(this.w === null)
-            cpov.error("fatal", "w is undefined.", "VectorXYZW.toSDL");
+            cpov.error("fatal", "w is undefined.", "VectorXYZW.toSDL", this);
     
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + ">";
     }
@@ -9903,11 +10143,11 @@ class Color {
         stops = cpov.tab(stops);
     
         if(this.r === null)
-            cpov.error("fatal", "r is undefined.", "Color.toSDL");
+            cpov.error("fatal", "r is undefined.", "Color.toSDL", this);
         if(this.g === null)
-            cpov.error("fatal", "g is undefined.", "Color.toSDL");
+            cpov.error("fatal", "g is undefined.", "Color.toSDL", this);
         if(this.b === null)
-            cpov.error("fatal", "b is undefined.", "Color.toSDL");
+            cpov.error("fatal", "b is undefined.", "Color.toSDL", this);
     
         var form = (this.srgb ? "s" : "") + "rgb";
         var args = [this.r, this.g, this.b];
@@ -10221,7 +10461,7 @@ class Matrix {
     xMatrix(that) {
     
         if(!cpov.isClass(that, "Matrix"))
-            cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix");
+            cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix", this);
     
         return new Matrix(
             /* v00 */ (this.v00 * that.v00 + this.v01 * that.v10 + this.v02 * that.v20),
@@ -10247,7 +10487,7 @@ class Matrix {
     xPoint(point) {
     
         if(!cpov.isClass(point, "VectorXYZ"))
-            cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint");
+            cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint", this);
     
         return new VectorXYZ(
             this.v00 * point.x + this.v10 * point.y + this.v20 * point.z + this.v30,

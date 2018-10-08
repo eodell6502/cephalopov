@@ -16,6 +16,7 @@ cpov.debug        = false;
 cpov.preamble     = false;     // contents of file to include
 cpov.outputBase   = "cpov0000" // output base name template
 cpov.infile       = false;     // input file
+cpov.tickVal      = 1.0;       // clock tick
 
 cpov.currentFrame = 0;    // current animation frame
 cpov.objectSerial = 0;    // running count of Primitives created
@@ -1444,7 +1445,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["JuliaFractal.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -1452,6 +1453,11 @@ cpov.objDef = {
                 req:   true,
                 valid: "cpov.inArray(val, cpov.juliaFractalTypes)",
                 err:   "type must be one of " + cpov.arrayToTextList(cpov.juliaFractalTypes) + "."
+            }, {
+                name:  "juliaParam",
+				req:   true,
+                valid: "cpov.isClass(val, 'VectorXYZW')",
+                err:   "juliaParam must be a VectorXYZW."
             }, {
                 name:  "power",
                 valid: "cpov.isClass(val, 'VectorXY')",
@@ -1480,7 +1486,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Lathe.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -1902,7 +1908,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["BicubicPatch.toSDL"],
         immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
@@ -2110,7 +2116,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Cubic.toSDL"],
         immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
