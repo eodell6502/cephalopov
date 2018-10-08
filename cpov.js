@@ -338,8 +338,8 @@ cpov.returnActions = {
 
 cpov.internalSplineTypes = {
     linearSpline: "linear_spline",
-    bSpline:      "b_spline",
-    cubicSpline:  "cubicSpline"
+    bezierSpline: "b_spline",
+    cubicSpline:  "cubic_spline"
 };
 
 
@@ -1774,7 +1774,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["SphereSweep.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -2096,14 +2096,19 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Poly.toSDL"],
         immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
+                name:  "order",
+                req:   true,
+                valid: "cpov.isInt(val) && val >= 2 && val <= 35",
+                err:   "order must be an integer in the range (."
+            }, {
                 name:  "coefficients",
                 req:   true,
-                valid: "cpov.isArrayOfFloats(val, 2, 35)",
-                err:   "coefficients must be an array of 2 to 35 floats."
+                valid: "cpov.isArrayOfFloats(val, 1, Infinity)",   // FIXME
+                err:   "coefficients must be an array of floats."
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
@@ -2136,14 +2141,14 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Quartic.toSDL"],
         immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "coefficients",
                 req:   true,
-                valid: "cpov.isArrayOfFloats(val, 20, 20)",
-                err:   "coefficients must be an array of 20 floats."
+                valid: "cpov.isArrayOfFloats(val, 35, 35)",
+                err:   "coefficients must be an array of 35 floats."
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
@@ -2152,12 +2157,12 @@ cpov.objDef = {
         ],
     },
 
-    polynomial: {                                             // this will require better understanding of the
-        desc: false,
+    polynomial: {                                             // This will require better understanding of the
+        desc: false,                                          // underlying maths than I currently have to validate.
         conArgs: false,
         conBlock: false,
         snippets: false,
-        immutable: { finite: false, solid: true, csg: false, pseudo: false },    // underlying maths than I currently have to validate
+        immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
                 name:  "order",
@@ -2181,59 +2186,14 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Quadric.toSDL"],
         immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
-                name:  "a",
+                name:  "coefficients",
                 req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "a must be a float."
-            }, {
-                name:  "b",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "b must be a float."
-            }, {
-                name:  "c",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "c must be a float."
-            }, {
-                name:  "d",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "d must be a float."
-            }, {
-                name:  "e",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "e must be a float."
-            }, {
-                name:  "f",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "f must be a float."
-            }, {
-                name:  "g",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "g must be a float."
-            }, {
-                name:  "h",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "h must be a float."
-            }, {
-                name:  "i",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "i must be a float."
-            }, {
-                name:  "j",
-                req:   true,
-                valid: "cpov.isFloat(val)",
-                err:   "j must be a float."
+                valid: "cpov.isArrayOfFloats(val, 10, 10)",
+                err:   "coefficients must be an array of 10 floats."
             }
         ],
 

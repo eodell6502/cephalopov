@@ -21,38 +21,44 @@ be the user manual. Right now, it's mostly notes.</div>
 
 <h3>Milestone C0</h3>
 
-<pre>reqTest in snippets for use in toSDL methods
+<pre>snippet: isoSurface.toSDL -- need to examine examples of functions
+snippet: mesh.toSDL
+snippet: polynomial.toSDL
 
-toSDL() for remaining Primitives and related types
-    isoSurface -- need to examine examples of functions
-    mesh
-    mesh2
-    poly
-    polynomial
-    quadric
-    quartic
-    sphereSweep
+reqTest in snippets for use in toSDL methods, or maybe revalidate
+
+CLI processing
+    -i, --infile
+    -o, --outfile (basename)
+    -q, --quietMode
+    -v, --verbose
+    -d, --debug (verbose = 4)
+    -p, --preamble
 
 Get SDL vector or SDL function out of vector params automatically
-CLI processing
+Add toSDL alias of toString to SDL function params
+
 Special constructor arguments, esp Matrix operations
-sky_sphere
-copy() method across classes, both shallow and deep
-parent/child updates for CSG, blobs, parametrics, etc.; subcomponents generally
+Temporary sky_sphere stub feature for testing
+parent/child updates for CSG, blobs, sphere sweeps, parametrics, etc.; subcomponents generally
 CSG output
 Main processing loop and output
-Add toSDL alias of toString to SDL function params</pre>
+
+copy() method across classes, both shallow and deep</pre>
 
 
 <h3>Milestone C1</h3>
 
-<pre>Wrap Array attributes with Proxies to enforce type
+<pre>snippet: mesh2.toSDL
+Wrap Array attributes with Proxies to enforce type
 Matrix
     rotate and skew
 Matrix, Vector, Color
     Use JS/SDL func in lieu of individual attributes
 Preamble/SDL include support
-Reorg: move things needed for codegen to separate file not included at runtime
+Reorg
+    Move things needed for codegen to separate file not included at runtime
+    Script to pretty-print definition files
 Camera pseudo-primitive transform integration
 codegen
     Documentation generation

@@ -6751,7 +6751,7 @@ class SphereSweep {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.internalSplineTypes))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be one of 'linearSpline', 'bSpline', or 'cubicSpline'.", "SphereSweep");
+            cpov.error("fatal", "type must be one of 'linearSpline', 'bezierSpline', or 'cubicSpline'.", "SphereSweep");
         }
     }
 
@@ -6792,6 +6792,46 @@ class SphereSweep {
             cpov.error("fatal", "tolerance must be a float.", "SphereSweep");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.type === null)
+            cpov.error("fatal", "type is undefined.", "SphereSweep.toSDL", this);
+        if(this.spheres === null)
+            cpov.error("fatal", "spheres is undefined.", "SphereSweep.toSDL", this);
+        if(this.type == "linearSpline" && this.spheres.length < 2)
+            cpov.error("fatal", "A linear spline requires at least two spheres.", "SphereSweep.toSDL", this);
+        else if((this.type == "bezierSpline" || this.type == "cubicSpline") && this.spheres.length < 4)
+            cpov.error("fatal", "Bezier and cubic splines require at least four spheres.", "SphereSweep.toSDL", this);
+    
+        content.push(pad + "sphere_sweep {");
+        content.push(ppad + this.type);
+        content.push(ppad + this.spheres.length + ",");
+        var items = [ ];
+        for(var i = 0; i < this.spheres.length; i++) {
+            items.push(ppad + this.spheres[i].center.toSDL() + ", " + this.spheres[i].radius);
+        }
+        content.push(items.join(",\n");
+        if(this.tolerance !== null)
+            content.push(ppad + "tolerance " + this.tolerance);
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    }
+
 
 
 }
@@ -8526,6 +8566,7 @@ class Poly {
 
         // Mutable properties //
 
+        this._order        = null;
         this._coefficients = null;
         this._sturm        = null;
 
@@ -8577,6 +8618,25 @@ class Poly {
 
     //--------------------------------------------------------------------------
 
+    get order() {
+        if(typeof this._order == "function")
+            return this._order();
+        else if(typeof this._order == "string" && this._order.substr(0, 1) == "&")
+            return this._order.substr(1);
+        else
+            return this._order;
+    }
+
+    set order(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 2 && val <= 35)) {
+            this._order = val;
+        } else {
+            cpov.error("fatal", "order must be an integer in the range (.", "Poly");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
@@ -8587,10 +8647,10 @@ class Poly {
     }
 
     set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 35))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 1, Infinity))) {
             this._coefficients = val;
         } else {
-            cpov.error("fatal", "coefficients must be an array of 2 to 35 floats.", "Poly");
+            cpov.error("fatal", "coefficients must be an array of floats.", "Poly");
         }
     }
 
@@ -8612,6 +8672,44 @@ class Poly {
             cpov.error("fatal", "sturm must be a boolean.", "Poly");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+    	if(this.order === null)
+    		cpov.error("fatal", "order is undefined.", "Poly.toSDL", this);
+        if(this.coefficients === null)
+            cpov.error("fatal", "coefficients is undefined.", "Poly.toSDL", this);
+    
+        var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
+    
+        if(this.coefficients.length != ccnt)
+            cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
+    
+    	content.push(pad + "poly {");
+        var items = this.coefficents.slice(0);
+        items.unshift(this.order);
+    	content.push(ppad + this.items.join(", "));
+        if(this.sturm)
+            content.push(ppad + "sturm")
+    	content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    
+    }
+
 
 
 }
@@ -8835,10 +8933,10 @@ class Quartic {
     }
 
     set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 35, 35))) {
             this._coefficients = val;
         } else {
-            cpov.error("fatal", "coefficients must be an array of 20 floats.", "Quartic");
+            cpov.error("fatal", "coefficients must be an array of 35 floats.", "Quartic");
         }
     }
 
@@ -8860,6 +8958,34 @@ class Quartic {
             cpov.error("fatal", "sturm must be a boolean.", "Quartic");
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.coefficients === null)
+            cpov.error("fatal", "coefficients is undefined.", "Quartic.toSDL", this);
+    
+        content.push(pad + "quartic {");
+        content.push(ppad + this.coefficients.join(", ");
+        if(this.sturm)
+            content.push(ppad + "sturm");
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
+    }
+
 
 
 }
@@ -9014,16 +9140,7 @@ class Quadric {
 
         // Mutable properties //
 
-        this._a = null;
-        this._b = null;
-        this._c = null;
-        this._d = null;
-        this._e = null;
-        this._f = null;
-        this._g = null;
-        this._h = null;
-        this._i = null;
-        this._j = null;
+        this._coefficients = null;
 
         // Initialization //
 
@@ -9073,193 +9190,54 @@ class Quadric {
 
     //--------------------------------------------------------------------------
 
-    get a() {
-        if(typeof this._a == "function")
-            return this._a();
-        else if(typeof this._a == "string" && this._a.substr(0, 1) == "&")
-            return this._a.substr(1);
+    get coefficients() {
+        if(typeof this._coefficients == "function")
+            return this._coefficients();
+        else if(typeof this._coefficients == "string" && this._coefficients.substr(0, 1) == "&")
+            return this._coefficients.substr(1);
         else
-            return this._a;
+            return this._coefficients;
     }
 
-    set a(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._a = val;
+    set coefficients(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 10, 10))) {
+            this._coefficients = val;
         } else {
-            cpov.error("fatal", "a must be a float.", "Quadric");
+            cpov.error("fatal", "coefficients must be an array of 10 floats.", "Quadric");
         }
     }
 
     //--------------------------------------------------------------------------
-
-    get b() {
-        if(typeof this._b == "function")
-            return this._b();
-        else if(typeof this._b == "string" && this._b.substr(0, 1) == "&")
-            return this._b.substr(1);
-        else
-            return this._b;
-    }
-
-    set b(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._b = val;
-        } else {
-            cpov.error("fatal", "b must be a float.", "Quadric");
-        }
-    }
-
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-
-    get c() {
-        if(typeof this._c == "function")
-            return this._c();
-        else if(typeof this._c == "string" && this._c.substr(0, 1) == "&")
-            return this._c.substr(1);
-        else
-            return this._c;
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+    
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.coefficients === null)
+            cpov.error("fatal", "coefficients is undefined.", "Quadric.toSDL", this);
+    
+        content.push(pad + "quartic {");
+        content.push(
+            ppad
+            + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, " +
+            + "<" + this.coefficients[3] + ", " + this.coefficients[4] + ", " + this.coefficients[5] + ">, " +
+            + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, " +
+            + this.coefficients[9]
+        );
+        content.push(super.toSDL(stops + 1));
+        content.push(pad + "}");
+    
+        return content.join("\n");
     }
 
-    set c(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._c = val;
-        } else {
-            cpov.error("fatal", "c must be a float.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get d() {
-        if(typeof this._d == "function")
-            return this._d();
-        else if(typeof this._d == "string" && this._d.substr(0, 1) == "&")
-            return this._d.substr(1);
-        else
-            return this._d;
-    }
-
-    set d(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._d = val;
-        } else {
-            cpov.error("fatal", "d must be a float.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get e() {
-        if(typeof this._e == "function")
-            return this._e();
-        else if(typeof this._e == "string" && this._e.substr(0, 1) == "&")
-            return this._e.substr(1);
-        else
-            return this._e;
-    }
-
-    set e(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._e = val;
-        } else {
-            cpov.error("fatal", "e must be a float.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get f() {
-        if(typeof this._f == "function")
-            return this._f();
-        else if(typeof this._f == "string" && this._f.substr(0, 1) == "&")
-            return this._f.substr(1);
-        else
-            return this._f;
-    }
-
-    set f(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._f = val;
-        } else {
-            cpov.error("fatal", "f must be a float.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get g() {
-        if(typeof this._g == "function")
-            return this._g();
-        else if(typeof this._g == "string" && this._g.substr(0, 1) == "&")
-            return this._g.substr(1);
-        else
-            return this._g;
-    }
-
-    set g(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._g = val;
-        } else {
-            cpov.error("fatal", "g must be a float.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get h() {
-        if(typeof this._h == "function")
-            return this._h();
-        else if(typeof this._h == "string" && this._h.substr(0, 1) == "&")
-            return this._h.substr(1);
-        else
-            return this._h;
-    }
-
-    set h(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._h = val;
-        } else {
-            cpov.error("fatal", "h must be a float.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get i() {
-        if(typeof this._i == "function")
-            return this._i();
-        else if(typeof this._i == "string" && this._i.substr(0, 1) == "&")
-            return this._i.substr(1);
-        else
-            return this._i;
-    }
-
-    set i(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._i = val;
-        } else {
-            cpov.error("fatal", "i must be a float.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get j() {
-        if(typeof this._j == "function")
-            return this._j();
-        else if(typeof this._j == "string" && this._j.substr(0, 1) == "&")
-            return this._j.substr(1);
-        else
-            return this._j;
-    }
-
-    set j(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._j = val;
-        } else {
-            cpov.error("fatal", "j must be a float.", "Quadric");
-        }
-    }
 
 
 }

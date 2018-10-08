@@ -968,6 +968,46 @@ toSDL(stops = 0) {
 
 
 
+// Poly.toSDL //----------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+	if(this.order === null)
+		cpov.error("fatal", "order is undefined.", "Poly.toSDL", this);
+    if(this.coefficients === null)
+        cpov.error("fatal", "coefficients is undefined.", "Poly.toSDL", this);
+
+    var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
+
+    if(this.coefficients.length != ccnt)
+        cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
+
+	content.push(pad + "poly {");
+    var items = this.coefficents.slice(0);
+    items.unshift(this.order);
+	content.push(ppad + this.items.join(", "));
+    if(this.sturm)
+        content.push(ppad + "sturm")
+	content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+
+}
+
+
 // Polygon.toSDL //---------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -1053,6 +1093,72 @@ toSDL(stops = 0) {
 
 
 
+// Quadric.toSDL //-------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+    if(this.coefficients === null)
+        cpov.error("fatal", "coefficients is undefined.", "Quadric.toSDL", this);
+
+    content.push(pad + "quartic {");
+    content.push(
+        ppad
+        + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, " +
+        + "<" + this.coefficients[3] + ", " + this.coefficients[4] + ", " + this.coefficients[5] + ">, " +
+        + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, " +
+        + this.coefficients[9]
+    );
+    content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+
+
+// Quartic.toSDL //-------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+    if(this.coefficients === null)
+        cpov.error("fatal", "coefficients is undefined.", "Quartic.toSDL", this);
+
+    content.push(pad + "quartic {");
+    content.push(ppad + this.coefficients.join(", ");
+    if(this.sturm)
+        content.push(ppad + "sturm");
+    content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+
+
 // Sor.toSDL //-----------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -1114,6 +1220,49 @@ toSDL(stops = 0) {
 
     content.push(pad + "sphere {");
     content.push(ppad + this.center.toSDL() + ", " + this.radius);
+    content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+
+
+// SphereSweep.toSDL //---------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+    if(this.type === null)
+        cpov.error("fatal", "type is undefined.", "SphereSweep.toSDL", this);
+    if(this.spheres === null)
+        cpov.error("fatal", "spheres is undefined.", "SphereSweep.toSDL", this);
+    if(this.type == "linearSpline" && this.spheres.length < 2)
+        cpov.error("fatal", "A linear spline requires at least two spheres.", "SphereSweep.toSDL", this);
+    else if((this.type == "bezierSpline" || this.type == "cubicSpline") && this.spheres.length < 4)
+        cpov.error("fatal", "Bezier and cubic splines require at least four spheres.", "SphereSweep.toSDL", this);
+
+    content.push(pad + "sphere_sweep {");
+    content.push(ppad + this.type);
+    content.push(ppad + this.spheres.length + ",");
+    var items = [ ];
+    for(var i = 0; i < this.spheres.length; i++) {
+        items.push(ppad + this.spheres[i].center.toSDL() + ", " + this.spheres[i].radius);
+    }
+    content.push(items.join(",\n");
+    if(this.tolerance !== null)
+        content.push(ppad + "tolerance " + this.tolerance);
     content.push(super.toSDL(stops + 1));
     content.push(pad + "}");
 
