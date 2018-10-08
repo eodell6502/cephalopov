@@ -226,6 +226,48 @@ toSDL(stops = 0) {
 
 
 
+// Blob.toSDL //----------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    if(this.components === null)
+        cpov.error("fatal", "components is undefined.", "Blob.toSDL");
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+    content.push(pad + "blob {");
+	var components = this.components;
+	if(cpov.isSDLFunction(components)) {
+		content.push(ppad + this.components);
+	} else { // array
+		for(var i = 0; i < components.length; i++) {
+			content.push(components[i].toSDL(stops + 1);
+		}
+	}
+	if(this.hierarchy)
+		content.push(ppad + "hierarchy on");
+	if(this.sturm)
+		content.push(ppad + "sturm on");
+	if(this.threshold !== null)
+		content.push(ppad + "threshold " + this.threshold);
+    content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+
+
 // Box.toSDL //-----------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -670,6 +712,39 @@ toSDL(stops = 0) {
 }
 
 
+
+// Plane.toSDL //---------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+	if(this.normal === null)
+		cpov.error("fatal", "normal is undefined.", "Sphere.toSDL");
+	if(this.distance === null)
+		cpov.error("fatal", "distance is undefined.", "Sphere.toSDL");
+
+	content.push(pad + "plane {");
+	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
+	content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+
+}
+
+
+
 // Sphere.toSDL //--------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -699,6 +774,66 @@ toSDL(stops = 0) {
     return content.join("\n");
 }
 
+
+
+// Superellipsoid.toSDL //--------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+    if(this.e === null)
+        cpov.error("fatal", "e is undefined.", "Superellipsoid.toSDL");
+    if(this.n === null)
+        cpov.error("fatal", "n is undefined.", "Superellipsoid.toSDL");
+
+    content.push(pad + "superellipsoid {");
+    content.push(ppad + "<" + this.e + ", " + this.n + ">");
+    content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
+
+
+
+// Text.toSDL //------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    if(!this.active)
+        return "";
+
+    var pad     = cpov.tab(stops);
+    var ppad    = cpov.tab(stops + 1);
+    var content = [ ];
+
+    if(this.font === null)
+        cpov.error("fatal", "font is undefined.", "Text.toSDL");
+
+
+    content.push(pad + "superellipsoid {");
+    content.push(ppad + "<" + this.e + ", " + this.n + ">");
+    content.push(super.toSDL(stops + 1));
+    content.push(pad + "}");
+
+    return content.join("\n");
+}
 
 
 // Torus.toSDL //---------------------------------------------------------------

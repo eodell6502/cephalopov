@@ -267,6 +267,14 @@ cpov.ditherTypes = {
 };
 
 
+//------------------------------------------------------------------------------
+// Legal font types mapped to textual descriptions.
+//------------------------------------------------------------------------------
+
+cpov.fontTypes = {
+	"ttf": "TrueType font",
+	"ttc": "TrueType collection",
+};
 
 //------------------------------------------------------------------------------
 // All (graphics) output file formats, mapped to textual descriptions.
@@ -1072,10 +1080,6 @@ cpov.objCommon = {
             valid: "typeof val == 'function'",
             err:   "frameEnd must be a JavaScript function."
         }, {
-            name:  "hierarchy",
-            valid: "cpov.isBoolean(val)",
-            err:   "hierarchy must be a boolean."
-        }, {
             name:  "hollow",
             valid: "cpov.isBoolean(val)",
             err:   "hollow must be a boolean."
@@ -1107,10 +1111,6 @@ cpov.objCommon = {
             name:  "noReflection",
             valid: "cpov.isBoolean(val)",
             err:   "noReflection must be a boolean."
-        }, {
-            name:  "normal",
-            valid: "cpov.isClass(val, 'VectorXYZ')",
-            err:   "normal must be a VectorXYZ."
         }, {
             name:  "noShadow",
             valid: "cpov.isBoolean(val)",
@@ -1161,7 +1161,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Blob.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -1797,10 +1797,16 @@ cpov.objDef = {
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
-                name:  "vector",
+                name:  "e",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXY')",
-                err:   "vector must be a VectorXY."
+                valid: "cpov.isFloat(val)",
+                err:   "e must be a float."
+            },
+			{
+                name:  "n",
+                req:   true,
+                valid: "cpov.isFloat(val)",
+                err:   "n must be a float."
             }
         ],
 
@@ -1837,7 +1843,12 @@ cpov.objDef = {
         snippets: false,
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
-            {
+			{
+				name:  "fontType",
+				req:   true,
+				valid: "cpov.isKey(val, cpov.fontTypes)",
+				err:   "fontType must be one of " + cpov.keysToTextList(cpov.fontTypes) + "."
+            }, {
                 name:  "font",
                 req:   true,
                 valid: "cpov.isNonEmptyString(val)",
@@ -2057,7 +2068,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Plane.toSDL"],
         immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
