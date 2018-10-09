@@ -17,10 +17,14 @@
     "url": "git+https://github.com/eodell/CephaloPOV.git"
   },
   "keywords": [
+    "3D"
+    "graphics",
+    "pov",
     "pov-ray",
-    "ray-tracing",
     "povray",
-    "pov"
+    "ray tracing",
+    "ray-tracing",
+    "raytracing",
   ],
   "author": "Eric O'Dell",
   "license": "MIT",

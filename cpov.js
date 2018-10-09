@@ -92,7 +92,7 @@ function main() {
     if(!userProgram.main)
         cpov.error("fatal", "Unable to access its 'main' export in input file.", "CEPHALOPOV");
 
-    // TODO: main loop
+    userProgram.main(cpov); // main loop
 
 }
 

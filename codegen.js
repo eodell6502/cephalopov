@@ -103,6 +103,24 @@ ClassBuilder.prototype.align = function(rows) {
 
 
 //------------------------------------------------------------------------------
+// Performs string interpolation. Given a string and an object containing k/v
+// pairs, returns a string where all of the instances of $key have been replaced
+// by their corresponding values. To keep it simple and to avoid the slithering
+// horror of ES2015's template strings, we just walk through the object, replac-
+// ing each corresponding $key in turn. This isn't very efficient, but it
+// it doesn't have to be in this case. Keys are interpreted as regexes.
+//------------------------------------------------------------------------------
+
+ClassBuilder.prototype.interpolate = function(str, obj) {
+    for(var k in obj) {
+        var regexp = new RegExp(k, "g");
+        str = str.replace(regexp, obj[k]);
+    }
+    return str;
+}
+
+
+//------------------------------------------------------------------------------
 // Generates source code for class.
 //------------------------------------------------------------------------------
 

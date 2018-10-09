@@ -345,7 +345,7 @@ cpov.internalSplineTypes = {
 
 
 //------------------------------------------------------------------------------
-// Map of prism types to their SDL representations.
+// Map of prism (spline) types to their SDL representations.
 //------------------------------------------------------------------------------
 
 cpov.prismTypes = {
