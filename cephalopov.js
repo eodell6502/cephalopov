@@ -13,7 +13,8 @@ var cpov = { };
 cpov.quietMode    = false; // CLI switches ...
 cpov.verbosity    = 1;
 cpov.debug        = false;
-cpov.preamble     = false;     // contents of file to include
+cpov.preamble     = false;     // content to prepend to SDL output
+cpov.sdlIncludes  = false;     // SDL files to include after preamble
 cpov.outputBase   = "cpov0000" // output base name template
 cpov.infile       = false;     // input file
 cpov.tickVal      = 1.0;       // clock tick
@@ -2647,7 +2648,7 @@ cpov.parseCLI = function(optionMap) {
                 }
 
                 if(complex === null) {
-                    cpov.error("fatal", "Unknown commandline switch '-" + arg + "'", "CLI");
+                    cpov.error("fatal", "Unknown commandline switch '-" + arg + "'", "CEPHALOPOV");
                 } else {
                     arg = complex;
                     dashes = 2;
@@ -2660,7 +2661,7 @@ cpov.parseCLI = function(optionMap) {
         if(dashes == 2) {
 
             if(optionMap[arg] === undefined)
-                cpov.error("fatal", "Unknown commandline switch '--" + arg + "'", "CLI");
+                cpov.error("fatal", "Unknown commandline switch '--" + arg + "'", "CEPHALOPOV");
 
             currentArg = arg;
 
@@ -2674,9 +2675,9 @@ cpov.parseCLI = function(optionMap) {
         // If we get here, we're looking at an argument to a switch
 
         if(optionMap[currentArg] === undefined)
-            cpov.error("fatal", "Invalid commandline argument '" + item + "' supplied without preceding switch.", "CLI");
+            cpov.error("fatal", "Invalid commandline argument '" + item + "' supplied without preceding switch.", "CEPHALOPOV");
         else if(optionMap[currentArg].vals === undefined)
-            cpov.error("fatal", "Commandline switch --" + currentArg + "/-" + optionMap[currentArg].short + " does not take arguments.", "CLI");
+            cpov.error("fatal", "Commandline switch --" + currentArg + "/-" + optionMap[currentArg].short + " does not take arguments.", "CEPHALOPOV");
         else
             optionMap[currentArg].vals.push(item);
 
