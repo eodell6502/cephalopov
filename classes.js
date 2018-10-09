@@ -1,4 +1,4 @@
-var cpov = require("./cephalopov.js").cpov;
+var cpov = require("./cephalopov.js");
 
 //==============================================================================
 // The GlobalSettings class manages the variables that will be output into the 

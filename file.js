@@ -77,4 +77,4 @@ File.prototype.zeroPad = function(num, pad) {
 }
 
 
-exports.File = File;
+module.exports = File;

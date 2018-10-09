@@ -30,7 +30,7 @@ cpov.idMap        = { };  // maps identifiers to maps
 //------------------------------------------------------------------------------
 
 cpov.fs      = require("fs");
-cpov.File    = require("./file.js").File;
+cpov.File    = require("./file.js");
 cpov.chalk   = require("chalk");
 cpov.process = require("process");
 cpov.wrap    = require("word-wrap"); // https://github.com/jonschlinkert/word-wrap
@@ -2692,4 +2692,4 @@ cpov.parseCLI = function(optionMap) {
 // Fly my pretties, fly! =======================================================
 //==============================================================================
 
-exports.cpov = cpov;
+module.exports = cpov;

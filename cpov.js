@@ -3,8 +3,8 @@
 //##############################################################################
 
 var chalk = require("chalk");
-var cpov = require("./cephalopov.js").cpov;
-var File = require("./file.js").File;
+var cpov = require("./cephalopov.js");
+var File = require("./file.js");
 // import classes
 
 main();

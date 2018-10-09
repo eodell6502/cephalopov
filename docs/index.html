@@ -21,24 +21,14 @@ be the user manual. Right now, it's mostly notes.</div>
 
 <h3>Milestone C0</h3>
 
-<pre>
-CLI processing
-    -i, --infile
-    -o, --outfile (basename)
-    -q, --quietMode
-    -v, --verbose
-    -d, --debug (verbose = 4)
-    -p, --preamble
-
-Preamble/SDL include support
-Solidify understanding of Node modules
-
-reqTest in snippets for use in toSDL methods, or maybe revalidate
+<pre>reqTest in snippets for use in toSDL methods, or maybe revalidate
 
 Get SDL vector or SDL function out of vector params automatically
-Add toSDL alias of toString to SDL function params
+Add toSDL alias 'toString' to SDL function params
 
 Special constructor arguments, esp Matrix operations
+Matrix
+    rotate and skew
 
 Temporary sky_sphere stub feature for testing
 parent/child updates for CSG, blobs, sphere sweeps, parametrics, etc.; subcomponents generally
@@ -56,8 +46,6 @@ copy() method across classes, both shallow and deep</pre>
     snippet: mesh2.toSDL
     snippet: polynomial.toSDL
 Wrap Array attributes with Proxies to enforce type
-Matrix
-    rotate and skew
 Matrix, Vector, Color
     Use JS/SDL func in lieu of individual attributes
 Reorg
