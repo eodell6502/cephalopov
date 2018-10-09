@@ -21,12 +21,7 @@ be the user manual. Right now, it's mostly notes.</div>
 
 <h3>Milestone C0</h3>
 
-<pre>snippet: isoSurface.toSDL -- need to examine examples of functions
-snippet: mesh.toSDL
-snippet: polynomial.toSDL
-
-reqTest in snippets for use in toSDL methods, or maybe revalidate
-
+<pre>
 CLI processing
     -i, --infile
     -o, --outfile (basename)
@@ -34,6 +29,12 @@ CLI processing
     -v, --verbose
     -d, --debug (verbose = 4)
     -p, --preamble
+
+Preamble/SDL include support
+
+reqTest in snippets for use in toSDL methods, or maybe revalidate
+
+
 
 Get SDL vector or SDL function out of vector params automatically
 Add toSDL alias of toString to SDL function params
@@ -50,13 +51,17 @@ copy() method across classes, both shallow and deep</pre>
 
 <h3>Milestone C1</h3>
 
-<pre>snippet: mesh2.toSDL
+<pre>Solidify understanding of Node modules
+Remaining primitives
+    snippet: isoSurface.toSDL -- need to examine examples of functions
+    snippet: mesh.toSDL
+    snippet: mesh2.toSDL
+    snippet: polynomial.toSDL
 Wrap Array attributes with Proxies to enforce type
 Matrix
     rotate and skew
 Matrix, Vector, Color
     Use JS/SDL func in lieu of individual attributes
-Preamble/SDL include support
 Reorg
     Move things needed for codegen to separate file not included at runtime
     Script to pretty-print definition files
@@ -78,7 +83,7 @@ ImageOptions
 Execution
     Optionally generate .sh/.bat files
     Oversee execution directly
-Solidify understanding of Node modules</pre>
+</pre>
 
 
 <h3>Backlog</h3>
