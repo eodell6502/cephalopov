@@ -1,4 +1,4 @@
-var cpov  = require("./cpov.js").cpov;
+var cpov  = require("./cephalopov.js").cpov;
 var File  = require("./file.js").File;
 var cli   = require("commander");
 var chalk = require("chalk");
@@ -269,7 +269,7 @@ ClassBuilder.prototype.toString = function() {
 //==============================================================================
 
 var fp = new File("./classes.js", "w");
-fp.write("var cpov = require(\"./cpov.js\").cpov;\n\n");
+fp.write("var cpov = require(\"./cephalopov.js\").cpov;\n\n");
 
 fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./snippets.js") + "\n\n");
 fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
