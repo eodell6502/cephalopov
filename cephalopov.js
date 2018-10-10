@@ -2277,7 +2277,7 @@ cpov.vectorDef = {
     VectorXY: {
         desc: false,
         conArgs: false,
-        conBlock: false,
+        conBlock: "VectorXY.conBlock",
         snippets: ["VectorXY.copy", "VectorXY.toSDL"],
         mutable: [
             {
@@ -2294,7 +2294,7 @@ cpov.vectorDef = {
     VectorUV: {
         desc: false,
         conArgs: false,
-        conBlock: false,
+        conBlock: "VectorUV.conBlock",
         snippets: ["VectorUV.copy", "VectorUV.toSDL"],
         mutable: [
             {
@@ -2311,7 +2311,7 @@ cpov.vectorDef = {
     VectorXYZ: {
         desc: false,
         conArgs: false,
-        conBlock: false,
+        conBlock: "VectorXYZ.conBlock",
         snippets: ["VectorXYZ.copy", "VectorXYZ.toSDL"],
         mutable: [
             {
@@ -2332,7 +2332,7 @@ cpov.vectorDef = {
     VectorXYZW: {
         desc: false,
         conArgs: false,
-        conBlock: false,
+        conBlock: "VectorXYZW.conBlock",
         snippets: ["VectorXYZW.copy", "VectorXYZW.toSDL"],
         mutable: [
             {
@@ -2357,7 +2357,7 @@ cpov.vectorDef = {
     Color: {
         desc: false,
         conArgs: false,
-        conBlock: false,
+        conBlock: "Color.conBlock",
         snippets: ["Color.copy", "Color.toSDL"],
         mutable: [
             {
