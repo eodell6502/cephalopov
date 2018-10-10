@@ -531,7 +531,7 @@ cpov.gsDef = {
         + "into the SDL global_settings block.",
     conArgs: false,
     conBlock: false,
-    snippets: false,
+    snippets: ["GlobalSettings.toSDL"],
     mutable: [
         {
             name:  "adcBailout",
@@ -720,7 +720,7 @@ cpov.ioDef = {
         + "in the form of command line switches.",
     conArgs: false,
     conBlock: false,
-    snippets: ["GlobalSettings.output"],
+    snippets: ["ImageOptions.output"],
     mutable: [
         {
             name:  "allConsole",

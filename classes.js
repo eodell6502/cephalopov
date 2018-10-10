@@ -878,6 +878,109 @@ class GlobalSettings {
         }
     }
 
+    //==============================================================================
+    // Returns the SDL for the object *if* the type is GlobalSettings. (ImageOptions
+    // produces either commandline flags or the contents of a .ini file, neither of
+    // which is SDL.) Unlike other toSDL methods, this one does not take a stops
+    // argument because the SDL global_settings declaration always happens at the
+    // top level.
+    //==============================================================================
+    
+    toSDL() {
+        var contents = [ ];
+    
+        contents.push("global_settings {");
+    
+        var params = {
+            adcBailout: "adc_bailout",
+            ambientLight: "ambient_light",
+            assumedGamma: "assumed_gamma",
+            iridWavelength: "irid_wavelength",
+            charset: "charset",
+            maxIntersections: "max_intersections",
+            maxTraceLevel: "max_trace_level",
+            mmPerUnit: "mm_per_unit",
+            numberOfWaves: "number_of_waves",
+            noiseGenerator: "noise_generator"
+        };
+    
+        var radParams = {
+            radAdcBailout: "adc_bailout",
+            radAlwaysSample: "always_sample",
+            radBrightness: "brightness",
+            radCount: "count",
+            radErrorBound: "error_bound",
+            radGrayThreshold: "gray_threshold",
+            radLowErrorFactor: "low_error_factor",
+            radMaxSample: "max_sample",
+            radMaximumReuse: "maximum_reuse",
+            radMinimumReuse: "minimum_reuse",
+            radNearestCount: "nearest_count",
+            radNormal: "normal",
+            radPretraceStart: "pretrace_start",
+            radPretraceEnd: "pretrace_end",
+            radRecursionLimit: "recursion_limit",
+            radSubsurface: "subsurface"
+        };
+    
+        var subParams = {
+            subRadiosity: "radiosity",
+            subSamples: "samples"
+        };
+    
+        var photonParams = {
+            photonSpacing: "spacing",
+            photonCount: "count",
+            photonGather: "gather",
+            photonMedia: "media",
+            photonJitter: "jitter",
+            photonMaxTraceLevel: "max_trace_level",
+            photonAdcBailout: "adc_bailout",
+            photonSaveFile: "save_file",
+            photonLoadFile: "load_file",
+            photonAutostop: "autostop",
+            photonExpandThresholds: "expand_thresholds",
+            photonRadius: "radius"
+        };
+    
+        for(var i in params) {
+            if(this[i] !== null)
+                contents.push("    " + params[i] + " " + this[i]);
+        }
+    
+        if(this.radiosity) {
+            contents.push("    radiosity {");
+            for(var i in radParams) {
+                if(this[i] !== null)
+                    contents.push("        " + radParams[i] + " " + this[i]);
+            }
+            contents.push("    }");
+        }
+    
+        if(this.subsurface) {
+            contents.push("    subsurface {");
+            for(var i in subParams) {
+                if(this[i] !== null)
+                    contents.push("        " + subParams[i] + " " + this[i]);
+            }
+            contents.push("    }");
+        }
+    
+        if(this.photon) {
+            contents.push("    photon {");
+            for(var i in photonParams) {
+                if(this[i] !== null)
+                    contents.push("        " + photonParams[i] + " " + this[i]);
+            }
+            contents.push("    }");
+        }
+    
+        contents.push("}");
+    
+        return contents.join("\n");
+    }
+
+
 
 }
 
