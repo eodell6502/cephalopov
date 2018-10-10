@@ -234,6 +234,17 @@ var pad     = cpov.tab(stops);
 var ppad    = cpov.tab(stops + 1);
 var content = [ ];
 
+
+
+// Primitive.toSDL-postamble //---------------------------------------------
+
+content.push(super.toSDL(stops + 1));
+content.push(pad + "}");
+
+return content.join("\n");
+
+
+
 // BicubicPatch.toSDL //----------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -267,10 +278,7 @@ toSDL(stops = 0) {
 		content.push(ppad + items.join(", ") + (row == 3 ? "," : ""));
 	}
 
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -304,10 +312,8 @@ toSDL(stops = 0) {
 		content.push(ppad + "sturm");
 	if(this.threshold !== null)
 		content.push(ppad + "threshold " + this.threshold);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -330,10 +336,8 @@ toSDL(stops = 0) {
 
     content.push(pad + "box {");
     content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -385,10 +389,8 @@ toSDL(stops = 0) {
         content.push(ppad + "variance " + this.variance);
     if(this.bokeh !== null)
         content.push(ppad + "bokeh " + this.bokeh);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -416,10 +418,8 @@ toSDL(stops = 0) {
     content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
     if(this.open)
         content.push(pad + "    open");
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -442,10 +442,8 @@ toSDL(stops = 0) {
     content.push(ppad + this.coefficients.join(", ");
     if(this.sturm)
         content.push(ppad + "sturm");
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -472,10 +470,8 @@ toSDL(stops = 0) {
     content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
     if(this.open)
         content.push(pad + "    open");
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -498,10 +494,8 @@ toSDL(stops = 0) {
 
     content.push(pad + "disc {");
     content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -527,10 +521,8 @@ toSDL(stops = 0) {
     for(var i = 0; i < this.negativeObjects.length; i++) {
         content.push(ppad + this.negativeObjects[i].toSDL(stops + 1));
     }
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -565,10 +557,8 @@ toSDL(stops = 0) {
         content.push(pad + "    smooth");
     if(this.waterLevel !== null)
         content.push(pad + "    water_level " + this.waterLevel);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -591,10 +581,8 @@ toSDL(stops = 0) {
     for(var i = 0; i < this.objects.length; i++) {
         content.push(ppad + this.objects[i].toSDL(stops + 1));
     }
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -632,10 +620,7 @@ toSDL(stops = 0) {
 	if(this.slice !== null)
 		content.push(ppad + this.slice.toSDL() + ", " + this.distance);
 
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -668,10 +653,7 @@ toSDL(stops = 0) {
 	if(this.sturm)
 		content.push(ppad + "sturm");
 
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -771,10 +753,8 @@ toSDL(stops = 0) {
     for(var i = 0; i < this.objects.length; i++) {
         content.push(ppad + this.objects[i].toSDL(stops + 1));
     }
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -797,10 +777,8 @@ toSDL(stops = 0) {
 
     content.push(pad + "ovus {");
     content.push(ppad + this.topRadius + ", " + this.bottomRadius);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -850,10 +828,7 @@ toSDL(stops = 0) {
         content.push(ppad + "precompute " + this.precomputeDepth + " " + items.join(", "));
     }
 
-	content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
-
-    return content.join("\n");
+	$Primitive.toSDL-postamble
 
 }
 
@@ -877,10 +852,8 @@ toSDL(stops = 0) {
 
 	content.push(pad + "plane {");
 	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
-	content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 
 }
 
@@ -913,10 +886,8 @@ toSDL(stops = 0) {
 	content.push(ppad + this.items.join(", "));
     if(this.sturm)
         content.push(ppad + "sturm")
-	content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 
 }
 
@@ -944,10 +915,8 @@ toSDL(stops = 0) {
         items.push(points[i].toSDL());
     }
     content.push(ppad + items.join(", ");
-	content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 
 }
 
@@ -987,10 +956,8 @@ toSDL(stops = 0) {
         content.push(ppad + "open");
     if(this.sturm)
         content.push(ppad + "sturm");
-	content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 
 }
 
@@ -1018,10 +985,8 @@ toSDL(stops = 0) {
         + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, " +
         + this.coefficients[9]
     );
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -1044,10 +1009,8 @@ toSDL(stops = 0) {
     content.push(ppad + this.coefficients.join(", ");
     if(this.sturm)
         content.push(ppad + "sturm");
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -1077,10 +1040,8 @@ toSDL(stops = 0) {
         content.push(ppad + "open");
     if(this.sturm)
         content.push(ppad + "sturm");
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -1103,10 +1064,8 @@ toSDL(stops = 0) {
 
     content.push(pad + "sphere {");
     content.push(ppad + this.center.toSDL() + ", " + this.radius);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -1141,10 +1100,8 @@ toSDL(stops = 0) {
     content.push(items.join(",\n");
     if(this.tolerance !== null)
         content.push(ppad + "tolerance " + this.tolerance);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -1167,10 +1124,8 @@ toSDL(stops = 0) {
 
     content.push(pad + "superellipsoid {");
     content.push(ppad + "<" + this.e + ", " + this.n + ">");
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -1202,10 +1157,8 @@ toSDL(stops = 0) {
     content.push(pad + "text {");
     content.push(ppad + this.fontType + " " + "\"" + this.font + "\"" + "\"" + );
     content.push(ppad + this.thickness + ", " + this.offset);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 
@@ -1227,10 +1180,9 @@ toSDL(stops = 0) {
 
     content.push(pad + "torus {");
     content.push(ppad + this.majorRadius + ", " + this.minorRadius);
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
+
 }
 
 
@@ -1261,8 +1213,6 @@ toSDL(stops = 0) {
 
         content.push(pad + "triangle {");
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
 
     } else {
 
@@ -1278,12 +1228,10 @@ toSDL(stops = 0) {
             + this.corner1.toSDL() + ", " + this.normal1.toSDL() + ", "
             + this.corner2.toSDL() + ", " + this.normal2.toSDL() + ", "
             + this.corner3.toSDL() + ", " + this.normal3.toSDL());
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
 
     }
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 // Union.toSDL //---------------------------------------------------------------
@@ -1305,10 +1253,8 @@ toSDL(stops = 0) {
         content.push(ppad + this.objects[i].toSDL(stops + 1));
     }
     content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
-    content.push(super.toSDL(stops + 1));
-    content.push(pad + "}");
 
-    return content.join("\n");
+    $Primitive.toSDL-postamble
 }
 
 

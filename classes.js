@@ -3218,10 +3218,8 @@ class Blob {
     		content.push(ppad + "sturm");
     	if(this.threshold !== null)
     		content.push(ppad + "threshold " + this.threshold);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -3356,10 +3354,8 @@ class Box {
     
         content.push(pad + "box {");
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -3803,10 +3799,8 @@ class Camera {
             content.push(ppad + "variance " + this.variance);
         if(this.bokeh !== null)
             content.push(ppad + "bokeh " + this.bokeh);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -4007,10 +4001,8 @@ class Cone {
         content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
         if(this.open)
             content.push(pad + "    open");
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -4209,10 +4201,8 @@ class Cylinder {
         content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
         if(this.open)
             content.push(pad + "    open");
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -4459,10 +4449,8 @@ class HeightField {
             content.push(pad + "    smooth");
         if(this.waterLevel !== null)
             content.push(pad + "    water_level " + this.waterLevel);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -4942,10 +4930,7 @@ class JuliaFractal {
     	if(this.slice !== null)
     		content.push(ppad + this.slice.toSDL() + ", " + this.distance);
     
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
-    
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -5110,10 +5095,7 @@ class Lathe {
     	if(this.sturm)
     		content.push(ppad + "sturm");
     
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
-    
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -5897,10 +5879,8 @@ class Ovus {
     
         content.push(pad + "ovus {");
         content.push(ppad + this.topRadius + ", " + this.bottomRadius);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -6262,10 +6242,7 @@ class Parametric {
             content.push(ppad + "precompute " + this.precomputeDepth + " " + items.join(", "));
         }
     
-    	content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
-    
-        return content.join("\n");
+    	$Primitive.toSDL-postamble
     
     }
 
@@ -6497,10 +6474,8 @@ class Prism {
             content.push(ppad + "open");
         if(this.sturm)
             content.push(ppad + "sturm");
-    	content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     
     }
 
@@ -6656,10 +6631,8 @@ class Sphere {
     
         content.push(pad + "sphere {");
         content.push(ppad + this.center.toSDL() + ", " + this.radius);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -6826,10 +6799,8 @@ class SphereSweep {
         content.push(items.join(",\n");
         if(this.tolerance !== null)
             content.push(ppad + "tolerance " + this.tolerance);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -7101,10 +7072,8 @@ class Sor {
             content.push(ppad + "open");
         if(this.sturm)
             content.push(ppad + "sturm");
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -7308,10 +7277,8 @@ class Text {
         content.push(pad + "text {");
         content.push(ppad + this.fontType + " " + "\"" + this.font + "\"" + "\"" + );
         content.push(ppad + this.thickness + ", " + this.offset);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -7466,10 +7433,9 @@ class Torus {
     
         content.push(pad + "torus {");
         content.push(ppad + this.majorRadius + ", " + this.minorRadius);
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
+    
     }
 
 
@@ -7679,10 +7645,7 @@ class BicubicPatch {
     		content.push(ppad + items.join(", ") + (row == 3 ? "," : ""));
     	}
     
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
-    
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -7857,10 +7820,8 @@ class Disc {
     
         content.push(pad + "disc {");
         content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -8110,10 +8071,8 @@ class Polygon {
             items.push(points[i].toSDL());
         }
         content.push(ppad + items.join(", ");
-    	content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     
     }
 
@@ -8378,8 +8337,6 @@ class Triangle {
     
             content.push(pad + "triangle {");
             content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());
-            content.push(super.toSDL(stops + 1));
-            content.push(pad + "}");
     
         } else {
     
@@ -8395,12 +8352,10 @@ class Triangle {
                 + this.corner1.toSDL() + ", " + this.normal1.toSDL() + ", "
                 + this.corner2.toSDL() + ", " + this.normal2.toSDL() + ", "
                 + this.corner3.toSDL() + ", " + this.normal3.toSDL());
-            content.push(super.toSDL(stops + 1));
-            content.push(pad + "}");
     
         }
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -8535,10 +8490,8 @@ class Plane {
     
     	content.push(pad + "plane {");
     	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
-    	content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     
     }
 
@@ -8703,10 +8656,8 @@ class Poly {
     	content.push(ppad + this.items.join(", "));
         if(this.sturm)
             content.push(ppad + "sturm")
-    	content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     
     }
 
@@ -8842,10 +8793,8 @@ class Cubic {
         content.push(ppad + this.coefficients.join(", ");
         if(this.sturm)
             content.push(ppad + "sturm");
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -8980,10 +8929,8 @@ class Quartic {
         content.push(ppad + this.coefficients.join(", ");
         if(this.sturm)
             content.push(ppad + "sturm");
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -9232,10 +9179,8 @@ class Quadric {
             + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, " +
             + this.coefficients[9]
         );
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -9360,10 +9305,8 @@ class Union {
             content.push(ppad + this.objects[i].toSDL(stops + 1));
         }
         content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -9467,10 +9410,8 @@ class Intersection {
         for(var i = 0; i < this.objects.length; i++) {
             content.push(ppad + this.objects[i].toSDL(stops + 1));
         }
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -9597,10 +9538,8 @@ class Difference {
         for(var i = 0; i < this.negativeObjects.length; i++) {
             content.push(ppad + this.negativeObjects[i].toSDL(stops + 1));
         }
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
@@ -9704,10 +9643,8 @@ class Merge {
         for(var i = 0; i < this.objects.length; i++) {
             content.push(ppad + this.objects[i].toSDL(stops + 1));
         }
-        content.push(super.toSDL(stops + 1));
-        content.push(pad + "}");
     
-        return content.join("\n");
+        $Primitive.toSDL-postamble
     }
 
 
