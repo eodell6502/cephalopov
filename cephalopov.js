@@ -254,6 +254,36 @@ cpov.isUnusedId = function(val, obj) {
     return result;
 }
 
+//------------------------------------------------------------------------------
+// Used in setter validation to auto-convert convenience forms of vectors to
+// actual objects. The class constructors will terminate execution with a fatal
+// cpov.error message if the initializer is invalid or malformed.
+//------------------------------------------------------------------------------
+
+cpov.convertToVector = function(type, val) {
+    switch(type) {
+        case "VectorXY":
+            val = new VectorXY(val);
+            break;
+        case "VectorUV":
+            val = new VectorUV(val);
+            break;
+        case "VectorXYZ":
+            val = new VectorXYZ(val);
+            break;
+        case "VectorXYZW":
+            val = new VectorXYZW(val);
+            break;
+        case "Color":
+            val = new Color(val);
+            break;
+        default:
+            cpov.error("fatal", "System error, invalid type '" + type + "'.", "cpov.convertToVector");
+    }
+
+    return val;
+}
+
 
 //------------------------------------------------------------------------------
 // Legal dither types mapped to textual descriptions.
@@ -509,8 +539,8 @@ cpov.gsDef = {
             err:   "adcBailout must be a float greater than or equal to zero."
         }, {
             name:  "ambientLight",
-            valid: "cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB')",
-            err:   "ambientLight must be a VectorRGB or VectorSRGB."
+            valid: "cpov.isClass(val, 'Color')",
+            err:   "ambientLight must be a Color."
         }, {
             name:  "assumedGamma",
             valid: "cpov.isFloat(val)",
@@ -521,8 +551,8 @@ cpov.gsDef = {
             err:   "charset must be one of 'ascii', 'utf8', or 'sys'."
         }, {
             name:  "iridWavelength",
-            valid: "cpov.isClass(val, 'VectorRGB') || cpov.isClass(val, 'VectorSRGB')",
-            err:   "iridWavelength must be a VectorRGB or VectorSRGB"
+            valid: "cpov.isClass(val, 'Color')",
+            err:   "iridWavelength must be a Color"
         }, {
             name:  "maxIntersections",
             valid: "cpov.isInt(val) && val >= 0",
@@ -1197,11 +1227,11 @@ cpov.objDef = {
             {
                 name:  "corner1",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner1 must be a VectorXYZ."
             }, {
                 name:  "corner2",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner2"
             }
         ],
@@ -1239,8 +1269,8 @@ cpov.objDef = {
                 err:   "blurSamples must be an array of two floats greater than or equal to zero."
             }, {
                 name:  "bokeh",
-                valid: "cpov.isClass(val, 'VectorRGB') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
-                err:   "bokeh must be a VectorRGB in the range <0, 0, 0> to <1, 1, 0>."
+                valid: "cpov.isClass(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
+                err:   "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>."
             }, {
                 name:  "confidence",
                 valid: "cpov.isFloat(val)",
@@ -1251,31 +1281,31 @@ cpov.objDef = {
                 err:   "cylinderType must be an integer in the range (1 - 4)."
             }, {
                 name:  "direction",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "direction must be a VectorXYZ."
             }, {
                 name:  "focalPoint",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "focalPoint must be a VectorXYZ."
             }, {
                 name:  "location",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "location must be a VectorXYZ."
             }, {
                 name:  "lookAt",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "lookAt must be a VectorXYZ."
             }, {
                 name:  "right",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "right must be a VectorXYZ."
             }, {
                 name:  "sky",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "sky must be a VectorXYZ."
             }, {
                 name:  "up",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "up must be a VectorXYZ."
             }, {
                 name:  "variance",
@@ -1299,7 +1329,7 @@ cpov.objDef = {
             {
                 name:  "basePoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "basePoint must be a VectorXYZ."
             }, {
                 name:  "baseRadius",
@@ -1309,7 +1339,7 @@ cpov.objDef = {
             }, {
                 name:  "capPoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "capPoint must be a VectorXYZ."
             }, {
                 name:  "capRadius",
@@ -1334,12 +1364,12 @@ cpov.objDef = {
             {
                 name:  "basePoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "basePoint must be a VectorXYZ."
             }, {
                 name:  "capPoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "capPoint must be a VectorXYZ."
             }, {
                 name:  "radius",
@@ -1457,11 +1487,11 @@ cpov.objDef = {
             }, {
                 name:  "juliaParam",
 				req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZW')",
+                valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "juliaParam must be a VectorXYZW."
             }, {
                 name:  "power",
-                valid: "cpov.isClass(val, 'VectorXY')",
+                valid: "cpov.isClass(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val))",
                 err:   "power must be a VectorXY."
             }, {
                 name:  "maxIter",
@@ -1473,7 +1503,7 @@ cpov.objDef = {
                 err:   "precision must be an integer."
             }, {
                 name:  "slice",
-                valid: "cpov.isClass(val, 'VectorXYZW')",
+                valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "slice must be a VectorXYZW."
             }, {
                 name:  "distance",
@@ -1518,13 +1548,13 @@ cpov.objDef = {
             {
                 name:  "location",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "location must be a VectorXYZ."
             }, {
                 name:  "color",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorRGB')", // TODO: or VectorSRGB?
-                err:   "color must be a VectorRGB."
+                valid: "cpov.isClass(val, 'Color') || (val = cpov.convertToVector('Color', val))",
+                err:   "color must be a Color."
             }, {
                 name:  "adaptive",
                 valid: "cpov.isFloat(val) && val >= 0",
@@ -1539,11 +1569,11 @@ cpov.objDef = {
                 err:   "areaLight must be a boolean."
             }, {
                 name:  "axis1",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "axis1 must be a VectorXYZ."
             }, {
                 name:  "axis2",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "axis2 must be a VectorXYZ."
             }, {
                 name:  "circular",
@@ -1587,7 +1617,7 @@ cpov.objDef = {
                 err:   "parallel must be a boolean."
             }, {
                 name:  "pointAt",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "pointAt must be a VectorXYZ."
             }, {
                 name:  "projectedThrough",
@@ -1668,12 +1698,12 @@ cpov.objDef = {
             }, {
                 name:  "uv1",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorUV')",
+                valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
                 err:   "uv1 must be a VectorUV."
             }, {
                 name:  "uv2",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorUV')",
+                valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
                 err:   "uv2 must be a VectorUV."
             }, {
                 name:  "containedBy",
@@ -1756,7 +1786,7 @@ cpov.objDef = {
             {
                 name:  "center",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "center must be a VectorXYZ."
             }, {
                 name:  "radius",
@@ -1948,12 +1978,12 @@ cpov.objDef = {
             {
                 name:  "center",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "center must be a VectorXYZ."
             }, {
                 name:  "normal",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal must be a VectorXYZ."
             }, {
                 name:  "radius",
@@ -1982,7 +2012,7 @@ cpov.objDef = {
                 err:   "triangles"
             }, {
                 name:  "insideVector",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "insideVector must be a VectorXYZ."
             }, {
                 name:  "hierarchy",
@@ -2035,17 +2065,17 @@ cpov.objDef = {
             {
                 name:  "corner1",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner1 must be a VectorXYZ."
             }, {
                 name:  "corner2",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner2 must be a VectorXYZ."
             }, {
                 name:  "corner3",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner3 must be a VectorXYZ."
             }, {
                 name:  "smooth", // if smooth and normal1...3 are defined, it's a smooth triangle
@@ -2053,15 +2083,15 @@ cpov.objDef = {
                 err:   "smooth must be a boolean."
             }, {
                 name:  "normal1",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal1 must be a VectorXYZ."
             }, {
                 name:  "normal2",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal2 must be a VectorXYZ."
             }, {
                 name:  "normal3",
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal3 must be a VectorXYZ."
             }, {
                 name:  "textures",
@@ -2081,7 +2111,7 @@ cpov.objDef = {
             {
                 name:  "normal",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ')",
+                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal must be a VectorXYZ."
             }, {
                 name:  "distance",
@@ -2173,7 +2203,7 @@ cpov.objDef = {
             }, {
                 name:  "coefficients",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZW')",
+                valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "coefficients must be a VectorXYZW."
             }, {
                 name:  "sturm",

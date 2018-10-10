@@ -125,6 +125,8 @@ if(Array.isArray(options)) {
     if(options.x === undefined || options.y === undefined)
         cpov.error("fatal", "When initializing a VectorXY with an object, x and y must be defined.", "VectorXY.constructor", this);
     cpov.initObject(this, options);
+} else {
+    cpov.error("fatal", "Invalid initializer.", "VectorXY.constructor", this);
 }
 
 
@@ -164,6 +166,8 @@ if(Array.isArray(options)) {
     if(options.u === undefined || options.v === undefined)
         cpov.error("fatal", "When initializing a VectorUV with an object, u and v must be defined.", "VectorUV.constructor", this);
     cpov.initObject(this, options);
+} else {
+    cpov.error("fatal", "Invalid initializer.", "VectorUV.constructor", this);
 }
 
 
@@ -205,6 +209,8 @@ if(Array.isArray(options)) {
     if(options.x === undefined || options.y === undefined || options.z === undefined)
         cpov.error("fatal", "When initializing a VectorXYZ with an object, x, y and z must be defined.", "VectorXYZ.constructor", this);
     cpov.initObject(this, options);
+} else {
+    cpov.error("fatal", "Invalid initializer.", "VectorXYZ.constructor", this);
 }
 
 
@@ -249,6 +255,8 @@ if(Array.isArray(options)) {
     if(options.x === undefined || options.y === undefined || options.z === undefined || options.w === undefined)
         cpov.error("fatal", "When initializing a VectorXYZW with an object, x, y, z, and w must be defined.", "VectorXYZW.constructor", this);
     cpov.initObject(this, options);
+} else {
+    cpov.error("fatal", "Invalid initializer.", "VectorXYZW.constructor", this);
 }
 
 
@@ -300,6 +308,8 @@ if(Array.isArray(options)) {
     if(options.r === undefined || options.g === undefined || options.b === undefined)
         cpov.error("fatal", "When initializing a Color with an object, r, g, and b must be defined.", "Color.constructor", this);
     cpov.initObject(this, options);
+} else {
+    cpov.error("fatal", "Invalid initializer.", "Color.constructor", this);
 }
 
 
