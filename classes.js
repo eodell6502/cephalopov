@@ -2415,6 +2415,438 @@ class ImageOptions {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Performs some aggregate tests on the final state of the image options,
+    // and if none are found, returns an object containing two members, ini
+    // and cli, corresponding to the contents of the ini file and the
+    // commandline version, respectively.
+    //--------------------------------------------------------------------------
+    
+    output() {
+        var ini     = [];
+        var cli     = [];
+        var iniWarn = [];
+        var cliWarn = [];
+    
+        for(var opt in cpov.ioDef) {
+    
+            if(opt != "Width" && opt != "Height" && this[opt] === null)
+                continue;
+    
+            switch(opt) {
+                case "allConsole":
+                    if(this.allFile === null) {
+                        ini.push("All_Console=" + this.allConsole);
+                        cli.push((this.allConsole ? "+" : "-") + "GA");
+                    }
+                    break;
+                case "allFile":
+                    ini.push("All_File=" + this.allFile);
+                    cli.push(
+                        (this.allConsole === null || this.allConsole === false ? "-" : "+")
+                        + "GA"
+                        + (typeof this.allFile == "string" ? this.allFile : "")
+                    );
+                    break;
+                case "antialias":
+                    ini.push("Antialias=" + (this.antialias ? "true" : "false"));
+                    if(this.antialiasThreshold === null) {
+                        cli.push((this.antialias ? "+" : "-") + "A");
+                    }
+                    break;
+                case "antialiasDepth":
+                    ini.push("Antialias_Depth=" + this.antialiasDepth);
+                    cli.push("+R" + this.antialiasDepth);
+                    break;
+                case "antialiasGamma":
+                    ini.push("Antialias_Gamma=" + this.antialiasGamma);
+                    cli.push("+AG" + this.antialiasGamma);
+                    break;
+                case "antialiasThreshold":
+                    ini.push("Antialias_Threshold=" + this.antialiasThreshold);
+                    cli.push((this.antialias ? "+" : "-") + "A" + this.antialiasThreshold);
+                    break;
+                case "appendFile":
+                    ini.push("Append_File=" + (this.appendFile ? "true" : "false"));
+                    cli.push((this.appendFile ? "+" : "-") + "GP");
+                    break;
+                case "bitsPerColor":
+                    ini.push("Bits_Per_Color=" + this.bitsPerColor);
+                    break;
+                case "bounding":
+                    ini.push("Bounding=" + (this.bounding ? "true" : "false"));
+                    if(this.boundingThreshold === null) {
+                        cli.push((this.bounding ? "+" : "-") + "MB");
+                    };
+                    break;
+                case "boundingMethod":
+                    ini.push("Bounding_Method=" + this.boundingMethod);
+                    cli.push("+BM" + this.boundingMethod);
+                    break;
+                case "boundingThreshold":
+                    ini.push("Bounding_Threshold=" + this.boundingThreshold);
+                    cli.push(
+                        (this.bounding !== null || this.bounding ? "+" : "-")
+                        + "MB" + this.boundingThreshold
+                    );
+                    break;
+                case "bspBaseAccessCost":
+                    ini.push("BSP_BaseAccessCost=" + this.bspBaseAccessCost);
+                    break;
+                case "bspChildAccessCost":
+                    ini.push("BSP_ChildAccessCost=" + this.bspChildAccessCost);
+                    break;
+                case "bspIsectCost":
+                    ini.push("BSP_IsectCost=" + this.bspIsectCost);
+                    break;
+                case "bspMaxDepth":
+                    ini.push("BSP_MaxDepth=" + this.bspMaxDepth);
+                    break;
+                case "bspMissChance":
+                    ini.push("BSP_MissChance=" + this.bspMissChance);
+                    break;
+                case "constants":
+                    break;
+                case "continueTrace":
+                    ini.push("Continue_Trace=" + this.continueTrace);
+                    cli.push(this.continueTrace ? "+C" : "-C");
+                    break;
+                case "createIni":
+                    if(typeof this.createIni == "boolean") {
+                        ini.push("Create_Ini=" + (this.createIni ? "true" : "false"));
+                    } else {
+                        ini.push("Create_Ini=" + this.createIni);
+                        cli.push("+GI" + this.createIni);
+                    }
+                    break;
+                case "debugConsole":
+                    if(this.allConsole === null)
+                        ini.push("Debug_Console=" + this.debugConsole);
+                    if(this.debugFile === null && this.allFile === null)
+                        cli.push((this.debugConsole ? "+" : "-") + "GD");
+                    break;
+                case "debugFile":
+                    if(this.optAllFile === null) {
+                        ini.push("Debug_File=" + this.debugFile);
+                        cli.push(
+                            (this.debugConsole === null || this.debugConsole === false ? "-" : "+")
+                            + "GD"
+                            + (typeof this.debugFile == "string" ? this.debugFile : "")
+                        );
+                    }
+                    break;
+                case "display":
+                    ini.push("Display=" + (this.display ? "true" : "false"));
+                    if(this.videoMode === null)
+                        cli.push(this.display ? "+D" : "-D");
+                    break;
+                case "displayGamma":
+                    ini_push("Display_Gamma=" + this.displayGamma);
+                    break;
+                case "dither":
+                    ini.push("Dither=" + (this.dither ? "true" : "false"));
+                    if(this.ditherMethod === null)
+                        cli.push((this.dither ? "+" : "-") + "TH");
+                    break;
+                case "ditherMethod":
+                    ini.push("Dither_Method=" + this.ditherMethod);
+                    cli.push((this.dither ? "+" : "-") + "TH" + this.ditherMethod);
+                    break;
+                case "endColumn":
+                    ini.push("End_Column=" + this.endColumn);
+                    cli.push("+EC" + this.endColumn);
+                    break;
+                case "endRow":
+                    ini.push("End_Row=" + this.endRow);
+                    cli.push("+ER" + this.endRow);
+                    break;
+                case "fatalConsole":
+                    if(this.allConsole === null)
+                            ini.push("Fatal_Console=" + this.fatalConsole);
+                    if(this.fatalFile === null && this.allFile === null)
+                        cli.push((this.fatalConsole ? "+" : "-") + "GF");
+                    break;
+                case "fatalErrorCommand":
+                    ini.push("Fatal_Error_Command=" + this.fatalErrorCommand);
+                    break;
+                case "fatalErrorReturn":
+                    ini.push("Fatal_Error_Return=" + this.fatalErrorReturn);
+                    break;
+                case "fatalFile":
+                    if(this.optAllFile === null) {
+                        ini.push("Fatal_File=" + this.fatalFile);
+                        cli.push(
+                            (this.fatalConsole === null || this.fatalConsole === false ? "-" : "+")
+                            + "GF"
+                            + (typeof this.fatalFile == "string" ? this.fatalFile : "")
+                        );
+                    }
+                    break;
+                case "fileGamma":
+                    ini.push("File_Gamma=" + this.fileGamma);
+                    break;
+                case "height":
+                    if(this.width === null || this.height === null)
+                        throw new RangeError("[ImageOptions]: Both width and height must be defined.");
+                    ini.push("Height=" + this.height);
+                    cli.push("+H" + this.height);
+                    break;
+                case "highReproducibility":
+                    ini.push("High_Reproducibility=" + (this.highReproducibility ? "true" : "false"));
+                    if(this.highReproducibility)
+                        cli.push("+HR");
+                    break;
+                case "includeHeader":
+                    ini.push("Include_Header=" + this.includeHeader);
+                    cli.push("+HI" + this.includeHeader);
+                    break;
+                case "inputFileName":
+                    ini.push("Input_File_Name=" + this.inputFileName);
+                    cli.push("+I" + this.inputFileName);
+                    break;
+                case "jitter":
+                    ini.push("Jitter=" + (this.jitter ? "true" : "false"));
+                    if(this.jitterAmount === null) {
+                        cli.push((this.jitter ? "+" : "-") + "J");
+                    }
+                    break;
+                case "jitterAmount":
+                    ini.push("Jitter_Amount=" + this.jitterAmount);
+                    cli.push((this.jitterAmount > 0 ? "+" : "-" ) + "J" + this.jitterAmount);
+                    break;
+                case "libraryPath":
+                    ini.push("Library_Path=" + this.libraryPath);
+                    cli.push("+L" + this.libraryPath);
+                    break;
+                case "maxImageBufferMemory":
+                    ini.push("Max_Image_Buffer_Memory=" + this.maxImageBufferMemory);
+                    cli.push("+MI" + this.maxImageBufferMemory);
+                    break;
+                case "outputAlpha":
+                    ini.push("Output_Alpha=" + (this.outputAlpha ? "true" : "false"));
+                    cli.push((this.outputAlpha ? "+" : "-") + "UA");
+                    break;
+                case "outputFileName":
+                    ini.push("Output_File_Name=" + this.outputFileName);
+                    cli.push("+O" + this.outputFileName);
+                    break;
+                case "outputFileType":
+                    ini.push("Output_File_Type=" + this.outputFileType);
+                    cli.push(
+                        ((this.outputToFile === null || this.outputToFile === false) ? "-" : "+")
+                        + this.outputFileType
+                        + (this.bitsPerColor === null ? "" : this.bitsPerColor)
+                    );
+                    break;
+                case "outputToFile":
+                    if(this.outputFileType === null) {
+                        ini.push("Output_to_File=" + (this.outputToFile ? "true" : "false"));
+                        cli.push(this.outputToFile ? "+F" : "-F");
+                    }
+                    break;
+                case "palette":
+                    ini.push("Palette=" + this.palette);
+                    if(this.videoMode !== null)
+                        cli.push(
+                            (this.display ? "+" : "-")
+                            + "D"
+                            + this.videoMode + this.palette
+                        );
+                    break;
+                case "pauseWhenDone":
+                    ini.push("Pause_When_Done=" + (this.pauseWhenDone ? "true" : "false"));
+                    cli.push(this.pauseWhenDone ? "+P" : "-P");
+                    break;
+                case "postFrameCommand":
+                    ini.push("Post_Frame_Command=" + this.postFrameCommand);
+                    break;
+                case "postFrameReturn":
+                    ini.push("Post_Frame_Return=" + this.postFrameReturn);
+                    break;
+                case "postSceneCommand":
+                    ini.push("Post_Scene_Command=" + this.postSceneCommand);
+                    break;
+                case "postSceneReturn":
+                    ini.push("Post_Scene_Return=" + this.postSceneReturn);
+                    break;
+                case "preFrameCommand":
+                    ini.push("Pre_Frame_Command=" + this.preFrameCommand);
+                    break;
+                case "preFrameReturn":
+                    ini.push("Pre_Frame_Return=" + this.preFrameReturn);
+                    break;
+                case "preSceneCommand":
+                    ini.push("Pre_Scene_Command=" + this.postSceneCommand);
+                    break;
+                case "preSceneReturn":
+                    ini.push("Pre_Scene_Return=" + this.preSceneReturn);
+                    break;
+                case "previewEndSize":
+                    if(this.previewStartSize !== null) {
+                        ini.push("Preview_End_Size=" + this.previewEndSize);
+                        cli.push("+EP" + this.previewEndSize);
+                    }
+                    break;
+                case "previewStartSize":
+                    ini.push("Preview_Start_Size=" + this.previewStartSize);
+                    cli.push("+SP" + this.previewStartSize);
+                    break;
+                case "quality":
+                    ini.push("Quality=" + this.quality);
+                    cli.push("+Q" + this.quality);
+                    break;
+                case "radiosityFileName":
+                    ini.push("Radiosity_File_Name=" + this.radiosityFileName);
+                    cli.push("+RF" + this.radiosityFileName);
+                    break;
+                case "radiosityFromFile":
+                    ini.push("Radiosity_From_File=" + (this.radiosityFromFile ? "true" : "false"));
+                    if(this.radiosityFromFile)
+                        cli.push("+RFI");
+                    break;
+                case "radiosityToFile":
+                    ini.push("Radiosity_To_File=" + (this.radiosityToFile ? "true" : "false"));
+                    if(this.radiosityToFile)
+                        cli.push("+RFO");
+                    break;
+                case "radiosityVainPretrace":
+                    ini.push("Radiosity_Vain_Pretrace=" + (this.radiosityVainPretrace ? "true" : "false"));
+                    cli.push(this.radiosityVainPretrace ? "+RVP" : "-RVP");
+                    break;
+                case "removeBounds":
+                    ini.push("Remove_Bounds=" + (this.removeBounds ? "true" : "false"));
+                    cli.push((this.removeBounds ? "+" : "-") + "UR");
+                    break;
+                case "renderBlockSize":
+                    ini.push("Render_Block_Size=" + this.renderBlockSize);
+                    cli.push("+BS" + this.renderBlockSize);
+                    break;
+                case "renderBlockStep":
+                    ini.push("Render_Block_Step=" + this.renderBlockStep);
+                    cli.push("+RS" + this.renderBlockStep);
+                    break;
+                case "renderConsole":
+                    if(this.allConsole === null)
+                        ini.push("Render_Console=" + this.renderConsole);
+                    if(this.renderFile === null && this.allFile === null)
+                        cli.push((this.renderConsole ? "+" : "-") + "GR");
+                        break;
+                case "renderFile":
+                    if(this.optAllFile === null) {
+                        ini.push("Render_File=" + this.renderFile);
+                        cli.push(
+                            (this.renderConsole === null || this.renderConsole === false ? "-" : "+")
+                            + "GR"
+                            + (typeof this.renderFile == "string" ? this.renderFile : "")
+                        );
+                    }
+                    break;
+                case "renderPattern":
+                    ini.push("Render_Pattern=" + this.renderPattern);
+                    cli.push("+RP" + this.renderPattern);
+                    break;
+                case "samplingMethod":
+                    ini.push("Sampling_Method=" + this.samplingMethod);
+                    cli.push("+AM" + this.samplingMethod);
+                    break;
+                case "splitUnions":
+                    ini.push("Split_Unions=" + (this.splitUnions ? "true" : "false"));
+                    cli.push((this.splitUnions ? "+" : "-") + "SU");
+                    break;
+                case "startColumn":
+                    ini.push("Start_Column=" + this.startColumn);
+                    cli.push("+SC" + this.startColumn);
+                    break;
+                case "startRow":
+                    ini.push("Start_Row=" + this.startRow);
+                    cli.push("+SR" + this.startRow);
+                    break;
+                case "statisticConsole":
+                    if(this.allConsole === null)
+                        ini.push("Statistic_Console=" + this.statisticConsole);
+                    if(this.statisticFile === null && this.allFile === null)
+                        cli.push((this.statisticConsole ? "+" : "-") + "GS");
+                    break;
+                case "statisticFile":
+                    if(this.optAllFile === null) {
+                        ini.push("Statistic_File=" + this.statisticFile);
+                        cli.push(
+                            (this.statisticConsole === null || this.statisticConsole === false ? "-" : "+")
+                            + "GS"
+                            + (typeof this.statisticFile == "string" ? this.statisticFile : "")
+                        );
+                    }
+                    break;
+                case "testAbort":
+                    if(this.testAbortCount !== null) {
+                        ini.push("Test_Abort=" + (this.testAbort ? "true" : "false"));
+                        cli.push(this.testAbort ? "+X" : "-X");
+                    }
+                    break;
+                case "testAbortCount":
+                    ini.push("Test_Abort_Count=" + this.testAbortCount);
+                    if(this.testAbort !== null)
+                        cli.push((this.testAbort ? "+" : "-") + "X" + this.testAbortCount)
+                    else
+                        cli.push("+X" + this.testAbortCount);
+                    break;
+                case "userAbortCommand":
+                    ini.push("User_Abort_Command=" + this.userAbortCommand);
+                    break;
+                case "userAbortReturn":
+                    ini.push("User_Abort_Return=" + this.userAbortReturn);
+                    break;
+                case "verbose":
+                    ini.push("Verbose=" + (this.verbose ? "true" : "false"));
+                    cli.push(this.verbose ? "+V" : "-V");
+                    break;
+                case "videoMode":
+                    ini.push("Video_Mode=" + this.videoMode);
+                    if(this.palette === null)
+                        cli.push((this.videoMode ? "+" : "-") + "D" + this.videoMode);
+                    break;
+                case "warningConsole":
+                    if(this.allConsole === null)
+                        ini.push("Warning_Console=" + this.warningConsole);
+                    if(this.warningFile === null && this.allFile === null)
+                        cli.push((this.warningConsole ? "+" : "-") + "GW");
+                    break;
+                case "warningFile":
+                    if(this.optAllFile === null) {
+                        ini.push("Warning_File=" + this.warningFile);
+                        cli.push(
+                            (this.warningConsole === null || this.warningConsole === false ? "-" : "+")
+                            + "GW"
+                            + (typeof this.warningFile == "string" ? this.warningFile : "")
+                        );
+                    }
+                    break;
+                case "warningLevel":
+                    ini.push("Warning_Level=" + this.warningLevel);
+                    cli.push("+WL" + this.warningLevel);
+                    break;
+                case "width":
+                    if(this.width === null || this.height === null)
+                        throw new RangeError("[ImageOptions]: Both width and height must be defined.");
+                    ini.push("Width=" + this.width);
+                    cli.push("+W" + this.width);
+                    break;
+                case "workThreads":
+                    ini.push("Work_Threads=" + this.workThreads);
+                    cli.push("+WT" + this.workThreads);
+                    break;
+                default:
+                    break;
+            }
+        }
+    
+        cli.unshift(this.exePath === null ? "povray" : this.exePath);
+    
+        return { ini: ini.join("\n"), cli: cli.join(" ") };
+    
+    }
+
+
 
 }
 

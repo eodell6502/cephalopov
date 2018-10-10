@@ -720,7 +720,7 @@ cpov.ioDef = {
         + "in the form of command line switches.",
     conArgs: false,
     conBlock: false,
-    snippets: false,
+    snippets: ["GlobalSettings.output"],
     mutable: [
         {
             name:  "allConsole",
