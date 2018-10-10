@@ -3195,13 +3195,13 @@ class Blob {
     
         if(!this.active)
             return "";
-    
-        if(this.components === null)
-            cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
+    
+        if(this.components === null)
+            cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
     
         content.push(pad + "blob {");
     	var components = this.components;
@@ -3344,15 +3344,15 @@ class Box {
     
         if(!this.active)
             return "";
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
     
         if(this.corner1 === null)
             cpov.error("fatal", "corner1 is undefined.", "Box.toSDL", this);
         if(this.corner2 === null)
             cpov.error("fatal", "corner2 is undefined.", "Box.toSDL", this);
-    
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
     
         content.push(pad + "box {");
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
@@ -3765,6 +3765,10 @@ class Camera {
     
         if(!this.active)
             return "";
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
     
         if(this.type === null)
             cpov.error("fatal", "type is undefined.", "Camera.toSDL", this);
@@ -3772,10 +3776,6 @@ class Camera {
             cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL", this);
         else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
             cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
-    
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
     
         content.push(pad + "camera {");
         content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
@@ -3989,6 +3989,10 @@ class Cone {
     
         if(!this.active)
             return "";
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
     
         if(this.basePoint === null)
             cpov.error("fatal", "basePoint is undefined.", "Cone.toSDL", this);
@@ -3998,10 +4002,6 @@ class Cone {
             cpov.error("fatal", "capPoint is undefined.", "Cone.toSDL", this);
         if(this.capRadius === null)
             cpov.error("fatal", "capRadius is undefined.", "Cone.toSDL", this);
-    
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
     
         content.push(pad + "cone {");
         content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
@@ -4193,7 +4193,7 @@ class Cylinder {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -4435,7 +4435,7 @@ class HeightField {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -4915,7 +4915,7 @@ class JuliaFractal {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -5088,7 +5088,7 @@ class Lathe {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -5696,7 +5696,7 @@ class LightSource {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -5885,7 +5885,7 @@ class Ovus {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -6223,7 +6223,7 @@ class Parametric {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -6469,7 +6469,7 @@ class Prism {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -6644,7 +6644,7 @@ class Sphere {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -6802,7 +6802,7 @@ class SphereSweep {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7082,7 +7082,7 @@ class Sor {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7287,7 +7287,7 @@ class Text {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7454,7 +7454,7 @@ class Torus {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7652,15 +7652,15 @@ class BicubicPatch {
     
         if(!this.active)
             return "";
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
     
         if(this.type === null)
             cpov.error("fatal", "type is undefined.", "BicubicPatch.toSDL", this);
     	if(this.patch === null)
             cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
-    
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
     
         content.push(pad + "bicubic_patch {");
     	content.push(ppad + "type " + this.type);
@@ -7845,7 +7845,7 @@ class Disc {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8093,7 +8093,7 @@ class Polygon {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8362,7 +8362,7 @@ class Triangle {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8523,7 +8523,7 @@ class Plane {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8682,7 +8682,7 @@ class Poly {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8830,7 +8830,7 @@ class Cubic {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8968,7 +8968,7 @@ class Quartic {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9216,7 +9216,7 @@ class Quadric {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9347,7 +9347,7 @@ class Union {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9455,7 +9455,7 @@ class Intersection {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9582,7 +9582,7 @@ class Difference {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9692,7 +9692,7 @@ class Merge {
     
         if(!this.active)
             return "";
-    
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];

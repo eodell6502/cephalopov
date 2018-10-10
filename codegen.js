@@ -103,21 +103,29 @@ ClassBuilder.prototype.align = function(rows) {
 
 
 //------------------------------------------------------------------------------
-// Performs string interpolation. Given a string and an object containing k/v
-// pairs, returns a string where all of the instances of $key have been replaced
-// by their corresponding values. To keep it simple and to avoid the slithering
-// horror of ES2015's template strings, we just walk through the object, replac-
-// ing each corresponding $key in turn. This isn't very efficient, but it
-// it doesn't have to be in this case. Keys are interpreted as regexes.
+// Takes src and replaces all instances of $snippet_name with the corresponding
+// snippet, with a base indentation based on the location of $snippet_name. (In
+// case it is not obvious, this means all snippets are blocks and not inline.)
+// If the snippet is not found, a warning is issued. A single pass is made, so
+// nested snippets are not supported presently.
 //------------------------------------------------------------------------------
 
-ClassBuilder.prototype.interpolate = function(str, obj) {
-    for(var k in obj) {
-        var regexp = new RegExp(k, "g");
-        str = str.replace(regexp, obj[k]);
-    }
-    return str;
+ClassBuilder.prototype.snippetInterpolate = function(src) {
+
+    var snippets = this.snippets
+    return src.replace(/([ \t]*)\$(\S+)/, function(match, p1, p2, offset, string) {
+        if(snippets[p2] === undefined) {
+            cpov.error("warn", "Missing snippet '" + p2 + "'", "CODEGEN");
+            return match;
+        } else {
+            var result = p1 + snippets[p2].replace(/\n/g, "\n" + p1)
+            return result;
+        }
+    });
+
+
 }
+
 
 
 //------------------------------------------------------------------------------
@@ -275,8 +283,10 @@ ClassBuilder.prototype.toString = function() {
     // Class closing -----------------------------------------------------------
 
     src.push("\n}");
+    src = src.join("\n");
 
-    return src.join("\n");
+    return this.snippetInterpolate(src);
+
 }
 
 

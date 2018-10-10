@@ -225,6 +225,14 @@ toSDL(stops = 0) {
 }
 
 
+// Primitive.toSDL-preamble //----------------------------------------------
+
+if(!this.active)
+    return "";
+
+var pad     = cpov.tab(stops);
+var ppad    = cpov.tab(stops + 1);
+var content = [ ];
 
 // BicubicPatch.toSDL //----------------------------------------------------
 
@@ -235,17 +243,12 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
+    $Primitive.toSDL-preamble
 
     if(this.type === null)
         cpov.error("fatal", "type is undefined.", "BicubicPatch.toSDL", this);
 	if(this.patch === null)
         cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
 
     content.push(pad + "bicubic_patch {");
 	content.push(ppad + "type " + this.type);
@@ -281,15 +284,10 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
+    $Primitive.toSDL-preamble
 
     if(this.components === null)
         cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
 
     content.push(pad + "blob {");
 	var components = this.components;
@@ -323,17 +321,12 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
+    $Primitive.toSDL-preamble
 
     if(this.corner1 === null)
         cpov.error("fatal", "corner1 is undefined.", "Box.toSDL", this);
     if(this.corner2 === null)
         cpov.error("fatal", "corner2 is undefined.", "Box.toSDL", this);
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
 
     content.push(pad + "box {");
     content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
@@ -357,8 +350,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
+    $Primitive.toSDL-preamble
 
     if(this.type === null)
         cpov.error("fatal", "type is undefined.", "Camera.toSDL", this);
@@ -366,10 +358,6 @@ toSDL(stops = 0) {
         cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL", this);
     else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
         cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
 
     content.push(pad + "camera {");
     content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
@@ -413,8 +401,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
+    $Primitive.toSDL-preamble
 
     if(this.basePoint === null)
         cpov.error("fatal", "basePoint is undefined.", "Cone.toSDL", this);
@@ -424,10 +411,6 @@ toSDL(stops = 0) {
         cpov.error("fatal", "capPoint is undefined.", "Cone.toSDL", this);
     if(this.capRadius === null)
         cpov.error("fatal", "capRadius is undefined.", "Cone.toSDL", this);
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
 
     content.push(pad + "cone {");
     content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
@@ -450,12 +433,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.coefficients === null)
         cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
@@ -481,12 +459,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.basePoint === null)
         cpov.error("fatal", "basePoint is undefined.", "Cylinder.toSDL", this);
@@ -516,12 +489,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.center === null)
         cpov.error("fatal", "center is undefined.", "Disc.toSDL", this);
@@ -547,12 +515,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.positiveObject === null)
         cpov.error("fatal", "positiveObject is undefined.", "Difference.toSDL", this);
@@ -581,12 +544,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     content.push(pad + "height_field {");
     if(this.userFunc !== null) {
@@ -624,12 +582,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.objects === null)
         cpov.error("fatal", "objects is undefined.", "Intersection.toSDL", this);
@@ -655,12 +608,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.type === null)
         cpov.error("fatal", "type is undefined.", "JuliaFractal.toSDL", this);
@@ -701,12 +649,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.type === null)
         cpov.error("fatal", "type is undefined.", "Lathe.toSDL", this);
@@ -742,12 +685,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.location === null)
         cpov.error("fatal", "location is undefined.", "LightSource.toSDL", this);
@@ -824,12 +762,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.objects === null)
         cpov.error("fatal", "objects is undefined.", "Merge.toSDL", this);
@@ -855,12 +788,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.topRadius === null)
         cpov.error("fatal", "topRadius is undefined.", "Ovus.toSDL", this);
@@ -886,12 +814,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
 	if(this.funcX === null)
 		cpov.error("fatal", "funcX is undefined.", "Parametric.toSDL", this);
@@ -945,12 +868,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
 	if(this.normal === null)
 		cpov.error("fatal", "normal is undefined.", "Sphere.toSDL", this);
@@ -977,12 +895,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
 	if(this.order === null)
 		cpov.error("fatal", "order is undefined.", "Poly.toSDL", this);
@@ -1017,12 +930,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
 	if(this.points === null)
 		cpov.error("fatal", "points is undefined.", "Polygon.toSDL", this);
@@ -1054,12 +962,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
 	if(this.type === null)
 		cpov.error("fatal", "type is undefined.", "Prism.toSDL", this);
@@ -1102,12 +1005,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.coefficients === null)
         cpov.error("fatal", "coefficients is undefined.", "Quadric.toSDL", this);
@@ -1137,12 +1035,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.coefficients === null)
         cpov.error("fatal", "coefficients is undefined.", "Quartic.toSDL", this);
@@ -1168,12 +1061,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.points === null)
         cpov.error("fatal", "points is undefined.", "Sor.toSDL", this);
@@ -1206,12 +1094,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.center === null)
         cpov.error("fatal", "center is undefined.", "Sphere.toSDL", this);
@@ -1237,12 +1120,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.type === null)
         cpov.error("fatal", "type is undefined.", "SphereSweep.toSDL", this);
@@ -1280,12 +1158,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.e === null)
         cpov.error("fatal", "e is undefined.", "Superellipsoid.toSDL", this);
@@ -1311,12 +1184,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.fontType === null)
         cpov.error("fatal", "fontType is undefined.", "Text.toSDL", this);
@@ -1350,12 +1218,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.majorRadius === null)
         cpov.error("fatal", "majorRadius is undefined.", "Torus.toSDL", this);
@@ -1385,12 +1248,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.corner1 === null)
         cpov.error("fatal", "corner1 is undefined.", "Triangle.toSDL", this);
@@ -1437,12 +1295,7 @@ toSDL(stops = 0) {
 
 toSDL(stops = 0) {
 
-    if(!this.active)
-        return "";
-
-    var pad     = cpov.tab(stops);
-    var ppad    = cpov.tab(stops + 1);
-    var content = [ ];
+    $Primitive.toSDL-preamble
 
     if(this.objects === null)
         cpov.error("fatal", "objects is undefined.", "Union.toSDL", this);
