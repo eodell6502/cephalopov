@@ -66,7 +66,7 @@ class GlobalSettings {
     get adcBailout() {
         if(typeof this._adcBailout == "function")
             return this._adcBailout();
-        else if(typeof this._adcBailout == "string" && this._adcBailout.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._adcBailout))
             return this._adcBailout.substr(1);
         else
             return this._adcBailout;
@@ -85,7 +85,7 @@ class GlobalSettings {
     get ambientLight() {
         if(typeof this._ambientLight == "function")
             return this._ambientLight();
-        else if(typeof this._ambientLight == "string" && this._ambientLight.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._ambientLight))
             return this._ambientLight.substr(1);
         else
             return this._ambientLight;
@@ -104,7 +104,7 @@ class GlobalSettings {
     get assumedGamma() {
         if(typeof this._assumedGamma == "function")
             return this._assumedGamma();
-        else if(typeof this._assumedGamma == "string" && this._assumedGamma.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._assumedGamma))
             return this._assumedGamma.substr(1);
         else
             return this._assumedGamma;
@@ -123,7 +123,7 @@ class GlobalSettings {
     get charset() {
         if(typeof this._charset == "function")
             return this._charset();
-        else if(typeof this._charset == "string" && this._charset.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._charset))
             return this._charset.substr(1);
         else
             return this._charset;
@@ -142,7 +142,7 @@ class GlobalSettings {
     get iridWavelength() {
         if(typeof this._iridWavelength == "function")
             return this._iridWavelength();
-        else if(typeof this._iridWavelength == "string" && this._iridWavelength.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._iridWavelength))
             return this._iridWavelength.substr(1);
         else
             return this._iridWavelength;
@@ -161,7 +161,7 @@ class GlobalSettings {
     get maxIntersections() {
         if(typeof this._maxIntersections == "function")
             return this._maxIntersections();
-        else if(typeof this._maxIntersections == "string" && this._maxIntersections.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._maxIntersections))
             return this._maxIntersections.substr(1);
         else
             return this._maxIntersections;
@@ -180,7 +180,7 @@ class GlobalSettings {
     get maxTraceLevel() {
         if(typeof this._maxTraceLevel == "function")
             return this._maxTraceLevel();
-        else if(typeof this._maxTraceLevel == "string" && this._maxTraceLevel.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._maxTraceLevel))
             return this._maxTraceLevel.substr(1);
         else
             return this._maxTraceLevel;
@@ -199,7 +199,7 @@ class GlobalSettings {
     get mmPerUnit() {
         if(typeof this._mmPerUnit == "function")
             return this._mmPerUnit();
-        else if(typeof this._mmPerUnit == "string" && this._mmPerUnit.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._mmPerUnit))
             return this._mmPerUnit.substr(1);
         else
             return this._mmPerUnit;
@@ -218,7 +218,7 @@ class GlobalSettings {
     get noiseGenerator() {
         if(typeof this._noiseGenerator == "function")
             return this._noiseGenerator();
-        else if(typeof this._noiseGenerator == "string" && this._noiseGenerator.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._noiseGenerator))
             return this._noiseGenerator.substr(1);
         else
             return this._noiseGenerator;
@@ -237,7 +237,7 @@ class GlobalSettings {
     get numberOfWaves() {
         if(typeof this._numberOfWaves == "function")
             return this._numberOfWaves();
-        else if(typeof this._numberOfWaves == "string" && this._numberOfWaves.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._numberOfWaves))
             return this._numberOfWaves.substr(1);
         else
             return this._numberOfWaves;
@@ -256,7 +256,7 @@ class GlobalSettings {
     get photon() {
         if(typeof this._photon == "function")
             return this._photon();
-        else if(typeof this._photon == "string" && this._photon.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photon))
             return this._photon.substr(1);
         else
             return this._photon;
@@ -275,7 +275,7 @@ class GlobalSettings {
     get photonAdcBailout() {
         if(typeof this._photonAdcBailout == "function")
             return this._photonAdcBailout();
-        else if(typeof this._photonAdcBailout == "string" && this._photonAdcBailout.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonAdcBailout))
             return this._photonAdcBailout.substr(1);
         else
             return this._photonAdcBailout;
@@ -294,7 +294,7 @@ class GlobalSettings {
     get photonAutostop() {
         if(typeof this._photonAutostop == "function")
             return this._photonAutostop();
-        else if(typeof this._photonAutostop == "string" && this._photonAutostop.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonAutostop))
             return this._photonAutostop.substr(1);
         else
             return this._photonAutostop;
@@ -313,7 +313,7 @@ class GlobalSettings {
     get photonCount() {
         if(typeof this._photonCount == "function")
             return this._photonCount();
-        else if(typeof this._photonCount == "string" && this._photonCount.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonCount))
             return this._photonCount.substr(1);
         else
             return this._photonCount;
@@ -332,7 +332,7 @@ class GlobalSettings {
     get photonExpandThresholds() {
         if(typeof this._photonExpandThresholds == "function")
             return this._photonExpandThresholds();
-        else if(typeof this._photonExpandThresholds == "string" && this._photonExpandThresholds.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonExpandThresholds))
             return this._photonExpandThresholds.substr(1);
         else
             return this._photonExpandThresholds;
@@ -351,7 +351,7 @@ class GlobalSettings {
     get photonGather() {
         if(typeof this._photonGather == "function")
             return this._photonGather();
-        else if(typeof this._photonGather == "string" && this._photonGather.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonGather))
             return this._photonGather.substr(1);
         else
             return this._photonGather;
@@ -370,7 +370,7 @@ class GlobalSettings {
     get photonJitter() {
         if(typeof this._photonJitter == "function")
             return this._photonJitter();
-        else if(typeof this._photonJitter == "string" && this._photonJitter.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonJitter))
             return this._photonJitter.substr(1);
         else
             return this._photonJitter;
@@ -389,7 +389,7 @@ class GlobalSettings {
     get photonLoadFile() {
         if(typeof this._photonLoadFile == "function")
             return this._photonLoadFile();
-        else if(typeof this._photonLoadFile == "string" && this._photonLoadFile.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonLoadFile))
             return this._photonLoadFile.substr(1);
         else
             return this._photonLoadFile;
@@ -408,7 +408,7 @@ class GlobalSettings {
     get photonMaxTraceLevel() {
         if(typeof this._photonMaxTraceLevel == "function")
             return this._photonMaxTraceLevel();
-        else if(typeof this._photonMaxTraceLevel == "string" && this._photonMaxTraceLevel.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonMaxTraceLevel))
             return this._photonMaxTraceLevel.substr(1);
         else
             return this._photonMaxTraceLevel;
@@ -427,7 +427,7 @@ class GlobalSettings {
     get photonMedia() {
         if(typeof this._photonMedia == "function")
             return this._photonMedia();
-        else if(typeof this._photonMedia == "string" && this._photonMedia.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonMedia))
             return this._photonMedia.substr(1);
         else
             return this._photonMedia;
@@ -446,7 +446,7 @@ class GlobalSettings {
     get photonRadius() {
         if(typeof this._photonRadius == "function")
             return this._photonRadius();
-        else if(typeof this._photonRadius == "string" && this._photonRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonRadius))
             return this._photonRadius.substr(1);
         else
             return this._photonRadius;
@@ -465,7 +465,7 @@ class GlobalSettings {
     get photonSaveFile() {
         if(typeof this._photonSaveFile == "function")
             return this._photonSaveFile();
-        else if(typeof this._photonSaveFile == "string" && this._photonSaveFile.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonSaveFile))
             return this._photonSaveFile.substr(1);
         else
             return this._photonSaveFile;
@@ -484,7 +484,7 @@ class GlobalSettings {
     get photonSpacing() {
         if(typeof this._photonSpacing == "function")
             return this._photonSpacing();
-        else if(typeof this._photonSpacing == "string" && this._photonSpacing.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photonSpacing))
             return this._photonSpacing.substr(1);
         else
             return this._photonSpacing;
@@ -503,7 +503,7 @@ class GlobalSettings {
     get radAdcBailout() {
         if(typeof this._radAdcBailout == "function")
             return this._radAdcBailout();
-        else if(typeof this._radAdcBailout == "string" && this._radAdcBailout.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radAdcBailout))
             return this._radAdcBailout.substr(1);
         else
             return this._radAdcBailout;
@@ -522,7 +522,7 @@ class GlobalSettings {
     get radAlwaysSample() {
         if(typeof this._radAlwaysSample == "function")
             return this._radAlwaysSample();
-        else if(typeof this._radAlwaysSample == "string" && this._radAlwaysSample.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radAlwaysSample))
             return this._radAlwaysSample.substr(1);
         else
             return this._radAlwaysSample;
@@ -541,7 +541,7 @@ class GlobalSettings {
     get radBrightness() {
         if(typeof this._radBrightness == "function")
             return this._radBrightness();
-        else if(typeof this._radBrightness == "string" && this._radBrightness.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radBrightness))
             return this._radBrightness.substr(1);
         else
             return this._radBrightness;
@@ -560,7 +560,7 @@ class GlobalSettings {
     get radCount() {
         if(typeof this._radCount == "function")
             return this._radCount();
-        else if(typeof this._radCount == "string" && this._radCount.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radCount))
             return this._radCount.substr(1);
         else
             return this._radCount;
@@ -579,7 +579,7 @@ class GlobalSettings {
     get radErrorBound() {
         if(typeof this._radErrorBound == "function")
             return this._radErrorBound();
-        else if(typeof this._radErrorBound == "string" && this._radErrorBound.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radErrorBound))
             return this._radErrorBound.substr(1);
         else
             return this._radErrorBound;
@@ -598,7 +598,7 @@ class GlobalSettings {
     get radGrayThreshold() {
         if(typeof this._radGrayThreshold == "function")
             return this._radGrayThreshold();
-        else if(typeof this._radGrayThreshold == "string" && this._radGrayThreshold.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radGrayThreshold))
             return this._radGrayThreshold.substr(1);
         else
             return this._radGrayThreshold;
@@ -617,7 +617,7 @@ class GlobalSettings {
     get radiosity() {
         if(typeof this._radiosity == "function")
             return this._radiosity();
-        else if(typeof this._radiosity == "string" && this._radiosity.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radiosity))
             return this._radiosity.substr(1);
         else
             return this._radiosity;
@@ -636,7 +636,7 @@ class GlobalSettings {
     get radLowErrorFactor() {
         if(typeof this._radLowErrorFactor == "function")
             return this._radLowErrorFactor();
-        else if(typeof this._radLowErrorFactor == "string" && this._radLowErrorFactor.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radLowErrorFactor))
             return this._radLowErrorFactor.substr(1);
         else
             return this._radLowErrorFactor;
@@ -655,7 +655,7 @@ class GlobalSettings {
     get radMaximumReuse() {
         if(typeof this._radMaximumReuse == "function")
             return this._radMaximumReuse();
-        else if(typeof this._radMaximumReuse == "string" && this._radMaximumReuse.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radMaximumReuse))
             return this._radMaximumReuse.substr(1);
         else
             return this._radMaximumReuse;
@@ -674,7 +674,7 @@ class GlobalSettings {
     get radMaxSample() {
         if(typeof this._radMaxSample == "function")
             return this._radMaxSample();
-        else if(typeof this._radMaxSample == "string" && this._radMaxSample.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radMaxSample))
             return this._radMaxSample.substr(1);
         else
             return this._radMaxSample;
@@ -693,7 +693,7 @@ class GlobalSettings {
     get radMinimumReuse() {
         if(typeof this._radMinimumReuse == "function")
             return this._radMinimumReuse();
-        else if(typeof this._radMinimumReuse == "string" && this._radMinimumReuse.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radMinimumReuse))
             return this._radMinimumReuse.substr(1);
         else
             return this._radMinimumReuse;
@@ -712,7 +712,7 @@ class GlobalSettings {
     get radNearestCount() {
         if(typeof this._radNearestCount == "function")
             return this._radNearestCount();
-        else if(typeof this._radNearestCount == "string" && this._radNearestCount.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radNearestCount))
             return this._radNearestCount.substr(1);
         else
             return this._radNearestCount;
@@ -731,7 +731,7 @@ class GlobalSettings {
     get radNormal() {
         if(typeof this._radNormal == "function")
             return this._radNormal();
-        else if(typeof this._radNormal == "string" && this._radNormal.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radNormal))
             return this._radNormal.substr(1);
         else
             return this._radNormal;
@@ -750,7 +750,7 @@ class GlobalSettings {
     get radPretraceEnd() {
         if(typeof this._radPretraceEnd == "function")
             return this._radPretraceEnd();
-        else if(typeof this._radPretraceEnd == "string" && this._radPretraceEnd.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radPretraceEnd))
             return this._radPretraceEnd.substr(1);
         else
             return this._radPretraceEnd;
@@ -769,7 +769,7 @@ class GlobalSettings {
     get radPretraceStart() {
         if(typeof this._radPretraceStart == "function")
             return this._radPretraceStart();
-        else if(typeof this._radPretraceStart == "string" && this._radPretraceStart.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radPretraceStart))
             return this._radPretraceStart.substr(1);
         else
             return this._radPretraceStart;
@@ -788,7 +788,7 @@ class GlobalSettings {
     get radRecursionLimit() {
         if(typeof this._radRecursionLimit == "function")
             return this._radRecursionLimit();
-        else if(typeof this._radRecursionLimit == "string" && this._radRecursionLimit.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radRecursionLimit))
             return this._radRecursionLimit.substr(1);
         else
             return this._radRecursionLimit;
@@ -807,7 +807,7 @@ class GlobalSettings {
     get radSubsurface() {
         if(typeof this._radSubsurface == "function")
             return this._radSubsurface();
-        else if(typeof this._radSubsurface == "string" && this._radSubsurface.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radSubsurface))
             return this._radSubsurface.substr(1);
         else
             return this._radSubsurface;
@@ -826,7 +826,7 @@ class GlobalSettings {
     get subRadiosity() {
         if(typeof this._subRadiosity == "function")
             return this._subRadiosity();
-        else if(typeof this._subRadiosity == "string" && this._subRadiosity.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._subRadiosity))
             return this._subRadiosity.substr(1);
         else
             return this._subRadiosity;
@@ -845,7 +845,7 @@ class GlobalSettings {
     get subSamples() {
         if(typeof this._subSamples == "function")
             return this._subSamples();
-        else if(typeof this._subSamples == "string" && this._subSamples.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._subSamples))
             return this._subSamples.substr(1);
         else
             return this._subSamples;
@@ -864,7 +864,7 @@ class GlobalSettings {
     get subsurface() {
         if(typeof this._subsurface == "function")
             return this._subsurface();
-        else if(typeof this._subsurface == "string" && this._subsurface.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._subsurface))
             return this._subsurface.substr(1);
         else
             return this._subsurface;
@@ -878,13 +878,66 @@ class GlobalSettings {
         }
     }
 
-    //==============================================================================
-    // Returns the SDL for the object *if* the type is GlobalSettings. (ImageOptions
-    // produces either commandline flags or the contents of a .ini file, neither of
-    // which is SDL.) Unlike other toSDL methods, this one does not take a stops
-    // argument because the SDL global_settings declaration always happens at the
-    // top level.
-    //==============================================================================
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new GlobalSettings();
+
+        newObj.adcBailout             = this.adcBailout;            
+        newObj.ambientLight           = this.ambientLight;          
+        newObj.assumedGamma           = this.assumedGamma;          
+        newObj.charset                = this.charset;               
+        newObj.iridWavelength         = this.iridWavelength;        
+        newObj.maxIntersections       = this.maxIntersections;      
+        newObj.maxTraceLevel          = this.maxTraceLevel;         
+        newObj.mmPerUnit              = this.mmPerUnit;             
+        newObj.noiseGenerator         = this.noiseGenerator;        
+        newObj.numberOfWaves          = this.numberOfWaves;         
+        newObj.photon                 = this.photon;                
+        newObj.photonAdcBailout       = this.photonAdcBailout;      
+        newObj.photonAutostop         = this.photonAutostop;        
+        newObj.photonCount            = this.photonCount;           
+        newObj.photonExpandThresholds = this.photonExpandThresholds;
+        newObj.photonGather           = this.photonGather;          
+        newObj.photonJitter           = this.photonJitter;          
+        newObj.photonLoadFile         = this.photonLoadFile;        
+        newObj.photonMaxTraceLevel    = this.photonMaxTraceLevel;   
+        newObj.photonMedia            = this.photonMedia;           
+        newObj.photonRadius           = this.photonRadius;          
+        newObj.photonSaveFile         = this.photonSaveFile;        
+        newObj.photonSpacing          = this.photonSpacing;         
+        newObj.radAdcBailout          = this.radAdcBailout;         
+        newObj.radAlwaysSample        = this.radAlwaysSample;       
+        newObj.radBrightness          = this.radBrightness;         
+        newObj.radCount               = this.radCount;              
+        newObj.radErrorBound          = this.radErrorBound;         
+        newObj.radGrayThreshold       = this.radGrayThreshold;      
+        newObj.radiosity              = this.radiosity;             
+        newObj.radLowErrorFactor      = this.radLowErrorFactor;     
+        newObj.radMaximumReuse        = this.radMaximumReuse;       
+        newObj.radMaxSample           = this.radMaxSample;          
+        newObj.radMinimumReuse        = this.radMinimumReuse;       
+        newObj.radNearestCount        = this.radNearestCount;       
+        newObj.radNormal              = this.radNormal;             
+        newObj.radPretraceEnd         = this.radPretraceEnd;        
+        newObj.radPretraceStart       = this.radPretraceStart;      
+        newObj.radRecursionLimit      = this.radRecursionLimit;     
+        newObj.radSubsurface          = this.radSubsurface;         
+        newObj.subRadiosity           = this.subRadiosity;          
+        newObj.subSamples             = this.subSamples;            
+        newObj.subsurface             = this.subsurface;            
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Returns the SDL for GlobalSettings. Unlike other toSDL methods, this one
+    // does not take a stops argument because the SDL global_settings
+    // declaration always happens at the top level.
+    //--------------------------------------------------------------------------
     
     toSDL() {
         var contents = [ ];
@@ -2519,6 +2572,102 @@ class ImageOptions {
     }
 
     //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new ImageOptions();
+
+        newObj.allConsole            = this.allConsole;           
+        newObj.allFile               = this.allFile;              
+        newObj.antialias             = this.antialias;            
+        newObj.antialiasDepth        = this.antialiasDepth;       
+        newObj.antialiasGamma        = this.antialiasGamma;       
+        newObj.antialiasThreshold    = this.antialiasThreshold;   
+        newObj.appendFile            = this.appendFile;           
+        newObj.bitsPerColor          = this.bitsPerColor;         
+        newObj.bounding              = this.bounding;             
+        newObj.boundingMethod        = this.boundingMethod;       
+        newObj.boundingThreshold     = this.boundingThreshold;    
+        newObj.bspBaseAccessCost     = this.bspBaseAccessCost;    
+        newObj.bspChildAccessCost    = this.bspChildAccessCost;   
+        newObj.bspIsectCost          = this.bspIsectCost;         
+        newObj.bspMaxDepth           = this.bspMaxDepth;          
+        newObj.bspMissChance         = this.bspMissChance;        
+        newObj.continueTrace         = this.continueTrace;        
+        newObj.createIni             = this.createIni;            
+        newObj.debugConsole          = this.debugConsole;         
+        newObj.debugFile             = this.debugFile;            
+        newObj.display               = this.display;              
+        newObj.displayGamma          = this.displayGamma;         
+        newObj.dither                = this.dither;               
+        newObj.ditherMethod          = this.ditherMethod;         
+        newObj.endColumn             = this.endColumn;            
+        newObj.endRow                = this.endRow;               
+        newObj.exePath               = this.exePath;              
+        newObj.fatalConsole          = this.fatalConsole;         
+        newObj.fatalErrorCommand     = this.fatalErrorCommand;    
+        newObj.fatalErrorReturn      = this.fatalErrorReturn;     
+        newObj.fatalFile             = this.fatalFile;            
+        newObj.fileGamma             = this.fileGamma;            
+        newObj.height                = this.height;               
+        newObj.highReproducibility   = this.highReproducibility;  
+        newObj.includeHeader         = this.includeHeader;        
+        newObj.inputFileName         = this.inputFileName;        
+        newObj.jitter                = this.jitter;               
+        newObj.jitterAmount          = this.jitterAmount;         
+        newObj.libraryPath           = this.libraryPath;          
+        newObj.maxImageBufferMemory  = this.maxImageBufferMemory; 
+        newObj.outputAlpha           = this.outputAlpha;          
+        newObj.outputFileName        = this.outputFileName;       
+        newObj.outputFileType        = this.outputFileType;       
+        newObj.outputToFile          = this.outputToFile;         
+        newObj.palette               = this.palette;              
+        newObj.pauseWhenDone         = this.pauseWhenDone;        
+        newObj.postFrameCommand      = this.postFrameCommand;     
+        newObj.postFrameReturn       = this.postFrameReturn;      
+        newObj.postSceneCommand      = this.postSceneCommand;     
+        newObj.postSceneReturn       = this.postSceneReturn;      
+        newObj.preFrameCommand       = this.preFrameCommand;      
+        newObj.preFrameReturn        = this.preFrameReturn;       
+        newObj.preSceneCommand       = this.preSceneCommand;      
+        newObj.preSceneReturn        = this.preSceneReturn;       
+        newObj.previewEndSize        = this.previewEndSize;       
+        newObj.previewStartSize      = this.previewStartSize;     
+        newObj.quality               = this.quality;              
+        newObj.radiosityFileName     = this.radiosityFileName;    
+        newObj.radiosityFromFile     = this.radiosityFromFile;    
+        newObj.radiosityToFile       = this.radiosityToFile;      
+        newObj.radiosityVainPretrace = this.radiosityVainPretrace;
+        newObj.removeBounds          = this.removeBounds;         
+        newObj.renderBlockSize       = this.renderBlockSize;      
+        newObj.renderBlockStep       = this.renderBlockStep;      
+        newObj.renderConsole         = this.renderConsole;        
+        newObj.renderFile            = this.renderFile;           
+        newObj.renderPattern         = this.renderPattern;        
+        newObj.samplingMethod        = this.samplingMethod;       
+        newObj.splitUnions           = this.splitUnions;          
+        newObj.startColumn           = this.startColumn;          
+        newObj.startRow              = this.startRow;             
+        newObj.statisticConsole      = this.statisticConsole;     
+        newObj.statisticFile         = this.statisticFile;        
+        newObj.testAbort             = this.testAbort;            
+        newObj.testAbortCount        = this.testAbortCount;       
+        newObj.userAbortCommand      = this.userAbortCommand;     
+        newObj.userAbortReturn       = this.userAbortReturn;      
+        newObj.verbose               = this.verbose;              
+        newObj.videoMode             = this.videoMode;            
+        newObj.warningConsole        = this.warningConsole;       
+        newObj.warningFile           = this.warningFile;          
+        newObj.warningLevel          = this.warningLevel;         
+        newObj.width                 = this.width;                
+        newObj.workThreads           = this.workThreads;          
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
     // Performs some aggregate tests on the final state of the image options,
     // and if none are found, returns an object containing two members, ini
     // and cli, corresponding to the contents of the ini file and the
@@ -2994,6 +3143,7 @@ class Primitive {
 
         // Initialization //
 
+        this.active = true;
         cpov.initObject(this, options);
         
         // Create serial number and register with cpov object
@@ -3010,7 +3160,7 @@ class Primitive {
     get active() {
         if(typeof this._active == "function")
             return this._active();
-        else if(typeof this._active == "string" && this._active.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._active))
             return this._active.substr(1);
         else
             return this._active;
@@ -3029,7 +3179,7 @@ class Primitive {
     get baseTransform() {
         if(typeof this._baseTransform == "function")
             return this._baseTransform();
-        else if(typeof this._baseTransform == "string" && this._baseTransform.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._baseTransform))
             return this._baseTransform.substr(1);
         else
             return this._baseTransform;
@@ -3048,7 +3198,7 @@ class Primitive {
     get boundedBy() {
         if(typeof this._boundedBy == "function")
             return this._boundedBy();
-        else if(typeof this._boundedBy == "string" && this._boundedBy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._boundedBy))
             return this._boundedBy.substr(1);
         else
             return this._boundedBy;
@@ -3067,7 +3217,7 @@ class Primitive {
     get children() {
         if(typeof this._children == "function")
             return this._children();
-        else if(typeof this._children == "string" && this._children.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._children))
             return this._children.substr(1);
         else
             return this._children;
@@ -3086,7 +3236,7 @@ class Primitive {
     get clippedBy() {
         if(typeof this._clippedBy == "function")
             return this._clippedBy();
-        else if(typeof this._clippedBy == "string" && this._clippedBy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._clippedBy))
             return this._clippedBy.substr(1);
         else
             return this._clippedBy;
@@ -3105,7 +3255,7 @@ class Primitive {
     get doubleIlluminate() {
         if(typeof this._doubleIlluminate == "function")
             return this._doubleIlluminate();
-        else if(typeof this._doubleIlluminate == "string" && this._doubleIlluminate.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._doubleIlluminate))
             return this._doubleIlluminate.substr(1);
         else
             return this._doubleIlluminate;
@@ -3124,7 +3274,7 @@ class Primitive {
     get finish() {
         if(typeof this._finish == "function")
             return this._finish();
-        else if(typeof this._finish == "string" && this._finish.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._finish))
             return this._finish.substr(1);
         else
             return this._finish;
@@ -3143,7 +3293,7 @@ class Primitive {
     get frameBegin() {
         if(typeof this._frameBegin == "function")
             return this._frameBegin();
-        else if(typeof this._frameBegin == "string" && this._frameBegin.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._frameBegin))
             return this._frameBegin.substr(1);
         else
             return this._frameBegin;
@@ -3162,7 +3312,7 @@ class Primitive {
     get frameEnd() {
         if(typeof this._frameEnd == "function")
             return this._frameEnd();
-        else if(typeof this._frameEnd == "string" && this._frameEnd.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._frameEnd))
             return this._frameEnd.substr(1);
         else
             return this._frameEnd;
@@ -3181,7 +3331,7 @@ class Primitive {
     get hollow() {
         if(typeof this._hollow == "function")
             return this._hollow();
-        else if(typeof this._hollow == "string" && this._hollow.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._hollow))
             return this._hollow.substr(1);
         else
             return this._hollow;
@@ -3200,7 +3350,7 @@ class Primitive {
     get id() {
         if(typeof this._id == "function")
             return this._id();
-        else if(typeof this._id == "string" && this._id.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._id))
             return this._id.substr(1);
         else
             return this._id;
@@ -3219,7 +3369,7 @@ class Primitive {
     get interior() {
         if(typeof this._interior == "function")
             return this._interior();
-        else if(typeof this._interior == "string" && this._interior.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._interior))
             return this._interior.substr(1);
         else
             return this._interior;
@@ -3238,7 +3388,7 @@ class Primitive {
     get inverse() {
         if(typeof this._inverse == "function")
             return this._inverse();
-        else if(typeof this._inverse == "string" && this._inverse.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._inverse))
             return this._inverse.substr(1);
         else
             return this._inverse;
@@ -3257,7 +3407,7 @@ class Primitive {
     get material() {
         if(typeof this._material == "function")
             return this._material();
-        else if(typeof this._material == "string" && this._material.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._material))
             return this._material.substr(1);
         else
             return this._material;
@@ -3276,7 +3426,7 @@ class Primitive {
     get noImage() {
         if(typeof this._noImage == "function")
             return this._noImage();
-        else if(typeof this._noImage == "string" && this._noImage.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._noImage))
             return this._noImage.substr(1);
         else
             return this._noImage;
@@ -3295,7 +3445,7 @@ class Primitive {
     get noRadiosity() {
         if(typeof this._noRadiosity == "function")
             return this._noRadiosity();
-        else if(typeof this._noRadiosity == "string" && this._noRadiosity.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._noRadiosity))
             return this._noRadiosity.substr(1);
         else
             return this._noRadiosity;
@@ -3314,7 +3464,7 @@ class Primitive {
     get noReflection() {
         if(typeof this._noReflection == "function")
             return this._noReflection();
-        else if(typeof this._noReflection == "string" && this._noReflection.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._noReflection))
             return this._noReflection.substr(1);
         else
             return this._noReflection;
@@ -3333,7 +3483,7 @@ class Primitive {
     get noShadow() {
         if(typeof this._noShadow == "function")
             return this._noShadow();
-        else if(typeof this._noShadow == "string" && this._noShadow.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._noShadow))
             return this._noShadow.substr(1);
         else
             return this._noShadow;
@@ -3352,7 +3502,7 @@ class Primitive {
     get parent() {
         if(typeof this._parent == "function")
             return this._parent();
-        else if(typeof this._parent == "string" && this._parent.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._parent))
             return this._parent.substr(1);
         else
             return this._parent;
@@ -3371,7 +3521,7 @@ class Primitive {
     get photons() {
         if(typeof this._photons == "function")
             return this._photons();
-        else if(typeof this._photons == "string" && this._photons.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._photons))
             return this._photons.substr(1);
         else
             return this._photons;
@@ -3390,7 +3540,7 @@ class Primitive {
     get radiosity() {
         if(typeof this._radiosity == "function")
             return this._radiosity();
-        else if(typeof this._radiosity == "string" && this._radiosity.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radiosity))
             return this._radiosity.substr(1);
         else
             return this._radiosity;
@@ -3409,7 +3559,7 @@ class Primitive {
     get serial() {
         if(typeof this._serial == "function")
             return this._serial();
-        else if(typeof this._serial == "string" && this._serial.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._serial))
             return this._serial.substr(1);
         else
             return this._serial;
@@ -3428,7 +3578,7 @@ class Primitive {
     get texture() {
         if(typeof this._texture == "function")
             return this._texture();
-        else if(typeof this._texture == "string" && this._texture.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._texture))
             return this._texture.substr(1);
         else
             return this._texture;
@@ -3489,6 +3639,77 @@ class Primitive {
     
         this._transform = val.xMatrix(this.transform);
     
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Primitive();
+
+        newObj.active           = this.active;          
+        newObj.baseTransform    = this.baseTransform;   
+        newObj.boundedBy        = this.boundedBy;       
+        newObj.children         = this.children;        
+        newObj.clippedBy        = this.clippedBy;       
+        newObj.doubleIlluminate = this.doubleIlluminate;
+        newObj.finish           = this.finish;          
+        newObj.frameBegin       = this.frameBegin;      
+        newObj.frameEnd         = this.frameEnd;        
+        newObj.hollow           = this.hollow;          
+        newObj.id               = this.id;              
+        newObj.interior         = this.interior;        
+        newObj.inverse          = this.inverse;         
+        newObj.material         = this.material;        
+        newObj.noImage          = this.noImage;         
+        newObj.noRadiosity      = this.noRadiosity;     
+        newObj.noReflection     = this.noReflection;    
+        newObj.noShadow         = this.noShadow;        
+        newObj.parent           = this.parent;          
+        newObj.photons          = this.photons;         
+        newObj.radiosity        = this.radiosity;       
+        newObj.serial           = this.serial;          
+        newObj.texture          = this.texture;         
+        newObj.transform        = this.transform;       
+
+        return newObj;
+    }
+
+    destroy() {
+        delete cpov.serialMap(this.serial);
+        if(this.id)
+            delete cpov.idMap(this.id);
+    }
+
+
+    copyFrom(obj) {
+        this.active           = obj.active;
+        this.baseTransform    = obj.baseTransform;
+        this.boundedBy        = obj.boundedBy;
+        this.children         = obj.children;
+        this.clippedBy        = obj.clippedBy;
+        this.doubleIlluminate = obj.doubleIlluminate;
+        this.finish           = obj.finish;
+        this.frameBegin       = obj.frameBegin;
+        this.frameEnd         = obj.frameEnd;
+        this.hollow           = obj.hollow;
+        this.id               = obj.id;
+        this.interior         = obj.interior;
+        this.inverse          = obj.inverse;
+        this.material         = obj.material;
+        this.noImage          = obj.noImage;
+        this.noRadiosity      = obj.noRadiosity;
+        this.noReflection     = obj.noReflection;
+        this.noShadow         = obj.noShadow;
+        this.parent           = obj.parent;
+        this.photons          = obj.photons;
+        this.radiosity        = obj.radiosity;
+        this.serial           = obj.serial;
+        this.texture          = obj.texture;
+        this.transform        = obj.transform;
     }
 
 
@@ -3564,13 +3785,6 @@ class Primitive {
     }
 
 
-    destroy() {
-        delete cpov.serialMap(this.serial);
-        if(this.id)
-            delete cpov.idMap(this.id);
-    }
-
-
 
 }
 
@@ -3581,7 +3795,7 @@ exports.Primitive = Primitive;
 // Blob class
 //==============================================================================
 
-class Blob {
+class Blob extends Primitive {
 
     constructor(options) {
 
@@ -3601,6 +3815,7 @@ class Blob {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -3650,7 +3865,7 @@ class Blob {
     get components() {
         if(typeof this._components == "function")
             return this._components();
-        else if(typeof this._components == "string" && this._components.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._components))
             return this._components.substr(1);
         else
             return this._components;
@@ -3669,7 +3884,7 @@ class Blob {
     get threshold() {
         if(typeof this._threshold == "function")
             return this._threshold();
-        else if(typeof this._threshold == "string" && this._threshold.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._threshold))
             return this._threshold.substr(1);
         else
             return this._threshold;
@@ -3688,7 +3903,7 @@ class Blob {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -3707,7 +3922,7 @@ class Blob {
     get hierarchy() {
         if(typeof this._hierarchy == "function")
             return this._hierarchy();
-        else if(typeof this._hierarchy == "string" && this._hierarchy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._hierarchy))
             return this._hierarchy.substr(1);
         else
             return this._hierarchy;
@@ -3719,6 +3934,23 @@ class Blob {
         } else {
             cpov.error("fatal", "hierarchy must be a boolean.", "Blob");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Blob();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.components = this.components;
+        newObj.threshold  = this.threshold; 
+        newObj.sturm      = this.sturm;     
+        newObj.hierarchy  = this.hierarchy; 
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -3744,7 +3976,7 @@ class Blob {
     		content.push(ppad + this.components);
     	} else { // array
     		for(var i = 0; i < components.length; i++) {
-    			content.push(components[i].toSDL(stops + 1);
+    			content.push(components[i].toSDL(stops + 1));
     		}
     	}
     	if(this.hierarchy)
@@ -3768,7 +4000,7 @@ exports.Blob = Blob;
 // Box class
 //==============================================================================
 
-class Box {
+class Box extends Primitive {
 
     constructor(options) {
 
@@ -3786,6 +4018,7 @@ class Box {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -3835,7 +4068,7 @@ class Box {
     get corner1() {
         if(typeof this._corner1 == "function")
             return this._corner1();
-        else if(typeof this._corner1 == "string" && this._corner1.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._corner1))
             return this._corner1.substr(1);
         else
             return this._corner1;
@@ -3854,7 +4087,7 @@ class Box {
     get corner2() {
         if(typeof this._corner2 == "function")
             return this._corner2();
-        else if(typeof this._corner2 == "string" && this._corner2.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._corner2))
             return this._corner2.substr(1);
         else
             return this._corner2;
@@ -3866,6 +4099,21 @@ class Box {
         } else {
             cpov.error("fatal", "corner2", "Box");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Box();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.corner1 = this.corner1;
+        newObj.corner2 = this.corner2;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -3904,7 +4152,7 @@ exports.Box = Box;
 // Camera class
 //==============================================================================
 
-class Camera {
+class Camera extends Primitive {
 
     constructor(options) {
 
@@ -3936,6 +4184,7 @@ class Camera {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -3985,7 +4234,7 @@ class Camera {
     get type() {
         if(typeof this._type == "function")
             return this._type();
-        else if(typeof this._type == "string" && this._type.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._type))
             return this._type.substr(1);
         else
             return this._type;
@@ -4004,7 +4253,7 @@ class Camera {
     get angle() {
         if(typeof this._angle == "function")
             return this._angle();
-        else if(typeof this._angle == "string" && this._angle.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._angle))
             return this._angle.substr(1);
         else
             return this._angle;
@@ -4023,7 +4272,7 @@ class Camera {
     get apertureSize() {
         if(typeof this._apertureSize == "function")
             return this._apertureSize();
-        else if(typeof this._apertureSize == "string" && this._apertureSize.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._apertureSize))
             return this._apertureSize.substr(1);
         else
             return this._apertureSize;
@@ -4042,7 +4291,7 @@ class Camera {
     get blurSamples() {
         if(typeof this._blurSamples == "function")
             return this._blurSamples();
-        else if(typeof this._blurSamples == "string" && this._blurSamples.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._blurSamples))
             return this._blurSamples.substr(1);
         else
             return this._blurSamples;
@@ -4061,7 +4310,7 @@ class Camera {
     get bokeh() {
         if(typeof this._bokeh == "function")
             return this._bokeh();
-        else if(typeof this._bokeh == "string" && this._bokeh.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._bokeh))
             return this._bokeh.substr(1);
         else
             return this._bokeh;
@@ -4080,7 +4329,7 @@ class Camera {
     get confidence() {
         if(typeof this._confidence == "function")
             return this._confidence();
-        else if(typeof this._confidence == "string" && this._confidence.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._confidence))
             return this._confidence.substr(1);
         else
             return this._confidence;
@@ -4099,7 +4348,7 @@ class Camera {
     get cylinderType() {
         if(typeof this._cylinderType == "function")
             return this._cylinderType();
-        else if(typeof this._cylinderType == "string" && this._cylinderType.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._cylinderType))
             return this._cylinderType.substr(1);
         else
             return this._cylinderType;
@@ -4118,7 +4367,7 @@ class Camera {
     get direction() {
         if(typeof this._direction == "function")
             return this._direction();
-        else if(typeof this._direction == "string" && this._direction.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._direction))
             return this._direction.substr(1);
         else
             return this._direction;
@@ -4137,7 +4386,7 @@ class Camera {
     get focalPoint() {
         if(typeof this._focalPoint == "function")
             return this._focalPoint();
-        else if(typeof this._focalPoint == "string" && this._focalPoint.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._focalPoint))
             return this._focalPoint.substr(1);
         else
             return this._focalPoint;
@@ -4156,7 +4405,7 @@ class Camera {
     get location() {
         if(typeof this._location == "function")
             return this._location();
-        else if(typeof this._location == "string" && this._location.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._location))
             return this._location.substr(1);
         else
             return this._location;
@@ -4175,7 +4424,7 @@ class Camera {
     get lookAt() {
         if(typeof this._lookAt == "function")
             return this._lookAt();
-        else if(typeof this._lookAt == "string" && this._lookAt.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._lookAt))
             return this._lookAt.substr(1);
         else
             return this._lookAt;
@@ -4194,7 +4443,7 @@ class Camera {
     get right() {
         if(typeof this._right == "function")
             return this._right();
-        else if(typeof this._right == "string" && this._right.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._right))
             return this._right.substr(1);
         else
             return this._right;
@@ -4213,7 +4462,7 @@ class Camera {
     get sky() {
         if(typeof this._sky == "function")
             return this._sky();
-        else if(typeof this._sky == "string" && this._sky.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sky))
             return this._sky.substr(1);
         else
             return this._sky;
@@ -4232,7 +4481,7 @@ class Camera {
     get up() {
         if(typeof this._up == "function")
             return this._up();
-        else if(typeof this._up == "string" && this._up.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._up))
             return this._up.substr(1);
         else
             return this._up;
@@ -4251,7 +4500,7 @@ class Camera {
     get variance() {
         if(typeof this._variance == "function")
             return this._variance();
-        else if(typeof this._variance == "string" && this._variance.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._variance))
             return this._variance.substr(1);
         else
             return this._variance;
@@ -4270,7 +4519,7 @@ class Camera {
     get vertAngle() {
         if(typeof this._vertAngle == "function")
             return this._vertAngle();
-        else if(typeof this._vertAngle == "string" && this._vertAngle.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._vertAngle))
             return this._vertAngle.substr(1);
         else
             return this._vertAngle;
@@ -4282,6 +4531,35 @@ class Camera {
         } else {
             cpov.error("fatal", "vertAngle must be an integer.", "Camera");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Camera();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.type         = this.type;        
+        newObj.angle        = this.angle;       
+        newObj.apertureSize = this.apertureSize;
+        newObj.blurSamples  = this.blurSamples; 
+        newObj.bokeh        = this.bokeh;       
+        newObj.confidence   = this.confidence;  
+        newObj.cylinderType = this.cylinderType;
+        newObj.direction    = this.direction;   
+        newObj.focalPoint   = this.focalPoint;  
+        newObj.location     = this.location;    
+        newObj.lookAt       = this.lookAt;      
+        newObj.right        = this.right;       
+        newObj.sky          = this.sky;         
+        newObj.up           = this.up;          
+        newObj.variance     = this.variance;    
+        newObj.vertAngle    = this.vertAngle;   
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -4349,7 +4627,7 @@ exports.Camera = Camera;
 // Cone class
 //==============================================================================
 
-class Cone {
+class Cone extends Primitive {
 
     constructor(options) {
 
@@ -4370,6 +4648,7 @@ class Cone {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4419,7 +4698,7 @@ class Cone {
     get basePoint() {
         if(typeof this._basePoint == "function")
             return this._basePoint();
-        else if(typeof this._basePoint == "string" && this._basePoint.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._basePoint))
             return this._basePoint.substr(1);
         else
             return this._basePoint;
@@ -4438,7 +4717,7 @@ class Cone {
     get baseRadius() {
         if(typeof this._baseRadius == "function")
             return this._baseRadius();
-        else if(typeof this._baseRadius == "string" && this._baseRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._baseRadius))
             return this._baseRadius.substr(1);
         else
             return this._baseRadius;
@@ -4457,7 +4736,7 @@ class Cone {
     get capPoint() {
         if(typeof this._capPoint == "function")
             return this._capPoint();
-        else if(typeof this._capPoint == "string" && this._capPoint.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._capPoint))
             return this._capPoint.substr(1);
         else
             return this._capPoint;
@@ -4476,7 +4755,7 @@ class Cone {
     get capRadius() {
         if(typeof this._capRadius == "function")
             return this._capRadius();
-        else if(typeof this._capRadius == "string" && this._capRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._capRadius))
             return this._capRadius.substr(1);
         else
             return this._capRadius;
@@ -4495,7 +4774,7 @@ class Cone {
     get open() {
         if(typeof this._open == "function")
             return this._open();
-        else if(typeof this._open == "string" && this._open.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._open))
             return this._open.substr(1);
         else
             return this._open;
@@ -4507,6 +4786,24 @@ class Cone {
         } else {
             cpov.error("fatal", "open must be a boolean.", "Cone");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Cone();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.basePoint  = this.basePoint; 
+        newObj.baseRadius = this.baseRadius;
+        newObj.capPoint   = this.capPoint;  
+        newObj.capRadius  = this.capRadius; 
+        newObj.open       = this.open;      
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -4551,7 +4848,7 @@ exports.Cone = Cone;
 // Cylinder class
 //==============================================================================
 
-class Cylinder {
+class Cylinder extends Primitive {
 
     constructor(options) {
 
@@ -4572,6 +4869,7 @@ class Cylinder {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4621,7 +4919,7 @@ class Cylinder {
     get basePoint() {
         if(typeof this._basePoint == "function")
             return this._basePoint();
-        else if(typeof this._basePoint == "string" && this._basePoint.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._basePoint))
             return this._basePoint.substr(1);
         else
             return this._basePoint;
@@ -4640,7 +4938,7 @@ class Cylinder {
     get capPoint() {
         if(typeof this._capPoint == "function")
             return this._capPoint();
-        else if(typeof this._capPoint == "string" && this._capPoint.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._capPoint))
             return this._capPoint.substr(1);
         else
             return this._capPoint;
@@ -4659,7 +4957,7 @@ class Cylinder {
     get radius() {
         if(typeof this._radius == "function")
             return this._radius();
-        else if(typeof this._radius == "string" && this._radius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radius))
             return this._radius.substr(1);
         else
             return this._radius;
@@ -4678,7 +4976,7 @@ class Cylinder {
     get open() {
         if(typeof this._open == "function")
             return this._open();
-        else if(typeof this._open == "string" && this._open.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._open))
             return this._open.substr(1);
         else
             return this._open;
@@ -4697,7 +4995,7 @@ class Cylinder {
     get strength() {
         if(typeof this._strength == "function")
             return this._strength();
-        else if(typeof this._strength == "string" && this._strength.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._strength))
             return this._strength.substr(1);
         else
             return this._strength;
@@ -4709,6 +5007,24 @@ class Cylinder {
         } else {
             cpov.error("fatal", "strength must be a float", "Cylinder");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Cylinder();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.basePoint = this.basePoint;
+        newObj.capPoint  = this.capPoint; 
+        newObj.radius    = this.radius;   
+        newObj.open      = this.open;     
+        newObj.strength  = this.strength; 
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -4751,7 +5067,7 @@ exports.Cylinder = Cylinder;
 // HeightField class
 //==============================================================================
 
-class HeightField {
+class HeightField extends Primitive {
 
     constructor(options) {
 
@@ -4774,6 +5090,7 @@ class HeightField {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -4823,7 +5140,7 @@ class HeightField {
     get source() {
         if(typeof this._source == "function")
             return this._source();
-        else if(typeof this._source == "string" && this._source.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._source))
             return this._source.substr(1);
         else
             return this._source;
@@ -4842,7 +5159,7 @@ class HeightField {
     get hfType() {
         if(typeof this._hfType == "function")
             return this._hfType();
-        else if(typeof this._hfType == "string" && this._hfType.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._hfType))
             return this._hfType.substr(1);
         else
             return this._hfType;
@@ -4861,7 +5178,7 @@ class HeightField {
     get smooth() {
         if(typeof this._smooth == "function")
             return this._smooth();
-        else if(typeof this._smooth == "string" && this._smooth.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._smooth))
             return this._smooth.substr(1);
         else
             return this._smooth;
@@ -4880,7 +5197,7 @@ class HeightField {
     get waterLevel() {
         if(typeof this._waterLevel == "function")
             return this._waterLevel();
-        else if(typeof this._waterLevel == "string" && this._waterLevel.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._waterLevel))
             return this._waterLevel.substr(1);
         else
             return this._waterLevel;
@@ -4899,7 +5216,7 @@ class HeightField {
     get hierarchy() {
         if(typeof this._hierarchy == "function")
             return this._hierarchy();
-        else if(typeof this._hierarchy == "string" && this._hierarchy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._hierarchy))
             return this._hierarchy.substr(1);
         else
             return this._hierarchy;
@@ -4918,7 +5235,7 @@ class HeightField {
     get gamma() {
         if(typeof this._gamma == "function")
             return this._gamma();
-        else if(typeof this._gamma == "string" && this._gamma.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._gamma))
             return this._gamma.substr(1);
         else
             return this._gamma;
@@ -4937,7 +5254,7 @@ class HeightField {
     get premult() {
         if(typeof this._premult == "function")
             return this._premult();
-        else if(typeof this._premult == "string" && this._premult.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._premult))
             return this._premult.substr(1);
         else
             return this._premult;
@@ -4949,6 +5266,26 @@ class HeightField {
         } else {
             cpov.error("fatal", "premult must be a boolean.", "HeightField");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new HeightField();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.source     = this.source;    
+        newObj.hfType     = this.hfType;    
+        newObj.smooth     = this.smooth;    
+        newObj.waterLevel = this.waterLevel;
+        newObj.hierarchy  = this.hierarchy; 
+        newObj.gamma      = this.gamma;     
+        newObj.premult    = this.premult;   
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -4999,7 +5336,7 @@ exports.HeightField = HeightField;
 // IsoSurface class
 //==============================================================================
 
-class IsoSurface {
+class IsoSurface extends Primitive {
 
     constructor(options) {
 
@@ -5023,6 +5360,7 @@ class IsoSurface {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5072,7 +5410,7 @@ class IsoSurface {
     get source() {
         if(typeof this._source == "function")
             return this._source();
-        else if(typeof this._source == "string" && this._source.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._source))
             return this._source.substr(1);
         else
             return this._source;
@@ -5091,7 +5429,7 @@ class IsoSurface {
     get containedBy() {
         if(typeof this._containedBy == "function")
             return this._containedBy();
-        else if(typeof this._containedBy == "string" && this._containedBy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._containedBy))
             return this._containedBy.substr(1);
         else
             return this._containedBy;
@@ -5110,7 +5448,7 @@ class IsoSurface {
     get threshold() {
         if(typeof this._threshold == "function")
             return this._threshold();
-        else if(typeof this._threshold == "string" && this._threshold.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._threshold))
             return this._threshold.substr(1);
         else
             return this._threshold;
@@ -5129,7 +5467,7 @@ class IsoSurface {
     get accuracy() {
         if(typeof this._accuracy == "function")
             return this._accuracy();
-        else if(typeof this._accuracy == "string" && this._accuracy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._accuracy))
             return this._accuracy.substr(1);
         else
             return this._accuracy;
@@ -5148,7 +5486,7 @@ class IsoSurface {
     get maxGradient() {
         if(typeof this._maxGradient == "function")
             return this._maxGradient();
-        else if(typeof this._maxGradient == "string" && this._maxGradient.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._maxGradient))
             return this._maxGradient.substr(1);
         else
             return this._maxGradient;
@@ -5167,7 +5505,7 @@ class IsoSurface {
     get evaluate() {
         if(typeof this._evaluate == "function")
             return this._evaluate();
-        else if(typeof this._evaluate == "string" && this._evaluate.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._evaluate))
             return this._evaluate.substr(1);
         else
             return this._evaluate;
@@ -5186,7 +5524,7 @@ class IsoSurface {
     get open() {
         if(typeof this._open == "function")
             return this._open();
-        else if(typeof this._open == "string" && this._open.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._open))
             return this._open.substr(1);
         else
             return this._open;
@@ -5205,7 +5543,7 @@ class IsoSurface {
     get maxTrace() {
         if(typeof this._maxTrace == "function")
             return this._maxTrace();
-        else if(typeof this._maxTrace == "string" && this._maxTrace.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._maxTrace))
             return this._maxTrace.substr(1);
         else
             return this._maxTrace;
@@ -5219,6 +5557,27 @@ class IsoSurface {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new IsoSurface();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.source      = this.source;     
+        newObj.containedBy = this.containedBy;
+        newObj.threshold   = this.threshold;  
+        newObj.accuracy    = this.accuracy;   
+        newObj.maxGradient = this.maxGradient;
+        newObj.evaluate    = this.evaluate;   
+        newObj.open        = this.open;       
+        newObj.maxTrace    = this.maxTrace;   
+
+        return newObj;
+    }
+
 
 }
 
@@ -5229,7 +5588,7 @@ exports.IsoSurface = IsoSurface;
 // JuliaFractal class
 //==============================================================================
 
-class JuliaFractal {
+class JuliaFractal extends Primitive {
 
     constructor(options) {
 
@@ -5252,6 +5611,7 @@ class JuliaFractal {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5301,7 +5661,7 @@ class JuliaFractal {
     get type() {
         if(typeof this._type == "function")
             return this._type();
-        else if(typeof this._type == "string" && this._type.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._type))
             return this._type.substr(1);
         else
             return this._type;
@@ -5320,7 +5680,7 @@ class JuliaFractal {
     get juliaParam() {
         if(typeof this._juliaParam == "function")
             return this._juliaParam();
-        else if(typeof this._juliaParam == "string" && this._juliaParam.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._juliaParam))
             return this._juliaParam.substr(1);
         else
             return this._juliaParam;
@@ -5339,7 +5699,7 @@ class JuliaFractal {
     get power() {
         if(typeof this._power == "function")
             return this._power();
-        else if(typeof this._power == "string" && this._power.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._power))
             return this._power.substr(1);
         else
             return this._power;
@@ -5358,7 +5718,7 @@ class JuliaFractal {
     get maxIter() {
         if(typeof this._maxIter == "function")
             return this._maxIter();
-        else if(typeof this._maxIter == "string" && this._maxIter.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._maxIter))
             return this._maxIter.substr(1);
         else
             return this._maxIter;
@@ -5377,7 +5737,7 @@ class JuliaFractal {
     get precision() {
         if(typeof this._precision == "function")
             return this._precision();
-        else if(typeof this._precision == "string" && this._precision.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._precision))
             return this._precision.substr(1);
         else
             return this._precision;
@@ -5396,7 +5756,7 @@ class JuliaFractal {
     get slice() {
         if(typeof this._slice == "function")
             return this._slice();
-        else if(typeof this._slice == "string" && this._slice.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._slice))
             return this._slice.substr(1);
         else
             return this._slice;
@@ -5415,7 +5775,7 @@ class JuliaFractal {
     get distance() {
         if(typeof this._distance == "function")
             return this._distance();
-        else if(typeof this._distance == "string" && this._distance.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._distance))
             return this._distance.substr(1);
         else
             return this._distance;
@@ -5427,6 +5787,26 @@ class JuliaFractal {
         } else {
             cpov.error("fatal", "distance must be a float.", "JuliaFractal");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new JuliaFractal();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.type       = this.type;      
+        newObj.juliaParam = this.juliaParam;
+        newObj.power      = this.power;     
+        newObj.maxIter    = this.maxIter;   
+        newObj.precision  = this.precision; 
+        newObj.slice      = this.slice;     
+        newObj.distance   = this.distance;  
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -5479,7 +5859,7 @@ exports.JuliaFractal = JuliaFractal;
 // Lathe class
 //==============================================================================
 
-class Lathe {
+class Lathe extends Primitive {
 
     constructor(options) {
 
@@ -5498,6 +5878,7 @@ class Lathe {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5547,7 +5928,7 @@ class Lathe {
     get type() {
         if(typeof this._type == "function")
             return this._type();
-        else if(typeof this._type == "string" && this._type.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._type))
             return this._type.substr(1);
         else
             return this._type;
@@ -5566,7 +5947,7 @@ class Lathe {
     get points() {
         if(typeof this._points == "function")
             return this._points();
-        else if(typeof this._points == "string" && this._points.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._points))
             return this._points.substr(1);
         else
             return this._points;
@@ -5585,7 +5966,7 @@ class Lathe {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -5597,6 +5978,22 @@ class Lathe {
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Lathe");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Lathe();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.type   = this.type;  
+        newObj.points = this.points;
+        newObj.sturm  = this.sturm; 
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -5625,7 +6022,7 @@ class Lathe {
     	var items = [ ];
     	for(var i = 0; i < this.points.length; i++)
     		items.push(this.points[i].toSDL());
-    	content.push(ppad + items.join(", ");
+    	content.push(ppad + items.join(", "));
     
     	if(this.sturm)
     		content.push(ppad + "sturm");
@@ -5644,7 +6041,7 @@ exports.Lathe = Lathe;
 // LightSource class
 //==============================================================================
 
-class LightSource {
+class LightSource extends Primitive {
 
     constructor(options) {
 
@@ -5685,6 +6082,7 @@ class LightSource {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -5734,7 +6132,7 @@ class LightSource {
     get location() {
         if(typeof this._location == "function")
             return this._location();
-        else if(typeof this._location == "string" && this._location.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._location))
             return this._location.substr(1);
         else
             return this._location;
@@ -5753,7 +6151,7 @@ class LightSource {
     get color() {
         if(typeof this._color == "function")
             return this._color();
-        else if(typeof this._color == "string" && this._color.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._color))
             return this._color.substr(1);
         else
             return this._color;
@@ -5772,7 +6170,7 @@ class LightSource {
     get adaptive() {
         if(typeof this._adaptive == "function")
             return this._adaptive();
-        else if(typeof this._adaptive == "string" && this._adaptive.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._adaptive))
             return this._adaptive.substr(1);
         else
             return this._adaptive;
@@ -5791,7 +6189,7 @@ class LightSource {
     get areaIllumination() {
         if(typeof this._areaIllumination == "function")
             return this._areaIllumination();
-        else if(typeof this._areaIllumination == "string" && this._areaIllumination.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._areaIllumination))
             return this._areaIllumination.substr(1);
         else
             return this._areaIllumination;
@@ -5810,7 +6208,7 @@ class LightSource {
     get areaLight() {
         if(typeof this._areaLight == "function")
             return this._areaLight();
-        else if(typeof this._areaLight == "string" && this._areaLight.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._areaLight))
             return this._areaLight.substr(1);
         else
             return this._areaLight;
@@ -5829,7 +6227,7 @@ class LightSource {
     get axis1() {
         if(typeof this._axis1 == "function")
             return this._axis1();
-        else if(typeof this._axis1 == "string" && this._axis1.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._axis1))
             return this._axis1.substr(1);
         else
             return this._axis1;
@@ -5848,7 +6246,7 @@ class LightSource {
     get axis2() {
         if(typeof this._axis2 == "function")
             return this._axis2();
-        else if(typeof this._axis2 == "string" && this._axis2.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._axis2))
             return this._axis2.substr(1);
         else
             return this._axis2;
@@ -5867,7 +6265,7 @@ class LightSource {
     get circular() {
         if(typeof this._circular == "function")
             return this._circular();
-        else if(typeof this._circular == "string" && this._circular.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._circular))
             return this._circular.substr(1);
         else
             return this._circular;
@@ -5886,7 +6284,7 @@ class LightSource {
     get fadeDistance() {
         if(typeof this._fadeDistance == "function")
             return this._fadeDistance();
-        else if(typeof this._fadeDistance == "string" && this._fadeDistance.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._fadeDistance))
             return this._fadeDistance.substr(1);
         else
             return this._fadeDistance;
@@ -5905,7 +6303,7 @@ class LightSource {
     get fadePower() {
         if(typeof this._fadePower == "function")
             return this._fadePower();
-        else if(typeof this._fadePower == "string" && this._fadePower.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._fadePower))
             return this._fadePower.substr(1);
         else
             return this._fadePower;
@@ -5924,7 +6322,7 @@ class LightSource {
     get falloff() {
         if(typeof this._falloff == "function")
             return this._falloff();
-        else if(typeof this._falloff == "string" && this._falloff.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._falloff))
             return this._falloff.substr(1);
         else
             return this._falloff;
@@ -5943,7 +6341,7 @@ class LightSource {
     get jitter() {
         if(typeof this._jitter == "function")
             return this._jitter();
-        else if(typeof this._jitter == "string" && this._jitter.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._jitter))
             return this._jitter.substr(1);
         else
             return this._jitter;
@@ -5962,7 +6360,7 @@ class LightSource {
     get looksLike() {
         if(typeof this._looksLike == "function")
             return this._looksLike();
-        else if(typeof this._looksLike == "string" && this._looksLike.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._looksLike))
             return this._looksLike.substr(1);
         else
             return this._looksLike;
@@ -5981,7 +6379,7 @@ class LightSource {
     get mediaAttenuation() {
         if(typeof this._mediaAttenuation == "function")
             return this._mediaAttenuation();
-        else if(typeof this._mediaAttenuation == "string" && this._mediaAttenuation.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._mediaAttenuation))
             return this._mediaAttenuation.substr(1);
         else
             return this._mediaAttenuation;
@@ -6000,7 +6398,7 @@ class LightSource {
     get mediaInteraction() {
         if(typeof this._mediaInteraction == "function")
             return this._mediaInteraction();
-        else if(typeof this._mediaInteraction == "string" && this._mediaInteraction.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._mediaInteraction))
             return this._mediaInteraction.substr(1);
         else
             return this._mediaInteraction;
@@ -6019,7 +6417,7 @@ class LightSource {
     get orient() {
         if(typeof this._orient == "function")
             return this._orient();
-        else if(typeof this._orient == "string" && this._orient.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._orient))
             return this._orient.substr(1);
         else
             return this._orient;
@@ -6038,7 +6436,7 @@ class LightSource {
     get parallel() {
         if(typeof this._parallel == "function")
             return this._parallel();
-        else if(typeof this._parallel == "string" && this._parallel.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._parallel))
             return this._parallel.substr(1);
         else
             return this._parallel;
@@ -6057,7 +6455,7 @@ class LightSource {
     get pointAt() {
         if(typeof this._pointAt == "function")
             return this._pointAt();
-        else if(typeof this._pointAt == "string" && this._pointAt.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._pointAt))
             return this._pointAt.substr(1);
         else
             return this._pointAt;
@@ -6076,7 +6474,7 @@ class LightSource {
     get projectedThrough() {
         if(typeof this._projectedThrough == "function")
             return this._projectedThrough();
-        else if(typeof this._projectedThrough == "string" && this._projectedThrough.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._projectedThrough))
             return this._projectedThrough.substr(1);
         else
             return this._projectedThrough;
@@ -6095,7 +6493,7 @@ class LightSource {
     get radius() {
         if(typeof this._radius == "function")
             return this._radius();
-        else if(typeof this._radius == "string" && this._radius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radius))
             return this._radius.substr(1);
         else
             return this._radius;
@@ -6114,7 +6512,7 @@ class LightSource {
     get shadowless() {
         if(typeof this._shadowless == "function")
             return this._shadowless();
-        else if(typeof this._shadowless == "string" && this._shadowless.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._shadowless))
             return this._shadowless.substr(1);
         else
             return this._shadowless;
@@ -6133,7 +6531,7 @@ class LightSource {
     get size1() {
         if(typeof this._size1 == "function")
             return this._size1();
-        else if(typeof this._size1 == "string" && this._size1.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._size1))
             return this._size1.substr(1);
         else
             return this._size1;
@@ -6152,7 +6550,7 @@ class LightSource {
     get size2() {
         if(typeof this._size2 == "function")
             return this._size2();
-        else if(typeof this._size2 == "string" && this._size2.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._size2))
             return this._size2.substr(1);
         else
             return this._size2;
@@ -6171,7 +6569,7 @@ class LightSource {
     get tightness() {
         if(typeof this._tightness == "function")
             return this._tightness();
-        else if(typeof this._tightness == "string" && this._tightness.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._tightness))
             return this._tightness.substr(1);
         else
             return this._tightness;
@@ -6190,7 +6588,7 @@ class LightSource {
     get type() {
         if(typeof this._type == "function")
             return this._type();
-        else if(typeof this._type == "string" && this._type.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._type))
             return this._type.substr(1);
         else
             return this._type;
@@ -6202,6 +6600,44 @@ class LightSource {
         } else {
             cpov.error("fatal", "type must be either 'spotlight' or 'cylinder'.", "LightSource");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new LightSource();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.location         = this.location;        
+        newObj.color            = this.color;           
+        newObj.adaptive         = this.adaptive;        
+        newObj.areaIllumination = this.areaIllumination;
+        newObj.areaLight        = this.areaLight;       
+        newObj.axis1            = this.axis1;           
+        newObj.axis2            = this.axis2;           
+        newObj.circular         = this.circular;        
+        newObj.fadeDistance     = this.fadeDistance;    
+        newObj.fadePower        = this.fadePower;       
+        newObj.falloff          = this.falloff;         
+        newObj.jitter           = this.jitter;          
+        newObj.looksLike        = this.looksLike;       
+        newObj.mediaAttenuation = this.mediaAttenuation;
+        newObj.mediaInteraction = this.mediaInteraction;
+        newObj.orient           = this.orient;          
+        newObj.parallel         = this.parallel;        
+        newObj.pointAt          = this.pointAt;         
+        newObj.projectedThrough = this.projectedThrough;
+        newObj.radius           = this.radius;          
+        newObj.shadowless       = this.shadowless;      
+        newObj.size1            = this.size1;           
+        newObj.size2            = this.size2;           
+        newObj.tightness        = this.tightness;       
+        newObj.type             = this.type;            
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -6293,7 +6729,7 @@ exports.LightSource = LightSource;
 // Ovus class
 //==============================================================================
 
-class Ovus {
+class Ovus extends Primitive {
 
     constructor(options) {
 
@@ -6311,6 +6747,7 @@ class Ovus {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6360,7 +6797,7 @@ class Ovus {
     get bottomRadius() {
         if(typeof this._bottomRadius == "function")
             return this._bottomRadius();
-        else if(typeof this._bottomRadius == "string" && this._bottomRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._bottomRadius))
             return this._bottomRadius.substr(1);
         else
             return this._bottomRadius;
@@ -6379,7 +6816,7 @@ class Ovus {
     get topRadius() {
         if(typeof this._topRadius == "function")
             return this._topRadius();
-        else if(typeof this._topRadius == "string" && this._topRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._topRadius))
             return this._topRadius.substr(1);
         else
             return this._topRadius;
@@ -6391,6 +6828,21 @@ class Ovus {
         } else {
             cpov.error("fatal", "topRadius must be a float.", "Ovus");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Ovus();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.bottomRadius = this.bottomRadius;
+        newObj.topRadius    = this.topRadius;   
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -6429,7 +6881,7 @@ exports.Ovus = Ovus;
 // Parametric class
 //==============================================================================
 
-class Parametric {
+class Parametric extends Primitive {
 
     constructor(options) {
 
@@ -6457,6 +6909,7 @@ class Parametric {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6506,7 +6959,7 @@ class Parametric {
     get funcX() {
         if(typeof this._funcX == "function")
             return this._funcX();
-        else if(typeof this._funcX == "string" && this._funcX.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._funcX))
             return this._funcX.substr(1);
         else
             return this._funcX;
@@ -6525,7 +6978,7 @@ class Parametric {
     get funcY() {
         if(typeof this._funcY == "function")
             return this._funcY();
-        else if(typeof this._funcY == "string" && this._funcY.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._funcY))
             return this._funcY.substr(1);
         else
             return this._funcY;
@@ -6544,7 +6997,7 @@ class Parametric {
     get funcZ() {
         if(typeof this._funcZ == "function")
             return this._funcZ();
-        else if(typeof this._funcZ == "string" && this._funcZ.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._funcZ))
             return this._funcZ.substr(1);
         else
             return this._funcZ;
@@ -6563,7 +7016,7 @@ class Parametric {
     get uv1() {
         if(typeof this._uv1 == "function")
             return this._uv1();
-        else if(typeof this._uv1 == "string" && this._uv1.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._uv1))
             return this._uv1.substr(1);
         else
             return this._uv1;
@@ -6582,7 +7035,7 @@ class Parametric {
     get uv2() {
         if(typeof this._uv2 == "function")
             return this._uv2();
-        else if(typeof this._uv2 == "string" && this._uv2.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._uv2))
             return this._uv2.substr(1);
         else
             return this._uv2;
@@ -6601,7 +7054,7 @@ class Parametric {
     get containedBy() {
         if(typeof this._containedBy == "function")
             return this._containedBy();
-        else if(typeof this._containedBy == "string" && this._containedBy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._containedBy))
             return this._containedBy.substr(1);
         else
             return this._containedBy;
@@ -6620,7 +7073,7 @@ class Parametric {
     get maxGradient() {
         if(typeof this._maxGradient == "function")
             return this._maxGradient();
-        else if(typeof this._maxGradient == "string" && this._maxGradient.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._maxGradient))
             return this._maxGradient.substr(1);
         else
             return this._maxGradient;
@@ -6639,7 +7092,7 @@ class Parametric {
     get accuracy() {
         if(typeof this._accuracy == "function")
             return this._accuracy();
-        else if(typeof this._accuracy == "string" && this._accuracy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._accuracy))
             return this._accuracy.substr(1);
         else
             return this._accuracy;
@@ -6658,7 +7111,7 @@ class Parametric {
     get precomputeDepth() {
         if(typeof this._precomputeDepth == "function")
             return this._precomputeDepth();
-        else if(typeof this._precomputeDepth == "string" && this._precomputeDepth.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._precomputeDepth))
             return this._precomputeDepth.substr(1);
         else
             return this._precomputeDepth;
@@ -6677,7 +7130,7 @@ class Parametric {
     get precomputeX() {
         if(typeof this._precomputeX == "function")
             return this._precomputeX();
-        else if(typeof this._precomputeX == "string" && this._precomputeX.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._precomputeX))
             return this._precomputeX.substr(1);
         else
             return this._precomputeX;
@@ -6696,7 +7149,7 @@ class Parametric {
     get precomputeY() {
         if(typeof this._precomputeY == "function")
             return this._precomputeY();
-        else if(typeof this._precomputeY == "string" && this._precomputeY.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._precomputeY))
             return this._precomputeY.substr(1);
         else
             return this._precomputeY;
@@ -6715,7 +7168,7 @@ class Parametric {
     get precomputeZ() {
         if(typeof this._precomputeZ == "function")
             return this._precomputeZ();
-        else if(typeof this._precomputeZ == "string" && this._precomputeZ.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._precomputeZ))
             return this._precomputeZ.substr(1);
         else
             return this._precomputeZ;
@@ -6727,6 +7180,31 @@ class Parametric {
         } else {
             cpov.error("fatal", "precomputeZ must be a boolean.", "Parametric");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Parametric();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.funcX           = this.funcX;          
+        newObj.funcY           = this.funcY;          
+        newObj.funcZ           = this.funcZ;          
+        newObj.uv1             = this.uv1;            
+        newObj.uv2             = this.uv2;            
+        newObj.containedBy     = this.containedBy;    
+        newObj.maxGradient     = this.maxGradient;    
+        newObj.accuracy        = this.accuracy;       
+        newObj.precomputeDepth = this.precomputeDepth;
+        newObj.precomputeX     = this.precomputeX;    
+        newObj.precomputeY     = this.precomputeY;    
+        newObj.precomputeZ     = this.precomputeZ;    
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -6792,7 +7270,7 @@ exports.Parametric = Parametric;
 // Prism class
 //==============================================================================
 
-class Prism {
+class Prism extends Primitive {
 
     constructor(options) {
 
@@ -6814,6 +7292,7 @@ class Prism {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -6863,7 +7342,7 @@ class Prism {
     get type() {
         if(typeof this._type == "function")
             return this._type();
-        else if(typeof this._type == "string" && this._type.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._type))
             return this._type.substr(1);
         else
             return this._type;
@@ -6882,7 +7361,7 @@ class Prism {
     get height1() {
         if(typeof this._height1 == "function")
             return this._height1();
-        else if(typeof this._height1 == "string" && this._height1.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._height1))
             return this._height1.substr(1);
         else
             return this._height1;
@@ -6901,7 +7380,7 @@ class Prism {
     get height2() {
         if(typeof this._height2 == "function")
             return this._height2();
-        else if(typeof this._height2 == "string" && this._height2.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._height2))
             return this._height2.substr(1);
         else
             return this._height2;
@@ -6920,7 +7399,7 @@ class Prism {
     get points() {
         if(typeof this._points == "function")
             return this._points();
-        else if(typeof this._points == "string" && this._points.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._points))
             return this._points.substr(1);
         else
             return this._points;
@@ -6939,7 +7418,7 @@ class Prism {
     get open() {
         if(typeof this._open == "function")
             return this._open();
-        else if(typeof this._open == "string" && this._open.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._open))
             return this._open.substr(1);
         else
             return this._open;
@@ -6958,7 +7437,7 @@ class Prism {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -6970,6 +7449,25 @@ class Prism {
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Prism");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Prism();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.type    = this.type;   
+        newObj.height1 = this.height1;
+        newObj.height2 = this.height2;
+        newObj.points  = this.points; 
+        newObj.open    = this.open;   
+        newObj.sturm   = this.sturm;  
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -7004,7 +7502,7 @@ class Prism {
         for(var i = 0; i < this.points.length; i++) {
             items.push(points[i].toSDL());
         }
-        content.push(ppad + items.join(", ");
+        content.push(ppad + items.join(", "));
         if(this.open)
             content.push(ppad + "open");
         if(this.sturm)
@@ -7025,7 +7523,7 @@ exports.Prism = Prism;
 // Sphere class
 //==============================================================================
 
-class Sphere {
+class Sphere extends Primitive {
 
     constructor(options) {
 
@@ -7044,6 +7542,7 @@ class Sphere {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7093,7 +7592,7 @@ class Sphere {
     get center() {
         if(typeof this._center == "function")
             return this._center();
-        else if(typeof this._center == "string" && this._center.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._center))
             return this._center.substr(1);
         else
             return this._center;
@@ -7112,7 +7611,7 @@ class Sphere {
     get radius() {
         if(typeof this._radius == "function")
             return this._radius();
-        else if(typeof this._radius == "string" && this._radius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radius))
             return this._radius.substr(1);
         else
             return this._radius;
@@ -7131,7 +7630,7 @@ class Sphere {
     get strength() {
         if(typeof this._strength == "function")
             return this._strength();
-        else if(typeof this._strength == "string" && this._strength.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._strength))
             return this._strength.substr(1);
         else
             return this._strength;
@@ -7143,6 +7642,22 @@ class Sphere {
         } else {
             cpov.error("fatal", "strength must be a float.", "Sphere");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Sphere();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.center   = this.center;  
+        newObj.radius   = this.radius;  
+        newObj.strength = this.strength;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -7181,7 +7696,7 @@ exports.Sphere = Sphere;
 // SphereSweep class
 //==============================================================================
 
-class SphereSweep {
+class SphereSweep extends Primitive {
 
     constructor(options) {
 
@@ -7200,6 +7715,7 @@ class SphereSweep {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7249,7 +7765,7 @@ class SphereSweep {
     get type() {
         if(typeof this._type == "function")
             return this._type();
-        else if(typeof this._type == "string" && this._type.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._type))
             return this._type.substr(1);
         else
             return this._type;
@@ -7268,7 +7784,7 @@ class SphereSweep {
     get spheres() {
         if(typeof this._spheres == "function")
             return this._spheres();
-        else if(typeof this._spheres == "string" && this._spheres.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._spheres))
             return this._spheres.substr(1);
         else
             return this._spheres;
@@ -7287,7 +7803,7 @@ class SphereSweep {
     get tolerance() {
         if(typeof this._tolerance == "function")
             return this._tolerance();
-        else if(typeof this._tolerance == "string" && this._tolerance.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._tolerance))
             return this._tolerance.substr(1);
         else
             return this._tolerance;
@@ -7299,6 +7815,22 @@ class SphereSweep {
         } else {
             cpov.error("fatal", "tolerance must be a float.", "SphereSweep");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new SphereSweep();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.type      = this.type;     
+        newObj.spheres   = this.spheres;  
+        newObj.tolerance = this.tolerance;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -7331,7 +7863,7 @@ class SphereSweep {
         for(var i = 0; i < this.spheres.length; i++) {
             items.push(ppad + this.spheres[i].center.toSDL() + ", " + this.spheres[i].radius);
         }
-        content.push(items.join(",\n");
+        content.push(items.join(",\n"));
         if(this.tolerance !== null)
             content.push(ppad + "tolerance " + this.tolerance);
     
@@ -7349,7 +7881,7 @@ exports.SphereSweep = SphereSweep;
 // Superellipsoid class
 //==============================================================================
 
-class Superellipsoid {
+class Superellipsoid extends Primitive {
 
     constructor(options) {
 
@@ -7367,6 +7899,7 @@ class Superellipsoid {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7416,7 +7949,7 @@ class Superellipsoid {
     get e() {
         if(typeof this._e == "function")
             return this._e();
-        else if(typeof this._e == "string" && this._e.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._e))
             return this._e.substr(1);
         else
             return this._e;
@@ -7435,7 +7968,7 @@ class Superellipsoid {
     get n() {
         if(typeof this._n == "function")
             return this._n();
-        else if(typeof this._n == "string" && this._n.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._n))
             return this._n.substr(1);
         else
             return this._n;
@@ -7449,6 +7982,21 @@ class Superellipsoid {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Superellipsoid();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.e = this.e;
+        newObj.n = this.n;
+
+        return newObj;
+    }
+
 
 }
 
@@ -7459,7 +8007,7 @@ exports.Superellipsoid = Superellipsoid;
 // Sor class
 //==============================================================================
 
-class Sor {
+class Sor extends Primitive {
 
     constructor(options) {
 
@@ -7478,6 +8026,7 @@ class Sor {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7527,7 +8076,7 @@ class Sor {
     get points() {
         if(typeof this._points == "function")
             return this._points();
-        else if(typeof this._points == "string" && this._points.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._points))
             return this._points.substr(1);
         else
             return this._points;
@@ -7546,7 +8095,7 @@ class Sor {
     get open() {
         if(typeof this._open == "function")
             return this._open();
-        else if(typeof this._open == "string" && this._open.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._open))
             return this._open.substr(1);
         else
             return this._open;
@@ -7565,7 +8114,7 @@ class Sor {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -7577,6 +8126,22 @@ class Sor {
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Sor");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Sor();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.points = this.points;
+        newObj.open   = this.open;  
+        newObj.sturm  = this.sturm; 
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -7622,7 +8187,7 @@ exports.Sor = Sor;
 // Text class
 //==============================================================================
 
-class Text {
+class Text extends Primitive {
 
     constructor(options) {
 
@@ -7643,6 +8208,7 @@ class Text {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7692,7 +8258,7 @@ class Text {
     get fontType() {
         if(typeof this._fontType == "function")
             return this._fontType();
-        else if(typeof this._fontType == "string" && this._fontType.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._fontType))
             return this._fontType.substr(1);
         else
             return this._fontType;
@@ -7711,7 +8277,7 @@ class Text {
     get font() {
         if(typeof this._font == "function")
             return this._font();
-        else if(typeof this._font == "string" && this._font.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._font))
             return this._font.substr(1);
         else
             return this._font;
@@ -7730,7 +8296,7 @@ class Text {
     get displayText() {
         if(typeof this._displayText == "function")
             return this._displayText();
-        else if(typeof this._displayText == "string" && this._displayText.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._displayText))
             return this._displayText.substr(1);
         else
             return this._displayText;
@@ -7749,7 +8315,7 @@ class Text {
     get thickness() {
         if(typeof this._thickness == "function")
             return this._thickness();
-        else if(typeof this._thickness == "string" && this._thickness.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._thickness))
             return this._thickness.substr(1);
         else
             return this._thickness;
@@ -7768,7 +8334,7 @@ class Text {
     get offset() {
         if(typeof this._offset == "function")
             return this._offset();
-        else if(typeof this._offset == "string" && this._offset.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._offset))
             return this._offset.substr(1);
         else
             return this._offset;
@@ -7780,6 +8346,24 @@ class Text {
         } else {
             cpov.error("fatal", "offset must be a float.", "Text");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Text();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.fontType    = this.fontType;   
+        newObj.font        = this.font;       
+        newObj.displayText = this.displayText;
+        newObj.thickness   = this.thickness;  
+        newObj.offset      = this.offset;     
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -7810,7 +8394,7 @@ class Text {
         // TODO: Handle escaping of double quotes in this.displayText
     
         content.push(pad + "text {");
-        content.push(ppad + this.fontType + " " + "\"" + this.font + "\"" + "\"" + );
+        content.push(ppad + this.fontType + " " + "\"" + this.font + "\"");
         content.push(ppad + this.thickness + ", " + this.offset);
     
         $Primitive.toSDL-postamble
@@ -7827,7 +8411,7 @@ exports.Text = Text;
 // Torus class
 //==============================================================================
 
-class Torus {
+class Torus extends Primitive {
 
     constructor(options) {
 
@@ -7846,6 +8430,7 @@ class Torus {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -7895,7 +8480,7 @@ class Torus {
     get majorRadius() {
         if(typeof this._majorRadius == "function")
             return this._majorRadius();
-        else if(typeof this._majorRadius == "string" && this._majorRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._majorRadius))
             return this._majorRadius.substr(1);
         else
             return this._majorRadius;
@@ -7914,7 +8499,7 @@ class Torus {
     get minorRadius() {
         if(typeof this._minorRadius == "function")
             return this._minorRadius();
-        else if(typeof this._minorRadius == "string" && this._minorRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._minorRadius))
             return this._minorRadius.substr(1);
         else
             return this._minorRadius;
@@ -7933,7 +8518,7 @@ class Torus {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -7945,6 +8530,22 @@ class Torus {
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Torus");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Torus();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.majorRadius = this.majorRadius;
+        newObj.minorRadius = this.minorRadius;
+        newObj.sturm       = this.sturm;      
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -7984,7 +8585,7 @@ exports.Torus = Torus;
 // BicubicPatch class
 //==============================================================================
 
-class BicubicPatch {
+class BicubicPatch extends Primitive {
 
     constructor(options) {
 
@@ -8005,6 +8606,7 @@ class BicubicPatch {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8054,7 +8656,7 @@ class BicubicPatch {
     get type() {
         if(typeof this._type == "function")
             return this._type();
-        else if(typeof this._type == "string" && this._type.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._type))
             return this._type.substr(1);
         else
             return this._type;
@@ -8073,7 +8675,7 @@ class BicubicPatch {
     get points() {
         if(typeof this._points == "function")
             return this._points();
-        else if(typeof this._points == "string" && this._points.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._points))
             return this._points.substr(1);
         else
             return this._points;
@@ -8092,7 +8694,7 @@ class BicubicPatch {
     get uSteps() {
         if(typeof this._uSteps == "function")
             return this._uSteps();
-        else if(typeof this._uSteps == "string" && this._uSteps.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._uSteps))
             return this._uSteps.substr(1);
         else
             return this._uSteps;
@@ -8111,7 +8713,7 @@ class BicubicPatch {
     get vSteps() {
         if(typeof this._vSteps == "function")
             return this._vSteps();
-        else if(typeof this._vSteps == "string" && this._vSteps.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._vSteps))
             return this._vSteps.substr(1);
         else
             return this._vSteps;
@@ -8130,7 +8732,7 @@ class BicubicPatch {
     get flatness() {
         if(typeof this._flatness == "function")
             return this._flatness();
-        else if(typeof this._flatness == "string" && this._flatness.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._flatness))
             return this._flatness.substr(1);
         else
             return this._flatness;
@@ -8142,6 +8744,24 @@ class BicubicPatch {
         } else {
             cpov.error("fatal", "flatness must be a float.", "BicubicPatch");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new BicubicPatch();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.type     = this.type;    
+        newObj.points   = this.points;  
+        newObj.uSteps   = this.uSteps;  
+        newObj.vSteps   = this.vSteps;  
+        newObj.flatness = this.flatness;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -8194,7 +8814,7 @@ exports.BicubicPatch = BicubicPatch;
 // Disc class
 //==============================================================================
 
-class Disc {
+class Disc extends Primitive {
 
     constructor(options) {
 
@@ -8214,6 +8834,7 @@ class Disc {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8263,7 +8884,7 @@ class Disc {
     get center() {
         if(typeof this._center == "function")
             return this._center();
-        else if(typeof this._center == "string" && this._center.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._center))
             return this._center.substr(1);
         else
             return this._center;
@@ -8282,7 +8903,7 @@ class Disc {
     get normal() {
         if(typeof this._normal == "function")
             return this._normal();
-        else if(typeof this._normal == "string" && this._normal.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._normal))
             return this._normal.substr(1);
         else
             return this._normal;
@@ -8301,7 +8922,7 @@ class Disc {
     get radius() {
         if(typeof this._radius == "function")
             return this._radius();
-        else if(typeof this._radius == "string" && this._radius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._radius))
             return this._radius.substr(1);
         else
             return this._radius;
@@ -8320,7 +8941,7 @@ class Disc {
     get holeRadius() {
         if(typeof this._holeRadius == "function")
             return this._holeRadius();
-        else if(typeof this._holeRadius == "string" && this._holeRadius.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._holeRadius))
             return this._holeRadius.substr(1);
         else
             return this._holeRadius;
@@ -8332,6 +8953,23 @@ class Disc {
         } else {
             cpov.error("fatal", "holeRadius must be a float.", "Disc");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Disc();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.center     = this.center;    
+        newObj.normal     = this.normal;    
+        newObj.radius     = this.radius;    
+        newObj.holeRadius = this.holeRadius;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -8370,7 +9008,7 @@ exports.Disc = Disc;
 // Mesh class
 //==============================================================================
 
-class Mesh {
+class Mesh extends Primitive {
 
     constructor(options) {
 
@@ -8389,6 +9027,7 @@ class Mesh {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8438,7 +9077,7 @@ class Mesh {
     get triangles() {
         if(typeof this._triangles == "function")
             return this._triangles();
-        else if(typeof this._triangles == "string" && this._triangles.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._triangles))
             return this._triangles.substr(1);
         else
             return this._triangles;
@@ -8457,7 +9096,7 @@ class Mesh {
     get insideVector() {
         if(typeof this._insideVector == "function")
             return this._insideVector();
-        else if(typeof this._insideVector == "string" && this._insideVector.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._insideVector))
             return this._insideVector.substr(1);
         else
             return this._insideVector;
@@ -8476,7 +9115,7 @@ class Mesh {
     get hierarchy() {
         if(typeof this._hierarchy == "function")
             return this._hierarchy();
-        else if(typeof this._hierarchy == "string" && this._hierarchy.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._hierarchy))
             return this._hierarchy.substr(1);
         else
             return this._hierarchy;
@@ -8490,6 +9129,22 @@ class Mesh {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Mesh();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.triangles    = this.triangles;   
+        newObj.insideVector = this.insideVector;
+        newObj.hierarchy    = this.hierarchy;   
+
+        return newObj;
+    }
+
 
 }
 
@@ -8500,7 +9155,7 @@ exports.Mesh = Mesh;
 // Polygon class
 //==============================================================================
 
-class Polygon {
+class Polygon extends Primitive {
 
     constructor(options) {
 
@@ -8517,6 +9172,7 @@ class Polygon {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8566,7 +9222,7 @@ class Polygon {
     get points() {
         if(typeof this._points == "function")
             return this._points();
-        else if(typeof this._points == "string" && this._points.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._points))
             return this._points.substr(1);
         else
             return this._points;
@@ -8578,6 +9234,20 @@ class Polygon {
         } else {
             cpov.error("fatal", "points must be an array of three or more VectorXY.", "Polygon");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Polygon();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.points = this.points;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -8605,7 +9275,7 @@ class Polygon {
         for(var i = 0; i < this.points.length; i++) {
             items.push(points[i].toSDL());
         }
-        content.push(ppad + items.join(", ");
+        content.push(ppad + items.join(", "));
     
         $Primitive.toSDL-postamble
     
@@ -8623,7 +9293,7 @@ exports.Polygon = Polygon;
 // the supplied parameters and the smooth flag.
 //==============================================================================
 
-class Triangle {
+class Triangle extends Primitive {
 
     constructor(options) {
 
@@ -8647,6 +9317,7 @@ class Triangle {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8696,7 +9367,7 @@ class Triangle {
     get corner1() {
         if(typeof this._corner1 == "function")
             return this._corner1();
-        else if(typeof this._corner1 == "string" && this._corner1.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._corner1))
             return this._corner1.substr(1);
         else
             return this._corner1;
@@ -8715,7 +9386,7 @@ class Triangle {
     get corner2() {
         if(typeof this._corner2 == "function")
             return this._corner2();
-        else if(typeof this._corner2 == "string" && this._corner2.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._corner2))
             return this._corner2.substr(1);
         else
             return this._corner2;
@@ -8734,7 +9405,7 @@ class Triangle {
     get corner3() {
         if(typeof this._corner3 == "function")
             return this._corner3();
-        else if(typeof this._corner3 == "string" && this._corner3.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._corner3))
             return this._corner3.substr(1);
         else
             return this._corner3;
@@ -8753,7 +9424,7 @@ class Triangle {
     get smooth() {
         if(typeof this._smooth == "function")
             return this._smooth();
-        else if(typeof this._smooth == "string" && this._smooth.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._smooth))
             return this._smooth.substr(1);
         else
             return this._smooth;
@@ -8772,7 +9443,7 @@ class Triangle {
     get normal1() {
         if(typeof this._normal1 == "function")
             return this._normal1();
-        else if(typeof this._normal1 == "string" && this._normal1.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._normal1))
             return this._normal1.substr(1);
         else
             return this._normal1;
@@ -8791,7 +9462,7 @@ class Triangle {
     get normal2() {
         if(typeof this._normal2 == "function")
             return this._normal2();
-        else if(typeof this._normal2 == "string" && this._normal2.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._normal2))
             return this._normal2.substr(1);
         else
             return this._normal2;
@@ -8810,7 +9481,7 @@ class Triangle {
     get normal3() {
         if(typeof this._normal3 == "function")
             return this._normal3();
-        else if(typeof this._normal3 == "string" && this._normal3.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._normal3))
             return this._normal3.substr(1);
         else
             return this._normal3;
@@ -8829,7 +9500,7 @@ class Triangle {
     get textures() {
         if(typeof this._textures == "function")
             return this._textures();
-        else if(typeof this._textures == "string" && this._textures.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._textures))
             return this._textures.substr(1);
         else
             return this._textures;
@@ -8841,6 +9512,27 @@ class Triangle {
         } else {
             cpov.error("fatal", "textures must be an array of integers.", "Triangle");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Triangle();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.corner1  = this.corner1; 
+        newObj.corner2  = this.corner2; 
+        newObj.corner3  = this.corner3; 
+        newObj.smooth   = this.smooth;  
+        newObj.normal1  = this.normal1; 
+        newObj.normal2  = this.normal2; 
+        newObj.normal3  = this.normal3; 
+        newObj.textures = this.textures;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -8904,7 +9596,7 @@ exports.Triangle = Triangle;
 // Plane class
 //==============================================================================
 
-class Plane {
+class Plane extends Primitive {
 
     constructor(options) {
 
@@ -8922,6 +9614,7 @@ class Plane {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -8971,7 +9664,7 @@ class Plane {
     get normal() {
         if(typeof this._normal == "function")
             return this._normal();
-        else if(typeof this._normal == "string" && this._normal.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._normal))
             return this._normal.substr(1);
         else
             return this._normal;
@@ -8990,7 +9683,7 @@ class Plane {
     get distance() {
         if(typeof this._distance == "function")
             return this._distance();
-        else if(typeof this._distance == "string" && this._distance.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._distance))
             return this._distance.substr(1);
         else
             return this._distance;
@@ -9002,6 +9695,21 @@ class Plane {
         } else {
             cpov.error("fatal", "distance must be a float.", "Plane");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Plane();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.normal   = this.normal;  
+        newObj.distance = this.distance;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -9041,7 +9749,7 @@ exports.Plane = Plane;
 // Poly class
 //==============================================================================
 
-class Poly {
+class Poly extends Primitive {
 
     constructor(options) {
 
@@ -9060,6 +9768,7 @@ class Poly {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -9109,7 +9818,7 @@ class Poly {
     get order() {
         if(typeof this._order == "function")
             return this._order();
-        else if(typeof this._order == "string" && this._order.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._order))
             return this._order.substr(1);
         else
             return this._order;
@@ -9128,7 +9837,7 @@ class Poly {
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
-        else if(typeof this._coefficients == "string" && this._coefficients.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._coefficients))
             return this._coefficients.substr(1);
         else
             return this._coefficients;
@@ -9147,7 +9856,7 @@ class Poly {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -9159,6 +9868,22 @@ class Poly {
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Poly");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Poly();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.order        = this.order;       
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -9207,7 +9932,7 @@ exports.Poly = Poly;
 // Cubic class
 //==============================================================================
 
-class Cubic {
+class Cubic extends Primitive {
 
     constructor(options) {
 
@@ -9225,6 +9950,7 @@ class Cubic {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -9274,7 +10000,7 @@ class Cubic {
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
-        else if(typeof this._coefficients == "string" && this._coefficients.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._coefficients))
             return this._coefficients.substr(1);
         else
             return this._coefficients;
@@ -9293,7 +10019,7 @@ class Cubic {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -9305,6 +10031,21 @@ class Cubic {
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Cubic");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Cubic();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -9325,7 +10066,7 @@ class Cubic {
             cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
     
         content.push(pad + "cubic {");
-        content.push(ppad + this.coefficients.join(", ");
+        content.push(ppad + this.coefficients.join(", "));
         if(this.sturm)
             content.push(ppad + "sturm");
     
@@ -9343,7 +10084,7 @@ exports.Cubic = Cubic;
 // Quartic class
 //==============================================================================
 
-class Quartic {
+class Quartic extends Primitive {
 
     constructor(options) {
 
@@ -9361,6 +10102,7 @@ class Quartic {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -9410,7 +10152,7 @@ class Quartic {
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
-        else if(typeof this._coefficients == "string" && this._coefficients.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._coefficients))
             return this._coefficients.substr(1);
         else
             return this._coefficients;
@@ -9429,7 +10171,7 @@ class Quartic {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -9441,6 +10183,21 @@ class Quartic {
         } else {
             cpov.error("fatal", "sturm must be a boolean.", "Quartic");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Quartic();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -9461,7 +10218,7 @@ class Quartic {
             cpov.error("fatal", "coefficients is undefined.", "Quartic.toSDL", this);
     
         content.push(pad + "quartic {");
-        content.push(ppad + this.coefficients.join(", ");
+        content.push(ppad + this.coefficients.join(", "));
         if(this.sturm)
             content.push(ppad + "sturm");
     
@@ -9479,7 +10236,7 @@ exports.Quartic = Quartic;
 // Polynomial class
 //==============================================================================
 
-class Polynomial {
+class Polynomial extends Primitive {
 
     constructor(options) {
 
@@ -9498,6 +10255,7 @@ class Polynomial {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -9547,7 +10305,7 @@ class Polynomial {
     get order() {
         if(typeof this._order == "function")
             return this._order();
-        else if(typeof this._order == "string" && this._order.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._order))
             return this._order.substr(1);
         else
             return this._order;
@@ -9566,7 +10324,7 @@ class Polynomial {
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
-        else if(typeof this._coefficients == "string" && this._coefficients.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._coefficients))
             return this._coefficients.substr(1);
         else
             return this._coefficients;
@@ -9585,7 +10343,7 @@ class Polynomial {
     get sturm() {
         if(typeof this._sturm == "function")
             return this._sturm();
-        else if(typeof this._sturm == "string" && this._sturm.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._sturm))
             return this._sturm.substr(1);
         else
             return this._sturm;
@@ -9599,6 +10357,22 @@ class Polynomial {
         }
     }
 
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Polynomial();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.order        = this.order;       
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
+    }
+
 
 }
 
@@ -9609,7 +10383,7 @@ exports.Polynomial = Polynomial;
 // Quadric class
 //==============================================================================
 
-class Quadric {
+class Quadric extends Primitive {
 
     constructor(options) {
 
@@ -9626,6 +10400,7 @@ class Quadric {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -9675,7 +10450,7 @@ class Quadric {
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients();
-        else if(typeof this._coefficients == "string" && this._coefficients.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._coefficients))
             return this._coefficients.substr(1);
         else
             return this._coefficients;
@@ -9687,6 +10462,20 @@ class Quadric {
         } else {
             cpov.error("fatal", "coefficients must be an array of 10 floats.", "Quadric");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Quadric();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.coefficients = this.coefficients;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -9729,7 +10518,7 @@ exports.Quadric = Quadric;
 // Union class
 //==============================================================================
 
-class Union {
+class Union extends Primitive {
 
     constructor(options) {
 
@@ -9746,6 +10535,7 @@ class Union {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -9785,7 +10575,7 @@ class Union {
     get objects() {
         if(typeof this._objects == "function")
             return this._objects();
-        else if(typeof this._objects == "string" && this._objects.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._objects))
             return this._objects.substr(1);
         else
             return this._objects;
@@ -9804,7 +10594,7 @@ class Union {
     get splitUnion() {
         if(typeof this._splitUnion == "function")
             return this._splitUnion();
-        else if(typeof this._splitUnion == "string" && this._splitUnion.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._splitUnion))
             return this._splitUnion.substr(1);
         else
             return this._splitUnion;
@@ -9816,6 +10606,21 @@ class Union {
         } else {
             cpov.error("fatal", "splitUnion must be a boolean.", "Union");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Union();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.objects    = this.objects;   
+        newObj.splitUnion = this.splitUnion;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -9855,7 +10660,7 @@ exports.Union = Union;
 // Intersection class
 //==============================================================================
 
-class Intersection {
+class Intersection extends Primitive {
 
     constructor(options) {
 
@@ -9871,6 +10676,7 @@ class Intersection {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -9910,7 +10716,7 @@ class Intersection {
     get objects() {
         if(typeof this._objects == "function")
             return this._objects();
-        else if(typeof this._objects == "string" && this._objects.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._objects))
             return this._objects.substr(1);
         else
             return this._objects;
@@ -9922,6 +10728,20 @@ class Intersection {
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Intersection");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Intersection();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.objects = this.objects;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -9960,7 +10780,7 @@ exports.Intersection = Intersection;
 // Difference class
 //==============================================================================
 
-class Difference {
+class Difference extends Primitive {
 
     constructor(options) {
 
@@ -9977,6 +10797,7 @@ class Difference {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -10016,7 +10837,7 @@ class Difference {
     get positiveObject() {
         if(typeof this._positiveObject == "function")
             return this._positiveObject();
-        else if(typeof this._positiveObject == "string" && this._positiveObject.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._positiveObject))
             return this._positiveObject.substr(1);
         else
             return this._positiveObject;
@@ -10035,7 +10856,7 @@ class Difference {
     get negativeObjects() {
         if(typeof this._negativeObjects == "function")
             return this._negativeObjects();
-        else if(typeof this._negativeObjects == "string" && this._negativeObjects.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._negativeObjects))
             return this._negativeObjects.substr(1);
         else
             return this._negativeObjects;
@@ -10047,6 +10868,21 @@ class Difference {
         } else {
             cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Difference();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.positiveObject  = this.positiveObject; 
+        newObj.negativeObjects = this.negativeObjects;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -10088,7 +10924,7 @@ exports.Difference = Difference;
 // Merge class
 //==============================================================================
 
-class Merge {
+class Merge extends Primitive {
 
     constructor(options) {
 
@@ -10104,6 +10940,7 @@ class Merge {
 
         // Initialization //
 
+        super(options);
         cpov.initObject(this, options);
 
     }
@@ -10143,7 +10980,7 @@ class Merge {
     get objects() {
         if(typeof this._objects == "function")
             return this._objects();
-        else if(typeof this._objects == "string" && this._objects.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._objects))
             return this._objects.substr(1);
         else
             return this._objects;
@@ -10155,6 +10992,20 @@ class Merge {
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Merge");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Merge();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.objects = this.objects;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -10231,7 +11082,7 @@ class VectorXY {
     get x() {
         if(typeof this._x == "function")
             return this._x();
-        else if(typeof this._x == "string" && this._x.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._x))
             return this._x.substr(1);
         else
             return this._x;
@@ -10250,7 +11101,7 @@ class VectorXY {
     get y() {
         if(typeof this._y == "function")
             return this._y();
-        else if(typeof this._y == "string" && this._y.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._y))
             return this._y.substr(1);
         else
             return this._y;
@@ -10262,6 +11113,20 @@ class VectorXY {
         } else {
             cpov.error("fatal", "y must be a float.", "VectorXY");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new VectorXY();
+
+        newObj.x = this.x;
+        newObj.y = this.y;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -10343,7 +11208,7 @@ class VectorUV {
     get u() {
         if(typeof this._u == "function")
             return this._u();
-        else if(typeof this._u == "string" && this._u.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._u))
             return this._u.substr(1);
         else
             return this._u;
@@ -10362,7 +11227,7 @@ class VectorUV {
     get v() {
         if(typeof this._v == "function")
             return this._v();
-        else if(typeof this._v == "string" && this._v.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v))
             return this._v.substr(1);
         else
             return this._v;
@@ -10374,6 +11239,20 @@ class VectorUV {
         } else {
             cpov.error("fatal", "v must be a float.", "VectorUV");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new VectorUV();
+
+        newObj.u = this.u;
+        newObj.v = this.v;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -10457,7 +11336,7 @@ class VectorXYZ {
     get x() {
         if(typeof this._x == "function")
             return this._x();
-        else if(typeof this._x == "string" && this._x.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._x))
             return this._x.substr(1);
         else
             return this._x;
@@ -10476,7 +11355,7 @@ class VectorXYZ {
     get y() {
         if(typeof this._y == "function")
             return this._y();
-        else if(typeof this._y == "string" && this._y.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._y))
             return this._y.substr(1);
         else
             return this._y;
@@ -10495,7 +11374,7 @@ class VectorXYZ {
     get z() {
         if(typeof this._z == "function")
             return this._z();
-        else if(typeof this._z == "string" && this._z.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._z))
             return this._z.substr(1);
         else
             return this._z;
@@ -10507,6 +11386,21 @@ class VectorXYZ {
         } else {
             cpov.error("fatal", "z must be a float.", "VectorXYZ");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new VectorXYZ();
+
+        newObj.x = this.x;
+        newObj.y = this.y;
+        newObj.z = this.z;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -10595,7 +11489,7 @@ class VectorXYZW {
     get x() {
         if(typeof this._x == "function")
             return this._x();
-        else if(typeof this._x == "string" && this._x.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._x))
             return this._x.substr(1);
         else
             return this._x;
@@ -10614,7 +11508,7 @@ class VectorXYZW {
     get y() {
         if(typeof this._y == "function")
             return this._y();
-        else if(typeof this._y == "string" && this._y.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._y))
             return this._y.substr(1);
         else
             return this._y;
@@ -10633,7 +11527,7 @@ class VectorXYZW {
     get z() {
         if(typeof this._z == "function")
             return this._z();
-        else if(typeof this._z == "string" && this._z.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._z))
             return this._z.substr(1);
         else
             return this._z;
@@ -10652,7 +11546,7 @@ class VectorXYZW {
     get w() {
         if(typeof this._w == "function")
             return this._w();
-        else if(typeof this._w == "string" && this._w.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._w))
             return this._w.substr(1);
         else
             return this._w;
@@ -10664,6 +11558,22 @@ class VectorXYZW {
         } else {
             cpov.error("fatal", "w must be a float.", "VectorXYZW");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new VectorXYZW();
+
+        newObj.x = this.x;
+        newObj.y = this.y;
+        newObj.z = this.z;
+        newObj.w = this.w;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -10762,7 +11672,7 @@ class Color {
     get r() {
         if(typeof this._r == "function")
             return this._r();
-        else if(typeof this._r == "string" && this._r.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._r))
             return this._r.substr(1);
         else
             return this._r;
@@ -10781,7 +11691,7 @@ class Color {
     get g() {
         if(typeof this._g == "function")
             return this._g();
-        else if(typeof this._g == "string" && this._g.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._g))
             return this._g.substr(1);
         else
             return this._g;
@@ -10800,7 +11710,7 @@ class Color {
     get b() {
         if(typeof this._b == "function")
             return this._b();
-        else if(typeof this._b == "string" && this._b.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._b))
             return this._b.substr(1);
         else
             return this._b;
@@ -10819,7 +11729,7 @@ class Color {
     get f() {
         if(typeof this._f == "function")
             return this._f();
-        else if(typeof this._f == "string" && this._f.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._f))
             return this._f.substr(1);
         else
             return this._f;
@@ -10838,7 +11748,7 @@ class Color {
     get t() {
         if(typeof this._t == "function")
             return this._t();
-        else if(typeof this._t == "string" && this._t.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._t))
             return this._t.substr(1);
         else
             return this._t;
@@ -10857,7 +11767,7 @@ class Color {
     get srgb() {
         if(typeof this._srgb == "function")
             return this._srgb();
-        else if(typeof this._srgb == "string" && this._srgb.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._srgb))
             return this._srgb.substr(1);
         else
             return this._srgb;
@@ -10869,6 +11779,24 @@ class Color {
         } else {
             cpov.error("fatal", "srgb must be a boolean.", "Color");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Color();
+
+        newObj.r    = this.r;   
+        newObj.g    = this.g;   
+        newObj.b    = this.b;   
+        newObj.f    = this.f;   
+        newObj.t    = this.t;   
+        newObj.srgb = this.srgb;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------
@@ -10935,7 +11863,7 @@ exports.Color = Color;
 
 class Matrix {
 
-    constructor(options) {
+    constructor(v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32) {
 
         // Mutable properties //
 
@@ -10954,8 +11882,52 @@ class Matrix {
 
         // Initialization //
 
-        cpov.initObject(this, options);
-
+        this._v00 = this._v01 = this._v02 = this._v10 = this._v11 = this._v12
+            = this._v20 = this._v21 = this._v22 = this._v30 = this._v31
+            = this._v32 = 0;
+        
+        if(v00 == "scale") {
+        
+            this.v00 = v01; // x
+            this.v11 = v02; // y
+            this.v22 = v10; // z
+        
+        } else if(v00 == "rotate") {
+        
+            // TODO
+            cpov.error("fatal", "The rotate initializer is not implemented yet.", "Matrix.constructor", this);
+        
+        } else if(v00 == "translate") {
+        
+            this.v00 = this.v11 = this.v22 = 1; // scale identity
+        
+            this.v30 = v01; // x
+            this.v31 = v02; // y
+            this.v32 = v10; // z
+        
+        } else if(v00 == "skew") {
+        
+            // TODO
+            cpov.error("fatal", "The skew initializer is not implemented yet.", "Matrix.constructor", this);
+        
+        } else {
+        
+            this.v00 = v00;
+            this.v01 = v01;
+            this.v02 = v02;
+            this.v10 = v10;
+            this.v11 = v11;
+            this.v12 = v12;
+            this.v20 = v20;
+            this.v21 = v21;
+            this.v22 = v22;
+            this.v30 = v30;
+            this.v31 = v31;
+            this.v32 = v32;
+        
+        }
+        
+        
     }
 
     //--------------------------------------------------------------------------
@@ -10963,7 +11935,7 @@ class Matrix {
     get v00() {
         if(typeof this._v00 == "function")
             return this._v00();
-        else if(typeof this._v00 == "string" && this._v00.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v00))
             return this._v00.substr(1);
         else
             return this._v00;
@@ -10982,7 +11954,7 @@ class Matrix {
     get v01() {
         if(typeof this._v01 == "function")
             return this._v01();
-        else if(typeof this._v01 == "string" && this._v01.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v01))
             return this._v01.substr(1);
         else
             return this._v01;
@@ -11001,7 +11973,7 @@ class Matrix {
     get v02() {
         if(typeof this._v02 == "function")
             return this._v02();
-        else if(typeof this._v02 == "string" && this._v02.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v02))
             return this._v02.substr(1);
         else
             return this._v02;
@@ -11020,7 +11992,7 @@ class Matrix {
     get v10() {
         if(typeof this._v10 == "function")
             return this._v10();
-        else if(typeof this._v10 == "string" && this._v10.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v10))
             return this._v10.substr(1);
         else
             return this._v10;
@@ -11039,7 +12011,7 @@ class Matrix {
     get v11() {
         if(typeof this._v11 == "function")
             return this._v11();
-        else if(typeof this._v11 == "string" && this._v11.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v11))
             return this._v11.substr(1);
         else
             return this._v11;
@@ -11058,7 +12030,7 @@ class Matrix {
     get v12() {
         if(typeof this._v12 == "function")
             return this._v12();
-        else if(typeof this._v12 == "string" && this._v12.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v12))
             return this._v12.substr(1);
         else
             return this._v12;
@@ -11077,7 +12049,7 @@ class Matrix {
     get v20() {
         if(typeof this._v20 == "function")
             return this._v20();
-        else if(typeof this._v20 == "string" && this._v20.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v20))
             return this._v20.substr(1);
         else
             return this._v20;
@@ -11096,7 +12068,7 @@ class Matrix {
     get v21() {
         if(typeof this._v21 == "function")
             return this._v21();
-        else if(typeof this._v21 == "string" && this._v21.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v21))
             return this._v21.substr(1);
         else
             return this._v21;
@@ -11115,7 +12087,7 @@ class Matrix {
     get v22() {
         if(typeof this._v22 == "function")
             return this._v22();
-        else if(typeof this._v22 == "string" && this._v22.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v22))
             return this._v22.substr(1);
         else
             return this._v22;
@@ -11134,7 +12106,7 @@ class Matrix {
     get v30() {
         if(typeof this._v30 == "function")
             return this._v30();
-        else if(typeof this._v30 == "string" && this._v30.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v30))
             return this._v30.substr(1);
         else
             return this._v30;
@@ -11153,7 +12125,7 @@ class Matrix {
     get v31() {
         if(typeof this._v31 == "function")
             return this._v31();
-        else if(typeof this._v31 == "string" && this._v31.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v31))
             return this._v31.substr(1);
         else
             return this._v31;
@@ -11172,7 +12144,7 @@ class Matrix {
     get v32() {
         if(typeof this._v32 == "function")
             return this._v32();
-        else if(typeof this._v32 == "string" && this._v32.substr(0, 1) == "&")
+        else if(cpov.isSDLFunction(this._v32))
             return this._v32.substr(1);
         else
             return this._v32;
@@ -11184,6 +12156,30 @@ class Matrix {
         } else {
             cpov.error("fatal", "v32 must be a float.", "Matrix");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Matrix();
+
+        newObj.v00 = this.v00;
+        newObj.v01 = this.v01;
+        newObj.v02 = this.v02;
+        newObj.v10 = this.v10;
+        newObj.v11 = this.v11;
+        newObj.v12 = this.v12;
+        newObj.v20 = this.v20;
+        newObj.v21 = this.v21;
+        newObj.v22 = this.v22;
+        newObj.v30 = this.v30;
+        newObj.v31 = this.v31;
+        newObj.v32 = this.v32;
+
+        return newObj;
     }
 
     //--------------------------------------------------------------------------

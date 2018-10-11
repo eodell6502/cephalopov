@@ -83,6 +83,9 @@ function main() {
         fp.close();
     }
 
+    for(var item in cpov)
+        global[item] = cpov[item];
+
     try {
         var userProgram = require(opts.infile.vals[0]);
     } catch(e) {

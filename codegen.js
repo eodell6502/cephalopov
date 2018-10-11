@@ -239,7 +239,7 @@ ClassBuilder.prototype.toString = function() {
                     + tab3 + "return this._" + item.name + "();");
                 if(this.allowSDL)
                     src.push(
-                        tab2 + "else if(typeof this._" + item.name + " == \"string\" && this._" + item.name + ".substr(0, 1) == \"&\")\n"
+                        tab2 + "else if(cpov.isSDLFunction(this._" + item.name + "))\n"
                         + tab3 + "return this._" + item.name + ".substr(1);"
                     );
                 src.push(
@@ -268,6 +268,29 @@ ClassBuilder.prototype.toString = function() {
         }
     }
 
+    // Copy method -------------------------------------------------------------
+
+    // TODO: Deep clones, etc.
+
+    if(this.obj.mutable) {
+        src.push(this.divider(1, "-") + "\n"
+            + tab1 + "// Constructs and returns a shallow copy of the object.\n"
+            + this.divider(1, "-") + "\n\n"
+            + tab1 + "copy() {\n\n"
+            + tab2 + "var newObj = new " + this.name + "();\n");
+        if(this.obj.superclass && this.obj.superclass == "Primitive") {
+            src.push(tab2 + "newObj.copyCommonFrom(this); // copy Primitive attributes");
+        };
+        var rows = [ ];
+        for(var attr in this.obj.mutable) {
+            var attrName = this.obj.mutable[attr].name;
+            rows.push([tab2 + "newObj." + attrName, " = ", "this." + attrName + ";"]);
+        }
+        src.push(this.align(rows) + "\n");
+        src.push(tab2 + "return newObj;");
+        src.push(tab1 + "}\n");
+    }
+
     // Snippet code ------------------------------------------------------------
 
     if(this.obj.snippets) {
@@ -290,39 +313,91 @@ ClassBuilder.prototype.toString = function() {
 }
 
 
-//==============================================================================
-// We don't currently use ClassBuilder anywhere else -- a lot of it is very
-// CephaloPOV-specific, so when executed, this file just outputs the various
-// class modules used by CephaloPOV.
-//==============================================================================
 
-var fp = new File("./classes.js", "w");
-fp.write("var cpov = require(\"./cephalopov.js\");\n\n");
 
-fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./snippets.js") + "\n\n");
-fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
+main();
 
-var ioObj = new ClassBuilder("ImageOptions", cpov.ioDef, "./snippets.js");
-ioObj.allowSDL = false;
-fp.write(ioObj + "\n\n");
-fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
+function main() {
 
-fp.write(new ClassBuilder("Primitive", cpov.objCommon, "./snippets.js") + "\n\n");
-fp.write("exports.Primitive = Primitive;\n\n\n");
+    var opts = {
+        classes:  { short: "c", cnt: 0 },
+        snippets: { short: "s", cnt: 0 },
+        help:     { short: "h", cnt: 0 },
+    };
 
-for(var pname in cpov.objDef) {
-    var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-    fp.write(new ClassBuilder(cname, cpov.objDef[pname], "./snippets.js") + "\n\n");
-    fp.write("exports." + cname + " = " + cname + ";\n\n\n");
+    cpov.parseCLI(opts);
+
+    var optCount = 0;
+    for(var i in opts)
+        optCount += opts[i].cnt;
+
+    if(opts.help.cnt) {
+        console.log("\nUsage: codegen [options]\n\n"
+            + "-c, --classes   Generate classes.js\n"
+            + "-s, --snippets  Regenerate snippets.js --> snippets.new.js\n"
+            + "-h, --help      Display this text\n\n");
+        return;
+    }
+
+    // snippets.new.js ---------------------------------------------------------
+
+    if(opts.snippets.cnt) {
+        var fp = new File("./snippets.new.js", "w");
+        var snippets = cpov.objectImport("./snippets.js");
+        var keys = [ ];
+        for(var key in snippets)
+            keys.push(key);
+        keys.sort(function(a, b) {
+            if(a == "README")
+                return -Infinity;
+            else
+                return a.localeCompare(b);
+        });
+        var dash80 = "--------------------------------------------------------------------------------";
+
+        for(var i = 0; i < keys.length; i++) {
+            var label = "// " + keys[i] + " //";
+            label = label + dash80.substr(0, 80 - label.length) + "\n\n";
+            fp.write(label);
+            // TODO: prettify?
+            fp.write(snippets[keys[i]] + "\n\n\n\n")
+        }
+
+        fp.close();
+
+    }
+
+    // classes.js --------------------------------------------------------------
+
+    if(optCount == 0 || opts.classes.cnt) {  // by default, classes.js is produced
+        var fp = new File("./classes.js", "w");
+        fp.write("var cpov = require(\"./cephalopov.js\");\n\n");
+
+        fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./snippets.js") + "\n\n");
+        fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
+
+        var ioObj = new ClassBuilder("ImageOptions", cpov.ioDef, "./snippets.js");
+        ioObj.allowSDL = false;
+        fp.write(ioObj + "\n\n");
+        fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
+
+        fp.write(new ClassBuilder("Primitive", cpov.objCommon, "./snippets.js") + "\n\n");
+        fp.write("exports.Primitive = Primitive;\n\n\n");
+
+        for(var pname in cpov.objDef) {
+            var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
+            fp.write(new ClassBuilder(cname, cpov.objDef[pname], "./snippets.js") + "\n\n");
+            fp.write("exports." + cname + " = " + cname + ";\n\n\n");
+        }
+
+        for(var pname in cpov.vectorDef) {
+            var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
+            fp.write(new ClassBuilder(cname, cpov.vectorDef[pname], "./snippets.js") + "\n\n");
+            fp.write("exports." + cname + " = " + cname + ";\n\n\n");
+        }
+
+        fp.close();
+    }
+
 }
-
-for(var pname in cpov.vectorDef) {
-    var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-    fp.write(new ClassBuilder(cname, cpov.vectorDef[pname], "./snippets.js") + "\n\n");
-    fp.write("exports." + cname + " = " + cname + ";\n\n\n");
-}
-
-
-fp.close();
-
 

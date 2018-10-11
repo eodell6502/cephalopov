@@ -1096,7 +1096,7 @@ cpov.objCommon = {
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: "Primitive.conBlock",
-    snippets: [ "Primitive.toSDL", "Primitive.destroy" ],
+    snippets: [ "Primitive.destroy", "Primitive.copyCommonFrom", "Primitive.toSDL"  ],
     mutable: [
         {
             name:  "active",
@@ -1213,6 +1213,7 @@ cpov.objDef = {
     // TODO: need way to specify special methods, e.g., editing the components array
 
     blob: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1241,6 +1242,7 @@ cpov.objDef = {
     },
 
     box: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1267,6 +1269,7 @@ cpov.objDef = {
     //--------------------------------------------------------------------------
 
     camera: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1343,6 +1346,7 @@ cpov.objDef = {
     },
 
     cone: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1378,6 +1382,7 @@ cpov.objDef = {
     },
 
     cylinder: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1412,6 +1417,7 @@ cpov.objDef = {
     },
 
     heightField: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1452,6 +1458,7 @@ cpov.objDef = {
     },
 
     isoSurface: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1496,6 +1503,7 @@ cpov.objDef = {
     },
 
     juliaFractal: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1537,6 +1545,7 @@ cpov.objDef = {
     },
 
     lathe: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1562,6 +1571,7 @@ cpov.objDef = {
     },
 
     lightSource: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1675,6 +1685,7 @@ cpov.objDef = {
     },
 
     ovus: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1697,6 +1708,7 @@ cpov.objDef = {
     },
 
     parametric: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1761,6 +1773,7 @@ cpov.objDef = {
     },
 
     prism: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1800,6 +1813,7 @@ cpov.objDef = {
     },
 
     sphere: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1825,6 +1839,7 @@ cpov.objDef = {
     },
 
     sphereSweep: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1850,6 +1865,7 @@ cpov.objDef = {
     },
 
     superellipsoid: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1873,6 +1889,7 @@ cpov.objDef = {
     },
 
     sor: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1897,6 +1914,7 @@ cpov.objDef = {
     },
 
     text: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1934,6 +1952,7 @@ cpov.objDef = {
     },
 
     torus: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1959,6 +1978,7 @@ cpov.objDef = {
     },
 
     bicubicPatch: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -1992,6 +2012,7 @@ cpov.objDef = {
     },
 
     disc: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2022,6 +2043,7 @@ cpov.objDef = {
     },
 
     mesh: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2050,6 +2072,7 @@ cpov.objDef = {
 // Deferred pending further research
 
     mesh2: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2061,6 +2084,7 @@ cpov.objDef = {
 */
 
     polygon: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2078,6 +2102,7 @@ cpov.objDef = {
     },
 
     triangle: {               // combines triangle and smooth_triangle
+        superclass: "Primitive",
         desc: "The Triangle class combines POV-Ray's triangle and smooth_triangle "
             + "based on the supplied parameters and the smooth flag.",
         conArgs: false,
@@ -2125,6 +2150,7 @@ cpov.objDef = {
     },
 
     plane: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2147,6 +2173,7 @@ cpov.objDef = {
     },
 
     poly: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2172,6 +2199,7 @@ cpov.objDef = {
     },
 
     cubic: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2192,6 +2220,7 @@ cpov.objDef = {
     },
 
     quartic: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2212,6 +2241,7 @@ cpov.objDef = {
     },
 
     polynomial: {                                             // This will require better understanding of the
+        superclass: "Primitive",
         desc: false,                                          // underlying maths than I currently have to validate.
         conArgs: false,
         conBlock: false,
@@ -2237,6 +2267,7 @@ cpov.objDef = {
     },
 
     quadric: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2254,6 +2285,7 @@ cpov.objDef = {
     },
 
     union: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2274,6 +2306,7 @@ cpov.objDef = {
     },
 
     intersection: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2289,6 +2322,7 @@ cpov.objDef = {
     },
 
     difference: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2309,6 +2343,7 @@ cpov.objDef = {
     },
 
     merge: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
@@ -2442,8 +2477,8 @@ cpov.vectorDef = {
     },
     Matrix: {
         desc: false,
-        conArgs: false,
-        conBlock: false,
+        conArgs: "v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32",
+        conBlock: "Matrix.conBlock",
         snippets: ["Matrix.copy", "Matrix-methods"],
         mutable: [
             {

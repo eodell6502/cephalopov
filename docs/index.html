@@ -18,13 +18,21 @@ be the user manual. Right now, it's mostly notes.</div>
 
 <h2>Introduction</h2>
 
+<p>CephaloPOV is a JavaScript scripting engine for POV-Ray. It is implemented as
+a Node command line program that loads a user script and executes it. User
+scripts manipulate various JavaScript classes that map to POV-Ray's native
+objects, in addition to having full access to the Node ecosystem. CephaloPOV
+takes care of generating POV-Ray Scene Description Language files, both for
+static scenes and multi-frame animations.</p>
+
 <h2>TODO</h2>
 
 <h3>Milestone C0</h3>
 
 <pre>Type coercion
     Matrix
-        rotate and skew
+        rotate
+        skew
     Special constructor arguments for Matrix
     Accept special initializer for matrices in setters
     Try conversion and assignment in validator for matrices?
@@ -38,18 +46,6 @@ parent/child updates for CSG, blobs, sphere sweeps, parametrics, etc.; subcompon
 CSG output
 
 Frame output routine
-
-// Pare the second conditional down to cpov.isSDLFunction()
-
-get iridWavelength() {
-    if(typeof this._iridWavelength == "function")
-        return this._iridWavelength();
-    else if(typeof this._iridWavelength == "string" && this._iridWavelength.substr(0, 1) == "&")
-        return this._iridWavelength.substr(1);
-    else
-        return this._iridWavelength;
-}
-
 
 [use --preamble or --sdlIncludes for atmospheric effects until implemented]</pre>
 
