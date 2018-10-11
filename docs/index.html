@@ -33,10 +33,23 @@ be the user manual. Right now, it's mostly notes.</div>
     Get SDL vector or SDL function out of vector params automatically
     Add toSDL alias 'toString' to SDL function params
 
+Extend copy procedure to Primitive base class
 parent/child updates for CSG, blobs, sphere sweeps, parametrics, etc.; subcomponents generally
 CSG output
 
 Frame output routine
+
+// Pare the second conditional down to cpov.isSDLFunction()
+
+get iridWavelength() {
+    if(typeof this._iridWavelength == "function")
+        return this._iridWavelength();
+    else if(typeof this._iridWavelength == "string" && this._iridWavelength.substr(0, 1) == "&")
+        return this._iridWavelength.substr(1);
+    else
+        return this._iridWavelength;
+}
+
 
 [use --preamble or --sdlIncludes for atmospheric effects until implemented]</pre>
 
