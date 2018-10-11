@@ -7,7 +7,17 @@
 	body,table,input { font: 10pt Arial,Helvetica,sans-serif; }
     body { width: 8.5in; margin-left: auto; margin-right: auto; }
 	div.code { white-space: pre; font: 10pt Consolas,Courier,fixed; background-color: #EEF; border: 1px solid #CCF; margin-top: 1em; padding: 1em; }
+    code { font: 10pt Consolas,Courier,fixed; }
     pre { font: 10pt Consolas,Courier,fixed; }
+    table.matrixDemo { background-color: black; border-spacing: 1pt; margin-left: auto; margin-right: auto; }
+    table.matrixDemo th { color: white; width: 20%; padding: 0.5em; }
+    table.matrixDemo td { background-color: white; vertical-align: top; padding: 0.25em; }
+    table.matrixDemo td.implicit { background-color: #CCC; }
+    table.matrixDemo td.scale { background-color: #FAA; }
+    table.matrixDemo td.translate { background-color: #AAF; }
+    table.matrixDemo td.skew { background-color: #AFA; }
+    table.matrixDemo div.cpName { text-align: center; font: bold 10pt Consolas,Courier,fixed; }
+    table.matrixDemo div.op { text-align: center; font-weight: bold; margin-top: 0.25em; }
 </style>
 </head>
 <body>
@@ -25,14 +35,68 @@ objects, in addition to having full access to the Node ecosystem. CephaloPOV
 takes care of generating POV-Ray Scene Description Language files, both for
 static scenes and multi-frame animations.</p>
 
+<h2>Appendix A: Matrices</h2>
+
+<p>SDL matrices are an abbreviated form of the entire matrix being used. The
+fourth column is invariant and therefore omitted from its SDL representation and
+inaccessible within CephaloPOV, but we'll show it here in grey for the
+math-curious. You <em>don't</em> have to know much about matrix math to use the
+<code>Matrix</code> class. Like SDL, CephaloPOV offers shortcuts to the
+individual transformations in the form of special arguments to the
+<code>Matrix</code> constructor and the <code>apply</code> method.</p>
+
+<p>If you want to know more, Jeff Lee's <a
+href="https://www.shipbrook.net/jeff/raytrace/matrix.html">POV-Ray-specific
+tutorial</a> is a good place to start, as are these <a
+href="https://courses.cs.washington.edu/courses/cse457/99au/handouts/lectures/3d-transformations.pdf">course
+notes</a>. To dig deeper than that&mdash;and there's
+a <em>lot</em> more you can do with matrices&mdash;the topic is covered in depth
+in 3D graphics and linear algebra textbooks. And don't be scared off: it's far
+more tedious than difficult.</p>
+
+
+
+<table class='matrixDemo'>
+    <tr><th></th><th>Column<br/>0</th><th>Column<br/>1</th><th>Column<br/>2</th><th>Column<br/>3</th></tr>
+    <tr>
+        <th>Row<br/>0</th>
+        <td class='scale'><div class='cpName'>v00</div><div class='op'>Scale X</div></td>
+        <td class='skew'><div class='cpName'>v01</div><div class='op'>Skew Y by X</div></td>
+        <td class='skew'><div class='cpName'>v02</div><div class='op'>Skew Z by X</div></td>
+        <td class='implicit'><div class='cpName'>(v03)</div><div class='op'>0</div></td>
+    </tr><tr>
+        <th>Row<br/>1</th>
+        <td class='skew'><div class='cpName'>v10</div><div class='op'>Skew X by Y</div></td>
+        <td class='scale'><div class='cpName'>v11</div><div class='op'>Scale Y</div></td>
+        <td class='skew'><div class='cpName'>v12</div><div class='op'>Skew Z by Y</div></td>
+        <td class='implicit'><div class='cpName'>(v13)</div><div class='op'>0</div></td>
+    </tr><tr>
+        <th>Row<br/>2</th>
+        <td class='skew'><div class='cpName'>v20</div><div class='op'>Skew X by Z</div></td>
+        <td class='skew'><div class='cpName'>v21</div><div class='op'>Skew Y by Z</div></td>
+        <td class='scale'><div class='cpName'>v22</div><div class='op'>Scale Z</div></td>
+        <td class='implicit'><div class='cpName'>(v23)</div><div class='op'>0</div></td>
+    </tr><tr>
+        <th>Row<br/>3</th>
+        <td class='translate'><div class='cpName'>v30</div><div class='op'>Translate X</div></td>
+        <td class='translate'><div class='cpName'>v31</div><div class='op'>Translate Y</div></td>
+        <td class='translate'><div class='cpName'>v32</div><div class='op'>Translate Z</div></td>
+        <td class='implicit'><div class='cpName'>(v33)</div><div class='op'>1</div></td>
+    </tr>
+</table>
+
+
+
+
 <h2>TODO</h2>
 
 <h3>Milestone C0: core system implementation and shakedown</h3>
 
 <pre>Type coercion
     Matrix
-        rotate
-        skew
+        toSDL
+        rotate } ... in progress; will need to experiment to figure out
+        skew   }     the mapping between SDL matrices and proper matrices
     Try conversion and assignment in validator for matrices?
 
     reqTest in snippets for use in toSDL methods, or maybe revalidate
@@ -45,6 +109,8 @@ CSG output
 Frame output routine
 
 [use --preamble or --sdlIncludes for atmospheric effects until implemented]</pre>
+
+Implicit fourth column in transformation matrix documentation.
 
 <h3>Milestone C1: preparation for public beta</h3>
 
@@ -137,6 +203,7 @@ npm install -g sloc        ... cronify
 
 <h2>Changelog</h2>
 
+<p>Oh geez, not yet.</p>
 
 </body>
 </html>
