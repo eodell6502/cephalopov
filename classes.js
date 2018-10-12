@@ -11865,26 +11865,12 @@ class Matrix {
 
     constructor(v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32) {
 
-        // Mutable properties //
-
-        this._v00 = null;
-        this._v01 = null;
-        this._v02 = null;
-        this._v10 = null;
-        this._v11 = null;
-        this._v12 = null;
-        this._v20 = null;
-        this._v21 = null;
-        this._v22 = null;
-        this._v30 = null;
-        this._v31 = null;
-        this._v32 = null;
-
         // Initialization //
 
-        this._v00 = this._v01 = this._v02 = this._v10 = this._v11 = this._v12
-            = this._v20 = this._v21 = this._v22 = this._v30 = this._v31
-            = this._v32 = 0;
+        this._v01 = this._v02 = this._v10 = this._v12 = this._v20 = this._v21
+        	= this._v30 = this._v31 = this._v32 = 0;
+        
+        this._v00 = this._v11 = this._v22 = 1; // scale identity
         
         if(v00 == "scale") {
         
@@ -11898,8 +11884,6 @@ class Matrix {
             cpov.error("fatal", "The rotate initializer is not implemented yet.", "Matrix.constructor", this);
         
         } else if(v00 == "translate") {
-        
-            this.v00 = this.v11 = this.v22 = 1; // scale identity
         
             this.v30 = v01; // x
             this.v31 = v02; // y

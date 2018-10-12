@@ -1191,9 +1191,10 @@ xPoint(point) {
 
 // Matrix.conBlock //-----------------------------------------------------------
 
-this._v00 = this._v01 = this._v02 = this._v10 = this._v11 = this._v12
-    = this._v20 = this._v21 = this._v22 = this._v30 = this._v31
-    = this._v32 = 0;
+this._v01 = this._v02 = this._v10 = this._v12 = this._v20 = this._v21
+	= this._v30 = this._v31 = this._v32 = 0;
+
+this._v00 = this._v11 = this._v22 = 1; // scale identity
 
 if(v00 == "scale") {
 
@@ -1207,8 +1208,6 @@ if(v00 == "scale") {
     cpov.error("fatal", "The rotate initializer is not implemented yet.", "Matrix.constructor", this);
 
 } else if(v00 == "translate") {
-
-    this.v00 = this.v11 = this.v22 = 1; // scale identity
 
     this.v30 = v01; // x
     this.v31 = v02; // y

@@ -176,20 +176,28 @@ ClassBuilder.prototype.toString = function() {
 
     if(this.obj.mutable) {
 
-		var rows = [ ];
+		if(this.obj.noInit) {
 
-		src.push(tab2 + "// Mutable properties //\n");
+			// noop
 
-        for(var i = 0; i < this.obj.mutable.length; i++) {
-            if(this.obj.mutable[i].default) {
-                var init = this.obj.mutable[i].default;
-            } else {
-                var init = "null";
-            }
-			rows.push([tab2 + "this._" + this.obj.mutable[i].name, " = ", init + ";"]);
-        }
+		} else {
 
-		src.push(this.align(rows) + "\n");
+			var rows = [ ];
+
+			src.push(tab2 + "// Mutable properties //\n");
+
+			for(var i = 0; i < this.obj.mutable.length; i++) {
+				if(this.obj.mutable[i].default) {
+					var init = this.obj.mutable[i].default;
+				} else {
+					var init = "null";
+				}
+				rows.push([tab2 + "this._" + this.obj.mutable[i].name, " = ", init + ";"]);
+			}
+
+			src.push(this.align(rows) + "\n");
+
+		}
     }
 
     // Initialization ----------------------------------------------------------

@@ -85,7 +85,41 @@ more tedious than difficult.</p>
     </tr>
 </table>
 
+<!--
 
+ If we were to rotate an object 45 degrees around the Z axis, we would use the following statement:
+
+            matrix < cos(a), sin(a), 0,
+                    -sin(a), cos(a), 0,
+                       0,      0,    1,
+                       0,      0,    0 >
+
+The course notes I found, taken from Mathematical Elements for Computer Graphics, 2ed,
+Rogers and Adams, 1990, gives the following Z axis rotation (note the fourth,
+invariant column):
+
+        Rz = [ cos(a), -sin(a), 0, 0,
+               sin(a),  cos(a), 0, 0,
+                    0,       0, 1, 0,
+                    0,       0, 0, 1 ]
+
+I'll have to test to find out for sure, but I think the reversal of the signs of
+the two sine functions is because the second source uses a right-handed coordinate
+system while POV-Ray uses a left-handed system.
+
+The other two rotation matrices in Rogers and Adams are as follows:
+
+        Rx = [ 1,      0,       0, 0,
+               0, cos(a), -sin(a), 0,
+               0, sin(a),  cos(a), 0,
+               0,      0,       0, 1 ]
+
+        Ry  = [  cos(a), 0, sin(a), 0,
+                      0, 1,      0, 0,
+                -sin(a), 0, cos(a), 0,
+                      0, 0,      0, 1 ]
+
+-->
 
 
 <h2>TODO</h2>
