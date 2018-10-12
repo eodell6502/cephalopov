@@ -16,6 +16,11 @@
     table.matrixDemo td.scale { background-color: #FAA; }
     table.matrixDemo td.translate { background-color: #AAF; }
     table.matrixDemo td.skew { background-color: #AFA; }
+
+    table.matrixDemo td.rotate { background-color: #FAA; }
+    table.matrixDemo td.ident { background-color: #AAF; }
+    table.matrixDemo td.null { background-color: #CCC; }
+
     table.matrixDemo div.cpName { text-align: center; font: bold 10pt Consolas,Courier,fixed; }
     table.matrixDemo div.op { text-align: center; font-weight: bold; margin-top: 0.25em; }
 </style>
@@ -45,16 +50,14 @@ math-curious. You <em>don't</em> have to know much about matrix math to use the
 individual transformations in the form of special arguments to the
 <code>Matrix</code> constructor and the <code>apply</code> method.</p>
 
-<p>If you want to know more, Jeff Lee's <a
-href="https://www.shipbrook.net/jeff/raytrace/matrix.html">POV-Ray-specific
-tutorial</a> is a good place to start, as are these <a
-href="https://courses.cs.washington.edu/courses/cse457/99au/handouts/lectures/3d-transformations.pdf">course
-notes</a>. To dig deeper than that&mdash;and there's
-a <em>lot</em> more you can do with matrices&mdash;the topic is covered in depth
-in 3D graphics and linear algebra textbooks. And don't be scared off: it's far
-more tedious than difficult.</p>
+<h3>Translation, Scaling, and Skewing</h3>
 
-
+<p>Red elements determine scaling, blue elements determine translation, and
+green elements determine skewing. (The grey elements, as previously mentioned,
+are invariant and hidden in both POV-Ray and CephaloPOV.) Note that there are
+three elements for each axis when scaling and translating, but there are six
+elements for skewing, because skew transformations involve relationships between
+pairs of axes.</p>
 
 <table class='matrixDemo'>
     <tr><th></th><th>Column<br/>0</th><th>Column<br/>1</th><th>Column<br/>2</th><th>Column<br/>3</th></tr>
@@ -84,6 +87,128 @@ more tedious than difficult.</p>
         <td class='implicit'><div class='cpName'>(v33)</div><div class='op'>1</div></td>
     </tr>
 </table>
+
+<p>An important thing to notice here is that while the matrix elements that
+determine translation and skewing are 0 if no translation or skewing is to be
+done, the elements that define scaling must be 1 when no scaling is to be done,
+i.e., it's an identity element. Setting the scaling elements to zero will make
+the object disappear!</p>
+
+<p>Another thing to notice about scaling is that negative values will
+<em>reflect</em> the object across the relevant axis. In the special case of 1,
+this will be a perfect mirror image; other values will stretch or squash the
+object.</p>
+
+<h3>Rotation</h3>
+
+<p>Rotation is a little more complicated because it requires the use of
+trigonometric functions. This is handled for you by the Matrix class'
+<code>rotate</code> constructor argument, but it's worth understanding in case
+you want to try doing the calculations yourself or trying variations to see what
+they do.</p>
+
+<p>Since the values for rotations around the axes overlap, we'll omit the
+invariant fourth column and the translation row so we can cram all three rotation
+matrices into a single row. In this case, we'll color the rotation elements red,
+the single scale identity element blue, and everything else grey. If you're
+entirely innocent of trigonometry, know that <i>cos</i> and <i>sin</i> are
+the trigonometric functions cosine and sine, which are implemented in JavaScript
+as the <code>Math.cos()</code> and <code>Math.sin()</code> methods. The angle
+of rotation is represented by the Greek letter theta (&theta;) and is specified
+in radians, though POV-Ray and CephaloPOV expect you to use degrees instead and
+quietly translate degrees into radians for you.</p>
+
+
+<table style='width: 100%;'>
+    <tr>
+        <td style='width: 33%;'>
+
+            <table class='matrixDemo'>
+                <tr><th colspan='4'>Rotation around the X axis</th></tr>
+                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
+                <tr>
+                    <th>Row<br/>0</th>
+                    <td class='ident'><div class='cpName'>v00</div><div class='op'>1</div></td>
+                    <td class='null'><div class='cpName'>v01</div><div class='op'>0</div></td>
+                    <td class='null'><div class='cpName'>v02</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>1</th>
+                    <td class='null'><div class='cpName'>v10</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v11</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v12</div><div class='op'><i>sin</i>(&theta;)</div></td>
+                </tr><tr>
+                    <th>Row<br/>2</th>
+                    <td class='null'><div class='cpName'>v20</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v21</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v22</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                </tr>
+            </table>
+
+        </td><td style='width: 33%;'>
+
+            <table class='matrixDemo'>
+                <tr><th colspan='4'>Rotation around the Y axis</th></tr>
+                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
+                <tr>
+                    <th>Row<br/>0</th>
+                    <td class='rotate'><div class='cpName'>v00</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v01</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v02</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
+                </tr><tr>
+                    <th>Row<br/>1</th>
+                    <td class='null'><div class='cpName'>v10</div><div class='op'>0</div></td>
+                    <td class='ident'><div class='cpName'>v11</div><div class='op'>1</div></td>
+                    <td class='null'><div class='cpName'>v12</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>2</th>
+                    <td class='rotate'><div class='cpName'>v20</div><div class='op'><i>sin</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v21</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v22</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                </tr>
+            </table>
+
+        </td><td style='width: 33%;'>
+
+            <table class='matrixDemo'>
+                <tr><th colspan='4'>Rotation around the Z axis</th></tr>
+                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
+                <tr>
+                    <th>Row<br/>0</th>
+                    <td class='rotate'><div class='cpName'>v00</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v01</div><div class='op'><i>sin</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v02</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>1</th>
+                    <td class='rotate'><div class='cpName'>v10</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v11</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v12</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>2</th>
+                    <td class='null'><div class='cpName'>v20</div><div class='op'>0</div></td>
+                    <td class='null'><div class='cpName'>v21</div><div class='op'>0</div></td>
+                    <td class='ident'><div class='cpName'>v22</div><div class='op'>1</div></td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+<p>Note the sign of the sine functions. These are specific to the left-handed
+coordinate system that POV-Ray uses. In a right-handed system, you'd reverse the
+signs.</p>
+
+<p>If you want to know more, Jeff Lee's <a
+href="https://www.shipbrook.net/jeff/raytrace/matrix.html">POV-Ray-specific
+tutorial</a> is a good place to start, as are these <a
+href="https://courses.cs.washington.edu/courses/cse457/99au/handouts/lectures/3d-transformations.pdf">course
+notes</a>. To dig deeper than that&mdash;and there's a <em>lot</em> more you can
+do with matrices&mdash;the topic is covered in depth in 3D graphics and linear
+algebra textbooks. And don't be scared off: it's far more tedious than
+difficult. Choose a simple shape, try fiddling with different elements and
+different functions, and look at the results of a rendering.</p>
+
+
 
 <!--
 
