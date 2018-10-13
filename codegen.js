@@ -404,6 +404,9 @@ function main() {
             fp.write("exports." + cname + " = " + cname + ";\n\n\n");
         }
 
+		var snippets = cpov.objectImport("./snippets.js");
+		fp.write(snippets.Matrix + "\n\n\n");
+
         fp.close();
     }
 

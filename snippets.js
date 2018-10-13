@@ -1143,125 +1143,411 @@ toSDL(stops = 0) {
 
 
 
-// Matrix-methods //------------------------------------------------------------
+// Matrix //--------------------------------------------------------------------
 
-//--------------------------------------------------------------------------
-// Given another Matrix, that, returns a new Matrix this * that.
-//--------------------------------------------------------------------------
+//==============================================================================
+// Matrix class. This was originally generated along with the Vector/Color
+// classes, but the need for efficient computation that I couldn't readily get
+// from codegen made it easier to copy the original generated code over to
+// the snippets file and use it as a starting point for a largely hand-coded
+// class.
+//
+// FIXME: There is squat for validation in the constructor subroutines.
+//==============================================================================
 
-xMatrix(that) {
+class Matrix {
 
-    if(!cpov.isClass(that, "Matrix"))
-        cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix", this);
+    constructor(v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32) {
 
-    return new Matrix(
-        /* v00 */ (this.v00 * that.v00 + this.v01 * that.v10 + this.v02 * that.v20),
-        /* v01 */ (this.v00 * that.v01 + this.v01 * that.v11 + this.v02 * that.v21),
-        /* v02 */ (this.v00 * that.v02 + this.v01 * that.v12 + this.v02 * that.v22),
-        /* v10 */ (this.v10 * that.v00 + this.v11 * that.v10 + this.v12 * that.v20),
-        /* v11 */ (this.v10 * that.v01 + this.v11 * that.v11 + this.v12 * that.v21),
-        /* v12 */ (this.v10 * that.v02 + this.v11 * that.v12 + this.v12 * that.v22),
-        /* v20 */ (this.v20 * that.v00 + this.v21 * that.v10 + this.v22 * that.v20),
-        /* v21 */ (this.v20 * that.v01 + this.v21 * that.v11 + this.v22 * that.v21),
-        /* v22 */ (this.v20 * that.v02 + this.v21 * that.v12 + this.v22 * that.v22),
-        /* v30 */ (this.v30 * that.v00 + this.v31 * that.v10 + this.v32 * that.v20 + that.v30),
-        /* v31 */ (this.v30 * that.v01 + this.v31 * that.v11 + this.v32 * that.v21 + that.v31),
-        /* v32 */ (this.v30 * that.v02 + this.v31 * that.v12 + this.v32 * that.v22 + that.v32)
-    );
+        // Initialization //
+
+        this.raw = [ // private array representation
+			1, 0, 0,
+			0, 1, 0,
+			0, 0, 1,
+			0, 0, 0
+		];
+
+		if(cpov.isArrayOfFloats(v00) && v00.length == 12) {
+
+			this.raw = v00.slice(0);
+
+		} else if(v00 == "scale") {
+
+            this.raw[0] = v01; // x
+            this.raw[4] = v02; // y
+            this.raw[8] = v10; // z
+
+        } else if(v00 == "rotate") {
+
+			if(v01 != 0) {                             // X
+				this.raw = Matrix._xMatrix(this.raw, [
+					1,              0,             0,
+					0,  Math.cos(v01), Math.sin(v01),
+					0, -Math.sin(v01), Math.cos(v01),
+					0,              0,             0
+				]);
+			}
+
+			if(v02 != 0) {                             // Y
+				this.raw = Matrix._xMatrix(this.raw, [
+					Math.cos(v02), 0, -Math.sin(v02),
+					0,             1,              0,
+					Math.sin(v02), 0,  Math.cos(v02),
+					0,             0,              0
+				]);
+			}
+
+			if(v10 != 0) {                             // Z
+				this.raw = Matrix._xMatrix(this.raw, [
+					 Math.cos(v10), Math.sin(v10), 0,
+					-Math.sin(v10), Math.cos(v10), 0,
+								 0,             0, 1,
+								 0,             0, 0
+				]);
+			}
+
+        } else if(v00 == "translate") {
+
+            this.raw[9]  = v01; // x
+            this.raw[10] = v02; // y
+            this.raw[11] = v10; // z
+
+        } else if(v00 == "skew") {
+
+            // Since there are six possible values for skew xforms as
+			// opposed to three for the others, just taking them as a list
+			// doesn't buy the user much. So instead, they pass an object
+			// with the axis-pairs they're interested in as labels: yx, zx,
+			// xy, zy, xz, and yz.
+
+			this.raw[1] = v01.yx === undefined ? 0 : v01.yx;
+			this.raw[2] = v01.zx === undefined ? 0 : v01.zx;
+			this.raw[3] = v01.xy === undefined ? 0 : v01.xy;
+			this.raw[5] = v01.zy === undefined ? 0 : v01.zy;
+			this.raw[6] = v01.xz === undefined ? 0 : v01.xz;
+			this.raw[7] = v01.yz === undefined ? 0 : v01.yz;
+
+        } else {
+
+            this.raw = [ v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31,
+				v32 ];
+
+        }
+
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v00() {
+        if(typeof this.raw[0] == "function")
+            return this.raw[0]();
+        else if(cpov.isSDLFunction(this.raw[0]))
+            return this.raw[0].substr(1);
+        else
+            return this.raw[0];
+    }
+
+    set v00(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[0] = val;
+        } else {
+            cpov.error("fatal", "v00 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v01() {
+        if(typeof this.raw[1] == "function")
+            return this.raw[1]();
+        else if(cpov.isSDLFunction(this.raw[1]))
+            return this.raw[1].substr(1);
+        else
+            return this.raw[1];
+    }
+
+    set v01(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[1] = val;
+        } else {
+            cpov.error("fatal", "v01 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v02() {
+        if(typeof this.raw[2] == "function")
+            return this.raw[2]();
+        else if(cpov.isSDLFunction(this.raw[2]))
+            return this.raw[2].substr(1);
+        else
+            return this.raw[2];
+    }
+
+    set v02(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[2] = val;
+        } else {
+            cpov.error("fatal", "v02 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v10() {
+        if(typeof this.raw[3] == "function")
+            return this.raw[3]();
+        else if(cpov.isSDLFunction(this.raw[3]))
+            return this.raw[3].substr(1);
+        else
+            return this.raw[3];
+    }
+
+    set v10(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[3] = val;
+        } else {
+            cpov.error("fatal", "v10 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v11() {
+        if(typeof this.raw[4] == "function")
+            return this.raw[4]();
+        else if(cpov.isSDLFunction(this.raw[4]))
+            return this.raw[4].substr(1);
+        else
+            return this.raw[4];
+    }
+
+    set v11(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[4] = val;
+        } else {
+            cpov.error("fatal", "v11 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v12() {
+        if(typeof this.raw[5] == "function")
+            return this.raw[5]();
+        else if(cpov.isSDLFunction(this.raw[5]))
+            return this.raw[5].substr(1);
+        else
+            return this.raw[5];
+    }
+
+    set v12(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[5] = val;
+        } else {
+            cpov.error("fatal", "v12 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v20() {
+        if(typeof this.raw[6] == "function")
+            return this.raw[6]();
+        else if(cpov.isSDLFunction(this.raw[6]))
+            return this.raw[6].substr(1);
+        else
+            return this.raw[6];
+    }
+
+    set v20(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[6] = val;
+        } else {
+            cpov.error("fatal", "v20 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v21() {
+        if(typeof this.raw[7] == "function")
+            return this.raw[7]();
+        else if(cpov.isSDLFunction(this.raw[7]))
+            return this.raw[7].substr(1);
+        else
+            return this.raw[7];
+    }
+
+    set v21(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[7] = val;
+        } else {
+            cpov.error("fatal", "v21 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v22() {
+        if(typeof this.raw[8] == "function")
+            return this.raw[8]();
+        else if(cpov.isSDLFunction(this.raw[8]))
+            return this.raw[8].substr(1);
+        else
+            return this.raw[8];
+    }
+
+    set v22(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[8] = val;
+        } else {
+            cpov.error("fatal", "v22 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v30() {
+        if(typeof this.raw[9] == "function")
+            return this.raw[9]();
+        else if(cpov.isSDLFunction(this.raw[9]))
+            return this.raw[9].substr(1);
+        else
+            return this.raw[9];
+    }
+
+    set v30(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[9] = val;
+        } else {
+            cpov.error("fatal", "v30 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v31() {
+        if(typeof this.raw[10] == "function")
+            return this.raw[10]();
+        else if(cpov.isSDLFunction(this.raw[10]))
+            return this.raw[10].substr(1);
+        else
+            return this.raw[10];
+    }
+
+    set v31(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[10] = val;
+        } else {
+            cpov.error("fatal", "v31 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get v32() {
+        if(typeof this.raw[11] == "function")
+            return this.raw[11]();
+        else if(cpov.isSDLFunction(this.raw[11]))
+            return this.raw[11].substr(1);
+        else
+            return this.raw[11];
+    }
+
+    set v32(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this.raw[11] = val;
+        } else {
+            cpov.error("fatal", "v32 must be a float.", "Matrix");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        return new Matrix(this.raw);
+
+    }
+
+    //--------------------------------------------------------------------------
+    // A private method for multiplying matrices in the form of arrays of 12
+    // elements, returning the same.
+    //--------------------------------------------------------------------------
+
+    static _xMatrix(a, b) {
+    	return [
+            /* v00] */ (a[0] * b[0] + a[1]  * b[3] + a[2]  * b[6]),
+            /* v01] */ (a[0] * b[1] + a[1]  * b[4] + a[2]  * b[7]),
+            /* v02] */ (a[0] * b[2] + a[1]  * b[5] + a[2]  * b[8]),
+            /* v10] */ (a[3] * b[0] + a[4]  * b[3] + a[5]  * b[6]),
+            /* v11] */ (a[3] * b[1] + a[4]  * b[4] + a[5]  * b[7]),
+            /* v12] */ (a[3] * b[2] + a[4]  * b[5] + a[5]  * b[8]),
+            /* v20] */ (a[6] * b[0] + a[7]  * b[3] + a[8]  * b[6]),
+            /* v21] */ (a[6] * b[1] + a[7]  * b[4] + a[8]  * b[7]),
+            /* v22] */ (a[6] * b[2] + a[7]  * b[5] + a[8]  * b[8]),
+            /* v30] */ (a[9] * b[0] + a[10] * b[3] + a[11] * b[6] + b[9]),
+            /* v31] */ (a[9] * b[1] + a[10] * b[4] + a[11] * b[7] + b[10]),
+            /* v32] */ (a[9] * b[2] + a[10] * b[5] + a[11] * b[8] + b[11])
+    	];
+    }
+
+    //--------------------------------------------------------------------------
+    // Given another Matrix, that, returns a new Matrix this * that.
+    //--------------------------------------------------------------------------
+
+    xMatrix(that) {
+
+        if(!cpov.isClass(that, "Matrix"))
+            cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix", this);
+
+		return new Matrix(Matrix._xMatrix(this.raw, that.raw));
+
+
+//        return new Matrix(
+//            /* v00 */ (this.v00 * that.v00 + this.v01 * that.v10 + this.v02 * that.v20),
+//            /* v01 */ (this.v00 * that.v01 + this.v01 * that.v11 + this.v02 * that.v21),
+//            /* v02 */ (this.v00 * that.v02 + this.v01 * that.v12 + this.v02 * that.v22),
+//            /* v10 */ (this.v10 * that.v00 + this.v11 * that.v10 + this.v12 * that.v20),
+//            /* v11 */ (this.v10 * that.v01 + this.v11 * that.v11 + this.v12 * that.v21),
+//            /* v12 */ (this.v10 * that.v02 + this.v11 * that.v12 + this.v12 * that.v22),
+//            /* v20 */ (this.v20 * that.v00 + this.v21 * that.v10 + this.v22 * that.v20),
+//            /* v21 */ (this.v20 * that.v01 + this.v21 * that.v11 + this.v22 * that.v21),
+//            /* v22 */ (this.v20 * that.v02 + this.v21 * that.v12 + this.v22 * that.v22),
+//            /* v30 */ (this.v30 * that.v00 + this.v31 * that.v10 + this.v32 * that.v20 + that.v30),
+//            /* v31 */ (this.v30 * that.v01 + this.v31 * that.v11 + this.v32 * that.v21 + that.v31),
+//            /* v32 */ (this.v30 * that.v02 + this.v31 * that.v12 + this.v32 * that.v22 + that.v32)
+//        );
+
+    }
+
+    //--------------------------------------------------------------------------
+    // Given a VectorXYZ, point, returns a new VectorXYZ this * point.
+    //--------------------------------------------------------------------------
+
+    xPoint(point) {
+
+        if(!cpov.isClass(point, "VectorXYZ"))
+            cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint", this);
+
+        return new VectorXYZ(
+            this.v00 * point.x + this.v10 * point.y + this.v20 * point.z + this.v30,
+            this.v01 * point.x + this.v11 * point.y + this.v21 * point.z + this.v31,
+            this.v02 * point.x + this.v12 * point.y + this.v22 * point.z + this.v32
+        );
+    }
+
+
+
 }
 
-
-//--------------------------------------------------------------------------
-// Given a VectorXYZ, point, returns a new VectorXYZ this * point.
-//--------------------------------------------------------------------------
-
-xPoint(point) {
-
-    if(!cpov.isClass(point, "VectorXYZ"))
-        cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint", this);
-
-    return new VectorXYZ(
-        this.v00 * point.x + this.v10 * point.y + this.v20 * point.z + this.v30,
-        this.v01 * point.x + this.v11 * point.y + this.v21 * point.z + this.v31,
-        this.v02 * point.x + this.v12 * point.y + this.v22 * point.z + this.v32
-    );
-}
-
-
-
-// Matrix.conBlock //-----------------------------------------------------------
-
-this._v01 = this._v02 = this._v10 = this._v12 = this._v20 = this._v21
-	= this._v30 = this._v31 = this._v32 = 0;
-
-this._v00 = this._v11 = this._v22 = 1; // scale identity
-
-if(v00 == "scale") {
-
-    this.v00 = v01; // x
-    this.v11 = v02; // y
-    this.v22 = v10; // z
-
-} else if(v00 == "rotate") {
-
-    // TODO
-    cpov.error("fatal", "The rotate initializer is not implemented yet.", "Matrix.constructor", this);
-
-} else if(v00 == "translate") {
-
-    this.v30 = v01; // x
-    this.v31 = v02; // y
-    this.v32 = v10; // z
-
-} else if(v00 == "skew") {
-
-    // TODO
-    cpov.error("fatal", "The skew initializer is not implemented yet.", "Matrix.constructor", this);
-
-} else {
-
-    this.v00 = v00;
-    this.v01 = v01;
-    this.v02 = v02;
-    this.v10 = v10;
-    this.v11 = v11;
-    this.v12 = v12;
-    this.v20 = v20;
-    this.v21 = v21;
-    this.v22 = v22;
-    this.v30 = v30;
-    this.v31 = v31;
-    this.v32 = v32;
-
-}
-
-
-
-// Matrix.copy //---------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-// Produces a copy of the Matrix. Does so quickly by directly copying
-// "private" members instead of going through get/set methods.
-//--------------------------------------------------------------------------
-
-copy() {
-
-    var that = new Matrix();
-    that._v00 = this._v00;
-    that._v01 = this._v01;
-    that._v02 = this._v02;
-    that._v10 = this._v10;
-    that._v11 = this._v11;
-    that._v12 = this._v12;
-    that._v20 = this._v20;
-    that._v21 = this._v21;
-    that._v22 = this._v22;
-    that._v30 = this._v30;
-    that._v31 = this._v31;
-    that._v32 = this._v32;
-
-    return that;
-}
+exports.Matrix = Matrix;
 
 
 

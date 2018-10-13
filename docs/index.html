@@ -5,11 +5,16 @@
 <title>CephaloPOV Documentation</title>
 <style type="text/css">
 	body,table,input { font: 10pt Arial,Helvetica,sans-serif; }
-    body { width: 8.5in; margin-left: auto; margin-right: auto; }
+    body { width: 7.5in; margin-left: auto; margin-right: auto; }
 	div.code { white-space: pre; font: 10pt Consolas,Courier,fixed; background-color: #EEF; border: 1px solid #CCF; margin-top: 1em; padding: 1em; }
     code { font: 10pt Consolas,Courier,fixed; }
     pre { font: 10pt Consolas,Courier,fixed; }
-    table.matrixDemo { background-color: black; border-spacing: 1pt; margin-left: auto; margin-right: auto; }
+    h2 { font-size: 16pt; color: white; background-color: #666; border: 2pt solid black; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2em; margin-bottom: 0.3em; }
+    h3 { font-size: 14pt; border-bottom: 1.5pt solid black; margin-top: 1.5em; margin-bottom: 0.2em; }
+    h4 { font-size: 12pt; margin-top: 1em; margin-bottom: 0.2em; }
+    p { margin-top: 0em; margin-bottom: 0.75em; }
+
+    table.matrixDemo { background-color: black; border-spacing: 1pt; margin-left: auto; margin-right: auto; font-size: 90%; margin-top: 1em; margin-bottom: 2em; }
     table.matrixDemo th { color: white; width: 20%; padding: 0.5em; }
     table.matrixDemo td { background-color: white; vertical-align: top; padding: 0.25em; }
     table.matrixDemo td.implicit { background-color: #CCC; }
@@ -26,19 +31,21 @@
 </style>
 </head>
 <body>
-<h1>CephaloPOV Documentation</h1>
+<img src='cplogo_small.png' style='float: right; margin-left: 1em; margin-bottom: 1em;'><h1>CephaloPOV Documentation</h1>
 
-<div class='code'>Before CephaloPOV reaches a preliminary beta phase, this will
-be the user manual. Right now, it's mostly notes.</div>
+<p><i>Before CephaloPOV reaches a preliminary beta phase, this will
+be the user manual. Right now, it's mostly notes.</i></p>
 
-<h2>Introduction</h2>
+<br/><br/>
+
+<h2>1: Introduction</h2>
 
 <p>CephaloPOV is a JavaScript scripting engine for POV-Ray. It is implemented as
-a Node command line program that loads a user script and executes it. User
-scripts manipulate various JavaScript classes that map to POV-Ray's native
-objects, in addition to having full access to the Node ecosystem. CephaloPOV
-takes care of generating POV-Ray Scene Description Language files, both for
-static scenes and multi-frame animations.</p>
+a Node command line program that loads a user script and executes it in an
+environment in which it can manipulate various JavaScript classes that map to
+POV-Ray's native objects, in addition to having full access to the Node
+ecosystem. CephaloPOV takes care of generating POV-Ray Scene Description
+Language files, both for static scenes and multi-frame animations.</p>
 
 <h2>Appendix A: Matrices</h2>
 
@@ -108,15 +115,15 @@ you want to try doing the calculations yourself or trying variations to see what
 they do.</p>
 
 <p>Since the values for rotations around the axes overlap, we'll omit the
-invariant fourth column and the translation row so we can cram all three rotation
-matrices into a single row. In this case, we'll color the rotation elements red,
-the single scale identity element blue, and everything else grey. If you're
-entirely innocent of trigonometry, know that <i>cos</i> and <i>sin</i> are
-the trigonometric functions cosine and sine, which are implemented in JavaScript
-as the <code>Math.cos()</code> and <code>Math.sin()</code> methods. The angle
-of rotation is represented by the Greek letter theta (&theta;) and is specified
-in radians, though POV-Ray and CephaloPOV expect you to use degrees instead and
-quietly translate degrees into radians for you.</p>
+invariant fourth column and the translation row so we can cram all three
+rotation matrices into a single row. In this case, we'll color the rotation
+elements red, the single scale identity element blue, and everything else grey.
+If you're entirely innocent of trigonometry, know that <i>cos</i> and <i>sin</i>
+are the trigonometric functions cosine and sine, which are implemented in
+JavaScript as the <code>Math.cos()</code> and <code>Math.sin()</code> methods.
+The angle of rotation is conventionally represented by the Greek letter theta,
+&theta;, and is specified in radians, though POV-Ray and CephaloPOV expect you
+to use degrees instead and quietly translate degrees into radians for you.</p>
 
 
 <table style='width: 100%;'>
@@ -333,7 +340,9 @@ Primitive
     tick order
 Direct support for ffmpeg + Google speech API
 Script execution on events
-Extensive warn, info, debug output</pre>
+Extensive warn, info, debug output
+Angles in the unit interval
+</pre>
 
 
 <h4>CephaloPOV Scene Graph</h4>
