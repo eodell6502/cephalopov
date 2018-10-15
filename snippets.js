@@ -1732,6 +1732,35 @@ toSDL(stops = 0) {
 
 
 
+// Primitive.adopt //-----------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Called on contained objects to aim their parent attributes at the container.
+// Intelligently handles singletons, arrays, and functions.
+//------------------------------------------------------------------------------
+
+adopt(val) {
+    if(Array.isArray(val)) {
+        for(var i = 0; i < val.length; i++) {
+            this._adopt(val[i]);
+        }
+    } else {
+        this._adopt(val);
+    }
+}
+
+_adopt(val) {
+    if(cpov.isSDLFunction(val)) {
+        cpov.error("warn", "Cannot mark an SDL function as a child. You're on your own here.", "Primitive.adopt", this);
+    } else if(typeof val == "function") {
+        cpov.error("warn", "Cannot mark a JavaScript function as a child. You're on your own here.", "Primitive.adopt", this);
+    } else if(cpov.inheritsFrom(val, "Primitive")) {
+        val.parent = this;
+    }
+}
+
+
+
 // Primitive.conBlock //--------------------------------------------------------
 
 this.active = true;
@@ -1810,6 +1839,7 @@ requiredParameterTest(requiredParams) {
             + ".", "Primitive.requiredParameterTest", this);
     }
 }
+
 
 
 // Primitive.toSDL //-----------------------------------------------------------

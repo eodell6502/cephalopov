@@ -224,7 +224,6 @@ different functions, and look at the results of a rendering.</p>
 <h3>Milestone C0: core system implementation and shakedown</h3>
 
 <pre>
-parent/child updates for CSG, blobs, sphere sweeps, parametrics, etc.; subcomponents generally
 
 Frame output routine
 
@@ -237,6 +236,7 @@ Shakedown:
 <h3>Milestone C1: preparation for public beta</h3>
 
 <pre>
+Wrap Array attributes with Proxies to enforce type
 Array of arrays or objects to vectors
 copy() method across classes, both shallow and deep
 Remaining primitives
@@ -244,7 +244,6 @@ Remaining primitives
     snippet: mesh.toSDL
     snippet: mesh2.toSDL
     snippet: polynomial.toSDL
-Wrap Array attributes with Proxies to enforce type
 Matrix, Vector, Color
     Use JS/SDL func in lieu of individual attributes
 Reorg

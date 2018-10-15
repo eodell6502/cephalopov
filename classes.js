@@ -3690,6 +3690,32 @@ class Primitive {
         return newObj;
     }
 
+    //------------------------------------------------------------------------------
+    // Called on contained objects to aim their parent attributes at the container.
+    // Intelligently handles singletons, arrays, and functions.
+    //------------------------------------------------------------------------------
+    
+    adopt(val) {
+        if(Array.isArray(val)) {
+            for(var i = 0; i < val.length; i++) {
+                this._adopt(val[i]);
+            }
+        } else {
+            this._adopt(val);
+        }
+    }
+    
+    _adopt(val) {
+        if(cpov.isSDLFunction(val)) {
+            cpov.error("warn", "Cannot mark an SDL function as a child. You're on your own here.", "Primitive.adopt", this);
+        } else if(typeof val == "function") {
+            cpov.error("warn", "Cannot mark a JavaScript function as a child. You're on your own here.", "Primitive.adopt", this);
+        } else if(cpov.inheritsFrom(val, "Primitive")) {
+            val.parent = this;
+        }
+    }
+
+
     copyFrom(obj) {
         this.active           = obj.active;
         this.baseTransform    = obj.baseTransform;
@@ -3913,6 +3939,7 @@ class Blob extends Primitive {
     set components(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length)) {
             this._components = val;
+            this.adopt(this._components);
         } else {
             cpov.error("fatal", "components must be an array of Spheres and/or Cylinders.", "Blob");
         }
@@ -6460,6 +6487,7 @@ class LightSource extends Primitive {
     set looksLike(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._looksLike = val;
+            this.adopt(this._looksLike);
         } else {
             cpov.error("fatal", "looksLike must be a Primitive.", "LightSource");
         }
@@ -6574,6 +6602,7 @@ class LightSource extends Primitive {
     set projectedThrough(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._projectedThrough = val;
+            this.adopt(this._projectedThrough);
         } else {
             cpov.error("fatal", "projectedThrough", "LightSource");
         }
@@ -7166,6 +7195,7 @@ class Parametric extends Primitive {
     set containedBy(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
             this._containedBy = val;
+            this.adopt(this._containedBy);
         } else {
             cpov.error("fatal", "containedBy must be a Sphere or Box.", "Parametric");
         }
@@ -7914,6 +7944,7 @@ class SphereSweep extends Primitive {
     set spheres(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Sphere', 2, infinity))) {
             this._spheres = val;
+            this.adopt(this._spheres);
         } else {
             cpov.error("fatal", "spheres must be an an array of two or more Sphere.", "SphereSweep");
         }
@@ -10795,6 +10826,7 @@ class Union extends Primitive {
     set objects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._objects = val;
+            this.adopt(this._objects);
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Union");
         }
@@ -10894,7 +10926,7 @@ class Intersection extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "objects" ];
 
     }
 
@@ -10942,6 +10974,7 @@ class Intersection extends Primitive {
     set objects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._objects = val;
+            this.adopt(this._objects);
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Intersection");
         }
@@ -11021,7 +11054,7 @@ class Difference extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ "positiveObject" ];
+        this.requiredParams = [ "positiveObject", "negativeObjects" ];
 
     }
 
@@ -11069,6 +11102,7 @@ class Difference extends Primitive {
     set positiveObject(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._positiveObject = val;
+            this.adopt(this._positiveObject);
         } else {
             cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
         }
@@ -11088,6 +11122,7 @@ class Difference extends Primitive {
     set negativeObjects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._negativeObjects = val;
+            this.adopt(this._negativeObjects);
         } else {
             cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference");
         }
@@ -11170,7 +11205,7 @@ class Merge extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "objects" ];
 
     }
 
@@ -11218,6 +11253,7 @@ class Merge extends Primitive {
     set objects(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
             this._objects = val;
+            this.adopt(this._objects);
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Merge");
         }

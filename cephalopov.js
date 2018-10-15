@@ -753,6 +753,13 @@ cpov.colorsInc = {
 //                       req:    If true, this value must be set before output
 //                       custom: The name of the snippet to substitute for the
 //                               auto-generated accessor methods.
+//                       child:  "scalar" or "array" indicates that this
+//                               property is itself a primitive or array of
+//                               primitives whose parent property should be
+//                               updated upon assignment.
+//
+// cpov.vectorDef follows the same format, but the odds of it being entirely
+// replaced before the first public beta are quite high.
 //
 //==============================================================================
 
@@ -1308,7 +1315,7 @@ cpov.primitiveDef = {
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: "Primitive.conBlock",
-    snippets: [ "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.requiredParameterTest", "Primitive.toSDL" ],
+    snippets: [ "Primitive.adopt", "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.requiredParameterTest", "Primitive.toSDL" ],
     mutable: [
         {
             name:  "active",
@@ -1435,6 +1442,7 @@ cpov.objDef = {
             {
                 name:  "components",
                 req:   true,
+                child: "array",
                 valid: "cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length",
                 err:   "components must be an array of Spheres and/or Cylinders."
             }, {
@@ -1842,6 +1850,7 @@ cpov.objDef = {
                 err:   "jitter must be a boolean."
             }, {
                 name:  "looksLike",
+                child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "looksLike must be a Primitive."
             }, {
@@ -1866,6 +1875,7 @@ cpov.objDef = {
                 err:   "pointAt must be a VectorXYZ."
             }, {
                 name:  "projectedThrough",
+                child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "projectedThrough"
             }, {
@@ -1954,6 +1964,7 @@ cpov.objDef = {
                 err:   "uv2 must be a VectorUV."
             }, {
                 name:  "containedBy",
+                child: "scalar",
                 valid: "cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')",
                 err:   "containedBy must be a Sphere or Box."
             }, {
@@ -2065,6 +2076,7 @@ cpov.objDef = {
                 err:   "type must be one of " + cpov.keysToTextList(cpov.internalSplineTypes) + "."
             }, {
                 name:  "spheres",
+                child: "array",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Sphere', 2, infinity)",
                 err:   "spheres must be an an array of two or more Sphere."
@@ -2453,8 +2465,8 @@ cpov.objDef = {
     },
 
     polynomial: {                                             // This will require better understanding of the
-        superclass: "Primitive",
-        desc: false,                                          // underlying maths than I currently have to validate.
+        superclass: "Primitive",                              // underlying maths than I currently have to validate.
+        desc: false,
         conArgs: false,
         conBlock: false,
         snippets: false,
@@ -2506,6 +2518,7 @@ cpov.objDef = {
         mutable: [
             {
                 name:  "objects",
+                child: "scalar",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives."
@@ -2527,6 +2540,8 @@ cpov.objDef = {
         mutable: [
             {
                 name:  "objects",
+                child: "scalar",
+                req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives."
             }
@@ -2543,11 +2558,14 @@ cpov.objDef = {
         mutable: [
             {
                 name:  "positiveObject",
+                child: "scalar",
                 req:   true,
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "positiveObject must be a Primitive."
             }, {
                 name:  "negativeObjects",
+                child: "array",
+                req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Primitive')",
                 err:   "negativeObjects must be an array of Primitives."
             }
@@ -2564,6 +2582,8 @@ cpov.objDef = {
         mutable: [
             {
                 name:  "objects",
+                child: "array",
+                req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives."
             }
@@ -2946,8 +2966,6 @@ cpov.deg2rad = function(deg) {
 cpov.fileSerial = function(template, serial) {
     return template.replace(/%+/, function(match) { return this.zeroPad(serial, match.length); });
 }
-
-
 
 
 //==============================================================================

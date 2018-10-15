@@ -283,6 +283,7 @@ ClassBuilder.prototype.toString = function() {
                 }
                 src.push(
                     tab3 + "this._" + item.name + " = val;\n"
+                    + (item.child ? (tab3 + "this.adopt(this._" + item.name + ");\n") : "")
                     + tab2 + "} else {\n"
                     + tab3 + "cpov.error(\"fatal\", \"" + item.err + "\", \"" + this.name + "\");\n"
                     + tab2 + "}\n"
@@ -412,34 +413,35 @@ function main() {
             }
         }
 
-    }
+        var topNames = [ ];
+        for(var k in topLevel)
+            topNames.push(k);
+        topNames.sort();
 
-    var topNames = [ ];
-    for(var k in topLevel)
-        topNames.push(k);
-    topNames.sort();
+        var mutableNames = [ ];
+        for(var k in mutable)
+            mutableNames.push(k);
+        mutableNames.sort();
 
-    var mutableNames = [ ];
-    for(var k in mutable)
-        mutableNames.push(k);
-    mutableNames.sort();
+        var immutableNames = [ ];
+        for(var k in immutable)
+            immutableNames.push(k);
+        immutableNames.sort();
 
-    var immutableNames = [ ];
-    for(var k in immutable)
-        immutableNames.push(k);
-    immutableNames.sort();
+        console.log("\nObject Property List:\n");
 
-    console.log("\nObject Property List:\n");
-
-    for(var i = 0; i < topNames.length; i++) {
-        if(topNames[i] == "mutable") {
-            console.log("mutable: " + mutableNames.join());
-        } else if(topNames[i] == "immutable") {
-            console.log("immutable: " + immutableNames.join());
-        } else {
-            console.log(topNames[i]);
+        for(var i = 0; i < topNames.length; i++) {
+            if(topNames[i] == "mutable") {
+                console.log("mutable: " + mutableNames.join());
+            } else if(topNames[i] == "immutable") {
+                console.log("immutable: " + immutableNames.join());
+            } else {
+                console.log(topNames[i]);
+            }
         }
+
     }
+
 
     // snippets.new.js ---------------------------------------------------------
 
