@@ -352,7 +352,7 @@ cpov.outputFileTypes = {
 // List of geometric primitive type names.
 //------------------------------------------------------------------------------
 
-cpov.primitives = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
+cpov.primitiveDefs = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
     "cylinder", "difference", "disc", "heightField", "intersection",
     "isoSurface", "juliaFractal", "lathe", "lightSource", "merge", "mesh", "ovus",
     "parametric", "plane", "poly", "polygon", "polynomial", "prism", "quadric",
@@ -1249,12 +1249,12 @@ cpov.ioDef = {
 // all primitive objects.
 //------------------------------------------------------------------------------
 
-cpov.Primitive = {
+cpov.primitiveDef = {
     desc: "The Primitive class implements parameters and functionality that are "
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: "Primitive.conBlock",
-    snippets: [ "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.requiredParameterTest", "Primitive.toSDL"  ],
+    snippets: [ "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.requiredParameterTest", "Primitive.toSDL" ],
     mutable: [
         {
             name:  "active",
@@ -2658,7 +2658,7 @@ cpov.error = function(level, message, location = "CEPHALOPOV", obj = null) {
     var instance = '';
 
     if(obj !== null && cpov.inheritsFrom(obj, "Primitive"))
-        instance = " (" + cpov.primitiveIdentifier(obj) + ")";
+        instance = " (" + cpov.primitiveDefIdentifier(obj) + ")";
 
 
 
@@ -2771,7 +2771,7 @@ cpov.indentTextBlock = function(block, stops) {
 // available, id.
 //==============================================================================
 
-cpov.primitiveIdentifier = function(obj) {
+cpov.primitiveDefIdentifier = function(obj) {
     var result = [ ];
     result.push(obj.serial);
     if(obj.id !== null)

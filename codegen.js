@@ -339,6 +339,7 @@ ClassBuilder.prototype.toString = function() {
 
 
 
+
 main();
 
 function main() {
@@ -346,6 +347,7 @@ function main() {
     var opts = {
         classes:  { short: "c", cnt: 0 },
         snippets: { short: "s", cnt: 0 },
+        proplist: { short: "p", cnt: 0 },
         help:     { short: "h", cnt: 0 },
     };
 
@@ -359,8 +361,84 @@ function main() {
         console.log("\nUsage: codegen [options]\n\n"
             + "-c, --classes   Generate classes.js\n"
             + "-s, --snippets  Regenerate snippets.js --> snippets.new.js\n"
+            + "-p, --proplist  Produce list of properties in object definitions\n"
             + "-h, --help      Display this text\n\n");
         return;
+    }
+
+    // proplist ----------------------------------------------------------------
+
+    if(opts.proplist.cnt) {
+        var topLevel  = { };
+        var mutable   = { };
+        var immutable = { };
+
+        for(var k in cpov.gsDef) {
+            topLevel[k] = true;
+            if(k == "mutable") {
+                readParamKeys(cpov.gsDef.mutable, mutable);
+            }
+        }
+
+        for(var k in cpov.ioDef) {
+            topLevel[k] = true;
+            if(k == "mutable") {
+                readParamKeys(cpov.ioDef.mutable, mutable);
+            }
+        }
+
+        for(var k in cpov.primitiveDef) {
+            topLevel[k] = true;
+            if(k == "mutable") {
+                readParamKeys(cpov.primitiveDef.mutable, mutable);
+            } else if(k == "immutable") {
+                for(var k2 in cpov.primitiveDef.immutable) {
+                    immutable[k2] = true;
+                }
+            }
+        }
+
+        for(var name in cpov.objDef) {
+            var curObj = cpov.objDef[name];
+            for(var k in curObj) {
+                topLevel[k] = true;
+                if(k == "mutable") {
+                    readParamKeys(curObj.mutable, mutable);
+                } else if(k == "immutable") {
+                    for(var k2 in curObj.immutable) {
+                        immutable[k2] = true;
+                    }
+                }
+            }
+        }
+
+    }
+
+    var topNames = [ ];
+    for(var k in topLevel)
+        topNames.push(k);
+    topNames.sort();
+
+    var mutableNames = [ ];
+    for(var k in mutable)
+        mutableNames.push(k);
+    mutableNames.sort();
+
+    var immutableNames = [ ];
+    for(var k in immutable)
+        immutableNames.push(k);
+    immutableNames.sort();
+
+    console.log("\nObject Property List:\n");
+
+    for(var i = 0; i < topNames.length; i++) {
+        if(topNames[i] == "mutable") {
+            console.log("mutable: " + mutableNames.join());
+        } else if(topNames[i] == "immutable") {
+            console.log("immutable: " + immutableNames.join());
+        } else {
+            console.log(topNames[i]);
+        }
     }
 
     // snippets.new.js ---------------------------------------------------------
@@ -405,7 +483,7 @@ function main() {
         fp.write(ioObj + "\n\n");
         fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
-        fp.write(new ClassBuilder("Primitive", cpov.Primitive, "./snippets.js") + "\n\n");
+        fp.write(new ClassBuilder("Primitive", cpov.primitiveDef, "./snippets.js") + "\n\n");
         fp.write("exports.Primitive = Primitive;\n\n\n");
 
         for(var pname in cpov.objDef) {
@@ -426,5 +504,19 @@ function main() {
         fp.close();
     }
 
+}
+
+
+//------------------------------------------------------------------------------
+// Takes an array of objects and for each object key encountered, sets
+// key == true in destObj.
+//------------------------------------------------------------------------------
+
+function readParamKeys(array, destObj) {
+    for(var i = 0; i < array.length; i++) {
+        for(var k in array[i]) {
+            destObj[k] = true;
+        }
+    }
 }
 
