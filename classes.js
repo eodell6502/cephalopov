@@ -59,6 +59,10 @@ class GlobalSettings {
 
         cpov.initObject(this, options);
 
+        // Required parameters //
+
+        this.requiredParams = [ ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -1140,6 +1144,10 @@ class ImageOptions {
         // Initialization //
 
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ ];
 
     }
 
@@ -3153,6 +3161,10 @@ class Primitive {
         cpov.serialMap[this.serial] = this;
         
         
+        // Required parameters //
+
+        this.requiredParams = [ ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -3678,13 +3690,6 @@ class Primitive {
         return newObj;
     }
 
-    destroy() {
-        delete cpov.serialMap(this.serial);
-        if(this.id)
-            delete cpov.idMap(this.id);
-    }
-
-
     copyFrom(obj) {
         this.active           = obj.active;
         this.baseTransform    = obj.baseTransform;
@@ -3710,6 +3715,36 @@ class Primitive {
         this.serial           = obj.serial;
         this.texture          = obj.texture;
         this.transform        = obj.transform;
+    }
+
+
+    destroy() {
+        delete cpov.serialMap(this.serial);
+        if(this.id)
+            delete cpov.idMap(this.id);
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Tests to see whether the required parameters for the class have been
+    // filled prior to output. Aborts if not. There are currently (10/15/2018)
+    // no required params for the Primitive base class; this is meant to be
+    // called from the subclasses.
+    //--------------------------------------------------------------------------
+    
+    requiredParameterTest(requiredParams) {
+        var missing = [ ];
+    
+        for(var i = 0; i < requiredParams.length; i++) {
+            if(this[requiredParams[i]] === null) {
+                missing.push(requiredParams[i]);
+            }
+        }
+    
+        if(missing.length > 0) {
+            cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
+                + ".", "Primitive.requiredParameterTest", this);
+        }
     }
 
 
@@ -3817,6 +3852,10 @@ class Blob extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "components" ];
 
     }
 
@@ -3963,6 +4002,8 @@ class Blob extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -4020,6 +4061,10 @@ class Box extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "corner1" ];
 
     }
 
@@ -4126,6 +4171,8 @@ class Box extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -4186,6 +4233,10 @@ class Camera extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "type" ];
 
     }
 
@@ -4575,6 +4626,8 @@ class Camera extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -4650,6 +4703,10 @@ class Cone extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "basePoint", "baseRadius", "capPoint", "capRadius" ];
 
     }
 
@@ -4816,6 +4873,8 @@ class Cone extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -4871,6 +4930,10 @@ class Cylinder extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "basePoint", "capPoint", "radius" ];
 
     }
 
@@ -5037,6 +5100,8 @@ class Cylinder extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -5092,6 +5157,10 @@ class HeightField extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "source" ];
 
     }
 
@@ -5298,6 +5367,8 @@ class HeightField extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -5362,6 +5433,10 @@ class IsoSurface extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "source" ];
 
     }
 
@@ -5614,6 +5689,10 @@ class JuliaFractal extends Primitive {
         super(options);
         cpov.initObject(this, options);
 
+        // Required parameters //
+
+        this.requiredParams = [ "type", "juliaParam" ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -5819,6 +5898,8 @@ class JuliaFractal extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -5880,6 +5961,10 @@ class Lathe extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "type", "points" ];
 
     }
 
@@ -6006,6 +6091,8 @@ class Lathe extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -6084,6 +6171,10 @@ class LightSource extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "location", "color" ];
 
     }
 
@@ -6650,6 +6741,8 @@ class LightSource extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -6749,6 +6842,10 @@ class Ovus extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "bottomRadius", "topRadius" ];
 
     }
 
@@ -6855,6 +6952,8 @@ class Ovus extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -6911,6 +7010,10 @@ class Parametric extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "funcX", "funcY", "funcZ", "uv1", "uv2" ];
 
     }
 
@@ -7217,6 +7320,8 @@ class Parametric extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7294,6 +7399,10 @@ class Prism extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "type", "height1", "height2", "points" ];
 
     }
 
@@ -7480,6 +7589,8 @@ class Prism extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7544,6 +7655,10 @@ class Sphere extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "center", "radius" ];
 
     }
 
@@ -7670,6 +7785,8 @@ class Sphere extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7717,6 +7834,10 @@ class SphereSweep extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "type", "spheres" ];
 
     }
 
@@ -7843,6 +7964,8 @@ class SphereSweep extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -7901,6 +8024,10 @@ class Superellipsoid extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "e", "n" ];
 
     }
 
@@ -8029,6 +8156,10 @@ class Sor extends Primitive {
         super(options);
         cpov.initObject(this, options);
 
+        // Required parameters //
+
+        this.requiredParams = [ "points" ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -8154,6 +8285,8 @@ class Sor extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8210,6 +8343,10 @@ class Text extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "fontType", "font", "displayText", "thickness", "offset" ];
 
     }
 
@@ -8376,6 +8513,8 @@ class Text extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8432,6 +8571,10 @@ class Torus extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "majorRadius", "minorRadius" ];
 
     }
 
@@ -8558,6 +8701,8 @@ class Torus extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8608,6 +8753,10 @@ class BicubicPatch extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "type", "points" ];
 
     }
 
@@ -8774,6 +8923,8 @@ class BicubicPatch extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -8836,6 +8987,10 @@ class Disc extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "center", "normal", "radius" ];
 
     }
 
@@ -8982,6 +9137,8 @@ class Disc extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9029,6 +9186,10 @@ class Mesh extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "triangles" ];
 
     }
 
@@ -9175,6 +9336,10 @@ class Polygon extends Primitive {
         super(options);
         cpov.initObject(this, options);
 
+        // Required parameters //
+
+        this.requiredParams = [ "points" ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -9260,6 +9425,8 @@ class Polygon extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9319,6 +9486,10 @@ class Triangle extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "corner1", "corner2", "corner3" ];
 
     }
 
@@ -9549,6 +9720,8 @@ class Triangle extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9616,6 +9789,10 @@ class Plane extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "normal", "distance" ];
 
     }
 
@@ -9722,6 +9899,8 @@ class Plane extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9770,6 +9949,10 @@ class Poly extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "order", "coefficients" ];
 
     }
 
@@ -9896,6 +10079,8 @@ class Poly extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -9952,6 +10137,10 @@ class Cubic extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "coefficients" ];
 
     }
 
@@ -10058,6 +10247,8 @@ class Cubic extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -10104,6 +10295,10 @@ class Quartic extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "coefficients" ];
 
     }
 
@@ -10210,6 +10405,8 @@ class Quartic extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -10257,6 +10454,10 @@ class Polynomial extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "order", "coefficients" ];
 
     }
 
@@ -10403,6 +10604,10 @@ class Quadric extends Primitive {
         super(options);
         cpov.initObject(this, options);
 
+        // Required parameters //
+
+        this.requiredParams = [ "coefficients" ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -10488,6 +10693,8 @@ class Quadric extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -10537,6 +10744,10 @@ class Union extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "objects" ];
 
     }
 
@@ -10633,6 +10844,8 @@ class Union extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -10678,6 +10891,10 @@ class Intersection extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ ];
 
     }
 
@@ -10754,6 +10971,8 @@ class Intersection extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -10799,6 +11018,10 @@ class Difference extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "positiveObject" ];
 
     }
 
@@ -10895,6 +11118,8 @@ class Difference extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -10942,6 +11167,10 @@ class Merge extends Primitive {
 
         super(options);
         cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ ];
 
     }
 
@@ -11018,6 +11247,8 @@ class Merge extends Primitive {
         if(!this.active)
             return "";
         
+        super.requiredParameterTest(this.requiredParams);
+        
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
@@ -11075,6 +11306,10 @@ class VectorXY {
         }
         
         
+        // Required parameters //
+
+        this.requiredParams = [ ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -11201,6 +11436,10 @@ class VectorUV {
         }
         
         
+        // Required parameters //
+
+        this.requiredParams = [ ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -11329,6 +11568,10 @@ class VectorXYZ {
         }
         
         
+        // Required parameters //
+
+        this.requiredParams = [ ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -11482,6 +11725,10 @@ class VectorXYZW {
         }
         
         
+        // Required parameters //
+
+        this.requiredParams = [ ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -11665,6 +11912,10 @@ class Color {
         }
         
         
+        // Required parameters //
+
+        this.requiredParams = [ ];
+
     }
 
     //--------------------------------------------------------------------------
@@ -12238,7 +12489,17 @@ class Matrix {
         );
     }
 
+    //--------------------------------------------------------------------------
+    // Produces the SDL representation of the Matrix.
+    //--------------------------------------------------------------------------
 
+    toSDL(stops = 0) {
+        var pad = cpov.tab(stops);
+
+        return pad + "<" + [this.v00, this.v01, this.v02, this.v10, this.v11,
+            this.v12, this.v20, this.v21, this.v22, this.v30, this.v31,
+            this.v32 ].join(", ") + ">";
+    }
 
 }
 

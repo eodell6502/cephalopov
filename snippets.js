@@ -1774,6 +1774,9 @@ copyFrom(obj) {
     this.transform        = obj.transform;
 }
 
+
+
+
 // Primitive.destroy //---------------------------------------------------------
 
 destroy() {
@@ -1782,6 +1785,31 @@ destroy() {
         delete cpov.idMap(this.id);
 }
 
+
+
+// Primitive.requiredParameterTest //-------------------------------------------
+
+//--------------------------------------------------------------------------
+// Tests to see whether the required parameters for the class have been
+// filled prior to output. Aborts if not. There are currently (10/15/2018)
+// no required params for the Primitive base class; this is meant to be
+// called from the subclasses.
+//--------------------------------------------------------------------------
+
+requiredParameterTest(requiredParams) {
+    var missing = [ ];
+
+    for(var i = 0; i < requiredParams.length; i++) {
+        if(this[requiredParams[i]] === null) {
+            missing.push(requiredParams[i]);
+        }
+    }
+
+    if(missing.length > 0) {
+        cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
+            + ".", "Primitive.requiredParameterTest", this);
+    }
+}
 
 
 // Primitive.toSDL //-----------------------------------------------------------
@@ -1872,6 +1900,8 @@ return content.join("\n");
 
 if(!this.active)
     return "";
+
+super.requiredParameterTest(this.requiredParams);
 
 var pad     = cpov.tab(stops);
 var ppad    = cpov.tab(stops + 1);

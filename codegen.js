@@ -213,6 +213,22 @@ ClassBuilder.prototype.toString = function() {
         src.push(tab2 + "cpov.initObject(this, options);\n");
     }
 
+    // Required parameters list ------------------------------------------------
+
+    var req = [ ];
+    for(var i = 0; i < this.obj.mutable.length; i++) {
+        if(this.obj.mutable[i].req)
+            req.push(this.obj.mutable[i].name);
+    }
+
+    src.push(tab2 + "// Required parameters //\n");
+    if(req.length > 0) {
+        src.push(tab2 + "this.requiredParams = [ \"" + req.join('", "') + "\" ];\n");
+    } else {
+        src.push(tab2 + "this.requiredParams = [ ];\n");
+    }
+
+    // End of constructor ------------------------------------------------------
 
     src.push(tab1 + "}\n");
 
@@ -389,7 +405,7 @@ function main() {
         fp.write(ioObj + "\n\n");
         fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
-        fp.write(new ClassBuilder("Primitive", cpov.objCommon, "./snippets.js") + "\n\n");
+        fp.write(new ClassBuilder("Primitive", cpov.Primitive, "./snippets.js") + "\n\n");
         fp.write("exports.Primitive = Primitive;\n\n\n");
 
         for(var pname in cpov.objDef) {

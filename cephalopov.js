@@ -1249,12 +1249,12 @@ cpov.ioDef = {
 // all primitive objects.
 //------------------------------------------------------------------------------
 
-cpov.objCommon = {
+cpov.Primitive = {
     desc: "The Primitive class implements parameters and functionality that are "
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: "Primitive.conBlock",
-    snippets: [ "Primitive.destroy", "Primitive.copyCommonFrom", "Primitive.toSDL"  ],
+    snippets: [ "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.requiredParameterTest", "Primitive.toSDL"  ],
     mutable: [
         {
             name:  "active",
