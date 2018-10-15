@@ -1526,7 +1526,17 @@ class Matrix {
         );
     }
 
+    //--------------------------------------------------------------------------
+    // Produces the SDL representation of the Matrix.
+    //--------------------------------------------------------------------------
 
+    toSDL(stops = 0) {
+        var pad = cpov.tab(stops);
+
+        return pad + "<" + [this.v00, this.v01, this.v02, this.v10, this.v11,
+            this.v12, this.v20, this.v21, this.v22, this.v30, this.v31,
+            this.v32 ].join(", ") + ">";
+    }
 
 }
 
