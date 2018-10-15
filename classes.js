@@ -12220,23 +12220,6 @@ class Matrix {
             cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix", this);
 
 		return new Matrix(Matrix._xMatrix(this.raw, that.raw));
-
-
-//        return new Matrix(
-//            /* v00 */ (this.v00 * that.v00 + this.v01 * that.v10 + this.v02 * that.v20),
-//            /* v01 */ (this.v00 * that.v01 + this.v01 * that.v11 + this.v02 * that.v21),
-//            /* v02 */ (this.v00 * that.v02 + this.v01 * that.v12 + this.v02 * that.v22),
-//            /* v10 */ (this.v10 * that.v00 + this.v11 * that.v10 + this.v12 * that.v20),
-//            /* v11 */ (this.v10 * that.v01 + this.v11 * that.v11 + this.v12 * that.v21),
-//            /* v12 */ (this.v10 * that.v02 + this.v11 * that.v12 + this.v12 * that.v22),
-//            /* v20 */ (this.v20 * that.v00 + this.v21 * that.v10 + this.v22 * that.v20),
-//            /* v21 */ (this.v20 * that.v01 + this.v21 * that.v11 + this.v22 * that.v21),
-//            /* v22 */ (this.v20 * that.v02 + this.v21 * that.v12 + this.v22 * that.v22),
-//            /* v30 */ (this.v30 * that.v00 + this.v31 * that.v10 + this.v32 * that.v20 + that.v30),
-//            /* v31 */ (this.v30 * that.v01 + this.v31 * that.v11 + this.v32 * that.v21 + that.v31),
-//            /* v32 */ (this.v30 * that.v02 + this.v31 * that.v12 + this.v32 * that.v22 + that.v32)
-//        );
-
     }
 
     //--------------------------------------------------------------------------

@@ -2633,65 +2633,6 @@ cpov.vectorDef = {
             },
         ],
     },
-	/*
-    Matrix: {
-        desc: false,
-        conArgs: "v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32",
-        conBlock: "Matrix.conBlock",
-        snippets: ["Matrix.copy", "Matrix-methods"],
-		noInit: true,
-        mutable: [
-            {
-                name:  "v00",
-                valid: "cpov.isFloat(val)",
-                err:   "v00 must be a float."
-            }, {
-                name:  "v01",
-                valid: "cpov.isFloat(val)",
-                err:   "v01 must be a float."
-            }, {
-                name:  "v02",
-                valid: "cpov.isFloat(val)",
-                err:   "v02 must be a float."
-            }, {
-                name:  "v10",
-                valid: "cpov.isFloat(val)",
-                err:   "v10 must be a float."
-            }, {
-                name:  "v11",
-                valid: "cpov.isFloat(val)",
-                err:   "v11 must be a float."
-            }, {
-                name:  "v12",
-                valid: "cpov.isFloat(val)",
-                err:   "v12 must be a float."
-            }, {
-                name:  "v20",
-                valid: "cpov.isFloat(val)",
-                err:   "v20 must be a float."
-            }, {
-                name:  "v21",
-                valid: "cpov.isFloat(val)",
-                err:   "v21 must be a float."
-            }, {
-                name:  "v22",
-                valid: "cpov.isFloat(val)",
-                err:   "v22 must be a float."
-            }, {
-                name:  "v30",
-                valid: "cpov.isFloat(val)",
-                err:   "v30 must be a float."
-            }, {
-                name:  "v31",
-                valid: "cpov.isFloat(val)",
-                err:   "v31 must be a float."
-            }, {
-                name:  "v32",
-                valid: "cpov.isFloat(val)",
-                err:   "v32 must be a float."
-            },
-        ]
-    } */
 }
 
 

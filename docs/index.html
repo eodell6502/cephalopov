@@ -51,7 +51,7 @@ Language files, both for static scenes and multi-frame animations.</p>
 
 <p>SDL matrices are an abbreviated form of the entire matrix being used. The
 fourth column is invariant and therefore omitted from its SDL representation and
-inaccessible within CephaloPOV, but we'll show it here in grey for the
+inaccessible within CephaloPOV, but we show it below in grey for the
 math-curious. You <em>don't</em> have to know much about matrix math to use the
 <code>Matrix</code> class. Like SDL, CephaloPOV offers shortcuts to the
 individual transformations in the form of special arguments to the
@@ -217,41 +217,6 @@ different functions, and look at the results of a rendering.</p>
 
 
 
-<!--
-
- If we were to rotate an object 45 degrees around the Z axis, we would use the following statement:
-
-            matrix < cos(a), sin(a), 0,
-                    -sin(a), cos(a), 0,
-                       0,      0,    1,
-                       0,      0,    0 >
-
-The course notes I found, taken from Mathematical Elements for Computer Graphics, 2ed,
-Rogers and Adams, 1990, gives the following Z axis rotation (note the fourth,
-invariant column):
-
-        Rz = [ cos(a), -sin(a), 0, 0,
-               sin(a),  cos(a), 0, 0,
-                    0,       0, 1, 0,
-                    0,       0, 0, 1 ]
-
-I'll have to test to find out for sure, but I think the reversal of the signs of
-the two sine functions is because the second source uses a right-handed coordinate
-system while POV-Ray uses a left-handed system.
-
-The other two rotation matrices in Rogers and Adams are as follows:
-
-        Rx = [ 1,      0,       0, 0,
-               0, cos(a), -sin(a), 0,
-               0, sin(a),  cos(a), 0,
-               0,      0,       0, 1 ]
-
-        Ry  = [  cos(a), 0, sin(a), 0,
-                      0, 1,      0, 0,
-                -sin(a), 0, cos(a), 0,
-                      0, 0,      0, 1 ]
-
--->
 
 
 <h2>TODO</h2>
@@ -261,9 +226,6 @@ The other two rotation matrices in Rogers and Adams are as follows:
 <pre>Type coercion
     Matrix
         toSDL
-        rotate } ... in progress; will need to experiment to figure out
-        skew   }     the mapping between SDL matrices and proper matrices
-    Try conversion and assignment in validator for matrices?
 
     reqTest in snippets for use in toSDL methods, or maybe revalidate
     Get SDL vector or SDL function out of vector params automatically
@@ -276,6 +238,7 @@ Frame output routine
 
 [use --preamble or --sdlIncludes for atmospheric effects until implemented]</pre>
 
+Ease-of-use refinements for initializers and assignments, esp. Vector*/Color and Matrix
 Implicit fourth column in transformation matrix documentation.
 
 <h3>Milestone C1: preparation for public beta</h3>
