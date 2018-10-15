@@ -703,6 +703,60 @@ cpov.colorsInc = {
 };
 
 
+//==============================================================================
+// The gsDef, ioDef, primitiveDef, and objDef objects follow similar forms and
+// are mainly used by codegen.js to crank out the mountain of repetitive boiler-
+// plate code needed to manage POV-Ray's large set of objects and values.
+//
+//    gsDef ........... Defines the parameters of the global_settings block.
+//
+//    ioDef ........... Defines the parameters of POV-Ray's image options, which
+//                      may be output as .ini files or as CLI switches.
+//
+//    primitiveDef .... Defines the members of the Primitive base class from
+//                      which all geometric primitives plus CSG objects, lights,
+//                      and cameras are subclassed.
+//
+//    objDef .......... Defines all of the subclasses of Primitive.
+//
+// They each use some or all of the following parameters:
+//
+//    desc ......... A human-readable description of the object or class, to be
+//                   placed in a header comment in the generated code.
+//
+//    conArgs ...... Custom constructor arguments, supplied as a string.
+//
+//    conBlock ..... Name of the snippet to be placed in the constructor in
+//                   lieu of the default code.
+//
+//    snippets ..... List of snippets to append to the class after the standard
+//                   accessor methods.
+//
+//    superclass ... Name of superclass; causes generation of extends clause and
+//                   automatically calls super() in the constructor.
+//
+//    immutable .... Read-only properties of the object. These are:
+//
+//                       csg:    Is this a CSG primitive, e.g., Union or Merge.
+//                       finite: Is this a finite primitive?
+//                       solid:  Is this a solid primitive?
+//                       pseudo: Is this an object that isn't actually a
+//                               POV-Ray primitive that CephaloPOV does extra
+//                               work to get it to behave like one? Currently,
+//                               this is only true for Camera.
+//
+//    mutable ...... Read-write properties of the object. These are:
+//
+//                       name:   Name of the property, e.g. assumedGamma
+//                       valid:  Validation conditional
+//                       err:    Error message to display on validation failure
+//                       req:    If true, this value must be set before output
+//                       custom: The name of the snippet to substitute for the
+//                               auto-generated accessor methods.
+//
+//==============================================================================
+
+
 //------------------------------------------------------------------------------
 // Definition of globalSettings parameter validations and error messages.
 //------------------------------------------------------------------------------
