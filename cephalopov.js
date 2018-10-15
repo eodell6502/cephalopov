@@ -33,19 +33,22 @@ var cpov = { };
 // Internal global state.
 //------------------------------------------------------------------------------
 
-cpov.quietMode    = false; // CLI switches ...
-cpov.verbosity    = 1;
-cpov.debug        = false;
-cpov.preamble     = false;     // content to prepend to SDL output
-cpov.sdlIncludes  = false;     // SDL files to include after preamble
-cpov.outputBase   = "cpov0000" // output base name template
-cpov.infile       = false;     // input file
-cpov.tickVal      = 1.0;       // clock tick
+cpov.quietMode      = false; // CLI switches ...
+cpov.verbosity      = 1;
+cpov.debug          = false;
+cpov.preamble       = false;     // content to prepend to SDL output
+cpov.sdlIncludes    = false;     // SDL files to include after preamble
+cpov.outputBase     = "cpov0000" // output base name template
+cpov.infile         = false;     // input file
+cpov.tickVal        = 1.0;       // clock tick
+cpov.clockTime      = 0;
+cpov.imageOptions   = null;
+cpov.globalSettings = null;
 
 cpov.currentFrame = 0;    // current animation frame
 cpov.objectSerial = 0;    // running count of Primitives created
 cpov.serialMap    = { };  // maps serials to objects
-cpov.idMap        = { };  // maps identifiers to maps
+cpov.idMap        = { };  // maps identifiers to serials
 
 
 //------------------------------------------------------------------------------
@@ -2959,13 +2962,62 @@ cpov.deg2rad = function(deg) {
 
 
 //==============================================================================
-// Given a filename template, replaces the first contiguous sequence of '%' with
-// serial zero-padded to the same length.
+// When called by the user program, outputs a frame.
 //==============================================================================
 
-cpov.fileSerial = function(template, serial) {
-    return template.replace(/%+/, function(match) { return this.zeroPad(serial, match.length); });
+cpov.outputFrame = function() {
+
+    //--------------------------------------------------------------------------
+    // Using cpov.serialMap, walk through all objects. For each object that is
+    // active, call the frameBegin function if it exists.
+    //--------------------------------------------------------------------------
+
+    for(var serial in cpov.serialMap) {
+        var obj = cpov.serialMap[serial];
+        if(obj.active && obj.frameBegin) {
+            cpov.error("debug", "Calling frameBegin on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
+            obj.frameBegin(cpov);
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Create the .ini file.
+    //--------------------------------------------------------------------------
+
+    var iniFile = new File(cpov.outputBase + ".ini", "w", cpov.currentFrame);
+    if(iniFile.open == false) {
+        cpov.error("error", "Unable to open " + iniFile.path + " for writing.", "CEPHALOPOV.outputFrame");
+    }
+
+    var iniContent = cpov.imageOptions.output();
+
+    iniFile.write(
+          "//==========================================================================\n"
+        + "// INI FILE: " + iniFile.path + "\n"
+        + "// FRAME: " + cpov.currentFrame + "\n"
+        + "// CLOCK TIME: " + cpov.clockTime + "\n"
+        + "// CLI EQUIV: " + iniContent.cli + "\n"
+        + "//==========================================================================\n\n"
+        + iniContent.ini + "\n\n"
+    );
+    iniFile.close();
+
+    //--------------------------------------------------------------------------
+    // Using cpov.serialMap, walk through all objects. For each object that is
+    // active, call the frameEnd function if it exists.
+    //--------------------------------------------------------------------------
+
+    for(var serial in cpov.serialMap) {
+        var obj = cpov.serialMap[serial];
+        if(obj.active && obj.frameEnd) {
+            cpov.error("debug", "Calling frameEnd on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
+            obj.frameEnd(cpov);
+        }
+    }
+
 }
+
+
 
 
 //==============================================================================

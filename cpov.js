@@ -85,6 +85,11 @@ function main() {
         fp.close();
     }
 
+    cpov.globalSettings = new globalSettings();
+    cpov.imageOptions   = new imageOptions();
+
+    // FIXME: We really want to be *much* more selective than this.
+
     for(var item in cpov)
         global[item] = cpov[item];
 
