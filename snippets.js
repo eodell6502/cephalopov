@@ -1953,7 +1953,8 @@ get transform() {
 
     if(this._transform === null) {
         if(this._baseTransform === null) {
-            cpov.error("fatal", "transform cannot be read until baseTransform is set.", "Primitive.transform", this);
+            return null;
+            // cpov.error("fatal", "transform cannot be read until baseTransform is set.", "Primitive.transform", this);
         } else {
             this.transform = this.baseTransform;
         }

@@ -287,6 +287,7 @@ cpov.isUnusedId = function(val, obj) {
 //------------------------------------------------------------------------------
 
 cpov.convertToVector = function(type, val) {
+
     switch(type) {
         case "VectorXY":
             val = new VectorXY(val);
@@ -2736,7 +2737,7 @@ cpov.error = function(level, message, location = "CEPHALOPOV", obj = null) {
     var instance = '';
 
     if(obj !== null && cpov.inheritsFrom(obj, "Primitive"))
-        instance = " (" + cpov.primitiveDefIdentifier(obj) + ")";
+        instance = "(" + cpov.primitiveDefIdentifier(obj) + ")";
 
 
 
@@ -2823,7 +2824,7 @@ cpov.initObject = function(obj, vals) {
     for(var k in vals) {
         if(k == "serial")
             continue;
-        if(obj[k] != undefined) {
+        if(obj[k] !== undefined) {
             obj[k] = vals[k];
         }
     }
@@ -2851,7 +2852,7 @@ cpov.indentTextBlock = function(block, stops) {
 
 cpov.primitiveDefIdentifier = function(obj) {
     var result = [ ];
-    result.push(obj.serial);
+    result.push("#" + obj.serial);
     if(obj.id !== null)
         result.push(obj.id);
     return result.join(":");

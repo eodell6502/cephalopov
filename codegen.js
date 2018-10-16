@@ -113,7 +113,7 @@ ClassBuilder.prototype.align = function(rows) {
 ClassBuilder.prototype.snippetInterpolate = function(src) {
 
     var snippets = this.snippets
-    return src.replace(/([ \t]*)\$(\S+)/, function(match, p1, p2, offset, string) {
+    return src.replace(/([ \t]*)\$(\S+)/g, function(match, p1, p2, offset, string) {
         if(snippets[p2] === undefined) {
             cpov.error("warn", "Missing snippet '" + p2 + "'", "CODEGEN");
             return match;
@@ -157,12 +157,9 @@ ClassBuilder.prototype.toString = function() {
         src.push(tab1 + "constructor(options) {\n")
     }
 
-    if(this.obj.conBlock) {
-        src.push(cpov.indentTextBlock(this.snippets[this.obj.conBlock] + "\n\n", 2));
-    } else {
-        if(this.obj.superclass) {
-            src.push(tab2 + "super(options);\n");
-        }
+    if(this.obj.superclass) {
+        src.push(tab2 + "// Superclass constructor //\n");
+        src.push(tab2 + "super(options);\n");
     }
 
     // Immutable properties --------------------------------------------------------
@@ -208,11 +205,17 @@ ClassBuilder.prototype.toString = function() {
 		}
     }
 
+    // Object conBlock ---------------------------------------------------------
+
+    if(this.obj.conBlock) {
+        src.push(tab2 + "// Snippet constructor block //\n");
+        src.push(cpov.indentTextBlock(this.snippets[this.obj.conBlock] + "\n\n", 2));
+    }
+
     // Initialization ----------------------------------------------------------
 
-	src.push(tab2 + "// Initialization //\n");
-
     if(!this.obj.conBlock) {
+    	src.push(tab2 + "// Initialization //\n");
         src.push(tab2 + "cpov.initObject(this, options);\n");
     }
 
