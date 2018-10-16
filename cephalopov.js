@@ -2986,7 +2986,7 @@ cpov.outputFrame = function() {
 
     var iniFile = new File(cpov.outputBase + ".ini", "w", cpov.currentFrame);
     if(iniFile.open == false) {
-        cpov.error("error", "Unable to open " + iniFile.path + " for writing.", "CEPHALOPOV.outputFrame");
+        cpov.error("error", "Unable to open " + iniFile.path + " for writing.", "CEPHALOPOV.outputFrame", this);
     }
 
     var iniContent = cpov.imageOptions.output();
@@ -3003,6 +3003,39 @@ cpov.outputFrame = function() {
     iniFile.close();
 
     //--------------------------------------------------------------------------
+    // Create the .pov file.
+    //--------------------------------------------------------------------------
+
+    var povFile = new File(cpov.outputBase + ".pov", "w", cpov.currentFrame);
+    if(povFile.open == false) {
+        cpov.error("error", "Unable to open " + povFile.path + " for writing.", "CEPHALOPOV.outputFrame", this);
+    }
+
+    povFile.write(
+          "//==========================================================================\n"
+        + "// POV FILE: " + povFile.path + "\n"
+        + "// FRAME: " + cpov.currentFrame + "\n"
+        + "// CLOCK TIME: " + cpov.clockTime + "\n"
+        + "//==========================================================================\n\n"
+    );
+
+    if(cpov.preamble) {
+        povFile.write(cpov.preamble + "\n\n");
+    }
+
+
+    // ... preamble
+
+    for(var serial in cpov.serialMap) {
+        var obj = cpov.serialMap[serial];
+        if(obj.active && obj.parent === null) {
+            cpov.error("debug", "Calling toSDL on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
+            povFile.write("// Object " + (obj.id ? obj.id : "" ) + " #" + serial + "\n\n");
+            povFile.write(obj.toSDL() + "\n\n");
+        }
+    }
+
+    //--------------------------------------------------------------------------
     // Using cpov.serialMap, walk through all objects. For each object that is
     // active, call the frameEnd function if it exists.
     //--------------------------------------------------------------------------
@@ -3014,6 +3047,13 @@ cpov.outputFrame = function() {
             obj.frameEnd(cpov);
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Advance time and frame count.
+    //--------------------------------------------------------------------------
+
+    cpov.clockTime += cpov.tickVal;
+    cpov.currentFrame++;
 
 }
 
