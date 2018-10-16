@@ -7,7 +7,11 @@
 var chalk = require("chalk");
 var cpov = require("./cephalopov.js");
 var File = require("./file.js");
-// import classes
+cpov.classes = require("./classes.js");
+
+for(var k in cpov.classes) {
+    global[k] = cpov.classes[k];
+}
 
 main();
 
@@ -85,8 +89,8 @@ function main() {
         fp.close();
     }
 
-    cpov.globalSettings = new globalSettings();
-    cpov.imageOptions   = new imageOptions();
+    cpov.globalSettings = new GlobalSettings();
+    cpov.imageOptions   = new ImageOptions();
 
     // FIXME: We really want to be *much* more selective than this.
 

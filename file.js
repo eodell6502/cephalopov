@@ -24,7 +24,7 @@ function File(path, mode, serial) {
         var parts = this.path.split(/[\/\\]/);
         var match = parts[parts.length - 1].match(/0+/);
         if(match !== null) {
-            parts[parts.length - 1] = parts[parts.length - 1].replace(/0+/, $CP.zeroPad(this.serial, match[0].length));
+            parts[parts.length - 1] = parts[parts.length - 1].replace(/0+/, this.zeroPad(this.serial, match[0].length));
         }
         this.path = parts.join("/");
     }

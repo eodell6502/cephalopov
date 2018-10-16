@@ -1479,6 +1479,7 @@ cpov.objDef = {
                 err:   "corner1 must be a VectorXYZ."
             }, {
                 name:  "corner2",
+                req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner2"
             }

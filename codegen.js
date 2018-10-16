@@ -157,6 +157,14 @@ ClassBuilder.prototype.toString = function() {
         src.push(tab1 + "constructor(options) {\n")
     }
 
+    if(this.obj.conBlock) {
+        src.push(cpov.indentTextBlock(this.snippets[this.obj.conBlock] + "\n\n", 2));
+    } else {
+        if(this.obj.superclass) {
+            src.push(tab2 + "super(options);\n");
+        }
+    }
+
     // Immutable properties --------------------------------------------------------
 
     if(this.obj.immutable) {
@@ -204,12 +212,7 @@ ClassBuilder.prototype.toString = function() {
 
 	src.push(tab2 + "// Initialization //\n");
 
-    if(this.obj.conBlock) {
-        src.push(cpov.indentTextBlock(this.snippets[this.obj.conBlock] + "\n\n", 2));
-    } else {
-        if(this.obj.superclass) {
-            src.push(tab2 + "super(options);");
-        }
+    if(!this.obj.conBlock) {
         src.push(tab2 + "cpov.initObject(this, options);\n");
     }
 
