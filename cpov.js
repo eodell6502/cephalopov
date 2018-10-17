@@ -16,17 +16,6 @@ for(var k in cpov.classes) {
 main();
 
 
-/*
-    -i, --infile
-    -o, --outfiles (basename)
-    -p, --preamble
-    -s, --sdlinclude
-    -v, --verbose
-    -q, --quietMode
-    -d, --debug (verbose = 4)
-    -h, --help
-*/
-
 
 function main() {
 
@@ -35,6 +24,11 @@ function main() {
         outfiles:   { short: "o", vals: [ ] },
         preamble:   { short: "p", vals: [ ] },
         sdlInclude: { short: "s", vals: [ ] },
+        tickVal:    { short: "c", vals: [ ] },
+        startTime:  { short: "t", vals: [ ] },
+        endTime:    { short: "T", vals: [ ] },
+        startFrame: { short: "f", vals: [ ] },
+        endFrame:   { short: "F", vals: [ ] },
         verbose:    { short: "v", cnt: 0 },     // accumulates appearance counts
         quietMode:  { short: "q", cnt: 0 },
         debug:      { short: "d", cnt: 0 },
@@ -49,6 +43,11 @@ function main() {
             + "    -o, --outfiles   <template>     Template for output file names.\n"
             + "    -p, --preamble   <file(s)>      Files with text to prepend to output.\n"
             + "    -s, --sdlInclude <filename(s)>  SDL files to include after preamble.\n"
+            + "    -c, --tickVal    <float>        Time increment per frame (default 1.0)\n"
+            + "    -t, --startTime  <float>        Start output at anim clock time (default 0.0)\n"
+            + "    -T, --endTime    <float>        End output at anim clock time (default Infinity)\n"
+            + "    -f, --startFrame <integer>      Start output at frame number (default 0)\n"
+            + "    -F, --endFrame   <integer>      End output at frame number (default Infinity)\n"
             + "    -v, --verbose                   Increase verbosity (starts at 1, up to 4).\n"
             + "    -q, --quietMode                 Suppress console output.\n"
             + "    -d, --debug                     Display debugging info.\n"
@@ -82,11 +81,48 @@ function main() {
     for(var i = 0; i < opts.preamble.vals.length; i++) {
         var fp = new File(opts.preamble.vals[i], "r");
         if(!fp.open)
-            cpov.error("FATAL", "Unable to open file " + opts.preamble.vals[i] + " for reading.", "CEPHALOPOV");
+            cpov.error("fatal", "Unable to open file " + opts.preamble.vals[i] + " for reading.", "CEPHALOPOV");
         if(cpov.preamble === false)
             cpov.preamble = "";
         cpov.preamble += fp.read();
         fp.close();
+    }
+
+    if(opts.tickVal.vals.length) {
+        var tickVal = parseFloat(opts.tickVal.vals[0]);
+        if(isNaN(tickVal))
+            cpov.error("fatal", "The tickVal must be a float.", "CEPHALOPOV");
+        cpov.tickVal = tickVal;
+    }
+
+    if(opts.startTime.vals.length) {
+        var startTime = parseFloat(opts.startTime.vals[0]);
+        if(isNaN(startTime))
+            cpov.error("fatal", "The startTime must be a float.", "CEPHALOPOV");
+        cpov.startTime = startTime;
+    }
+
+    if(opts.endTime.vals.length) {
+        var endTime = parseFloat(opts.endTime.vals[0]);
+        if(isNaN(endTime))
+            cpov.error("fatal", "The endTime must be a float.", "CEPHALOPOV");
+        cpov.endTime = endTime;
+    }
+
+    if(opts.startFrame.vals.length) {
+        var startFrameFloat = parseFloat(opts.startFrame.vals[0]);
+        var startFrame      = parseInt(opts.startFrame.vals[0]);
+        if(isNaN(startFrame) || startFrameFloat != startFrame || startFrame < 0)
+            cpov.error("fatal", "The startFrame must be an integer >= 0.", "CEPHALOPOV");
+        cpov.startFrame = startFrame;
+    }
+
+    if(opts.endFrame.vals.length) {
+        var endFrameFloat = parseFloat(opts.endFrame.vals[0]);
+        var endFrame      = parseInt(opts.endFrame.vals[0]);
+        if(isNaN(endFrame) || endFrameFloat != endFrame || endFrame < 0 || endFrame <= cpov.startFrame)
+            cpov.error("fatal", "The endFrame must be an integer >= 0 and <= startFrame .", "CEPHALOPOV");
+        cpov.endFrame = endFrame;
     }
 
     cpov.globalSettings = new GlobalSettings();

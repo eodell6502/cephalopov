@@ -42,6 +42,10 @@ cpov.outputBase     = "cpov0000" // output base name template
 cpov.infile         = false;     // input file
 cpov.tickVal        = 1.0;       // clock tick
 cpov.clockTime      = 0;
+cpov.startTime      = 0.0;
+cpov.endTime        = Infinity;
+cpov.startFrame     = 0;
+cpov.endFrame       = Infinity;
 cpov.imageOptions   = null;
 cpov.globalSettings = null;
 
