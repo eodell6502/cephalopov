@@ -82,9 +82,7 @@ function main() {
         var fp = new File(opts.preamble.vals[i], "r");
         if(!fp.open)
             cpov.error("fatal", "Unable to open file " + opts.preamble.vals[i] + " for reading.", "CEPHALOPOV");
-        if(cpov.preamble === false)
-            cpov.preamble = "";
-        cpov.preamble += fp.read();
+        cpov.preamble == fp.read();
         fp.close();
     }
 
