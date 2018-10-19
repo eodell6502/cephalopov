@@ -67,8 +67,14 @@ function main() {
     if(opts.verbose.cnt > 0)
         cpov.verbosity = Math.max(opts.verbose.cnt, 4);
 
-    if(opts.debug.cnt > 0)
+    if(opts.debug.cnt > 0) {
         cpov.verbosity = 4;
+        cpov.debug     = Math.min(opts.debug.cnt, 2);
+
+        if(cpov.debug == 2) {
+            cpov.debugLog = new File("cpov_debug.log", "w");
+        }
+    }
 
     if(opts.quietMode.cnt > 0) {
         cpov.verbosity = 0;
@@ -137,10 +143,7 @@ function main() {
         cpov.error("fatal", "Unable to require input file '" + opts.infile.vals[0] + "'.", "CEPHALOPOV");
     }
 
-    if(!userProgram.main)
-        cpov.error("fatal", "Unable to access its 'main' export in input file.", "CEPHALOPOV");
-
-    userProgram.main(cpov); // main loop
+    userProgram(cpov); // main loop
 
 }
 

@@ -35,7 +35,8 @@ var cpov = { };
 
 cpov.quietMode      = false; // CLI switches ...
 cpov.verbosity      = 1;
-cpov.debug          = false;
+cpov.debug          = 0;
+cpov.debugLog       = null;
 cpov.preamble       = false;     // content to prepend to SDL output
 cpov.sdlIncludes    = false;     // SDL files to include after preamble
 cpov.outputBase     = "cpov0000" // output base name template
@@ -2744,28 +2745,35 @@ cpov.error = function(level, message, location = "CEPHALOPOV", obj = null) {
         instance = "(" + cpov.primitiveDefIdentifier(obj) + ")";
 
 
-
     if(!cpov.quietMode) {
         switch(level) {
             case "fatal":
                 console.log(cpov.chalk.bgRed.yellowBright("[" + location + "]") + cpov.chalk.redBright(" FATAL ERROR: ") + cpov.chalk.yellowBright(message + instance));
+                if(cpov.debugLog)
+                    cpov.debugLog.write("[" + location + "] FATAL ERROR: " + message + instance + "\n");
                 break;
             case "warn":
                 if(cpov.verbosity >= 1)
-                    console.log(cpov.chalk.bgMagenta.whiteBright("[" + location + "]") + cpov.chalk.whiteBright(" Warning: ") + message + instance);
+                    console.log(cpov.chalk.bgYellow.whiteBright("[" + location + "]") + cpov.chalk.yellowBright(" WARNING: ") + message + instance);
+                if(cpov.debugLog)
+                    cpov.debugLog.write("[" + location + "] WARNING: " + message + instance + "\n");
                 break;
             case "info":
                 if(cpov.verbosity >= 2)
-                    console.log(cpov.chalk.whiteBright("[" + location + "] INFO: ") + message + instance);
+                    console.log(cpov.chalk.bgGreen.whiteBright("[" + location + "]") + cpov.chalk.greenBright(" INFO: ") + message + instance);
+                if(cpov.debugLog)
+                    cpov.debugLog.write("[" + location + "] INFO: " + message + instance + "\n");
                 break;
             case "debug":
                 if(cpov.verbosity >= 3 || cpov.debug)
                     console.log("[" + location + "] DEBUG: " + message + instance);
+                if(cpov.debugLog)
+                    cpov.debugLog.write("[" + location + "] DEBUG: " + message + instance + "\n");
                 break;
         }
     }
 
-    if(level == "fatal")
+    if(level == "fatal" && cpov.debug < 2)
         cpov.process.exit(1);
 }
 

@@ -1919,7 +1919,9 @@ toSDL(stops = 0) {
 
 // Primitive.toSDL-postamble //-------------------------------------------------
 
-content.push(super.toSDL(stops + 1));
+var superSDL = super.toSDL(stops + 1);
+if(superSDL)
+    content.push();
 content.push(pad + "}");
 
 return content.join("\n");
