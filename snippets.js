@@ -263,6 +263,29 @@ toSDL(stops = 0) {
 
 
 
+// Color.toPlainRGBVector //----------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Produces a minimal RGB vector literal -- <0.5, 0.2, 1.0> -- as is needed in
+// globalSettings and other places.
+//------------------------------------------------------------------------------
+
+toPlainRGBVector(stops = 0) {
+
+    stops = cpov.tab(stops);
+
+    if(this.r === null)
+        cpov.error("fatal", "r is undefined.", "Color.toSDL", this);
+    if(this.g === null)
+        cpov.error("fatal", "g is undefined.", "Color.toSDL", this);
+    if(this.b === null)
+        cpov.error("fatal", "b is undefined.", "Color.toSDL", this);
+
+    return stops + " <" + this.r + ", " + this.g + ", " + this.b + ">";
+}
+
+
+
 // Cone.toSDL //----------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -405,6 +428,10 @@ toSDL(stops = 0) {
 //--------------------------------------------------------------------------
 
 toSDL() {
+
+    if(this.photonSpacing !== null && this.photonCount !== null)
+        cpov.error("fatal", "photonSpacing and photonCount cannot be defined simultaneously.", "GlobalSettings", this);
+
     var contents = [ ];
 
     contents.push("global_settings {");
@@ -462,15 +489,25 @@ toSDL() {
     };
 
     for(var i in params) {
-        if(this[i] !== null)
-            contents.push("    " + params[i] + " " + (this[i].toSDL === undefined ? this[i] : this[i].toSDL()));
+        if(this[i] !== null) {
+            if(Array.isArray(this[i]))
+                contents.push("    " + params[i] + " " + this[i].join(", "));
+            else if(this[i].toPlainRGBVector === undefined)
+                contents.push("    " + params[i] + " " + this[i]);
+            else
+                contents.push("    " + params[i] + " " + this[i].toPlainRGBVector());
+        }
     }
 
     if(this.radiosity) {
         contents.push("    radiosity {");
         for(var i in radParams) {
-            if(this[i] !== null)
-                contents.push("        " + radParams[i] + " " + this[i]);
+            if(this[i] !== null) {
+               if(Array.isArray(this[i]))
+                    contents.push("        " + radParams[i] + " " + this[i].join(", "));
+               else
+                    contents.push("        " + radParams[i] + " " + this[i]);
+            }
         }
         contents.push("    }");
     }
@@ -478,8 +515,12 @@ toSDL() {
     if(this.subsurface) {
         contents.push("    subsurface {");
         for(var i in subParams) {
-            if(this[i] !== null)
-                contents.push("        " + subParams[i] + " " + this[i]);
+            if(this[i] !== null) {
+               if(Array.isArray(this[i]))
+                    contents.push("        " + subParams[i] + " " + this[i].join(", "));
+               else
+                    contents.push("        " + subParams[i] + " " + this[i]);
+            }
         }
         contents.push("    }");
     }
@@ -487,8 +528,12 @@ toSDL() {
     if(this.photon) {
         contents.push("    photon {");
         for(var i in photonParams) {
-            if(this[i] !== null)
-                contents.push("        " + photonParams[i] + " " + this[i]);
+            if(this[i] !== null) {
+               if(Array.isArray(this[i]))
+                    contents.push("        " + photonParams[i] + " " + this[i].join(", "));
+               else
+                    contents.push("        " + photonParams[i] + " " + this[i]);
+            }
         }
         contents.push("    }");
     }

@@ -2688,7 +2688,7 @@ cpov.vectorDef = {
         desc: false,
         conArgs: false,
         conBlock: "Color.conBlock",
-        snippets: ["Color.copy", "Color.toSDL"],
+        snippets: ["Color.copy", "Color.toSDL", "Color.toPlainRGBVector"],
         mutable: [
             {
                 name:  "r",
@@ -2998,23 +2998,25 @@ cpov.outputFrame = function() {
     // Create the .ini file.
     //--------------------------------------------------------------------------
 
-    var iniFile = new File(cpov.outputBase + ".ini", "w", cpov.currentFrame);
-    if(iniFile.open == false) {
-        cpov.error("error", "Unable to open " + iniFile.path + " for writing.", "CEPHALOPOV.outputFrame", this);
+    if(cpov.imageOptions.createIni === true) {
+        var iniFile = new File(cpov.outputBase + ".ini", "w", cpov.currentFrame);
+        if(iniFile.open == false) {
+            cpov.error("error", "Unable to open " + iniFile.path + " for writing.", "CEPHALOPOV.outputFrame", this);
+        }
+
+        var iniContent = cpov.imageOptions.output();
+
+        iniFile.write(
+              "//==========================================================================\n"
+            + "// INI FILE: " + iniFile.path + "\n"
+            + "// FRAME: " + cpov.currentFrame + "\n"
+            + "// CLOCK TIME: " + cpov.clockTime + "\n"
+            + "// CLI EQUIV: " + iniContent.cli + "\n"
+            + "//==========================================================================\n\n"
+            + iniContent.ini + "\n\n"
+        );
+        iniFile.close();
     }
-
-    var iniContent = cpov.imageOptions.output();
-
-    iniFile.write(
-          "//==========================================================================\n"
-        + "// INI FILE: " + iniFile.path + "\n"
-        + "// FRAME: " + cpov.currentFrame + "\n"
-        + "// CLOCK TIME: " + cpov.clockTime + "\n"
-        + "// CLI EQUIV: " + iniContent.cli + "\n"
-        + "//==========================================================================\n\n"
-        + iniContent.ini + "\n\n"
-    );
-    iniFile.close();
 
     //--------------------------------------------------------------------------
     // Create the .pov file.

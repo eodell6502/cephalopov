@@ -1,6 +1,6 @@
 /*
 
-node ..\cpov.js -i d:\projects\CephaloPOV\tests\test.js -p d:\projects\CephaloPOV\tests\preamble1.sdl -p d:\projects\CephaloPOV\tests\preamble2.sdl -s colors.inc -s glass.inc
+node ..\cpov.js -dd -i d:\projects\CephaloPOV\tests\test.js -p d:\projects\CephaloPOV\tests\preamble1.sdl -p d:\projects\CephaloPOV\tests\preamble2.sdl -s colors.inc -s glass.inc
 
 */
 
@@ -8,6 +8,8 @@ node ..\cpov.js -i d:\projects\CephaloPOV\tests\test.js -p d:\projects\CephaloPO
 function main(cpov) {
     var testSerial = 0;
     var fp = new cpov.File("regression.log", "w");
+
+    cpov.imageOptions.createIni = true;
 
     testHeader(fp, ++testSerial, "Preamble(s) and SDL include(s)");
     fp.write("Results appear in first frame file.\n");

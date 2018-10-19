@@ -173,9 +173,9 @@ Work_Threads=8
 
 global_settings {
     adc_bailout 5
-    ambient_light rgb <1, 1, 0>
+    ambient_light  <1, 1, 0>
     assumed_gamma 0.15
-    irid_wavelength rgb <1, 1, 0>
+    irid_wavelength  <1, 1, 0>
     charset utf8
     max_intersections 5
     max_trace_level 6
@@ -186,7 +186,7 @@ global_settings {
         adc_bailout 1.2
         always_sample false
         brightness 0.6
-        count 1,2
+        count 1, 2
         error_bound 6.2
         gray_threshold 0.26
         low_error_factor 2
@@ -202,20 +202,20 @@ global_settings {
     }
     subsurface {
         radiosity true
-        samples 7,19
+        samples 7, 19
     }
     photon {
         count 66
-        gather 5,8
-        media 5.6,0.222
+        gather 5, 8
+        media 5.6, 0.222
         jitter 1.2
         max_trace_level 4
         adc_bailout 4.5
         save_file bar
         load_file foo
         autostop 0.54
-        expand_thresholds 0.1,6
-        radius 1.2,6,0.02,-1.2
+        expand_thresholds 0.1, 6
+        radius 1.2, 6, 0.02, -1.2
     }
 }
 
@@ -226,9 +226,9 @@ global_settings {
 
 global_settings {
     adc_bailout 5
-    ambient_light rgb <1, 1, 0>
+    ambient_light  <1, 1, 0>
     assumed_gamma 0.15
-    irid_wavelength rgb <1, 1, 0>
+    irid_wavelength  <1, 1, 0>
     charset utf8
     max_intersections 5
     max_trace_level 6
@@ -239,7 +239,7 @@ global_settings {
         adc_bailout 1.2
         always_sample false
         brightness 0.6
-        count 1,2
+        count 1, 2
         error_bound 6.2
         gray_threshold 0.26
         low_error_factor 2
@@ -255,19 +255,19 @@ global_settings {
     }
     subsurface {
         radiosity true
-        samples 7,19
+        samples 7, 19
     }
     photon {
         count 66
-        gather 5,8
-        media 5.6,0.222
+        gather 5, 8
+        media 5.6, 0.222
         jitter 1.2
         max_trace_level 4
         adc_bailout 4.5
         save_file bar
         load_file foo
         autostop 0.54
-        expand_thresholds 0.1,6
-        radius 1.2,6,0.02,-1.2
+        expand_thresholds 0.1, 6
+        radius 1.2, 6, 0.02, -1.2
     }
 }
