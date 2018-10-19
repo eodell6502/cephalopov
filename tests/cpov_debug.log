@@ -1,3 +1,1 @@
-[CEPHALOPOV] FATAL ERROR: Not really.
-[CEPHALOPOV] INFO: Does this work?
-[CEPHALOPOV] DEBUG: Evidently, it does.
+[CEPHALOPOV] WARNING: No output template specified, using 'cpov0000'.

@@ -229,7 +229,7 @@ class GlobalSettings {
     }
 
     set noiseGenerator(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.inArray(val, [1, 2, 3]))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isInArray(val, [1, 2, 3]))) {
             this._noiseGenerator = val;
         } else {
             cpov.error("fatal", "noiseGenerator must be an integer and one of 1, 2, or 3.", "GlobalSettings");
@@ -305,7 +305,7 @@ class GlobalSettings {
     }
 
     set photonAutostop(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.within(val, 0, 1))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._photonAutostop = val;
         } else {
             cpov.error("fatal", "photonAutostop must be a float within the unit interval (0.0 - 1.0)", "GlobalSettings");
@@ -761,7 +761,7 @@ class GlobalSettings {
     }
 
     set radPretraceEnd(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(0, 1))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._radPretraceEnd = val;
         } else {
             cpov.error("fatal", "radPretraceEnd must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
@@ -780,7 +780,7 @@ class GlobalSettings {
     }
 
     set radPretraceStart(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(0, 1))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._radPretraceStart = val;
         } else {
             cpov.error("fatal", "radPretraceStart must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
@@ -1002,7 +1002,7 @@ class GlobalSettings {
     
         for(var i in params) {
             if(this[i] !== null)
-                contents.push("    " + params[i] + " " + this[i]);
+                contents.push("    " + params[i] + " " + (this[i].toSDL === undefined ? this[i] : this[i].toSDL()));
         }
     
         if(this.radiosity) {
@@ -5831,7 +5831,7 @@ class JuliaFractal extends Primitive {
     }
 
     set type(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.inArray(val, cpov.juliaFractalTypes))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, cpov.juliaFractalTypes))) {
             this._type = val;
         } else {
             cpov.error("fatal", "type must be one of hypercomplex:acos, hypercomplex:acosh, hypercomplex:asin, hypercomplex:atan, hypercomplex:atanh, hypercomplex:cos, hypercomplex:cosh, hypercomplex:cube, hypercomplex:exp, hypercomplex:ln, hypercomplex:pwr, hypercomplex:reciprocal, hypercomplex:sin, hypercomplex:sinh, hypercomplex:sqr, hypercomplex:tan, hypercomplex:tanh, quaternion:cube, or quaternion:sqr.", "JuliaFractal");

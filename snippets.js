@@ -463,7 +463,7 @@ toSDL() {
 
     for(var i in params) {
         if(this[i] !== null)
-            contents.push("    " + params[i] + " " + this[i]);
+            contents.push("    " + params[i] + " " + (this[i].toSDL === undefined ? this[i] : this[i].toSDL()));
     }
 
     if(this.radiosity) {

@@ -19,8 +19,19 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "ImageOptions: all parameters after init");
     imageOptionsTestAfterInit(fp);
 
+    testHeader(fp, ++testSerial, "GlobalSettings: all parameters at init");
+    globalSettingsTestAtInit(fp);
+
+    testHeader(fp, ++testSerial, "GlobalSettings: all parameters after init");
+    globalSettingsTestAfterInit(fp);
+
+
 }
 
+module.exports = main;
+
+
+//==============================================================================
 
 function imageOptionsTestAtInit(fp) {
 
@@ -119,6 +130,8 @@ function imageOptionsTestAtInit(fp) {
 }
 
 
+//==============================================================================
+
 function imageOptionsTestAfterInit(fp) {
 
     var obj = new ImageOptions();
@@ -215,6 +228,125 @@ function imageOptionsTestAfterInit(fp) {
 }
 
 
+//==============================================================================
+
+function globalSettingsTestAtInit(fp) {
+
+    var someColor = new Color({ r: 1.0, g: 1.0, b: 0.0 });
+
+    var options = {
+        adcBailout: 5.0,
+        ambientLight: someColor,
+        assumedGamma: .15,
+        charset: 'utf8',
+        iridWavelength: someColor,
+        maxIntersections: 5,
+        maxTraceLevel: 6,
+        mmPerUnit: 0.1,
+        noiseGenerator: 2,
+        numberOfWaves: 2,
+        photon: true,
+        photonAdcBailout: 4.5,
+        photonAutostop: 0.54,
+        photonCount: 66,
+        photonExpandThresholds: [ 0.1, 6 ],
+        photonGather: [5, 8],
+        photonJitter: 1.2,
+        photonLoadFile: "foo",
+        photonMaxTraceLevel: 4,
+        photonMedia: [5.6, 0.222],
+        photonRadius: [1.2, 6, 0.02, -1.2],
+        photonSaveFile: "bar",
+        photonSpacing: null,
+        radAdcBailout: 1.2,
+        radAlwaysSample: false,
+        radBrightness: 0.6,
+        radCount: [1, 2],
+        radErrorBound: 6.2,
+        radGrayThreshold: 0.26,
+        radiosity: true,
+        radLowErrorFactor: 2,
+        radMaximumReuse: 5.0,
+        radMaxSample: 0.12,
+        radMinimumReuse: 2.1,
+        radNearestCount: 15,
+        radNormal: true,
+        radPretraceEnd: 0.2,
+        radPretraceStart: 0.8,
+        radRecursionLimit: 5,
+        radSubsurface: true,
+        subRadiosity: true,
+        subSamples: [7, 19],
+        subsurface: true
+    };
+
+    var gs = new GlobalSettings(options);
+    fp.write(gs.toSDL() + "\n");
+
+}
+
+
+//==============================================================================
+
+function globalSettingsTestAfterInit(fp) {
+
+    var gs = new GlobalSettings();
+
+    var someColor = new Color({ r: 1.0, g: 1.0, b: 0.0 });
+
+    gs.adcBailout = 5.0;
+    gs.ambientLight = someColor;
+    gs.assumedGamma = .15;
+    gs.charset = 'utf8';
+    gs.iridWavelength = someColor;
+    gs.maxIntersections = 5;
+    gs.maxTraceLevel = 6;
+    gs.mmPerUnit = 0.1;
+    gs.noiseGenerator = 2;
+    gs.numberOfWaves = 2;
+    gs.photon = true;
+    gs.photonAdcBailout = 4.5;
+    gs.photonAutostop = 0.54;
+    gs.photonCount = 66;
+    gs.photonExpandThresholds = [ 0.1, 6 ];
+    gs.photonGather = [5, 8];
+    gs.photonJitter = 1.2;
+    gs.photonLoadFile = "foo";
+    gs.photonMaxTraceLevel = 4;
+    gs.photonMedia = [5.6, 0.222];
+    gs.photonRadius = [1.2, 6, 0.02, -1.2];
+    gs.photonSaveFile = "bar";
+    gs.photonSpacing = null;
+    gs.radAdcBailout = 1.2;
+    gs.radAlwaysSample = false;
+    gs.radBrightness = 0.6;
+    gs.radCount = [1, 2];
+    gs.radErrorBound = 6.2;
+    gs.radGrayThreshold = 0.26;
+    gs.radiosity = true;
+    gs.radLowErrorFactor = 2;
+    gs.radMaximumReuse = 5.0;
+    gs.radMaxSample = 0.12;
+    gs.radMinimumReuse = 2.1;
+    gs.radNearestCount = 15;
+    gs.radNormal = true;
+    gs.radPretraceEnd = 0.2;
+    gs.radPretraceStart = 0.8;
+    gs.radRecursionLimit = 5;
+    gs.radSubsurface = true;
+    gs.subRadiosity = true;
+    gs.subSamples = [7, 19];
+    gs.subsurface = true
+
+
+    fp.write(gs.toSDL() + "\n");
+
+}
+
+
+
+//==============================================================================
+
 function testHeader(fp, serial, name) {
     if(serial > 1)
         fp.write("\n\n");
@@ -226,5 +358,10 @@ function testHeader(fp, serial, name) {
 }
 
 
+/*
 
-module.exports = main;
+globalSettings params:
+
+
+*/
+

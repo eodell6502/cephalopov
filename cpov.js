@@ -55,15 +55,6 @@ function main() {
         process.exit(0);
     }
 
-    if(opts.infile.vals.length == 0)
-        cpov.error("fatal", "No input file specified.", "CEPHALOPOV");
-
-    if(opts.outfiles.vals.length == 0) {
-        cpov.error("warn", "No output template specified, using '" + cpov.outputBase + "'.", "CEPHALOPOV");
-    } else {
-        cpov.outputBase = opts.outfiles.vals[0];
-    }
-
     if(opts.verbose.cnt > 0)
         cpov.verbosity = Math.max(opts.verbose.cnt, 4);
 
@@ -74,6 +65,15 @@ function main() {
         if(cpov.debug == 2) {
             cpov.debugLog = new File("cpov_debug.log", "w");
         }
+    }
+
+    if(opts.infile.vals.length == 0)
+        cpov.error("fatal", "No input file specified.", "CEPHALOPOV");
+
+    if(opts.outfiles.vals.length == 0) {
+        cpov.error("warn", "No output template specified, using '" + cpov.outputBase + "'.", "CEPHALOPOV");
+    } else {
+        cpov.outputBase = opts.outfiles.vals[0];
     }
 
     if(opts.quietMode.cnt > 0) {

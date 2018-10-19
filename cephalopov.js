@@ -818,7 +818,7 @@ cpov.gsDef = {
             err:   "mmPerUnit must be a float greater than or equal to zero."
         }, {
             name:  "noiseGenerator",
-            valid: "cpov.isInt(val) && cpov.inArray(val, [1, 2, 3])",
+            valid: "cpov.isInt(val) && cpov.isInArray(val, [1, 2, 3])",
             err:   "noiseGenerator must be an integer and one of 1, 2, or 3."
         }, {
             name:  "numberOfWaves",
@@ -834,7 +834,7 @@ cpov.gsDef = {
             err:   "photonAdcBailout must be a float greater than or equal to zero."
         }, {
             name:  "photonAutostop",
-            valid: "cpov.isFloat(val) && cpov.within(val, 0, 1)",
+            valid: "cpov.isFloat(val) && cpov.isWithin(val, 0, 1)",
             err:   "photonAutostop must be a float within the unit interval (0.0 - 1.0)"
         }, {
             name:  "photonCount",                                                                          // TODO: cannot be used with photonSpacing
@@ -930,11 +930,11 @@ cpov.gsDef = {
             err:   "radNormal must be a boolean."
         }, {
             name:  "radPretraceEnd",
-            valid: "cpov.isFloat(val) && cpov.isWithin(0, 1)",
+            valid: "cpov.isFloat(val) && cpov.isWithin(val, 0, 1)",
             err:   "radPretraceEnd must be a float in the unit interval (0.0 - 1.0)"
         }, {
             name:  "radPretraceStart",
-            valid: "cpov.isFloat(val) && cpov.isWithin(0, 1)",
+            valid: "cpov.isFloat(val) && cpov.isWithin(val, 0, 1)",
             err:   "radPretraceStart must be a float in the unit interval (0.0 - 1.0)"
         }, {
             name:  "radRecursionLimit",
@@ -1743,7 +1743,7 @@ cpov.objDef = {
             {
                 name:  "type",
                 req:   true,
-                valid: "cpov.inArray(val, cpov.juliaFractalTypes)",
+                valid: "cpov.isInArray(val, cpov.juliaFractalTypes)",
                 err:   "type must be one of " + cpov.arrayToTextList(cpov.juliaFractalTypes) + "."
             }, {
                 name:  "juliaParam",
