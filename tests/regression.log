@@ -1,0 +1,167 @@
+//==============================================================================
+// TEST #1: Preamble(s) and SDL include(s)
+//==============================================================================
+
+Results appear in first frame file.
+
+
+//==============================================================================
+// TEST #2: ImageOptions: all parameters at init
+//==============================================================================
+
+CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 +C +GIpiddle.ini -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP1 +SP5 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
+
+INI file:
+
+All_File=poof
+Antialias=true
+Antialias_Depth=5
+Antialias_Gamma=1.81
+Antialias_Threshold=2.2
+Append_File=true
+Bits_Per_Color=8
+Bounding=true
+Bounding_Method=1
+Bounding_Threshold=5
+BSP_BaseAccessCost=1.3
+BSP_ChildAccessCost=2.4
+BSP_IsectCost=3.5
+BSP_MaxDepth=9
+BSP_MissChance=0.03
+Continue_Trace=true
+Create_Ini=piddle.ini
+Display=true
+Display_Gamma=sRGB
+Dither=false
+Dither_Method=FS
+End_Column=256
+End_Row=256
+Fatal_Error_Command=dir
+Fatal_Error_Return=I
+File_Gamma=1.2
+Height=480
+High_Reproducibility=false
+Include_Header=foop
+Input_File_Name=blarp.pov
+Jitter=true
+Jitter_Amount=1.5
+Library_Path=c:\dat\lib
+Max_Image_Buffer_Memory=2500000
+Output_Alpha=true
+Output_File_Name=squink.png
+Output_File_Type=S
+Palette=X
+Pause_When_Done=false
+Post_Frame_Command=dir c:\
+Post_Frame_Return=-S
+Post_Scene_Command=dir foo
+Post_Scene_Return=Q
+Pre_Frame_Command=dir d:\
+Pre_Frame_Return=A
+Pre_Scene_Command=dir foo
+Pre_Scene_Return=!F
+Preview_End_Size=1
+Preview_Start_Size=5
+Quality=11
+Radiosity_File_Name=rfoo
+Radiosity_From_File=true
+Radiosity_To_File=true
+Radiosity_Vain_Pretrace=false
+Remove_Bounds=false
+Render_Block_Size=4
+Render_Block_Step=1
+Render_Pattern=4
+Sampling_Method=2
+Split_Unions=false
+Start_Column=32
+Start_Row=32
+Test_Abort=false
+Test_Abort_Count=2
+User_Abort_Command=dir manama
+User_Abort_Return=-F
+Verbose=true
+Video_Mode=Y
+Warning_Level=5
+Width=640
+Work_Threads=8
+
+
+//==============================================================================
+// TEST #3: ImageOptions: all parameters after init
+//==============================================================================
+
+CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 +C +GIpiddle.ini -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP1 +SP5 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
+
+INI file:
+
+All_File=poof
+Antialias=true
+Antialias_Depth=5
+Antialias_Gamma=1.81
+Antialias_Threshold=2.2
+Append_File=true
+Bits_Per_Color=8
+Bounding=true
+Bounding_Method=1
+Bounding_Threshold=5
+BSP_BaseAccessCost=1.3
+BSP_ChildAccessCost=2.4
+BSP_IsectCost=3.5
+BSP_MaxDepth=9
+BSP_MissChance=0.03
+Continue_Trace=true
+Create_Ini=piddle.ini
+Display=true
+Display_Gamma=sRGB
+Dither=false
+Dither_Method=FS
+End_Column=256
+End_Row=256
+Fatal_Error_Command=dir
+Fatal_Error_Return=I
+File_Gamma=1.2
+Height=480
+High_Reproducibility=false
+Include_Header=foop
+Input_File_Name=blarp.pov
+Jitter=true
+Jitter_Amount=1.5
+Library_Path=c:\dat\lib
+Max_Image_Buffer_Memory=2500000
+Output_Alpha=true
+Output_File_Name=squink.png
+Output_File_Type=S
+Palette=X
+Pause_When_Done=false
+Post_Frame_Command=dir c:\
+Post_Frame_Return=-S
+Post_Scene_Command=dir foo
+Post_Scene_Return=Q
+Pre_Frame_Command=dir d:\
+Pre_Frame_Return=A
+Pre_Scene_Command=dir foo
+Pre_Scene_Return=!F
+Preview_End_Size=1
+Preview_Start_Size=5
+Quality=11
+Radiosity_File_Name=rfoo
+Radiosity_From_File=true
+Radiosity_To_File=true
+Radiosity_Vain_Pretrace=false
+Remove_Bounds=false
+Render_Block_Size=4
+Render_Block_Step=1
+Render_Pattern=4
+Sampling_Method=2
+Split_Unions=false
+Start_Column=32
+Start_Row=32
+Test_Abort=false
+Test_Abort_Count=2
+User_Abort_Command=dir manama
+User_Abort_Return=-F
+Verbose=true
+Video_Mode=Y
+Warning_Level=5
+Width=640
+Work_Threads=8

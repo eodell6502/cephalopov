@@ -84,12 +84,15 @@ function main() {
     if(opts.sdlInclude.vals.length > 0)
         cpov.sdlIncludes = opts.sdlInclude.vals.slice(0);
 
-    for(var i = 0; i < opts.preamble.vals.length; i++) {
-        var fp = new File(opts.preamble.vals[i], "r");
-        if(!fp.open)
-            cpov.error("fatal", "Unable to open file " + opts.preamble.vals[i] + " for reading.", "CEPHALOPOV");
-        cpov.preamble == fp.read();
-        fp.close();
+    if(opts.preamble.vals.length) {
+        cpov.preamble = "";
+        for(var i = 0; i < opts.preamble.vals.length; i++) {
+            var fp = new File(opts.preamble.vals[i], "r");
+            if(!fp.open)
+                cpov.error("fatal", "Unable to open file " + opts.preamble.vals[i] + " for reading.", "CEPHALOPOV");
+            cpov.preamble += fp.read();
+            fp.close();
+        }
     }
 
     if(opts.tickVal.vals.length) {

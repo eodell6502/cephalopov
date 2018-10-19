@@ -551,7 +551,9 @@ output() {
     var iniWarn = [];
     var cliWarn = [];
 
-    for(var opt in cpov.ioDef) {
+    for(var i = 0; i < cpov.ioDef.mutable.length; i++) {
+
+        var opt = cpov.ioDef.mutable[i].name;
 
         if(opt != "Width" && opt != "Height" && this[opt] === null)
             continue;
@@ -664,7 +666,7 @@ output() {
                     cli.push(this.display ? "+D" : "-D");
                 break;
             case "displayGamma":
-                ini_push("Display_Gamma=" + this.displayGamma);
+                ini.push("Display_Gamma=" + this.displayGamma);
                 break;
             case "dither":
                 ini.push("Dither=" + (this.dither ? "true" : "false"));

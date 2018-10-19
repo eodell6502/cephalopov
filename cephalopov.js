@@ -1003,7 +1003,7 @@ cpov.ioDef = {
             err:   "appendFile must be a boolean."
         }, {
             name:  "bitsPerColor",
-            valid: "cpov.isInt(val) && cpov.isWithin(5, 16)",
+            valid: "cpov.isInt(val) && cpov.isWithin(val, 5, 16)",
             err:   "bitsPerColor must be an integer in the range 5-16."
         }, {
             name:  "bounding",
@@ -1011,7 +1011,7 @@ cpov.ioDef = {
             err:   "bounding must be a boolean."
         }, {
             name:  "boundingMethod",
-            valid: "cpov.isInt(val) && cpov.isWithin(1, 2)",
+            valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 2)",
             err:   "boundingMethod must be either 1 or 2."
         }, {
             name:  "boundingThreshold",
@@ -1235,7 +1235,7 @@ cpov.ioDef = {
             err:   "renderConsole must be a boolean."
         }, {
             name:  "renderFile",
-            valid: "cpov.isBoolean(val) && cpov.isNonEmptyString(val)",
+            valid: "cpov.isBoolean(val) || cpov.isNonEmptyString(val)",
             err:   "renderFile must be a boolean or a non-empty string."
         }, {
             name:  "renderPattern",
@@ -3037,8 +3037,12 @@ cpov.outputFrame = function() {
         povFile.write(cpov.preamble + "\n\n");
     }
 
-
-    // ... preamble
+    if(cpov.sdlIncludes) {
+        for(var i = 0; i < cpov.sdlIncludes.length; i++) {
+            povFile.write("#include \"" + cpov.sdlIncludes[i] + "\"\n");
+        }
+        povFile.write("\n");
+    }
 
     for(var serial in cpov.serialMap) {
         var obj = cpov.serialMap[serial];

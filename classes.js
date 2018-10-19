@@ -1280,7 +1280,7 @@ class ImageOptions {
     }
 
     set bitsPerColor(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isWithin(5, 16))) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 5, 16))) {
             this._bitsPerColor = val;
         } else {
             cpov.error("fatal", "bitsPerColor must be an integer in the range 5-16.", "ImageOptions");
@@ -1314,7 +1314,7 @@ class ImageOptions {
     }
 
     set boundingMethod(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isWithin(1, 2))) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 2))) {
             this._boundingMethod = val;
         } else {
             cpov.error("fatal", "boundingMethod must be either 1 or 2.", "ImageOptions");
@@ -2266,7 +2266,7 @@ class ImageOptions {
     }
 
     set renderFile(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) && cpov.isNonEmptyString(val))) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._renderFile = val;
         } else {
             cpov.error("fatal", "renderFile must be a boolean or a non-empty string.", "ImageOptions");
@@ -2688,7 +2688,9 @@ class ImageOptions {
         var iniWarn = [];
         var cliWarn = [];
     
-        for(var opt in cpov.ioDef) {
+        for(var i = 0; i < cpov.ioDef.mutable.length; i++) {
+    
+            var opt = cpov.ioDef.mutable[i].name;
     
             if(opt != "Width" && opt != "Height" && this[opt] === null)
                 continue;
@@ -2801,7 +2803,7 @@ class ImageOptions {
                         cli.push(this.display ? "+D" : "-D");
                     break;
                 case "displayGamma":
-                    ini_push("Display_Gamma=" + this.displayGamma);
+                    ini.push("Display_Gamma=" + this.displayGamma);
                     break;
                 case "dither":
                     ini.push("Dither=" + (this.dither ? "true" : "false"));
