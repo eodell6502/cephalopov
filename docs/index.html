@@ -21,13 +21,23 @@
     table.matrixDemo td.scale { background-color: #FAA; }
     table.matrixDemo td.translate { background-color: #AAF; }
     table.matrixDemo td.skew { background-color: #AFA; }
-
     table.matrixDemo td.rotate { background-color: #FAA; }
     table.matrixDemo td.ident { background-color: #AAF; }
     table.matrixDemo td.null { background-color: #CCC; }
-
     table.matrixDemo div.cpName { text-align: center; font: bold 10pt Consolas,Courier,fixed; }
     table.matrixDemo div.op { text-align: center; font-weight: bold; margin-top: 0.25em; }
+
+    .floatCenter { margin-left: auto; margin-right: auto; }
+
+    table.sgrid { background-color: black; border-spacing: 1pt; margin-top: 1em; }
+    table.sgrid thead { color: white; }
+    table.sgrid tbody { background-color: white; }
+    table.sgrid td { padding-left: 0.5em; padding-right: 0.5em; }
+    table.sgrid td.pending { text-align: center; background-color: red;    color: yellow; font-weight: bold; white-space: nowrap; }
+    table.sgrid td.working { text-align: center; background-color: yellow; color: red;    font-weight: bold; white-space: nowrap; }
+    table.sgrid td.done    { text-align: center; background-color: green;  color: white;  font-weight: bold; white-space: nowrap; }
+    table.sgrid td.tbd     { text-align: center; background-color: #888;   color: white;  font-weight: bold; white-space: nowrap; }
+
 </style>
 </head>
 <body>
@@ -221,87 +231,144 @@ different functions, and look at the results of a rendering.</p>
 
 <h2>TODO</h2>
 
-<h3>Milestone C0: core system implementation and shakedown</h3>
+<h3>Milestone C0: Core system implementation and shakedown</h3>
 
-<pre>
+<table class='sgrid'>
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    <thead><tbody>
+        <!-- <tr><td></td><td></td><td></td></tr> -->
+        <tr><td class='working'>In Progress</td><td>Test/Implement</td><td><code>--preamble</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td><code>--sdlIncludes</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Ease-of-use refinements for initializers and assignments, esp. <code>Vector*/Color</code> and <code>Matrix</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Primitive default convenience initializers</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>"<code>stamp()</code>" (come up with better name?)</td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement</td><td><code>--debug</code> levels as with <code>--verbose</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement</td><td>Allow fatal errors if <code>cpov.debug == 2</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement</td><td>Debug log if <code>cpov.debug == 2</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement</td><td>Route all <code>cpov.error</code> messages to debug log if applicable.</td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement</td><td>Regression test script(s)</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>Special: camera</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>Special: lightSource</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>bicubicPatch</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>blob</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>box</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>cone</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>cubic</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>cylinder</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>disc</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>heightField</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>isoSurface</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>juliaFractal</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>lathe</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>mesh</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>ovus</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>parametric</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>plane</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>poly</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>polygon</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>polynomial</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>prism</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>quadric</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>quartic</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>sor</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>sphere</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>sphereSweep</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>superellipsoid</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>text</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>torus</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>triangle</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: difference</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: intersection</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: merge</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: union</td></tr>
+    </tbody>
+</table>
 
-Shakedown:
-    [use --preamble or --sdlIncludes for atmospheric effects until implemented]
-    Ease-of-use refinements for initializers and assignments, esp. Vector*/Color and Matrix
 
-Primitive default convenience initializers
-"stamp()"
+<h3>Milestone C1: Preparation for public beta</h3>
 
-Regression test script
-
-</pre>
-
-<h3>Milestone C1: preparation for public beta</h3>
-
-<pre>
-Untangle internal dependencies
-Wrap Array attributes with Proxies to enforce type
-Array of arrays or objects to vectors
-copy() method across classes, both shallow and deep
-Remaining primitives
-    snippet: isoSurface.toSDL -- need to examine examples of functions
-    snippet: mesh.toSDL
-    snippet: mesh2.toSDL
-    snippet: polynomial.toSDL
-Matrix, Vector, Color
-    Use JS/SDL func in lieu of individual attributes
-Reorg
-    Move things needed for codegen to separate file not included at runtime
-    Script to pretty-print definition files
-Camera pseudo-primitive transform integration
-codegen
-    Documentation generation
-    Reports
-Regression tests
-Primitive
-    .photons
-    .radiosity
-ImageOptions
-    boundingThreshold: convert zero to boolean on output
-    constants: gets special handling
-    endColumn: post check startColumn
-    endRow: post check startRow
-    startColumn: post check endColumn
-    startRow: post check endRow
-Execution
-    Optionally generate .sh/.bat files
-    Oversee execution directly
-</pre>
+<table class='sgrid'>
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    <thead><tbody>
+        <!-- <tr><td></td><td></td><td></td></tr> -->
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>copy() method across classes, both shallow and deep</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>isoSurface -- need to examine examples of functions</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>mesh</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>mesh2</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>polynomial</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Matrix, Vector, Color: Use JS/SDL func in lieu of individual attributes</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Move things needed for codegen to separate file not included at runtime</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Script to pretty-print definition files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera pseudo-primitive transform integration</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation generation</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reports</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive .photons</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive .radiosity</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- boundingThreshold: convert zero to boolean on output</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- constants: gets special handling</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- endColumn: post check startColumn</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- endRow: post check startRow</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- startColumn: post check endColumn</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- startRow: post check endRow</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Optionally generate .sh/.bat files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
+    </tbody>
+</table>
 
 
 <h3>Backlog</h3>
 
-<pre>Output frame range
-https://www.npmjs.com/package/ml-matrix
-Additional splines, easing functions, esp. Catmull-Rom
-Interior
-Texture
-Macro/Function generation, i.e., in separate file to use directly with POV-Ray
-Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray
-Script to parse as much as possible of POV-Ray .inc files into JS/cpov
-Porting of functions in .inc files
-Drag in some color libraries, theme generators
-Atmospheric effects
-Spline-builder UI
-Stereo pseudo-cameras
-Parametric types
-Polyhedron library
-Level-of-Detail
-Particle systems
-Geometric query system
-    Eric Haines' table of object intersections, collision detection
-Primitive
-    tick order
-Direct support for ffmpeg + Google speech API
-Script execution on events
-Extensive warn, info, debug output
-Angles in the unit interval
-</pre>
+<table class='sgrid'>
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    <thead><tbody>
+        <!-- <tr><td></td><td></td><td></td></tr> -->
+
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Output frame range</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Additional splines, easing functions, esp. Catmull-Rom</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Interior</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Texture</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Macro/Function generation, i.e., in separate file to use directly with POV-Ray</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script to parse as much as possible of POV-Ray .inc files into JS/cpov</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Porting of functions in .inc files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Atmospheric effects</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Spline-builder UI</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Stereo pseudo-cameras</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Parametric types</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Polyhedron library</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Level-of-Detail</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Particle systems</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Geometric query system</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Eric Haines' table of object intersections, collision detection</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Primitive</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>tick order</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Direct support for ffmpeg + Google speech API</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script execution on events</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Extensive warn, info, debug output</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
+    </tbody>
+</table>
 
 
 <h4>CephaloPOV Scene Graph</h4>
@@ -310,24 +377,17 @@ Angles in the unit interval
 their primary point of articulation. In each frame, they are transformed to
 their current frame-state.</p>
 
-Possibly, a relationship between A and B is stated in the form of B's point of
+<p>Possibly, a relationship between A and B is stated in the form of B's point of
 articulation relative to some explicit or implicit point in A. In its most basic
 form, this would amount to free movement of B relative to its attachment point
 to A. PSII could provide a set of standard constraints, e.g., ball joint, hinge,
-track, etc., which could be built upon or supplanted by the user.
+track, etc., which could be built upon or supplanted by the user.</p>
 
-This suggests a separate assembly process for objects with moving parts, which
+<p>This suggests a separate assembly process for objects with moving parts, which
 means that ordinary native CSG objects can go ahead just fine. Converting them
 into master objects amounts to just positioning them appropriately relative to
-the origin after construction.
+the origin after construction.</p>
 
-
-/*
-
-npm install -g sloc        ... cronify
-
-*/
-</pre>
 
 <h2>Changelog</h2>
 
