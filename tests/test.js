@@ -1,8 +1,6 @@
-var scene = $CP.factory("Scene");
-var box = $CP.factory("box");
-box.corner1 = $CP.factory("VectorXYZ", [1, 2, 3]);
-box.corner2 = $CP.factory("VectorXYZ", [4, 5, 6]);
-box.sturm = true;
-box.noRadiosity = true;
-console.log(box.toSDL());
+function main() {
+	var box = new Box({ corner1: [0,0,0], corner2: [1,1,1]});
+	cpov.outputFrame();
+}
 
+module.exports.main = main;
