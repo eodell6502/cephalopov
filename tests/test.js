@@ -15,59 +15,136 @@ function main(cpov) {
     fp.write("Results appear in first frame file.\n");
     cpov.outputFrame();
 
-    testHeader(fp, ++testSerial, "ImageOptions: all parameters at init");
-    imageOptionsTestAtInit(fp);
-
-    testHeader(fp, ++testSerial, "ImageOptions: all parameters after init");
-    imageOptionsTestAfterInit(fp);
-
-    testHeader(fp, ++testSerial, "GlobalSettings: all parameters at init");
-    globalSettingsTestAtInit(fp);
-
-    testHeader(fp, ++testSerial, "GlobalSettings: all parameters after init");
-    globalSettingsTestAfterInit(fp);
-
-    testHeader(fp, ++testSerial, "Box: minimal test");
-    boxTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Box: all (applicable) Primitive params");
-    boxTestAllParams(fp);
-
-    testHeader(fp, ++testSerial, "Cone: minimal test");
-    coneTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Cylinder: minimal test");
-    cylinderTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Disc: minimal test");
-    discTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Ovus: minimal test");
-    ovusTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Plane: minimal test");
-    planeTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "JuliaFractal: minimal test");
-    juliaFractalTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Prism: minimal test");
-    prismTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Sphere: minimal test");
-    sphereTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Superellipsoid: minimal test");
-    superellipsoidTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Torus: minimal test");
-    torusTestMinimum(fp);
-
-    testHeader(fp, ++testSerial, "Triangle: minimal test");
-    triangleTestMinimum(fp);
+    testHeader(fp, ++testSerial, "ImageOptions: all parameters at init");       imageOptionsTestAtInit(fp);
+    testHeader(fp, ++testSerial, "ImageOptions: all parameters after init");    imageOptionsTestAfterInit(fp);
+    testHeader(fp, ++testSerial, "GlobalSettings: all parameters at init");     globalSettingsTestAtInit(fp);
+    testHeader(fp, ++testSerial, "GlobalSettings: all parameters after init");  globalSettingsTestAfterInit(fp);
+    testHeader(fp, ++testSerial, "Box: minimal test");                          boxTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Box: all (applicable) Primitive params");     boxTestAllParams(fp);
+    testHeader(fp, ++testSerial, "Cone: minimal test");                         coneTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Cylinder: minimal test");                     cylinderTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Disc: minimal test");                         discTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Ovus: minimal test");                         ovusTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Plane: minimal test");                        planeTestMinimum(fp);
+    testHeader(fp, ++testSerial, "JuliaFractal: minimal test");                 juliaFractalTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Prism: minimal test");                        prismTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Sphere: minimal test");                       sphereTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Superellipsoid: minimal test");               superellipsoidTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Torus: minimal test");                        torusTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Triangle: minimal test");                     triangleTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Polygon: minimal test");                      polygonTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Text: minimal test");                         textTestMinimum(fp);
+    testHeader(fp, ++testSerial, "HeightField: minimal test");                  heightFieldTestMinimum(fp);
+    testHeader(fp, ++testSerial, "BicubicPatch: minimal test");                 bicubicPatchTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Blob: minimal test");                         blobTestMinimum(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function blobTestMinimum(fp) {
+
+    var sphere   = new Sphere({ center: new VectorXYZ({ x: 0, y: 0, z: 0 }), radius: 1.0, strength: 1.2 });
+    var cylinder = new Cylinder({ basePoint: new VectorXYZ({ x: 1, y: 1, z: 1 }), capPoint: new VectorXYZ({ x: 2, y: 2, z: 2 }), radius: 2.0, strength: 1.8 });
+
+    var params = {
+        components: [sphere, cylinder],
+        threshold: 1.0,
+        sturm: true,
+        hierarchy: true,
+        id: "blobTestMinimum"
+    };
+
+    var obj = new Blob(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function bicubicPatchTestMinimum(fp) {
+    var params = {
+        type: 1,
+        points: [
+            new VectorXYZ({ x: 1, y: 1, z: 1 }),
+            new VectorXYZ({ x: 2, y: 1, z: 2 }),
+            new VectorXYZ({ x: 3, y: 1, z: 5 }),
+            new VectorXYZ({ x: 4, y: 1, z: 2 }),
+            new VectorXYZ({ x: 1, y: 2, z: 1 }),
+            new VectorXYZ({ x: 2, y: 2, z: 7 }),
+            new VectorXYZ({ x: 3, y: 2, z: 3 }),
+            new VectorXYZ({ x: 4, y: 2, z: 2 }),
+            new VectorXYZ({ x: 1, y: 3, z: 2 }),
+            new VectorXYZ({ x: 2, y: 3, z: 5 }),
+            new VectorXYZ({ x: 3, y: 3, z: 4 }),
+            new VectorXYZ({ x: 4, y: 3, z: 1 }),
+            new VectorXYZ({ x: 1, y: 4, z: 2 }),
+            new VectorXYZ({ x: 2, y: 4, z: 4 }),
+            new VectorXYZ({ x: 3, y: 4, z: 7 }),
+            new VectorXYZ({ x: 4, y: 4, z: 1 }),
+        ],
+        flatness: 1.0,
+        uSteps: 32,
+        vSteps: 32,
+        id: "bicubicPatchTestMinimum"
+    };
+
+    var obj = new BicubicPatch(params);
+    fp.write(obj.toSDL() + "\n\n");
+
+}
+
+//==============================================================================
+
+function heightFieldTestMinimum(fp) {
+    var params = {
+        source: "foo.png",
+        hfType: "png",
+        smooth: true,
+        waterLevel: 0.2,
+        hierarchy: true,
+        gamma: 1.2,
+        premult: true,
+        id: "heightFieldTestMinimum"
+    };
+
+    var obj = new HeightField(params);
+    fp.write(obj.toSDL() + "\n\n");
+
+}
+
+//==============================================================================
+
+function textTestMinimum(fp) {
+    var params = {
+        fontType: "ttf",
+        font: "Arial",
+        displayText: "POV-Ray rules!",
+        thickness: 1,
+        offset: 1.2,
+        id: "textTestMinimum"
+    };
+
+    var obj = new Text(params);
+    fp.write(obj.toSDL() + "\n\n");
+
+}
+
+
+
+//==============================================================================
+
+function polygonTestMinimum(fp) {
+    var params = {
+        points: [ new VectorXY({ x: 0, y: 0 }), new VectorXY({ x: 1, y: 1 }), new VectorXY({ x: 1 , y: 0 }) ],
+        id: "polygonTestMinimum"
+    };
+
+    var obj = new Polygon(params);
+    fp.write(obj.toSDL() + "\n\n");
+
+}
+
 
 //==============================================================================
 
@@ -75,7 +152,8 @@ function triangleTestMinimum(fp) {
     var params = {
         corner1: new VectorXYZ({ x: 0, y: 0, z: 0 }),
         corner2: new VectorXYZ({ x: 1, y: 0, z: 0 }),
-        corner3: new VectorXYZ({ x: 1, y: 1, z: 0 })
+        corner3: new VectorXYZ({ x: 1, y: 1, z: 0 }),
+        id: "triangleTestMinimum"
     };
 
     var obj = new Triangle(params);
@@ -85,6 +163,7 @@ function triangleTestMinimum(fp) {
     params.normal2 = new VectorXYZ({ x: 1, y: 1, z: 0 });
     params.normal3 = new VectorXYZ({ x: 0, y: 1, z: 1 });
     params.smooth = true;
+    params.id = "smoothTriangleTestMinimum"
 
     var obj = new Triangle(params);
     fp.write(obj.toSDL() + "\n\n");
@@ -96,7 +175,8 @@ function torusTestMinimum(fp) {
     var params = {
         majorRadius: 20,
         minorRadius: 4,
-        sturm: true
+        sturm: true,
+        id: "torusTestMinimum"
     };
 
     var torus = new Torus(params);
@@ -109,7 +189,8 @@ function torusTestMinimum(fp) {
 function superellipsoidTestMinimum(fp) {
     var params = {
         e: 5,
-        n: 4
+        n: 4,
+        id: "superellipsoidTestMinimum"
     };
 
     var superellipsoid = new Superellipsoid(params);
@@ -123,7 +204,8 @@ function superellipsoidTestMinimum(fp) {
 function sphereTestMinimum(fp) {
     var params = {
         center: new VectorXYZ({ x: 0, y: 5, z: 15 }),
-        radius: 12
+        radius: 12,
+        id: "sphereTestMinimum"
     };
 
     var sphere = new Sphere(params);
@@ -140,7 +222,8 @@ function prismTestMinimum(fp) {
         height2: 0,
         points: [ new VectorXY({ x: 0, y: 0 }), new VectorXY({ x: 1, y: 1 }), new VectorXY({ x: 1 , y: 0 }) ],
         open: true,
-        sturm: true
+        sturm: true,
+        id: "prismTestMinimum"
     };
 
     var prism = new Prism(params);

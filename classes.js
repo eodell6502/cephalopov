@@ -3967,7 +3967,7 @@ class Blob extends Primitive {
     }
 
     set components(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, ['Sphere', 'Cylinder']) && val.length)) {
             this._components = val;
             this.adopt(this._components);
         } else {
@@ -4069,20 +4069,20 @@ class Blob extends Primitive {
             cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
     
         content.push(pad + "blob {" + (this.id === null ? "" : " // " + this.id));
-    	var components = this.components;
+    	if(this.threshold !== null)
+    		content.push(ppad + "threshold " + this.threshold);
+        var components = this.components;
     	if(cpov.isSDLFunction(components)) {
     		content.push(ppad + this.components);
     	} else { // array
     		for(var i = 0; i < components.length; i++) {
-    			content.push(components[i].toSDL(stops + 1));
+    			content.push(components[i].toSDL(stops + 1, true));
     		}
     	}
     	if(this.hierarchy)
     		content.push(ppad + "hierarchy on");
     	if(this.sturm)
     		content.push(ppad + "sturm");
-    	if(this.threshold !== null)
-    		content.push(ppad + "threshold " + this.threshold);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
@@ -5184,7 +5184,7 @@ class Cylinder extends Primitive {
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
     
-    toSDL(stops = 0) {
+    toSDL(stops = 0, component = false) {
     
         if(!this.active)
             return "";
@@ -5202,17 +5202,23 @@ class Cylinder extends Primitive {
         if(this.radius === null)
             cpov.error("fatal", "radius is undefined.", "Cylinder.toSDL", this);
     
-        content.push(pad + "cylinder {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
-        if(this.open)
-            content.push(pad + "    open");
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
+        if(component) {
+            return pad + "cylinder { " + this.basePoint.toSDL() + ", "
+                + this.capPoint.toSDL() + ", " + this.radius
+                + (this.strength !== null ? ", " + this.strength : "")
+                + " }";
+        } else {
+            content.push(pad + "cylinder {" + (this.id === null ? "" : " // " + this.id));
+            content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
+            if(this.open)
+                content.push(pad + "    open");
+            var superSDL = super.toSDL(stops + 1);
+            if(superSDL)
+                content.push(superSDL);
+            content.push(pad + "}");
+            
+            return content.join("\n");
+        }
     }
 
 
@@ -5471,18 +5477,16 @@ class HeightField extends Primitive {
         var content = [ ];
     
         content.push(pad + "height_field {" + (this.id === null ? "" : " // " + this.id));
-        if(this.userFunc !== null) {
-            content.push(pad + "    function FieldResolution_X, FieldResolution_Y { " + this.userFunc + " }");
-        } else if(this.filename !== null) {
+        if(cpov.isSDLFunction(this.source)) {
+            content.push(pad + "    " + this.userFunc);
+        } else {
             content.push(
                 ppad
                 + (this.hfType === null ? "" : (this.hfType + " "))
-                + '"' + this.filename + '" '
+                + '"' + this.source + '" '
                 + (this.gamma === null ? "" : ("gamma " + this.gamma + " "))
-                + (this.premultiplied === null ? "" : (this.premultiplied ? "on" : "off"))
+                + (this.premult === null ? "" : "premult " + (this.premult ? "on" : "off"))
             );
-        } else {
-            cpov.error("fatal", "Neither filename nor userFunc is defined.", "HeightField.toSDL", this);
         }
     
         if(this.smooth === true)
@@ -7929,10 +7933,12 @@ class Sphere extends Primitive {
 
     //--------------------------------------------------------------------------
     // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
+    // any necessary attributes are undefined. This and the Cylinder.toSDL
+    // method take an optional second argument, component, which will emit code
+    // appropriate for a Blob component if true.
     //--------------------------------------------------------------------------
     
-    toSDL(stops = 0) {
+    toSDL(stops = 0, component = false) {
     
         if(!this.active)
             return "";
@@ -7948,15 +7954,21 @@ class Sphere extends Primitive {
         if(this.radius === null)
             cpov.error("fatal", "radius is undefined.", "Sphere.toSDL", this);
     
-        content.push(pad + "sphere {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.center.toSDL() + ", " + this.radius);
+        if(component) {
+            return pad + "sphere { " + this.center.toSDL() + ", " + this.radius
+                + (this.strength !== null ? ", " + this.strength : "")
+                + " }";
+        } else {
+            content.push(pad + "sphere {" + (this.id === null ? "" : " // " + this.id));
+            content.push(ppad + this.center.toSDL() + ", " + this.radius);
+            var superSDL = super.toSDL(stops + 1);
+            if(superSDL)
+                content.push(superSDL);
+            content.push(pad + "}");
+            
+            return content.join("\n");
+        }
     
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
     }
 
 
@@ -9177,7 +9189,7 @@ class BicubicPatch extends Primitive {
     		for(var col = 0; col < 4; col++) {
     			items.push(this.points[row * 4 + col].toSDL());
     		}
-    		content.push(ppad + items.join(", ") + (row == 3 ? "," : ""));
+    		content.push(ppad + items.join(", ") + (row != 3 ? "," : ""));
     	}
     
         var superSDL = super.toSDL(stops + 1);
@@ -9688,7 +9700,7 @@ class Polygon extends Primitive {
     	content.push(ppad + this.points.length + ",");
         var items = [ ];
         for(var i = 0; i < this.points.length; i++) {
-            items.push(points[i].toSDL());
+            items.push(this.points[i].toSDL());
         }
         content.push(ppad + items.join(", "));
     
@@ -10170,9 +10182,9 @@ class Plane extends Primitive {
         var content = [ ];
     
     	if(this.normal === null)
-    		cpov.error("fatal", "normal is undefined.", "Sphere.toSDL", this);
+    		cpov.error("fatal", "normal is undefined.", "Plane.toSDL", this);
     	if(this.distance === null)
-    		cpov.error("fatal", "distance is undefined.", "Sphere.toSDL", this);
+    		cpov.error("fatal", "distance is undefined.", "Plane.toSDL", this);
     
     	content.push(pad + "plane {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.normal.toSDL() + ", " + this.distance);

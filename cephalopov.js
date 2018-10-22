@@ -167,18 +167,24 @@ cpov.isNull = function(val) {
 //------------------------------------------------------------------------------
 
 cpov.isClass = function(val, classname) {
-    if(Array.isArray(classname)) {
+    if(!Array.isArray(val))
+        val = [ val ];
+    if(!Array.isArray(classname))
+        classname = [ classname ];
+
+    for(var v = 0; v < val.length; v++) {
         var okay = false;
         for(var c = 0; c < classname.length; c++) {
-            if(Object.getPrototypeOf(val).constructor.name == classname[c]) {
+            if(Object.getPrototypeOf(val[v]).constructor.name == classname[c]) {
                 okay = true;
                 break;
             }
         }
-        return okay;
+        if(!okay)
+            return false;
     }
 
-    return (Object.getPrototypeOf(val).constructor.name == classname ? true : false);
+    return true;
 }
 
 //------------------------------------------------------------------------------
@@ -1453,7 +1459,7 @@ cpov.objDef = {
                 name:  "components",
                 req:   true,
                 child: "array",
-                valid: "cpov.isClass(val, ['Sphere', 'Cylinder']) && components.length",
+                valid: "cpov.isClass(val, ['Sphere', 'Cylinder']) && val.length",
                 err:   "components must be an array of Spheres and/or Cylinders."
             }, {
                 name:  "threshold",
