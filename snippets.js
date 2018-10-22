@@ -41,7 +41,7 @@ toSDL(stops = 0) {
 	if(this.patch === null)
         cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
 
-    content.push(pad + "bicubic_patch {");
+    content.push(pad + "bicubic_patch {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + "type " + this.type);
 	if(this.uSteps !== null)
 		content.push(ppad + "u_steps " + this.uSteps);
@@ -77,7 +77,7 @@ toSDL(stops = 0) {
     if(this.components === null)
         cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
 
-    content.push(pad + "blob {");
+    content.push(pad + "blob {" + (this.id === null ? "" : " // " + this.id));
 	var components = this.components;
 	if(cpov.isSDLFunction(components)) {
 		content.push(ppad + this.components);
@@ -114,7 +114,7 @@ toSDL(stops = 0) {
     if(this.corner2 === null)
         cpov.error("fatal", "corner2 is undefined.", "Box.toSDL", this);
 
-    content.push(pad + "box {");
+    content.push(pad + "box {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
 
     $Primitive.toSDL-postamble
@@ -143,7 +143,7 @@ toSDL(stops = 0) {
     else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
         cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
 
-    content.push(pad + "camera {");
+    content.push(pad + "camera {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
     if(this.location !== null)
         content.push(ppad + "location " + this.location.toSDL());
@@ -306,7 +306,7 @@ toSDL(stops = 0) {
     if(this.capRadius === null)
         cpov.error("fatal", "capRadius is undefined.", "Cone.toSDL", this);
 
-    content.push(pad + "cone {");
+    content.push(pad + "cone {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
     if(this.open)
         content.push(pad + "    open");
@@ -330,7 +330,7 @@ toSDL(stops = 0) {
     if(this.coefficients === null)
         cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
 
-    content.push(pad + "cubic {");
+    content.push(pad + "cubic {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.coefficients.join(", "));
     if(this.sturm)
         content.push(ppad + "sturm");
@@ -358,7 +358,7 @@ toSDL(stops = 0) {
     if(this.radius === null)
         cpov.error("fatal", "radius is undefined.", "Cylinder.toSDL", this);
 
-    content.push(pad + "cylinder {");
+    content.push(pad + "cylinder {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
     if(this.open)
         content.push(pad + "    open");
@@ -384,7 +384,7 @@ toSDL(stops = 0) {
     if(this.negativeObjects === null)
         cpov.error("fatal", "negativeObjects is undefined.", "Difference.toSDL", this);
 
-    content.push(pad + "difference {");
+    content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.positiveObject.toSDL(stops + 1));
     for(var i = 0; i < this.negativeObjects.length; i++) {
         content.push(ppad + this.negativeObjects[i].toSDL(stops + 1));
@@ -411,7 +411,7 @@ toSDL(stops = 0) {
     if(this.radius === null)
         cpov.error("fatal", "radius is undefined.", "Disc.toSDL", this);
 
-    content.push(pad + "disc {");
+    content.push(pad + "disc {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
 
     $Primitive.toSDL-postamble
@@ -556,7 +556,7 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    content.push(pad + "height_field {");
+    content.push(pad + "height_field {" + (this.id === null ? "" : " // " + this.id));
     if(this.userFunc !== null) {
         content.push(pad + "    function FieldResolution_X, FieldResolution_Y { " + this.userFunc + " }");
     } else if(this.filename !== null) {
@@ -1032,7 +1032,7 @@ toSDL(stops = 0) {
     if(this.objects === null)
         cpov.error("fatal", "objects is undefined.", "Intersection.toSDL", this);
 
-    content.push(pad + "intersection {");
+    content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
     for(var i = 0; i < this.objects.length; i++) {
         content.push(ppad + this.objects[i].toSDL(stops + 1));
     }
@@ -1062,7 +1062,7 @@ toSDL(stops = 0) {
 
 	var parts = this.type.split(/:/);
 
-    content.push(pad + "julia_fractal {");
+    content.push(pad + "julia_fractal {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + this.juliaParam.toSDL());
 	if(this.slice !== null)
 		content.push(ppad + this.type.toSDL());
@@ -1097,7 +1097,7 @@ toSDL(stops = 0) {
 		cpov.error("fatal", "points is undefined.", "Lathe.toSDL", this);
 	// TODO: add check for correct minimum number of points
 
-    content.push(pad + "lathe {");
+    content.push(pad + "lathe {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + cpov.splineTypes[this.type]);
 
 	var items = [ ];
@@ -1129,7 +1129,7 @@ toSDL(stops = 0) {
     if(this.color === null)
         cpov.error("fatal", "color is undefined.", "LightSource.toSDL", this);
 
-    content.push(pad + "light_source {");
+    content.push(pad + "light_source {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
 
     if(this.type !== null)
@@ -1580,7 +1580,7 @@ class Matrix {
     toSDL(stops = 0) {
         var pad = cpov.tab(stops);
 
-        return pad + "<" + [this.v00, this.v01, this.v02, this.v10, this.v11,
+        return pad + "matrix <" + [this.v00, this.v01, this.v02, this.v10, this.v11,
             this.v12, this.v20, this.v21, this.v22, this.v30, this.v31,
             this.v32 ].join(", ") + ">";
     }
@@ -1605,7 +1605,7 @@ toSDL(stops = 0) {
     if(this.objects === null)
         cpov.error("fatal", "objects is undefined.", "Merge.toSDL", this);
 
-    content.push(pad + "merge {");
+    content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
     for(var i = 0; i < this.objects.length; i++) {
         content.push(ppad + this.objects[i].toSDL(stops + 1));
     }
@@ -1631,7 +1631,7 @@ toSDL(stops = 0) {
     if(this.bottomRadius === null)
         cpov.error("fatal", "bottomRadius is undefined.", "Ovus.toSDL", this);
 
-    content.push(pad + "ovus {");
+    content.push(pad + "ovus {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.topRadius + ", " + this.bottomRadius);
 
     $Primitive.toSDL-postamble
@@ -1661,7 +1661,7 @@ toSDL(stops = 0) {
 	if(this.uv2 === null)
 		cpov.error("fatal", "uv2 is undefined.", "Parametric.toSDL", this);
 
-	content.push(pad + "parametric {");
+	content.push(pad + "parametric {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + this.funcX);
     content.push(ppad + this.funcY);
     content.push(ppad + this.funcZ);
@@ -1706,7 +1706,7 @@ toSDL(stops = 0) {
 	if(this.distance === null)
 		cpov.error("fatal", "distance is undefined.", "Sphere.toSDL", this);
 
-	content.push(pad + "plane {");
+	content.push(pad + "plane {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
 
     $Primitive.toSDL-postamble
@@ -1736,7 +1736,7 @@ toSDL(stops = 0) {
     if(this.coefficients.length != ccnt)
         cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
 
-	content.push(pad + "poly {");
+	content.push(pad + "poly {" + (this.id === null ? "" : " // " + this.id));
     var items = this.coefficents.slice(0);
     items.unshift(this.order);
 	content.push(ppad + this.items.join(", "));
@@ -1765,7 +1765,7 @@ toSDL(stops = 0) {
   	if(this.points.length < 3)
 		cpov.error("fatal", "points must contain at least three VectorXY.", "Polygon.toSDL", this);
 
-	content.push(pad + "polygon {");
+	content.push(pad + "polygon {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + this.points.length + ",");
     var items = [ ];
     for(var i = 0; i < this.points.length; i++) {
@@ -1957,7 +1957,7 @@ toSDL(stops = 0) {
     // TODO: radiosity
 
     if(this.transform !== undefined && this.transform !== null)
-        contents.push(pad + this.transform.toSDL(stops + 1));
+        contents.push(this.transform.toSDL(stops));
 
     return contents.join("\n");
 }
@@ -1968,7 +1968,7 @@ toSDL(stops = 0) {
 
 var superSDL = super.toSDL(stops + 1);
 if(superSDL)
-    content.push();
+    content.push(superSDL);
 content.push(pad + "}");
 
 return content.join("\n");
@@ -2036,7 +2036,12 @@ set transform(val) {
     if(!cpov.isClass(val, "Matrix"))
         cpov.error("fatal", "transform value must evaluate to a Matrix.", "Primitive.transform", this);
 
-    this._transform = val.xMatrix(this.transform);
+    if(this._baseTransform === null) {
+        this._baseTransform = val;
+        this._transform = val;
+    } else {
+        this._transform = val.xMatrix(this.transform);
+    }
 
 }
 
@@ -2064,7 +2069,7 @@ toSDL(stops = 0) {
   	if(this.points.length < 3)
 		cpov.error("fatal", "points must contain at least three VectorXY.", "Prism.toSDL", this);
 
-	content.push(pad + "prism {");
+	content.push(pad + "prism {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + cpov.prismTypes(this.type));
     content.push(ppad + this.height1 + ", " + this.height2 + ", " + this.points.length + ",");
     var items = [ ];
@@ -2097,7 +2102,7 @@ toSDL(stops = 0) {
     if(this.coefficients === null)
         cpov.error("fatal", "coefficients is undefined.", "Quadric.toSDL", this);
 
-    content.push(pad + "quartic {");
+    content.push(pad + "quadric {" + (this.id === null ? "" : " // " + this.id));
     content.push(
         ppad
         + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, " +
@@ -2125,7 +2130,7 @@ toSDL(stops = 0) {
     if(this.coefficients === null)
         cpov.error("fatal", "coefficients is undefined.", "Quartic.toSDL", this);
 
-    content.push(pad + "quartic {");
+    content.push(pad + "quartic {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.coefficients.join(", "));
     if(this.sturm)
         content.push(ppad + "sturm");
@@ -2151,7 +2156,7 @@ toSDL(stops = 0) {
     if(this.points.length < 2)
         cpov.error("fatal", "points must contain at least two VectorXY.", "Sor.toSDL", this);
 
-    content.push(pad + "sor {");
+    content.push(pad + "sor {" + (this.id === null ? "" : " // " + this.id));
     var items = [ this.points.length ];
     for(var i = 0; i < this.points.length; i++)
         items.push(this.points[i].toSDL());
@@ -2182,7 +2187,7 @@ toSDL(stops = 0) {
     if(this.radius === null)
         cpov.error("fatal", "radius is undefined.", "Sphere.toSDL", this);
 
-    content.push(pad + "sphere {");
+    content.push(pad + "sphere {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.center.toSDL() + ", " + this.radius);
 
     $Primitive.toSDL-postamble
@@ -2210,7 +2215,7 @@ toSDL(stops = 0) {
     else if((this.type == "bezierSpline" || this.type == "cubicSpline") && this.spheres.length < 4)
         cpov.error("fatal", "Bezier and cubic splines require at least four spheres.", "SphereSweep.toSDL", this);
 
-    content.push(pad + "sphere_sweep {");
+    content.push(pad + "sphere_sweep {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.type);
     content.push(ppad + this.spheres.length + ",");
     var items = [ ];
@@ -2242,7 +2247,7 @@ toSDL(stops = 0) {
     if(this.n === null)
         cpov.error("fatal", "n is undefined.", "Superellipsoid.toSDL", this);
 
-    content.push(pad + "superellipsoid {");
+    content.push(pad + "superellipsoid {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + "<" + this.e + ", " + this.n + ">");
 
     $Primitive.toSDL-postamble
@@ -2274,7 +2279,7 @@ toSDL(stops = 0) {
 
     // TODO: Handle escaping of double quotes in this.displayText
 
-    content.push(pad + "text {");
+    content.push(pad + "text {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.fontType + " " + "\"" + this.font + "\"");
     content.push(ppad + this.thickness + ", " + this.offset);
 
@@ -2299,7 +2304,7 @@ toSDL(stops = 0) {
     if(this.minorRadius === null)
         cpov.error("fatal", "minorRadius is undefined.", "Torus.toSDL", this);
 
-    content.push(pad + "torus {");
+    content.push(pad + "torus {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.majorRadius + ", " + this.minorRadius);
 
     $Primitive.toSDL-postamble
@@ -2332,7 +2337,7 @@ toSDL(stops = 0) {
 
     if(this.smooth) {
 
-        content.push(pad + "triangle {");
+        content.push(pad + "triangle {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());
 
     } else {
@@ -2371,7 +2376,7 @@ toSDL(stops = 0) {
     if(this.objects === null)
         cpov.error("fatal", "objects is undefined.", "Union.toSDL", this);
 
-    content.push(pad + "merge {");
+    content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
     for(var i = 0; i < this.objects.length; i++) {
         content.push(ppad + this.objects[i].toSDL(stops + 1));
     }

@@ -27,10 +27,146 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "GlobalSettings: all parameters after init");
     globalSettingsTestAfterInit(fp);
 
+    testHeader(fp, ++testSerial, "Box: minimal test");
+    boxTestMinimum(fp);
 
+    testHeader(fp, ++testSerial, "Box: all (applicable) Primitive params");
+    boxTestAllParams(fp);
+
+    testHeader(fp, ++testSerial, "Cone: minimal test");
+    coneTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Cylinder: minimal test");
+    cylinderTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Disc: minimal test");
+    discTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Ovus: minimal test");
+    ovusTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Plane: minimal test");
+    planeTestMinimum(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function planeTestMinimum(fp) {
+    var params = {
+        normal: new VectorXYZ({ x: 1, y: 0, z: 0 }),
+        distance: 22,
+        id: "planeTestMinimum"
+    };
+
+    var plane = new Plane(params);
+
+    fp.write(plane.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function ovusTestMinimum(fp) {
+    var params = {
+        bottomRadius: 10,
+        topRadius: 5,
+        id: "ovusTestMinimum"
+    };
+
+    var ovus = new Ovus(params);
+
+    fp.write(ovus.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function discTestMinimum(fp) {
+    var params = {
+        center: new VectorXYZ({x: 3, y: 4, z: 5}),
+        normal: new VectorXYZ({x: 0, y: 1, z: 0}),
+        radius: 5,
+        holeRadius: 10,
+        id: "discTestMinimum"
+    };
+
+    var disc = new Disc(params);
+
+    fp.write(disc.toSDL() + "\n\n");
+}
+
+
+//==============================================================================
+
+function cylinderTestMinimum(fp) {
+    var params = {
+        basePoint: new VectorXYZ({ x: 0, y: 0, z: 0 }),
+        radius: 5,
+        capPoint: new VectorXYZ({ x: 1, y: 2, z: 3 }),
+        open: true,
+        id: "cylinderTestMinimum"
+    };
+
+    var cylinder = new Cylinder(params);
+
+    fp.write(cylinder.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function coneTestMinimum(fp) {
+
+    var params = {
+        basePoint: new VectorXYZ({ x: 0, y: 0, z: 0 }),
+        baseRadius: 5,
+        capPoint: new VectorXYZ({ x: 1, y: 2, z: 3 }),
+        capRadius: 0,
+        open: true,
+        id: "coneTestMinimum"
+    };
+
+    var cone = new Cone(params);
+
+    fp.write(cone.toSDL() + "\n\n");
+}
+
+
+//==============================================================================
+
+function boxTestAllParams(fp) {
+
+    var xform = new Matrix("scale", 1, 2, 3);
+
+    var params = {
+        corner1: [0, 0, 0],
+        corner2: [1, 1, 1],
+        transform: xform,
+        doubleIlluminate: true,
+        hollow: true,
+        inverse: true,
+        noImage: true,
+        noRadiosity: true,
+        noReflection: true,
+        noShadow: true,
+        id: "commonParamTest"
+    };
+
+    var box = new Box(params);
+
+    fp.write(box.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function boxTestMinimum(fp) {
+    var boxArray  = new Box({ corner1: [0, 0, 0], corner2: [1, 1, 1], id: "BoxArray" });
+    var corner1 = new VectorXYZ({ x: 2, y: 3, z: 4 });
+    var corner2 = new VectorXYZ({ x: 5, y: 6, z: 7 });
+    var boxVector = new Box({ corner1: corner1, corner2: corner2, id: "BoxVector"});
+
+    fp.write(boxArray.toSDL() + "\n\n");
+    fp.write(boxVector.toSDL() + "\n");
+}
 
 
 //==============================================================================

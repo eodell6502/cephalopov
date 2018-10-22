@@ -177,7 +177,8 @@ cpov.isClass = function(val, classname) {
         }
         return okay;
     }
-    return Object.getPrototypeOf(val).constructor.name == classname ? true : false;
+
+    return (Object.getPrototypeOf(val).constructor.name == classname ? true : false);
 }
 
 //------------------------------------------------------------------------------

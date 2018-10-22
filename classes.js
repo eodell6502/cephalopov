@@ -3674,7 +3674,12 @@ class Primitive {
         if(!cpov.isClass(val, "Matrix"))
             cpov.error("fatal", "transform value must evaluate to a Matrix.", "Primitive.transform", this);
     
-        this._transform = val.xMatrix(this.transform);
+        if(this._baseTransform === null) {
+            this._baseTransform = val;
+            this._transform = val;
+        } else {
+            this._transform = val.xMatrix(this.transform);
+        }
     
     }
 
@@ -3865,7 +3870,7 @@ class Primitive {
         // TODO: radiosity
     
         if(this.transform !== undefined && this.transform !== null)
-            contents.push(pad + this.transform.toSDL(stops + 1));
+            contents.push(this.transform.toSDL(stops));
     
         return contents.join("\n");
     }
@@ -4066,7 +4071,7 @@ class Blob extends Primitive {
         if(this.components === null)
             cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
     
-        content.push(pad + "blob {");
+        content.push(pad + "blob {" + (this.id === null ? "" : " // " + this.id));
     	var components = this.components;
     	if(cpov.isSDLFunction(components)) {
     		content.push(ppad + this.components);
@@ -4084,7 +4089,7 @@ class Blob extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -4245,12 +4250,12 @@ class Box extends Primitive {
         if(this.corner2 === null)
             cpov.error("fatal", "corner2 is undefined.", "Box.toSDL", this);
     
-        content.push(pad + "box {");
+        content.push(pad + "box {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -4710,7 +4715,7 @@ class Camera extends Primitive {
         else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
             cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
     
-        content.push(pad + "camera {");
+        content.push(pad + "camera {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
         if(this.location !== null)
             content.push(ppad + "location " + this.location.toSDL());
@@ -4739,7 +4744,7 @@ class Camera extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -4967,14 +4972,14 @@ class Cone extends Primitive {
         if(this.capRadius === null)
             cpov.error("fatal", "capRadius is undefined.", "Cone.toSDL", this);
     
-        content.push(pad + "cone {");
+        content.push(pad + "cone {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
         if(this.open)
             content.push(pad + "    open");
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -5200,14 +5205,14 @@ class Cylinder extends Primitive {
         if(this.radius === null)
             cpov.error("fatal", "radius is undefined.", "Cylinder.toSDL", this);
     
-        content.push(pad + "cylinder {");
+        content.push(pad + "cylinder {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.basePoint.toSDL() + ", " + this.capPoint.toSDL() + ", " + this.radius);
         if(this.open)
             content.push(pad + "    open");
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -5468,7 +5473,7 @@ class HeightField extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        content.push(pad + "height_field {");
+        content.push(pad + "height_field {" + (this.id === null ? "" : " // " + this.id));
         if(this.userFunc !== null) {
             content.push(pad + "    function FieldResolution_X, FieldResolution_Y { " + this.userFunc + " }");
         } else if(this.filename !== null) {
@@ -5490,7 +5495,7 @@ class HeightField extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -6019,7 +6024,7 @@ class JuliaFractal extends Primitive {
     
     	var parts = this.type.split(/:/);
     
-        content.push(pad + "julia_fractal {");
+        content.push(pad + "julia_fractal {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.juliaParam.toSDL());
     	if(this.slice !== null)
     		content.push(ppad + this.type.toSDL());
@@ -6034,7 +6039,7 @@ class JuliaFractal extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -6217,7 +6222,7 @@ class Lathe extends Primitive {
     		cpov.error("fatal", "points is undefined.", "Lathe.toSDL", this);
     	// TODO: add check for correct minimum number of points
     
-        content.push(pad + "lathe {");
+        content.push(pad + "lathe {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + cpov.splineTypes[this.type]);
     
     	var items = [ ];
@@ -6230,7 +6235,7 @@ class Lathe extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -6876,7 +6881,7 @@ class LightSource extends Primitive {
         if(this.color === null)
             cpov.error("fatal", "color is undefined.", "LightSource.toSDL", this);
     
-        content.push(pad + "light_source {");
+        content.push(pad + "light_source {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
     
         if(this.type !== null)
@@ -7090,12 +7095,12 @@ class Ovus extends Primitive {
         if(this.bottomRadius === null)
             cpov.error("fatal", "bottomRadius is undefined.", "Ovus.toSDL", this);
     
-        content.push(pad + "ovus {");
+        content.push(pad + "ovus {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.topRadius + ", " + this.bottomRadius);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -7473,7 +7478,7 @@ class Parametric extends Primitive {
     	if(this.uv2 === null)
     		cpov.error("fatal", "uv2 is undefined.", "Parametric.toSDL", this);
     
-    	content.push(pad + "parametric {");
+    	content.push(pad + "parametric {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.funcX);
         content.push(ppad + this.funcY);
         content.push(ppad + this.funcZ);
@@ -7498,7 +7503,7 @@ class Parametric extends Primitive {
     
     	var superSDL = super.toSDL(stops + 1);
     	if(superSDL)
-    	    content.push();
+    	    content.push(superSDL);
     	content.push(pad + "}");
     	
     	return content.join("\n");
@@ -7750,7 +7755,7 @@ class Prism extends Primitive {
       	if(this.points.length < 3)
     		cpov.error("fatal", "points must contain at least three VectorXY.", "Prism.toSDL", this);
     
-    	content.push(pad + "prism {");
+    	content.push(pad + "prism {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + cpov.prismTypes(this.type));
         content.push(ppad + this.height1 + ", " + this.height2 + ", " + this.points.length + ",");
         var items = [ ];
@@ -7765,7 +7770,7 @@ class Prism extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -7948,12 +7953,12 @@ class Sphere extends Primitive {
         if(this.radius === null)
             cpov.error("fatal", "radius is undefined.", "Sphere.toSDL", this);
     
-        content.push(pad + "sphere {");
+        content.push(pad + "sphere {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.center.toSDL() + ", " + this.radius);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -8140,7 +8145,7 @@ class SphereSweep extends Primitive {
         else if((this.type == "bezierSpline" || this.type == "cubicSpline") && this.spheres.length < 4)
             cpov.error("fatal", "Bezier and cubic splines require at least four spheres.", "SphereSweep.toSDL", this);
     
-        content.push(pad + "sphere_sweep {");
+        content.push(pad + "sphere_sweep {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.type);
         content.push(ppad + this.spheres.length + ",");
         var items = [ ];
@@ -8153,7 +8158,7 @@ class SphereSweep extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -8468,7 +8473,7 @@ class Sor extends Primitive {
         if(this.points.length < 2)
             cpov.error("fatal", "points must contain at least two VectorXY.", "Sor.toSDL", this);
     
-        content.push(pad + "sor {");
+        content.push(pad + "sor {" + (this.id === null ? "" : " // " + this.id));
         var items = [ this.points.length ];
         for(var i = 0; i < this.points.length; i++)
             items.push(this.points[i].toSDL());
@@ -8480,7 +8485,7 @@ class Sor extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -8712,13 +8717,13 @@ class Text extends Primitive {
     
         // TODO: Handle escaping of double quotes in this.displayText
     
-        content.push(pad + "text {");
+        content.push(pad + "text {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.fontType + " " + "\"" + this.font + "\"");
         content.push(ppad + this.thickness + ", " + this.offset);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -8900,12 +8905,12 @@ class Torus extends Primitive {
         if(this.minorRadius === null)
             cpov.error("fatal", "minorRadius is undefined.", "Torus.toSDL", this);
     
-        content.push(pad + "torus {");
+        content.push(pad + "torus {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.majorRadius + ", " + this.minorRadius);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -9130,7 +9135,7 @@ class BicubicPatch extends Primitive {
     	if(this.patch === null)
             cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
     
-        content.push(pad + "bicubic_patch {");
+        content.push(pad + "bicubic_patch {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + "type " + this.type);
     	if(this.uSteps !== null)
     		content.push(ppad + "u_steps " + this.uSteps);
@@ -9149,7 +9154,7 @@ class BicubicPatch extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -9352,12 +9357,12 @@ class Disc extends Primitive {
         if(this.radius === null)
             cpov.error("fatal", "radius is undefined.", "Disc.toSDL", this);
     
-        content.push(pad + "disc {");
+        content.push(pad + "disc {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -9651,7 +9656,7 @@ class Polygon extends Primitive {
       	if(this.points.length < 3)
     		cpov.error("fatal", "points must contain at least three VectorXY.", "Polygon.toSDL", this);
     
-    	content.push(pad + "polygon {");
+    	content.push(pad + "polygon {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.points.length + ",");
         var items = [ ];
         for(var i = 0; i < this.points.length; i++) {
@@ -9661,7 +9666,7 @@ class Polygon extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -9958,7 +9963,7 @@ class Triangle extends Primitive {
     
         if(this.smooth) {
     
-            content.push(pad + "triangle {");
+            content.push(pad + "triangle {" + (this.id === null ? "" : " // " + this.id));
             content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());
     
         } else {
@@ -9980,7 +9985,7 @@ class Triangle extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -10141,12 +10146,12 @@ class Plane extends Primitive {
     	if(this.distance === null)
     		cpov.error("fatal", "distance is undefined.", "Sphere.toSDL", this);
     
-    	content.push(pad + "plane {");
+    	content.push(pad + "plane {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -10334,7 +10339,7 @@ class Poly extends Primitive {
         if(this.coefficients.length != ccnt)
             cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
     
-    	content.push(pad + "poly {");
+    	content.push(pad + "poly {" + (this.id === null ? "" : " // " + this.id));
         var items = this.coefficents.slice(0);
         items.unshift(this.order);
     	content.push(ppad + this.items.join(", "));
@@ -10343,7 +10348,7 @@ class Poly extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -10503,14 +10508,14 @@ class Cubic extends Primitive {
         if(this.coefficients === null)
             cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
     
-        content.push(pad + "cubic {");
+        content.push(pad + "cubic {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.coefficients.join(", "));
         if(this.sturm)
             content.push(ppad + "sturm");
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -10669,14 +10674,14 @@ class Quartic extends Primitive {
         if(this.coefficients === null)
             cpov.error("fatal", "coefficients is undefined.", "Quartic.toSDL", this);
     
-        content.push(pad + "quartic {");
+        content.push(pad + "quartic {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.coefficients.join(", "));
         if(this.sturm)
             content.push(ppad + "sturm");
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -10968,7 +10973,7 @@ class Quadric extends Primitive {
         if(this.coefficients === null)
             cpov.error("fatal", "coefficients is undefined.", "Quadric.toSDL", this);
     
-        content.push(pad + "quartic {");
+        content.push(pad + "quadric {" + (this.id === null ? "" : " // " + this.id));
         content.push(
             ppad
             + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, " +
@@ -10979,7 +10984,7 @@ class Quadric extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -11128,7 +11133,7 @@ class Union extends Primitive {
         if(this.objects === null)
             cpov.error("fatal", "objects is undefined.", "Union.toSDL", this);
     
-        content.push(pad + "merge {");
+        content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.objects.length; i++) {
             content.push(ppad + this.objects[i].toSDL(stops + 1));
         }
@@ -11136,7 +11141,7 @@ class Union extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -11264,14 +11269,14 @@ class Intersection extends Primitive {
         if(this.objects === null)
             cpov.error("fatal", "objects is undefined.", "Intersection.toSDL", this);
     
-        content.push(pad + "intersection {");
+        content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.objects.length; i++) {
             content.push(ppad + this.objects[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -11423,7 +11428,7 @@ class Difference extends Primitive {
         if(this.negativeObjects === null)
             cpov.error("fatal", "negativeObjects is undefined.", "Difference.toSDL", this);
     
-        content.push(pad + "difference {");
+        content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.positiveObject.toSDL(stops + 1));
         for(var i = 0; i < this.negativeObjects.length; i++) {
             content.push(ppad + this.negativeObjects[i].toSDL(stops + 1));
@@ -11431,7 +11436,7 @@ class Difference extends Primitive {
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -11559,14 +11564,14 @@ class Merge extends Primitive {
         if(this.objects === null)
             cpov.error("fatal", "objects is undefined.", "Merge.toSDL", this);
     
-        content.push(pad + "merge {");
+        content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.objects.length; i++) {
             content.push(ppad + this.objects[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
-            content.push();
+            content.push(superSDL);
         content.push(pad + "}");
         
         return content.join("\n");
@@ -12824,7 +12829,7 @@ class Matrix {
     toSDL(stops = 0) {
         var pad = cpov.tab(stops);
 
-        return pad + "<" + [this.v00, this.v01, this.v02, this.v10, this.v11,
+        return pad + "matrix <" + [this.v00, this.v01, this.v02, this.v10, this.v11,
             this.v12, this.v20, this.v21, this.v22, this.v30, this.v31,
             this.v32 ].join(", ") + ">";
     }
