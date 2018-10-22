@@ -141,7 +141,7 @@ cpov.isChar = function(val) {
 
 cpov.isInArray = function(val, array) {
     for(var i = 0; i < array.length; i++)
-        if(array[i] === val)
+        if(array[i] == val)
             return true;
     return false;
 }
@@ -149,7 +149,7 @@ cpov.isInArray = function(val, array) {
 //------------------------------------------------------------------------------
 
 cpov.isKey = function(val, object) {
-    return object[val] !== undefined ? true : false;
+    return object[val] === undefined ? false : true;
 }
 
 //------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ cpov.isClass = function(val, classname) {
 cpov.isArrayOfClass = function(val, classname, min, max) {
     if(Array.isArray(val)) {
         for(var i = 0; i < val.length; i++) {
-            if(Object.getPrototypeOf(val).constructor.name != classname)
+            if(Object.getPrototypeOf(val[i]).constructor.name != classname)
                 return false;
         }
         if(val.length < min || val.length > max)
@@ -243,7 +243,7 @@ cpov.keysToTextList = function(obj) {
 //------------------------------------------------------------------------------
 
 cpov.arrayToTextList = function(items) {
-    var items = items.splice(0);
+    var items = items.slice(0);
     items[items.length - 1] = "or " + items[items.length - 1];
     return items.join(", ");
 }
@@ -2104,7 +2104,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Superellipsoid.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -2743,7 +2743,7 @@ cpov.error = function(level, message, location = "CEPHALOPOV", obj = null) {
     var instance = '';
 
     if(obj !== null && cpov.inheritsFrom(obj, "Primitive"))
-        instance = "(" + cpov.primitiveDefIdentifier(obj) + ")";
+        instance = " (" + cpov.primitiveDefIdentifier(obj) + ")";
 
 
     if(!cpov.quietMode) {

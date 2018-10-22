@@ -1064,8 +1064,6 @@ toSDL(stops = 0) {
 
     content.push(pad + "julia_fractal {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + this.juliaParam.toSDL());
-	if(this.slice !== null)
-		content.push(ppad + this.type.toSDL());
 	content.push(ppad + parts[0]); // algebra type
 	content.push(ppad + parts[1]); // function type
 	if(this.maxIter !== null)
@@ -1073,7 +1071,7 @@ toSDL(stops = 0) {
 	if(this.precision !== null)
 		content.push(ppad + "precision " + this.precision);
 	if(this.slice !== null)
-		content.push(ppad + this.slice.toSDL() + ", " + this.distance);
+		content.push(ppad + "slice " + this.slice.toSDL() + ", " + this.distance);
 
     $Primitive.toSDL-postamble
 }
@@ -1934,9 +1932,6 @@ toSDL(stops = 0) {
     if(this.inverse)
         contents.push(pad + "inverse");
 
-    if(this.sturm)
-        contents.push(pad + "sturm");
-
     if(this.hierarchy)
         contents.push(pad + "hierarchy");
 
@@ -2070,11 +2065,11 @@ toSDL(stops = 0) {
 		cpov.error("fatal", "points must contain at least three VectorXY.", "Prism.toSDL", this);
 
 	content.push(pad + "prism {" + (this.id === null ? "" : " // " + this.id));
-    content.push(ppad + cpov.prismTypes(this.type));
+    content.push(ppad + cpov.prismTypes[this.type]);
     content.push(ppad + this.height1 + ", " + this.height2 + ", " + this.points.length + ",");
     var items = [ ];
     for(var i = 0; i < this.points.length; i++) {
-        items.push(points[i].toSDL());
+        items.push(this.points[i].toSDL());
     }
     content.push(ppad + items.join(", "));
     if(this.open)
@@ -2335,7 +2330,7 @@ toSDL(stops = 0) {
     if(this.corner3 === null)
         cpov.error("fatal", "corner3 is undefined.", "Triangle.toSDL", this);
 
-    if(this.smooth) {
+    if(!this.smooth) {
 
         content.push(pad + "triangle {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());

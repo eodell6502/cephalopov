@@ -3847,9 +3847,6 @@ class Primitive {
         if(this.inverse)
             contents.push(pad + "inverse");
     
-        if(this.sturm)
-            contents.push(pad + "sturm");
-    
         if(this.hierarchy)
             contents.push(pad + "hierarchy");
     
@@ -6026,8 +6023,6 @@ class JuliaFractal extends Primitive {
     
         content.push(pad + "julia_fractal {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.juliaParam.toSDL());
-    	if(this.slice !== null)
-    		content.push(ppad + this.type.toSDL());
     	content.push(ppad + parts[0]); // algebra type
     	content.push(ppad + parts[1]); // function type
     	if(this.maxIter !== null)
@@ -6035,7 +6030,7 @@ class JuliaFractal extends Primitive {
     	if(this.precision !== null)
     		content.push(ppad + "precision " + this.precision);
     	if(this.slice !== null)
-    		content.push(ppad + this.slice.toSDL() + ", " + this.distance);
+    		content.push(ppad + "slice " + this.slice.toSDL() + ", " + this.distance);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
@@ -7756,11 +7751,11 @@ class Prism extends Primitive {
     		cpov.error("fatal", "points must contain at least three VectorXY.", "Prism.toSDL", this);
     
     	content.push(pad + "prism {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + cpov.prismTypes(this.type));
+        content.push(ppad + cpov.prismTypes[this.type]);
         content.push(ppad + this.height1 + ", " + this.height2 + ", " + this.points.length + ",");
         var items = [ ];
         for(var i = 0; i < this.points.length; i++) {
-            items.push(points[i].toSDL());
+            items.push(this.points[i].toSDL());
         }
         content.push(ppad + items.join(", "));
         if(this.open)
@@ -8297,6 +8292,39 @@ class Superellipsoid extends Primitive {
 
         return newObj;
     }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.e === null)
+            cpov.error("fatal", "e is undefined.", "Superellipsoid.toSDL", this);
+        if(this.n === null)
+            cpov.error("fatal", "n is undefined.", "Superellipsoid.toSDL", this);
+    
+        content.push(pad + "superellipsoid {" + (this.id === null ? "" : " // " + this.id));
+        content.push(ppad + "<" + this.e + ", " + this.n + ">");
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
 
 
 }
@@ -9961,7 +9989,7 @@ class Triangle extends Primitive {
         if(this.corner3 === null)
             cpov.error("fatal", "corner3 is undefined.", "Triangle.toSDL", this);
     
-        if(this.smooth) {
+        if(!this.smooth) {
     
             content.push(pad + "triangle {" + (this.id === null ? "" : " // " + this.id));
             content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());

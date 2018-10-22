@@ -47,9 +47,125 @@ function main(cpov) {
 
     testHeader(fp, ++testSerial, "Plane: minimal test");
     planeTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "JuliaFractal: minimal test");
+    juliaFractalTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Prism: minimal test");
+    prismTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Sphere: minimal test");
+    sphereTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Superellipsoid: minimal test");
+    superellipsoidTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Torus: minimal test");
+    torusTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Triangle: minimal test");
+    triangleTestMinimum(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function triangleTestMinimum(fp) {
+    var params = {
+        corner1: new VectorXYZ({ x: 0, y: 0, z: 0 }),
+        corner2: new VectorXYZ({ x: 1, y: 0, z: 0 }),
+        corner3: new VectorXYZ({ x: 1, y: 1, z: 0 })
+    };
+
+    var obj = new Triangle(params);
+    fp.write(obj.toSDL() + "\n\n");
+
+    params.normal1 = new VectorXYZ({ x: 0, y: 1, z: 0 });
+    params.normal2 = new VectorXYZ({ x: 1, y: 1, z: 0 });
+    params.normal3 = new VectorXYZ({ x: 0, y: 1, z: 1 });
+    params.smooth = true;
+
+    var obj = new Triangle(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function torusTestMinimum(fp) {
+    var params = {
+        majorRadius: 20,
+        minorRadius: 4,
+        sturm: true
+    };
+
+    var torus = new Torus(params);
+
+    fp.write(torus.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function superellipsoidTestMinimum(fp) {
+    var params = {
+        e: 5,
+        n: 4
+    };
+
+    var superellipsoid = new Superellipsoid(params);
+
+    fp.write(superellipsoid.toSDL() + "\n\n");
+}
+
+
+//==============================================================================
+
+function sphereTestMinimum(fp) {
+    var params = {
+        center: new VectorXYZ({ x: 0, y: 5, z: 15 }),
+        radius: 12
+    };
+
+    var sphere = new Sphere(params);
+
+    fp.write(sphere.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function prismTestMinimum(fp) {
+    var params = {
+        type: "linearSpline",
+        height1: 0,
+        height2: 0,
+        points: [ new VectorXY({ x: 0, y: 0 }), new VectorXY({ x: 1, y: 1 }), new VectorXY({ x: 1 , y: 0 }) ],
+        open: true,
+        sturm: true
+    };
+
+    var prism = new Prism(params);
+
+    fp.write(prism.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function juliaFractalTestMinimum(fp) {
+    var params = {
+        type: "hypercomplex:reciprocal",
+        juliaParam: new VectorXYZW({ x: 1, y: 2, z: 3, w: 4 }),
+        power: new VectorXY({ x: 2, y: 3 }),
+        maxIter: 2500,
+        precision: 5,
+        slice: new VectorXYZW({ x: 1.1, y: 2.2, z: 3.3, w: 4.4 }),
+        distance: 2.1,
+        id: "juliaFractalMinimum"
+    };
+
+    var juliaFractal = new JuliaFractal(params);
+
+    fp.write(juliaFractal.toSDL() + "\n\n");
+}
 
 //==============================================================================
 
