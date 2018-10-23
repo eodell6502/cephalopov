@@ -1376,7 +1376,7 @@ cpov.primitiveDef = {
         }, {
             name:  "id",
             valid: "cpov.isNonEmptyString(val) && cpov.isUnusedId(val, this)",
-            err:   "id must be a non-empty string."
+            err:   "id must be a unique, non-empty string."
         }, {
             name:  "interior",
             valid: "cpov.isClass(val, 'Interior')",

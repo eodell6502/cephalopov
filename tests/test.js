@@ -37,9 +37,45 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "HeightField: minimal test");                  heightFieldTestMinimum(fp);
     testHeader(fp, ++testSerial, "BicubicPatch: minimal test");                 bicubicPatchTestMinimum(fp);
     testHeader(fp, ++testSerial, "Blob: minimal test");                         blobTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Cubic: minimal test");                        cubicTestMinimum(fp);
+    testHeader(fp, ++testSerial, "IsoSurface: minimal test");                   isoSurfaceTestMinimum(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function isoSurfaceTestMinimum(fp) {
+
+    var params = {
+        source: "&foo",
+        containedBy: new Box({ corner1: [0, 0, 0], corner2: [1, 1, 1]}),
+        threshold: 1.0,
+        accuracy: 1.2,
+        maxGradient: 1.3,
+        evaluate: [ 2.0, 2.1, 2.2 ],
+        open: true,
+        maxTrace: "allIntersections",
+        id: "isoSurfaceTestMinimum"
+    };
+
+    var obj = new IsoSurface(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function cubicTestMinimum(fp) {
+
+    var params = {
+        coefficients: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ],
+        sturm: true,
+        id: "cubicTestMinimum"
+    };
+
+    var obj = new Cubic(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
 
 //==============================================================================
 

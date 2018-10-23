@@ -3396,7 +3396,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val) && cpov.isUnusedId(val, this))) {
             this._id = val;
         } else {
-            cpov.error("fatal", "id must be a non-empty string.", "Primitive");
+            cpov.error("fatal", "id must be a unique, non-empty string.", "Primitive");
         }
     }
 
