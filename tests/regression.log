@@ -510,5 +510,17 @@ cubic { // cubicTestMinimum
 // TEST #25: IsoSurface: minimal test
 //==============================================================================
 
+intersection { // isoSurfaceTestMinimum
+    foo
 
+    contained_by {     box {
+        <0, 0, 0>, <1, 1, 1>
+    }}
+    threshold 1
+    accuracy 1.2
+    max_gradient 1.3
+    evaluate 2, 2.1, 2.2
+    open
+    max_trace allIntersections
+}
 

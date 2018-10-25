@@ -1059,7 +1059,7 @@ toSDL(stops = 0) {
     content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.source + "\n");
     if(this.containedBy !== null)
-        content.push(ppad + "contained_by { " + this.containedBy.toSDL() + "}");
+        content.push(ppad + "contained_by { " + this.containedBy.toSDL(1) + "}");
     if(this.threshold !== null)
         content.push(ppad + "threshold " + this.threshold);
     if(this.accuracy !== null)

@@ -5762,6 +5762,48 @@ class IsoSurface extends Primitive {
         return newObj;
     }
 
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
+        content.push(ppad + this.source + "\n");
+        if(this.containedBy !== null)
+            content.push(ppad + "contained_by { " + this.containedBy.toSDL(1) + "}");
+        if(this.threshold !== null)
+            content.push(ppad + "threshold " + this.threshold);
+        if(this.accuracy !== null)
+            content.push(ppad + "accuracy " + this.accuracy);
+        if(this.maxGradient !== null)
+            content.push(ppad + "max_gradient " + this.maxGradient);
+        if(this.evaluate !== null)
+            content.push(ppad + "evaluate " + this.evaluate.join(", "));
+        if(this.open)
+            content.push(ppad + "open");
+        if(this.maxTrace !== null)
+            content.push(ppad + "max_trace " + this.maxTrace);
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
 
 }
 
