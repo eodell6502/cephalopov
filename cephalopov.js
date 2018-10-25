@@ -2288,7 +2288,7 @@ cpov.objDef = {
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Mesh.toSDL"],
         immutable: { finite: true, solid: false, csg: false, pseudo: false },
         mutable: [
             {
@@ -2481,12 +2481,12 @@ cpov.objDef = {
         ],
     },
 
-    polynomial: {                                             // This will require better understanding of the
-        superclass: "Primitive",                              // underlying maths than I currently have to validate.
+    polynomial: {
+        superclass: "Primitive",
         desc: false,
         conArgs: false,
         conBlock: false,
-        snippets: false,
+        snippets: ["Polynomial.toSDL"],
         immutable: { finite: false, solid: true, csg: false, pseudo: false },
         mutable: [
             {
@@ -2497,7 +2497,7 @@ cpov.objDef = {
             }, {
                 name:  "coefficients",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
+                valid: "cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity)",
                 err:   "coefficients must be a VectorXYZW."
             }, {
                 name:  "sturm",

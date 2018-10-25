@@ -40,9 +40,166 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "Blob: minimal test");                         blobTestMinimum(fp);
     testHeader(fp, ++testSerial, "Cubic: minimal test");                        cubicTestMinimum(fp);
     testHeader(fp, ++testSerial, "IsoSurface: minimal test");                   isoSurfaceTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Lathe: minimal test");                        latheTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Mesh: minimal test");                         meshTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Parametric: minimal test");                   parametricTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Poly: minimal test");                         polyTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Polynomial: minimal test");                   polynomialTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Quadric: minimal test");                      quadricTestMinimum(fp);
+//    testHeader(fp, ++testSerial, "Quartic: minimal test");                      quarticTestMinimum(fp);
+//    testHeader(fp, ++testSerial, "Sor: minimal test");                          sorTestMinimum(fp);
+//    testHeader(fp, ++testSerial, "sphereSweep: minimal test");                  sphereSweepTestMinimum(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function sphereSweepTestMinimum(fp) {
+
+    var params = {
+        // TODO
+    };
+
+    var obj = new sphereSweep(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function sorTestMinimum(fp) {
+
+    var params = {
+        // TODO
+    };
+
+    var obj = new Sor(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function quarticTestMinimum(fp) {
+
+    var params = {
+        // TODO
+    };
+
+    var obj = new Quartic(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function quadricTestMinimum(fp) {
+
+    var params = {
+        coefficients: [1,2,3,4,5,6,7,8,9,10]
+    };
+
+    var obj = new Quadric(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function polynomialTestMinimum(fp) {
+
+    var params = {
+        order: 2,
+        coefficients: [
+            new VectorXYZW({x:1,  y:10, z:2, w:1}),
+            new VectorXYZW({x:2,  y:9,  z:4, w:2}),
+            new VectorXYZW({x:3,  y:8,  z:6, w:1}),
+            new VectorXYZW({x:4,  y:7,  z:8, w:2}),
+            new VectorXYZW({x:5,  y:6,  z:6, w:1}),
+            new VectorXYZW({x:6,  y:5,  z:4, w:2}),
+            new VectorXYZW({x:7,  y:4,  z:2, w:1}),
+            new VectorXYZW({x:8,  y:3,  z:0, w:2}),
+            new VectorXYZW({x:9,  y:2,  z:2, w:1}),
+            new VectorXYZW({x:10, y:1,  z:4, w:2}),
+        ],
+        sturm: true
+    };
+
+    var obj = new Polynomial(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function polyTestMinimum(fp) {
+
+    var params = {
+        order: 3,
+        coefficients: [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 ],
+        sturm: true
+    };
+
+    var obj = new Poly(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function parametricTestMinimum(fp) {
+
+    var box = new Box({corner1: [0,0,0], corner2: [1,1,1]});
+
+    var params = {
+        funcX: "&foo",
+        funcY: "&bar",
+        funcZ: "&baz",
+        uv1: new VectorUV({u:0, v:0}),
+        uv2: new VectorUV({u:1, v:1}),
+        containedBy: box,
+        maxGradient: 1.2,
+        accuracy: 1.3,
+        precomputeDepth: 4,
+        precomputeX: true,
+        precomputeY: true,
+        precomputeZ: true
+    };
+
+    var obj = new Parametric(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function meshTestMinimum(fp) {
+
+    var a = new VectorXYZ({x:0, y:0, z:0});
+    var b = new VectorXYZ({x:0, y:1, z:0});
+    var c = new VectorXYZ({x:0, y:0, z:1});
+    var d = new VectorXYZ({x:2, y:2, z:2});
+
+    var triangle1 = new Triangle({corner1: a, corner2: b, corner3: c});
+    var triangle2 = new Triangle({corner1: d, corner2: b, corner3: c});
+
+    var params = {
+        triangles: [triangle1, triangle2],
+        insideVector: new VectorXYZ({x:0, y:1, z:0}),
+        hierarchy: true
+    };
+
+    var obj = new Mesh(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function latheTestMinimum(fp) {
+
+    var params = {
+        type: "linearSpline",
+        points: [ new VectorXY({x:0, y:0}), new VectorXY({x:1, y:1}), new VectorXY({x:0, y:1}) ],
+        sturm: true
+    };
+
+    var obj = new Lathe(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
 
 //==============================================================================
 

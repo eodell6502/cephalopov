@@ -88,8 +88,8 @@ toSDL(stops = 0) {
 			content.push(components[i].toSDL(stops + 1, true));
 		}
 	}
-	if(this.hierarchy)
-		content.push(ppad + "hierarchy on");
+	if(this.hierarchy !== null)
+		content.push(ppad + "hierarchy " + (this.hierarchy ? "on" : "off"));
 	if(this.sturm)
 		content.push(ppad + "sturm");
 
@@ -1056,10 +1056,10 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
-    content.push(ppad + this.source + "\n");
+    content.push(pad + "isosurface {" + (this.id === null ? "" : " // " + this.id));
+    content.push(ppad + this.source);
     if(this.containedBy !== null)
-        content.push(ppad + "contained_by { " + this.containedBy.toSDL(1) + "}");
+        content.push(ppad + "contained_by {\n" + this.containedBy.toSDL(2) + "\n" + ppad + "}");
     if(this.threshold !== null)
         content.push(ppad + "threshold " + this.threshold);
     if(this.accuracy !== null)
@@ -1089,10 +1089,6 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.type === null)
-        cpov.error("fatal", "type is undefined.", "JuliaFractal.toSDL", this);
-    if(this.juliaParam === null)
-        cpov.error("fatal", "juliaParam is undefined.", "JuliaFractal.toSDL", this);
 	if((this.slice !== null && this.distance === null) || (this.slice === null && this.distance !== null))
 		cpov.error("fatal", "To use either, both slice and distance must be specified together.", "JuliaFractal.toSDL", this);
 
@@ -1125,10 +1121,6 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.type === null)
-        cpov.error("fatal", "type is undefined.", "Lathe.toSDL", this);
-	if(this.points === null)
-		cpov.error("fatal", "points is undefined.", "Lathe.toSDL", this);
 	// TODO: add check for correct minimum number of points
 
     content.push(pad + "lathe {" + (this.id === null ? "" : " // " + this.id));
@@ -1137,7 +1129,7 @@ toSDL(stops = 0) {
 	var items = [ ];
 	for(var i = 0; i < this.points.length; i++)
 		items.push(this.points[i].toSDL());
-	content.push(ppad + items.join(", "));
+	content.push(ppad + items.length + ", " + items.join(", "));
 
 	if(this.sturm)
 		content.push(ppad + "sturm");
@@ -1649,7 +1641,7 @@ toSDL(stops = 0) {
 
 
 
-// Ovus.toSDL //----------------------------------------------------------------
+// Mesh.toSDL //----------------------------------------------------------------
 
 //--------------------------------------------------------------------------
 // Produces SDL representation of the object. Will terminate the program if
@@ -1660,10 +1652,30 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.topRadius === null)
-        cpov.error("fatal", "topRadius is undefined.", "Ovus.toSDL", this);
-    if(this.bottomRadius === null)
-        cpov.error("fatal", "bottomRadius is undefined.", "Ovus.toSDL", this);
+    content.push(pad + "mesh {" + (this.id === null ? "" : " // " + this.id));
+    for(var i = 0; i < this.triangles.length; i++) {
+        content.push(this.triangles[i].toSDL(1));
+    }
+    if(this.insideVector !== null)
+        content.push(ppad + "inside_vector " + this.insideVector.toSDL());
+	if(this.hierarchy !== null)
+		content.push(ppad + "hierarchy " + (this.hierarchy ? "on" : "off"));
+
+    $Primitive.toSDL-postamble
+}
+
+
+
+// Ovus.toSDL //----------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    $Primitive.toSDL-preamble
 
     content.push(pad + "ovus {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.topRadius + ", " + this.bottomRadius);
@@ -1702,7 +1714,7 @@ toSDL(stops = 0) {
     content.push(ppad + this.uv1.toSDL() + ", " + this.uv2.toSDL());
 
     if(this.containedBy)
-        content.push(ppad + "contained_by {\n" + this.containedBy.toSDL(stops + 2) + "\n}");
+        content.push(ppad + "contained_by {\n" + this.containedBy.toSDL(stops + 2) + "\n" + ppad + "}");
     if(this.maxGradient !== null)
         content.push(ppad + "max_gradient " + this.maxGradient);
     if(this.accuracy !== null)
@@ -1760,20 +1772,46 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-	if(this.order === null)
-		cpov.error("fatal", "order is undefined.", "Poly.toSDL", this);
-    if(this.coefficients === null)
-        cpov.error("fatal", "coefficients is undefined.", "Poly.toSDL", this);
-
     var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
 
     if(this.coefficients.length != ccnt)
         cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
 
 	content.push(pad + "poly {" + (this.id === null ? "" : " // " + this.id));
-    var items = this.coefficents.slice(0);
+    var items = this.coefficients.slice(0);
     items.unshift(this.order);
-	content.push(ppad + this.items.join(", "));
+	content.push(ppad + items.join(", "));
+    if(this.sturm)
+        content.push(ppad + "sturm")
+
+    $Primitive.toSDL-postamble
+
+}
+
+
+
+// Polynomial.toSDL //----------------------------------------------------------
+
+//--------------------------------------------------------------------------
+// Produces SDL representation of the object. Will terminate the program if
+// any necessary attributes are undefined.
+//--------------------------------------------------------------------------
+
+toSDL(stops = 0) {
+
+    $Primitive.toSDL-preamble
+
+    var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
+
+    if(this.coefficients.length != ccnt)
+        cpov.error("fatal", "A Polynomial of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Polynomial.toSDL", this);
+
+	content.push(pad + "polynomial {" + (this.id === null ? "" : " // " + this.id));
+    content.push(ppad + this.order + ", ");
+    var coefficients = [ ];
+    for(var i = 0; i < this.coefficients.length; i++)
+        coefficients.push(ppad + "xyz(" + this.coefficients[i].x + ", " + this.coefficients[i].y + ", " + this.coefficients[i].z + "):" + this.coefficients[i].w);
+    content.push(coefficients.join(",\n"))
     if(this.sturm)
         content.push(ppad + "sturm")
 
@@ -1935,62 +1973,59 @@ toSDL(stops = 0) {
         return "";
 
     var pad = cpov.tab(stops);
-    var contents = [ ];
+    var content = [ ];
 
     if(this.clippedBy !== null) {
-        contents.push(pad + "clipped_by {");
-        contents.push(this.clippedBy.toSDL(stops + 1));
-        contents.push(pad + "}");
+        content.push(pad + "clipped_by {");
+        content.push(this.clippedBy.toSDL(stops + 1));
+        content.push(pad + "}");
     }
 
     if(this.boundedBy !== null) {
-        contents.push(pad + "bounded_by {");
+        content.push(pad + "bounded_by {");
         if(this.boundedBy === this.clippedBy) {
-            contents.push(pad + "    clipped_by");
+            content.push(pad + "    clipped_by");
         } else {
-            contents.push(this.boundedBy.toSDL(stops + 1));
+            content.push(this.boundedBy.toSDL(stops + 1));
         }
-        contents.push(pad + "}");
+        content.push(pad + "}");
     }
 
     if(this.noShadow)
-        contents.push(pad + "no_shadow");
+        content.push(pad + "no_shadow");
 
     if(this.noImage)
-        contents.push(pad + "no_image");
+        content.push(pad + "no_image");
 
     if(this.noRadiosity)
-        contents.push(pad + "no_radiosity");
+        content.push(pad + "no_radiosity");
 
     if(this.noReflection)
-        contents.push(pad + "no_reflection");
+        content.push(pad + "no_reflection");
 
     if(this.inverse)
-        contents.push(pad + "inverse");
-
-    if(this.hierarchy)
-        contents.push(pad + "hierarchy");
+        content.push(pad + "inverse");
 
     if(this.double_illuminate)
-        contents.push(pad + "double_illuminate");
+        content.push(pad + "double_illuminate");
 
     if(this.hollow)
-        contents.push(pad + "hollow");
+        content.push(pad + "hollow");
 
     // TODO: interior
     // TODO: interior_texture
     // TODO: texture (real)
 
     if(this.texture)
-        contents.push(pad + this.texture);
+        content.push(pad + this.texture);
 
     // TODO: photons
     // TODO: radiosity
 
     if(this.transform !== undefined && this.transform !== null)
-        contents.push(this.transform.toSDL(stops));
+        content.push(this.transform.toSDL(stops));
 
-    return contents.join("\n");
+    return content.join("\n");
 }
 
 
@@ -2130,15 +2165,12 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.coefficients === null)
-        cpov.error("fatal", "coefficients is undefined.", "Quadric.toSDL", this);
-
     content.push(pad + "quadric {" + (this.id === null ? "" : " // " + this.id));
     content.push(
         ppad
-        + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, " +
-        + "<" + this.coefficients[3] + ", " + this.coefficients[4] + ", " + this.coefficients[5] + ">, " +
-        + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, " +
+        + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, "
+        + "<" + this.coefficients[3] + ", " + this.coefficients[4] + ", " + this.coefficients[5] + ">, "
+        + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, "
         + this.coefficients[9]
     );
 
