@@ -205,6 +205,22 @@ cpov.isArrayOfClass = function(val, classname, min, max) {
 
 //------------------------------------------------------------------------------
 
+cpov.isArrayOfBaseClass = function(val, classname, min, max) {
+    if(Array.isArray(val)) {
+        for(var i = 0; i < val.length; i++) {
+            if(!cpov.inheritsFrom(val[i], classname))
+                return false;
+        }
+        if(val.length < min || val.length > max)
+            return false;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//------------------------------------------------------------------------------
+
 cpov.inheritsFrom = function(val, classname) {
     return Object.getPrototypeOf(val.constructor).name == classname ? true : false;
 }
@@ -844,7 +860,7 @@ cpov.gsDef = {
             valid: "cpov.isFloat(val) && cpov.isWithin(val, 0, 1)",
             err:   "photonAutostop must be a float within the unit interval (0.0 - 1.0)"
         }, {
-            name:  "photonCount",                                                                          // TODO: cannot be used with photonSpacing
+            name:  "photonCount",
             valid: "cpov.isInt(val) && val >= 0",
             err:   "photonCount must be an integer greater than or equal to zero"
         }, {
@@ -880,7 +896,7 @@ cpov.gsDef = {
             valid: "cpov.isNonEmptyString(val)",
             err:   "photonSaveFile must be a non-empty string."
         }, {
-            name:  "photonSpacing",                                       // TODO: cannot be used with photonCount
+            name:  "photonSpacing",
             valid: "cpov.isFloat(val) && val > 0",
             err:   "photonSpacing must be a float greater than zero."
         }, {
@@ -1516,11 +1532,11 @@ cpov.objDef = {
             {
                 name:  "type",
                 req:   true,
-                valid: "cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera'])",
+                valid: "cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera'])", // TODO: CamelCased versions
                 err:   "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera."
             }, {
                 name:  "angle", //        type: "FIXME" }, // TODO
-                valid: "",
+                valid: "true",
                 err:   "angle"
             }, {
                 name:  "apertureSize",
@@ -1866,7 +1882,7 @@ cpov.objDef = {
                 valid: "cpov.isBoolean(val)",
                 err:   "jitter must be a boolean."
             }, {
-                name:  "looksLike",
+                name:  "looksLike", // TODO
                 child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "looksLike must be a Primitive."
@@ -2429,7 +2445,7 @@ cpov.objDef = {
             }, {
                 name:  "coefficients",
                 req:   true,
-                valid: "cpov.isArrayOfFloats(val, 1, Infinity)",   // FIXME
+                valid: "cpov.isArrayOfFloats(val, 1, Infinity)",
                 err:   "coefficients must be an array of floats."
             }, {
                 name:  "sturm",
@@ -2534,10 +2550,10 @@ cpov.objDef = {
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
-                name:  "objects",
+                name:  "components",
                 child: "scalar",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives."
             }, {
                 name:  "splitUnion",
@@ -2556,10 +2572,10 @@ cpov.objDef = {
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
-                name:  "objects",
+                name:  "components",
                 child: "scalar",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives."
             }
         ],
@@ -2574,16 +2590,16 @@ cpov.objDef = {
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
-                name:  "positiveObject",
+                name:  "positiveComponent",
                 child: "scalar",
                 req:   true,
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "positiveObject must be a Primitive."
             }, {
-                name:  "negativeObjects",
+                name:  "negativeComponents",
                 child: "array",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
                 err:   "negativeObjects must be an array of Primitives."
             }
         ],
@@ -2598,10 +2614,10 @@ cpov.objDef = {
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
-                name:  "objects",
+                name:  "components",
                 child: "array",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'Primitive')",
+                valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives."
             }
         ],

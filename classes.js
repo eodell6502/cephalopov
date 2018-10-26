@@ -4381,7 +4381,7 @@ class Camera extends Primitive {
     }
 
     set angle(val) {
-        if(true) { // FIXME
+        if(cpov.isNullOrFunction(val) || (true)) {
             this._angle = val;
         } else {
             cpov.error("fatal", "angle", "Camera");
@@ -4702,9 +4702,7 @@ class Camera extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.type === null)
-            cpov.error("fatal", "type is undefined.", "Camera.toSDL", this);
-        else if(this.type == "cylinder" && this.cylinderType === null)
+        if(this.type == "cylinder" && this.cylinderType === null)
             cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL", this);
         else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
             cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
@@ -6906,11 +6904,6 @@ class LightSource extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.location === null)
-            cpov.error("fatal", "location is undefined.", "LightSource.toSDL", this);
-        if(this.color === null)
-            cpov.error("fatal", "color is undefined.", "LightSource.toSDL", this);
-    
         content.push(pad + "light_source {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
     
@@ -6932,7 +6925,7 @@ class LightSource extends Primitive {
             content.push(ppad + "parallel");
     
         if(this.pointAt !== null)
-            content.push(ppad + "point_at " + this.pointAt);
+            content.push(ppad + "point_at " + this.pointAt.toSDL());
     
         if(this.areaLight) {
             if(this.axis1 === null || this.axis2 === null || this.size1 === null || this.size2 === null)
@@ -11136,7 +11129,7 @@ class Union extends Primitive {
 
         // Mutable properties //
 
-        this._objects    = null;
+        this._components = null;
         this._splitUnion = null;
 
         // Initialization //
@@ -11145,7 +11138,7 @@ class Union extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ "objects" ];
+        this.requiredParams = [ "components" ];
 
     }
 
@@ -11181,19 +11174,19 @@ class Union extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get objects() {
-        if(typeof this._objects == "function")
-            return this._objects();
-        else if(cpov.isSDLFunction(this._objects))
-            return this._objects.substr(1);
+    get components() {
+        if(typeof this._components == "function")
+            return this._components();
+        else if(cpov.isSDLFunction(this._components))
+            return this._components.substr(1);
         else
-            return this._objects;
+            return this._components;
     }
 
-    set objects(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
-            this._objects = val;
-            this.adopt(this._objects);
+    set components(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
+            this._components = val;
+            this.adopt(this._components);
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Union");
         }
@@ -11227,7 +11220,7 @@ class Union extends Primitive {
         var newObj = new Union();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.objects    = this.objects;   
+        newObj.components = this.components;
         newObj.splitUnion = this.splitUnion;
 
         return newObj;
@@ -11249,12 +11242,9 @@ class Union extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.objects === null)
-            cpov.error("fatal", "objects is undefined.", "Union.toSDL", this);
-    
-        content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
-        for(var i = 0; i < this.objects.length; i++) {
-            content.push(ppad + this.objects[i].toSDL(stops + 1));
+        content.push(pad + "union {" + (this.id === null ? "" : " // " + this.id));
+        for(var i = 0; i < this.components.length; i++) {
+            content.push(ppad + this.components[i].toSDL(stops + 1));
         }
         content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
     
@@ -11293,7 +11283,7 @@ class Intersection extends Primitive {
 
         // Mutable properties //
 
-        this._objects = null;
+        this._components = null;
 
         // Initialization //
 
@@ -11301,7 +11291,7 @@ class Intersection extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ "objects" ];
+        this.requiredParams = [ "components" ];
 
     }
 
@@ -11337,19 +11327,19 @@ class Intersection extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get objects() {
-        if(typeof this._objects == "function")
-            return this._objects();
-        else if(cpov.isSDLFunction(this._objects))
-            return this._objects.substr(1);
+    get components() {
+        if(typeof this._components == "function")
+            return this._components();
+        else if(cpov.isSDLFunction(this._components))
+            return this._components.substr(1);
         else
-            return this._objects;
+            return this._components;
     }
 
-    set objects(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
-            this._objects = val;
-            this.adopt(this._objects);
+    set components(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
+            this._components = val;
+            this.adopt(this._components);
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Intersection");
         }
@@ -11364,7 +11354,7 @@ class Intersection extends Primitive {
         var newObj = new Intersection();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.objects = this.objects;
+        newObj.components = this.components;
 
         return newObj;
     }
@@ -11385,12 +11375,9 @@ class Intersection extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.objects === null)
-            cpov.error("fatal", "objects is undefined.", "Intersection.toSDL", this);
-    
         content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
-        for(var i = 0; i < this.objects.length; i++) {
-            content.push(ppad + this.objects[i].toSDL(stops + 1));
+        for(var i = 0; i < this.components.length; i++) {
+            content.push(ppad + this.components[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);
@@ -11428,8 +11415,8 @@ class Difference extends Primitive {
 
         // Mutable properties //
 
-        this._positiveObject  = null;
-        this._negativeObjects = null;
+        this._positiveComponent  = null;
+        this._negativeComponents = null;
 
         // Initialization //
 
@@ -11437,7 +11424,7 @@ class Difference extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ "positiveObject", "negativeObjects" ];
+        this.requiredParams = [ "positiveComponent", "negativeComponents" ];
 
     }
 
@@ -11473,19 +11460,19 @@ class Difference extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get positiveObject() {
-        if(typeof this._positiveObject == "function")
-            return this._positiveObject();
-        else if(cpov.isSDLFunction(this._positiveObject))
-            return this._positiveObject.substr(1);
+    get positiveComponent() {
+        if(typeof this._positiveComponent == "function")
+            return this._positiveComponent();
+        else if(cpov.isSDLFunction(this._positiveComponent))
+            return this._positiveComponent.substr(1);
         else
-            return this._positiveObject;
+            return this._positiveComponent;
     }
 
-    set positiveObject(val) {
+    set positiveComponent(val) {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
-            this._positiveObject = val;
-            this.adopt(this._positiveObject);
+            this._positiveComponent = val;
+            this.adopt(this._positiveComponent);
         } else {
             cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
         }
@@ -11493,19 +11480,19 @@ class Difference extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get negativeObjects() {
-        if(typeof this._negativeObjects == "function")
-            return this._negativeObjects();
-        else if(cpov.isSDLFunction(this._negativeObjects))
-            return this._negativeObjects.substr(1);
+    get negativeComponents() {
+        if(typeof this._negativeComponents == "function")
+            return this._negativeComponents();
+        else if(cpov.isSDLFunction(this._negativeComponents))
+            return this._negativeComponents.substr(1);
         else
-            return this._negativeObjects;
+            return this._negativeComponents;
     }
 
-    set negativeObjects(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
-            this._negativeObjects = val;
-            this.adopt(this._negativeObjects);
+    set negativeComponents(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
+            this._negativeComponents = val;
+            this.adopt(this._negativeComponents);
         } else {
             cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference");
         }
@@ -11520,8 +11507,8 @@ class Difference extends Primitive {
         var newObj = new Difference();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.positiveObject  = this.positiveObject; 
-        newObj.negativeObjects = this.negativeObjects;
+        newObj.positiveComponent  = this.positiveComponent; 
+        newObj.negativeComponents = this.negativeComponents;
 
         return newObj;
     }
@@ -11542,15 +11529,10 @@ class Difference extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.positiveObject === null)
-            cpov.error("fatal", "positiveObject is undefined.", "Difference.toSDL", this);
-        if(this.negativeObjects === null)
-            cpov.error("fatal", "negativeObjects is undefined.", "Difference.toSDL", this);
-    
         content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.positiveObject.toSDL(stops + 1));
-        for(var i = 0; i < this.negativeObjects.length; i++) {
-            content.push(ppad + this.negativeObjects[i].toSDL(stops + 1));
+        content.push(ppad + this.positiveComponent.toSDL(stops + 1));
+        for(var i = 0; i < this.negativeComponents.length; i++) {
+            content.push(ppad + this.negativeComponents[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);
@@ -11588,7 +11570,7 @@ class Merge extends Primitive {
 
         // Mutable properties //
 
-        this._objects = null;
+        this._components = null;
 
         // Initialization //
 
@@ -11596,7 +11578,7 @@ class Merge extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ "objects" ];
+        this.requiredParams = [ "components" ];
 
     }
 
@@ -11632,19 +11614,19 @@ class Merge extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get objects() {
-        if(typeof this._objects == "function")
-            return this._objects();
-        else if(cpov.isSDLFunction(this._objects))
-            return this._objects.substr(1);
+    get components() {
+        if(typeof this._components == "function")
+            return this._components();
+        else if(cpov.isSDLFunction(this._components))
+            return this._components.substr(1);
         else
-            return this._objects;
+            return this._components;
     }
 
-    set objects(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Primitive'))) {
-            this._objects = val;
-            this.adopt(this._objects);
+    set components(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
+            this._components = val;
+            this.adopt(this._components);
         } else {
             cpov.error("fatal", "objects must be an array of Primitives.", "Merge");
         }
@@ -11659,7 +11641,7 @@ class Merge extends Primitive {
         var newObj = new Merge();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.objects = this.objects;
+        newObj.components = this.components;
 
         return newObj;
     }
@@ -11680,12 +11662,9 @@ class Merge extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.objects === null)
-            cpov.error("fatal", "objects is undefined.", "Merge.toSDL", this);
-    
         content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
-        for(var i = 0; i < this.objects.length; i++) {
-            content.push(ppad + this.objects[i].toSDL(stops + 1));
+        for(var i = 0; i < this.components.length; i++) {
+            content.push(ppad + this.components[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);

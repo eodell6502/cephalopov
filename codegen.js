@@ -469,7 +469,6 @@ function main() {
             var label = "// " + keys[i] + " //";
             label = label + dash80.substr(0, 80 - label.length) + "\n\n";
             fp.write(label);
-            // TODO: prettify?
             fp.write(snippets[keys[i]] + "\n\n\n\n")
         }
 

@@ -136,9 +136,7 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.type === null)
-        cpov.error("fatal", "type is undefined.", "Camera.toSDL", this);
-    else if(this.type == "cylinder" && this.cylinderType === null)
+    if(this.type == "cylinder" && this.cylinderType === null)
         cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL", this);
     else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
         cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
@@ -385,15 +383,10 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.positiveObject === null)
-        cpov.error("fatal", "positiveObject is undefined.", "Difference.toSDL", this);
-    if(this.negativeObjects === null)
-        cpov.error("fatal", "negativeObjects is undefined.", "Difference.toSDL", this);
-
     content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
-    content.push(ppad + this.positiveObject.toSDL(stops + 1));
-    for(var i = 0; i < this.negativeObjects.length; i++) {
-        content.push(ppad + this.negativeObjects[i].toSDL(stops + 1));
+    content.push(ppad + this.positiveComponent.toSDL(stops + 1));
+    for(var i = 0; i < this.negativeComponents.length; i++) {
+        content.push(ppad + this.negativeComponents[i].toSDL(stops + 1));
     }
 
     $Primitive.toSDL-postamble
@@ -1033,12 +1026,9 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.objects === null)
-        cpov.error("fatal", "objects is undefined.", "Intersection.toSDL", this);
-
     content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
-    for(var i = 0; i < this.objects.length; i++) {
-        content.push(ppad + this.objects[i].toSDL(stops + 1));
+    for(var i = 0; i < this.components.length; i++) {
+        content.push(ppad + this.components[i].toSDL(stops + 1));
     }
 
     $Primitive.toSDL-postamble
@@ -1150,11 +1140,6 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.location === null)
-        cpov.error("fatal", "location is undefined.", "LightSource.toSDL", this);
-    if(this.color === null)
-        cpov.error("fatal", "color is undefined.", "LightSource.toSDL", this);
-
     content.push(pad + "light_source {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
 
@@ -1176,7 +1161,7 @@ toSDL(stops = 0) {
         content.push(ppad + "parallel");
 
     if(this.pointAt !== null)
-        content.push(ppad + "point_at " + this.pointAt);
+        content.push(ppad + "point_at " + this.pointAt.toSDL());
 
     if(this.areaLight) {
         if(this.axis1 === null || this.axis2 === null || this.size1 === null || this.size2 === null)
@@ -1628,12 +1613,9 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.objects === null)
-        cpov.error("fatal", "objects is undefined.", "Merge.toSDL", this);
-
     content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
-    for(var i = 0; i < this.objects.length; i++) {
-        content.push(ppad + this.objects[i].toSDL(stops + 1));
+    for(var i = 0; i < this.components.length; i++) {
+        content.push(ppad + this.components[i].toSDL(stops + 1));
     }
 
     $Primitive.toSDL-postamble
@@ -2431,12 +2413,9 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-    if(this.objects === null)
-        cpov.error("fatal", "objects is undefined.", "Union.toSDL", this);
-
-    content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
-    for(var i = 0; i < this.objects.length; i++) {
-        content.push(ppad + this.objects[i].toSDL(stops + 1));
+    content.push(pad + "union {" + (this.id === null ? "" : " // " + this.id));
+    for(var i = 0; i < this.components.length; i++) {
+        content.push(ppad + this.components[i].toSDL(stops + 1));
     }
     content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
 

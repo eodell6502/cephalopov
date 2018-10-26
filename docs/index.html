@@ -243,17 +243,12 @@ different functions, and look at the results of a rendering.</p>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='working'>In Progress</td><td>Implement</td><td>Regression test script(s)</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: difference</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: intersection</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: merge</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test</td><td>CSG: union</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test</td><td>Special: camera</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test</td><td>Special: lightSource</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Ease-of-use refinements for initializers and assignments, esp. <code>Vector*/Color</code> and <code>Matrix</code></td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>"<code>stamp()</code>" (come up with better name?)</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Documentation illustration generator script</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Compact output format for triangles in Mesh</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>uvVectors member in Triangle, ck Mesh compatibility.</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Optional skip first indent in toSDL functions</td></tr>
         <tr><td class='done'>Done</td><td>Test/Implement</td><td><code>--preamble</code></td></tr>
         <tr><td class='done'>Done</td><td>Test/Implement</td><td><code>--sdlIncludes</code></td></tr>
         <tr><td class='done'>Done</td><td>Implement</td><td><code>--debug</code> levels as with <code>--verbose</code></td></tr>
@@ -292,10 +287,50 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='done'>Done</td><td>Test</td><td>text</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>torus</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>triangle</td></tr>
+        <tr><td class='done'>Done</td><td>Test</td><td>CSG: union</td></tr>
+        <tr><td class='done'>Done</td><td>Test</td><td>CSG: intersection</td></tr>
+        <tr><td class='done'>Done</td><td>Test</td><td>CSG: merge</td></tr>
+        <tr><td class='done'>Done</td><td>Test</td><td>CSG: difference</td></tr>
+        <tr><td class='done'>Done</td><td>Test</td><td>Special: camera</td></tr>
+        <tr><td class='done'>Done</td><td>Test</td><td>Special: lightSource</td></tr>
         <tr><td class='done'>Done</td><td>Test/Implement</td><td>Respect <code>imageOptions.createIni</code></td></tr>
     </tbody>
 </table>
 
+<h3>Milestone C0: TODO/FIXME: Fallout needing prioritization</h3>
+
+<table class='sgrid'>
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    <thead><tbody>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Camera pseudo-primitive in CSG, transformations</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Camera.angle: Determine legal values and enforce</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Camera.type: replace SDL literals with camelCased cpov versions</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>cpov.js: More selective scope management</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Deep clones, etc.</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Lathe: add check for correct minimum number of points</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.looksLike</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.mediaAttenuation</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.mediaInteraction</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.projectedThrough</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Management of array attributes</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Matrix: Improve constructor validation</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Mesh2</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.interior</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.interiorTexture</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.photons</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.photons</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.radiosity</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.radiosity</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.texture</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Text.toSDL: Handle escaping of double quotes in Text.displayText</td></tr>
+    </tbody>
+</table>
 
 <h3>Milestone C1: Preparation for public beta</h3>
 

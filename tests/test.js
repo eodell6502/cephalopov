@@ -45,9 +45,138 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "Torus: minimal test");                        torusTestMinimum(fp);
     testHeader(fp, ++testSerial, "Triangle: minimal test");                     triangleTestMinimum(fp);
 
+    testHeader(fp, ++testSerial, "Union: minimal test");                        unionTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Merge: minimal test");                        mergeTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Intersection: minimal test");                 intersectionTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Difference: minimal test");                   differenceTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "LightSource: minimal test");                  lightSourceTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Camera: minimal test");                       cameraTestMinimum(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function cameraTestMinimum(fp) {
+
+    var params = {
+        type: "perspective",
+        lookAt: new VectorXYZ({x: 0, y: 0, z: 0}),
+        location: new VectorXYZ({x: 5, y: 5, z: 5}),
+        id: "cameraTestMinimum"
+    };
+
+    var obj = new Camera(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+
+//==============================================================================
+
+function lightSourceTestMinimum(fp) {
+
+    var params = {
+        location: new VectorXYZ({x: 1, y: 1, z: 1}),
+        color: new Color({r: 1, g: 1, b: 1}),
+        adaptive: 0.5,
+        fadeDistance: 5.1,
+        fadePower: 1.2,
+        id: "point_lightSourceTestMinimum"
+    };
+
+    var obj = new LightSource(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function differenceTestMinimum(fp) {
+
+    var params = {
+        positiveComponent: new Box({ corner1: [0.5, 0.5, 0.5], corner2: [1.5, 1.5, 1.5] }),
+        negativeComponents: [
+            new Box({ corner1: [0, 0, 0], corner2: [1, 1, 1] }),
+            new Box({ corner1: [1, 1, 1], corner2: [2, 2, 2] })
+        ],
+        id: "differenceTestMinimum"
+    };
+
+    var obj = new Difference(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+
+//==============================================================================
+
+function intersectionTestMinimum(fp) {
+
+    var params = {
+        components: [
+            new Box({ corner1: [0, 0, 0], corner2: [1, 1, 1] }),
+            new Box({ corner1: [0.5, 0.5, 0.5], corner2: [1.5, 1.5, 1.5] }),
+            new Box({ corner1: [1, 1, 1], corner2: [2, 2, 2] })
+        ],
+        id: "intersectionTestMinimum"
+    };
+
+    var obj = new Intersection(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function intersectionTestMinimum(fp) {
+
+    var params = {
+        components: [
+            new Box({ corner1: [0, 0, 0], corner2: [1, 1, 1] }),
+            new Box({ corner1: [0.5, 0.5, 0.5], corner2: [1.5, 1.5, 1.5] }),
+            new Box({ corner1: [1, 1, 1], corner2: [2, 2, 2] })
+        ],
+        id: "intersectionTestMinimum"
+    };
+
+    var obj = new Intersection(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+
+//==============================================================================
+
+function mergeTestMinimum(fp) {
+
+    var params = {
+        components: [
+            new Box({ corner1: [0, 0, 0], corner2: [1, 1, 1] }),
+            new Box({ corner1: [0.5, 0.5, 0.5], corner2: [1.5, 1.5, 1.5] }),
+            new Box({ corner1: [1, 1, 1], corner2: [2, 2, 2] })
+        ],
+        id: "mergeTestMinimum"
+    };
+
+    var obj = new Merge(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
+//==============================================================================
+
+function unionTestMinimum(fp) {
+
+    var params = {
+        components: [
+            new Box({ corner1: [0, 0, 0], corner2: [1, 1, 1] }),
+            new Box({ corner1: [0.5, 0.5, 0.5], corner2: [1.5, 1.5, 1.5] }),
+            new Box({ corner1: [1, 1, 1], corner2: [2, 2, 2] })
+        ],
+        splitUnion: true,
+        id: "unionTestMinimum"
+    };
+
+    var obj = new Union(params);
+    fp.write(obj.toSDL() + "\n\n");
+}
+
 
 //==============================================================================
 
@@ -56,7 +185,8 @@ function sphereSweepTestMinimum(fp) {
     var params = {
         type: "linearSpline",
 		spheres: [ new Sphere({ center: [1, 2, 3], radius: 1.2 }), new Sphere({ center: [4, 5, 6], radius: 2.4 }) ],
-		tolerance: 1.2
+		tolerance: 1.2,
+        id: "sphereSweepTestMinimum"
     };
 
     var obj = new SphereSweep(params);
@@ -68,7 +198,8 @@ function sphereSweepTestMinimum(fp) {
 function sorTestMinimum(fp) {
 
     var params = {
-        points: [ new VectorXY({x:0,y:0}), new VectorXY({x:1,y:1}), new VectorXY({x:0,y:2}) ]
+        points: [ new VectorXY({x:0,y:0}), new VectorXY({x:1,y:1}), new VectorXY({x:0,y:2}) ],
+        id: "sorTestMinimum"
     };
 
     var obj = new Sor(params);
@@ -80,7 +211,8 @@ function sorTestMinimum(fp) {
 function quarticTestMinimum(fp) {
 
     var params = {
-        coefficients: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,2,122,23,24,25,26,27,28,29,30,31,32,33,34,35]
+        coefficients: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,2,122,23,24,25,26,27,28,29,30,31,32,33,34,35],
+        id: "quarticTestMinimum"
     };
 
     var obj = new Quartic(params);
@@ -92,7 +224,8 @@ function quarticTestMinimum(fp) {
 function quadricTestMinimum(fp) {
 
     var params = {
-        coefficients: [1,2,3,4,5,6,7,8,9,10]
+        coefficients: [1,2,3,4,5,6,7,8,9,10],
+        id: "quadricTestMinimum"
     };
 
     var obj = new Quadric(params);
@@ -117,7 +250,8 @@ function polynomialTestMinimum(fp) {
             new VectorXYZW({x:9,  y:2,  z:2, w:1}),
             new VectorXYZW({x:10, y:1,  z:4, w:2}),
         ],
-        sturm: true
+        sturm: true,
+        id: "polynomialTestMinimum"
     };
 
     var obj = new Polynomial(params);
@@ -131,7 +265,8 @@ function polyTestMinimum(fp) {
     var params = {
         order: 3,
         coefficients: [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 ],
-        sturm: true
+        sturm: true,
+        id: "polyTestMinimum"
     };
 
     var obj = new Poly(params);
@@ -156,7 +291,8 @@ function parametricTestMinimum(fp) {
         precomputeDepth: 4,
         precomputeX: true,
         precomputeY: true,
-        precomputeZ: true
+        precomputeZ: true,
+        id: "parametricTestMinimum"
     };
 
     var obj = new Parametric(params);
@@ -178,7 +314,8 @@ function meshTestMinimum(fp) {
     var params = {
         triangles: [triangle1, triangle2],
         insideVector: new VectorXYZ({x:0, y:1, z:0}),
-        hierarchy: true
+        hierarchy: true,
+        id: "meshTestMinimum"
     };
 
     var obj = new Mesh(params);
@@ -192,7 +329,8 @@ function latheTestMinimum(fp) {
     var params = {
         type: "linearSpline",
         points: [ new VectorXY({x:0, y:0}), new VectorXY({x:1, y:1}), new VectorXY({x:0, y:1}) ],
-        sturm: true
+        sturm: true,
+        id: "latheTestMinimum"
     };
 
     var obj = new Lathe(params);
