@@ -47,8 +47,10 @@ cpov.startTime      = 0.0;       // starting time for animation
 cpov.endTime        = Infinity;  // ending time for animation
 cpov.startFrame     = 0;         // starting frame number for animation
 cpov.endFrame       = Infinity;  // ending frame number for animation
-cpov.imageOptions   = null;
-cpov.globalSettings = null;
+cpov.imageOptions   = null;      // current settings for CLI or .ini file
+cpov.globalSettings = null;      // current globalSettings values
+cpov.snapshots      = [ ];       // snapshots for current frame
+cpov.snapshotMode   = false;     // switch for snapshot mode, defaults to false
 
 cpov.currentFrame = 0;    // current animation frame
 cpov.objectSerial = 0;    // running count of Primitives created
@@ -3069,13 +3071,32 @@ cpov.outputFrame = function() {
         povFile.write("\n");
     }
 
-    for(var serial in cpov.serialMap) {
-        var obj = cpov.serialMap[serial];
-        if(obj.active && obj.parent === null) {
-            cpov.error("debug", "Calling toSDL on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
-            povFile.write("// Object " + (obj.id ? obj.id : "" ) + " #" + serial + "\n\n");
-            povFile.write(obj.toSDL() + "\n\n");
+    //--------------------------------------------------------------------------
+    // If we're in snapshot mode, we just dump the snapshots to the file and
+    // then clear the snapshot buffer. Otherwise, we walk through all of the
+    // (active) objects and call their .toSDL methods and write the output to
+    // the file.
+    //--------------------------------------------------------------------------
+
+    if(cpov.snapshotMode) {
+
+        if(!cpov.snapshots.length) {
+            cpov.error("warn", "Snapshot buffer is empty.", "CEPHALOPOV.outputFrame");
+        } else {
+            povFile.write(cpov.snapshots.join("\n\n"));
         }
+
+    } else {
+
+        for(var serial in cpov.serialMap) {
+            var obj = cpov.serialMap[serial];
+            if(obj.active && obj.parent === null) {
+                cpov.error("debug", "Calling toSDL on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
+                povFile.write("// Object " + (obj.id ? obj.id : "" ) + " #" + serial + "\n\n");
+                povFile.write(obj.toSDL() + "\n\n");
+            }
+        }
+
     }
 
     //--------------------------------------------------------------------------
