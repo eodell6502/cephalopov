@@ -3884,7 +3884,7 @@ class Primitive {
     
         if(missing.length > 0) {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
-                + ".", "Primitive.requiredParameterTest", this);
+                + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
         }
     }
 
@@ -5820,9 +5820,9 @@ class Difference extends Primitive {
         var content = [ ];
     
         content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.positiveComponent.toSDL(stops + 1));
+        content.push(this.positiveComponent.toSDL(stops + 1));
         for(var i = 0; i < this.negativeComponents.length; i++) {
-            content.push(ppad + this.negativeComponents[i].toSDL(stops + 1));
+            content.push(this.negativeComponents[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);
@@ -6438,7 +6438,7 @@ class Intersection extends Primitive {
     
         content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.components.length; i++) {
-            content.push(ppad + this.components[i].toSDL(stops + 1));
+            content.push(this.components[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);
@@ -8036,7 +8036,7 @@ class Merge extends Primitive {
     
         content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.components.length; i++) {
-            content.push(ppad + this.components[i].toSDL(stops + 1));
+            content.push(this.components[i].toSDL(stops + 1));
         }
     
         var superSDL = super.toSDL(stops + 1);
@@ -11652,7 +11652,7 @@ class Union extends Primitive {
     
         content.push(pad + "union {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.components.length; i++) {
-            content.push(ppad + this.components[i].toSDL(stops + 1));
+            content.push(this.components[i].toSDL(stops + 1));
         }
         content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
     
@@ -11708,7 +11708,7 @@ class VectorXY {
         
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "x", "y" ];
 
     }
 
@@ -11786,12 +11786,32 @@ class VectorXY {
     
     toSDL(stops = 0) {
     
-        if(this.x === null)
-            cpov.error("fatal", "x is undefined.", "VectorXY.toSDL", this);
-        if(this.y === null)
-            cpov.error("fatal", "y is undefined.", "VectorXY.toSDL", this);
+        this.requiredParameterTest(this.requiredParams);
     
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ">";
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Tests to see whether the required parameters for the class have been
+    // filled prior to output. Aborts if not. There are currently (10/15/2018)
+    // no required params for the Primitive base class; this is meant to be
+    // called from the subclasses.
+    //--------------------------------------------------------------------------
+    
+    requiredParameterTest(requiredParams) {
+        var missing = [ ];
+    
+        for(var i = 0; i < requiredParams.length; i++) {
+            if(this[requiredParams[i]] === null) {
+                missing.push(requiredParams[i]);
+            }
+        }
+    
+        if(missing.length > 0) {
+            cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
+                + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
+        }
     }
 
 
@@ -11838,7 +11858,7 @@ class VectorUV {
         
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "u", "v" ];
 
     }
 
@@ -11916,12 +11936,32 @@ class VectorUV {
     
     toSDL(stops = 0) {
     
-        if(this.u === null)
-            cpov.error("fatal", "u is undefined.", "VectorUV.toSDL", this);
-        if(this.v === null)
-            cpov.error("fatal", "v is undefined.", "VectorUV.toSDL", this);
+        this.requiredParameterTest(this.requiredParams);
     
         return cpov.tab(stops) + "<" + this.u + ", " + this.v + ">";
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Tests to see whether the required parameters for the class have been
+    // filled prior to output. Aborts if not. There are currently (10/15/2018)
+    // no required params for the Primitive base class; this is meant to be
+    // called from the subclasses.
+    //--------------------------------------------------------------------------
+    
+    requiredParameterTest(requiredParams) {
+        var missing = [ ];
+    
+        for(var i = 0; i < requiredParams.length; i++) {
+            if(this[requiredParams[i]] === null) {
+                missing.push(requiredParams[i]);
+            }
+        }
+    
+        if(missing.length > 0) {
+            cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
+                + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
+        }
     }
 
 
@@ -11970,7 +12010,7 @@ class VectorXYZ {
         
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "x", "y", "z" ];
 
     }
 
@@ -12069,14 +12109,32 @@ class VectorXYZ {
     
     toSDL(stops = 0) {
     
-        if(this.x === null)
-            cpov.error("fatal", "x is undefined.", "VectorXYZ.toSDL", this);
-        if(this.y === null)
-            cpov.error("fatal", "y is undefined.", "VectorXYZ.toSDL", this);
-        if(this.z === null)
-            cpov.error("fatal", "z is undefined.", "VectorXYZ.toSDL", this);
+        this.requiredParameterTest(this.requiredParams);
     
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ">";
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Tests to see whether the required parameters for the class have been
+    // filled prior to output. Aborts if not. There are currently (10/15/2018)
+    // no required params for the Primitive base class; this is meant to be
+    // called from the subclasses.
+    //--------------------------------------------------------------------------
+    
+    requiredParameterTest(requiredParams) {
+        var missing = [ ];
+    
+        for(var i = 0; i < requiredParams.length; i++) {
+            if(this[requiredParams[i]] === null) {
+                missing.push(requiredParams[i]);
+            }
+        }
+    
+        if(missing.length > 0) {
+            cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
+                + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
+        }
     }
 
 
@@ -12127,7 +12185,7 @@ class VectorXYZW {
         
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "x", "y", "z", "w" ];
 
     }
 
@@ -12247,16 +12305,32 @@ class VectorXYZW {
     
     toSDL(stops = 0) {
     
-        if(this.x === null)
-            cpov.error("fatal", "x is undefined.", "VectorXYZW.toSDL", this);
-        if(this.y === null)
-            cpov.error("fatal", "y is undefined.", "VectorXYZW.toSDL", this);
-        if(this.z === null)
-            cpov.error("fatal", "z is undefined.", "VectorXYZW.toSDL", this);
-        if(this.w === null)
-            cpov.error("fatal", "w is undefined.", "VectorXYZW.toSDL", this);
+        this.requiredParameterTest(this.requiredParams);
     
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + ">";
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Tests to see whether the required parameters for the class have been
+    // filled prior to output. Aborts if not. There are currently (10/15/2018)
+    // no required params for the Primitive base class; this is meant to be
+    // called from the subclasses.
+    //--------------------------------------------------------------------------
+    
+    requiredParameterTest(requiredParams) {
+        var missing = [ ];
+    
+        for(var i = 0; i < requiredParams.length; i++) {
+            if(this[requiredParams[i]] === null) {
+                missing.push(requiredParams[i]);
+            }
+        }
+    
+        if(missing.length > 0) {
+            cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
+                + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
+        }
     }
 
 
@@ -12286,10 +12360,18 @@ class Color {
         // Snippet constructor block //
 
         if(cpov.isClass(options, "Color")) { // copy
-            options = { r: options.r, g: options.g, b: options.b, f: options.f, t: options.t, srgb: options.srgb };
+            options = {
+                r: options.r === undefined ? null : options.r,
+                g: options.g === undefined ? null : options.g,
+                b: options.b === undefined ? null : options.b,
+                f: options.f === undefined ? null : options.f,
+                t: options.t === undefined ? null : options.t,
+                srgb: options.srgb === undefined ? null : options.srgb
+            };
         }
         
         if(Array.isArray(options)) {
+        
             if(options.length < 3 || options.length > 6) {
                 cpov.error("fatal", "When initializing a Color with an array, it must have three to six values.", "Color.constructor", this);
             } else {
@@ -12303,10 +12385,13 @@ class Color {
                 if(options.length > 5)
                     this.srgb = options[5];
             }
+        
         } else if(typeof options == "object") {
+        
             if(options.r === undefined || options.g === undefined || options.b === undefined)
                 cpov.error("fatal", "When initializing a Color with an object, r, g, and b must be defined.", "Color.constructor", this);
             cpov.initObject(this, options);
+        
         } else {
             cpov.error("fatal", "Invalid initializer.", "Color.constructor", this);
         }
@@ -12314,7 +12399,7 @@ class Color {
         
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "r", "g", "b" ];
 
     }
 
@@ -12478,12 +12563,7 @@ class Color {
     
         stops = cpov.tab(stops);
     
-        if(this.r === null)
-            cpov.error("fatal", "r is undefined.", "Color.toSDL", this);
-        if(this.g === null)
-            cpov.error("fatal", "g is undefined.", "Color.toSDL", this);
-        if(this.b === null)
-            cpov.error("fatal", "b is undefined.", "Color.toSDL", this);
+        this.requiredParameterTest(this.requiredParams);
     
         var form = (this.srgb ? "s" : "") + "rgb";
         var args = [this.r, this.g, this.b];
@@ -12519,6 +12599,29 @@ class Color {
             cpov.error("fatal", "b is undefined.", "Color.toSDL", this);
     
         return stops + " <" + this.r + ", " + this.g + ", " + this.b + ">";
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Tests to see whether the required parameters for the class have been
+    // filled prior to output. Aborts if not. There are currently (10/15/2018)
+    // no required params for the Primitive base class; this is meant to be
+    // called from the subclasses.
+    //--------------------------------------------------------------------------
+    
+    requiredParameterTest(requiredParams) {
+        var missing = [ ];
+    
+        for(var i = 0; i < requiredParams.length; i++) {
+            if(this[requiredParams[i]] === null) {
+                missing.push(requiredParams[i]);
+            }
+        }
+    
+        if(missing.length > 0) {
+            cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
+                + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
+        }
     }
 
 

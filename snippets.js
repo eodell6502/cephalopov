@@ -163,10 +163,18 @@ toSDL(stops = 0) {
 // Color.conBlock //------------------------------------------------------------
 
 if(cpov.isClass(options, "Color")) { // copy
-    options = { r: options.r, g: options.g, b: options.b, f: options.f, t: options.t, srgb: options.srgb };
+    options = {
+        r: options.r === undefined ? null : options.r,
+        g: options.g === undefined ? null : options.g,
+        b: options.b === undefined ? null : options.b,
+        f: options.f === undefined ? null : options.f,
+        t: options.t === undefined ? null : options.t,
+        srgb: options.srgb === undefined ? null : options.srgb
+    };
 }
 
 if(Array.isArray(options)) {
+
     if(options.length < 3 || options.length > 6) {
         cpov.error("fatal", "When initializing a Color with an array, it must have three to six values.", "Color.constructor", this);
     } else {
@@ -180,10 +188,13 @@ if(Array.isArray(options)) {
         if(options.length > 5)
             this.srgb = options[5];
     }
+
 } else if(typeof options == "object") {
+
     if(options.r === undefined || options.g === undefined || options.b === undefined)
         cpov.error("fatal", "When initializing a Color with an object, r, g, and b must be defined.", "Color.constructor", this);
     cpov.initObject(this, options);
+
 } else {
     cpov.error("fatal", "Invalid initializer.", "Color.constructor", this);
 }
@@ -246,12 +257,7 @@ toSDL(stops = 0) {
 
     stops = cpov.tab(stops);
 
-    if(this.r === null)
-        cpov.error("fatal", "r is undefined.", "Color.toSDL", this);
-    if(this.g === null)
-        cpov.error("fatal", "g is undefined.", "Color.toSDL", this);
-    if(this.b === null)
-        cpov.error("fatal", "b is undefined.", "Color.toSDL", this);
+    $Vector.toSDL-preamble
 
     var form = (this.srgb ? "s" : "") + "rgb";
     var args = [this.r, this.g, this.b];
@@ -352,9 +358,9 @@ toSDL(stops = 0) {
     $Primitive.toSDL-preamble
 
     content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
-    content.push(ppad + this.positiveComponent.toSDL(stops + 1));
+    content.push(this.positiveComponent.toSDL(stops + 1));
     for(var i = 0; i < this.negativeComponents.length; i++) {
-        content.push(ppad + this.negativeComponents[i].toSDL(stops + 1));
+        content.push(this.negativeComponents[i].toSDL(stops + 1));
     }
 
     $Primitive.toSDL-postamble
@@ -1076,7 +1082,7 @@ toSDL(stops = 0) {
 
     content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
     for(var i = 0; i < this.components.length; i++) {
-        content.push(ppad + this.components[i].toSDL(stops + 1));
+        content.push(this.components[i].toSDL(stops + 1));
     }
 
     $Primitive.toSDL-postamble
@@ -1664,7 +1670,7 @@ toSDL(stops = 0) {
 
     content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
     for(var i = 0; i < this.components.length; i++) {
-        content.push(ppad + this.components[i].toSDL(stops + 1));
+        content.push(this.components[i].toSDL(stops + 1));
     }
 
     $Primitive.toSDL-postamble
@@ -1966,7 +1972,7 @@ requiredParameterTest(requiredParams) {
 
     if(missing.length > 0) {
         cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
-            + ".", "Primitive.requiredParameterTest", this);
+            + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
     }
 }
 
@@ -2416,12 +2422,18 @@ toSDL(stops = 0) {
 
     content.push(pad + "union {" + (this.id === null ? "" : " // " + this.id));
     for(var i = 0; i < this.components.length; i++) {
-        content.push(ppad + this.components[i].toSDL(stops + 1));
+        content.push(this.components[i].toSDL(stops + 1));
     }
     content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
 
     $Primitive.toSDL-postamble
 }
+
+
+
+// Vector.toSDL-preamble //-----------------------------------------------------
+
+this.requiredParameterTest(this.requiredParams);
 
 
 
@@ -2475,10 +2487,7 @@ copy() {
 
 toSDL(stops = 0) {
 
-    if(this.u === null)
-        cpov.error("fatal", "u is undefined.", "VectorUV.toSDL", this);
-    if(this.v === null)
-        cpov.error("fatal", "v is undefined.", "VectorUV.toSDL", this);
+    $Vector.toSDL-preamble
 
     return cpov.tab(stops) + "<" + this.u + ", " + this.v + ">";
 }
@@ -2535,10 +2544,7 @@ copy() {
 
 toSDL(stops = 0) {
 
-    if(this.x === null)
-        cpov.error("fatal", "x is undefined.", "VectorXY.toSDL", this);
-    if(this.y === null)
-        cpov.error("fatal", "y is undefined.", "VectorXY.toSDL", this);
+    $Vector.toSDL-preamble
 
     return cpov.tab(stops) + "<" + this.x + ", " + this.y + ">";
 }
@@ -2597,12 +2603,7 @@ copy() {
 
 toSDL(stops = 0) {
 
-    if(this.x === null)
-        cpov.error("fatal", "x is undefined.", "VectorXYZ.toSDL", this);
-    if(this.y === null)
-        cpov.error("fatal", "y is undefined.", "VectorXYZ.toSDL", this);
-    if(this.z === null)
-        cpov.error("fatal", "z is undefined.", "VectorXYZ.toSDL", this);
+    $Vector.toSDL-preamble
 
     return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ">";
 }
@@ -2663,14 +2664,7 @@ copy() {
 
 toSDL(stops = 0) {
 
-    if(this.x === null)
-        cpov.error("fatal", "x is undefined.", "VectorXYZW.toSDL", this);
-    if(this.y === null)
-        cpov.error("fatal", "y is undefined.", "VectorXYZW.toSDL", this);
-    if(this.z === null)
-        cpov.error("fatal", "z is undefined.", "VectorXYZW.toSDL", this);
-    if(this.w === null)
-        cpov.error("fatal", "w is undefined.", "VectorXYZW.toSDL", this);
+    $Vector.toSDL-preamble
 
     return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + ">";
 }
