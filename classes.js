@@ -3877,6 +3877,249 @@ exports.Primitive = Primitive;
 
 
 //==============================================================================
+// BicubicPatch class
+//==============================================================================
+
+class BicubicPatch extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._type     = null;
+        this._points   = null;
+        this._uSteps   = null;
+        this._vSteps   = null;
+        this._flatness = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "type", "points" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[BicubicPatch]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[BicubicPatch]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[BicubicPatch]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[BicubicPatch]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get type() {
+        if(typeof this._type == "function")
+            return this._type();
+        else if(cpov.isSDLFunction(this._type))
+            return this._type.substr(1);
+        else
+            return this._type;
+    }
+
+    set type(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && (val == 0 || val == 1))) {
+            this._type = val;
+        } else {
+            cpov.error("fatal", "type must be either 0 or 1.", "BicubicPatch");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get points() {
+        if(typeof this._points == "function")
+            return this._points();
+        else if(cpov.isSDLFunction(this._points))
+            return this._points.substr(1);
+        else
+            return this._points;
+    }
+
+    set points(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16))) {
+            this._points = val;
+        } else {
+            cpov.error("fatal", "points must be an array of 16 VectorXYZ.", "BicubicPatch");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get uSteps() {
+        if(typeof this._uSteps == "function")
+            return this._uSteps();
+        else if(cpov.isSDLFunction(this._uSteps))
+            return this._uSteps.substr(1);
+        else
+            return this._uSteps;
+    }
+
+    set uSteps(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
+            this._uSteps = val;
+        } else {
+            cpov.error("fatal", "uSteps must be an integer.", "BicubicPatch");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get vSteps() {
+        if(typeof this._vSteps == "function")
+            return this._vSteps();
+        else if(cpov.isSDLFunction(this._vSteps))
+            return this._vSteps.substr(1);
+        else
+            return this._vSteps;
+    }
+
+    set vSteps(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
+            this._vSteps = val;
+        } else {
+            cpov.error("fatal", "vSteps must be an integer.", "BicubicPatch");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get flatness() {
+        if(typeof this._flatness == "function")
+            return this._flatness();
+        else if(cpov.isSDLFunction(this._flatness))
+            return this._flatness.substr(1);
+        else
+            return this._flatness;
+    }
+
+    set flatness(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._flatness = val;
+        } else {
+            cpov.error("fatal", "flatness must be a float.", "BicubicPatch");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new BicubicPatch();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.type     = this.type;    
+        newObj.points   = this.points;  
+        newObj.uSteps   = this.uSteps;  
+        newObj.vSteps   = this.vSteps;  
+        newObj.flatness = this.flatness;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.type === null)
+            cpov.error("fatal", "type is undefined.", "BicubicPatch.toSDL", this);
+    	if(this.patch === null)
+            cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
+    
+        content.push(pad + "bicubic_patch {" + (this.id === null ? "" : " // " + this.id));
+    	content.push(ppad + "type " + this.type);
+    	if(this.uSteps !== null)
+    		content.push(ppad + "u_steps " + this.uSteps);
+    	if(this.vSteps !== null)
+    		content.push(ppad + "v_steps " + this.vSteps);
+    	if(this.flatness !== null)
+    		content.push(ppad + "flatness " + this.flatness);
+    
+    	for(var row = 0; row < 4; row++) {
+    		var items = [ ];
+    		for(var col = 0; col < 4; col++) {
+    			items.push(this.points[row * 4 + col].toSDL());
+    		}
+    		content.push(ppad + items.join(", ") + (row != 3 ? "," : ""));
+    	}
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.BicubicPatch = BicubicPatch;
+
+
+//==============================================================================
 // Blob class
 //==============================================================================
 
@@ -4985,6 +5228,172 @@ exports.Cone = Cone;
 
 
 //==============================================================================
+// Cubic class
+//==============================================================================
+
+class Cubic extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = false;
+        this._solid  = true; 
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._coefficients = null;
+        this._sturm        = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "coefficients" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Cubic]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Cubic]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Cubic]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Cubic]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get coefficients() {
+        if(typeof this._coefficients == "function")
+            return this._coefficients();
+        else if(cpov.isSDLFunction(this._coefficients))
+            return this._coefficients.substr(1);
+        else
+            return this._coefficients;
+    }
+
+    set coefficients(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
+            this._coefficients = val;
+        } else {
+            cpov.error("fatal", "coefficients must be an array of 20 floats.", "Cubic");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get sturm() {
+        if(typeof this._sturm == "function")
+            return this._sturm();
+        else if(cpov.isSDLFunction(this._sturm))
+            return this._sturm.substr(1);
+        else
+            return this._sturm;
+    }
+
+    set sturm(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
+            this._sturm = val;
+        } else {
+            cpov.error("fatal", "sturm must be a boolean.", "Cubic");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Cubic();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.coefficients === null)
+            cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
+    
+        content.push(pad + "cubic {" + (this.id === null ? "" : " // " + this.id));
+        content.push(ppad + "< " + this.coefficients.join(", ") + " >");
+        if(this.sturm)
+            content.push(ppad + "sturm");
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Cubic = Cubic;
+
+
+//==============================================================================
 // Cylinder class
 //==============================================================================
 
@@ -5221,6 +5630,369 @@ class Cylinder extends Primitive {
 }
 
 exports.Cylinder = Cylinder;
+
+
+//==============================================================================
+// Difference class
+//==============================================================================
+
+class Difference extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = null;
+        this._solid  = true;
+        this._csg    = true;
+
+        // Mutable properties //
+
+        this._positiveComponent  = null;
+        this._negativeComponents = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "positiveComponent", "negativeComponents" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Difference]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Difference]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Difference]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get positiveComponent() {
+        if(typeof this._positiveComponent == "function")
+            return this._positiveComponent();
+        else if(cpov.isSDLFunction(this._positiveComponent))
+            return this._positiveComponent.substr(1);
+        else
+            return this._positiveComponent;
+    }
+
+    set positiveComponent(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
+            this._positiveComponent = val;
+            this.adopt(this._positiveComponent);
+        } else {
+            cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get negativeComponents() {
+        if(typeof this._negativeComponents == "function")
+            return this._negativeComponents();
+        else if(cpov.isSDLFunction(this._negativeComponents))
+            return this._negativeComponents.substr(1);
+        else
+            return this._negativeComponents;
+    }
+
+    set negativeComponents(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
+            this._negativeComponents = val;
+            this.adopt(this._negativeComponents);
+        } else {
+            cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Difference();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.positiveComponent  = this.positiveComponent; 
+        newObj.negativeComponents = this.negativeComponents;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
+        content.push(ppad + this.positiveComponent.toSDL(stops + 1));
+        for(var i = 0; i < this.negativeComponents.length; i++) {
+            content.push(ppad + this.negativeComponents[i].toSDL(stops + 1));
+        }
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Difference = Difference;
+
+
+//==============================================================================
+// Disc class
+//==============================================================================
+
+class Disc extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._center     = null;
+        this._normal     = null;
+        this._radius     = null;
+        this._holeRadius = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "center", "normal", "radius" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Disc]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Disc]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Disc]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Disc]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get center() {
+        if(typeof this._center == "function")
+            return this._center();
+        else if(cpov.isSDLFunction(this._center))
+            return this._center.substr(1);
+        else
+            return this._center;
+    }
+
+    set center(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+            this._center = val;
+        } else {
+            cpov.error("fatal", "center must be a VectorXYZ.", "Disc");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get normal() {
+        if(typeof this._normal == "function")
+            return this._normal();
+        else if(cpov.isSDLFunction(this._normal))
+            return this._normal.substr(1);
+        else
+            return this._normal;
+    }
+
+    set normal(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+            this._normal = val;
+        } else {
+            cpov.error("fatal", "normal must be a VectorXYZ.", "Disc");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get radius() {
+        if(typeof this._radius == "function")
+            return this._radius();
+        else if(cpov.isSDLFunction(this._radius))
+            return this._radius.substr(1);
+        else
+            return this._radius;
+    }
+
+    set radius(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._radius = val;
+        } else {
+            cpov.error("fatal", "radius must be a float.", "Disc");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get holeRadius() {
+        if(typeof this._holeRadius == "function")
+            return this._holeRadius();
+        else if(cpov.isSDLFunction(this._holeRadius))
+            return this._holeRadius.substr(1);
+        else
+            return this._holeRadius;
+    }
+
+    set holeRadius(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._holeRadius = val;
+        } else {
+            cpov.error("fatal", "holeRadius must be a float.", "Disc");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Disc();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.center     = this.center;    
+        newObj.normal     = this.normal;    
+        newObj.radius     = this.radius;    
+        newObj.holeRadius = this.holeRadius;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        if(this.center === null)
+            cpov.error("fatal", "center is undefined.", "Disc.toSDL", this);
+        if(this.radius === null)
+            cpov.error("fatal", "radius is undefined.", "Disc.toSDL", this);
+    
+        content.push(pad + "disc {" + (this.id === null ? "" : " // " + this.id));
+        content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Disc = Disc;
 
 
 //==============================================================================
@@ -5502,6 +6274,138 @@ class HeightField extends Primitive {
 }
 
 exports.HeightField = HeightField;
+
+
+//==============================================================================
+// Intersection class
+//==============================================================================
+
+class Intersection extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = null;
+        this._solid  = true;
+        this._csg    = true;
+
+        // Mutable properties //
+
+        this._components = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "components" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Intersection]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Intersection]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Intersection]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get components() {
+        if(typeof this._components == "function")
+            return this._components();
+        else if(cpov.isSDLFunction(this._components))
+            return this._components.substr(1);
+        else
+            return this._components;
+    }
+
+    set components(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
+            this._components = val;
+            this.adopt(this._components);
+        } else {
+            cpov.error("fatal", "objects must be an array of Primitives.", "Intersection");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Intersection();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.components = this.components;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
+        for(var i = 0; i < this.components.length; i++) {
+            content.push(ppad + this.components[i].toSDL(stops + 1));
+        }
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Intersection = Intersection;
 
 
 //==============================================================================
@@ -6971,6 +7875,326 @@ exports.LightSource = LightSource;
 
 
 //==============================================================================
+// Merge class
+//==============================================================================
+
+class Merge extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = null;
+        this._solid  = true;
+        this._csg    = true;
+
+        // Mutable properties //
+
+        this._components = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "components" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Merge]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Merge]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Merge]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get components() {
+        if(typeof this._components == "function")
+            return this._components();
+        else if(cpov.isSDLFunction(this._components))
+            return this._components.substr(1);
+        else
+            return this._components;
+    }
+
+    set components(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
+            this._components = val;
+            this.adopt(this._components);
+        } else {
+            cpov.error("fatal", "objects must be an array of Primitives.", "Merge");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Merge();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.components = this.components;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
+        for(var i = 0; i < this.components.length; i++) {
+            content.push(ppad + this.components[i].toSDL(stops + 1));
+        }
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Merge = Merge;
+
+
+//==============================================================================
+// Mesh class
+//==============================================================================
+
+class Mesh extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._triangles    = null;
+        this._insideVector = null;
+        this._hierarchy    = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "triangles" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Mesh]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Mesh]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Mesh]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Mesh]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get triangles() {
+        if(typeof this._triangles == "function")
+            return this._triangles();
+        else if(cpov.isSDLFunction(this._triangles))
+            return this._triangles.substr(1);
+        else
+            return this._triangles;
+    }
+
+    set triangles(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Triangle', 1, Infinity))) {
+            this._triangles = val;
+        } else {
+            cpov.error("fatal", "triangles", "Mesh");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get insideVector() {
+        if(typeof this._insideVector == "function")
+            return this._insideVector();
+        else if(cpov.isSDLFunction(this._insideVector))
+            return this._insideVector.substr(1);
+        else
+            return this._insideVector;
+    }
+
+    set insideVector(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+            this._insideVector = val;
+        } else {
+            cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get hierarchy() {
+        if(typeof this._hierarchy == "function")
+            return this._hierarchy();
+        else if(cpov.isSDLFunction(this._hierarchy))
+            return this._hierarchy.substr(1);
+        else
+            return this._hierarchy;
+    }
+
+    set hierarchy(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
+            this._hierarchy = val;
+        } else {
+            cpov.error("fatal", "hierarchy must be a boolean.", "Mesh");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Mesh();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.triangles    = this.triangles;   
+        newObj.insideVector = this.insideVector;
+        newObj.hierarchy    = this.hierarchy;   
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "mesh {" + (this.id === null ? "" : " // " + this.id));
+        for(var i = 0; i < this.triangles.length; i++) {
+            content.push(this.triangles[i].toSDL(1));
+        }
+        if(this.insideVector !== null)
+            content.push(ppad + "inside_vector " + this.insideVector.toSDL());
+    	if(this.hierarchy !== null)
+    		content.push(ppad + "hierarchy " + (this.hierarchy ? "on" : "off"));
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Mesh = Mesh;
+
+
+//==============================================================================
 // Ovus class
 //==============================================================================
 
@@ -7536,6 +8760,709 @@ exports.Parametric = Parametric;
 
 
 //==============================================================================
+// Plane class
+//==============================================================================
+
+class Plane extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = false;
+        this._solid  = true; 
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._normal   = null;
+        this._distance = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "normal", "distance" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Plane]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Plane]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Plane]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Plane]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get normal() {
+        if(typeof this._normal == "function")
+            return this._normal();
+        else if(cpov.isSDLFunction(this._normal))
+            return this._normal.substr(1);
+        else
+            return this._normal;
+    }
+
+    set normal(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+            this._normal = val;
+        } else {
+            cpov.error("fatal", "normal must be a VectorXYZ.", "Plane");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get distance() {
+        if(typeof this._distance == "function")
+            return this._distance();
+        else if(cpov.isSDLFunction(this._distance))
+            return this._distance.substr(1);
+        else
+            return this._distance;
+    }
+
+    set distance(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+            this._distance = val;
+        } else {
+            cpov.error("fatal", "distance must be a float.", "Plane");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Plane();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.normal   = this.normal;  
+        newObj.distance = this.distance;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+    	if(this.normal === null)
+    		cpov.error("fatal", "normal is undefined.", "Plane.toSDL", this);
+    	if(this.distance === null)
+    		cpov.error("fatal", "distance is undefined.", "Plane.toSDL", this);
+    
+    	content.push(pad + "plane {" + (this.id === null ? "" : " // " + this.id));
+    	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    
+    }
+
+
+
+}
+
+exports.Plane = Plane;
+
+
+//==============================================================================
+// Poly class
+//==============================================================================
+
+class Poly extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = false;
+        this._solid  = true; 
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._order        = null;
+        this._coefficients = null;
+        this._sturm        = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "order", "coefficients" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Poly]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Poly]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Poly]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Poly]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get order() {
+        if(typeof this._order == "function")
+            return this._order();
+        else if(cpov.isSDLFunction(this._order))
+            return this._order.substr(1);
+        else
+            return this._order;
+    }
+
+    set order(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 2 && val <= 35)) {
+            this._order = val;
+        } else {
+            cpov.error("fatal", "order must be an integer in the range (.", "Poly");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get coefficients() {
+        if(typeof this._coefficients == "function")
+            return this._coefficients();
+        else if(cpov.isSDLFunction(this._coefficients))
+            return this._coefficients.substr(1);
+        else
+            return this._coefficients;
+    }
+
+    set coefficients(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 1, Infinity))) {
+            this._coefficients = val;
+        } else {
+            cpov.error("fatal", "coefficients must be an array of floats.", "Poly");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get sturm() {
+        if(typeof this._sturm == "function")
+            return this._sturm();
+        else if(cpov.isSDLFunction(this._sturm))
+            return this._sturm.substr(1);
+        else
+            return this._sturm;
+    }
+
+    set sturm(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
+            this._sturm = val;
+        } else {
+            cpov.error("fatal", "sturm must be a boolean.", "Poly");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Poly();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.order        = this.order;       
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
+    
+        if(this.coefficients.length != ccnt)
+            cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
+    
+    	content.push(pad + "poly {" + (this.id === null ? "" : " // " + this.id));
+        var items = this.coefficients.slice(0);
+    	content.push(ppad + this.order + ", < " + items.join(", ") + " >");
+        if(this.sturm)
+            content.push(ppad + "sturm")
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    
+    }
+
+
+
+}
+
+exports.Poly = Poly;
+
+
+//==============================================================================
+// Polygon class
+//==============================================================================
+
+class Polygon extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = true; 
+        this._solid  = false;
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._points = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "points" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Polygon]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Polygon]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Polygon]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Polygon]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get points() {
+        if(typeof this._points == "function")
+            return this._points();
+        else if(cpov.isSDLFunction(this._points))
+            return this._points.substr(1);
+        else
+            return this._points;
+    }
+
+    set points(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity))) {
+            this._points = val;
+        } else {
+            cpov.error("fatal", "points must be an array of three or more VectorXY.", "Polygon");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Polygon();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.points = this.points;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+    	if(this.points === null)
+    		cpov.error("fatal", "points is undefined.", "Polygon.toSDL", this);
+      	if(this.points.length < 3)
+    		cpov.error("fatal", "points must contain at least three VectorXY.", "Polygon.toSDL", this);
+    
+    	content.push(pad + "polygon {" + (this.id === null ? "" : " // " + this.id));
+    	content.push(ppad + this.points.length + ",");
+        var items = [ ];
+        for(var i = 0; i < this.points.length; i++) {
+            items.push(this.points[i].toSDL());
+        }
+        content.push(ppad + items.join(", "));
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    
+    }
+
+
+
+}
+
+exports.Polygon = Polygon;
+
+
+//==============================================================================
+// Polynomial class
+//==============================================================================
+
+class Polynomial extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = false;
+        this._solid  = true; 
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._order        = null;
+        this._coefficients = null;
+        this._sturm        = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "order", "coefficients" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Polynomial]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Polynomial]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Polynomial]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Polynomial]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get order() {
+        if(typeof this._order == "function")
+            return this._order();
+        else if(cpov.isSDLFunction(this._order))
+            return this._order.substr(1);
+        else
+            return this._order;
+    }
+
+    set order(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
+            this._order = val;
+        } else {
+            cpov.error("fatal", "order must be an integer.", "Polynomial");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get coefficients() {
+        if(typeof this._coefficients == "function")
+            return this._coefficients();
+        else if(cpov.isSDLFunction(this._coefficients))
+            return this._coefficients.substr(1);
+        else
+            return this._coefficients;
+    }
+
+    set coefficients(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity))) {
+            this._coefficients = val;
+        } else {
+            cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get sturm() {
+        if(typeof this._sturm == "function")
+            return this._sturm();
+        else if(cpov.isSDLFunction(this._sturm))
+            return this._sturm.substr(1);
+        else
+            return this._sturm;
+    }
+
+    set sturm(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
+            this._sturm = val;
+        } else {
+            cpov.error("fatal", "sturm must be a boolean.", "Polynomial");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Polynomial();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.order        = this.order;       
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
+    
+        if(this.coefficients.length != ccnt)
+            cpov.error("fatal", "A Polynomial of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Polynomial.toSDL", this);
+    
+    	content.push(pad + "polynomial {" + (this.id === null ? "" : " // " + this.id));
+        content.push(ppad + this.order + ", ");
+        var coefficients = [ ];
+        for(var i = 0; i < this.coefficients.length; i++)
+            coefficients.push(ppad + "xyz(" + this.coefficients[i].x + ", " + this.coefficients[i].y + ", " + this.coefficients[i].z + "):" + this.coefficients[i].w);
+        content.push(coefficients.join(",\n"))
+        if(this.sturm)
+            content.push(ppad + "sturm")
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    
+    }
+
+
+
+}
+
+exports.Polynomial = Polynomial;
+
+
+//==============================================================================
 // Prism class
 //==============================================================================
 
@@ -7800,6 +9727,315 @@ class Prism extends Primitive {
 }
 
 exports.Prism = Prism;
+
+
+//==============================================================================
+// Quadric class
+//==============================================================================
+
+class Quadric extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = false;
+        this._solid  = true; 
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._coefficients = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "coefficients" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Quadric]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Quadric]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Quadric]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Quadric]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get coefficients() {
+        if(typeof this._coefficients == "function")
+            return this._coefficients();
+        else if(cpov.isSDLFunction(this._coefficients))
+            return this._coefficients.substr(1);
+        else
+            return this._coefficients;
+    }
+
+    set coefficients(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 10, 10))) {
+            this._coefficients = val;
+        } else {
+            cpov.error("fatal", "coefficients must be an array of 10 floats.", "Quadric");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Quadric();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.coefficients = this.coefficients;
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "quadric {" + (this.id === null ? "" : " // " + this.id));
+        content.push(
+            ppad
+            + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, "
+            + "<" + this.coefficients[3] + ", " + this.coefficients[4] + ", " + this.coefficients[5] + ">, "
+            + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, "
+            + this.coefficients[9]
+        );
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Quadric = Quadric;
+
+
+//==============================================================================
+// Quartic class
+//==============================================================================
+
+class Quartic extends Primitive {
+
+    constructor(options) {
+
+        // Superclass constructor //
+
+        super(options);
+
+        // Immutable properties //
+
+        this._finite = false;
+        this._solid  = true; 
+        this._csg    = false;
+        this._pseudo = false;
+
+        // Mutable properties //
+
+        this._coefficients = null;
+        this._sturm        = null;
+
+        // Initialization //
+
+        cpov.initObject(this, options);
+
+        // Required parameters //
+
+        this.requiredParams = [ "coefficients" ];
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    get finite() {
+        return this._finite;
+    }
+
+    set finite(val) {
+        throw new TypeError("[Quartic]: finite is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get solid() {
+        return this._solid;
+    }
+
+    set solid(val) {
+        throw new TypeError("[Quartic]: solid is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get csg() {
+        return this._csg;
+    }
+
+    set csg(val) {
+        throw new TypeError("[Quartic]: csg is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get pseudo() {
+        return this._pseudo;
+    }
+
+    set pseudo(val) {
+        throw new TypeError("[Quartic]: pseudo is a read-only property.");
+    }
+
+    //--------------------------------------------------------------------------
+
+    get coefficients() {
+        if(typeof this._coefficients == "function")
+            return this._coefficients();
+        else if(cpov.isSDLFunction(this._coefficients))
+            return this._coefficients.substr(1);
+        else
+            return this._coefficients;
+    }
+
+    set coefficients(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 35, 35))) {
+            this._coefficients = val;
+        } else {
+            cpov.error("fatal", "coefficients must be an array of 35 floats.", "Quartic");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get sturm() {
+        if(typeof this._sturm == "function")
+            return this._sturm();
+        else if(cpov.isSDLFunction(this._sturm))
+            return this._sturm.substr(1);
+        else
+            return this._sturm;
+    }
+
+    set sturm(val) {
+        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
+            this._sturm = val;
+        } else {
+            cpov.error("fatal", "sturm must be a boolean.", "Quartic");
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Constructs and returns a shallow copy of the object.
+    //--------------------------------------------------------------------------
+
+    copy() {
+
+        var newObj = new Quartic();
+
+        newObj.copyCommonFrom(this); // copy Primitive attributes
+        newObj.coefficients = this.coefficients;
+        newObj.sturm        = this.sturm;       
+
+        return newObj;
+    }
+
+    //--------------------------------------------------------------------------
+    // Produces SDL representation of the object. Will terminate the program if
+    // any necessary attributes are undefined.
+    //--------------------------------------------------------------------------
+    
+    toSDL(stops = 0) {
+    
+        if(!this.active)
+            return "";
+        
+        super.requiredParameterTest(this.requiredParams);
+        
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+    
+        content.push(pad + "quartic {" + (this.id === null ? "" : " // " + this.id));
+        content.push(ppad + "< " + this.coefficients.join(", ") + " >");
+        if(this.sturm)
+            content.push(ppad + "sturm");
+    
+        var superSDL = super.toSDL(stops + 1);
+        if(superSDL)
+            content.push(superSDL);
+        content.push(pad + "}");
+        
+        return content.join("\n");
+    }
+
+
+
+}
+
+exports.Quartic = Quartic;
 
 
 //==============================================================================
@@ -8975,796 +11211,6 @@ exports.Torus = Torus;
 
 
 //==============================================================================
-// BicubicPatch class
-//==============================================================================
-
-class BicubicPatch extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = true; 
-        this._solid  = false;
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._type     = null;
-        this._points   = null;
-        this._uSteps   = null;
-        this._vSteps   = null;
-        this._flatness = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "type", "points" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[BicubicPatch]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[BicubicPatch]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[BicubicPatch]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[BicubicPatch]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get type() {
-        if(typeof this._type == "function")
-            return this._type();
-        else if(cpov.isSDLFunction(this._type))
-            return this._type.substr(1);
-        else
-            return this._type;
-    }
-
-    set type(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && (val == 0 || val == 1))) {
-            this._type = val;
-        } else {
-            cpov.error("fatal", "type must be either 0 or 1.", "BicubicPatch");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get points() {
-        if(typeof this._points == "function")
-            return this._points();
-        else if(cpov.isSDLFunction(this._points))
-            return this._points.substr(1);
-        else
-            return this._points;
-    }
-
-    set points(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16))) {
-            this._points = val;
-        } else {
-            cpov.error("fatal", "points must be an array of 16 VectorXYZ.", "BicubicPatch");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get uSteps() {
-        if(typeof this._uSteps == "function")
-            return this._uSteps();
-        else if(cpov.isSDLFunction(this._uSteps))
-            return this._uSteps.substr(1);
-        else
-            return this._uSteps;
-    }
-
-    set uSteps(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
-            this._uSteps = val;
-        } else {
-            cpov.error("fatal", "uSteps must be an integer.", "BicubicPatch");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get vSteps() {
-        if(typeof this._vSteps == "function")
-            return this._vSteps();
-        else if(cpov.isSDLFunction(this._vSteps))
-            return this._vSteps.substr(1);
-        else
-            return this._vSteps;
-    }
-
-    set vSteps(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
-            this._vSteps = val;
-        } else {
-            cpov.error("fatal", "vSteps must be an integer.", "BicubicPatch");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get flatness() {
-        if(typeof this._flatness == "function")
-            return this._flatness();
-        else if(cpov.isSDLFunction(this._flatness))
-            return this._flatness.substr(1);
-        else
-            return this._flatness;
-    }
-
-    set flatness(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._flatness = val;
-        } else {
-            cpov.error("fatal", "flatness must be a float.", "BicubicPatch");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new BicubicPatch();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.type     = this.type;    
-        newObj.points   = this.points;  
-        newObj.uSteps   = this.uSteps;  
-        newObj.vSteps   = this.vSteps;  
-        newObj.flatness = this.flatness;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        if(this.type === null)
-            cpov.error("fatal", "type is undefined.", "BicubicPatch.toSDL", this);
-    	if(this.patch === null)
-            cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
-    
-        content.push(pad + "bicubic_patch {" + (this.id === null ? "" : " // " + this.id));
-    	content.push(ppad + "type " + this.type);
-    	if(this.uSteps !== null)
-    		content.push(ppad + "u_steps " + this.uSteps);
-    	if(this.vSteps !== null)
-    		content.push(ppad + "v_steps " + this.vSteps);
-    	if(this.flatness !== null)
-    		content.push(ppad + "flatness " + this.flatness);
-    
-    	for(var row = 0; row < 4; row++) {
-    		var items = [ ];
-    		for(var col = 0; col < 4; col++) {
-    			items.push(this.points[row * 4 + col].toSDL());
-    		}
-    		content.push(ppad + items.join(", ") + (row != 3 ? "," : ""));
-    	}
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.BicubicPatch = BicubicPatch;
-
-
-//==============================================================================
-// Disc class
-//==============================================================================
-
-class Disc extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = true; 
-        this._solid  = false;
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._center     = null;
-        this._normal     = null;
-        this._radius     = null;
-        this._holeRadius = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "center", "normal", "radius" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Disc]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Disc]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Disc]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Disc]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get center() {
-        if(typeof this._center == "function")
-            return this._center();
-        else if(cpov.isSDLFunction(this._center))
-            return this._center.substr(1);
-        else
-            return this._center;
-    }
-
-    set center(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
-            this._center = val;
-        } else {
-            cpov.error("fatal", "center must be a VectorXYZ.", "Disc");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get normal() {
-        if(typeof this._normal == "function")
-            return this._normal();
-        else if(cpov.isSDLFunction(this._normal))
-            return this._normal.substr(1);
-        else
-            return this._normal;
-    }
-
-    set normal(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
-            this._normal = val;
-        } else {
-            cpov.error("fatal", "normal must be a VectorXYZ.", "Disc");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get radius() {
-        if(typeof this._radius == "function")
-            return this._radius();
-        else if(cpov.isSDLFunction(this._radius))
-            return this._radius.substr(1);
-        else
-            return this._radius;
-    }
-
-    set radius(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._radius = val;
-        } else {
-            cpov.error("fatal", "radius must be a float.", "Disc");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get holeRadius() {
-        if(typeof this._holeRadius == "function")
-            return this._holeRadius();
-        else if(cpov.isSDLFunction(this._holeRadius))
-            return this._holeRadius.substr(1);
-        else
-            return this._holeRadius;
-    }
-
-    set holeRadius(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._holeRadius = val;
-        } else {
-            cpov.error("fatal", "holeRadius must be a float.", "Disc");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Disc();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.center     = this.center;    
-        newObj.normal     = this.normal;    
-        newObj.radius     = this.radius;    
-        newObj.holeRadius = this.holeRadius;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        if(this.center === null)
-            cpov.error("fatal", "center is undefined.", "Disc.toSDL", this);
-        if(this.radius === null)
-            cpov.error("fatal", "radius is undefined.", "Disc.toSDL", this);
-    
-        content.push(pad + "disc {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Disc = Disc;
-
-
-//==============================================================================
-// Mesh class
-//==============================================================================
-
-class Mesh extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = true; 
-        this._solid  = false;
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._triangles    = null;
-        this._insideVector = null;
-        this._hierarchy    = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "triangles" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Mesh]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Mesh]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Mesh]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Mesh]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get triangles() {
-        if(typeof this._triangles == "function")
-            return this._triangles();
-        else if(cpov.isSDLFunction(this._triangles))
-            return this._triangles.substr(1);
-        else
-            return this._triangles;
-    }
-
-    set triangles(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Triangle', 1, Infinity))) {
-            this._triangles = val;
-        } else {
-            cpov.error("fatal", "triangles", "Mesh");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get insideVector() {
-        if(typeof this._insideVector == "function")
-            return this._insideVector();
-        else if(cpov.isSDLFunction(this._insideVector))
-            return this._insideVector.substr(1);
-        else
-            return this._insideVector;
-    }
-
-    set insideVector(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
-            this._insideVector = val;
-        } else {
-            cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get hierarchy() {
-        if(typeof this._hierarchy == "function")
-            return this._hierarchy();
-        else if(cpov.isSDLFunction(this._hierarchy))
-            return this._hierarchy.substr(1);
-        else
-            return this._hierarchy;
-    }
-
-    set hierarchy(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
-            this._hierarchy = val;
-        } else {
-            cpov.error("fatal", "hierarchy must be a boolean.", "Mesh");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Mesh();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.triangles    = this.triangles;   
-        newObj.insideVector = this.insideVector;
-        newObj.hierarchy    = this.hierarchy;   
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        content.push(pad + "mesh {" + (this.id === null ? "" : " // " + this.id));
-        for(var i = 0; i < this.triangles.length; i++) {
-            content.push(this.triangles[i].toSDL(1));
-        }
-        if(this.insideVector !== null)
-            content.push(ppad + "inside_vector " + this.insideVector.toSDL());
-    	if(this.hierarchy !== null)
-    		content.push(ppad + "hierarchy " + (this.hierarchy ? "on" : "off"));
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Mesh = Mesh;
-
-
-//==============================================================================
-// Polygon class
-//==============================================================================
-
-class Polygon extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = true; 
-        this._solid  = false;
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._points = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "points" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Polygon]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Polygon]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Polygon]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Polygon]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get points() {
-        if(typeof this._points == "function")
-            return this._points();
-        else if(cpov.isSDLFunction(this._points))
-            return this._points.substr(1);
-        else
-            return this._points;
-    }
-
-    set points(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity))) {
-            this._points = val;
-        } else {
-            cpov.error("fatal", "points must be an array of three or more VectorXY.", "Polygon");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Polygon();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.points = this.points;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-    	if(this.points === null)
-    		cpov.error("fatal", "points is undefined.", "Polygon.toSDL", this);
-      	if(this.points.length < 3)
-    		cpov.error("fatal", "points must contain at least three VectorXY.", "Polygon.toSDL", this);
-    
-    	content.push(pad + "polygon {" + (this.id === null ? "" : " // " + this.id));
-    	content.push(ppad + this.points.length + ",");
-        var items = [ ];
-        for(var i = 0; i < this.points.length; i++) {
-            items.push(this.points[i].toSDL());
-        }
-        content.push(ppad + items.join(", "));
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    
-    }
-
-
-
-}
-
-exports.Polygon = Polygon;
-
-
-//==============================================================================
 // The Triangle class combines POV-Ray's triangle and smooth_triangle based on 
 // the supplied parameters and the smooth flag.
 //==============================================================================
@@ -10083,1033 +11529,6 @@ exports.Triangle = Triangle;
 
 
 //==============================================================================
-// Plane class
-//==============================================================================
-
-class Plane extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = false;
-        this._solid  = true; 
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._normal   = null;
-        this._distance = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "normal", "distance" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Plane]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Plane]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Plane]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Plane]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get normal() {
-        if(typeof this._normal == "function")
-            return this._normal();
-        else if(cpov.isSDLFunction(this._normal))
-            return this._normal.substr(1);
-        else
-            return this._normal;
-    }
-
-    set normal(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
-            this._normal = val;
-        } else {
-            cpov.error("fatal", "normal must be a VectorXYZ.", "Plane");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get distance() {
-        if(typeof this._distance == "function")
-            return this._distance();
-        else if(cpov.isSDLFunction(this._distance))
-            return this._distance.substr(1);
-        else
-            return this._distance;
-    }
-
-    set distance(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._distance = val;
-        } else {
-            cpov.error("fatal", "distance must be a float.", "Plane");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Plane();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.normal   = this.normal;  
-        newObj.distance = this.distance;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-    	if(this.normal === null)
-    		cpov.error("fatal", "normal is undefined.", "Plane.toSDL", this);
-    	if(this.distance === null)
-    		cpov.error("fatal", "distance is undefined.", "Plane.toSDL", this);
-    
-    	content.push(pad + "plane {" + (this.id === null ? "" : " // " + this.id));
-    	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    
-    }
-
-
-
-}
-
-exports.Plane = Plane;
-
-
-//==============================================================================
-// Poly class
-//==============================================================================
-
-class Poly extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = false;
-        this._solid  = true; 
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._order        = null;
-        this._coefficients = null;
-        this._sturm        = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "order", "coefficients" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Poly]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Poly]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Poly]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Poly]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get order() {
-        if(typeof this._order == "function")
-            return this._order();
-        else if(cpov.isSDLFunction(this._order))
-            return this._order.substr(1);
-        else
-            return this._order;
-    }
-
-    set order(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 2 && val <= 35)) {
-            this._order = val;
-        } else {
-            cpov.error("fatal", "order must be an integer in the range (.", "Poly");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get coefficients() {
-        if(typeof this._coefficients == "function")
-            return this._coefficients();
-        else if(cpov.isSDLFunction(this._coefficients))
-            return this._coefficients.substr(1);
-        else
-            return this._coefficients;
-    }
-
-    set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 1, Infinity))) {
-            this._coefficients = val;
-        } else {
-            cpov.error("fatal", "coefficients must be an array of floats.", "Poly");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get sturm() {
-        if(typeof this._sturm == "function")
-            return this._sturm();
-        else if(cpov.isSDLFunction(this._sturm))
-            return this._sturm.substr(1);
-        else
-            return this._sturm;
-    }
-
-    set sturm(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
-            this._sturm = val;
-        } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Poly");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Poly();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.order        = this.order;       
-        newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
-    
-        if(this.coefficients.length != ccnt)
-            cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
-    
-    	content.push(pad + "poly {" + (this.id === null ? "" : " // " + this.id));
-        var items = this.coefficients.slice(0);
-    	content.push(ppad + this.order + ", < " + items.join(", ") + " >");
-        if(this.sturm)
-            content.push(ppad + "sturm")
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    
-    }
-
-
-
-}
-
-exports.Poly = Poly;
-
-
-//==============================================================================
-// Cubic class
-//==============================================================================
-
-class Cubic extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = false;
-        this._solid  = true; 
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._coefficients = null;
-        this._sturm        = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "coefficients" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Cubic]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Cubic]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Cubic]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Cubic]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get coefficients() {
-        if(typeof this._coefficients == "function")
-            return this._coefficients();
-        else if(cpov.isSDLFunction(this._coefficients))
-            return this._coefficients.substr(1);
-        else
-            return this._coefficients;
-    }
-
-    set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
-            this._coefficients = val;
-        } else {
-            cpov.error("fatal", "coefficients must be an array of 20 floats.", "Cubic");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get sturm() {
-        if(typeof this._sturm == "function")
-            return this._sturm();
-        else if(cpov.isSDLFunction(this._sturm))
-            return this._sturm.substr(1);
-        else
-            return this._sturm;
-    }
-
-    set sturm(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
-            this._sturm = val;
-        } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Cubic");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Cubic();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        if(this.coefficients === null)
-            cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
-    
-        content.push(pad + "cubic {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + "< " + this.coefficients.join(", ") + " >");
-        if(this.sturm)
-            content.push(ppad + "sturm");
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Cubic = Cubic;
-
-
-//==============================================================================
-// Quartic class
-//==============================================================================
-
-class Quartic extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = false;
-        this._solid  = true; 
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._coefficients = null;
-        this._sturm        = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "coefficients" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Quartic]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Quartic]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Quartic]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Quartic]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get coefficients() {
-        if(typeof this._coefficients == "function")
-            return this._coefficients();
-        else if(cpov.isSDLFunction(this._coefficients))
-            return this._coefficients.substr(1);
-        else
-            return this._coefficients;
-    }
-
-    set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 35, 35))) {
-            this._coefficients = val;
-        } else {
-            cpov.error("fatal", "coefficients must be an array of 35 floats.", "Quartic");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get sturm() {
-        if(typeof this._sturm == "function")
-            return this._sturm();
-        else if(cpov.isSDLFunction(this._sturm))
-            return this._sturm.substr(1);
-        else
-            return this._sturm;
-    }
-
-    set sturm(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
-            this._sturm = val;
-        } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Quartic");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Quartic();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        content.push(pad + "quartic {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + "< " + this.coefficients.join(", ") + " >");
-        if(this.sturm)
-            content.push(ppad + "sturm");
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Quartic = Quartic;
-
-
-//==============================================================================
-// Polynomial class
-//==============================================================================
-
-class Polynomial extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = false;
-        this._solid  = true; 
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._order        = null;
-        this._coefficients = null;
-        this._sturm        = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "order", "coefficients" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Polynomial]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Polynomial]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Polynomial]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Polynomial]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get order() {
-        if(typeof this._order == "function")
-            return this._order();
-        else if(cpov.isSDLFunction(this._order))
-            return this._order.substr(1);
-        else
-            return this._order;
-    }
-
-    set order(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
-            this._order = val;
-        } else {
-            cpov.error("fatal", "order must be an integer.", "Polynomial");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get coefficients() {
-        if(typeof this._coefficients == "function")
-            return this._coefficients();
-        else if(cpov.isSDLFunction(this._coefficients))
-            return this._coefficients.substr(1);
-        else
-            return this._coefficients;
-    }
-
-    set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity))) {
-            this._coefficients = val;
-        } else {
-            cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get sturm() {
-        if(typeof this._sturm == "function")
-            return this._sturm();
-        else if(cpov.isSDLFunction(this._sturm))
-            return this._sturm.substr(1);
-        else
-            return this._sturm;
-    }
-
-    set sturm(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
-            this._sturm = val;
-        } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Polynomial");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Polynomial();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.order        = this.order;       
-        newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
-    
-        if(this.coefficients.length != ccnt)
-            cpov.error("fatal", "A Polynomial of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Polynomial.toSDL", this);
-    
-    	content.push(pad + "polynomial {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.order + ", ");
-        var coefficients = [ ];
-        for(var i = 0; i < this.coefficients.length; i++)
-            coefficients.push(ppad + "xyz(" + this.coefficients[i].x + ", " + this.coefficients[i].y + ", " + this.coefficients[i].z + "):" + this.coefficients[i].w);
-        content.push(coefficients.join(",\n"))
-        if(this.sturm)
-            content.push(ppad + "sturm")
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    
-    }
-
-
-
-}
-
-exports.Polynomial = Polynomial;
-
-
-//==============================================================================
-// Quadric class
-//==============================================================================
-
-class Quadric extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = false;
-        this._solid  = true; 
-        this._csg    = false;
-        this._pseudo = false;
-
-        // Mutable properties //
-
-        this._coefficients = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "coefficients" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Quadric]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Quadric]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Quadric]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Quadric]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get coefficients() {
-        if(typeof this._coefficients == "function")
-            return this._coefficients();
-        else if(cpov.isSDLFunction(this._coefficients))
-            return this._coefficients.substr(1);
-        else
-            return this._coefficients;
-    }
-
-    set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 10, 10))) {
-            this._coefficients = val;
-        } else {
-            cpov.error("fatal", "coefficients must be an array of 10 floats.", "Quadric");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Quadric();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.coefficients = this.coefficients;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        content.push(pad + "quadric {" + (this.id === null ? "" : " // " + this.id));
-        content.push(
-            ppad
-            + "<" + this.coefficients[0] + ", " + this.coefficients[1] + ", " + this.coefficients[2] + ">, "
-            + "<" + this.coefficients[3] + ", " + this.coefficients[4] + ", " + this.coefficients[5] + ">, "
-            + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, "
-            + this.coefficients[9]
-        );
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Quadric = Quadric;
-
-
-//==============================================================================
 // Union class
 //==============================================================================
 
@@ -11261,425 +11680,6 @@ class Union extends Primitive {
 }
 
 exports.Union = Union;
-
-
-//==============================================================================
-// Intersection class
-//==============================================================================
-
-class Intersection extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = null;
-        this._solid  = true;
-        this._csg    = true;
-
-        // Mutable properties //
-
-        this._components = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "components" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Intersection]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Intersection]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Intersection]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get components() {
-        if(typeof this._components == "function")
-            return this._components();
-        else if(cpov.isSDLFunction(this._components))
-            return this._components.substr(1);
-        else
-            return this._components;
-    }
-
-    set components(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
-            this._components = val;
-            this.adopt(this._components);
-        } else {
-            cpov.error("fatal", "objects must be an array of Primitives.", "Intersection");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Intersection();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.components = this.components;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
-        for(var i = 0; i < this.components.length; i++) {
-            content.push(ppad + this.components[i].toSDL(stops + 1));
-        }
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Intersection = Intersection;
-
-
-//==============================================================================
-// Difference class
-//==============================================================================
-
-class Difference extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = null;
-        this._solid  = true;
-        this._csg    = true;
-
-        // Mutable properties //
-
-        this._positiveComponent  = null;
-        this._negativeComponents = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "positiveComponent", "negativeComponents" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Difference]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Difference]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Difference]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get positiveComponent() {
-        if(typeof this._positiveComponent == "function")
-            return this._positiveComponent();
-        else if(cpov.isSDLFunction(this._positiveComponent))
-            return this._positiveComponent.substr(1);
-        else
-            return this._positiveComponent;
-    }
-
-    set positiveComponent(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
-            this._positiveComponent = val;
-            this.adopt(this._positiveComponent);
-        } else {
-            cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get negativeComponents() {
-        if(typeof this._negativeComponents == "function")
-            return this._negativeComponents();
-        else if(cpov.isSDLFunction(this._negativeComponents))
-            return this._negativeComponents.substr(1);
-        else
-            return this._negativeComponents;
-    }
-
-    set negativeComponents(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
-            this._negativeComponents = val;
-            this.adopt(this._negativeComponents);
-        } else {
-            cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Difference();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.positiveComponent  = this.positiveComponent; 
-        newObj.negativeComponents = this.negativeComponents;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.positiveComponent.toSDL(stops + 1));
-        for(var i = 0; i < this.negativeComponents.length; i++) {
-            content.push(ppad + this.negativeComponents[i].toSDL(stops + 1));
-        }
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Difference = Difference;
-
-
-//==============================================================================
-// Merge class
-//==============================================================================
-
-class Merge extends Primitive {
-
-    constructor(options) {
-
-        // Superclass constructor //
-
-        super(options);
-
-        // Immutable properties //
-
-        this._finite = null;
-        this._solid  = true;
-        this._csg    = true;
-
-        // Mutable properties //
-
-        this._components = null;
-
-        // Initialization //
-
-        cpov.initObject(this, options);
-
-        // Required parameters //
-
-        this.requiredParams = [ "components" ];
-
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Merge]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Merge]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Merge]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get components() {
-        if(typeof this._components == "function")
-            return this._components();
-        else if(cpov.isSDLFunction(this._components))
-            return this._components.substr(1);
-        else
-            return this._components;
-    }
-
-    set components(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfBaseClass(val, 'Primitive'))) {
-            this._components = val;
-            this.adopt(this._components);
-        } else {
-            cpov.error("fatal", "objects must be an array of Primitives.", "Merge");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-    // Constructs and returns a shallow copy of the object.
-    //--------------------------------------------------------------------------
-
-    copy() {
-
-        var newObj = new Merge();
-
-        newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.components = this.components;
-
-        return newObj;
-    }
-
-    //--------------------------------------------------------------------------
-    // Produces SDL representation of the object. Will terminate the program if
-    // any necessary attributes are undefined.
-    //--------------------------------------------------------------------------
-    
-    toSDL(stops = 0) {
-    
-        if(!this.active)
-            return "";
-        
-        super.requiredParameterTest(this.requiredParams);
-        
-        var pad     = cpov.tab(stops);
-        var ppad    = cpov.tab(stops + 1);
-        var content = [ ];
-    
-        content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
-        for(var i = 0; i < this.components.length; i++) {
-            content.push(ppad + this.components[i].toSDL(stops + 1));
-        }
-    
-        var superSDL = super.toSDL(stops + 1);
-        if(superSDL)
-            content.push(superSDL);
-        content.push(pad + "}");
-        
-        return content.join("\n");
-    }
-
-
-
-}
-
-exports.Merge = Merge;
 
 
 //==============================================================================
