@@ -37,6 +37,9 @@
     table.sgrid td.working { text-align: center; background-color: yellow; color: red;    font-weight: bold; white-space: nowrap; }
     table.sgrid td.done    { text-align: center; background-color: green;  color: white;  font-weight: bold; white-space: nowrap; }
     table.sgrid td.tbd     { text-align: center; background-color: #888;   color: white;  font-weight: bold; white-space: nowrap; }
+    table.sgrid td.subtask { padding-left: 3em; }
+
+    table.todo { width: 100%; }
 
 </style>
 </head>
@@ -233,7 +236,7 @@ different functions, and look at the results of a rendering.</p>
 
 <h3>Milestone C0: Core system implementation and shakedown</h3>
 
-<table class='sgrid'>
+<table class='sgrid todo'>
     <thead>
         <tr>
             <th>Status</th>
@@ -243,22 +246,21 @@ different functions, and look at the results of a rendering.</p>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='working'>In Progress</td><td>Implement</td><td>Regression test script(s)</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Ease-of-use refinements for initializers and assignments, esp. <code>Vector*/Color</code> and <code>Matrix</code></td></tr>
-        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Documentation illustration generator script, further tests</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Compact output format for triangles in Mesh</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>uvVectors member in Triangle, ck Mesh compatibility.</td></tr>
-        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Optional skip first indent in toSDL functions</td></tr>
-        <tr><td class='done'>Done</td><td>Test/Implement</td><td>"<code>stamp()</code>" (come up with better name? snapshot?)</td></tr>
-        <tr><td class='done'>Done</td><td>Test/Implement</td><td><code>--preamble</code></td></tr>
-        <tr><td class='done'>Done</td><td>Test/Implement</td><td><code>--sdlIncludes</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement/Test</td><td>Ease-of-use refinements for initializers and assignments, esp. <code>Vector*/Color</code> and <code>Matrix</code></td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement/Test</td><td>Compact output format for triangles in Mesh</td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement/Test</td><td>uvVectors member in Triangle, ck Mesh compatibility.</td></tr>
+        <tr><td class='pending'>Pending</td><td>Implement/Test</td><td>Optional skip first indent in toSDL functions</td></tr>
+        <tr><td class='done'>Done</td><td>Implement/Test</td><td>"<code>stamp()</code>" (come up with better name? snapshot?)</td></tr>
+        <tr><td class='done'>Done</td><td>Implement/Test</td><td><code>--preamble</code></td></tr>
+        <tr><td class='done'>Done</td><td>Implement/Test</td><td><code>--sdlIncludes</code></td></tr>
         <tr><td class='done'>Done</td><td>Implement</td><td><code>--debug</code> levels as with <code>--verbose</code></td></tr>
         <tr><td class='done'>Done</td><td>Implement</td><td>Allow fatal errors if <code>cpov.debug == 2</code></td></tr>
         <tr><td class='done'>Done</td><td>Implement</td><td>Debug log if <code>cpov.debug == 2</code></td></tr>
         <tr><td class='done'>Done</td><td>Implement</td><td>Route all <code>cpov.error</code> messages to debug log if applicable.</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>imageOptions</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>globalSettings</td></tr>
-        <tr><td class='done'>Done</td><td>Test/Implement</td><td>For Color vectors in globalSettings, add .toPlainRGBVector</td></tr>
-        <tr><td class='done'>Done</td><td>Test/Implement</td><td>For array output generally, add .join(", ") for readability over native .toString()</td></tr>
+        <tr><td class='done'>Done</td><td>Implement/Test</td><td>For Color vectors in globalSettings, add .toPlainRGBVector</td></tr>
+        <tr><td class='done'>Done</td><td>Implement/Test</td><td>For array output generally, add .join(", ") for readability over native .toString()</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>bicubicPatch</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>blob</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>box</td></tr>
@@ -267,7 +269,7 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='done'>Done</td><td>Test</td><td>cylinder</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>disc</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>heightField</td></tr>
-        <tr><td class='done'>Done</td><td>Test/Implement</td><td>isoSurface + IsoSurface.toSDL</td></tr>
+        <tr><td class='done'>Done</td><td>Implement/Test</td><td>isoSurface + IsoSurface.toSDL</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>juliaFractal</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>lathe</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>mesh</td></tr>
@@ -293,14 +295,14 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='done'>Done</td><td>Test</td><td>CSG: difference</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>Special: camera</td></tr>
         <tr><td class='done'>Done</td><td>Test</td><td>Special: lightSource</td></tr>
-        <tr><td class='done'>Done</td><td>Test/Implement</td><td>Respect <code>imageOptions.createIni</code></td></tr>
+        <tr><td class='done'>Done</td><td>Implement/Test</td><td>Respect <code>imageOptions.createIni</code></td></tr>
     </tbody>
 </table>
 
 
 <h3>Milestone C1: Preparation for public beta</h3>
 
-<table class='sgrid'>
+<table class='sgrid todo'>
     <thead>
         <tr>
             <th>Status</th>
@@ -309,46 +311,52 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>All geometric primitives</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Transformation validation and fixes</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera pseudo-primitive in CSG, transformations</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera pseudo-primitive transform integration</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera.angle: Determine legal values and enforce</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera.type: replace SDL literals with camelCased cpov versions</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>copy() method across classes, both shallow and deep</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>cpov.js: More selective scope management</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Deep clones, etc.</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Camera</code></td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive in CSG integration</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive transform integration</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Camera.angle</code>: Determine legal values and enforce</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>cpov.js</code>: More selective scope management</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation generation</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Optionally generate .sh/.bat files</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.boundingThreshold: convert zero to boolean on output</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.constants: gets special handling</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.endColumn: post check startColumn</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.endRow: post check startRow</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.startColumn: post check endColumn</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.startRow: post check endRow</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.boundingThreshold</code>: convert zero to boolean on output</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.constants</code>: gets special handling</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.endColumn</code>: post check startColumn</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.endRow</code>: post check startRow</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.startColumn</code>: post check endColumn</td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.startRow</code>: post check endRow</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Lathe: add check for correct minimum number of points</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.looksLike</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.mediaAttenuation</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.mediaInteraction</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.projectedThrough</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>LightSource</code></td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.looksLike</code></td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaAttenuation</code></td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaInteraction</code></td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.projectedThrough</code></td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Management of array attributes</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Matrix, Vector, Color: Use JS/SDL func in lieu of individual attributes</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Matrix: Improve constructor validation</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Mesh2</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.interior</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.interiorTexture</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.photons</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.photons</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.radiosity</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.radiosity</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.texture</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Matrix, Vector, Color</code>: Use JS/SDL func in lieu of individual attributes</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Matrix</code>: Improve constructor validation</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Mesh2</code></td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Primitive</code></td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</code></td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interior</code></td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interiorTexture</code></td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.photons</code></td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.radiosity</code></td></tr>
+            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.texture</code></td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Move things needed for codegen to separate file not included at runtime</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Script to pretty-print definition files</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reports</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Text.toSDL: Handle escaping of double quotes in Text.displayText</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Text.toSDL</code>: Handle escaping of double quotes in <code>Text.displayText</code></td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
     </tbody>
@@ -356,7 +364,7 @@ different functions, and look at the results of a rendering.</p>
 
 <h3>Backlog</h3>
 
-<table class='sgrid'>
+<table class='sgrid todo'>
     <thead>
         <tr>
             <th>Status</th>
