@@ -10436,8 +10436,7 @@ class Poly extends Primitive {
     
     	content.push(pad + "poly {" + (this.id === null ? "" : " // " + this.id));
         var items = this.coefficients.slice(0);
-        items.unshift(this.order);
-    	content.push(ppad + items.join(", "));
+    	content.push(ppad + this.order + ", < " + items.join(", ") + " >");
         if(this.sturm)
             content.push(ppad + "sturm")
     
@@ -10604,7 +10603,7 @@ class Cubic extends Primitive {
             cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
     
         content.push(pad + "cubic {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.coefficients.join(", "));
+        content.push(ppad + "< " + this.coefficients.join(", ") + " >");
         if(this.sturm)
             content.push(ppad + "sturm");
     
@@ -10766,11 +10765,8 @@ class Quartic extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.coefficients === null)
-            cpov.error("fatal", "coefficients is undefined.", "Quartic.toSDL", this);
-    
         content.push(pad + "quartic {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.coefficients.join(", "));
+        content.push(ppad + "< " + this.coefficients.join(", ") + " >");
         if(this.sturm)
             content.push(ppad + "sturm");
     

@@ -47,7 +47,7 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "Poly: minimal test");                         polyTestMinimum(fp);
     testHeader(fp, ++testSerial, "Polynomial: minimal test");                   polynomialTestMinimum(fp);
     testHeader(fp, ++testSerial, "Quadric: minimal test");                      quadricTestMinimum(fp);
-//    testHeader(fp, ++testSerial, "Quartic: minimal test");                      quarticTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Quartic: minimal test");                      quarticTestMinimum(fp);
 //    testHeader(fp, ++testSerial, "Sor: minimal test");                          sorTestMinimum(fp);
 //    testHeader(fp, ++testSerial, "sphereSweep: minimal test");                  sphereSweepTestMinimum(fp);
 }
@@ -83,7 +83,7 @@ function sorTestMinimum(fp) {
 function quarticTestMinimum(fp) {
 
     var params = {
-        // TODO
+        coefficients: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,2,122,23,24,25,26,27,28,29,30,31,32,33,34,35]
     };
 
     var obj = new Quartic(params);
