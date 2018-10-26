@@ -10,8 +10,8 @@
     code { font: 10pt Consolas,Courier,fixed; }
     pre { font: 10pt Consolas,Courier,fixed; }
     h2 { font-size: 16pt; color: white; background-color: #666; border: 2pt solid black; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2em; margin-bottom: 0.3em; }
-    h3 { font-size: 14pt; border-bottom: 1.5pt solid black; margin-top: 1.5em; margin-bottom: 0.2em; }
-    h4 { font-size: 12pt; margin-top: 1em; margin-bottom: 0.2em; }
+    h3 { font-size: 14pt; border: 1.5pt solid black; margin-top: 1.5em; margin-bottom: 0.2em; padding: 0.25em; }
+    h4 { font-size: 14pt; margin-top: 1em; margin-bottom: 0.2em; border-bottom: 1.5pt solid black; }
     p { margin-top: 0em; margin-bottom: 0.75em; }
 
     table.matrixDemo { background-color: black; border-spacing: 1pt; margin-left: auto; margin-right: auto; font-size: 90%; margin-top: 1em; margin-bottom: 2em; }
@@ -60,7 +60,180 @@ POV-Ray's native objects, in addition to having full access to the Node
 ecosystem. CephaloPOV takes care of generating POV-Ray Scene Description
 Language files, both for static scenes and multi-frame animations.</p>
 
-<h2>Appendix A: Matrices</h2>
+<h2>2: Tutorial</h2>
+
+<p>TODO</p>
+
+<h2>3: Reference</h2>
+
+<h3>Vectors and Colors</h3>
+
+<h4>VectorUV</h4>
+
+<p>TODO</p>
+
+<h4>VectorXY</h4>
+
+<p>TODO</p>
+
+<h4>VectorXYZ</h4>
+
+<p>TODO</p>
+
+<h4>VectorXYZW</h4>
+
+<p>TODO</p>
+
+<h4>Color</h4>
+
+<p>TODO</p>
+
+<h3>Geometric Primitives</h3>
+
+<h4>Primitive</h4>
+
+<p>TODO</p>
+
+<h4>BicubicPatch</h4>
+
+<p>TODO</p>
+
+<h4>Blob</h4>
+
+<p>TODO</p>
+
+<h4>Box</h4>
+
+<p>TODO</p>
+
+<h4>Camera</h4>
+
+<p>TODO</p>
+
+<h4>Cone</h4>
+
+<p>TODO</p>
+
+<h4>Cubic</h4>
+
+<p>TODO</p>
+
+<h4>Cylinder</h4>
+
+<p>TODO</p>
+
+<h4>Difference</h4>
+
+<p>TODO</p>
+
+<h4>Disc</h4>
+
+<p>TODO</p>
+
+<h4>HeightField</h4>
+
+<p>TODO</p>
+
+<h4>Intersection</h4>
+
+<p>TODO</p>
+
+<h4>IsoSurface</h4>
+
+<p>TODO</p>
+
+<h4>JuliaFractal</h4>
+
+<p>TODO</p>
+
+<h4>Lathe</h4>
+
+<p>TODO</p>
+
+<h4>LightSource</h4>
+
+<p>TODO</p>
+
+<h4>Merge</h4>
+
+<p>TODO</p>
+
+<h4>Mesh</h4>
+
+<p>TODO</p>
+
+<h4>Ovus</h4>
+
+<p>TODO</p>
+
+<h4>Parametric</h4>
+
+<p>TODO</p>
+
+<h4>Plane</h4>
+
+<p>TODO</p>
+
+<h4>Poly</h4>
+
+<p>TODO</p>
+
+<h4>Polygon</h4>
+
+<p>TODO</p>
+
+<h4>Polynomial</h4>
+
+<p>TODO</p>
+
+<h4>Prism</h4>
+
+<p>TODO</p>
+
+<h4>Quadric</h4>
+
+<p>TODO</p>
+
+<h4>Quartic</h4>
+
+<p>TODO</p>
+
+<h4>Sor</h4>
+
+<p>TODO</p>
+
+<h4>Sphere</h4>
+
+<p>TODO</p>
+
+<h4>SphereSweep</h4>
+
+<p>TODO</p>
+
+<h4>Superellipsoid</h4>
+
+<p>TODO</p>
+
+<h4>Text</h4>
+
+<p>TODO</p>
+
+<h4>Torus</h4>
+
+<p>TODO</p>
+
+<h4>Triangle</h4>
+
+<p>TODO</p>
+
+<h4>Union</h4>
+
+<p>TODO</p>
+
+
+<h2>Appendices</h2>
+
+<h3>Appendix A: Matrices</h3>
 
 <p>SDL matrices are an abbreviated form of the entire matrix being used. The
 fourth column is invariant and therefore omitted from its SDL representation and
@@ -70,7 +243,7 @@ math-curious. You <em>don't</em> have to know much about matrix math to use the
 individual transformations in the form of special arguments to the
 <code>Matrix</code> constructor and the <code>apply</code> method.</p>
 
-<h3>Translation, Scaling, and Skewing</h3>
+<h4>Translation, Scaling, and Skewing</h4>
 
 <p>Red elements determine scaling, blue elements determine translation, and
 green elements determine skewing. (The grey elements, as previously mentioned,
@@ -119,7 +292,7 @@ the object disappear!</p>
 this will be a perfect mirror image; other values will stretch or squash the
 object.</p>
 
-<h3>Rotation</h3>
+<h4>Rotation</h4>
 
 <p>Rotation is a little more complicated because it requires the use of
 trigonometric functions. This is handled for you by the Matrix class'
@@ -229,7 +402,7 @@ difficult. Choose a simple shape, try fiddling with different elements and
 different functions, and look at the results of a rendering.</p>
 
 
-<h2>Appendix B: CephaloPOV Internals</h2>
+<h3>Appendix B: CephaloPOV Internals</h3>
 
 <pre>The gsDef, ioDef, primitiveDef, and objDef objects follow similar forms and
 are mainly used by codegen.js to crank out the mountain of repetitive boiler-

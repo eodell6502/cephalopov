@@ -344,6 +344,22 @@ ClassBuilder.prototype.toString = function() {
 }
 
 
+//==============================================================================
+// docHumper takes a string -- chiefly the CephaloPOV documentation file
+// /docs/index.html -- and an array of the same definition objects used by
+// ClassBuilder. It looks through the docs for div/span elements with special
+// attributes and replaces their contents with documentation generated from the
+// definition objects. The markup looks like this:
+//
+//     <div dh="classname.member"> ... </div dh="classname.member">
+//
+// Note that the dh attribute has to be repeated in the closing tag, which
+// spares us the non-trivial exercise of actually parsing the HTML.
+//==============================================================================
+
+function docHumper(doc, defs) {
+
+}
 
 
 
