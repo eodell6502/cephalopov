@@ -8110,7 +8110,7 @@ class SphereSweep extends Primitive {
     }
 
     set spheres(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Sphere', 2, infinity))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Sphere', 2, Infinity))) {
             this._spheres = val;
             this.adopt(this._spheres);
         } else {
@@ -8169,17 +8169,13 @@ class SphereSweep extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.type === null)
-            cpov.error("fatal", "type is undefined.", "SphereSweep.toSDL", this);
-        if(this.spheres === null)
-            cpov.error("fatal", "spheres is undefined.", "SphereSweep.toSDL", this);
         if(this.type == "linearSpline" && this.spheres.length < 2)
             cpov.error("fatal", "A linear spline requires at least two spheres.", "SphereSweep.toSDL", this);
         else if((this.type == "bezierSpline" || this.type == "cubicSpline") && this.spheres.length < 4)
             cpov.error("fatal", "Bezier and cubic splines require at least four spheres.", "SphereSweep.toSDL", this);
     
         content.push(pad + "sphere_sweep {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.type);
+        content.push(ppad + cpov.internalSplineTypes[this.type]);
         content.push(ppad + this.spheres.length + ",");
         var items = [ ];
         for(var i = 0; i < this.spheres.length; i++) {
@@ -8533,11 +8529,6 @@ class Sor extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.points === null)
-            cpov.error("fatal", "points is undefined.", "Sor.toSDL", this);
-        if(this.points.length < 2)
-            cpov.error("fatal", "points must contain at least two VectorXY.", "Sor.toSDL", this);
     
         content.push(pad + "sor {" + (this.id === null ? "" : " // " + this.id));
         var items = [ this.points.length ];

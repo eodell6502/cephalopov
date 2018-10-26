@@ -2095,7 +2095,7 @@ cpov.objDef = {
                 name:  "spheres",
                 child: "array",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'Sphere', 2, infinity)",
+                valid: "cpov.isArrayOfClass(val, 'Sphere', 2, Infinity)",
                 err:   "spheres must be an an array of two or more Sphere."
             }, {
                 name:  "tolerance",

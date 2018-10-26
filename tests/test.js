@@ -1,10 +1,3 @@
-/*
-
-node ..\cpov.js -dd -i d:\projects\CephaloPOV\tests\test.js -p d:\projects\CephaloPOV\tests\preamble1.sdl -p d:\projects\CephaloPOV\tests\preamble2.sdl -s colors.inc -s glass.inc
-node ..\cpov.js -dd -i d:\prog\CephaloPOV\tests\test.js -p d:\prog\CephaloPOV\tests\preamble1.sdl -p d:\prog\CephaloPOV\tests\preamble2.sdl -s colors.inc -s glass.inc
-sloc cephalopov.js classes.js codegen.js cpov.js file.js snippets.js tests\test.js
-
-*/
 
 
 function main(cpov) {
@@ -21,35 +14,37 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "ImageOptions: all parameters after init");    imageOptionsTestAfterInit(fp);
     testHeader(fp, ++testSerial, "GlobalSettings: all parameters at init");     globalSettingsTestAtInit(fp);
     testHeader(fp, ++testSerial, "GlobalSettings: all parameters after init");  globalSettingsTestAfterInit(fp);
-    testHeader(fp, ++testSerial, "Box: minimal test");                          boxTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Box: all (applicable) Primitive params");     boxTestAllParams(fp);
-    testHeader(fp, ++testSerial, "Cone: minimal test");                         coneTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Cylinder: minimal test");                     cylinderTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Disc: minimal test");                         discTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Ovus: minimal test");                         ovusTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Plane: minimal test");                        planeTestMinimum(fp);
-    testHeader(fp, ++testSerial, "JuliaFractal: minimal test");                 juliaFractalTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Prism: minimal test");                        prismTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Sphere: minimal test");                       sphereTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Superellipsoid: minimal test");               superellipsoidTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Torus: minimal test");                        torusTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Triangle: minimal test");                     triangleTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Polygon: minimal test");                      polygonTestMinimum(fp);
-    testHeader(fp, ++testSerial, "Text: minimal test");                         textTestMinimum(fp);
-    testHeader(fp, ++testSerial, "HeightField: minimal test");                  heightFieldTestMinimum(fp);
+
+	testHeader(fp, ++testSerial, "Box: minimal test");                          boxTestMinimum(fp);
     testHeader(fp, ++testSerial, "BicubicPatch: minimal test");                 bicubicPatchTestMinimum(fp);
     testHeader(fp, ++testSerial, "Blob: minimal test");                         blobTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Box: all (applicable) Primitive params");     boxTestAllParams(fp);
+    testHeader(fp, ++testSerial, "Cone: minimal test");                         coneTestMinimum(fp);
     testHeader(fp, ++testSerial, "Cubic: minimal test");                        cubicTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Cylinder: minimal test");                     cylinderTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Disc: minimal test");                         discTestMinimum(fp);
+    testHeader(fp, ++testSerial, "HeightField: minimal test");                  heightFieldTestMinimum(fp);
     testHeader(fp, ++testSerial, "IsoSurface: minimal test");                   isoSurfaceTestMinimum(fp);
+    testHeader(fp, ++testSerial, "JuliaFractal: minimal test");                 juliaFractalTestMinimum(fp);
     testHeader(fp, ++testSerial, "Lathe: minimal test");                        latheTestMinimum(fp);
     testHeader(fp, ++testSerial, "Mesh: minimal test");                         meshTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Ovus: minimal test");                         ovusTestMinimum(fp);
     testHeader(fp, ++testSerial, "Parametric: minimal test");                   parametricTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Plane: minimal test");                        planeTestMinimum(fp);
     testHeader(fp, ++testSerial, "Poly: minimal test");                         polyTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Polygon: minimal test");                      polygonTestMinimum(fp);
     testHeader(fp, ++testSerial, "Polynomial: minimal test");                   polynomialTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Prism: minimal test");                        prismTestMinimum(fp);
     testHeader(fp, ++testSerial, "Quadric: minimal test");                      quadricTestMinimum(fp);
     testHeader(fp, ++testSerial, "Quartic: minimal test");                      quarticTestMinimum(fp);
-//    testHeader(fp, ++testSerial, "Sor: minimal test");                          sorTestMinimum(fp);
-//    testHeader(fp, ++testSerial, "sphereSweep: minimal test");                  sphereSweepTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Sor: minimal test");                          sorTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Sphere: minimal test");                       sphereTestMinimum(fp);
+    testHeader(fp, ++testSerial, "SphereSweep: minimal test");                  sphereSweepTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Superellipsoid: minimal test");               superellipsoidTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Text: minimal test");                         textTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Torus: minimal test");                        torusTestMinimum(fp);
+    testHeader(fp, ++testSerial, "Triangle: minimal test");                     triangleTestMinimum(fp);
+
 }
 
 module.exports = main;
@@ -59,10 +54,12 @@ module.exports = main;
 function sphereSweepTestMinimum(fp) {
 
     var params = {
-        // TODO
+        type: "linearSpline",
+		spheres: [ new Sphere({ center: [1, 2, 3], radius: 1.2 }), new Sphere({ center: [4, 5, 6], radius: 2.4 }) ],
+		tolerance: 1.2
     };
 
-    var obj = new sphereSweep(params);
+    var obj = new SphereSweep(params);
     fp.write(obj.toSDL() + "\n\n");
 }
 
@@ -71,7 +68,7 @@ function sphereSweepTestMinimum(fp) {
 function sorTestMinimum(fp) {
 
     var params = {
-        // TODO
+        points: [ new VectorXY({x:0,y:0}), new VectorXY({x:1,y:1}), new VectorXY({x:0,y:2}) ]
     };
 
     var obj = new Sor(params);
