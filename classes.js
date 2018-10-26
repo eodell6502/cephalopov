@@ -2724,6 +2724,7 @@ class ImageOptions {
                         cli.push((this.allConsole ? "+" : "-") + "GA");
                     }
                     break;
+    
                 case "allFile":
                     ini.push("All_File=" + this.allFile);
                     cli.push(
@@ -2732,41 +2733,50 @@ class ImageOptions {
                         + (typeof this.allFile == "string" ? this.allFile : "")
                     );
                     break;
+    
                 case "antialias":
                     ini.push("Antialias=" + (this.antialias ? "true" : "false"));
                     if(this.antialiasThreshold === null) {
                         cli.push((this.antialias ? "+" : "-") + "A");
                     }
                     break;
+    
                 case "antialiasDepth":
                     ini.push("Antialias_Depth=" + this.antialiasDepth);
                     cli.push("+R" + this.antialiasDepth);
                     break;
+    
                 case "antialiasGamma":
                     ini.push("Antialias_Gamma=" + this.antialiasGamma);
                     cli.push("+AG" + this.antialiasGamma);
                     break;
+    
                 case "antialiasThreshold":
                     ini.push("Antialias_Threshold=" + this.antialiasThreshold);
                     cli.push((this.antialias ? "+" : "-") + "A" + this.antialiasThreshold);
                     break;
+    
                 case "appendFile":
                     ini.push("Append_File=" + (this.appendFile ? "true" : "false"));
                     cli.push((this.appendFile ? "+" : "-") + "GP");
                     break;
+    
                 case "bitsPerColor":
                     ini.push("Bits_Per_Color=" + this.bitsPerColor);
                     break;
+    
                 case "bounding":
                     ini.push("Bounding=" + (this.bounding ? "true" : "false"));
                     if(this.boundingThreshold === null) {
                         cli.push((this.bounding ? "+" : "-") + "MB");
                     };
                     break;
+    
                 case "boundingMethod":
                     ini.push("Bounding_Method=" + this.boundingMethod);
                     cli.push("+BM" + this.boundingMethod);
                     break;
+    
                 case "boundingThreshold":
                     ini.push("Bounding_Threshold=" + this.boundingThreshold);
                     cli.push(
@@ -2774,27 +2784,35 @@ class ImageOptions {
                         + "MB" + this.boundingThreshold
                     );
                     break;
+    
                 case "bspBaseAccessCost":
                     ini.push("BSP_BaseAccessCost=" + this.bspBaseAccessCost);
                     break;
+    
                 case "bspChildAccessCost":
                     ini.push("BSP_ChildAccessCost=" + this.bspChildAccessCost);
                     break;
+    
                 case "bspIsectCost":
                     ini.push("BSP_IsectCost=" + this.bspIsectCost);
                     break;
+    
                 case "bspMaxDepth":
                     ini.push("BSP_MaxDepth=" + this.bspMaxDepth);
                     break;
+    
                 case "bspMissChance":
                     ini.push("BSP_MissChance=" + this.bspMissChance);
                     break;
+    
                 case "constants":
                     break;
+    
                 case "continueTrace":
                     ini.push("Continue_Trace=" + this.continueTrace);
                     cli.push(this.continueTrace ? "+C" : "-C");
                     break;
+    
                 case "createIni":
                     if(typeof this.createIni == "boolean") {
                         ini.push("Create_Ini=" + (this.createIni ? "true" : "false"));
@@ -2803,12 +2821,14 @@ class ImageOptions {
                         cli.push("+GI" + this.createIni);
                     }
                     break;
+    
                 case "debugConsole":
                     if(this.allConsole === null)
                         ini.push("Debug_Console=" + this.debugConsole);
                     if(this.debugFile === null && this.allFile === null)
                         cli.push((this.debugConsole ? "+" : "-") + "GD");
                     break;
+    
                 case "debugFile":
                     if(this.optAllFile === null) {
                         ini.push("Debug_File=" + this.debugFile);
@@ -2819,43 +2839,53 @@ class ImageOptions {
                         );
                     }
                     break;
+    
                 case "display":
                     ini.push("Display=" + (this.display ? "true" : "false"));
                     if(this.videoMode === null)
                         cli.push(this.display ? "+D" : "-D");
                     break;
+    
                 case "displayGamma":
                     ini.push("Display_Gamma=" + this.displayGamma);
                     break;
+    
                 case "dither":
                     ini.push("Dither=" + (this.dither ? "true" : "false"));
                     if(this.ditherMethod === null)
                         cli.push((this.dither ? "+" : "-") + "TH");
                     break;
+    
                 case "ditherMethod":
                     ini.push("Dither_Method=" + this.ditherMethod);
                     cli.push((this.dither ? "+" : "-") + "TH" + this.ditherMethod);
                     break;
+    
                 case "endColumn":
                     ini.push("End_Column=" + this.endColumn);
                     cli.push("+EC" + this.endColumn);
                     break;
+    
                 case "endRow":
                     ini.push("End_Row=" + this.endRow);
                     cli.push("+ER" + this.endRow);
                     break;
+    
                 case "fatalConsole":
                     if(this.allConsole === null)
                             ini.push("Fatal_Console=" + this.fatalConsole);
                     if(this.fatalFile === null && this.allFile === null)
                         cli.push((this.fatalConsole ? "+" : "-") + "GF");
                     break;
+    
                 case "fatalErrorCommand":
                     ini.push("Fatal_Error_Command=" + this.fatalErrorCommand);
                     break;
+    
                 case "fatalErrorReturn":
                     ini.push("Fatal_Error_Return=" + this.fatalErrorReturn);
                     break;
+    
                 case "fatalFile":
                     if(this.optAllFile === null) {
                         ini.push("Fatal_File=" + this.fatalFile);
@@ -2866,54 +2896,66 @@ class ImageOptions {
                         );
                     }
                     break;
+    
                 case "fileGamma":
                     ini.push("File_Gamma=" + this.fileGamma);
                     break;
+    
                 case "height":
                     if(this.width === null || this.height === null)
                         throw new RangeError("[ImageOptions]: Both width and height must be defined.");
                     ini.push("Height=" + this.height);
                     cli.push("+H" + this.height);
                     break;
+    
                 case "highReproducibility":
                     ini.push("High_Reproducibility=" + (this.highReproducibility ? "true" : "false"));
                     if(this.highReproducibility)
                         cli.push("+HR");
                     break;
+    
                 case "includeHeader":
                     ini.push("Include_Header=" + this.includeHeader);
                     cli.push("+HI" + this.includeHeader);
                     break;
+    
                 case "inputFileName":
                     ini.push("Input_File_Name=" + this.inputFileName);
                     cli.push("+I" + this.inputFileName);
                     break;
+    
                 case "jitter":
                     ini.push("Jitter=" + (this.jitter ? "true" : "false"));
                     if(this.jitterAmount === null) {
                         cli.push((this.jitter ? "+" : "-") + "J");
                     }
                     break;
+    
                 case "jitterAmount":
                     ini.push("Jitter_Amount=" + this.jitterAmount);
                     cli.push((this.jitterAmount > 0 ? "+" : "-" ) + "J" + this.jitterAmount);
                     break;
+    
                 case "libraryPath":
                     ini.push("Library_Path=" + this.libraryPath);
                     cli.push("+L" + this.libraryPath);
                     break;
+    
                 case "maxImageBufferMemory":
                     ini.push("Max_Image_Buffer_Memory=" + this.maxImageBufferMemory);
                     cli.push("+MI" + this.maxImageBufferMemory);
                     break;
+    
                 case "outputAlpha":
                     ini.push("Output_Alpha=" + (this.outputAlpha ? "true" : "false"));
                     cli.push((this.outputAlpha ? "+" : "-") + "UA");
                     break;
+    
                 case "outputFileName":
                     ini.push("Output_File_Name=" + this.outputFileName);
                     cli.push("+O" + this.outputFileName);
                     break;
+    
                 case "outputFileType":
                     ini.push("Output_File_Type=" + this.outputFileType);
                     cli.push(
@@ -2922,12 +2964,14 @@ class ImageOptions {
                         + (this.bitsPerColor === null ? "" : this.bitsPerColor)
                     );
                     break;
+    
                 case "outputToFile":
                     if(this.outputFileType === null) {
                         ini.push("Output_to_File=" + (this.outputToFile ? "true" : "false"));
                         cli.push(this.outputToFile ? "+F" : "-F");
                     }
                     break;
+    
                 case "palette":
                     ini.push("Palette=" + this.palette);
                     if(this.videoMode !== null)
@@ -2937,84 +2981,105 @@ class ImageOptions {
                             + this.videoMode + this.palette
                         );
                     break;
+    
                 case "pauseWhenDone":
                     ini.push("Pause_When_Done=" + (this.pauseWhenDone ? "true" : "false"));
                     cli.push(this.pauseWhenDone ? "+P" : "-P");
                     break;
+    
                 case "postFrameCommand":
                     ini.push("Post_Frame_Command=" + this.postFrameCommand);
                     break;
+    
                 case "postFrameReturn":
                     ini.push("Post_Frame_Return=" + this.postFrameReturn);
                     break;
+    
                 case "postSceneCommand":
                     ini.push("Post_Scene_Command=" + this.postSceneCommand);
                     break;
+    
                 case "postSceneReturn":
                     ini.push("Post_Scene_Return=" + this.postSceneReturn);
                     break;
+    
                 case "preFrameCommand":
                     ini.push("Pre_Frame_Command=" + this.preFrameCommand);
                     break;
+    
                 case "preFrameReturn":
                     ini.push("Pre_Frame_Return=" + this.preFrameReturn);
                     break;
+    
                 case "preSceneCommand":
                     ini.push("Pre_Scene_Command=" + this.postSceneCommand);
                     break;
+    
                 case "preSceneReturn":
                     ini.push("Pre_Scene_Return=" + this.preSceneReturn);
                     break;
+    
                 case "previewEndSize":
                     if(this.previewStartSize !== null) {
                         ini.push("Preview_End_Size=" + this.previewEndSize);
                         cli.push("+EP" + this.previewEndSize);
                     }
                     break;
+    
                 case "previewStartSize":
                     ini.push("Preview_Start_Size=" + this.previewStartSize);
                     cli.push("+SP" + this.previewStartSize);
                     break;
+    
                 case "quality":
                     ini.push("Quality=" + this.quality);
                     cli.push("+Q" + this.quality);
                     break;
+    
                 case "radiosityFileName":
                     ini.push("Radiosity_File_Name=" + this.radiosityFileName);
                     cli.push("+RF" + this.radiosityFileName);
                     break;
+    
                 case "radiosityFromFile":
                     ini.push("Radiosity_From_File=" + (this.radiosityFromFile ? "true" : "false"));
                     if(this.radiosityFromFile)
                         cli.push("+RFI");
                     break;
+    
                 case "radiosityToFile":
                     ini.push("Radiosity_To_File=" + (this.radiosityToFile ? "true" : "false"));
                     if(this.radiosityToFile)
                         cli.push("+RFO");
                     break;
+    
                 case "radiosityVainPretrace":
                     ini.push("Radiosity_Vain_Pretrace=" + (this.radiosityVainPretrace ? "true" : "false"));
                     cli.push(this.radiosityVainPretrace ? "+RVP" : "-RVP");
                     break;
+    
                 case "removeBounds":
                     ini.push("Remove_Bounds=" + (this.removeBounds ? "true" : "false"));
                     cli.push((this.removeBounds ? "+" : "-") + "UR");
                     break;
+    
                 case "renderBlockSize":
                     ini.push("Render_Block_Size=" + this.renderBlockSize);
                     cli.push("+BS" + this.renderBlockSize);
                     break;
+    
                 case "renderBlockStep":
                     ini.push("Render_Block_Step=" + this.renderBlockStep);
                     cli.push("+RS" + this.renderBlockStep);
                     break;
+    
                 case "renderConsole":
                     if(this.allConsole === null)
                         ini.push("Render_Console=" + this.renderConsole);
                     if(this.renderFile === null && this.allFile === null)
                         cli.push((this.renderConsole ? "+" : "-") + "GR");
                         break;
+    
                 case "renderFile":
                     if(this.optAllFile === null) {
                         ini.push("Render_File=" + this.renderFile);
@@ -3025,32 +3090,39 @@ class ImageOptions {
                         );
                     }
                     break;
+    
                 case "renderPattern":
                     ini.push("Render_Pattern=" + this.renderPattern);
                     cli.push("+RP" + this.renderPattern);
                     break;
+    
                 case "samplingMethod":
                     ini.push("Sampling_Method=" + this.samplingMethod);
                     cli.push("+AM" + this.samplingMethod);
                     break;
+    
                 case "splitUnions":
                     ini.push("Split_Unions=" + (this.splitUnions ? "true" : "false"));
                     cli.push((this.splitUnions ? "+" : "-") + "SU");
                     break;
+    
                 case "startColumn":
                     ini.push("Start_Column=" + this.startColumn);
                     cli.push("+SC" + this.startColumn);
                     break;
+    
                 case "startRow":
                     ini.push("Start_Row=" + this.startRow);
                     cli.push("+SR" + this.startRow);
                     break;
+    
                 case "statisticConsole":
                     if(this.allConsole === null)
                         ini.push("Statistic_Console=" + this.statisticConsole);
                     if(this.statisticFile === null && this.allFile === null)
                         cli.push((this.statisticConsole ? "+" : "-") + "GS");
                     break;
+    
                 case "statisticFile":
                     if(this.optAllFile === null) {
                         ini.push("Statistic_File=" + this.statisticFile);
@@ -3061,12 +3133,14 @@ class ImageOptions {
                         );
                     }
                     break;
+    
                 case "testAbort":
                     if(this.testAbortCount !== null) {
                         ini.push("Test_Abort=" + (this.testAbort ? "true" : "false"));
                         cli.push(this.testAbort ? "+X" : "-X");
                     }
                     break;
+    
                 case "testAbortCount":
                     ini.push("Test_Abort_Count=" + this.testAbortCount);
                     if(this.testAbort !== null)
@@ -3074,27 +3148,33 @@ class ImageOptions {
                     else
                         cli.push("+X" + this.testAbortCount);
                     break;
+    
                 case "userAbortCommand":
                     ini.push("User_Abort_Command=" + this.userAbortCommand);
                     break;
+    
                 case "userAbortReturn":
                     ini.push("User_Abort_Return=" + this.userAbortReturn);
                     break;
+    
                 case "verbose":
                     ini.push("Verbose=" + (this.verbose ? "true" : "false"));
                     cli.push(this.verbose ? "+V" : "-V");
                     break;
+    
                 case "videoMode":
                     ini.push("Video_Mode=" + this.videoMode);
                     if(this.palette === null)
                         cli.push((this.videoMode ? "+" : "-") + "D" + this.videoMode);
                     break;
+    
                 case "warningConsole":
                     if(this.allConsole === null)
                         ini.push("Warning_Console=" + this.warningConsole);
                     if(this.warningFile === null && this.allFile === null)
                         cli.push((this.warningConsole ? "+" : "-") + "GW");
                     break;
+    
                 case "warningFile":
                     if(this.optAllFile === null) {
                         ini.push("Warning_File=" + this.warningFile);
@@ -3105,22 +3185,27 @@ class ImageOptions {
                         );
                     }
                     break;
+    
                 case "warningLevel":
                     ini.push("Warning_Level=" + this.warningLevel);
                     cli.push("+WL" + this.warningLevel);
                     break;
+    
                 case "width":
                     if(this.width === null || this.height === null)
                         throw new RangeError("[ImageOptions]: Both width and height must be defined.");
                     ini.push("Width=" + this.width);
                     cli.push("+W" + this.width);
                     break;
+    
                 case "workThreads":
                     ini.push("Work_Threads=" + this.workThreads);
                     cli.push("+WT" + this.workThreads);
                     break;
+    
                 default:
                     break;
+    
             }
         }
     
@@ -4082,11 +4167,6 @@ class BicubicPatch extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.type === null)
-            cpov.error("fatal", "type is undefined.", "BicubicPatch.toSDL", this);
-    	if(this.patch === null)
-            cpov.error("fatal", "patch is undefined.", "BicubicPatch.toSDL", this);
-    
         content.push(pad + "bicubic_patch {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + "type " + this.type);
     	if(this.uSteps !== null)
@@ -4305,9 +4385,6 @@ class Blob extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.components === null)
-            cpov.error("fatal", "components is undefined.", "Blob.toSDL", this);
-    
         content.push(pad + "blob {" + (this.id === null ? "" : " // " + this.id));
     	if(this.threshold !== null)
     		content.push(ppad + "threshold " + this.threshold);
@@ -4481,11 +4558,6 @@ class Box extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.corner1 === null)
-            cpov.error("fatal", "corner1 is undefined.", "Box.toSDL", this);
-        if(this.corner2 === null)
-            cpov.error("fatal", "corner2 is undefined.", "Box.toSDL", this);
     
         content.push(pad + "box {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
@@ -5198,15 +5270,6 @@ class Cone extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.basePoint === null)
-            cpov.error("fatal", "basePoint is undefined.", "Cone.toSDL", this);
-        if(this.baseRadius === null)
-            cpov.error("fatal", "baseRadius is undefined.", "Cone.toSDL", this);
-        if(this.capPoint === null)
-            cpov.error("fatal", "capPoint is undefined.", "Cone.toSDL", this);
-        if(this.capRadius === null)
-            cpov.error("fatal", "capRadius is undefined.", "Cone.toSDL", this);
-    
         content.push(pad + "cone {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
         if(this.open)
@@ -5369,9 +5432,6 @@ class Cubic extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.coefficients === null)
-            cpov.error("fatal", "coefficients is undefined.", "Cubic.toSDL", this);
     
         content.push(pad + "cubic {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + "< " + this.coefficients.join(", ") + " >");
@@ -5598,13 +5658,6 @@ class Cylinder extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.basePoint === null)
-            cpov.error("fatal", "basePoint is undefined.", "Cylinder.toSDL", this);
-        if(this.capPoint === null)
-            cpov.error("fatal", "capPoint is undefined.", "Cylinder.toSDL", this);
-        if(this.radius === null)
-            cpov.error("fatal", "radius is undefined.", "Cylinder.toSDL", this);
     
         if(component) {
             return pad + "cylinder { " + this.basePoint.toSDL() + ", "
@@ -5971,11 +6024,6 @@ class Disc extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.center === null)
-            cpov.error("fatal", "center is undefined.", "Disc.toSDL", this);
-        if(this.radius === null)
-            cpov.error("fatal", "radius is undefined.", "Disc.toSDL", this);
     
         content.push(pad + "disc {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
@@ -8709,17 +8757,6 @@ class Parametric extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-    	if(this.funcX === null)
-    		cpov.error("fatal", "funcX is undefined.", "Parametric.toSDL", this);
-    	if(this.funcY === null)
-    		cpov.error("fatal", "funcY is undefined.", "Parametric.toSDL", this);
-    	if(this.funcZ === null)
-    		cpov.error("fatal", "funcZ is undefined.", "Parametric.toSDL", this);
-    	if(this.uv1 === null)
-    		cpov.error("fatal", "uv1 is undefined.", "Parametric.toSDL", this);
-    	if(this.uv2 === null)
-    		cpov.error("fatal", "uv2 is undefined.", "Parametric.toSDL", this);
-    
     	content.push(pad + "parametric {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.funcX);
         content.push(ppad + this.funcY);
@@ -8901,11 +8938,6 @@ class Plane extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-    	if(this.normal === null)
-    		cpov.error("fatal", "normal is undefined.", "Plane.toSDL", this);
-    	if(this.distance === null)
-    		cpov.error("fatal", "distance is undefined.", "Plane.toSDL", this);
     
     	content.push(pad + "plane {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
@@ -9239,8 +9271,6 @@ class Polygon extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-    	if(this.points === null)
-    		cpov.error("fatal", "points is undefined.", "Polygon.toSDL", this);
       	if(this.points.length < 3)
     		cpov.error("fatal", "points must contain at least three VectorXY.", "Polygon.toSDL", this);
     
@@ -9689,14 +9719,6 @@ class Prism extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-    	if(this.type === null)
-    		cpov.error("fatal", "type is undefined.", "Prism.toSDL", this);
-        if(this.height1 === null)
-            cpov.error("fatal", "height1 is undefined.", "Prism.toSDL", this);
-        if(this.height2 === null)
-            cpov.error("fatal", "height2 is undefined.", "Prism.toSDL", this);
-    	if(this.points === null)
-    		cpov.error("fatal", "points is undefined.", "Prism.toSDL", this);
       	if(this.points.length < 3)
     		cpov.error("fatal", "points must contain at least three VectorXY.", "Prism.toSDL", this);
     
@@ -10204,11 +10226,6 @@ class Sphere extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.center === null)
-            cpov.error("fatal", "center is undefined.", "Sphere.toSDL", this);
-        if(this.radius === null)
-            cpov.error("fatal", "radius is undefined.", "Sphere.toSDL", this);
-    
         if(component) {
             return pad + "sphere { " + this.center.toSDL() + ", " + this.radius
                 + (this.strength !== null ? ", " + this.strength : "")
@@ -10571,11 +10588,6 @@ class Superellipsoid extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.e === null)
-            cpov.error("fatal", "e is undefined.", "Superellipsoid.toSDL", this);
-        if(this.n === null)
-            cpov.error("fatal", "n is undefined.", "Superellipsoid.toSDL", this);
     
         content.push(pad + "superellipsoid {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + "<" + this.e + ", " + this.n + ">");
@@ -10990,17 +11002,6 @@ class Text extends Primitive {
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
     
-        if(this.fontType === null)
-            cpov.error("fatal", "fontType is undefined.", "Text.toSDL", this);
-        if(this.font === null)
-            cpov.error("fatal", "font is undefined.", "Text.toSDL", this);
-        if(this.displayText === null)
-            cpov.error("fatal", "displayText is undefined.", "Text.toSDL", this);
-        if(this.thickness === null)
-            cpov.error("fatal", "thickness is undefined.", "Text.toSDL", this);
-        if(this.offset === null)
-            cpov.error("fatal", "offset is undefined.", "Text.toSDL", this);
-    
         // TODO: Handle escaping of double quotes in this.displayText
     
         content.push(pad + "text {" + (this.id === null ? "" : " // " + this.id));
@@ -11185,11 +11186,6 @@ class Torus extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.majorRadius === null)
-            cpov.error("fatal", "majorRadius is undefined.", "Torus.toSDL", this);
-        if(this.minorRadius === null)
-            cpov.error("fatal", "minorRadius is undefined.", "Torus.toSDL", this);
     
         content.push(pad + "torus {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.majorRadius + ", " + this.minorRadius);
@@ -11483,13 +11479,6 @@ class Triangle extends Primitive {
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
-        if(this.corner1 === null)
-            cpov.error("fatal", "corner1 is undefined.", "Triangle.toSDL", this);
-        if(this.corner2 === null)
-            cpov.error("fatal", "corner2 is undefined.", "Triangle.toSDL", this);
-        if(this.corner3 === null)
-            cpov.error("fatal", "corner3 is undefined.", "Triangle.toSDL", this);
     
         if(!this.smooth) {
     

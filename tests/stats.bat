@@ -1,3 +1,3 @@
 cd ..
-sloc cephalopov.js classes.js codegen.js cpov.js file.js snippets.js tests\test.js
+sloc cephalopov.js classes.js codegen.js colorsInc.js cpov.js file.js gsDef.js ioDef.js miscDef.js objDef.js primitiveDef.js snippets.js vectorDef.js tests\test.js
 cd tests
