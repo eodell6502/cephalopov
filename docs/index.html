@@ -244,7 +244,7 @@ different functions, and look at the results of a rendering.</p>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='working'>In Progress</td><td>Implement</td><td>Regression test script(s)</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Ease-of-use refinements for initializers and assignments, esp. <code>Vector*/Color</code> and <code>Matrix</code></td></tr>
-        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>"<code>stamp()</code>" (come up with better name?)</td></tr>
+        <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>"<code>stamp()</code>" (come up with better name? snapshot?)</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Documentation illustration generator script</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>Compact output format for triangles in Mesh</td></tr>
         <tr><td class='pending'>Pending</td><td>Test/Implement</td><td>uvVectors member in Triangle, ck Mesh compatibility.</td></tr>
@@ -297,40 +297,6 @@ different functions, and look at the results of a rendering.</p>
     </tbody>
 </table>
 
-<h3>Milestone C0: TODO/FIXME: Fallout needing prioritization</h3>
-
-<table class='sgrid'>
-    <thead>
-        <tr>
-            <th>Status</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    <thead><tbody>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Camera pseudo-primitive in CSG, transformations</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Camera.angle: Determine legal values and enforce</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Camera.type: replace SDL literals with camelCased cpov versions</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>cpov.js: More selective scope management</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Deep clones, etc.</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Lathe: add check for correct minimum number of points</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.looksLike</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.mediaAttenuation</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.mediaInteraction</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>LightSource.projectedThrough</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Management of array attributes</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Matrix: Improve constructor validation</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Mesh2</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.interior</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.interiorTexture</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.photons</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.photons</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.radiosity</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.radiosity</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Primitive.texture</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Test/Implement</td><td>Text.toSDL: Handle escaping of double quotes in Text.displayText</td></tr>
-    </tbody>
-</table>
 
 <h3>Milestone C1: Preparation for public beta</h3>
 
@@ -343,32 +309,48 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>copy() method across classes, both shallow and deep</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>isoSurface -- need to examine examples of functions</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>mesh</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>mesh2</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>polynomial</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Matrix, Vector, Color: Use JS/SDL func in lieu of individual attributes</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Move things needed for codegen to separate file not included at runtime</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Script to pretty-print definition files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera pseudo-primitive in CSG, transformations</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera pseudo-primitive transform integration</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera.angle: Determine legal values and enforce</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Camera.type: replace SDL literals with camelCased cpov versions</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>copy() method across classes, both shallow and deep</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>cpov.js: More selective scope management</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Deep clones, etc.</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation generation</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reports</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive .photons</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive .radiosity</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- boundingThreshold: convert zero to boolean on output</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- constants: gets special handling</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- endColumn: post check startColumn</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- endRow: post check startRow</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- startColumn: post check endColumn</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions -- startRow: post check endRow</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Optionally generate .sh/.bat files</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.boundingThreshold: convert zero to boolean on output</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.constants: gets special handling</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.endColumn: post check startColumn</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.endRow: post check startRow</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.startColumn: post check endColumn</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions.startRow: post check endRow</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Lathe: add check for correct minimum number of points</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.looksLike</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.mediaAttenuation</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.mediaInteraction</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>LightSource.projectedThrough</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Management of array attributes</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Matrix, Vector, Color: Use JS/SDL func in lieu of individual attributes</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Matrix: Improve constructor validation</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Mesh2</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.interior</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.interiorTexture</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.photons</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.photons</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.radiosity</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.radiosity</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Primitive.texture</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Move things needed for codegen to separate file not included at runtime</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Script to pretty-print definition files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reports</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Text.toSDL: Handle escaping of double quotes in Text.displayText</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
+        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
     </tbody>
 </table>
 
@@ -383,32 +365,31 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Output frame range</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Additional splines, easing functions, esp. Catmull-Rom</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Interior</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Texture</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Macro/Function generation, i.e., in separate file to use directly with POV-Ray</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script to parse as much as possible of POV-Ray .inc files into JS/cpov</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Porting of functions in .inc files</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Atmospheric effects</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Direct support for ffmpeg/avisynth + Google speech API</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Eric Haines' table of object intersections, collision detection</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Extensive warn, info, debug output</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Geometric query system</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Interior</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Level-of-Detail</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Macro/Function generation, i.e., in separate file to use directly with POV-Ray</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Output frame range</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Parametric types</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Particle systems</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Polyhedron library</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Porting of functions in .inc files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Primitive</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script execution on events</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script to parse as much as possible of POV-Ray .inc files into JS/cpov</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Spline-builder UI</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Stereo pseudo-cameras</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Parametric types</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Polyhedron library</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Level-of-Detail</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Particle systems</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Geometric query system</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Eric Haines' table of object intersections, collision detection</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Primitive</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Texture</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>tick order</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Direct support for ffmpeg + Google speech API</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script execution on events</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Extensive warn, info, debug output</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
     </tbody>
 </table>
 
