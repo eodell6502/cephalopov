@@ -1,6 +1,5 @@
 var cpov  = require("./cephalopov.js");
 var File  = require("./file.js");
-var cli   = require("commander");
 var chalk = require("chalk");
 
 
@@ -345,20 +344,60 @@ ClassBuilder.prototype.toString = function() {
 
 
 //==============================================================================
+// Takes an array of objects and for each object key encountered, sets
+// key == true in destObj.
+//==============================================================================
+
+function readParamKeys(array, destObj) {
+    for(var i = 0; i < array.length; i++) {
+        for(var k in array[i]) {
+            destObj[k] = true;
+        }
+    }
+}
+
+
+//==============================================================================
 // docHumper takes a string -- chiefly the CephaloPOV documentation file
-// /docs/index.html -- and an array of the same definition objects used by
+// /docs/index.html -- and one of the same definition objects used by
 // ClassBuilder. It looks through the docs for div/span elements with special
 // attributes and replaces their contents with documentation generated from the
 // definition objects. The markup looks like this:
 //
-//     <div dh="classname.member"> ... </div dh="classname.member">
+//     <div dh="classname"> ... </div dh="classname">
 //
 // Note that the dh attribute has to be repeated in the closing tag, which
 // spares us the non-trivial exercise of actually parsing the HTML.
 //==============================================================================
 
-function docHumper(doc, defs) {
+function docHumper(doc, classname, def) {
+	var content = [ ];
+	var members = [ ];
 
+	if(def.immutable !== undefined)
+		for(var k in def.immutable)
+			members.push(k);
+	if(def.mutable !== undefined)
+		for(var k in def.mutable)
+			members.push(k);
+
+	members.sort();
+
+	// TODO: table preamble
+
+	for(var m = 0; m < members.length; m++) {
+		if(def.immutable !== undefined && def.immutable[members[m]] !== undefined) {
+			// TODO: immutable property/method
+		} else if(def.mutable !== undefined && def.mutable[members[m]] !== undefined) {
+			// TODO: immutable property/method
+		}
+	}
+
+	// TODO: table postamble
+
+	regex = new RegExp('<div +dh="' + classname + '">[^]*</div +dh="' + classname + '">');
+
+	return doc.replace(regex, content.join("\n"));
 }
 
 
@@ -530,16 +569,5 @@ function main() {
 }
 
 
-//------------------------------------------------------------------------------
-// Takes an array of objects and for each object key encountered, sets
-// key == true in destObj.
-//------------------------------------------------------------------------------
 
-function readParamKeys(array, destObj) {
-    for(var i = 0; i < array.length; i++) {
-        for(var k in array[i]) {
-            destObj[k] = true;
-        }
-    }
-}
 
