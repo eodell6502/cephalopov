@@ -10,12 +10,16 @@ module.exports = {
                 name:  "x",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "x must be a float."
+                err:   "x must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "y must be a float."
+                err:   "y must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             },
         ],
     },
@@ -30,12 +34,16 @@ module.exports = {
                 name:  "u",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "u must be a float."
+                err:   "u must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "v",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "v must be a float."
+                err:   "v must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             },
         ],
     },
@@ -50,17 +58,23 @@ module.exports = {
                 name:  "x",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "x must be a float."
+                err:   "x must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "y must be a float."
+                err:   "y must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "z",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "z must be a float."
+                err:   "z must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             },
         ],
     },
@@ -75,22 +89,30 @@ module.exports = {
                 name:  "x",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "x must be a float."
+                err:   "x must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "y must be a float."
+                err:   "y must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "z",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "z must be a float."
+                err:   "z must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "w",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "w must be a float."
+                err:   "w must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             },
         ],
     },
@@ -105,29 +127,41 @@ module.exports = {
                 name:  "r",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "r must be a float."
+                err:   "r must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "g",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "g must be a float."
+                err:   "g must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "b",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "b must be a float."
+                err:   "b must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "f",
                 valid: "cpov.isFloat(val)",
-                err:   "f must be a float."
+                err:   "f must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "t",
                 valid: "cpov.isFloat(val)",
-                err:   "t must be a float."
+                err:   "t must be a float.",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "srgb",
                 valid: "cpov.isBoolean(val)",
-                err:   "srgb must be a boolean."
+                err:   "srgb must be a boolean.",
+                desc:  "TODO",
+                tname: "TODO"
             },
         ],
     },

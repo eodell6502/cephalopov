@@ -5,14 +5,23 @@
 <title>CephaloPOV Documentation</title>
 <style type="text/css">
 	body,table,input { font: 10pt Arial,Helvetica,sans-serif; }
-    body { width: 7.5in; margin-left: auto; margin-right: auto; }
+    body { width: 7.5in; margin-left: auto; margin-right: auto; counter-reset: h2counter; }
 	div.code { white-space: pre; font: 10pt Consolas,Courier,fixed; background-color: #EEF; border: 1px solid #CCF; margin-top: 1em; padding: 1em; }
     code { font: 10pt Consolas,Courier,fixed; }
     pre { font: 10pt Consolas,Courier,fixed; }
-    h2 { font-size: 16pt; color: white; background-color: #666; border: 2pt solid black; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2em; margin-bottom: 0.3em; }
-    h3 { font-size: 14pt; border: 1.5pt solid black; margin-top: 1.5em; margin-bottom: 0.2em; padding: 0.25em; }
-    h4 { font-size: 14pt; margin-top: 1em; margin-bottom: 0.2em; border-bottom: 1.5pt solid black; }
+
+    h1 { counter-reset: h2counter; }
+    h2 { counter-reset: h3counter; font-size: 18pt; color: white; background-color: #666; border: 2pt solid black; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2em; margin-bottom: 0.3em; }
+    h3 { counter-reset: h4counter; font-size: 16pt; color: white; background-color: #666; border: 1pt solid black; margin-top: 1.5em; margin-bottom: 0.2em; padding: 0.25em 0.25em 0.25em 0.5em; }
+    h4 { counter-reset: h5counter; font-size: 14pt; margin-top: 1em; margin-bottom: 0.2em; border-bottom: 1.5pt solid black; }
+
+    h2:before { counter-increment: h2counter; content: counter(h2counter) "\0000a0\0000a0";                                               }
+    h3:before { counter-increment: h3counter; content: counter(h2counter) "." counter(h3counter) "\0000a0\0000a0";                        }
+    h4:before { counter-increment: h4counter; content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "\0000a0\0000a0"; }
+
     p { margin-top: 0em; margin-bottom: 0.75em; }
+    ul.spacious li { padding-top: 0.5em; }
+    ol.spacious li { padding-top: 0.5em; }
 
     table.matrixDemo { background-color: black; border-spacing: 1pt; margin-left: auto; margin-right: auto; font-size: 90%; margin-top: 1em; margin-bottom: 2em; }
     table.matrixDemo th { color: white; width: 20%; padding: 0.5em; }
@@ -34,9 +43,13 @@
     table.sgrid tbody { background-color: white; }
     table.sgrid td { padding-left: 0.5em; padding-right: 0.5em; vertical-align: top; }
 
+    table.attrs { width: 100%; }
     table.attrs tbody tr :nth-child(1) { white-space: pre; text-align: center; }
     table.attrs tbody tr :nth-child(2) { text-align: center; }
     table.attrs tbody tr :nth-child(3) { font-family: Consolas,Courier,fixed; font-weight: bold; }
+    table.attrs tbody tr :nth-child(4) { font-family: Consolas,Courier,fixed; }
+    table.attrs tbody tr :nth-child(5) { white-space: normal; }
+    table.attrs tbody td.dummy { color: #888; background-color: #FFE; }
 
     table.todo { width: 100%; }
     table.todo td.pending { text-align: center; background-color: red;    color: yellow; font-weight: bold; white-space: nowrap; }
@@ -54,12 +67,12 @@
 <body>
 <img src='cplogo_small.png' style='float: right; margin-left: 1em; margin-bottom: 1em;'><h1>CephaloPOV Documentation</h1>
 
-<p><i>Before CephaloPOV reaches a preliminary beta phase, this will
-be the user manual. Right now, it's mostly notes.</i></p>
+<p><i>Before CephaloPOV reaches a preliminary beta phase, this will be the user
+manual. Right now, it's very much a work in progress.</i></p>
 
 <br/><br/>
 
-<h2>1: Introduction</h2>
+<h2>Introduction</h2>
 
 <p>CephaloPOV is a JavaScript scripting engine for POV-Ray. It is implemented as
 a Node command line program that loads a user script and executes it in an
@@ -68,11 +81,100 @@ POV-Ray's native objects, in addition to having full access to the Node
 ecosystem. CephaloPOV takes care of generating POV-Ray Scene Description
 Language files, both for static scenes and multi-frame animations.</p>
 
-<h2>2: Tutorial</h2>
+<h3>What you need (and don't need) to know</h3>
+
+<p>One of the major design goals of CephaloPOV is to be accessible to anyone who
+has basic competency in JavaScript without requiring prior experience with
+POV-Ray or having to know its Scene Description Language (SDL). However, POV-Ray
+is an enormous program with a vast array of features, and it will be quite some
+time before this manual is a complete substitute for POV-Ray's own extensive
+documentation. In the meantime, POV-Ray novices should refer to the <a
+href="http://povray.org/documentation/3.7.0/index.html">official
+documentation</a>.</p>
+
+<p>Having said all that, another major design goal of CephaloPOV is to interoperate
+as smoothly as possible with SDL. You can use existing SDL code with (and within)
+CephaloPOV JavaScript code, and it is easy to go the other way, incorporating
+the output of CephaloPOV scripts into SDL.</p>
+
+<p>As far as JavaScript expertise goes, you can get by with a basic knowledge of
+the language. CephaloPOV uses ES6 classes instead of bare prototypes for most
+things, but unless you intend to extend them, you can treat them just like
+prototypes. If you're a JavaScript expert, you can of course do much more than a
+beginner, but that is a simple matter of programmer skill and not a matter of
+CephaloPOV's API.</p>
+
+<p>POV-Ray is a non-interactive 3D graphics program, so knowledge of analytic
+geometry will always be to your advantage, but both POV-Ray and CephaloPOV are
+designed to be usable to anyone who understands three-dimensional Cartesian
+coordinates. <span class='ephemeral'>In the future, CephaloPOV will offer a
+sophisticated but easy-to-use geometric query system that will let you leverage
+quite complex math without having to understand the details, but that's still
+a ways off.</span></p>
+
+
+<h2>Tutorial</h2>
 
 <p>TODO</p>
 
-<h2>3: Reference</h2>
+<h2>Reference</h2>
+
+<h3>Documentation Conventions</h3>
+
+<p>TODO</p>
+
+<h3>API Conventions</h3>
+
+<h4>Type Discipline</h4>
+
+<p>To make it easier to debug&mdash;and hopefully to reduce the number of bugs
+in the first place&mdash;CephaloPOV imposes a stricter type discipline than the
+default JavaScript type system:</p>
+
+<ul class='spacious'>
+
+    <li>The most important rule is that primitive types are <em>never</em>
+    silently converted to other types. If a parameter or method calls for a
+    string and you pass a number (or vice versa), you'll get a fatal error. The
+    string "2" and the number 2 are as different in CephaloPOV as if it had been
+    written in C.</li>
+
+    <li>CephaloPOV is particularly picky about numbers. JavaScript has only one
+    numeric type, <code>Number</code>, which is internally a double-precision
+    floating point number. CephaloPOV, however, distinguishes between floats and
+    integers. If the API expects an integer, you must pass a whole number;
+    fractional values will be rejected. This is to avoid the unexpected behavior
+    that might come from truncating or rounding the fractional part.</li>
+
+    <li>The big exception to all this is that the constructors for nearly all of
+    the classes take optional shortcut forms for the sake of convenience. In
+    most cases, this is an ordered list of the minimum required arguments, e.g.,
+    <code>corner1</code> and <code>corner2</code> for a <code>Box</code>.</li>
+
+    <li>The other exception concerns the various <code>Vector*</code>,
+    <code>Color</code>, and <code>Matrix</code> types which are heavily used
+    throughout the API. For example, anywhere a <code>VectorXYZ</code> is
+    required, you can pass a three-element array of floats&mdash;<code>[ 0, 1,
+    2.3 ]</code>&mdash;to avoid the tedious boilerplate code of explicitly
+    instantiating the class.</li>
+
+</ul>
+
+<h4>Type Indiscipline</h4>
+
+<h3>Global Parameters</h3>
+
+<h4>ImageOptions</h4>
+
+<p>TODO</p>
+
+<div dh="ImageOptions"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>N</td><td>allConsole</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>allFile</td><td>boolean<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>antialias</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>antialiasDepth</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>antialiasGamma</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>antialiasThreshold</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>appendFile</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bitsPerColor</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bounding</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>boundingMethod</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>boundingThreshold</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bspBaseAccessCost</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bspChildAccessCost</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bspIsectCost</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bspMaxDepth</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bspMissChance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>continueTrace</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>createIni</td><td>boolean<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>debugConsole</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>debugFile</td><td>boolean<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>endColumn</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>endRow</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>fatalFile</td><td>boolean<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>fileGamma</td><td>float<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>height</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>highReproducibility</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>includeHeader</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>inputFileName</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>jitter</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>jitterAmount</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>libraryPath</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>maxImageBufferMemory</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>outputToFile</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>palette</td><td>char</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>pauseWhenDone</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>postFrameCommand</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>postFrameReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>postSceneCommand</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>postSceneReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>preFrameCommand</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>preFrameReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>preSceneCommand</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radiosityFileName</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radiosityFromFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radiosityToFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radiosityVainPretrace</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>removeBounds</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>renderBlockSize</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>renderBlockStep</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>renderConsole</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>renderFile</td><td>boolean<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>renderPattern</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>samplingMethod</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>splitUnions</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>startColumn</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>startRow</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>statisticConsole</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>statisticFile</td><td>boolean<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>testAbort</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>testAbortCount</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>userAbortCommand</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>userAbortReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>verbose</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>width</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>workThreads</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="ImageOptions">
+
+<h4>GlobalSettings</h4>
+
+<p>TODO</p>
+
+<div dh="GlobalSettings"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>N</td><td>adcBailout</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>ambientLight</td><td>Color</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>assumedGamma</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>charset</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>iridWavelength</td><td>Color</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>numberOfWaves</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photon</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonAdcBailout</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonAutostop</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonCount</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonExpandThresholds</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonGather</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonJitter</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonLoadFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonMaxTraceLevel</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonMedia</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonRadius</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonSaveFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photonSpacing</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radAdcBailout</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radAlwaysSample</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radBrightness</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radCount</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radErrorBound</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radGrayThreshold</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radLowErrorFactor</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radMaxSample</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radMaximumReuse</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radMinimumReuse</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radNearestCount</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radNormal</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radPretraceEnd</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radPretraceStart</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radRecursionLimit</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radSubsurface</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radiosity</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>subRadiosity</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>subSamples</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>subsurface</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="GlobalSettings">
 
 <h3>Vectors and Colors</h3>
 
@@ -80,21 +182,31 @@ Language files, both for static scenes and multi-frame animations.</p>
 
 <p>TODO</p>
 
+<div dh="VectorUV"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>u</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>v</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="VectorUV">
+
 <h4>VectorXY</h4>
 
 <p>TODO</p>
+
+<div dh="VectorXY"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>x</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>y</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="VectorXY">
 
 <h4>VectorXYZ</h4>
 
 <p>TODO</p>
 
+<div dh="VectorXYZ"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>x</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>y</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>z</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="VectorXYZ">
+
 <h4>VectorXYZW</h4>
 
 <p>TODO</p>
 
+<div dh="VectorXYZW"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>w</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>x</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>y</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>z</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="VectorXYZW">
+
 <h4>Color</h4>
 
 <p>TODO</p>
+
+<div dh="Color"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>b</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>f</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>g</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>r</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>srgb</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>t</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Color">
 
 <h3>Geometric Primitives</h3>
 
@@ -102,677 +214,216 @@ Language files, both for static scenes and multi-frame animations.</p>
 
 <p>TODO</p>
 
+<div dh="Primitive"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>N</td><td>active</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>baseTransform</td><td>Matrix</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>boundedBy</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>children</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>clippedBy</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>doubleIlluminate</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>finish</td><td>Finish</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>frameBegin</td><td>function</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>frameEnd</td><td>function</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>hollow</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>id</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>interior</td><td>Interior</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>inverse</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>material</td><td>Material</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>noImage</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>noRadiosity</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>noReflection</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>noShadow</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>parent</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>photons</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>radiosity</td><td>TOOD</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>serial</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>texture</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>transform</td><td>Matrix</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Primitive">
+
 <h4>BicubicPatch</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a BicubicPatch, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>flatness</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>uSteps</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>vSteps</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="BicubicPatch"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a BicubicPatch, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a BicubicPatch, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>flatness</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a BicubicPatch, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a BicubicPatch, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>type</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>uSteps</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>vSteps</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="BicubicPatch">
 
 <h4>Blob</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Blob, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Blob, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>hierarchy</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Blob, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Blob, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>threshold</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Blob"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Blob, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Blob, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>hierarchy</td><td>hierarchy</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Blob, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Blob, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Blob">
 
 <h4>Box</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>corner1</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>corner2</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Box, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Box, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Box, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Box, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Box"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>corner1</td><td>VectorXYZ</td><td>The first of two opposite corners of the cube.</td></tr><tr><td>RW</td><td>Y</td><td>corner2</td><td>VectorXYZ</td><td>The first of two opposite corners of the cube.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Box, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Box, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Box, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Box, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Box">
 
 <h4>Camera</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>N</td><td>angle</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>apertureSize</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>blurSamples</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>bokeh</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>confidence</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Camera, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>cylinderType</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>direction</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Camera, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>focalPoint</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>location</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>lookAt</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Camera, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>right</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>sky</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Camera, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>up</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>variance</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>vertAngle</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Camera"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>N</td><td>angle</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>apertureSize</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>blurSamples</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Camera, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>direction</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Camera, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>focalPoint</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>location</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>lookAt</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Camera, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>right</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>sky</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Camera, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>up</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>variance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>vertAngle</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Camera">
 
 <h4>Cone</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>basePoint</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>baseRadius</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>capPoint</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>capRadius</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Cone, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Cone, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cone, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Cone, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Cone"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>basePoint</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>baseRadius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>capPoint</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>capRadius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Cone, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Cone, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cone, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Cone, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Cone">
 
 <h4>Cubic</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Cubic, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Cubic, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cubic, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Cubic, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Cubic"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Cubic, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Cubic, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cubic, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Cubic, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Cubic">
 
 <h4>Cylinder</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>basePoint</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>capPoint</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Cylinder, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Cylinder, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cylinder, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>radius</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Cylinder, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>strength</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Cylinder"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>basePoint</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>capPoint</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Cylinder, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Cylinder, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cylinder, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Cylinder, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>strength</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Cylinder">
 
 <h4>Difference</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Difference, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Difference, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>negativeComponents</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>positiveComponent</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Difference, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Difference"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Difference, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Difference, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>negativeComponents</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>positiveComponent</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Difference, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Difference">
 
 <h4>Disc</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>center</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Disc, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Disc, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>holeRadius</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>normal</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Disc, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>radius</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Disc, this is always <code>false</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Disc"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>center</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Disc, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Disc, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>holeRadius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>normal</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Disc, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Disc, this is always <code>false</code>.</td></td></tr></tbody></table></div dh="Disc">
 
 <h4>HeightField</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a HeightField, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a HeightField, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>gamma</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>hfType</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>hierarchy</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>premult</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a HeightField, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>smooth</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a HeightField, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>source</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>waterLevel</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="HeightField"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a HeightField, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a HeightField, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>gamma</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>hfType</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>hierarchy</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>premult</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a HeightField, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>smooth</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a HeightField, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>source</td><td>SDL<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>waterLevel</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="HeightField">
 
 <h4>Intersection</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Intersection, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Intersection, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Intersection, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Intersection"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Intersection, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Intersection, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Intersection, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Intersection">
 
 <h4>IsoSurface</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>N</td><td>accuracy</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>containedBy</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a IsoSurface, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>evaluate</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a IsoSurface, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>maxGradient</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>maxTrace</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a IsoSurface, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a IsoSurface, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>source</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>threshold</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="IsoSurface"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>N</td><td>accuracy</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>containedBy</td><td>Sphere<br/>Box</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a IsoSurface, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>evaluate</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a IsoSurface, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>maxGradient</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>maxTrace</td><td>integer<br/>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a IsoSurface, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a IsoSurface, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>source</td><td>SDL</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="IsoSurface">
 
 <h4>JuliaFractal</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>distance</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>juliaParam</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>maxIter</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>power</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>precision</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>slice</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="JuliaFractal"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a JuliaFractal, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>distance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a JuliaFractal, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>maxIter</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>power</td><td>VectorXY</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>precision</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a JuliaFractal, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>slice</td><td>VectorXYZW</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a JuliaFractal, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="JuliaFractal">
 
 <h4>Lathe</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Lathe, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Lathe, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Lathe, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Lathe, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Lathe"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Lathe, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Lathe, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Lathe, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Lathe, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Lathe">
 
 <h4>LightSource</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>N</td><td>adaptive</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>areaIllumination</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>areaLight</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>axis1</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>axis2</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>circular</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>color</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a LightSource, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>fadeDistance</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>fadePower</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>falloff</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a LightSource, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>jitter</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>location</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>looksLike</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>mediaAttenuation</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>mediaInteraction</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>orient</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>parallel</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>pointAt</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>projectedThrough</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a LightSource, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>radius</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>shadowless</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>size1</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>size2</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a LightSource, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>tightness</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>type</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="LightSource"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>N</td><td>adaptive</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>areaIllumination</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>areaLight</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>axis1</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>axis2</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>circular</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>color</td><td>Color</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a LightSource, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>fadeDistance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>fadePower</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>falloff</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a LightSource, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>jitter</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>location</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>looksLike</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>mediaAttenuation</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>mediaInteraction</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>orient</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>parallel</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>pointAt</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>projectedThrough</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a LightSource, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>radius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>shadowless</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>size1</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>size2</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a LightSource, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>tightness</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>type</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="LightSource">
 
 <h4>Merge</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Merge, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Merge, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Merge, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Merge"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Merge, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Merge, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Merge, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Merge">
 
 <h4>Mesh</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Mesh, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Mesh, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>hierarchy</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>insideVector</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Mesh, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Mesh, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>triangles</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Mesh"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Mesh, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Mesh, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>hierarchy</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>insideVector</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Mesh, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Mesh, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>triangles</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Mesh">
 
 <h4>Ovus</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>bottomRadius</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Ovus, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Ovus, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Ovus, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Ovus, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>topRadius</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Ovus"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>bottomRadius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Ovus, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Ovus, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Ovus, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Ovus, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>topRadius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Ovus">
 
 <h4>Parametric</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>N</td><td>accuracy</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>containedBy</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Parametric, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Parametric, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>funcX</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>funcY</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>funcZ</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>maxGradient</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>precomputeDepth</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>precomputeX</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>precomputeY</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>precomputeZ</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Parametric, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Parametric, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>uv1</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>uv2</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Parametric"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>N</td><td>accuracy</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>containedBy</td><td>Sphere<br/>Box</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Parametric, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Parametric, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>funcX</td><td>SDL</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>funcY</td><td>SDL</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>funcZ</td><td>SDL</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>maxGradient</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>precomputeDepth</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>precomputeX</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>precomputeY</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>precomputeZ</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Parametric, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Parametric, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>uv1</td><td>VectorUV</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>uv2</td><td>VectorUV</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Parametric">
 
 <h4>Plane</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Plane, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>distance</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Plane, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>normal</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Plane, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Plane, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Plane"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Plane, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>distance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Plane, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>normal</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Plane, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Plane, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Plane">
 
 <h4>Poly</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Poly, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Poly, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>order</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Poly, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Poly, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Poly"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Poly, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Poly, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>order</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Poly, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Poly, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Poly">
 
 <h4>Polygon</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Polygon, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Polygon, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polygon, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Polygon, this is always <code>false</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Polygon"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Polygon, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Polygon, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polygon, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Polygon, this is always <code>false</code>.</td></td></tr></tbody></table></div dh="Polygon">
 
 <h4>Polynomial</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Polynomial, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Polynomial, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>order</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polynomial, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Polynomial, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Polynomial"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Polynomial, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Polynomial, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>order</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polynomial, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Polynomial, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Polynomial">
 
 <h4>Prism</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Prism, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Prism, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>height1</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>height2</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Prism, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Prism, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Prism"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Prism, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Prism, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>height1</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>height2</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Prism, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Prism, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Prism">
 
 <h4>Quadric</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Quadric, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Quadric, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Quadric, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Quadric, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Quadric"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Quadric, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Quadric, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Quadric, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Quadric, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Quadric">
 
 <h4>Quartic</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Quartic, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Quartic, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Quartic, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Quartic, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Quartic"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Quartic, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Quartic, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Quartic, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Quartic, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Quartic">
 
 <h4>Sor</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Sor, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Sor, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sor, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Sor, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Sor"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Sor, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Sor, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sor, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Sor, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Sor">
 
 <h4>Sphere</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>center</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Sphere, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Sphere, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sphere, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>radius</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Sphere, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>strength</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Sphere"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>center</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Sphere, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Sphere, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sphere, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Sphere, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>strength</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Sphere">
 
 <h4>SphereSweep</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a SphereSweep, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a SphereSweep, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a SphereSweep, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a SphereSweep, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>spheres</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>tolerance</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="SphereSweep"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a SphereSweep, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a SphereSweep, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a SphereSweep, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a SphereSweep, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>spheres</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>tolerance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="SphereSweep">
 
 <h4>Superellipsoid</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Superellipsoid, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>e</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Superellipsoid, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>n</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Superellipsoid, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Superellipsoid, this is always <code>true</code>.</td></td></tr>
-</tbody>
-</table>
+<div dh="Superellipsoid"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Superellipsoid, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>e</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Superellipsoid, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>n</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Superellipsoid, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Superellipsoid, this is always <code>true</code>.</td></td></tr></tbody></table></div dh="Superellipsoid">
 
 <h4>Text</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Text, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>displayText</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Text, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>font</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>fontType</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>offset</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Text, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Text, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>thickness</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Text"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Text, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>displayText</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Text, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>font</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>fontType</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>offset</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Text, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Text, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>thickness</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Text">
 
 <h4>Torus</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Torus, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Torus, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>Y</td><td>majorRadius</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>minorRadius</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Torus, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Torus, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Torus"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Torus, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Torus, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>Y</td><td>majorRadius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>minorRadius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Torus, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Torus, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>sturm</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Torus">
 
 <h4>Triangle</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>corner1</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>corner2</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>Y</td><td>corner3</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Triangle, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Triangle, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>normal1</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>normal2</td><td>TODO.</td></tr>
-<tr><td>Writeable</td><td>N</td><td>normal3</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Triangle, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>smooth</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Triangle, this is always <code>false</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>textures</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Triangle"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>corner1</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>corner2</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>Y</td><td>corner3</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Triangle, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Triangle, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>normal1</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>normal2</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RW</td><td>N</td><td>normal3</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Triangle, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>smooth</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Triangle, this is always <code>false</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>textures</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Triangle">
 
 <h4>Union</h4>
 
 <p>TODO</p>
 
-<table class='sgrid attrs'>
-<thead>
-<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
-<thead><tbody>
-<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Union, this is always <code>true</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Union, this is always <code>false</code>.</td></td></tr>
-<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Union, this is always <code>true</code>.</td></td></tr>
-<tr><td>Writeable</td><td>N</td><td>splitUnion</td><td>TODO.</td></tr>
-</tbody>
-</table>
+<div dh="Union"><table class='sgrid attrs'><thead><tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr><thead><tbody><tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr><tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If true, the primitive is a composite CSG type. For a Union, this is always <code>true</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If true, the shape is finite in extent. For a Union, this is always <code>false</code>.</td></td></tr><tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If true, the shape is solid. For a Union, this is always <code>true</code>.</td></td></tr><tr><td>RW</td><td>N</td><td>splitUnion</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr></tbody></table></div dh="Union">
 
 
 <h2>Appendices</h2>
 
-<h3>Appendix A: Matrices</h3>
+<h3>Matrices</h3>
 
 <p>SDL matrices are an abbreviated form of the entire matrix being used. The
 fourth column is invariant and therefore omitted from its SDL representation and
@@ -941,7 +592,7 @@ difficult. Choose a simple shape, try fiddling with different elements and
 different functions, and look at the results of a rendering.</p>
 
 
-<h3>Appendix B: CephaloPOV Internals</h3>
+<h3>CephaloPOV Internals</h3>
 
 <pre>The gsDef, ioDef, primitiveDef, and objDef objects follow similar forms and
 are mainly used by codegen.js to crank out the mountain of repetitive boiler-
@@ -1018,9 +669,54 @@ replaced before the first public beta are quite high.</pre>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='working'>WIP</td><td>Implement</td><td>Documentation generation</td></tr>
             <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>objDef</code></td></tr>
-            <tr><td class='pending'>TBD</td><td>Implement</td><td class='subtask'><code>primitiveDef</code></td></tr>
-            <tr><td class='pending'>TBD</td><td>Implement</td><td class='subtask'><code>vectorDef</code></td></tr>
-            <tr><td class='pending'>TBD</td><td>Implement</td><td class='subtask'>Method documentation</td></tr>
+            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>primitiveDef</code></td></tr>
+            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>vectorDef</code></td></tr>
+            <tr><td class='done'>pending</td><td>Implement</td><td class='subtask'><code>gsDef</code></td></tr>
+            <tr><td class='done'>pending</td><td>Implement</td><td class='subtask'><code>ioDef</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td>Method documentation</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td>Attribute documentation</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>BicubicPatch attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Blob attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Box attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Camera attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Color attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Cone attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Cubic attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Cylinder attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Difference attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Disc attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>GlobalSettings attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>HeightField attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>ImageOptions attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Intersection attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>IsoSurface attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>JuliaFractal attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Lathe attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>LightSource attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Merge attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Mesh attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Ovus attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Parametric attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Plane attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Poly attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Polygon attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Polynomial attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Primitive attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Prism attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Quadric attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Quartic attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Sor attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Sphere attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>SphereSweep attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Superellipsoid attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Text attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Torus attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Triangle attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>Union attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>VectorUV attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>VectorXY attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>VectorXYZ attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>VectorXYZW attributes</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
             <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
             <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
@@ -1076,69 +772,6 @@ replaced before the first public beta are quite high.</pre>
 </table>
 
 
-<h3>Milestone C0: Core system implementation and shakedown</h3>
-
-<table class='sgrid todo'>
-    <thead>
-        <tr>
-            <th>Status</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    <thead><tbody>
-        <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='done'>Done</td><td>Implement</td><td>Regression test script(s)</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td>Ease-of-use refinements for initializers and assignments, esp. <code>Vector*/Color</code> and <code>Matrix</code></td></tr>
-        <tr><td class='done'>Cancelled</td><td>Implement/Test</td><td><strike>Internal POV-Ray default font support for <code>Text</code></strike> (Unstable feature)</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td><strike>Optional skip first indent in toSDL functions</strike> Fixed output bugs.</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td>"<code>stamp()</code>" (come up with better name? snapshot?)</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td><code>--preamble</code></td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td><code>--sdlIncludes</code></td></tr>
-        <tr><td class='done'>Done</td><td>Implement</td><td><code>--debug</code> levels as with <code>--verbose</code></td></tr>
-        <tr><td class='done'>Done</td><td>Implement</td><td>Allow fatal errors if <code>cpov.debug == 2</code></td></tr>
-        <tr><td class='done'>Done</td><td>Implement</td><td>Debug log if <code>cpov.debug == 2</code></td></tr>
-        <tr><td class='done'>Done</td><td>Implement</td><td>Route all <code>cpov.error</code> messages to debug log if applicable.</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>imageOptions</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>globalSettings</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td>For Color vectors in globalSettings, add .toPlainRGBVector</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td>For array output generally, add .join(", ") for readability over native .toString()</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>bicubicPatch</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>blob</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>box</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>cone</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>cubic</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>cylinder</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>disc</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>heightField</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td>isoSurface + IsoSurface.toSDL</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>juliaFractal</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>lathe</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>mesh</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>ovus</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>parametric</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>plane</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>poly</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>polygon</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>polynomial</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>prism</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>quadric</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>quartic</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>sor</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>sphere</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>sphereSweep</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>superellipsoid</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>text</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>torus</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>triangle</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>CSG: union</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>CSG: intersection</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>CSG: merge</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>CSG: difference</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>Special: camera</td></tr>
-        <tr><td class='done'>Done</td><td>Test</td><td>Special: lightSource</td></tr>
-        <tr><td class='done'>Done</td><td>Implement/Test</td><td>Respect <code>imageOptions.createIni</code></td></tr>
-    </tbody>
-</table>
 
 
 <h3>Backlog</h3>

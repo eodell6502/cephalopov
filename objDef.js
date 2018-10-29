@@ -20,24 +20,34 @@ module.exports = {
                 name:  "type",
                 req:   true,
                 valid: "cpov.isInt(val) && (val == 0 || val == 1)",
-                err:   "type must be either 0 or 1."
+                err:   "type must be either 0 or 1.",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16)",
-                err:   "points must be an array of 16 VectorXYZ."
+                err:   "points must be an array of 16 VectorXYZ.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "uSteps",
                 valid: "cpov.isInt(val)",
-                err:   "uSteps must be an integer."
+                err:   "uSteps must be an integer.",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "vSteps",
                 valid: "cpov.isInt(val)",
-                err:   "vSteps must be an integer."
+                err:   "vSteps must be an integer.",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "flatness",
                 valid: "cpov.isFloat(val)",
-                err:   "flatness must be a float."
+                err:   "flatness must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
     },
@@ -55,19 +65,27 @@ module.exports = {
                 req:   true,
                 child: "array",
                 valid: "cpov.isClass(val, ['Sphere', 'Cylinder']) && val.length",
-                err:   "components must be an array of Spheres and/or Cylinders."
+                err:   "components must be an array of Spheres and/or Cylinders.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "threshold",
                 valid: "cpov.isFloat(val)",
-                err:   "threshold"
+                err:   "threshold",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "hierarchy",
                 valid: "cpov.isBoolean(val)",
-                err:   "hierarchy must be a boolean."
+                err:   "hierarchy must be a boolean.",
+                desc:  "TODO",
+                tname: "hierarchy"
             }
         ],
     },
@@ -84,12 +102,16 @@ module.exports = {
                 name:  "corner1",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "corner1 must be a VectorXYZ."
+                err:   "corner1 must be a VectorXYZ.",
+                desc:  "The first of two opposite corners of the cube.",
+                tname: "VectorXYZ"
             }, {
                 name:  "corner2",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "corner2"
+                err:   "corner2 must be a VectorXYZ.",
+                desc:  "The first of two opposite corners of the cube.",
+                tname: "VectorXYZ"
             }
         ],
 
@@ -112,67 +134,99 @@ module.exports = {
                 name:  "type",
                 req:   true,
                 valid: "cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera'])", // TODO: CamelCased versions
-                err:   "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera."
+                err:   "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera.",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "angle", //        type: "FIXME" }, // TODO
                 valid: "true",
-                err:   "angle"
+                err:   "angle",
+                desc:  "TODO",
+                tname: "TODO"
             }, {
                 name:  "apertureSize",
                 valid: "cpov.isFloat(val)",
-                err:   "apertureSize must be a float."
+                err:   "apertureSize must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "blurSamples",
                 valid: "cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0",
-                err:   "blurSamples must be an array of two floats greater than or equal to zero."
+                err:   "blurSamples must be an array of two floats greater than or equal to zero.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "bokeh",
                 valid: "cpov.isClass(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
-                err:   "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>."
+                err:   "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>.",
+                desc:  "TODO",
+                tname: "Color"
             }, {
                 name:  "confidence",
                 valid: "cpov.isFloat(val)",
-                err:   "confidence must be a float."
+                err:   "confidence must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "cylinderType",
                 valid: "cpov.isInt(val) && val > 0 && val < 5",
-                err:   "cylinderType must be an integer in the range (1 - 4)."
+                err:   "cylinderType must be an integer in the range (1 - 4).",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "direction",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "direction must be a VectorXYZ."
+                err:   "direction must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "focalPoint",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "focalPoint must be a VectorXYZ."
+                err:   "focalPoint must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "location",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "location must be a VectorXYZ."
+                err:   "location must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "lookAt",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "lookAt must be a VectorXYZ."
+                err:   "lookAt must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "right",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "right must be a VectorXYZ."
+                err:   "right must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "sky",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "sky must be a VectorXYZ."
+                err:   "sky must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "up",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "up must be a VectorXYZ."
+                err:   "up must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "variance",
                 valid: "cpov.isFloat(val)",
-                err:   "variance must be a float."
+                err:   "variance must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "vertAngle",
                 valid: "cpov.isInt(val)",
-                err:   "vertAngle must be an integer."
+                err:   "vertAngle must be an integer.",
+                desc:  "TODO",
+                tname: "float"
             }
         ]
     },
@@ -189,26 +243,36 @@ module.exports = {
                 name:  "basePoint",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "basePoint must be a VectorXYZ."
+                err:   "basePoint must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "baseRadius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "baseRadius must be a float."
+                err:   "baseRadius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "capPoint",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "capPoint must be a VectorXYZ."
+                err:   "capPoint must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "capRadius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "capRadius must be a float."
+                err:   "capRadius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
-                err:   "open must be a boolean."
+                err:   "open must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -225,11 +289,15 @@ module.exports = {
                 name:  "coefficients",
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 20, 20)",
-                err:   "coefficients must be an array of 20 floats."
+                err:   "coefficients must be an array of 20 floats.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -246,25 +314,35 @@ module.exports = {
                 name:  "basePoint",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "basePoint must be a VectorXYZ."
+                err:   "basePoint must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "capPoint",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "capPoint must be a VectorXYZ."
+                err:   "capPoint must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "radius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "radius must be a float."
+                err:   "radius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
-                err:   "open must be a boolean."
+                err:   "open must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "strength", // only used when the cylinder is a blob component
                 valid: "cpov.isFloat(val)",
-                err:   "strength must be a float"
+                err:   "strength must be a float",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
     },
@@ -282,13 +360,17 @@ module.exports = {
                 child: "scalar",
                 req:   true,
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
-                err:   "positiveObject must be a Primitive."
+                err:   "positiveObject must be a Primitive.",
+                desc:  "TODO",
+                tname: "Primitive"
             }, {
                 name:  "negativeComponents",
                 child: "array",
                 req:   true,
                 valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
-                err:   "negativeObjects must be an array of Primitives."
+                err:   "negativeObjects must be an array of Primitives.",
+                desc:  "TODO",
+                tname: "Array"
             }
         ],
     },
@@ -305,21 +387,29 @@ module.exports = {
                 name:  "center",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "center must be a VectorXYZ."
+                err:   "center must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "normal",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "normal must be a VectorXYZ."
+                err:   "normal must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "radius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "radius must be a float."
+                err:   "radius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "holeRadius",
                 valid: "cpov.isFloat(val)",
-                err:   "holeRadius must be a float."
+                err:   "holeRadius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
     },
@@ -336,31 +426,45 @@ module.exports = {
                 name:  "source",
                 req:   true,
                 valid: "cpov.isSDLFunction(val) || cpov.isString(val)",
-                err:   "source"
+                err:   "source",
+                desc:  "TODO",
+                tname: "SDL<br/>string"
             }, {
                 name:  "hfType", // only used if source is image instead of function
                 valid: "cpov.isInArray(val, cpov.hfTypes)",
-                err:   "hfType must be one of " + cpov.arrayToTextList(cpov.hfTypes) + "."
+                err:   "hfType must be one of " + cpov.arrayToTextList(cpov.hfTypes) + ".",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "smooth",
                 valid: "cpov.isBoolean(val)",
-                err:   "smooth must be a boolean."
+                err:   "smooth must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "waterLevel",
                 valid: "cpov.isFloat(val)",
-                err:   "waterLevel must be a float."
+                err:   "waterLevel must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "hierarchy",
                 valid: "cpov.isBoolean(val)",
-                err:   "hierarchy must be a boolean."
+                err:   "hierarchy must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "gamma",
                 valid: "cpov.isFloat(val)",
-                err:   "gamma must be a float."
+                err:   "gamma must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "premult",
                 valid: "cpov.isBoolean(val)",
-                err:   "premult must be a boolean."
+                err:   "premult must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -378,7 +482,9 @@ module.exports = {
                 child: "scalar",
                 req:   true,
                 valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
-                err:   "objects must be an array of Primitives."
+                err:   "objects must be an array of Primitives.",
+                desc:  "TODO",
+                tname: "Array"
             }
         ],
     },
@@ -395,35 +501,51 @@ module.exports = {
                 name:  "source",
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
-                err:   "source must be an SDL function."
+                err:   "source must be an SDL function.",
+                desc:  "TODO",
+                tname: "SDL"
             }, {
                 name:  "containedBy",
                 valid: "cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')",
-                err:   "containedBy must be a Sphere or a Box."
+                err:   "containedBy must be a Sphere or a Box.",
+                desc:  "TODO",
+                tname: "Sphere<br/>Box"
             }, {
                 name:  "threshold",
                 valid: "cpov.isFloat(val)",
-                err:   "threshold"
+                err:   "threshold",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "accuracy",
                 valid: "cpov.isFloat(val)",
-                err:   "accuracy must be a float."
+                err:   "accuracy must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "maxGradient",
                 valid: "cpov.isFloat(val)",
-                err:   "maxGradient must be a float."
+                err:   "maxGradient must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "evaluate",
                 valid: "cpov.isArrayOfFloats(val, 3, 3)",
-                err:   "evaluate must be an array of three floats."
+                err:   "evaluate must be an array of three floats.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
-                err:   "open must be a boolean."
+                err:   "open must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "maxTrace",
                 valid: "cpov.isInt(val) || (typeof val == 'string' && val == 'allIntersections')",
-                err:   "maxTrace must be either an integer or 'allIntersections'."
+                err:   "maxTrace must be either an integer or 'allIntersections'.",
+                desc:  "TODO",
+                tname: "integer<br/>string"
             }
         ],
     },
@@ -440,32 +562,46 @@ module.exports = {
                 name:  "type",
                 req:   true,
                 valid: "cpov.isInArray(val, cpov.juliaFractalTypes)",
-                err:   "type must be one of " + cpov.arrayToTextList(cpov.juliaFractalTypes) + "."
+                err:   "type must be one of " + cpov.arrayToTextList(cpov.juliaFractalTypes) + ".",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "juliaParam",
 				req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
-                err:   "juliaParam must be a VectorXYZW."
+                err:   "juliaParam must be a VectorXYZW.",
+                desc:  "TODO",
+                tname: "VectorXYZW"
             }, {
                 name:  "power",
                 valid: "cpov.isClass(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val))",
-                err:   "power must be a VectorXY."
+                err:   "power must be a VectorXY.",
+                desc:  "TODO",
+                tname: "VectorXY"
             }, {
                 name:  "maxIter",
                 valid: "cpov.isInt(val)",
-                err:   "maxIter must be an integer."
+                err:   "maxIter must be an integer.",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "precision",
                 valid: "cpov.isInt(val)",
-                err:   "precision must be an integer."
+                err:   "precision must be an integer.",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "slice",
                 valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
-                err:   "slice must be a VectorXYZW."
+                err:   "slice must be a VectorXYZW.",
+                desc:  "TODO",
+                tname: "VectorXYZW"
             }, {
                 name:  "distance",
                 valid: "cpov.isFloat(val)",
-                err:   "distance must be a float."
+                err:   "distance must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
     },
@@ -482,16 +618,22 @@ module.exports = {
                 name:  "type",
                 req:   true,
                 valid: "cpov.isKey(val, cpov.splineTypes)",
-                err:   "type must be one of " + cpov.keysToTextList(cpov.splineTypes) + "."
+                err:   "type must be one of " + cpov.keysToTextList(cpov.splineTypes) + ".",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)",
-                err:   "points must be an array of two or more VectorXY."
+                err:   "points must be an array of two or more VectorXY.",
+                desc:  "TODO",
+                tname: "VectorXY"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -508,106 +650,156 @@ module.exports = {
                 name:  "location",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "location must be a VectorXYZ."
+                err:   "location must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "color",
                 req:   true,
                 valid: "cpov.isClass(val, 'Color') || (val = cpov.convertToVector('Color', val))",
-                err:   "color must be a Color."
+                err:   "color must be a Color.",
+                desc:  "TODO",
+                tname: "Color"
             }, {
                 name:  "adaptive",
                 valid: "cpov.isFloat(val) && val >= 0",
-                err:   "adaptive must be a float greater than or equal to zero."
+                err:   "adaptive must be a float greater than or equal to zero.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "areaIllumination",
                 valid: "cpov.isBoolean(val)",
-                err:   "areaIllumination must be a boolean."
+                err:   "areaIllumination must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "areaLight",
                 valid: "cpov.isBoolean(val)",
-                err:   "areaLight must be a boolean."
+                err:   "areaLight must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "axis1",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "axis1 must be a VectorXYZ."
+                err:   "axis1 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "axis2",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "axis2 must be a VectorXYZ."
+                err:   "axis2 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "circular",
                 valid: "cpov.isBoolean(val)",
-                err:   "circular must be a boolean."
+                err:   "circular must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "fadeDistance",
                 valid: "cpov.isFloat(val) && val > 0.",
-                err:   "fadeDistance must be a float greater than zero."
+                err:   "fadeDistance must be a float greater than zero.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "fadePower",
                 valid: "cpov.isFloat(val)",
-                err:   "fadePower must be a float."
+                err:   "fadePower must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "falloff",
                 valid: "cpov.isFloat(val) && val < 90.",
-                err:   "falloff must be a float less than 90."
+                err:   "falloff must be a float less than 90.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "jitter",
                 valid: "cpov.isBoolean(val)",
-                err:   "jitter must be a boolean."
+                err:   "jitter must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "looksLike", // TODO
                 child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
-                err:   "looksLike must be a Primitive."
+                err:   "looksLike must be a Primitive.",
+                desc:  "TODO",
+                tname: "Primitive"
             }, {
                 name:  "mediaAttenuation", // TODO
                 valid: "cpov.isBoolean(val)",
-                err:   "mediaAttenuation must be a boolean."
+                err:   "mediaAttenuation must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "mediaInteraction", // TODO
                 valid: "cpov.isBoolean(val)",
-                err:   "mediaInteraction must be a boolean."
+                err:   "mediaInteraction must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "orient",
                 valid: "cpov.isBoolean(val)",
-                err:   "orient must be a boolean."
+                err:   "orient must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "parallel",
                 valid: "cpov.isBoolean(val)",
-                err:   "parallel must be a boolean."
+                err:   "parallel must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "pointAt",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "pointAt must be a VectorXYZ."
+                err:   "pointAt must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "projectedThrough",
                 child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
-                err:   "projectedThrough"
+                err:   "projectedThrough",
+                desc:  "TODO",
+                tname: "Primitive"
             }, {
                 name:  "radius",
                 valid: "cpov.isFloat(val) && val < 90",
-                err:   "radius must be a float less than 90."
+                err:   "radius must be a float less than 90.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "shadowless",
                 valid: "cpov.isBoolean(val)",
-                err:   "shadowless must be a boolean."
+                err:   "shadowless must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "size1",
                 valid: "cpov.isFloat(val) && val > 0",
-                err:   "size1 must be a float greater than zero."
+                err:   "size1 must be a float greater than zero.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "size2",
                 valid: "cpov.isFloat(val) && val > 0",
-                err:   "size2 must be a float greater than zero."
+                err:   "size2 must be a float greater than zero.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "tightness",
                 valid: "cpov.isFloat(val) && val >= 0 && val <= 100",
-                err:   "tightness must be a float in the range (0 - 100)."
+                err:   "tightness must be a float in the range (0 - 100).",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "type",
                 valid: "cpov.isString(val) && (val == 'spotlight' || val == 'cylinder')",
-                err:   "type must be either 'spotlight' or 'cylinder'."
+                err:   "type must be either 'spotlight' or 'cylinder'.",
+                desc:  "TODO",
+                tname: "string"
             }
         ],
     },
@@ -625,7 +817,9 @@ module.exports = {
                 child: "array",
                 req:   true,
                 valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
-                err:   "objects must be an array of Primitives."
+                err:   "objects must be an array of Primitives.",
+                desc:  "TODO",
+                tname: "Array"
             }
         ],
     },
@@ -642,15 +836,21 @@ module.exports = {
                 name:  "triangles",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Triangle', 1, Infinity)",
-                err:   "triangles"
+                err:   "triangles",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "insideVector",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "insideVector must be a VectorXYZ."
+                err:   "insideVector must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "hierarchy",
                 valid: "cpov.isBoolean(val)",
-                err:   "hierarchy must be a boolean."
+                err:   "hierarchy must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -683,12 +883,16 @@ module.exports = {
             name:  "bottomRadius",
             req:   true,
             valid: "cpov.isFloat(val)",
-            err:   "bottomRadius must be a float."
+            err:   "bottomRadius must be a float.",
+                desc:  "TODO",
+                tname: "float"
         }, {
             name:  "topRadius",
             req:   true,
             valid: "cpov.isFloat(val)",
-            err:   "topRadius must be a float."
+            err:   "topRadius must be a float.",
+                desc:  "TODO",
+                tname: "float"
         }
         ],
 
@@ -706,56 +910,80 @@ module.exports = {
                 name:  "funcX",
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
-                err:   "funcX must be an SDL function."
+                err:   "funcX must be an SDL function.",
+                desc:  "TODO",
+                tname: "SDL"
             }, {
                 name:  "funcY",
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
-                err:   "funcY must be an SDL function."
+                err:   "funcY must be an SDL function.",
+                desc:  "TODO",
+                tname: "SDL"
             }, {
                 name:  "funcZ",
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
-                err:   "funcZ must be an SDL function."
+                err:   "funcZ must be an SDL function.",
+                desc:  "TODO",
+                tname: "SDL"
             }, {
                 name:  "uv1",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
-                err:   "uv1 must be a VectorUV."
+                err:   "uv1 must be a VectorUV.",
+                desc:  "TODO",
+                tname: "VectorUV"
             }, {
                 name:  "uv2",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
-                err:   "uv2 must be a VectorUV."
+                err:   "uv2 must be a VectorUV.",
+                desc:  "TODO",
+                tname: "VectorUV"
             }, {
                 name:  "containedBy",
                 child: "scalar",
                 valid: "cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')",
-                err:   "containedBy must be a Sphere or Box."
+                err:   "containedBy must be a Sphere or Box.",
+                desc:  "TODO",
+                tname: "Sphere<br/>Box"
             }, {
                 name:  "maxGradient",
                 valid: "cpov.isFloat(val)",
-                err:   "maxGradient must be a float."
+                err:   "maxGradient must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "accuracy",
                 valid: "cpov.isFloat(val)",
-                err:   "accuracy must be a float."
+                err:   "accuracy must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "precomputeDepth",
                 valid: "cpov.isInt(val)",
-                err:   "precomputeDepth must be an integer."
+                err:   "precomputeDepth must be an integer.",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "precomputeX",
                 valid: "cpov.isBoolean(val)",
-                err:   "precomputeX must be a boolean."
+                err:   "precomputeX must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "precomputeY",
                 valid: "cpov.isBoolean(val)",
-                err:   "precomputeY must be a boolean."
+                err:   "precomputeY must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "precomputeZ",
                 valid: "cpov.isBoolean(val)",
-                err:   "precomputeZ must be a boolean."
+                err:   "precomputeZ must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -772,12 +1000,16 @@ module.exports = {
                 name:  "normal",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "normal must be a VectorXYZ."
+                err:   "normal must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "distance",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "distance must be a float."
+                err:   "distance must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
 
@@ -795,16 +1027,22 @@ module.exports = {
                 name:  "order",
                 req:   true,
                 valid: "cpov.isInt(val) && val >= 2 && val <= 35",
-                err:   "order must be an integer in the range (."
+                err:   "order must be an integer in the range (2 - 35).",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "coefficients",
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 1, Infinity)",
-                err:   "coefficients must be an array of floats."
+                err:   "coefficients must be an array of floats.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -821,7 +1059,9 @@ module.exports = {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity)",
-                err:   "points must be an array of three or more VectorXY."
+                err:   "points must be an array of three or more VectorXY.",
+                desc:  "TODO",
+                tname: "Array"
             }
         ],
 
@@ -839,16 +1079,22 @@ module.exports = {
                 name:  "order",
                 req:   true,
                 valid: "cpov.isInt(val)",
-                err:   "order must be an integer."
+                err:   "order must be an integer.",
+                desc:  "TODO",
+                tname: "integer"
             }, {
                 name:  "coefficients",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity)",
-                err:   "coefficients must be a VectorXYZW."
+                err:   "coefficients must be a VectorXYZW.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -865,30 +1111,42 @@ module.exports = {
                 name:  "type",
                 req:   true,
                 valid: "cpov.isKey(val, cpov.prismTypes)",
-                err:   "type must be one of " + cpov.keysToTextList(cpov.prismTypes) + "."
+                err:   "type must be one of " + cpov.keysToTextList(cpov.prismTypes) + ".",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "height1",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "height1 must be a float."
+                err:   "height1 must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "height2",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "height2 must be a float"
+                err:   "height2 must be a float",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity)",
-                err:   "points must be an array of VectorXY."
+                err:   "points must be an array of VectorXY.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
-                err:   "open must be a boolean."
+                err:   "open must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -905,7 +1163,9 @@ module.exports = {
                 name:  "coefficients",
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 10, 10)",
-                err:   "coefficients must be an array of 10 floats."
+                err:   "coefficients must be an array of 10 floats.",
+                desc:  "TODO",
+                tname: "Array"
             }
         ],
 
@@ -923,11 +1183,15 @@ module.exports = {
                 name:  "coefficients",
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 35, 35)",
-                err:   "coefficients must be an array of 35 floats."
+                err:   "coefficients must be an array of 35 floats.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -944,16 +1208,22 @@ module.exports = {
                 name:  "center",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "center must be a VectorXYZ."
+                err:   "center must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "radius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "radius must be a float."
+                err:   "radius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "strength",    // only used when used as a blob component
                 valid: "cpov.isFloat(val)",
-                err:   "strength must be a float."
+                err:   "strength must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
     },
@@ -970,17 +1240,23 @@ module.exports = {
                 name:  "type",
                 req:   true,
                 valid: "cpov.isKey(val, cpov.internalSplineTypes)",
-                err:   "type must be one of " + cpov.keysToTextList(cpov.internalSplineTypes) + "."
+                err:   "type must be one of " + cpov.keysToTextList(cpov.internalSplineTypes) + ".",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "spheres",
                 child: "array",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Sphere', 2, Infinity)",
-                err:   "spheres must be an an array of two or more Sphere."
+                err:   "spheres must be an an array of two or more Sphere.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "tolerance",
                 valid: "cpov.isFloat(val)",
-                err:   "tolerance must be a float."
+                err:   "tolerance must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
     },
@@ -997,13 +1273,17 @@ module.exports = {
                 name:  "e",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "e must be a float."
+                err:   "e must be a float.",
+                desc:  "TODO",
+                tname: "float"
             },
 			{
                 name:  "n",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "n must be a float."
+                err:   "n must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
 
@@ -1021,15 +1301,21 @@ module.exports = {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)",
-                err:   "points must be an array of two or more VectorXY."
+                err:   "points must be an array of two or more VectorXY.",
+                desc:  "TODO",
+                tname: "VectorXY"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
-                err:   "open must be a boolean."
+                err:   "open must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ],
     },
@@ -1046,27 +1332,37 @@ module.exports = {
 				name:  "fontType",
 				req:   true,
 				valid: "cpov.isKey(val, cpov.fontTypes)",
-				err:   "fontType must be one of " + cpov.keysToTextList(cpov.fontTypes) + "."
+				err:   "fontType must be one of " + cpov.keysToTextList(cpov.fontTypes) + ".",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "font",
                 req:   true,
                 valid: "cpov.isNonEmptyString(val)",
-                err:   "font must be a non-empty string."
+                err:   "font must be a non-empty string.",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "displayText",
                 req:   true,
                 valid: "cpov.isNonEmptyString(val)",
-                err:   "displayText must be a non-empty string."
+                err:   "displayText must be a non-empty string.",
+                desc:  "TODO",
+                tname: "string"
             }, {
                 name:  "thickness",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "thickness must be a float."
+                err:   "thickness must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "offset",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "offset must be a float."
+                err:   "offset must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
 
@@ -1084,16 +1380,22 @@ module.exports = {
                 name:  "majorRadius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "majorRadius must be a float."
+                err:   "majorRadius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "minorRadius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "minorRadius must be a float."
+                err:   "minorRadius must be a float.",
+                desc:  "TODO",
+                tname: "float"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
-                err:   "sturm must be a boolean."
+                err:   "sturm must be a boolean.",
+                desc:  "TODO",
+                tname: "float"
             }
         ],
     },
@@ -1111,37 +1413,53 @@ module.exports = {
                 name:  "corner1",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "corner1 must be a VectorXYZ."
+                err:   "corner1 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "corner2",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "corner2 must be a VectorXYZ."
+                err:   "corner2 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "corner3",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "corner3 must be a VectorXYZ."
+                err:   "corner3 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "smooth", // if smooth and normal1...3 are defined, it's a smooth triangle
                 valid: "cpov.isBoolean(val)",
-                err:   "smooth must be a boolean."
+                err:   "smooth must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }, {
                 name:  "normal1",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "normal1 must be a VectorXYZ."
+                err:   "normal1 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "normal2",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "normal2 must be a VectorXYZ."
+                err:   "normal2 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "normal3",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
-                err:   "normal3 must be a VectorXYZ."
+                err:   "normal3 must be a VectorXYZ.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }, {
                 name:  "textures",
                 valid: "cpov.isArrayOfInt(val)",
-                err:   "textures must be an array of integers."
+                err:   "textures must be an array of integers.",
+                desc:  "TODO",
+                tname: "VectorXYZ"
             }
         ],
     },
@@ -1159,11 +1477,15 @@ module.exports = {
                 child: "scalar",
                 req:   true,
                 valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
-                err:   "objects must be an array of Primitives."
+                err:   "objects must be an array of Primitives.",
+                desc:  "TODO",
+                tname: "Array"
             }, {
                 name:  "splitUnion",
                 valid: "cpov.isBoolean(val)",
-                err:   "splitUnion must be a boolean."
+                err:   "splitUnion must be a boolean.",
+                desc:  "TODO",
+                tname: "boolean"
             }
         ]
     },
