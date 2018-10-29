@@ -32,14 +32,19 @@
     table.sgrid { background-color: black; border-spacing: 1pt; margin-top: 1em; }
     table.sgrid thead { color: white; }
     table.sgrid tbody { background-color: white; }
-    table.sgrid td { padding-left: 0.5em; padding-right: 0.5em; }
-    table.sgrid td.pending { text-align: center; background-color: red;    color: yellow; font-weight: bold; white-space: nowrap; }
-    table.sgrid td.working { text-align: center; background-color: yellow; color: red;    font-weight: bold; white-space: nowrap; }
-    table.sgrid td.done    { text-align: center; background-color: green;  color: white;  font-weight: bold; white-space: nowrap; }
-    table.sgrid td.tbd     { text-align: center; background-color: #888;   color: white;  font-weight: bold; white-space: nowrap; }
-    table.sgrid td.subtask { padding-left: 3em; }
+    table.sgrid td { padding-left: 0.5em; padding-right: 0.5em; vertical-align: top; }
+
+    table.attrs tbody tr :nth-child(1) { white-space: pre; text-align: center; }
+    table.attrs tbody tr :nth-child(2) { text-align: center; }
+    table.attrs tbody tr :nth-child(3) { font-family: Consolas,Courier,fixed; font-weight: bold; }
 
     table.todo { width: 100%; }
+    table.todo td.pending { text-align: center; background-color: red;    color: yellow; font-weight: bold; white-space: nowrap; }
+    table.todo td.working { text-align: center; background-color: yellow; color: red;    font-weight: bold; white-space: nowrap; }
+    table.todo td.done    { text-align: center; background-color: green;  color: white;  font-weight: bold; white-space: nowrap; }
+    table.todo td.tbd     { text-align: center; background-color: #888;   color: white;  font-weight: bold; white-space: nowrap; }
+    table.todo td.subtask { padding-left: 3em; }
+
 
 </style>
 
@@ -101,137 +106,668 @@ Language files, both for static scenes and multi-frame animations.</p>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a BicubicPatch, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>flatness</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>uSteps</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>vSteps</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Blob</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Blob, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Blob, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>hierarchy</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Blob, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Blob, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>threshold</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Box</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>corner1</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>corner2</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Box, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Box, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Box, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Box, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
+
 <h4>Camera</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>N</td><td>angle</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>apertureSize</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>blurSamples</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>bokeh</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>confidence</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Camera, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>cylinderType</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>direction</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Camera, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>focalPoint</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>location</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>lookAt</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Camera, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>right</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>sky</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Camera, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>up</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>variance</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>vertAngle</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Cone</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>basePoint</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>baseRadius</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>capPoint</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>capRadius</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Cone, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Cone, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cone, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Cone, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
+
 <h4>Cubic</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Cubic, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Cubic, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cubic, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Cubic, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Cylinder</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>basePoint</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>capPoint</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Cylinder, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Cylinder, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cylinder, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>radius</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Cylinder, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>strength</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Difference</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Difference, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Difference, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>negativeComponents</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>positiveComponent</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Difference, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
 
 <h4>Disc</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>center</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Disc, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Disc, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>holeRadius</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>normal</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Disc, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>radius</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Disc, this is always <code>false</code>.</td></td></tr>
+</tbody>
+</table>
+
 <h4>HeightField</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a HeightField, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a HeightField, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>gamma</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>hfType</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>hierarchy</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>premult</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a HeightField, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>smooth</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a HeightField, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>source</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>waterLevel</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Intersection</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Intersection, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Intersection, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Intersection, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
+
 <h4>IsoSurface</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>N</td><td>accuracy</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>containedBy</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a IsoSurface, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>evaluate</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a IsoSurface, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>maxGradient</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>maxTrace</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a IsoSurface, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a IsoSurface, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>source</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>threshold</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>JuliaFractal</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>distance</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>juliaParam</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>maxIter</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>power</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>precision</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>slice</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Lathe</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Lathe, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Lathe, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Lathe, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Lathe, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>LightSource</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>N</td><td>adaptive</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>areaIllumination</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>areaLight</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>axis1</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>axis2</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>circular</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>color</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a LightSource, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>fadeDistance</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>fadePower</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>falloff</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a LightSource, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>jitter</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>location</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>looksLike</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>mediaAttenuation</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>mediaInteraction</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>orient</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>parallel</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>pointAt</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>projectedThrough</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a LightSource, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>radius</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>shadowless</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>size1</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>size2</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a LightSource, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>tightness</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>type</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Merge</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Merge, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Merge, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Merge, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
 
 <h4>Mesh</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Mesh, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Mesh, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>hierarchy</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>insideVector</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Mesh, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Mesh, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>triangles</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Ovus</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>bottomRadius</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Ovus, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Ovus, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Ovus, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Ovus, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>topRadius</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Parametric</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>N</td><td>accuracy</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>containedBy</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Parametric, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Parametric, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>funcX</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>funcY</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>funcZ</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>maxGradient</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>precomputeDepth</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>precomputeX</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>precomputeY</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>precomputeZ</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Parametric, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Parametric, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>uv1</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>uv2</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Plane</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Plane, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>distance</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Plane, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>normal</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Plane, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Plane, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
 
 <h4>Poly</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Poly, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Poly, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>order</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Poly, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Poly, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Polygon</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Polygon, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Polygon, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polygon, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Polygon, this is always <code>false</code>.</td></td></tr>
+</tbody>
+</table>
 
 <h4>Polynomial</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Polynomial, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Polynomial, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>order</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polynomial, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Polynomial, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Prism</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Prism, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Prism, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>height1</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>height2</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Prism, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Prism, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Quadric</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Quadric, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Quadric, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Quadric, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Quadric, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
+
 <h4>Quartic</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>coefficients</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Quartic, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Quartic, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Quartic, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Quartic, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Sor</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Sor, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Sor, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>open</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>points</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sor, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Sor, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Sphere</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>center</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Sphere, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Sphere, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sphere, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>radius</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Sphere, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>strength</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>SphereSweep</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a SphereSweep, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a SphereSweep, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a SphereSweep, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a SphereSweep, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>spheres</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>tolerance</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>type</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Superellipsoid</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Superellipsoid, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>e</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Superellipsoid, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>n</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Superellipsoid, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Superellipsoid, this is always <code>true</code>.</td></td></tr>
+</tbody>
+</table>
 
 <h4>Text</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Text, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>displayText</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Text, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>font</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>fontType</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>offset</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Text, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Text, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>thickness</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Torus</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Torus, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Torus, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>Y</td><td>majorRadius</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>minorRadius</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Torus, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Torus, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>sturm</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 <h4>Triangle</h4>
 
 <p>TODO</p>
 
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>corner1</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>corner2</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>Y</td><td>corner3</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Triangle, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Triangle, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>normal1</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>normal2</td><td>TODO.</td></tr>
+<tr><td>Writeable</td><td>N</td><td>normal3</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>pseudo</td><td>Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Triangle, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>smooth</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Triangle, this is always <code>false</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>textures</td><td>TODO.</td></tr>
+</tbody>
+</table>
+
 <h4>Union</h4>
 
 <p>TODO</p>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>Writeable</td><td>Y</td><td>components</td><td>TODO.</td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>csg</td><td>Boolean. If true, the primitive is a composite CSG type. For a Union, this is always <code>true</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>finite</td><td>Boolean. If true, the shape is finite in extent. For a Union, this is always <code>false</code>.</td></td></tr>
+<tr><td>Read-Only</td><td>n/a</td><td>solid</td><td>Boolean. If true, the shape is solid. For a Union, this is always <code>true</code>.</td></td></tr>
+<tr><td>Writeable</td><td>N</td><td>splitUnion</td><td>TODO.</td></tr>
+</tbody>
+</table>
 
 
 <h2>Appendices</h2>
@@ -480,6 +1016,11 @@ replaced before the first public beta are quite high.</pre>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
+        <tr><td class='working'>WIP</td><td>Implement</td><td>Documentation generation</td></tr>
+            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>objDef</code></td></tr>
+            <tr><td class='pending'>TBD</td><td>Implement</td><td class='subtask'><code>primitiveDef</code></td></tr>
+            <tr><td class='pending'>TBD</td><td>Implement</td><td class='subtask'><code>vectorDef</code></td></tr>
+            <tr><td class='pending'>TBD</td><td>Implement</td><td class='subtask'>Method documentation</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
             <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
             <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
@@ -495,7 +1036,6 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>cpov.js</code>: More selective scope management</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation generation</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Optionally generate .sh/.bat files</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>ImageOptions</td></tr>

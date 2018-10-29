@@ -371,6 +371,14 @@ function readParamKeys(array, destObj) {
 //==============================================================================
 
 function docHumper(doc, classname, def) {
+
+    var immutableDesc = {
+        finite:  "Boolean. If true, the shape is finite in extent.",
+        solid:   "Boolean. If true, the shape is solid.",
+        csg:     "Boolean. If true, the primitive is a composite CSG type.",
+        pseudo:  "Boolean. If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects."
+    };
+
 	var content = [ ];
 	var members = [ ];
 
@@ -378,22 +386,37 @@ function docHumper(doc, classname, def) {
 		for(var k in def.immutable)
 			members.push(k);
 	if(def.mutable !== undefined)
-		for(var k in def.mutable)
-			members.push(k);
+		for(var i = 0; i < def.mutable.length; i++)
+			members.push(def.mutable[i].name);
 
 	members.sort();
 
-	// TODO: table preamble
+	content.push("<table class='sgrid attrs'>\n"
+        + "<thead>\n"
+        + "<tr><th>Type</th><th>Req'd</th><th>Name</th><th>Description</th></tr>\n"
+        + "<thead><tbody>");
 
 	for(var m = 0; m < members.length; m++) {
 		if(def.immutable !== undefined && def.immutable[members[m]] !== undefined) {
-			// TODO: immutable property/method
-		} else if(def.mutable !== undefined && def.mutable[members[m]] !== undefined) {
-			// TODO: immutable property/method
+            content.push("<tr><td>Read-Only</td>"
+                + "<td>n/a</td>"
+                + "<td>" + members[m] + "</td>"
+                + "<td>" + immutableDesc[members[m]] + " For a " + classname + ", this is always <code>" + (def.immutable[members[m]] ? "true" : "false") + "</code>.</td>"
+                + "</td></tr>");
+		} else if(def.mutable !== undefined) {
+            for(var i = 0; i < def.mutable.length; i++) {
+                if(def.mutable[i].name != members[m])
+                    continue;
+                content.push("<tr><td>Writeable</td>"
+                    + "<td>" + (def.mutable[i].req ? "Y" : "N") + "</td>"
+                    + "<td>" + members[m] + "</td>"
+                    + "<td>" + (def.mutable[i].desc === undefined ? "TODO." : def.mutable[i].desc)
+                    + "</td></tr>");
+            }
 		}
 	}
 
-	// TODO: table postamble
+    content.push("</tbody>\n</table>");
 
 	regex = new RegExp('<div +dh="' + classname + '">[^]*</div +dh="' + classname + '">');
 
@@ -407,10 +430,11 @@ main();
 function main() {
 
     var opts = {
-        classes:  { short: "c", cnt: 0 },
-        snippets: { short: "s", cnt: 0 },
-        proplist: { short: "p", cnt: 0 },
-        help:     { short: "h", cnt: 0 },
+        classes:   { short: "c", cnt: 0 },
+        snippets:  { short: "s", cnt: 0 },
+        proplist:  { short: "p", cnt: 0 },
+        docs:      { short: "d", cnt: 0 },
+        help:      { short: "h", cnt: 0 },
     };
 
     cpov.parseCLI(opts);
@@ -424,8 +448,25 @@ function main() {
             + "-c, --classes   Generate classes.js\n"
             + "-s, --snippets  Regenerate snippets.js --> snippets.new.js\n"
             + "-p, --proplist  Produce list of properties in object definitions\n"
+            + "-d, --docs      Update autogen text in index.html\n"
             + "-h, --help      Display this text\n\n");
         return;
+    }
+
+    // docs --------------------------------------------------------------------
+
+    if(opts.docs.cnt) {
+        var df = new File("./docs/index.html", "r");
+        var docs = df.read();
+        df.close();
+
+        for(var k in cpov.objDef) {
+            docs = docHumper(docs, k.substr(0, 1).toUpperCase() + k.substr(1), cpov.objDef[k]);
+        }
+
+        df = new File("./docs/index.html", "w");
+        df.write(docs);
+        df.close();
     }
 
     // proplist ----------------------------------------------------------------
