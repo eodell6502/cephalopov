@@ -52,9 +52,91 @@ function main(cpov) {
 
     testHeader(fp, ++testSerial, "LightSource: minimal test");                  lightSourceTestMinimum(fp);
     testHeader(fp, ++testSerial, "Camera: minimal test");                       cameraTestMinimum(fp);
+
+    testHeader(fp, ++testSerial, "Vector* initializer tests");                 vectorInitializerTest(fp);
+    testHeader(fp, ++testSerial, "Member Vector initializer tests");           memberVectorInitializerTest(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function memberVectorInitializerTest(fp) {
+
+    var box1 = new Box();
+    box1.id = "box1";
+    box1.corner1 = [ 0, 0, 0 ];
+    box1.corner2 = [ 1, 1, 1 ];
+    fp.write(box1.toSDL() + "\n\n");
+
+    var box2 = new Box({corner1: [ 1, 1, 1 ], corner2: [ 2, 2, 2 ], id: "box2"});
+    fp.write(box2.toSDL() + "\n\n");
+
+}
+
+//==============================================================================
+
+function vectorInitializerTest(fp) {
+
+    var uv1 = new VectorUV();
+    uv1.u = 0;
+    uv1.v = 1;
+
+    var uv2 = new VectorUV({ u: 2, v: 3 });
+
+    var uv3 = new VectorUV([4, 5]);
+
+    fp.write(uv1.toSDL() + " // UV setter\n\n");
+    fp.write(uv2.toSDL() + " // UV object\n\n");
+    fp.write(uv3.toSDL() + " // UV array\n\n");
+
+    //--------------------------------------------------------------------------
+
+    var xy1 = new VectorXY();
+    xy1.x = 0;
+    xy1.y = 1;
+
+    var xy2 = new VectorXY({ x: 2, y: 3 });
+
+    var xy3 = new VectorXY([4, 5]);
+
+    fp.write(xy1.toSDL() + " // XY setter\n\n");
+    fp.write(xy2.toSDL() + " // XY object\n\n");
+    fp.write(xy3.toSDL() + " // XY array\n\n");
+
+    //--------------------------------------------------------------------------
+
+    var xyz1 = new VectorXYZ();
+    xyz1.x = 0;
+    xyz1.y = 1;
+    xyz1.z = 2;
+
+    var xyz2 = new VectorXYZ({ x: 3, y: 4, z: 5 });
+
+    var xyz3 = new VectorXYZ([6, 7, 8]);
+
+    fp.write(xyz1.toSDL() + " // XYZ setter\n\n");
+    fp.write(xyz2.toSDL() + " // XYZ object\n\n");
+    fp.write(xyz3.toSDL() + " // XYZ array\n\n");
+
+    //--------------------------------------------------------------------------
+
+    var xyzw1 = new VectorXYZW();
+    xyzw1.x = 0;
+    xyzw1.y = 1;
+    xyzw1.z = 2;
+    xyzw1.w = 3;
+
+    var xyzw2 = new VectorXYZW({ x: 4, y: 5, z: 6, w: 7 });
+
+    var xyzw3 = new VectorXYZW([8, 9, 10, 11]);
+
+    fp.write(xyzw1.toSDL() + " // XYZW setter\n\n");
+    fp.write(xyzw2.toSDL() + " // XYZW object\n\n");
+    fp.write(xyzw3.toSDL() + " // XYZW array\n\n");
+
+}
+
 
 //==============================================================================
 

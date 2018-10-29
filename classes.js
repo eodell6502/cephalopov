@@ -11686,23 +11686,25 @@ class VectorXY {
 
         // Snippet constructor block //
 
-        if(cpov.isClass(options, "VectorXY")) { // copy
-            options = { x: options.x, y: options.y };
-        }
-        
-        if(Array.isArray(options)) {
-            if(options.length != 2) {
-                cpov.error("fatal", "When initializing a VectorXY with an array, it must have exactly two values.", "VectorXY.constructor", this);
-            } else {
-                this.x = options[0];
-                this.y = options[1];
+        if(options !== undefined) {
+            if(cpov.isClass(options, "VectorXY")) { // copy
+                options = { x: options.x, y: options.y };
             }
-        } else if(typeof options == "object") {
-            if(options.x === undefined || options.y === undefined)
-                cpov.error("fatal", "When initializing a VectorXY with an object, x and y must be defined.", "VectorXY.constructor", this);
-            cpov.initObject(this, options);
-        } else {
-            cpov.error("fatal", "Invalid initializer.", "VectorXY.constructor", this);
+        
+            if(Array.isArray(options)) {
+                if(options.length != 2) {
+                    cpov.error("fatal", "When initializing a VectorXY with an array, it must have exactly two values.", "VectorXY.constructor", this);
+                } else {
+                    this.x = options[0];
+                    this.y = options[1];
+                }
+            } else if(typeof options == "object") {
+                if(options.x === undefined || options.y === undefined)
+                    cpov.error("fatal", "When initializing a VectorXY with an object, x and y must be defined.", "VectorXY.constructor", this);
+                cpov.initObject(this, options);
+            } else {
+                cpov.error("fatal", "Invalid initializer.", "VectorXY.constructor", this);
+            }
         }
         
         
@@ -11836,23 +11838,25 @@ class VectorUV {
 
         // Snippet constructor block //
 
-        if(cpov.isClass(options, "VectorUV")) { // copy
-            options = { u: options.u, v: options.v };
-        }
-        
-        if(Array.isArray(options)) {
-            if(options.length != 2) {
-                cpov.error("fatal", "When initializing a VectorUV with an array, it must have exactly two values.", "VectorUV.constructor", this);
-            } else {
-                this.u = options[0];
-                this.v = options[1];
+        if(options !== undefined) {
+            if(cpov.isClass(options, "VectorUV")) { // copy
+                options = { u: options.u, v: options.v };
             }
-        } else if(typeof options == "object") {
-            if(options.u === undefined || options.v === undefined)
-                cpov.error("fatal", "When initializing a VectorUV with an object, u and v must be defined.", "VectorUV.constructor", this);
-            cpov.initObject(this, options);
-        } else {
-            cpov.error("fatal", "Invalid initializer.", "VectorUV.constructor", this);
+        
+            if(Array.isArray(options)) {
+                if(options.length != 2) {
+                    cpov.error("fatal", "When initializing a VectorUV with an array, it must have exactly two values.", "VectorUV.constructor", this);
+                } else {
+                    this.u = options[0];
+                    this.v = options[1];
+                }
+            } else if(typeof options == "object") {
+                if(options.u === undefined || options.v === undefined)
+                    cpov.error("fatal", "When initializing a VectorUV with an object, u and v must be defined.", "VectorUV.constructor", this);
+                cpov.initObject(this, options);
+            } else {
+                cpov.error("fatal", "Invalid initializer.", "VectorUV.constructor", this);
+            }
         }
         
         
@@ -11987,24 +11991,26 @@ class VectorXYZ {
 
         // Snippet constructor block //
 
-        if(cpov.isClass(options, "VectorXYZ")) { // copy
-            options = { x: options.x, y: options.y, z: options.z };
-        }
-        
-        if(Array.isArray(options)) {
-            if(options.length != 3) {
-                cpov.error("fatal", "When initializing a VectorXYZ with an array, it must have exactly three values.", "VectorXYZ.constructor", this);
-            } else {
-                this.x = options[0];
-                this.y = options[1];
-                this.z = options[2];
+        if(options !== undefined) {
+            if(cpov.isClass(options, "VectorXYZ")) { // copy
+                options = { x: options.x, y: options.y, z: options.z };
             }
-        } else if(typeof options == "object") {
-            if(options.x === undefined || options.y === undefined || options.z === undefined)
-                cpov.error("fatal", "When initializing a VectorXYZ with an object, x, y and z must be defined.", "VectorXYZ.constructor", this);
-            cpov.initObject(this, options);
-        } else {
-            cpov.error("fatal", "Invalid initializer.", "VectorXYZ.constructor", this);
+        
+            if(Array.isArray(options)) {
+                if(options.length != 3) {
+                    cpov.error("fatal", "When initializing a VectorXYZ with an array, it must have exactly three values.", "VectorXYZ.constructor", this);
+                } else {
+                    this.x = options[0];
+                    this.y = options[1];
+                    this.z = options[2];
+                }
+            } else if(typeof options == "object") {
+                if(options.x === undefined || options.y === undefined || options.z === undefined)
+                    cpov.error("fatal", "When initializing a VectorXYZ with an object, x, y and z must be defined.", "VectorXYZ.constructor", this);
+                cpov.initObject(this, options);
+            } else {
+                cpov.error("fatal", "Invalid initializer.", "VectorXYZ.constructor", this);
+            }
         }
         
         
@@ -12161,25 +12167,27 @@ class VectorXYZW {
 
         // Snippet constructor block //
 
-        if(cpov.isClass(options, "VectorXYZW")) { // copy
-            options = { x: options.x, y: options.y, z: options.z, w: options.w };
-        }
-        
-        if(Array.isArray(options)) {
-            if(options.length != 4) {
-                cpov.error("fatal", "When initializing a VectorXYZW with an array, it must have exactly four values.", "VectorXYZW.constructor", this);
-            } else {
-                this.x = options[0];
-                this.y = options[1];
-                this.z = options[2];
-                this.w = options[3];
+        if(options !== undefined) {
+            if(cpov.isClass(options, "VectorXYZW")) { // copy
+                options = { x: options.x, y: options.y, z: options.z, w: options.w };
             }
-        } else if(typeof options == "object") {
-            if(options.x === undefined || options.y === undefined || options.z === undefined || options.w === undefined)
-                cpov.error("fatal", "When initializing a VectorXYZW with an object, x, y, z, and w must be defined.", "VectorXYZW.constructor", this);
-            cpov.initObject(this, options);
-        } else {
-            cpov.error("fatal", "Invalid initializer.", "VectorXYZW.constructor", this);
+        
+            if(Array.isArray(options)) {
+                if(options.length != 4) {
+                    cpov.error("fatal", "When initializing a VectorXYZW with an array, it must have exactly four values.", "VectorXYZW.constructor", this);
+                } else {
+                    this.x = options[0];
+                    this.y = options[1];
+                    this.z = options[2];
+                    this.w = options[3];
+                }
+            } else if(typeof options == "object") {
+                if(options.x === undefined || options.y === undefined || options.z === undefined || options.w === undefined)
+                    cpov.error("fatal", "When initializing a VectorXYZW with an object, x, y, z, and w must be defined.", "VectorXYZW.constructor", this);
+                cpov.initObject(this, options);
+            } else {
+                cpov.error("fatal", "Invalid initializer.", "VectorXYZW.constructor", this);
+            }
         }
         
         
@@ -12359,41 +12367,43 @@ class Color {
 
         // Snippet constructor block //
 
-        if(cpov.isClass(options, "Color")) { // copy
-            options = {
-                r: options.r === undefined ? null : options.r,
-                g: options.g === undefined ? null : options.g,
-                b: options.b === undefined ? null : options.b,
-                f: options.f === undefined ? null : options.f,
-                t: options.t === undefined ? null : options.t,
-                srgb: options.srgb === undefined ? null : options.srgb
-            };
-        }
-        
-        if(Array.isArray(options)) {
-        
-            if(options.length < 3 || options.length > 6) {
-                cpov.error("fatal", "When initializing a Color with an array, it must have three to six values.", "Color.constructor", this);
-            } else {
-                this.r = options[0];
-                this.g = options[1];
-                this.b = options[2];
-                if(options.length > 3)
-                    this.f = options[3];
-                if(options.length > 4)
-                    this.t = options[4];
-                if(options.length > 5)
-                    this.srgb = options[5];
+        if(options !== undefined) {
+            if(cpov.isClass(options, "Color")) { // copy
+                options = {
+                    r: options.r === undefined ? null : options.r,
+                    g: options.g === undefined ? null : options.g,
+                    b: options.b === undefined ? null : options.b,
+                    f: options.f === undefined ? null : options.f,
+                    t: options.t === undefined ? null : options.t,
+                    srgb: options.srgb === undefined ? null : options.srgb
+                };
             }
         
-        } else if(typeof options == "object") {
+            if(Array.isArray(options)) {
         
-            if(options.r === undefined || options.g === undefined || options.b === undefined)
-                cpov.error("fatal", "When initializing a Color with an object, r, g, and b must be defined.", "Color.constructor", this);
-            cpov.initObject(this, options);
+                if(options.length < 3 || options.length > 6) {
+                    cpov.error("fatal", "When initializing a Color with an array, it must have three to six values.", "Color.constructor", this);
+                } else {
+                    this.r = options[0];
+                    this.g = options[1];
+                    this.b = options[2];
+                    if(options.length > 3)
+                        this.f = options[3];
+                    if(options.length > 4)
+                        this.t = options[4];
+                    if(options.length > 5)
+                        this.srgb = options[5];
+                }
         
-        } else {
-            cpov.error("fatal", "Invalid initializer.", "Color.constructor", this);
+            } else if(typeof options == "object") {
+        
+                if(options.r === undefined || options.g === undefined || options.b === undefined)
+                    cpov.error("fatal", "When initializing a Color with an object, r, g, and b must be defined.", "Color.constructor", this);
+                cpov.initObject(this, options);
+        
+            } else {
+                cpov.error("fatal", "Invalid initializer.", "Color.constructor", this);
+            }
         }
         
         
