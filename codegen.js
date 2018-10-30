@@ -436,8 +436,60 @@ function docHumper(doc, classname, def) {
 }
 
 
+//==============================================================================
+// Takes an object representing a set of simple k/v pairs and emits an HTML
+// table representing it.
+//==============================================================================
 
-main();
+function kvTabulate(obj, tclass, keyname, valname, title, sort = true, anchor = false) {
+    var contents = [
+        (anchor ? "<a name=\"" + anchor + "\"/>" : ''),
+        "<table class=\"" + tclass + "\">",
+        "<thead>",
+        (title ? "<tr><th colspan=\"2\">" + title + "</th></tr>" : ""),
+        "<tr><th>" + keyname + "</th><th>" + valname + "</th></tr>",
+        "</thead><tbody>"
+    ];
+
+    var keys = [ ];
+    for(var key in obj)
+        keys.push(key);
+
+    if(sort)
+        keys.sort();
+
+    for(var k = 0; k < keys.length; k++)
+        contents.push("<tr><td>" + keys[k] + "</td><td>" + obj[keys[k]] + "</td></tr>");
+
+    contents.push("</tbody></table>");
+
+    return contents.join("\n");
+}
+
+
+//==============================================================================
+// Produces a list of strings from either a simple array or from the keys of an
+// object. The strings are wrapped in <code> tags and quotes.
+//==============================================================================
+
+function keyList(obj) {
+    if(Array.isArray(obj)) {
+        var list = obj.slice(0);
+    } else {
+        var list = [ ];
+        for(var k in obj)
+            list.push(k);
+    }
+
+    list.sort();
+
+    return "<code>\"" + list.join("\"</code>, <code>\"") + "\"</code>";
+}
+
+
+//==============================================================================
+// Main loop.
+//==============================================================================
 
 function main() {
 
@@ -482,6 +534,12 @@ function main() {
         for(var k in cpov.vectorDef) {
             docs = docHumper(docs, k.substr(0, 1).toUpperCase() + k.substr(1), cpov.vectorDef[k]);
         }
+
+        docs = docs.replace(/\$keylist\.([A-Za-z]+)/g, function(match, p1) {
+            if(cpov[p1] !== undefined) {
+                return kvTabulate(cpov[p1], "sgrid codeDoc", "Code", "Meaning", false, true, false);
+            }
+        });
 
         df = new File("./docs/index.html", "w");
         df.write(docs);
@@ -567,6 +625,6 @@ function main() {
 
 }
 
-
+main();
 
 

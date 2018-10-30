@@ -1094,8 +1094,6 @@ class ImageOptions {
         this._bspIsectCost          = null;
         this._bspMaxDepth           = null;
         this._bspMissChance         = null;
-        this._continueTrace         = null;
-        this._createIni             = null;
         this._debugConsole          = null;
         this._debugFile             = null;
         this._display               = null;
@@ -1447,40 +1445,6 @@ class ImageOptions {
 
     //--------------------------------------------------------------------------
 
-    get continueTrace() {
-        if(typeof this._continueTrace == "function")
-            return this._continueTrace();
-        else
-            return this._continueTrace;
-    }
-
-    set continueTrace(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
-            this._continueTrace = val;
-        } else {
-            cpov.error("fatal", "continueTrace must be a boolean", "ImageOptions");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get createIni() {
-        if(typeof this._createIni == "function")
-            return this._createIni();
-        else
-            return this._createIni;
-    }
-
-    set createIni(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
-            this._createIni = val;
-        } else {
-            cpov.error("fatal", "createIni must be either a boolean or a non-empty string.", "ImageOptions");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
     get debugConsole() {
         if(typeof this._debugConsole == "function")
             return this._debugConsole();
@@ -1591,7 +1555,7 @@ class ImageOptions {
     }
 
     set endColumn(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._endColumn = val;
         } else {
             cpov.error("fatal", "endColumn must be an integer greater than zero.", "ImageOptions");
@@ -1608,7 +1572,7 @@ class ImageOptions {
     }
 
     set endRow(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._endRow = val;
         } else {
             cpov.error("fatal", "endRow must be an integer greater than zero.", "ImageOptions");
@@ -1713,7 +1677,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) || val === 'sRGB')) {
             this._fileGamma = val;
         } else {
-            cpov.error("fatal", "fileGamma", "ImageOptions");
+            cpov.error("fatal", "fileGamma must be either a float or the string 'sRGB'.", "ImageOptions");
         }
     }
 
@@ -1934,7 +1898,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isString(val) && val.length == 1)) {
             this._palette = val;
         } else {
-            cpov.error("fatal", "palette", "ImageOptions");
+            cpov.error("fatal", "palette must be a single character.", "ImageOptions");
         }
     }
 
@@ -2101,10 +2065,10 @@ class ImageOptions {
     }
 
     set previewEndSize(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isPowerOfTwo(val) && val > 0)) {
             this._previewEndSize = val;
         } else {
-            cpov.error("fatal", "previewEndSize must be an integer greater than zero", "ImageOptions");
+            cpov.error("fatal", "previewEndSize must be an integer that is both a power of two and greater than zero", "ImageOptions");
         }
     }
 
@@ -2118,10 +2082,10 @@ class ImageOptions {
     }
 
     set previewStartSize(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isPowerOfTwo(val) && val > 0)) {
             this._previewStartSize = val;
         } else {
-            cpov.error("fatal", "previewStartSize must be an integer greater than zero.", "ImageOptions");
+            cpov.error("fatal", "previewStartSize must be an integer that is both a power of two and greater than zero.", "ImageOptions");
         }
     }
 
@@ -2356,7 +2320,7 @@ class ImageOptions {
     }
 
     set startColumn(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 0)) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._startColumn = val;
         } else {
             cpov.error("fatal", "startColumn must be an integer greater than or equal to zero.", "ImageOptions");
@@ -2373,7 +2337,7 @@ class ImageOptions {
     }
 
     set startRow(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 0)) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._startRow = val;
         } else {
             cpov.error("fatal", "startRow must be an integer greater than or equal to zero.", "ImageOptions");
@@ -2625,8 +2589,6 @@ class ImageOptions {
         newObj.bspIsectCost          = this.bspIsectCost;         
         newObj.bspMaxDepth           = this.bspMaxDepth;          
         newObj.bspMissChance         = this.bspMissChance;        
-        newObj.continueTrace         = this.continueTrace;        
-        newObj.createIni             = this.createIni;            
         newObj.debugConsole          = this.debugConsole;         
         newObj.debugFile             = this.debugFile;            
         newObj.display               = this.display;              
@@ -2778,7 +2740,7 @@ class ImageOptions {
                     break;
     
                 case "boundingThreshold":
-                    ini.push("Bounding_Threshold=" + this.boundingThreshold);
+                    ini.push("Bounding_Threshold=" + (this.boundingThreshold ? this.boundingThreshold : "false"));
                     cli.push(
                         (this.bounding !== null || this.bounding ? "+" : "-")
                         + "MB" + this.boundingThreshold
@@ -2806,20 +2768,6 @@ class ImageOptions {
                     break;
     
                 case "constants":
-                    break;
-    
-                case "continueTrace":
-                    ini.push("Continue_Trace=" + this.continueTrace);
-                    cli.push(this.continueTrace ? "+C" : "-C");
-                    break;
-    
-                case "createIni":
-                    if(typeof this.createIni == "boolean") {
-                        ini.push("Create_Ini=" + (this.createIni ? "true" : "false"));
-                    } else {
-                        ini.push("Create_Ini=" + this.createIni);
-                        cli.push("+GI" + this.createIni);
-                    }
                     break;
     
                 case "debugConsole":
@@ -2862,11 +2810,17 @@ class ImageOptions {
                     break;
     
                 case "endColumn":
+                    if(this.startColumn !== null || this.endColumn <= this.startColumn)
+                        cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
+    
                     ini.push("End_Column=" + this.endColumn);
                     cli.push("+EC" + this.endColumn);
                     break;
     
                 case "endRow":
+                    if(this.startRow !== null || this.endRow <= this.startRow)
+                        cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
+    
                     ini.push("End_Row=" + this.endRow);
                     cli.push("+ER" + this.endRow);
                     break;
@@ -3107,11 +3061,17 @@ class ImageOptions {
                     break;
     
                 case "startColumn":
+                    if(this.endColumn !== null || this.endColumn <= this.startColumn)
+                        cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
+    
                     ini.push("Start_Column=" + this.startColumn);
                     cli.push("+SC" + this.startColumn);
                     break;
     
                 case "startRow":
+                    if(this.endRow !== null || this.endRow <= this.startRow)
+                        cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
+    
                     ini.push("Start_Row=" + this.startRow);
                     cli.push("+SR" + this.startRow);
                     break;
@@ -4524,7 +4484,7 @@ class Box extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner2 = val;
         } else {
-            cpov.error("fatal", "corner2", "Box");
+            cpov.error("fatal", "corner2 must be a VectorXYZ.", "Box");
         }
     }
 
@@ -9048,7 +9008,7 @@ class Poly extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 2 && val <= 35)) {
             this._order = val;
         } else {
-            cpov.error("fatal", "order must be an integer in the range (.", "Poly");
+            cpov.error("fatal", "order must be an integer in the range (2 - 35).", "Poly");
         }
     }
 

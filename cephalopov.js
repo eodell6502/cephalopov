@@ -79,6 +79,16 @@ cpov.isFloat = function(val) {
 
 //------------------------------------------------------------------------------
 
+cpov.isPowerOfTwo = function(val) {
+    var sqrt = Math.sqrt(val);
+    if(sqrt == Math.floor(sqrt))
+        return true;
+    else
+        return false;
+}
+
+//------------------------------------------------------------------------------
+
 cpov.isArrayOfFloats = function(val, min, max) {
     if(!Array.isArray(val))
         return false;
@@ -129,8 +139,34 @@ cpov.isString = function(val) {
 
 //------------------------------------------------------------------------------
 
+cpov.isArrayOfStrings = function(val, min, max) {
+    if(!Array.isArray(val))
+        return false;
+    if(val.length < min || val.length > max)
+        return false;
+    for(var i = 0; i < val.length; i++)
+        if(typeof val[i] != "string")
+            return false;
+    return true;
+}
+
+//------------------------------------------------------------------------------
+
 cpov.isNonEmptyString = function(val) {
     return typeof val == "string" && val.length ? true : false;
+}
+
+//------------------------------------------------------------------------------
+
+cpov.isArrayOfNonEmptyStrings = function(val, min, max) {
+    if(!Array.isArray(val))
+        return false;
+    if(val.length < min || val.length > max)
+        return false;
+    for(var i = 0; i < val.length; i++)
+        if(typeof val[i] != "string" || val[i].length < 1)
+            return false;
+    return true;
 }
 
 //------------------------------------------------------------------------------

@@ -151,6 +151,16 @@ miscDef.hfTypes = [ "exr", "gif", "hdr", "iff", "jpeg", "pgm", "png", "pot", "pp
 
 
 //------------------------------------------------------------------------------
+// List of POV-Ray warning levels.
+//------------------------------------------------------------------------------
+
+miscDef.warningLevels = {
+     0: "Turn off all warnings.",
+     5: "Turn off language version warnings.",
+    10: "Turn on all warnings (default)."
+}
+
+//------------------------------------------------------------------------------
 // List of SDL keywords.
 //------------------------------------------------------------------------------
 

@@ -631,7 +631,7 @@ output() {
                 break;
 
             case "boundingThreshold":
-                ini.push("Bounding_Threshold=" + this.boundingThreshold);
+                ini.push("Bounding_Threshold=" + (this.boundingThreshold ? this.boundingThreshold : "false"));
                 cli.push(
                     (this.bounding !== null || this.bounding ? "+" : "-")
                     + "MB" + this.boundingThreshold
@@ -659,20 +659,6 @@ output() {
                 break;
 
             case "constants":
-                break;
-
-            case "continueTrace":
-                ini.push("Continue_Trace=" + this.continueTrace);
-                cli.push(this.continueTrace ? "+C" : "-C");
-                break;
-
-            case "createIni":
-                if(typeof this.createIni == "boolean") {
-                    ini.push("Create_Ini=" + (this.createIni ? "true" : "false"));
-                } else {
-                    ini.push("Create_Ini=" + this.createIni);
-                    cli.push("+GI" + this.createIni);
-                }
                 break;
 
             case "debugConsole":
@@ -715,11 +701,17 @@ output() {
                 break;
 
             case "endColumn":
+                if(this.startColumn !== null || this.endColumn <= this.startColumn)
+                    cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
+
                 ini.push("End_Column=" + this.endColumn);
                 cli.push("+EC" + this.endColumn);
                 break;
 
             case "endRow":
+                if(this.startRow !== null || this.endRow <= this.startRow)
+                    cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
+
                 ini.push("End_Row=" + this.endRow);
                 cli.push("+ER" + this.endRow);
                 break;
@@ -790,8 +782,10 @@ output() {
                 break;
 
             case "libraryPath":
-                ini.push("Library_Path=" + this.libraryPath);
-                cli.push("+L" + this.libraryPath);
+                for(var j = 0; j < this.libraryPath.length; j++) {
+                    ini.push("Library_Path=" + this.libraryPath[j]);
+                    cli.push("+L" + this.libraryPath[j]);
+                }
                 break;
 
             case "maxImageBufferMemory":
@@ -960,11 +954,17 @@ output() {
                 break;
 
             case "startColumn":
+                if(this.endColumn !== null || this.endColumn <= this.startColumn)
+                    cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
+
                 ini.push("Start_Column=" + this.startColumn);
                 cli.push("+SC" + this.startColumn);
                 break;
 
             case "startRow":
+                if(this.endRow !== null || this.endRow <= this.startRow)
+                    cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
+
                 ini.push("Start_Row=" + this.startRow);
                 cli.push("+SR" + this.startRow);
                 break;
