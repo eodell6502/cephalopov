@@ -373,10 +373,10 @@ function readParamKeys(array, destObj) {
 function docHumper(doc, classname, def) {
 
     var immutableDesc = {
-        finite:  "If true, the shape is finite in extent.",
-        solid:   "If true, the shape is solid.",
-        csg:     "If true, the primitive is a composite CSG type.",
-        pseudo:  "If true, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects."
+        finite:  "If <code>true</code>, the shape is finite in extent.",
+        solid:   "If <code>true</code>, the shape is solid.",
+        csg:     "If <code>true</code>, the primitive is a composite CSG type.",
+        pseudo:  "If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects."
     };
 
     var descDummy = "TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.";
@@ -468,6 +468,33 @@ function kvTabulate(obj, tclass, keyname, valname, title, sort = true, anchor = 
 
 
 //==============================================================================
+// Produces a single-column list of strings from a simple array. The strings are
+// wrapped in <code> tags.
+//==============================================================================
+
+function stringTable(obj, tclass, title, sort = true, anchor = false) {
+    var contents = [
+        (anchor ? "<a name=\"" + anchor + "\"/>" : ''),
+        "<table class=\"" + tclass + "\">",
+        "<thead>",
+        (title ? "<tr><th>" + title + "</th></tr>" : ""),
+        "</thead><tbody>"
+    ];
+
+    var strings = obj.slice(0);
+
+    if(sort)
+        strings.sort();
+
+    for(var i = 0; i < strings.length; i++)
+        contents.push("<tr><td><code>" + strings[i] + "</code></td></tr>");
+
+    contents.push("</tbody></table>");
+
+    return contents.join("\n") + "\n";
+}
+
+//==============================================================================
 // Produces a list of quoted strings from a simple array. The strings are
 // wrapped in <code> tags and quotes.
 //==============================================================================
@@ -540,6 +567,12 @@ function main() {
         docs = docs.replace(/\$strlist\.([A-Za-z]+)/g, function(match, p1) {
             if(cpov[p1] !== undefined) {
                 return stringList(cpov[p1]);
+            }
+        });
+
+        docs = docs.replace(/\$strtable\.([A-Za-z]+)/g, function(match, p1) {
+            if(cpov[p1] !== undefined) {
+                return stringTable(cpov[p1], "sgrid codeDoc", "Julia Fractal Types", true, false);
             }
         });
 

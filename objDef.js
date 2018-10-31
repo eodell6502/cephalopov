@@ -502,49 +502,49 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
                 err:   "source must be an SDL function.",
-                desc:  "TODO",
+                desc:  "This is a string containing the SDL function code which defines the surface.",
                 tname: "SDL"
             }, {
                 name:  "containedBy",
                 valid: "cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')",
                 err:   "containedBy must be a Sphere or a Box.",
-                desc:  "TODO",
+                desc:  "Defines a <code>Sphere</code> or <code>Box</code> which determines the portion of the (potentially infinite) surface that POV-Ray will render. By default, this is a <code>Box</code> with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.",
                 tname: "Sphere<br/>Box"
             }, {
                 name:  "threshold",
                 valid: "cpov.isFloat(val)",
                 err:   "threshold",
-                desc:  "TODO",
+                desc:  "The surface appears where the value of <code>source</code> equals this value, which defaults to 0.",
                 tname: "float"
             }, {
                 name:  "accuracy",
                 valid: "cpov.isFloat(val)",
                 err:   "accuracy must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the amount of subdivision POV-Ray performs to find the surface, with lower values being more accurate. Defaults to 0.001.",
                 tname: "float"
             }, {
                 name:  "maxGradient",
                 valid: "cpov.isFloat(val)",
                 err:   "maxGradient must be a float.",
-                desc:  "TODO",
+                desc:  "Rendering will be faster if POV-Ray knows the maximum gradient of the <code>source</code> function. The <code>maxGradient</code> value defaults to 1.1, but if this too low, holes and other imperfections may appear, and POV-Ray will emit a warning telling you the maximum gradient it found so that you can manually update this value. Beware of raising the value beyond the actual maximum gradient, as this will slow down the render.",
                 tname: "float"
             }, {
                 name:  "evaluate",
                 valid: "cpov.isArrayOfFloats(val, 3, 3)",
                 err:   "evaluate must be an array of three floats.",
-                desc:  "TODO",
+                desc:  "This is an array of three floats that optionally guides POV-Ray in dynamically adapting <code>maxGradient</code>. See the official POV-Ray documentation for <a href=\"specifies whether the file is stored in premultiplied associated or non-premultiplied straight alpha format, overriding the file format specific default. This keyword has no effect on files without an alpha channel.\">details.</a>",
                 tname: "Array"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
                 err:   "open must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</cope>, the boundaries where the isosurface intersects with the <code>containedBy</code> object will be left open.",
                 tname: "boolean"
             }, {
                 name:  "maxTrace",
                 valid: "cpov.isInt(val) || (typeof val == 'string' && val == 'allIntersections')",
                 err:   "maxTrace must be either an integer or 'allIntersections'.",
-                desc:  "TODO",
+                desc:  "When used as part of a CSG object, this determines the maximum number of surfaces to look for when constructing the final CSG object. By default, only the <code>containedBy</code> object is examined. For complete accuracy at the expense of speed, use the string <code>\"all_intersections\".",
                 tname: "integer<br/>string"
             }
         ],
@@ -563,44 +563,44 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isInArray(val, cpov.juliaFractalTypes)",
                 err:   "type must be one of " + cpov.arrayToTextList(cpov.juliaFractalTypes) + ".",
-                desc:  "TODO",
+                desc:  "Specifies the type of julia fractal formula used. The legal values are: $strtable.juliaFractalTypes",
                 tname: "string"
             }, {
                 name:  "juliaParam",
 				req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "juliaParam must be a VectorXYZW.",
-                desc:  "TODO",
+                desc:  "This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.",
                 tname: "VectorXYZW"
             }, {
                 name:  "power",
                 valid: "cpov.isClass(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val))",
                 err:   "power must be a VectorXY.",
-                desc:  "TODO",
+                desc:  "For the <code>hypercomplex:pwr</code> formula, this <code>VectorXY</code> contains the X and Y exponents used in the calculations. Has no effect on other formula types.",
                 tname: "VectorXY"
             }, {
                 name:  "maxIter",
                 valid: "cpov.isInt(val)",
                 err:   "maxIter must be an integer.",
-                desc:  "TODO",
+                desc:  "Determines the number of iterations used to find the surface of the fractal, with higher values being more accurate but slower to render. The default is 20.",
                 tname: "integer"
             }, {
                 name:  "precision",
                 valid: "cpov.isInt(val)",
                 err:   "precision must be an integer.",
-                desc:  "TODO",
+                desc:  "Determines the accuracy of the calculations for finding the surface of the julia set. The default is 20. Higher values result in greater accuracy but longer rendering times.",
                 tname: "integer"
             }, {
                 name:  "slice",
                 valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "slice must be a VectorXYZW.",
-                desc:  "TODO",
+                desc:  "Specifies the 3D slice through 4D space used to view the fractal.",
                 tname: "VectorXYZW"
             }, {
                 name:  "distance",
                 valid: "cpov.isFloat(val)",
                 err:   "distance must be a float.",
-                desc:  "TODO",
+                desc:  "Specifies the distance of the <code>slice</code> from the origin.",
                 tname: "float"
             }
         ],
