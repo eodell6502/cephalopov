@@ -21,32 +21,32 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isInt(val) && (val == 0 || val == 1)",
                 err:   "type must be either 0 or 1.",
-                desc:  "TODO",
+                desc:  "This may be either 0 or 1. Type 0 reduces the amount of memory used to store the patch in memory at the cost of slower rendering. Type 1 does the reverse, consuming more memory but reducing the number of calculations required.",
                 tname: "integer"
             }, {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16)",
                 err:   "points must be an array of 16 VectorXYZ.",
-                desc:  "TODO",
+                desc:  "The <code>points</code> attribute is an array of 16 <code>VectorXYZ</code> points which define the 4 &mult; 4 array of control points that define the patch.",
                 tname: "Array"
             }, {
                 name:  "uSteps",
                 valid: "cpov.isInt(val)",
                 err:   "uSteps must be an integer.",
-                desc:  "TODO",
+                desc:  "Defines the number of rows of triangles used to create the patch. Most patches can be acceptably rendered using 3 rows.",
                 tname: "integer"
             }, {
                 name:  "vSteps",
                 valid: "cpov.isInt(val)",
                 err:   "vSteps must be an integer.",
-                desc:  "TODO",
+                desc:  "Defines the number of columns of triangles used to create the patch. Most patches can be acceptably rendered using 3 columns.",
                 tname: "integer"
             }, {
                 name:  "flatness",
-                valid: "cpov.isFloat(val)",
-                err:   "flatness must be a float.",
-                desc:  "TODO",
+                valid: "cpov.isFloat(val) && val >= 0 && val <= 1",
+                err:   "flatness must be a float in the unit interval (0.0 - 1.0).",
+                desc:  "If <code>flatness</code> is 0 (the default), the patch will be subdivided into only as many triangles as specified by <code>uSteps</code> and <code>vSteps</code>. Increasing it up to a maximum of 1.0 will encourage POV-Ray to automatically subdivide the patch into additional triangles as needed.",
                 tname: "float"
             }
         ],
@@ -66,25 +66,25 @@ module.exports = {
                 child: "array",
                 valid: "cpov.isClass(val, ['Sphere', 'Cylinder']) && val.length",
                 err:   "components must be an array of Spheres and/or Cylinders.",
-                desc:  "TODO",
+                desc:  "This is an array of <code>Sphere</code> and <code>Cylinders</code>, optionally with their <code>strength</code> attributes set.",
                 tname: "Array"
             }, {
                 name:  "threshold",
                 valid: "cpov.isFloat(val)",
                 err:   "threshold",
-                desc:  "TODO",
+                desc:  "The <code>threshold</code> determines the field strength that distinguishes between the inside and outside of a <code>Blob</code>, i.e., <code>threshold</code> defines the surface of a <code>Blob</code>.",
                 tname: "float"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }, {
                 name:  "hierarchy",
                 valid: "cpov.isBoolean(val)",
                 err:   "hierarchy must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>false</code>, turn off the internal bounding hierarchy.",
                 tname: "hierarchy"
             }
         ],
@@ -244,34 +244,34 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "basePoint must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the location of the center of the cone's base end.",
                 tname: "VectorXYZ"
             }, {
                 name:  "baseRadius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "baseRadius must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the radius of the cone's base end.",
                 tname: "float"
             }, {
                 name:  "capPoint",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "capPoint must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the location of the center of the cone's cap end.",
                 tname: "VectorXYZ"
             }, {
                 name:  "capRadius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "capRadius must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the radius of the cone's cap end. If this is non-zero, it technically ceases to be a cone and instead becomes a frustum.",
                 tname: "float"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
                 err:   "open must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the base and the cap are left open, yielding a hollow cone.",
                 tname: "boolean"
             }
         ],
@@ -290,13 +290,13 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 20, 20)",
                 err:   "coefficients must be an array of 20 floats.",
-                desc:  "TODO",
+                desc:  "An array of 20 floats that act as the coefficients of a third-order polynomial.",
                 tname: "Array"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }
         ],
@@ -315,33 +315,33 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "basePoint must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the center of the base end of the cylinder.",
                 tname: "VectorXYZ"
             }, {
                 name:  "capPoint",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "capPoint must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the center of the cap end of the cylinder.",
                 tname: "VectorXYZ"
             }, {
                 name:  "radius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "radius must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the radius of the cylinder.",
                 tname: "float"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
                 err:   "open must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the cap and base planes are are eliminating, yielding a hollow tube.",
                 tname: "boolean"
             }, {
                 name:  "strength", // only used when the cylinder is a blob component
                 valid: "cpov.isFloat(val)",
                 err:   "strength must be a float",
-                desc:  "TODO",
+                desc:  "Defines the field strength of the cylinder. This is only used when the cylinder is a component of a <code>Blob</code> object.",
                 tname: "float"
             }
         ],
@@ -361,7 +361,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "positiveObject must be a Primitive.",
-                desc:  "TODO",
+                desc:  "This is the single base object from which the object(s) in the <code>negativeComponents</code> array are subtracted.",
                 tname: "Primitive"
             }, {
                 name:  "negativeComponents",
@@ -369,7 +369,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
                 err:   "negativeObjects must be an array of Primitives.",
-                desc:  "TODO",
+                desc:  "This is an array of objects to subtract from the <code>positiveComponent</code>.",
                 tname: "Array"
             }
         ],
@@ -388,27 +388,27 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "center must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "This is the center point of the disc.",
                 tname: "VectorXYZ"
             }, {
                 name:  "normal",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "This defines the normal or orientation of the disc in space.",
                 tname: "VectorXYZ"
             }, {
                 name:  "radius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "radius must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the radius of the disc.",
                 tname: "float"
             }, {
                 name:  "holeRadius",
                 valid: "cpov.isFloat(val)",
                 err:   "holeRadius must be a float.",
-                desc:  "TODO",
+                desc:  "If supplied and non-zero, defines the radius of the hole in the center of the disc.",
                 tname: "float"
             }
         ],
@@ -427,43 +427,43 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isSDLFunction(val) || cpov.isString(val)",
                 err:   "source",
-                desc:  "TODO",
+                desc:  "Defines the source of the points that comprise the height field. This may be either an SDL function or the path to a graphics file.",
                 tname: "SDL<br/>string"
             }, {
                 name:  "hfType", // only used if source is image instead of function
                 valid: "cpov.isInArray(val, cpov.hfTypes)",
                 err:   "hfType must be one of " + cpov.arrayToTextList(cpov.hfTypes) + ".",
-                desc:  "TODO",
+                desc:  "If <code>source</code> is a graphics file, the <code>hfType</code> attribute declares the file format, which must be one of $strlist.hfTypes.",
                 tname: "string"
             }, {
                 name:  "smooth",
                 valid: "cpov.isBoolean(val)",
                 err:   "smooth must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will manipulate the surface normals of the generated triangles to create a smoother-looking surface.",
                 tname: "boolean"
             }, {
                 name:  "waterLevel",
-                valid: "cpov.isFloat(val)",
-                err:   "waterLevel must be a float.",
-                desc:  "TODO",
+                valid: "cpov.isFloat(val) && val >= 0 && val <= 0",
+                err:   "waterLevel must be a float in the unit interval (0.0 - 1.0).",
+                desc:  "Defines the point below which the height field is hidden. This defaults to 0.0, which corresponds to the bottom of the height field, i.e., nothing is hidden. At the other extreme, 1.0 will cause the entire height field to be hidden. Note that this does not create a plane representing water; you'll have to do that manually.",
                 tname: "float"
             }, {
                 name:  "hierarchy",
                 valid: "cpov.isBoolean(val)",
                 err:   "hierarchy must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>false</code>, turn off the internal bounding hierarchy.",
                 tname: "boolean"
             }, {
                 name:  "gamma",
-                valid: "cpov.isFloat(val)",
+                valid: "cpov.isFloat(val) || val === \"sRGB\"",
                 err:   "gamma must be a float.",
-                desc:  "TODO",
-                tname: "float"
+                desc:  "Defines the gamma value to be used in interpreting an image file. This may be either a float or the string <code>\"sRGB\"</code>.",
+                tname: "float<br/>string"
             }, {
-                name:  "premult",
+                name:  "premultiplied",
                 valid: "cpov.isBoolean(val)",
                 err:   "premult must be a boolean.",
-                desc:  "TODO",
+                desc:  "Specifies whether the file is stored in premultiplied associated or non-premultiplied straight alpha format, overriding the file format specific default. This keyword has no effect on files without an alpha channel.",
                 tname: "boolean"
             }
         ],
@@ -483,7 +483,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives.",
-                desc:  "TODO",
+                desc:  "An array of objects whose intersection will produce the resulting object.",
                 tname: "Array"
             }
         ],
@@ -632,7 +632,7 @@ module.exports = {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }
         ],
@@ -1041,7 +1041,7 @@ module.exports = {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }
         ],
@@ -1093,7 +1093,7 @@ module.exports = {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }
         ],
@@ -1145,7 +1145,7 @@ module.exports = {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }
         ],
@@ -1190,7 +1190,7 @@ module.exports = {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }
         ],
@@ -1314,7 +1314,7 @@ module.exports = {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "boolean"
             }
         ],
@@ -1394,7 +1394,7 @@ module.exports = {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
                 err:   "sturm must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.",
                 tname: "float"
             }
         ],

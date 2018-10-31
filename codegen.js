@@ -468,17 +468,13 @@ function kvTabulate(obj, tclass, keyname, valname, title, sort = true, anchor = 
 
 
 //==============================================================================
-// Produces a list of strings from either a simple array or from the keys of an
-// object. The strings are wrapped in <code> tags and quotes.
+// Produces a list of quoted strings from a simple array. The strings are
+// wrapped in <code> tags and quotes.
 //==============================================================================
 
-function keyList(obj) {
+function stringList(obj) {
     if(Array.isArray(obj)) {
         var list = obj.slice(0);
-    } else {
-        var list = [ ];
-        for(var k in obj)
-            list.push(k);
     }
 
     list.sort();
@@ -541,8 +537,14 @@ function main() {
             }
         });
 
+        docs = docs.replace(/\$strlist\.([A-Za-z]+)/g, function(match, p1) {
+            if(cpov[p1] !== undefined) {
+                return stringList(cpov[p1]);
+            }
+        });
+
         df = new File("./docs/index.html", "w");
-        df.write(docs);
+        df.write(docs.trim() + "\n");
         df.close();
     }
 

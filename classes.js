@@ -4012,10 +4012,10 @@ class BicubicPatch extends Primitive {
     }
 
     set flatness(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 1)) {
             this._flatness = val;
         } else {
-            cpov.error("fatal", "flatness must be a float.", "BicubicPatch");
+            cpov.error("fatal", "flatness must be a float in the unit interval (0.0 - 1.0).", "BicubicPatch");
         }
     }
 
@@ -5950,13 +5950,13 @@ class HeightField extends Primitive {
 
         // Mutable properties //
 
-        this._source     = null;
-        this._hfType     = null;
-        this._smooth     = null;
-        this._waterLevel = null;
-        this._hierarchy  = null;
-        this._gamma      = null;
-        this._premult    = null;
+        this._source        = null;
+        this._hfType        = null;
+        this._smooth        = null;
+        this._waterLevel    = null;
+        this._hierarchy     = null;
+        this._gamma         = null;
+        this._premultiplied = null;
 
         // Initialization //
 
@@ -6077,10 +6077,10 @@ class HeightField extends Primitive {
     }
 
     set waterLevel(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 0)) {
             this._waterLevel = val;
         } else {
-            cpov.error("fatal", "waterLevel must be a float.", "HeightField");
+            cpov.error("fatal", "waterLevel must be a float in the unit interval (0.0 - 1.0).", "HeightField");
         }
     }
 
@@ -6115,7 +6115,7 @@ class HeightField extends Primitive {
     }
 
     set gamma(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) || val === "sRGB")) {
             this._gamma = val;
         } else {
             cpov.error("fatal", "gamma must be a float.", "HeightField");
@@ -6124,18 +6124,18 @@ class HeightField extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get premult() {
-        if(typeof this._premult == "function")
-            return this._premult(cpov, this);
-        else if(cpov.isSDLFunction(this._premult))
-            return this._premult.substr(1);
+    get premultiplied() {
+        if(typeof this._premultiplied == "function")
+            return this._premultiplied(cpov, this);
+        else if(cpov.isSDLFunction(this._premultiplied))
+            return this._premultiplied.substr(1);
         else
-            return this._premult;
+            return this._premultiplied;
     }
 
-    set premult(val) {
+    set premultiplied(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
-            this._premult = val;
+            this._premultiplied = val;
         } else {
             cpov.error("fatal", "premult must be a boolean.", "HeightField");
         }
@@ -6150,13 +6150,13 @@ class HeightField extends Primitive {
         var newObj = new HeightField();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.source     = this.source;    
-        newObj.hfType     = this.hfType;    
-        newObj.smooth     = this.smooth;    
-        newObj.waterLevel = this.waterLevel;
-        newObj.hierarchy  = this.hierarchy; 
-        newObj.gamma      = this.gamma;     
-        newObj.premult    = this.premult;   
+        newObj.source        = this.source;       
+        newObj.hfType        = this.hfType;       
+        newObj.smooth        = this.smooth;       
+        newObj.waterLevel    = this.waterLevel;   
+        newObj.hierarchy     = this.hierarchy;    
+        newObj.gamma         = this.gamma;        
+        newObj.premultiplied = this.premultiplied;
 
         return newObj;
     }
@@ -6186,7 +6186,7 @@ class HeightField extends Primitive {
                 + (this.hfType === null ? "" : (this.hfType + " "))
                 + '"' + this.source + '" '
                 + (this.gamma === null ? "" : ("gamma " + this.gamma + " "))
-                + (this.premult === null ? "" : "premult " + (this.premult ? "on" : "off"))
+                + (this.premultiplied === null ? "" : "premultiplied " + (this.premultiplied ? "on" : "off"))
             );
         }
     

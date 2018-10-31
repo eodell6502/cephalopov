@@ -534,7 +534,7 @@ toSDL(stops = 0) {
             + (this.hfType === null ? "" : (this.hfType + " "))
             + '"' + this.source + '" '
             + (this.gamma === null ? "" : ("gamma " + this.gamma + " "))
-            + (this.premult === null ? "" : "premult " + (this.premult ? "on" : "off"))
+            + (this.premultiplied === null ? "" : "premultiplied " + (this.premultiplied ? "on" : "off"))
         );
     }
 
