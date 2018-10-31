@@ -265,7 +265,7 @@ ClassBuilder.prototype.toString = function() {
                     this.divider(1, "-") + "\n\n"
                     + tab1 + "get " + item.name + "() {\n"
                     + tab2 + "if(typeof this._" + item.name + " == \"function\")\n"
-                    + tab3 + "return this._" + item.name + "();");
+                    + tab3 + "return this._" + item.name + "(cpov, this);");
                 if(this.allowSDL)
                     src.push(
                         tab2 + "else if(cpov.isSDLFunction(this._" + item.name + "))\n"
@@ -393,9 +393,9 @@ function docHumper(doc, classname, def) {
 
 	members.sort();
 
-	content.push("<div dh=\"" + classname + "\"><table class='sgrid attrs'>"
-        + "<thead>"
-        + "<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>"
+	content.push("<div dh=\"" + classname + "\">\n<table class='sgrid attrs'>\n"
+        + "<thead>\n"
+        + "<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>\n"
         + "<thead><tbody>");
 
 	for(var m = 0; m < members.length; m++) {
@@ -428,11 +428,11 @@ function docHumper(doc, classname, def) {
 		}
 	}
 
-    content.push("</tbody></table></div dh=\"" + classname + "\">");
+    content.push("</tbody></table>\n</div dh=\"" + classname + "\">");
 
 	regex = new RegExp('<div +dh="' + classname + '">[^]*</div +dh="' + classname + '">');
 
-	return doc.replace(regex, content.join(""));
+	return doc.replace(regex, content.join("\n")) + "\n";
 }
 
 
@@ -463,7 +463,7 @@ function kvTabulate(obj, tclass, keyname, valname, title, sort = true, anchor = 
 
     contents.push("</tbody></table>");
 
-    return contents.join("\n");
+    return contents.join("\n") + "\n";
 }
 
 

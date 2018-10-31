@@ -1979,6 +1979,14 @@ requiredParameterTest(requiredParams) {
 
 
 
+// Primitive.resetTransform //--------------------------------------------------
+
+resetTransform() {
+    this._transform = this._baseTransform;
+}
+
+
+
 // Primitive.snapshot //--------------------------------------------------------
 
 //--------------------------------------------------------------------------

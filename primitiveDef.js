@@ -14,19 +14,19 @@ module.exports = {
             name:  "active",
             valid: "cpov.isBoolean(val)",
             err:   "active must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>active == false</code>, it will not be output to the current .pov frame file. Defaults to <code>true</code>.",
             tname: "boolean"
         }, {
             name:  "baseTransform",
             valid: "cpov.isClass(val, 'Matrix')",
             err:   "baseTransform must be a Matrix.",
-            desc:  "TODO",
+            desc:  "The <code>baseTransform</code> attribute contains the \"default\" transformation of the object. As new transformations are applied, the original <code>baseTransform</code> remains unchanged, making it easy to revert to the original state by calling the <code>resetTransform</code> method.",
             tname: "Matrix"
         }, {
             name:  "boundedBy",
-            valid: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.
+            valid: "cpov.inheritsFrom(val, 'Primitive')",
             err:   "boundedBy must be a Primitive.",
-            desc:  "TODO",
+            desc:  "Defines a manual bounding volume for the object.",
             tname: "Primitive"
         }, {
             name:  "children",
@@ -38,13 +38,13 @@ module.exports = {
             name:  "clippedBy",
             valid: "cpov.inheritsFrom(val, 'Primitive')",
             err:   "clippedBy must be a Primitive.",
-            desc:  "TODO",
+            desc:  "Specifies a <code>Primitive</code> that the object is clipped by in a manner similar to CSG intersection.",
             tname: "Primitive"
         }, {
             name:  "doubleIlluminate",
             valid: "cpov.isBoolean(val)",
             err:   "doubleIlluminate must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, the object is illuminated on its shadow side.",
             tname: "boolean"
         }, {
             name:  "finish",
@@ -56,25 +56,25 @@ module.exports = {
             name:  "frameBegin",
             valid: "typeof val == 'function'",
             err:   "frameBegin must be a JavaScript function.",
-            desc:  "TODO",
+            desc:  "If defined, this function will be called at the beginning of a frame before output.",
             tname: "function"
         }, {
             name:  "frameEnd",
             valid: "typeof val == 'function'",
             err:   "frameEnd must be a JavaScript function.",
-            desc:  "TODO",
+            desc:  "If defined, this function will be called at the end of a frame after output.",
             tname: "function"
         }, {
             name:  "hollow",
             valid: "cpov.isBoolean(val)",
             err:   "hollow must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, this will make an otherwise solid primitive hollow. Has no effect on objects which are not solid.",
             tname: "boolean"
         }, {
             name:  "id",
             valid: "cpov.isNonEmptyString(val) && cpov.isUnusedId(val, this)",
             err:   "id must be a unique, non-empty string.",
-            desc:  "TODO",
+            desc:  "An optional, unique string which serves to identify an object. While you can pull objects out of <code>cpov.idMap</code> using this value, it is output in error messages, making it easier to find the offending object.",
             tname: "string"
         }, {
             name:  "interior",
@@ -86,7 +86,7 @@ module.exports = {
             name:  "inverse",
             valid: "cpov.isBoolean(val)",
             err:   "inverse must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, the inside and outside of the solid object are swapped. For example, a hollow <code>Sphere</code> would consist of a spherical void in an infinite solid mass. This is mainly useful in CSG objects.",
             tname: "boolean"
         }, {
             name:  "material",
@@ -98,25 +98,25 @@ module.exports = {
             name:  "noImage",
             valid: "cpov.isBoolean(val)",
             err:   "noImage must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, the object will be invisible to cameras, but it will still cast shadows and show up in reflections.",
             tname: "boolean"
         }, {
             name:  "noRadiosity",
             valid: "cpov.isBoolean(val)",
             err:   "noRadiosity must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, the object will be invisible to radiosity rays.",
             tname: "boolean"
         }, {
             name:  "noReflection",
             valid: "cpov.isBoolean(val)",
             err:   "noReflection must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, the object will not be visible in reflections.",
             tname: "boolean"
         }, {
             name:  "noShadow",
             valid: "cpov.isBoolean(val)",
             err:   "noShadow must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, the object will not cast shadows.",
             tname: "boolean"
         }, {
             name:  "parent",
@@ -140,7 +140,7 @@ module.exports = {
             name:  "serial",
             valid: "cpov.isInt(val) && cpov.isUnusedSerial(val, this)",
             err:   "serial must be an integer.",
-            desc:  "TODO",
+            desc:  "This is a unique read-only integer serial number automatically assigned by CephaloPOV upon object creation. It is displayed in error messages, and objects can be looked up using <code>cpov.serialMap</code>.",
             tname: "integer"
         }, {
             name:  "texture",
@@ -155,7 +155,7 @@ module.exports = {
             valid: "cpov.isClass(val, 'Matrix')",
             err:   "transform must be a Matrix.",
             custom: "Primitive.transform.get-set",
-            desc:  "TODO",
+            desc:  "This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.",
             tname: "Matrix"
         }
     ]
