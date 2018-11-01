@@ -8,7 +8,7 @@ module.exports = {
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: "Primitive.conBlock",
-    snippets: [ "Primitive.adopt", "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.requiredParameterTest", "Primitive.toSDL" ],
+    snippets: [ "Primitive.adopt", "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.disown", "Primitive.requiredParameterTest", "Primitive.toSDL" ],
     mutable: [
         {
             name:  "active",
@@ -28,12 +28,6 @@ module.exports = {
             err:   "boundedBy must be a Primitive.",
             desc:  "Defines a manual bounding volume for the object.",
             tname: "Primitive"
-        }, {
-            name:  "children",
-            valid: "cpov.isArrayOfSubclass(val, 'Primitive')",
-            err:   "children must be an array of Primitives.",
-            desc:  "TODO",
-            tname: "Array"
         }, {
             name:  "clippedBy",
             valid: "cpov.inheritsFrom(val, 'Primitive')",
@@ -119,11 +113,12 @@ module.exports = {
             desc:  "If <code>true</code>, the object will not cast shadows.",
             tname: "boolean"
         }, {
-            name:  "parent",
-            valid: "cpov.inheritsFrom(val, 'Primitive')",
-            err:   "parent must be a Primitive.",
-            desc:  "TODO",
-            tname: "Primitive"
+            name:   "parent",
+            valid:  "cpov.inheritsFrom(val, 'Primitive')",
+            err:    "parent must be a Primitive.",
+            custom: "Primitive.parent.get-set",
+            desc:   "TODO",
+            tname:  "Primitive"
         }, {
             name:  "photons", //          type: "Photons",    test: null }, TODO FIXME
             valid: "",
@@ -137,11 +132,12 @@ module.exports = {
             desc:  "TODO",
             tname: "TOOD"
         }, {
-            name:  "serial",
-            valid: "cpov.isInt(val) && cpov.isUnusedSerial(val, this)",
-            err:   "serial must be an integer.",
-            desc:  "This is a unique read-only integer serial number automatically assigned by CephaloPOV upon object creation. It is displayed in error messages, and objects can be looked up using <code>cpov.serialMap</code>.",
-            tname: "integer"
+            name:   "serial",
+            valid:  "cpov.isInt(val) && cpov.isUnusedSerial(val, this)",
+            err:    "serial must be an integer.",
+            custom: "Primitive.serial.get-set",
+            desc:   "This is a unique read-only integer serial number automatically assigned by CephaloPOV upon object creation. It is displayed in error messages, and objects can be looked up using <code>cpov.serialMap</code>.",
+            tname:  "integer"
         }, {
             name:  "texture",
             // valid: "cpov.isClass(val, 'Texture')",         // Temporarily, we will fake having
@@ -151,12 +147,12 @@ module.exports = {
             desc:  "TODO",
             tname: "string"
         }, {
-            name:  "transform",
-            valid: "cpov.isClass(val, 'Matrix')",
-            err:   "transform must be a Matrix.",
+            name:   "transform",
+            valid:  "cpov.isClass(val, 'Matrix')",
+            err:    "transform must be a Matrix.",
             custom: "Primitive.transform.get-set",
-            desc:  "This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.",
-            tname: "Matrix"
+            desc:   "This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.",
+            tname:  "Matrix"
         }
     ]
 };

@@ -80,7 +80,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._adcBailout = val;
         } else {
-            cpov.error("fatal", "adcBailout must be a float greater than or equal to zero.", "GlobalSettings");
+            cpov.error("fatal", "adcBailout must be a float greater than or equal to zero.", "GlobalSettings", this);
         }
     }
 
@@ -99,7 +99,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color'))) {
             this._ambientLight = val;
         } else {
-            cpov.error("fatal", "ambientLight must be a Color.", "GlobalSettings");
+            cpov.error("fatal", "ambientLight must be a Color.", "GlobalSettings", this);
         }
     }
 
@@ -118,7 +118,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._assumedGamma = val;
         } else {
-            cpov.error("fatal", "assumedGamma must be a float.", "GlobalSettings");
+            cpov.error("fatal", "assumedGamma must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -134,10 +134,10 @@ class GlobalSettings {
     }
 
     set charset(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, ['ascii', 'utf8', 'sys']))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, cpov.charsets))) {
             this._charset = val;
         } else {
-            cpov.error("fatal", "charset must be one of 'ascii', 'utf8', or 'sys'.", "GlobalSettings");
+            cpov.error("fatal", "charset must be one of 'ascii', 'utf8', or 'sys'.", "GlobalSettings", this);
         }
     }
 
@@ -156,7 +156,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color'))) {
             this._iridWavelength = val;
         } else {
-            cpov.error("fatal", "iridWavelength must be a Color", "GlobalSettings");
+            cpov.error("fatal", "iridWavelength must be a Color", "GlobalSettings", this);
         }
     }
 
@@ -175,7 +175,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._maxIntersections = val;
         } else {
-            cpov.error("fatal", "maxIntersections must be an integer greater than or equal to zero.", "GlobalSettings");
+            cpov.error("fatal", "maxIntersections must be an integer greater than or equal to zero.", "GlobalSettings", this);
         }
     }
 
@@ -191,10 +191,10 @@ class GlobalSettings {
     }
 
     set maxTraceLevel(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0 && val <= 256)) {
             this._maxTraceLevel = val;
         } else {
-            cpov.error("fatal", "maxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings");
+            cpov.error("fatal", "maxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings", this);
         }
     }
 
@@ -213,7 +213,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._mmPerUnit = val;
         } else {
-            cpov.error("fatal", "mmPerUnit must be a float greater than or equal to zero.", "GlobalSettings");
+            cpov.error("fatal", "mmPerUnit must be a float greater than or equal to zero.", "GlobalSettings", this);
         }
     }
 
@@ -232,7 +232,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isInArray(val, [1, 2, 3]))) {
             this._noiseGenerator = val;
         } else {
-            cpov.error("fatal", "noiseGenerator must be an integer and one of 1, 2, or 3.", "GlobalSettings");
+            cpov.error("fatal", "noiseGenerator must be an integer and one of 1, 2, or 3.", "GlobalSettings", this);
         }
     }
 
@@ -251,7 +251,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._numberOfWaves = val;
         } else {
-            cpov.error("fatal", "numberOfWaves must be an integer greater than or equal to zero.", "GlobalSettings");
+            cpov.error("fatal", "numberOfWaves must be an integer greater than or equal to zero.", "GlobalSettings", this);
         }
     }
 
@@ -270,7 +270,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._photon = val;
         } else {
-            cpov.error("fatal", "photon must be a boolean.", "GlobalSettings");
+            cpov.error("fatal", "photon must be a boolean.", "GlobalSettings", this);
         }
     }
 
@@ -289,7 +289,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._photonAdcBailout = val;
         } else {
-            cpov.error("fatal", "photonAdcBailout must be a float greater than or equal to zero.", "GlobalSettings");
+            cpov.error("fatal", "photonAdcBailout must be a float greater than or equal to zero.", "GlobalSettings", this);
         }
     }
 
@@ -308,7 +308,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._photonAutostop = val;
         } else {
-            cpov.error("fatal", "photonAutostop must be a float within the unit interval (0.0 - 1.0)", "GlobalSettings");
+            cpov.error("fatal", "photonAutostop must be a float within the unit interval (0.0 - 1.0)", "GlobalSettings", this);
         }
     }
 
@@ -327,7 +327,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._photonCount = val;
         } else {
-            cpov.error("fatal", "photonCount must be an integer greater than or equal to zero", "GlobalSettings");
+            cpov.error("fatal", "photonCount must be an integer greater than or equal to zero", "GlobalSettings", this);
         }
     }
 
@@ -346,7 +346,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isInt(val[1]))) {
             this._photonExpandThresholds = val;
         } else {
-            cpov.error("fatal", "photonExpandThresholds must be an array consisting of a float and and integer.", "GlobalSettings");
+            cpov.error("fatal", "photonExpandThresholds must be an array consisting of a float and and integer.", "GlobalSettings", this);
         }
     }
 
@@ -365,7 +365,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 2, 2) && val[0] >= 0 && val[1] >= 0 && val[0] <= val[1])) {
             this._photonGather = val;
         } else {
-            cpov.error("fatal", "photonGather must be an array of two integers greater than zero in ascending order.", "GlobalSettings");
+            cpov.error("fatal", "photonGather must be an array of two integers greater than zero in ascending order.", "GlobalSettings", this);
         }
     }
 
@@ -384,7 +384,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._photonJitter = val;
         } else {
-            cpov.error("fatal", "photonJitter must be a float.", "GlobalSettings");
+            cpov.error("fatal", "photonJitter must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -403,7 +403,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._photonLoadFile = val;
         } else {
-            cpov.error("fatal", "photonLoadFile must be a non-empty string.", "GlobalSettings");
+            cpov.error("fatal", "photonLoadFile must be a non-empty string.", "GlobalSettings", this);
         }
     }
 
@@ -422,7 +422,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._photonMaxTraceLevel = val;
         } else {
-            cpov.error("fatal", "photonMaxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings");
+            cpov.error("fatal", "photonMaxTraceLevel must be an integer greater than or equal to zero.", "GlobalSettings", this);
         }
     }
 
@@ -441,7 +441,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 2))) {
             this._photonMedia = val;
         } else {
-            cpov.error("fatal", "photonMedia must be an array of two floats.", "GlobalSettings");
+            cpov.error("fatal", "photonMedia must be an array of two floats.", "GlobalSettings", this);
         }
     }
 
@@ -460,7 +460,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 4, 4))) {
             this._photonRadius = val;
         } else {
-            cpov.error("fatal", "photonRadius must be an array of four floats.", "GlobalSettings");
+            cpov.error("fatal", "photonRadius must be an array of four floats.", "GlobalSettings", this);
         }
     }
 
@@ -479,7 +479,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._photonSaveFile = val;
         } else {
-            cpov.error("fatal", "photonSaveFile must be a non-empty string.", "GlobalSettings");
+            cpov.error("fatal", "photonSaveFile must be a non-empty string.", "GlobalSettings", this);
         }
     }
 
@@ -498,7 +498,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._photonSpacing = val;
         } else {
-            cpov.error("fatal", "photonSpacing must be a float greater than zero.", "GlobalSettings");
+            cpov.error("fatal", "photonSpacing must be a float greater than zero.", "GlobalSettings", this);
         }
     }
 
@@ -517,7 +517,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radAdcBailout = val;
         } else {
-            cpov.error("fatal", "radAdcBailout must be a float.", "GlobalSettings");
+            cpov.error("fatal", "radAdcBailout must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -536,7 +536,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radAlwaysSample = val;
         } else {
-            cpov.error("fatal", "radAlwaysSample must be a boolean.", "GlobalSettings");
+            cpov.error("fatal", "radAlwaysSample must be a boolean.", "GlobalSettings", this);
         }
     }
 
@@ -555,7 +555,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radBrightness = val;
         } else {
-            cpov.error("fatal", "radBrightness must be a float.", "GlobalSettings");
+            cpov.error("fatal", "radBrightness must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -574,7 +574,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 1, 2) && val[0] >= 1 && (val[1] === undefined || val[1] >= 1))) {
             this._radCount = val;
         } else {
-            cpov.error("fatal", "radCount must be an array of one or two integers, both of which must be greater than or equal to one.", "GlobalSettings");
+            cpov.error("fatal", "radCount must be an array of one or two integers, both of which must be greater than or equal to one.", "GlobalSettings", this);
         }
     }
 
@@ -593,7 +593,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radErrorBound = val;
         } else {
-            cpov.error("fatal", "radErrorBound must be a float.", "GlobalSettings");
+            cpov.error("fatal", "radErrorBound must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -612,7 +612,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._radGrayThreshold = val;
         } else {
-            cpov.error("fatal", "radGrayThreshold must be a float in the unit interval (0.0 - 1.0).", "GlobalSettings");
+            cpov.error("fatal", "radGrayThreshold must be a float in the unit interval (0.0 - 1.0).", "GlobalSettings", this);
         }
     }
 
@@ -631,7 +631,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radiosity = val;
         } else {
-            cpov.error("fatal", "radiosity must be a boolean.", "GlobalSettings");
+            cpov.error("fatal", "radiosity must be a boolean.", "GlobalSettings", this);
         }
     }
 
@@ -650,7 +650,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radLowErrorFactor = val;
         } else {
-            cpov.error("fatal", "radLowErrorFactor must be a float.", "GlobalSettings");
+            cpov.error("fatal", "radLowErrorFactor must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -669,7 +669,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMaximumReuse = val;
         } else {
-            cpov.error("fatal", "radMaximumReuse must be a float.", "GlobalSettings");
+            cpov.error("fatal", "radMaximumReuse must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -688,7 +688,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMaxSample = val;
         } else {
-            cpov.error("fatal", "radMaxSample must be a float.", "GlobalSettings");
+            cpov.error("fatal", "radMaxSample must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -707,7 +707,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radMinimumReuse = val;
         } else {
-            cpov.error("fatal", "radMinimumReuse must be a float.", "GlobalSettings");
+            cpov.error("fatal", "radMinimumReuse must be a float.", "GlobalSettings", this);
         }
     }
 
@@ -726,7 +726,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 20))) {
             this._radNearestCount = val;
         } else {
-            cpov.error("fatal", "radNearestCount must be an integer in the range 1-20.", "GlobalSettings");
+            cpov.error("fatal", "radNearestCount must be an integer in the range 1-20.", "GlobalSettings", this);
         }
     }
 
@@ -745,7 +745,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radNormal = val;
         } else {
-            cpov.error("fatal", "radNormal must be a boolean.", "GlobalSettings");
+            cpov.error("fatal", "radNormal must be a boolean.", "GlobalSettings", this);
         }
     }
 
@@ -764,7 +764,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._radPretraceEnd = val;
         } else {
-            cpov.error("fatal", "radPretraceEnd must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
+            cpov.error("fatal", "radPretraceEnd must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings", this);
         }
     }
 
@@ -783,7 +783,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && cpov.isWithin(val, 0, 1))) {
             this._radPretraceStart = val;
         } else {
-            cpov.error("fatal", "radPretraceStart must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings");
+            cpov.error("fatal", "radPretraceStart must be a float in the unit interval (0.0 - 1.0)", "GlobalSettings", this);
         }
     }
 
@@ -802,7 +802,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 20))) {
             this._radRecursionLimit = val;
         } else {
-            cpov.error("fatal", "radRecursionLimit must be an integer in the range 1-20.", "GlobalSettings");
+            cpov.error("fatal", "radRecursionLimit must be an integer in the range 1-20.", "GlobalSettings", this);
         }
     }
 
@@ -821,7 +821,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._radSubsurface = val;
         } else {
-            cpov.error("fatal", "radSubsurface must be a boolean.", "GlobalSettings");
+            cpov.error("fatal", "radSubsurface must be a boolean.", "GlobalSettings", this);
         }
     }
 
@@ -840,7 +840,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._subRadiosity = val;
         } else {
-            cpov.error("fatal", "subRadiosity must be a boolean", "GlobalSettings");
+            cpov.error("fatal", "subRadiosity must be a boolean", "GlobalSettings", this);
         }
     }
 
@@ -859,7 +859,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInts(val, 2, 2))) {
             this._subSamples = val;
         } else {
-            cpov.error("fatal", "subSamples must be an array of two integers.", "GlobalSettings");
+            cpov.error("fatal", "subSamples must be an array of two integers.", "GlobalSettings", this);
         }
     }
 
@@ -878,7 +878,7 @@ class GlobalSettings {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._subsurface = val;
         } else {
-            cpov.error("fatal", "subsurface must be a boolean.", "GlobalSettings");
+            cpov.error("fatal", "subsurface must be a boolean.", "GlobalSettings", this);
         }
     }
 
@@ -1180,7 +1180,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._allConsole = val;
         } else {
-            cpov.error("fatal", "allConsole must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "allConsole must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1197,7 +1197,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._allFile = val;
         } else {
-            cpov.error("fatal", "allFile must be either a boolean or a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "allFile must be either a boolean or a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1214,7 +1214,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._antialias = val;
         } else {
-            cpov.error("fatal", "antialias must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "antialias must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1231,7 +1231,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 9))) {
             this._antialiasDepth = val;
         } else {
-            cpov.error("fatal", "antialiasDepth must be an integer in the range 1-9.", "ImageOptions");
+            cpov.error("fatal", "antialiasDepth must be an integer in the range 1-9.", "ImageOptions", this);
         }
     }
 
@@ -1248,7 +1248,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val))) {
             this._antialiasGamma = val;
         } else {
-            cpov.error("fatal", "antialiasGamma must be a float.", "ImageOptions");
+            cpov.error("fatal", "antialiasGamma must be a float.", "ImageOptions", this);
         }
     }
 
@@ -1265,7 +1265,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._antialiasThreshold = val;
         } else {
-            cpov.error("fatal", "antialiasThreshold must be a float greater than or equal to zero.", "ImageOptions");
+            cpov.error("fatal", "antialiasThreshold must be a float greater than or equal to zero.", "ImageOptions", this);
         }
     }
 
@@ -1282,7 +1282,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._appendFile = val;
         } else {
-            cpov.error("fatal", "appendFile must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "appendFile must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1299,7 +1299,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 5, 16))) {
             this._bitsPerColor = val;
         } else {
-            cpov.error("fatal", "bitsPerColor must be an integer in the range 5-16.", "ImageOptions");
+            cpov.error("fatal", "bitsPerColor must be an integer in the range 5-16.", "ImageOptions", this);
         }
     }
 
@@ -1316,7 +1316,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._bounding = val;
         } else {
-            cpov.error("fatal", "bounding must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "bounding must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1333,7 +1333,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isWithin(val, 1, 2))) {
             this._boundingMethod = val;
         } else {
-            cpov.error("fatal", "boundingMethod must be either 1 or 2.", "ImageOptions");
+            cpov.error("fatal", "boundingMethod must be either 1 or 2.", "ImageOptions", this);
         }
     }
 
@@ -1350,7 +1350,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._boundingThreshold = val;
         } else {
-            cpov.error("fatal", "boundingThreshold must be an integer greater than or equal to zero.", "ImageOptions");
+            cpov.error("fatal", "boundingThreshold must be an integer greater than or equal to zero.", "ImageOptions", this);
         }
     }
 
@@ -1367,7 +1367,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val))) {
             this._bspBaseAccessCost = val;
         } else {
-            cpov.error("fatal", "bspBaseAccessCost must be a float.", "ImageOptions");
+            cpov.error("fatal", "bspBaseAccessCost must be a float.", "ImageOptions", this);
         }
     }
 
@@ -1384,7 +1384,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val))) {
             this._bspChildAccessCost = val;
         } else {
-            cpov.error("fatal", "bspChildAccessCost must be a float.", "ImageOptions");
+            cpov.error("fatal", "bspChildAccessCost must be a float.", "ImageOptions", this);
         }
     }
 
@@ -1401,7 +1401,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val))) {
             this._bspIsectCost = val;
         } else {
-            cpov.error("fatal", "bspIsectCost must be a float.", "ImageOptions");
+            cpov.error("fatal", "bspIsectCost must be a float.", "ImageOptions", this);
         }
     }
 
@@ -1418,7 +1418,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._bspMaxDepth = val;
         } else {
-            cpov.error("fatal", "bspMaxDepth must be an integer greater than zero.", "ImageOptions");
+            cpov.error("fatal", "bspMaxDepth must be an integer greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -1435,7 +1435,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val))) {
             this._bspMissChance = val;
         } else {
-            cpov.error("fatal", "bspMissChance must be a float.", "ImageOptions");
+            cpov.error("fatal", "bspMissChance must be a float.", "ImageOptions", this);
         }
     }
 
@@ -1452,7 +1452,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._debugConsole = val;
         } else {
-            cpov.error("fatal", "debugConsole must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "debugConsole must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1469,7 +1469,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._debugFile = val;
         } else {
-            cpov.error("fatal", "debugFile must be either a boolean or a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "debugFile must be either a boolean or a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1486,7 +1486,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._display = val;
         } else {
-            cpov.error("fatal", "display must be a boolean", "ImageOptions");
+            cpov.error("fatal", "display must be a boolean", "ImageOptions", this);
         }
     }
 
@@ -1503,7 +1503,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) || (cpov.isString(val) && val == 'sRGB'))) {
             this._displayGamma = val;
         } else {
-            cpov.error("fatal", "displayGamma must be either a float or the string 'sRGB'.", "ImageOptions");
+            cpov.error("fatal", "displayGamma must be either a float or the string 'sRGB'.", "ImageOptions", this);
         }
     }
 
@@ -1520,7 +1520,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._dither = val;
         } else {
-            cpov.error("fatal", "dither must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "dither must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1537,7 +1537,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isKey(val, cpov.ditherTypes))) {
             this._ditherMethod = val;
         } else {
-            cpov.error("fatal", "ditherMethod must be one of 'B2', 'B3', 'B4', 'D1', 'D2', or 'FS'.", "ImageOptions");
+            cpov.error("fatal", "ditherMethod must be one of 'B2', 'B3', 'B4', 'D1', 'D2', or 'FS'.", "ImageOptions", this);
         }
     }
 
@@ -1554,7 +1554,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._endColumn = val;
         } else {
-            cpov.error("fatal", "endColumn must be an integer greater than zero.", "ImageOptions");
+            cpov.error("fatal", "endColumn must be an integer greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -1571,7 +1571,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._endRow = val;
         } else {
-            cpov.error("fatal", "endRow must be an integer greater than zero.", "ImageOptions");
+            cpov.error("fatal", "endRow must be an integer greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -1588,7 +1588,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._exePath = val;
         } else {
-            cpov.error("fatal", "exePath must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "exePath must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1605,7 +1605,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._fatalConsole = val;
         } else {
-            cpov.error("fatal", "fatalConsole must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "fatalConsole must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1622,7 +1622,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._fatalErrorCommand = val;
         } else {
-            cpov.error("fatal", "fatalErrorCommand must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "fatalErrorCommand must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1639,7 +1639,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._fatalErrorReturn = val;
         } else {
-            cpov.error("fatal", "fatalErrorReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
+            cpov.error("fatal", "fatalErrorReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions", this);
         }
     }
 
@@ -1656,7 +1656,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._fatalFile = val;
         } else {
-            cpov.error("fatal", "fatalFile must be either a boolean or a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "fatalFile must be either a boolean or a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1673,7 +1673,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) || val === 'sRGB')) {
             this._fileGamma = val;
         } else {
-            cpov.error("fatal", "fileGamma must be either a float or the string 'sRGB'.", "ImageOptions");
+            cpov.error("fatal", "fileGamma must be either a float or the string 'sRGB'.", "ImageOptions", this);
         }
     }
 
@@ -1690,7 +1690,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._height = val;
         } else {
-            cpov.error("fatal", "height must be an integer greater than zero.", "ImageOptions");
+            cpov.error("fatal", "height must be an integer greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -1707,7 +1707,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._highReproducibility = val;
         } else {
-            cpov.error("fatal", "highReproducibility must be a boolean", "ImageOptions");
+            cpov.error("fatal", "highReproducibility must be a boolean", "ImageOptions", this);
         }
     }
 
@@ -1724,7 +1724,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._includeHeader = val;
         } else {
-            cpov.error("fatal", "includeHeader must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "includeHeader must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1741,7 +1741,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._inputFileName = val;
         } else {
-            cpov.error("fatal", "inputFileName must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "inputFileName must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1758,7 +1758,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._jitter = val;
         } else {
-            cpov.error("fatal", "jitter must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "jitter must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1775,7 +1775,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val))) {
             this._jitterAmount = val;
         } else {
-            cpov.error("fatal", "jitterAmount must be a float.", "ImageOptions");
+            cpov.error("fatal", "jitterAmount must be a float.", "ImageOptions", this);
         }
     }
 
@@ -1792,7 +1792,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isArrayOfNonEmptyStrings(val, 1, Infinity))) {
             this._libraryPath = val;
         } else {
-            cpov.error("fatal", "libraryPath must be an array of one or more non-empty strings.", "ImageOptions");
+            cpov.error("fatal", "libraryPath must be an array of one or more non-empty strings.", "ImageOptions", this);
         }
     }
 
@@ -1809,7 +1809,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._maxImageBufferMemory = val;
         } else {
-            cpov.error("fatal", "maxImageBufferMemory must be an integer greater than zero.", "ImageOptions");
+            cpov.error("fatal", "maxImageBufferMemory must be an integer greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -1826,7 +1826,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._outputAlpha = val;
         } else {
-            cpov.error("fatal", "outputAlpha must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "outputAlpha must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1843,7 +1843,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._outputFileName = val;
         } else {
-            cpov.error("fatal", "outputFileName must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "outputFileName must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1860,7 +1860,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isKey(val, cpov.outputFileTypes))) {
             this._outputFileType = val;
         } else {
-            cpov.error("fatal", "outputFileType must be one of 'B', 'C', 'E', 'H', 'J', 'N', 'P', 'S', or 'T'", "ImageOptions");
+            cpov.error("fatal", "outputFileType must be one of 'B', 'C', 'E', 'H', 'J', 'N', 'P', 'S', or 'T'", "ImageOptions", this);
         }
     }
 
@@ -1877,7 +1877,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._outputToFile = val;
         } else {
-            cpov.error("fatal", "outputToFile must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "outputToFile must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1894,7 +1894,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isString(val) && val.length == 1)) {
             this._palette = val;
         } else {
-            cpov.error("fatal", "palette must be a single character.", "ImageOptions");
+            cpov.error("fatal", "palette must be a single character.", "ImageOptions", this);
         }
     }
 
@@ -1911,7 +1911,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._pauseWhenDone = val;
         } else {
-            cpov.error("fatal", "pauseWhenDone must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "pauseWhenDone must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -1928,7 +1928,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._postSceneCommand = val;
         } else {
-            cpov.error("fatal", "postSceneCommand must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "postSceneCommand must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1945,7 +1945,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._postSceneReturn = val;
         } else {
-            cpov.error("fatal", "postSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
+            cpov.error("fatal", "postSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions", this);
         }
     }
 
@@ -1962,7 +1962,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._preSceneCommand = val;
         } else {
-            cpov.error("fatal", "preSceneCommand must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "preSceneCommand must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -1979,7 +1979,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._preSceneReturn = val;
         } else {
-            cpov.error("fatal", "preSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
+            cpov.error("fatal", "preSceneReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions", this);
         }
     }
 
@@ -1996,7 +1996,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isPowerOfTwo(val) && val > 0)) {
             this._previewEndSize = val;
         } else {
-            cpov.error("fatal", "previewEndSize must be an integer that is both a power of two and greater than zero", "ImageOptions");
+            cpov.error("fatal", "previewEndSize must be an integer that is both a power of two and greater than zero", "ImageOptions", this);
         }
     }
 
@@ -2013,7 +2013,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isPowerOfTwo(val) && val > 0)) {
             this._previewStartSize = val;
         } else {
-            cpov.error("fatal", "previewStartSize must be an integer that is both a power of two and greater than zero.", "ImageOptions");
+            cpov.error("fatal", "previewStartSize must be an integer that is both a power of two and greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -2030,7 +2030,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 0 && val <= 11)) {
             this._quality = val;
         } else {
-            cpov.error("fatal", "quality must be an integer in the range (0 - 11)", "ImageOptions");
+            cpov.error("fatal", "quality must be an integer in the range (0 - 11)", "ImageOptions", this);
         }
     }
 
@@ -2047,7 +2047,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityFileName = val;
         } else {
-            cpov.error("fatal", "radiosityFileName must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "radiosityFileName must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -2064,7 +2064,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityFromFile = val;
         } else {
-            cpov.error("fatal", "radiosityFromFile must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "radiosityFromFile must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -2081,7 +2081,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._radiosityToFile = val;
         } else {
-            cpov.error("fatal", "radiosityToFile must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "radiosityToFile must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -2098,7 +2098,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._radiosityVainPretrace = val;
         } else {
-            cpov.error("fatal", "radiosityVainPretrace must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "radiosityVainPretrace must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2115,7 +2115,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._removeBounds = val;
         } else {
-            cpov.error("fatal", "removeBounds must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "removeBounds must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2132,7 +2132,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 4)) {
             this._renderBlockSize = val;
         } else {
-            cpov.error("fatal", "renderBlockSize must be an integer greater than or equal to 4.", "ImageOptions");
+            cpov.error("fatal", "renderBlockSize must be an integer greater than or equal to 4.", "ImageOptions", this);
         }
     }
 
@@ -2149,7 +2149,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 1)) {
             this._renderBlockStep = val;
         } else {
-            cpov.error("fatal", "renderBlockStep must be an integer greater than or equal to 1.", "ImageOptions");
+            cpov.error("fatal", "renderBlockStep must be an integer greater than or equal to 1.", "ImageOptions", this);
         }
     }
 
@@ -2166,7 +2166,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._renderConsole = val;
         } else {
-            cpov.error("fatal", "renderConsole must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "renderConsole must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2183,7 +2183,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._renderFile = val;
         } else {
-            cpov.error("fatal", "renderFile must be a boolean or a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "renderFile must be a boolean or a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -2200,7 +2200,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 0 && val <= 5)) {
             this._renderPattern = val;
         } else {
-            cpov.error("fatal", "renderPattern must be an integer in the range (0 - 5).", "ImageOptions");
+            cpov.error("fatal", "renderPattern must be an integer in the range (0 - 5).", "ImageOptions", this);
         }
     }
 
@@ -2217,7 +2217,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 1 && val <= 2)) {
             this._samplingMethod = val;
         } else {
-            cpov.error("fatal", "samplingMethod must be an integer in the range (1 - 2).", "ImageOptions");
+            cpov.error("fatal", "samplingMethod must be an integer in the range (1 - 2).", "ImageOptions", this);
         }
     }
 
@@ -2234,7 +2234,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._splitUnions = val;
         } else {
-            cpov.error("fatal", "splitUnions must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "splitUnions must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2251,7 +2251,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._startColumn = val;
         } else {
-            cpov.error("fatal", "startColumn must be an integer greater than or equal to zero.", "ImageOptions");
+            cpov.error("fatal", "startColumn must be an integer greater than or equal to zero.", "ImageOptions", this);
         }
     }
 
@@ -2268,7 +2268,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._startRow = val;
         } else {
-            cpov.error("fatal", "startRow must be an integer greater than or equal to zero.", "ImageOptions");
+            cpov.error("fatal", "startRow must be an integer greater than or equal to zero.", "ImageOptions", this);
         }
     }
 
@@ -2285,7 +2285,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._statisticConsole = val;
         } else {
-            cpov.error("fatal", "statisticConsole must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "statisticConsole must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2302,7 +2302,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean || cpov.isNonEmptyString(val))) {
             this._statisticFile = val;
         } else {
-            cpov.error("fatal", "statisticFile must be a boolean or a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "statisticFile must be a boolean or a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -2319,7 +2319,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._testAbort = val;
         } else {
-            cpov.error("fatal", "testAbort must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "testAbort must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2336,7 +2336,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 1)) {
             this._testAbortCount = val;
         } else {
-            cpov.error("fatal", "testAbortCount must be an integer greater than or equal to one.", "ImageOptions");
+            cpov.error("fatal", "testAbortCount must be an integer greater than or equal to one.", "ImageOptions", this);
         }
     }
 
@@ -2353,7 +2353,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
             this._userAbortCommand = val;
         } else {
-            cpov.error("fatal", "userAbortCommand must be a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "userAbortCommand must be a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -2370,7 +2370,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isKey(val, cpov.returnActions))) {
             this._userAbortReturn = val;
         } else {
-            cpov.error("fatal", "userAbortReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions");
+            cpov.error("fatal", "userAbortReturn must be one of 'I', 'S', 'A', 'Q', 'U', 'F', '-I', '-S', '-A', '-Q', '-U', '-F', '!I', '!S', '!A', '!Q', '!U', or '!F'.", "ImageOptions", this);
         }
     }
 
@@ -2387,7 +2387,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._verbose = val;
         } else {
-            cpov.error("fatal", "verbose must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "verbose must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2404,7 +2404,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isString(val) && val.length == 1)) {
             this._videoMode = val;
         } else {
-            cpov.error("fatal", "videoMode must be a single character.", "ImageOptions");
+            cpov.error("fatal", "videoMode must be a single character.", "ImageOptions", this);
         }
     }
 
@@ -2421,7 +2421,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
             this._warningConsole = val;
         } else {
-            cpov.error("fatal", "warningConsole must be a boolean.", "ImageOptions");
+            cpov.error("fatal", "warningConsole must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2438,7 +2438,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val) || cpov.isNonEmptyString(val))) {
             this._warningFile = val;
         } else {
-            cpov.error("fatal", "warningFile must be a boolean or a non-empty string.", "ImageOptions");
+            cpov.error("fatal", "warningFile must be a boolean or a non-empty string.", "ImageOptions", this);
         }
     }
 
@@ -2455,7 +2455,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && cpov.isKey(val, cpov.warningLevels))) {
             this._warningLevel = val;
         } else {
-            cpov.error("fatal", "warningLevel must be one of 0, 5, or 10.", "ImageOptions");
+            cpov.error("fatal", "warningLevel must be one of 0, 5, or 10.", "ImageOptions", this);
         }
     }
 
@@ -2472,7 +2472,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
             this._width = val;
         } else {
-            cpov.error("fatal", "width must be an integer greater than zero.", "ImageOptions");
+            cpov.error("fatal", "width must be an integer greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -2489,7 +2489,7 @@ class ImageOptions {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val >= 1 && val <= 512)) {
             this._workThreads = val;
         } else {
-            cpov.error("fatal", "workThreads must be an integer in the range (1 - 512).", "ImageOptions");
+            cpov.error("fatal", "workThreads must be an integer in the range (1 - 512).", "ImageOptions", this);
         }
     }
 
@@ -2691,9 +2691,6 @@ class ImageOptions {
                     ini.push("BSP_MissChance=" + this.bspMissChance);
                     break;
     
-                case "constants":
-                    break;
-    
                 case "debugConsole":
                     if(this.allConsole === null)
                         ini.push("Debug_Console=" + this.debugConsole);
@@ -2734,7 +2731,7 @@ class ImageOptions {
                     break;
     
                 case "endColumn":
-                    if(this.startColumn !== null || this.endColumn <= this.startColumn)
+                    if(this.startColumn !== null && this.endColumn <= this.startColumn)
                         cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
     
                     ini.push("End_Column=" + this.endColumn);
@@ -2742,7 +2739,7 @@ class ImageOptions {
                     break;
     
                 case "endRow":
-                    if(this.startRow !== null || this.endRow <= this.startRow)
+                    if(this.startRow !== null && this.endRow <= this.startRow)
                         cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
     
                     ini.push("End_Row=" + this.endRow);
@@ -2987,7 +2984,7 @@ class ImageOptions {
                     break;
     
                 case "startColumn":
-                    if(this.endColumn !== null || this.endColumn <= this.startColumn)
+                    if(this.endColumn !== null && this.endColumn <= this.startColumn)
                         cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
     
                     ini.push("Start_Column=" + this.startColumn);
@@ -2995,7 +2992,7 @@ class ImageOptions {
                     break;
     
                 case "startRow":
-                    if(this.endRow !== null || this.endRow <= this.startRow)
+                    if(this.endRow !== null && this.endRow <= this.startRow)
                         cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
     
                     ini.push("Start_Row=" + this.startRow);
@@ -3122,7 +3119,6 @@ class Primitive {
         this._active           = null;
         this._baseTransform    = null;
         this._boundedBy        = null;
-        this._children         = null;
         this._clippedBy        = null;
         this._doubleIlluminate = null;
         this._finish           = null;
@@ -3152,7 +3148,7 @@ class Primitive {
         // Create serial number and register with cpov object
         
         cpov.objectSerial++;
-        this.serial = cpov.objectSerial;
+        this._serial = cpov.objectSerial;
         cpov.serialMap[this.serial] = this;
         
         
@@ -3177,7 +3173,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._active = val;
         } else {
-            cpov.error("fatal", "active must be a boolean.", "Primitive");
+            cpov.error("fatal", "active must be a boolean.", "Primitive", this);
         }
     }
 
@@ -3196,7 +3192,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Matrix'))) {
             this._baseTransform = val;
         } else {
-            cpov.error("fatal", "baseTransform must be a Matrix.", "Primitive");
+            cpov.error("fatal", "baseTransform must be a Matrix.", "Primitive", this);
         }
     }
 
@@ -3215,26 +3211,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._boundedBy = val;
         } else {
-            cpov.error("fatal", "boundedBy must be a Primitive.", "Primitive");
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get children() {
-        if(typeof this._children == "function")
-            return this._children(cpov, this);
-        else if(cpov.isSDLFunction(this._children))
-            return this._children.substr(1);
-        else
-            return this._children;
-    }
-
-    set children(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfSubclass(val, 'Primitive'))) {
-            this._children = val;
-        } else {
-            cpov.error("fatal", "children must be an array of Primitives.", "Primitive");
+            cpov.error("fatal", "boundedBy must be a Primitive.", "Primitive", this);
         }
     }
 
@@ -3253,7 +3230,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
             this._clippedBy = val;
         } else {
-            cpov.error("fatal", "clippedBy must be a Primitive.", "Primitive");
+            cpov.error("fatal", "clippedBy must be a Primitive.", "Primitive", this);
         }
     }
 
@@ -3272,7 +3249,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._doubleIlluminate = val;
         } else {
-            cpov.error("fatal", "doubleIlluminate must be a boolean.", "Primitive");
+            cpov.error("fatal", "doubleIlluminate must be a boolean.", "Primitive", this);
         }
     }
 
@@ -3291,7 +3268,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Finish'))) {
             this._finish = val;
         } else {
-            cpov.error("fatal", "finish must be a Finish.", "Primitive");
+            cpov.error("fatal", "finish must be a Finish.", "Primitive", this);
         }
     }
 
@@ -3310,7 +3287,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (typeof val == 'function')) {
             this._frameBegin = val;
         } else {
-            cpov.error("fatal", "frameBegin must be a JavaScript function.", "Primitive");
+            cpov.error("fatal", "frameBegin must be a JavaScript function.", "Primitive", this);
         }
     }
 
@@ -3329,7 +3306,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (typeof val == 'function')) {
             this._frameEnd = val;
         } else {
-            cpov.error("fatal", "frameEnd must be a JavaScript function.", "Primitive");
+            cpov.error("fatal", "frameEnd must be a JavaScript function.", "Primitive", this);
         }
     }
 
@@ -3348,7 +3325,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hollow = val;
         } else {
-            cpov.error("fatal", "hollow must be a boolean.", "Primitive");
+            cpov.error("fatal", "hollow must be a boolean.", "Primitive", this);
         }
     }
 
@@ -3367,7 +3344,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val) && cpov.isUnusedId(val, this))) {
             this._id = val;
         } else {
-            cpov.error("fatal", "id must be a unique, non-empty string.", "Primitive");
+            cpov.error("fatal", "id must be a unique, non-empty string.", "Primitive", this);
         }
     }
 
@@ -3386,7 +3363,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Interior'))) {
             this._interior = val;
         } else {
-            cpov.error("fatal", "interior must be an Interior.", "Primitive");
+            cpov.error("fatal", "interior must be an Interior.", "Primitive", this);
         }
     }
 
@@ -3405,7 +3382,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._inverse = val;
         } else {
-            cpov.error("fatal", "inverse must be a boolean.", "Primitive");
+            cpov.error("fatal", "inverse must be a boolean.", "Primitive", this);
         }
     }
 
@@ -3424,7 +3401,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Material'))) {
             this._material = val;
         } else {
-            cpov.error("fatal", "material must be a Material.", "Primitive");
+            cpov.error("fatal", "material must be a Material.", "Primitive", this);
         }
     }
 
@@ -3443,7 +3420,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noImage = val;
         } else {
-            cpov.error("fatal", "noImage must be a boolean.", "Primitive");
+            cpov.error("fatal", "noImage must be a boolean.", "Primitive", this);
         }
     }
 
@@ -3462,7 +3439,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noRadiosity = val;
         } else {
-            cpov.error("fatal", "noRadiosity must be a boolean.", "Primitive");
+            cpov.error("fatal", "noRadiosity must be a boolean.", "Primitive", this);
         }
     }
 
@@ -3481,7 +3458,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noReflection = val;
         } else {
-            cpov.error("fatal", "noReflection must be a boolean.", "Primitive");
+            cpov.error("fatal", "noReflection must be a boolean.", "Primitive", this);
         }
     }
 
@@ -3500,12 +3477,12 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._noShadow = val;
         } else {
-            cpov.error("fatal", "noShadow must be a boolean.", "Primitive");
+            cpov.error("fatal", "noShadow must be a boolean.", "Primitive", this);
         }
     }
 
     //--------------------------------------------------------------------------
-
+    
     get parent() {
         if(typeof this._parent == "function")
             return this._parent(cpov, this);
@@ -3514,14 +3491,11 @@ class Primitive {
         else
             return this._parent;
     }
-
+    
     set parent(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
-            this._parent = val;
-        } else {
-            cpov.error("fatal", "parent must be a Primitive.", "Primitive");
-        }
+        cpov.error("fatal", "parent is read-only.", "Primitive", this);
     }
+
 
     //--------------------------------------------------------------------------
 
@@ -3538,7 +3512,7 @@ class Primitive {
         if(true) { // FIXME
             this._photons = val;
         } else {
-            cpov.error("fatal", "photons", "Primitive");
+            cpov.error("fatal", "photons", "Primitive", this);
         }
     }
 
@@ -3557,12 +3531,12 @@ class Primitive {
         if(true) { // FIXME
             this._radiosity = val;
         } else {
-            cpov.error("fatal", "radiosity", "Primitive");
+            cpov.error("fatal", "radiosity", "Primitive", this);
         }
     }
 
     //--------------------------------------------------------------------------
-
+    
     get serial() {
         if(typeof this._serial == "function")
             return this._serial(cpov, this);
@@ -3571,14 +3545,11 @@ class Primitive {
         else
             return this._serial;
     }
-
+    
     set serial(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && cpov.isUnusedSerial(val, this))) {
-            this._serial = val;
-        } else {
-            cpov.error("fatal", "serial must be an integer.", "Primitive");
-        }
+        cpov.error("fatal", "The serial attribute is read-only.", "Primitive", this);
     }
+
 
     //--------------------------------------------------------------------------
 
@@ -3595,7 +3566,7 @@ class Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isString(val))) {
             this._texture = val;
         } else {
-            cpov.error("fatal", "texture must be a string (for now).", "Primitive");
+            cpov.error("fatal", "texture must be a string (for now).", "Primitive", this);
         }
     }
 
@@ -3666,7 +3637,6 @@ class Primitive {
         newObj.active           = this.active;          
         newObj.baseTransform    = this.baseTransform;   
         newObj.boundedBy        = this.boundedBy;       
-        newObj.children         = this.children;        
         newObj.clippedBy        = this.clippedBy;       
         newObj.doubleIlluminate = this.doubleIlluminate;
         newObj.finish           = this.finish;          
@@ -3712,7 +3682,7 @@ class Primitive {
         } else if(typeof val == "function") {
             cpov.error("warn", "Cannot mark a JavaScript function as a child. You're on your own here.", "Primitive.adopt", this);
         } else if(cpov.inheritsFrom(val, "Primitive")) {
-            val.parent = this;
+            val._parent = this;
         }
     }
 
@@ -3749,6 +3719,32 @@ class Primitive {
         delete cpov.serialMap(this.serial);
         if(this.id)
             delete cpov.idMap(this.id);
+    }
+
+
+    //------------------------------------------------------------------------------
+    // Called on formerly contained objects to set their parent attribute to null.
+    // Intelligently handles singletons, arrays, and functions.
+    //------------------------------------------------------------------------------
+    
+    disown(val) {
+        if(Array.isArray(val)) {
+            for(var i = 0; i < val.length; i++) {
+                this._adopt(val[i]);
+            }
+        } else {
+            this._adopt(val);
+        }
+    }
+    
+    _adopt(val) {
+        if(cpov.isSDLFunction(val)) {
+            cpov.error("warn", "Cannot mark an SDL function as a child. You're on your own here.", "Primitive.adopt", this);
+        } else if(typeof val == "function") {
+            cpov.error("warn", "Cannot mark a JavaScript function as a child. You're on your own here.", "Primitive.adopt", this);
+        } else if(cpov.inheritsFrom(val, "Primitive")) {
+            val._parent = null;
+        }
     }
 
 
@@ -3939,7 +3935,7 @@ class BicubicPatch extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && (val == 0 || val == 1))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be either 0 or 1.", "BicubicPatch");
+            cpov.error("fatal", "type must be either 0 or 1.", "BicubicPatch", this);
         }
     }
 
@@ -3958,7 +3954,7 @@ class BicubicPatch extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16))) {
             this._points = val;
         } else {
-            cpov.error("fatal", "points must be an array of 16 VectorXYZ.", "BicubicPatch");
+            cpov.error("fatal", "points must be an array of 16 VectorXYZ.", "BicubicPatch", this);
         }
     }
 
@@ -3977,7 +3973,7 @@ class BicubicPatch extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._uSteps = val;
         } else {
-            cpov.error("fatal", "uSteps must be an integer.", "BicubicPatch");
+            cpov.error("fatal", "uSteps must be an integer.", "BicubicPatch", this);
         }
     }
 
@@ -3996,7 +3992,7 @@ class BicubicPatch extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._vSteps = val;
         } else {
-            cpov.error("fatal", "vSteps must be an integer.", "BicubicPatch");
+            cpov.error("fatal", "vSteps must be an integer.", "BicubicPatch", this);
         }
     }
 
@@ -4015,7 +4011,7 @@ class BicubicPatch extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 1)) {
             this._flatness = val;
         } else {
-            cpov.error("fatal", "flatness must be a float in the unit interval (0.0 - 1.0).", "BicubicPatch");
+            cpov.error("fatal", "flatness must be a float in the unit interval (0.0 - 1.0).", "BicubicPatch", this);
         }
     }
 
@@ -4173,11 +4169,11 @@ class Blob extends Primitive {
     }
 
     set components(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, ['Sphere', 'Cylinder']) && val.length)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, ['Sphere', 'Cylinder'], 1, Infinity) && val.length)) {
             this._components = val;
             this.adopt(this._components);
         } else {
-            cpov.error("fatal", "components must be an array of Spheres and/or Cylinders.", "Blob");
+            cpov.error("fatal", "components must be an array of Spheres and/or Cylinders.", "Blob", this);
         }
     }
 
@@ -4196,7 +4192,7 @@ class Blob extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._threshold = val;
         } else {
-            cpov.error("fatal", "threshold", "Blob");
+            cpov.error("fatal", "threshold", "Blob", this);
         }
     }
 
@@ -4215,7 +4211,7 @@ class Blob extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Blob");
+            cpov.error("fatal", "sturm must be a boolean.", "Blob", this);
         }
     }
 
@@ -4234,7 +4230,7 @@ class Blob extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
         } else {
-            cpov.error("fatal", "hierarchy must be a boolean.", "Blob");
+            cpov.error("fatal", "hierarchy must be a boolean.", "Blob", this);
         }
     }
 
@@ -4391,7 +4387,7 @@ class Box extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner1 = val;
         } else {
-            cpov.error("fatal", "corner1 must be a VectorXYZ.", "Box");
+            cpov.error("fatal", "corner1 must be a VectorXYZ.", "Box", this);
         }
     }
 
@@ -4410,7 +4406,7 @@ class Box extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner2 = val;
         } else {
-            cpov.error("fatal", "corner2 must be a VectorXYZ.", "Box");
+            cpov.error("fatal", "corner2 must be a VectorXYZ.", "Box", this);
         }
     }
 
@@ -4486,7 +4482,7 @@ class Camera extends Primitive {
 
         this._type         = null;
         this._angle        = null;
-        this._apertureSize = null;
+        this._aperture     = null;
         this._blurSamples  = null;
         this._bokeh        = null;
         this._confidence   = null;
@@ -4563,10 +4559,10 @@ class Camera extends Primitive {
     }
 
     set type(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera']))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.cameraTypes))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera.", "Camera");
+            cpov.error("fatal", "type must be one of 'perspective', 'orthographic', 'fisheye', 'ultraWideAngle', 'omnimax', 'panoramic', 'spherical', 'cylinder', or 'meshCamera'.", "Camera", this);
         }
     }
 
@@ -4582,29 +4578,29 @@ class Camera extends Primitive {
     }
 
     set angle(val) {
-        if(cpov.isNullOrFunction(val) || (true)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0 && val <= 360)) {
             this._angle = val;
         } else {
-            cpov.error("fatal", "angle", "Camera");
+            cpov.error("fatal", "angle must be a float greater than zero and less than or equal to 360.", "Camera", this);
         }
     }
 
     //--------------------------------------------------------------------------
 
-    get apertureSize() {
-        if(typeof this._apertureSize == "function")
-            return this._apertureSize(cpov, this);
-        else if(cpov.isSDLFunction(this._apertureSize))
-            return this._apertureSize.substr(1);
+    get aperture() {
+        if(typeof this._aperture == "function")
+            return this._aperture(cpov, this);
+        else if(cpov.isSDLFunction(this._aperture))
+            return this._aperture.substr(1);
         else
-            return this._apertureSize;
+            return this._aperture;
     }
 
-    set apertureSize(val) {
+    set aperture(val) {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
-            this._apertureSize = val;
+            this._aperture = val;
         } else {
-            cpov.error("fatal", "apertureSize must be a float.", "Camera");
+            cpov.error("fatal", "apertureSize must be a float.", "Camera", this);
         }
     }
 
@@ -4623,7 +4619,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0)) {
             this._blurSamples = val;
         } else {
-            cpov.error("fatal", "blurSamples must be an array of two floats greater than or equal to zero.", "Camera");
+            cpov.error("fatal", "blurSamples must be an array of two floats greater than or equal to zero.", "Camera", this);
         }
     }
 
@@ -4642,7 +4638,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0)) {
             this._bokeh = val;
         } else {
-            cpov.error("fatal", "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>.", "Camera");
+            cpov.error("fatal", "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>.", "Camera", this);
         }
     }
 
@@ -4658,10 +4654,10 @@ class Camera extends Primitive {
     }
 
     set confidence(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val < 1)) {
             this._confidence = val;
         } else {
-            cpov.error("fatal", "confidence must be a float.", "Camera");
+            cpov.error("fatal", "confidence must be a float.", "Camera", this);
         }
     }
 
@@ -4680,7 +4676,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val > 0 && val < 5)) {
             this._cylinderType = val;
         } else {
-            cpov.error("fatal", "cylinderType must be an integer in the range (1 - 4).", "Camera");
+            cpov.error("fatal", "cylinderType must be an integer in the range (1 - 4).", "Camera", this);
         }
     }
 
@@ -4699,7 +4695,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._direction = val;
         } else {
-            cpov.error("fatal", "direction must be a VectorXYZ.", "Camera");
+            cpov.error("fatal", "direction must be a VectorXYZ.", "Camera", this);
         }
     }
 
@@ -4718,7 +4714,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._focalPoint = val;
         } else {
-            cpov.error("fatal", "focalPoint must be a VectorXYZ.", "Camera");
+            cpov.error("fatal", "focalPoint must be a VectorXYZ.", "Camera", this);
         }
     }
 
@@ -4737,7 +4733,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._location = val;
         } else {
-            cpov.error("fatal", "location must be a VectorXYZ.", "Camera");
+            cpov.error("fatal", "location must be a VectorXYZ.", "Camera", this);
         }
     }
 
@@ -4756,7 +4752,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._lookAt = val;
         } else {
-            cpov.error("fatal", "lookAt must be a VectorXYZ.", "Camera");
+            cpov.error("fatal", "lookAt must be a VectorXYZ.", "Camera", this);
         }
     }
 
@@ -4775,7 +4771,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._right = val;
         } else {
-            cpov.error("fatal", "right must be a VectorXYZ.", "Camera");
+            cpov.error("fatal", "right must be a VectorXYZ.", "Camera", this);
         }
     }
 
@@ -4794,7 +4790,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._sky = val;
         } else {
-            cpov.error("fatal", "sky must be a VectorXYZ.", "Camera");
+            cpov.error("fatal", "sky must be a VectorXYZ.", "Camera", this);
         }
     }
 
@@ -4813,7 +4809,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._up = val;
         } else {
-            cpov.error("fatal", "up must be a VectorXYZ.", "Camera");
+            cpov.error("fatal", "up must be a VectorXYZ.", "Camera", this);
         }
     }
 
@@ -4832,7 +4828,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._variance = val;
         } else {
-            cpov.error("fatal", "variance must be a float.", "Camera");
+            cpov.error("fatal", "variance must be a float.", "Camera", this);
         }
     }
 
@@ -4851,7 +4847,7 @@ class Camera extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._vertAngle = val;
         } else {
-            cpov.error("fatal", "vertAngle must be an integer.", "Camera");
+            cpov.error("fatal", "vertAngle must be an integer.", "Camera", this);
         }
     }
 
@@ -4866,7 +4862,7 @@ class Camera extends Primitive {
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.type         = this.type;        
         newObj.angle        = this.angle;       
-        newObj.apertureSize = this.apertureSize;
+        newObj.aperture     = this.aperture;    
         newObj.blurSamples  = this.blurSamples; 
         newObj.bokeh        = this.bokeh;       
         newObj.confidence   = this.confidence;  
@@ -4922,18 +4918,19 @@ class Camera extends Primitive {
             content.push(ppad + "angle " + this.angle);
         if(this.lookAt !== null)
             content.push(ppad + "look_at " + this.lookAt.toSDL());
-        if(this.blurSamples !== null)
-            content.push(ppad + "blur_samples " + this.blurSamples.join(", "));
-        if(this.apertureSize !== null)
-            content.push(ppad + "aperture_size " + this.apertureSize);
-        if(this.focalPoint !== null)
-            content.push(ppad + "focal_point " + this.focalPoint.toSDL());
-        if(this.confidence !== null)
-            content.push(ppad + "confidence " + this.confidence);
-        if(this.variance !== null)
-            content.push(ppad + "variance " + this.variance);
-        if(this.bokeh !== null)
-            content.push(ppad + "bokeh " + this.bokeh);
+        if(this.apertureSize !== null) {
+            content.push(ppad + "aperture " + this.aperture);
+            if(this.blurSamples !== null)
+                content.push(ppad + "blur_samples " + this.blurSamples.join(", "));
+            if(this.focalPoint !== null)
+                content.push(ppad + "focal_point " + this.focalPoint.toSDL());
+            if(this.confidence !== null)
+                content.push(ppad + "confidence " + this.confidence);
+            if(this.variance !== null)
+                content.push(ppad + "variance " + this.variance);
+            if(this.bokeh !== null)
+                content.push(ppad + "bokeh " + this.bokeh);
+        }
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
@@ -5042,7 +5039,7 @@ class Cone extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._basePoint = val;
         } else {
-            cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cone");
+            cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cone", this);
         }
     }
 
@@ -5061,7 +5058,7 @@ class Cone extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._baseRadius = val;
         } else {
-            cpov.error("fatal", "baseRadius must be a float.", "Cone");
+            cpov.error("fatal", "baseRadius must be a float.", "Cone", this);
         }
     }
 
@@ -5080,7 +5077,7 @@ class Cone extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._capPoint = val;
         } else {
-            cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cone");
+            cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cone", this);
         }
     }
 
@@ -5099,7 +5096,7 @@ class Cone extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._capRadius = val;
         } else {
-            cpov.error("fatal", "capRadius must be a float.", "Cone");
+            cpov.error("fatal", "capRadius must be a float.", "Cone", this);
         }
     }
 
@@ -5118,7 +5115,7 @@ class Cone extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
-            cpov.error("fatal", "open must be a boolean.", "Cone");
+            cpov.error("fatal", "open must be a boolean.", "Cone", this);
         }
     }
 
@@ -5265,7 +5262,7 @@ class Cubic extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 20, 20))) {
             this._coefficients = val;
         } else {
-            cpov.error("fatal", "coefficients must be an array of 20 floats.", "Cubic");
+            cpov.error("fatal", "coefficients must be an array of 20 floats.", "Cubic", this);
         }
     }
 
@@ -5284,7 +5281,7 @@ class Cubic extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Cubic");
+            cpov.error("fatal", "sturm must be a boolean.", "Cubic", this);
         }
     }
 
@@ -5431,7 +5428,7 @@ class Cylinder extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._basePoint = val;
         } else {
-            cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cylinder");
+            cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cylinder", this);
         }
     }
 
@@ -5450,7 +5447,7 @@ class Cylinder extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._capPoint = val;
         } else {
-            cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cylinder");
+            cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cylinder", this);
         }
     }
 
@@ -5469,7 +5466,7 @@ class Cylinder extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
         } else {
-            cpov.error("fatal", "radius must be a float.", "Cylinder");
+            cpov.error("fatal", "radius must be a float.", "Cylinder", this);
         }
     }
 
@@ -5488,7 +5485,7 @@ class Cylinder extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
-            cpov.error("fatal", "open must be a boolean.", "Cylinder");
+            cpov.error("fatal", "open must be a boolean.", "Cylinder", this);
         }
     }
 
@@ -5507,7 +5504,7 @@ class Cylinder extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._strength = val;
         } else {
-            cpov.error("fatal", "strength must be a float", "Cylinder");
+            cpov.error("fatal", "strength must be a float", "Cylinder", this);
         }
     }
 
@@ -5650,7 +5647,7 @@ class Difference extends Primitive {
             this._positiveComponent = val;
             this.adopt(this._positiveComponent);
         } else {
-            cpov.error("fatal", "positiveObject must be a Primitive.", "Difference");
+            cpov.error("fatal", "positiveObject must be a Primitive.", "Difference", this);
         }
     }
 
@@ -5670,7 +5667,7 @@ class Difference extends Primitive {
             this._negativeComponents = val;
             this.adopt(this._negativeComponents);
         } else {
-            cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference");
+            cpov.error("fatal", "negativeObjects must be an array of Primitives.", "Difference", this);
         }
     }
 
@@ -5817,7 +5814,7 @@ class Disc extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._center = val;
         } else {
-            cpov.error("fatal", "center must be a VectorXYZ.", "Disc");
+            cpov.error("fatal", "center must be a VectorXYZ.", "Disc", this);
         }
     }
 
@@ -5836,7 +5833,7 @@ class Disc extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal = val;
         } else {
-            cpov.error("fatal", "normal must be a VectorXYZ.", "Disc");
+            cpov.error("fatal", "normal must be a VectorXYZ.", "Disc", this);
         }
     }
 
@@ -5855,7 +5852,7 @@ class Disc extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
         } else {
-            cpov.error("fatal", "radius must be a float.", "Disc");
+            cpov.error("fatal", "radius must be a float.", "Disc", this);
         }
     }
 
@@ -5874,7 +5871,7 @@ class Disc extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._holeRadius = val;
         } else {
-            cpov.error("fatal", "holeRadius must be a float.", "Disc");
+            cpov.error("fatal", "holeRadius must be a float.", "Disc", this);
         }
     }
 
@@ -6023,7 +6020,7 @@ class HeightField extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val) || cpov.isString(val))) {
             this._source = val;
         } else {
-            cpov.error("fatal", "source", "HeightField");
+            cpov.error("fatal", "source", "HeightField", this);
         }
     }
 
@@ -6042,7 +6039,7 @@ class HeightField extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, cpov.hfTypes))) {
             this._hfType = val;
         } else {
-            cpov.error("fatal", "hfType must be one of exr, gif, hdr, iff, jpeg, pgm, png, pot, ppm, sys, tga, or tiff.", "HeightField");
+            cpov.error("fatal", "hfType must be one of exr, gif, hdr, iff, jpeg, pgm, png, pot, ppm, sys, tga, or tiff.", "HeightField", this);
         }
     }
 
@@ -6061,7 +6058,7 @@ class HeightField extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._smooth = val;
         } else {
-            cpov.error("fatal", "smooth must be a boolean.", "HeightField");
+            cpov.error("fatal", "smooth must be a boolean.", "HeightField", this);
         }
     }
 
@@ -6077,10 +6074,10 @@ class HeightField extends Primitive {
     }
 
     set waterLevel(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 0)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 1)) {
             this._waterLevel = val;
         } else {
-            cpov.error("fatal", "waterLevel must be a float in the unit interval (0.0 - 1.0).", "HeightField");
+            cpov.error("fatal", "waterLevel must be a float in the unit interval (0.0 - 1.0).", "HeightField", this);
         }
     }
 
@@ -6099,7 +6096,7 @@ class HeightField extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
         } else {
-            cpov.error("fatal", "hierarchy must be a boolean.", "HeightField");
+            cpov.error("fatal", "hierarchy must be a boolean.", "HeightField", this);
         }
     }
 
@@ -6118,7 +6115,7 @@ class HeightField extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) || val === "sRGB")) {
             this._gamma = val;
         } else {
-            cpov.error("fatal", "gamma must be a float.", "HeightField");
+            cpov.error("fatal", "gamma must be a float.", "HeightField", this);
         }
     }
 
@@ -6137,7 +6134,7 @@ class HeightField extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._premultiplied = val;
         } else {
-            cpov.error("fatal", "premult must be a boolean.", "HeightField");
+            cpov.error("fatal", "premult must be a boolean.", "HeightField", this);
         }
     }
 
@@ -6288,7 +6285,7 @@ class Intersection extends Primitive {
             this._components = val;
             this.adopt(this._components);
         } else {
-            cpov.error("fatal", "objects must be an array of Primitives.", "Intersection");
+            cpov.error("fatal", "objects must be an array of Primitives.", "Intersection", this);
         }
     }
 
@@ -6437,7 +6434,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._source = val;
         } else {
-            cpov.error("fatal", "source must be an SDL function.", "IsoSurface");
+            cpov.error("fatal", "source must be an SDL function.", "IsoSurface", this);
         }
     }
 
@@ -6456,7 +6453,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
             this._containedBy = val;
         } else {
-            cpov.error("fatal", "containedBy must be a Sphere or a Box.", "IsoSurface");
+            cpov.error("fatal", "containedBy must be a Sphere or a Box.", "IsoSurface", this);
         }
     }
 
@@ -6475,7 +6472,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._threshold = val;
         } else {
-            cpov.error("fatal", "threshold", "IsoSurface");
+            cpov.error("fatal", "threshold", "IsoSurface", this);
         }
     }
 
@@ -6494,7 +6491,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._accuracy = val;
         } else {
-            cpov.error("fatal", "accuracy must be a float.", "IsoSurface");
+            cpov.error("fatal", "accuracy must be a float.", "IsoSurface", this);
         }
     }
 
@@ -6513,7 +6510,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._maxGradient = val;
         } else {
-            cpov.error("fatal", "maxGradient must be a float.", "IsoSurface");
+            cpov.error("fatal", "maxGradient must be a float.", "IsoSurface", this);
         }
     }
 
@@ -6532,7 +6529,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 3, 3))) {
             this._evaluate = val;
         } else {
-            cpov.error("fatal", "evaluate must be an array of three floats.", "IsoSurface");
+            cpov.error("fatal", "evaluate must be an array of three floats.", "IsoSurface", this);
         }
     }
 
@@ -6551,7 +6548,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
-            cpov.error("fatal", "open must be a boolean.", "IsoSurface");
+            cpov.error("fatal", "open must be a boolean.", "IsoSurface", this);
         }
     }
 
@@ -6570,7 +6567,7 @@ class IsoSurface extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) || (typeof val == 'string' && val == 'allIntersections'))) {
             this._maxTrace = val;
         } else {
-            cpov.error("fatal", "maxTrace must be either an integer or 'allIntersections'.", "IsoSurface");
+            cpov.error("fatal", "maxTrace must be either an integer or 'allIntersections'.", "IsoSurface", this);
         }
     }
 
@@ -6737,7 +6734,7 @@ class JuliaFractal extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInArray(val, cpov.juliaFractalTypes))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be one of hypercomplex:acos, hypercomplex:acosh, hypercomplex:asin, hypercomplex:atan, hypercomplex:atanh, hypercomplex:cos, hypercomplex:cosh, hypercomplex:cube, hypercomplex:exp, hypercomplex:ln, hypercomplex:pwr, hypercomplex:reciprocal, hypercomplex:sin, hypercomplex:sinh, hypercomplex:sqr, hypercomplex:tan, hypercomplex:tanh, quaternion:cube, or quaternion:sqr.", "JuliaFractal");
+            cpov.error("fatal", "type must be one of hypercomplex:acos, hypercomplex:acosh, hypercomplex:asin, hypercomplex:atan, hypercomplex:atanh, hypercomplex:cos, hypercomplex:cosh, hypercomplex:cube, hypercomplex:exp, hypercomplex:ln, hypercomplex:pwr, hypercomplex:reciprocal, hypercomplex:sin, hypercomplex:sinh, hypercomplex:sqr, hypercomplex:tan, hypercomplex:tanh, quaternion:cube, or quaternion:sqr.", "JuliaFractal", this);
         }
     }
 
@@ -6756,7 +6753,7 @@ class JuliaFractal extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val)))) {
             this._juliaParam = val;
         } else {
-            cpov.error("fatal", "juliaParam must be a VectorXYZW.", "JuliaFractal");
+            cpov.error("fatal", "juliaParam must be a VectorXYZW.", "JuliaFractal", this);
         }
     }
 
@@ -6775,7 +6772,7 @@ class JuliaFractal extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val)))) {
             this._power = val;
         } else {
-            cpov.error("fatal", "power must be a VectorXY.", "JuliaFractal");
+            cpov.error("fatal", "power must be a VectorXY.", "JuliaFractal", this);
         }
     }
 
@@ -6794,7 +6791,7 @@ class JuliaFractal extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._maxIter = val;
         } else {
-            cpov.error("fatal", "maxIter must be an integer.", "JuliaFractal");
+            cpov.error("fatal", "maxIter must be an integer.", "JuliaFractal", this);
         }
     }
 
@@ -6813,7 +6810,7 @@ class JuliaFractal extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._precision = val;
         } else {
-            cpov.error("fatal", "precision must be an integer.", "JuliaFractal");
+            cpov.error("fatal", "precision must be an integer.", "JuliaFractal", this);
         }
     }
 
@@ -6832,7 +6829,7 @@ class JuliaFractal extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val)))) {
             this._slice = val;
         } else {
-            cpov.error("fatal", "slice must be a VectorXYZW.", "JuliaFractal");
+            cpov.error("fatal", "slice must be a VectorXYZW.", "JuliaFractal", this);
         }
     }
 
@@ -6851,7 +6848,7 @@ class JuliaFractal extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._distance = val;
         } else {
-            cpov.error("fatal", "distance must be a float.", "JuliaFractal");
+            cpov.error("fatal", "distance must be a float.", "JuliaFractal", this);
         }
     }
 
@@ -6899,7 +6896,15 @@ class JuliaFractal extends Primitive {
         content.push(pad + "julia_fractal {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.juliaParam.toSDL());
     	content.push(ppad + parts[0]); // algebra type
-    	content.push(ppad + parts[1]); // function type
+        if(this.type == "hypercomplex:pwr") {
+            if(this.power === null) {
+                cpov.error("fatal", "For JuliaFractal type \"hypercomplex:pwr\", power must be defined.", "JuliaFractal.toSDL", this);
+            } else {
+                content.push(ppad + "pwr(" + this.power.x + ", " + this.power.y + ")");
+            }
+        } else {
+        	content.push(ppad + parts[1]); // function type
+        }
     	if(this.maxIter !== null)
     		content.push(ppad + "max_iteration " + this.maxIter);
     	if(this.precision !== null)
@@ -7012,7 +7017,7 @@ class Lathe extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.splineTypes))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be one of 'bezierSpline', 'cubicSpline', 'linearSpline', or 'quadraticSpline'.", "Lathe");
+            cpov.error("fatal", "type must be one of 'bezierSpline', 'cubicSpline', 'linearSpline', or 'quadraticSpline'.", "Lathe", this);
         }
     }
 
@@ -7031,7 +7036,7 @@ class Lathe extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity))) {
             this._points = val;
         } else {
-            cpov.error("fatal", "points must be an array of two or more VectorXY.", "Lathe");
+            cpov.error("fatal", "points must be an array of two or more VectorXY.", "Lathe", this);
         }
     }
 
@@ -7050,7 +7055,7 @@ class Lathe extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Lathe");
+            cpov.error("fatal", "sturm must be a boolean.", "Lathe", this);
         }
     }
 
@@ -7226,7 +7231,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._location = val;
         } else {
-            cpov.error("fatal", "location must be a VectorXYZ.", "LightSource");
+            cpov.error("fatal", "location must be a VectorXYZ.", "LightSource", this);
         }
     }
 
@@ -7245,7 +7250,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color') || (val = cpov.convertToVector('Color', val)))) {
             this._color = val;
         } else {
-            cpov.error("fatal", "color must be a Color.", "LightSource");
+            cpov.error("fatal", "color must be a Color.", "LightSource", this);
         }
     }
 
@@ -7264,7 +7269,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
             this._adaptive = val;
         } else {
-            cpov.error("fatal", "adaptive must be a float greater than or equal to zero.", "LightSource");
+            cpov.error("fatal", "adaptive must be a float greater than or equal to zero.", "LightSource", this);
         }
     }
 
@@ -7283,7 +7288,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._areaIllumination = val;
         } else {
-            cpov.error("fatal", "areaIllumination must be a boolean.", "LightSource");
+            cpov.error("fatal", "areaIllumination must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7302,7 +7307,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._areaLight = val;
         } else {
-            cpov.error("fatal", "areaLight must be a boolean.", "LightSource");
+            cpov.error("fatal", "areaLight must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7321,7 +7326,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._axis1 = val;
         } else {
-            cpov.error("fatal", "axis1 must be a VectorXYZ.", "LightSource");
+            cpov.error("fatal", "axis1 must be a VectorXYZ.", "LightSource", this);
         }
     }
 
@@ -7340,7 +7345,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._axis2 = val;
         } else {
-            cpov.error("fatal", "axis2 must be a VectorXYZ.", "LightSource");
+            cpov.error("fatal", "axis2 must be a VectorXYZ.", "LightSource", this);
         }
     }
 
@@ -7359,7 +7364,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._circular = val;
         } else {
-            cpov.error("fatal", "circular must be a boolean.", "LightSource");
+            cpov.error("fatal", "circular must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7378,7 +7383,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0.)) {
             this._fadeDistance = val;
         } else {
-            cpov.error("fatal", "fadeDistance must be a float greater than zero.", "LightSource");
+            cpov.error("fatal", "fadeDistance must be a float greater than zero.", "LightSource", this);
         }
     }
 
@@ -7397,7 +7402,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._fadePower = val;
         } else {
-            cpov.error("fatal", "fadePower must be a float.", "LightSource");
+            cpov.error("fatal", "fadePower must be a float.", "LightSource", this);
         }
     }
 
@@ -7416,7 +7421,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val < 90.)) {
             this._falloff = val;
         } else {
-            cpov.error("fatal", "falloff must be a float less than 90.", "LightSource");
+            cpov.error("fatal", "falloff must be a float less than 90.", "LightSource", this);
         }
     }
 
@@ -7435,7 +7440,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._jitter = val;
         } else {
-            cpov.error("fatal", "jitter must be a boolean.", "LightSource");
+            cpov.error("fatal", "jitter must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7455,7 +7460,7 @@ class LightSource extends Primitive {
             this._looksLike = val;
             this.adopt(this._looksLike);
         } else {
-            cpov.error("fatal", "looksLike must be a Primitive.", "LightSource");
+            cpov.error("fatal", "looksLike must be a Primitive.", "LightSource", this);
         }
     }
 
@@ -7474,7 +7479,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._mediaAttenuation = val;
         } else {
-            cpov.error("fatal", "mediaAttenuation must be a boolean.", "LightSource");
+            cpov.error("fatal", "mediaAttenuation must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7493,7 +7498,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._mediaInteraction = val;
         } else {
-            cpov.error("fatal", "mediaInteraction must be a boolean.", "LightSource");
+            cpov.error("fatal", "mediaInteraction must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7512,7 +7517,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._orient = val;
         } else {
-            cpov.error("fatal", "orient must be a boolean.", "LightSource");
+            cpov.error("fatal", "orient must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7531,7 +7536,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._parallel = val;
         } else {
-            cpov.error("fatal", "parallel must be a boolean.", "LightSource");
+            cpov.error("fatal", "parallel must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7550,7 +7555,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._pointAt = val;
         } else {
-            cpov.error("fatal", "pointAt must be a VectorXYZ.", "LightSource");
+            cpov.error("fatal", "pointAt must be a VectorXYZ.", "LightSource", this);
         }
     }
 
@@ -7570,7 +7575,7 @@ class LightSource extends Primitive {
             this._projectedThrough = val;
             this.adopt(this._projectedThrough);
         } else {
-            cpov.error("fatal", "projectedThrough", "LightSource");
+            cpov.error("fatal", "projectedThrough", "LightSource", this);
         }
     }
 
@@ -7589,7 +7594,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val < 90)) {
             this._radius = val;
         } else {
-            cpov.error("fatal", "radius must be a float less than 90.", "LightSource");
+            cpov.error("fatal", "radius must be a float less than 90.", "LightSource", this);
         }
     }
 
@@ -7608,7 +7613,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._shadowless = val;
         } else {
-            cpov.error("fatal", "shadowless must be a boolean.", "LightSource");
+            cpov.error("fatal", "shadowless must be a boolean.", "LightSource", this);
         }
     }
 
@@ -7627,7 +7632,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._size1 = val;
         } else {
-            cpov.error("fatal", "size1 must be a float greater than zero.", "LightSource");
+            cpov.error("fatal", "size1 must be a float greater than zero.", "LightSource", this);
         }
     }
 
@@ -7646,7 +7651,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._size2 = val;
         } else {
-            cpov.error("fatal", "size2 must be a float greater than zero.", "LightSource");
+            cpov.error("fatal", "size2 must be a float greater than zero.", "LightSource", this);
         }
     }
 
@@ -7665,7 +7670,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0 && val <= 100)) {
             this._tightness = val;
         } else {
-            cpov.error("fatal", "tightness must be a float in the range (0 - 100).", "LightSource");
+            cpov.error("fatal", "tightness must be a float in the range (0 - 100).", "LightSource", this);
         }
     }
 
@@ -7684,7 +7689,7 @@ class LightSource extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isString(val) && (val == 'spotlight' || val == 'cylinder'))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be either 'spotlight' or 'cylinder'.", "LightSource");
+            cpov.error("fatal", "type must be either 'spotlight' or 'cylinder'.", "LightSource", this);
         }
     }
 
@@ -7886,7 +7891,7 @@ class Merge extends Primitive {
             this._components = val;
             this.adopt(this._components);
         } else {
-            cpov.error("fatal", "objects must be an array of Primitives.", "Merge");
+            cpov.error("fatal", "objects must be an array of Primitives.", "Merge", this);
         }
     }
 
@@ -8030,7 +8035,7 @@ class Mesh extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'Triangle', 1, Infinity))) {
             this._triangles = val;
         } else {
-            cpov.error("fatal", "triangles", "Mesh");
+            cpov.error("fatal", "triangles", "Mesh", this);
         }
     }
 
@@ -8049,7 +8054,7 @@ class Mesh extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._insideVector = val;
         } else {
-            cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh");
+            cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh", this);
         }
     }
 
@@ -8068,7 +8073,7 @@ class Mesh extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._hierarchy = val;
         } else {
-            cpov.error("fatal", "hierarchy must be a boolean.", "Mesh");
+            cpov.error("fatal", "hierarchy must be a boolean.", "Mesh", this);
         }
     }
 
@@ -8217,7 +8222,7 @@ class Ovus extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._bottomRadius = val;
         } else {
-            cpov.error("fatal", "bottomRadius must be a float.", "Ovus");
+            cpov.error("fatal", "bottomRadius must be a float.", "Ovus", this);
         }
     }
 
@@ -8236,7 +8241,7 @@ class Ovus extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._topRadius = val;
         } else {
-            cpov.error("fatal", "topRadius must be a float.", "Ovus");
+            cpov.error("fatal", "topRadius must be a float.", "Ovus", this);
         }
     }
 
@@ -8388,7 +8393,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._funcX = val;
         } else {
-            cpov.error("fatal", "funcX must be an SDL function.", "Parametric");
+            cpov.error("fatal", "funcX must be an SDL function.", "Parametric", this);
         }
     }
 
@@ -8407,7 +8412,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._funcY = val;
         } else {
-            cpov.error("fatal", "funcY must be an SDL function.", "Parametric");
+            cpov.error("fatal", "funcY must be an SDL function.", "Parametric", this);
         }
     }
 
@@ -8426,7 +8431,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isSDLFunction(val))) {
             this._funcZ = val;
         } else {
-            cpov.error("fatal", "funcZ must be an SDL function.", "Parametric");
+            cpov.error("fatal", "funcZ must be an SDL function.", "Parametric", this);
         }
     }
 
@@ -8445,7 +8450,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val)))) {
             this._uv1 = val;
         } else {
-            cpov.error("fatal", "uv1 must be a VectorUV.", "Parametric");
+            cpov.error("fatal", "uv1 must be a VectorUV.", "Parametric", this);
         }
     }
 
@@ -8464,7 +8469,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val)))) {
             this._uv2 = val;
         } else {
-            cpov.error("fatal", "uv2 must be a VectorUV.", "Parametric");
+            cpov.error("fatal", "uv2 must be a VectorUV.", "Parametric", this);
         }
     }
 
@@ -8484,7 +8489,7 @@ class Parametric extends Primitive {
             this._containedBy = val;
             this.adopt(this._containedBy);
         } else {
-            cpov.error("fatal", "containedBy must be a Sphere or Box.", "Parametric");
+            cpov.error("fatal", "containedBy must be a Sphere or Box.", "Parametric", this);
         }
     }
 
@@ -8503,7 +8508,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._maxGradient = val;
         } else {
-            cpov.error("fatal", "maxGradient must be a float.", "Parametric");
+            cpov.error("fatal", "maxGradient must be a float.", "Parametric", this);
         }
     }
 
@@ -8522,7 +8527,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._accuracy = val;
         } else {
-            cpov.error("fatal", "accuracy must be a float.", "Parametric");
+            cpov.error("fatal", "accuracy must be a float.", "Parametric", this);
         }
     }
 
@@ -8541,7 +8546,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._precomputeDepth = val;
         } else {
-            cpov.error("fatal", "precomputeDepth must be an integer.", "Parametric");
+            cpov.error("fatal", "precomputeDepth must be an integer.", "Parametric", this);
         }
     }
 
@@ -8560,7 +8565,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeX = val;
         } else {
-            cpov.error("fatal", "precomputeX must be a boolean.", "Parametric");
+            cpov.error("fatal", "precomputeX must be a boolean.", "Parametric", this);
         }
     }
 
@@ -8579,7 +8584,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeY = val;
         } else {
-            cpov.error("fatal", "precomputeY must be a boolean.", "Parametric");
+            cpov.error("fatal", "precomputeY must be a boolean.", "Parametric", this);
         }
     }
 
@@ -8598,7 +8603,7 @@ class Parametric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._precomputeZ = val;
         } else {
-            cpov.error("fatal", "precomputeZ must be a boolean.", "Parametric");
+            cpov.error("fatal", "precomputeZ must be a boolean.", "Parametric", this);
         }
     }
 
@@ -8655,15 +8660,19 @@ class Parametric extends Primitive {
             content.push(ppad + "max_gradient " + this.maxGradient);
         if(this.accuracy !== null)
             content.push(ppad + "accuracy " + this.accuracy);
-        if(this.precomputeDepth && (this.precomputeX || this.precomputeY || this.precomputeZ)) {
-            var items = [ ];
-            if(this.precomputeX)
-                items.push("x");
-            if(this.precomputeY)
-                items.push("y");
-            if(this.precomputeZ)
-                items.push("z");
-            content.push(ppad + "precompute " + this.precomputeDepth + " " + items.join(", "));
+        if(this.precomputeDepth) {
+            if(this.precomputeX || this.precomputeY || this.precomputeZ) {
+                var items = [ ];
+                if(this.precomputeX)
+                    items.push("x");
+                if(this.precomputeY)
+                    items.push("y");
+                if(this.precomputeZ)
+                    items.push("z");
+                content.push(ppad + "precompute " + this.precomputeDepth + " " + items.join(", "));
+            } else {
+                cpov.error("fatal", "When using precomputeDepth, at least one of precomputeX, precomputeY, or precomputeZ must also be defined.", "Parametric.toSDL", this);
+            }
         }
     
     	var superSDL = super.toSDL(stops + 1);
@@ -8771,7 +8780,7 @@ class Plane extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal = val;
         } else {
-            cpov.error("fatal", "normal must be a VectorXYZ.", "Plane");
+            cpov.error("fatal", "normal must be a VectorXYZ.", "Plane", this);
         }
     }
 
@@ -8790,7 +8799,7 @@ class Plane extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._distance = val;
         } else {
-            cpov.error("fatal", "distance must be a float.", "Plane");
+            cpov.error("fatal", "distance must be a float.", "Plane", this);
         }
     }
 
@@ -8934,7 +8943,7 @@ class Poly extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 2 && val <= 35)) {
             this._order = val;
         } else {
-            cpov.error("fatal", "order must be an integer in the range (2 - 35).", "Poly");
+            cpov.error("fatal", "order must be an integer in the range (2 - 35).", "Poly", this);
         }
     }
 
@@ -8953,7 +8962,7 @@ class Poly extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 1, Infinity))) {
             this._coefficients = val;
         } else {
-            cpov.error("fatal", "coefficients must be an array of floats.", "Poly");
+            cpov.error("fatal", "coefficients must be an array of floats.", "Poly", this);
         }
     }
 
@@ -8972,7 +8981,7 @@ class Poly extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Poly");
+            cpov.error("fatal", "sturm must be a boolean.", "Poly", this);
         }
     }
 
@@ -9123,7 +9132,7 @@ class Polygon extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity))) {
             this._points = val;
         } else {
-            cpov.error("fatal", "points must be an array of three or more VectorXY.", "Polygon");
+            cpov.error("fatal", "points must be an array of three or more VectorXY.", "Polygon", this);
         }
     }
 
@@ -9274,7 +9283,7 @@ class Polynomial extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isInt(val))) {
             this._order = val;
         } else {
-            cpov.error("fatal", "order must be an integer.", "Polynomial");
+            cpov.error("fatal", "order must be an integer.", "Polynomial", this);
         }
     }
 
@@ -9293,7 +9302,7 @@ class Polynomial extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity))) {
             this._coefficients = val;
         } else {
-            cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial");
+            cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial", this);
         }
     }
 
@@ -9312,7 +9321,7 @@ class Polynomial extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Polynomial");
+            cpov.error("fatal", "sturm must be a boolean.", "Polynomial", this);
         }
     }
 
@@ -9471,7 +9480,7 @@ class Prism extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.prismTypes))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be one of 'bezierSpline', 'conicSweep', 'cubicSpline', 'linearSpline', 'linearSweep', or 'quadraticSpline'.", "Prism");
+            cpov.error("fatal", "type must be one of 'bezierSpline', 'conicSweep', 'cubicSpline', 'linearSpline', 'linearSweep', or 'quadraticSpline'.", "Prism", this);
         }
     }
 
@@ -9490,7 +9499,7 @@ class Prism extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._height1 = val;
         } else {
-            cpov.error("fatal", "height1 must be a float.", "Prism");
+            cpov.error("fatal", "height1 must be a float.", "Prism", this);
         }
     }
 
@@ -9509,7 +9518,7 @@ class Prism extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._height2 = val;
         } else {
-            cpov.error("fatal", "height2 must be a float", "Prism");
+            cpov.error("fatal", "height2 must be a float", "Prism", this);
         }
     }
 
@@ -9528,7 +9537,7 @@ class Prism extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity))) {
             this._points = val;
         } else {
-            cpov.error("fatal", "points must be an array of VectorXY.", "Prism");
+            cpov.error("fatal", "points must be an array of VectorXY.", "Prism", this);
         }
     }
 
@@ -9547,7 +9556,7 @@ class Prism extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
-            cpov.error("fatal", "open must be a boolean.", "Prism");
+            cpov.error("fatal", "open must be a boolean.", "Prism", this);
         }
     }
 
@@ -9566,7 +9575,7 @@ class Prism extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Prism");
+            cpov.error("fatal", "sturm must be a boolean.", "Prism", this);
         }
     }
 
@@ -9725,7 +9734,7 @@ class Quadric extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 10, 10))) {
             this._coefficients = val;
         } else {
-            cpov.error("fatal", "coefficients must be an array of 10 floats.", "Quadric");
+            cpov.error("fatal", "coefficients must be an array of 10 floats.", "Quadric", this);
         }
     }
 
@@ -9872,7 +9881,7 @@ class Quartic extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 35, 35))) {
             this._coefficients = val;
         } else {
-            cpov.error("fatal", "coefficients must be an array of 35 floats.", "Quartic");
+            cpov.error("fatal", "coefficients must be an array of 35 floats.", "Quartic", this);
         }
     }
 
@@ -9891,7 +9900,7 @@ class Quartic extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Quartic");
+            cpov.error("fatal", "sturm must be a boolean.", "Quartic", this);
         }
     }
 
@@ -10036,7 +10045,7 @@ class Sphere extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._center = val;
         } else {
-            cpov.error("fatal", "center must be a VectorXYZ.", "Sphere");
+            cpov.error("fatal", "center must be a VectorXYZ.", "Sphere", this);
         }
     }
 
@@ -10055,7 +10064,7 @@ class Sphere extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._radius = val;
         } else {
-            cpov.error("fatal", "radius must be a float.", "Sphere");
+            cpov.error("fatal", "radius must be a float.", "Sphere", this);
         }
     }
 
@@ -10074,7 +10083,7 @@ class Sphere extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._strength = val;
         } else {
-            cpov.error("fatal", "strength must be a float.", "Sphere");
+            cpov.error("fatal", "strength must be a float.", "Sphere", this);
         }
     }
 
@@ -10226,7 +10235,7 @@ class SphereSweep extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.internalSplineTypes))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be one of 'linearSpline', 'bezierSpline', or 'cubicSpline'.", "SphereSweep");
+            cpov.error("fatal", "type must be one of 'linearSpline', 'bezierSpline', or 'cubicSpline'.", "SphereSweep", this);
         }
     }
 
@@ -10246,7 +10255,7 @@ class SphereSweep extends Primitive {
             this._spheres = val;
             this.adopt(this._spheres);
         } else {
-            cpov.error("fatal", "spheres must be an an array of two or more Sphere.", "SphereSweep");
+            cpov.error("fatal", "spheres must be an an array of two or more Sphere.", "SphereSweep", this);
         }
     }
 
@@ -10265,7 +10274,7 @@ class SphereSweep extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._tolerance = val;
         } else {
-            cpov.error("fatal", "tolerance must be a float.", "SphereSweep");
+            cpov.error("fatal", "tolerance must be a float.", "SphereSweep", this);
         }
     }
 
@@ -10421,7 +10430,7 @@ class Superellipsoid extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._e = val;
         } else {
-            cpov.error("fatal", "e must be a float.", "Superellipsoid");
+            cpov.error("fatal", "e must be a float.", "Superellipsoid", this);
         }
     }
 
@@ -10440,7 +10449,7 @@ class Superellipsoid extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._n = val;
         } else {
-            cpov.error("fatal", "n must be a float.", "Superellipsoid");
+            cpov.error("fatal", "n must be a float.", "Superellipsoid", this);
         }
     }
 
@@ -10583,7 +10592,7 @@ class Sor extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity))) {
             this._points = val;
         } else {
-            cpov.error("fatal", "points must be an array of two or more VectorXY.", "Sor");
+            cpov.error("fatal", "points must be an array of two or more VectorXY.", "Sor", this);
         }
     }
 
@@ -10602,7 +10611,7 @@ class Sor extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._open = val;
         } else {
-            cpov.error("fatal", "open must be a boolean.", "Sor");
+            cpov.error("fatal", "open must be a boolean.", "Sor", this);
         }
     }
 
@@ -10621,7 +10630,7 @@ class Sor extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Sor");
+            cpov.error("fatal", "sturm must be a boolean.", "Sor", this);
         }
     }
 
@@ -10774,7 +10783,7 @@ class Text extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isKey(val, cpov.fontTypes))) {
             this._fontType = val;
         } else {
-            cpov.error("fatal", "fontType must be one of 'ttf', or 'ttc'.", "Text");
+            cpov.error("fatal", "fontType must be one of 'ttf', or 'ttc'.", "Text", this);
         }
     }
 
@@ -10793,7 +10802,7 @@ class Text extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._font = val;
         } else {
-            cpov.error("fatal", "font must be a non-empty string.", "Text");
+            cpov.error("fatal", "font must be a non-empty string.", "Text", this);
         }
     }
 
@@ -10812,7 +10821,7 @@ class Text extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isNonEmptyString(val))) {
             this._displayText = val;
         } else {
-            cpov.error("fatal", "displayText must be a non-empty string.", "Text");
+            cpov.error("fatal", "displayText must be a non-empty string.", "Text", this);
         }
     }
 
@@ -10831,7 +10840,7 @@ class Text extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._thickness = val;
         } else {
-            cpov.error("fatal", "thickness must be a float.", "Text");
+            cpov.error("fatal", "thickness must be a float.", "Text", this);
         }
     }
 
@@ -10850,7 +10859,7 @@ class Text extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._offset = val;
         } else {
-            cpov.error("fatal", "offset must be a float.", "Text");
+            cpov.error("fatal", "offset must be a float.", "Text", this);
         }
     }
 
@@ -10999,7 +11008,7 @@ class Torus extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._majorRadius = val;
         } else {
-            cpov.error("fatal", "majorRadius must be a float.", "Torus");
+            cpov.error("fatal", "majorRadius must be a float.", "Torus", this);
         }
     }
 
@@ -11018,7 +11027,7 @@ class Torus extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._minorRadius = val;
         } else {
-            cpov.error("fatal", "minorRadius must be a float.", "Torus");
+            cpov.error("fatal", "minorRadius must be a float.", "Torus", this);
         }
     }
 
@@ -11037,7 +11046,7 @@ class Torus extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._sturm = val;
         } else {
-            cpov.error("fatal", "sturm must be a boolean.", "Torus");
+            cpov.error("fatal", "sturm must be a boolean.", "Torus", this);
         }
     }
 
@@ -11188,7 +11197,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner1 = val;
         } else {
-            cpov.error("fatal", "corner1 must be a VectorXYZ.", "Triangle");
+            cpov.error("fatal", "corner1 must be a VectorXYZ.", "Triangle", this);
         }
     }
 
@@ -11207,7 +11216,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner2 = val;
         } else {
-            cpov.error("fatal", "corner2 must be a VectorXYZ.", "Triangle");
+            cpov.error("fatal", "corner2 must be a VectorXYZ.", "Triangle", this);
         }
     }
 
@@ -11226,7 +11235,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner3 = val;
         } else {
-            cpov.error("fatal", "corner3 must be a VectorXYZ.", "Triangle");
+            cpov.error("fatal", "corner3 must be a VectorXYZ.", "Triangle", this);
         }
     }
 
@@ -11245,7 +11254,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._smooth = val;
         } else {
-            cpov.error("fatal", "smooth must be a boolean.", "Triangle");
+            cpov.error("fatal", "smooth must be a boolean.", "Triangle", this);
         }
     }
 
@@ -11264,7 +11273,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal1 = val;
         } else {
-            cpov.error("fatal", "normal1 must be a VectorXYZ.", "Triangle");
+            cpov.error("fatal", "normal1 must be a VectorXYZ.", "Triangle", this);
         }
     }
 
@@ -11283,7 +11292,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal2 = val;
         } else {
-            cpov.error("fatal", "normal2 must be a VectorXYZ.", "Triangle");
+            cpov.error("fatal", "normal2 must be a VectorXYZ.", "Triangle", this);
         }
     }
 
@@ -11302,7 +11311,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal3 = val;
         } else {
-            cpov.error("fatal", "normal3 must be a VectorXYZ.", "Triangle");
+            cpov.error("fatal", "normal3 must be a VectorXYZ.", "Triangle", this);
         }
     }
 
@@ -11321,7 +11330,7 @@ class Triangle extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfInt(val))) {
             this._textures = val;
         } else {
-            cpov.error("fatal", "textures must be an array of integers.", "Triangle");
+            cpov.error("fatal", "textures must be an array of integers.", "Triangle", this);
         }
     }
 
@@ -11482,7 +11491,7 @@ class Union extends Primitive {
             this._components = val;
             this.adopt(this._components);
         } else {
-            cpov.error("fatal", "objects must be an array of Primitives.", "Union");
+            cpov.error("fatal", "objects must be an array of Primitives.", "Union", this);
         }
     }
 
@@ -11501,7 +11510,7 @@ class Union extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._splitUnion = val;
         } else {
-            cpov.error("fatal", "splitUnion must be a boolean.", "Union");
+            cpov.error("fatal", "splitUnion must be a boolean.", "Union", this);
         }
     }
 
@@ -11615,7 +11624,7 @@ class VectorXY {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
         } else {
-            cpov.error("fatal", "x must be a float.", "VectorXY");
+            cpov.error("fatal", "x must be a float.", "VectorXY", this);
         }
     }
 
@@ -11634,7 +11643,7 @@ class VectorXY {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
         } else {
-            cpov.error("fatal", "y must be a float.", "VectorXY");
+            cpov.error("fatal", "y must be a float.", "VectorXY", this);
         }
     }
 
@@ -11767,7 +11776,7 @@ class VectorUV {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._u = val;
         } else {
-            cpov.error("fatal", "u must be a float.", "VectorUV");
+            cpov.error("fatal", "u must be a float.", "VectorUV", this);
         }
     }
 
@@ -11786,7 +11795,7 @@ class VectorUV {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v = val;
         } else {
-            cpov.error("fatal", "v must be a float.", "VectorUV");
+            cpov.error("fatal", "v must be a float.", "VectorUV", this);
         }
     }
 
@@ -11921,7 +11930,7 @@ class VectorXYZ {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
         } else {
-            cpov.error("fatal", "x must be a float.", "VectorXYZ");
+            cpov.error("fatal", "x must be a float.", "VectorXYZ", this);
         }
     }
 
@@ -11940,7 +11949,7 @@ class VectorXYZ {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
         } else {
-            cpov.error("fatal", "y must be a float.", "VectorXYZ");
+            cpov.error("fatal", "y must be a float.", "VectorXYZ", this);
         }
     }
 
@@ -11959,7 +11968,7 @@ class VectorXYZ {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._z = val;
         } else {
-            cpov.error("fatal", "z must be a float.", "VectorXYZ");
+            cpov.error("fatal", "z must be a float.", "VectorXYZ", this);
         }
     }
 
@@ -12098,7 +12107,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
         } else {
-            cpov.error("fatal", "x must be a float.", "VectorXYZW");
+            cpov.error("fatal", "x must be a float.", "VectorXYZW", this);
         }
     }
 
@@ -12117,7 +12126,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
         } else {
-            cpov.error("fatal", "y must be a float.", "VectorXYZW");
+            cpov.error("fatal", "y must be a float.", "VectorXYZW", this);
         }
     }
 
@@ -12136,7 +12145,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._z = val;
         } else {
-            cpov.error("fatal", "z must be a float.", "VectorXYZW");
+            cpov.error("fatal", "z must be a float.", "VectorXYZW", this);
         }
     }
 
@@ -12155,7 +12164,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._w = val;
         } else {
-            cpov.error("fatal", "w must be a float.", "VectorXYZW");
+            cpov.error("fatal", "w must be a float.", "VectorXYZW", this);
         }
     }
 
@@ -12314,7 +12323,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._r = val;
         } else {
-            cpov.error("fatal", "r must be a float.", "Color");
+            cpov.error("fatal", "r must be a float.", "Color", this);
         }
     }
 
@@ -12333,7 +12342,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._g = val;
         } else {
-            cpov.error("fatal", "g must be a float.", "Color");
+            cpov.error("fatal", "g must be a float.", "Color", this);
         }
     }
 
@@ -12352,7 +12361,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._b = val;
         } else {
-            cpov.error("fatal", "b must be a float.", "Color");
+            cpov.error("fatal", "undefined", "Color", this);
         }
     }
 
@@ -12371,7 +12380,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._f = val;
         } else {
-            cpov.error("fatal", "f must be a float.", "Color");
+            cpov.error("fatal", "f must be a float.", "Color", this);
         }
     }
 
@@ -12390,7 +12399,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._t = val;
         } else {
-            cpov.error("fatal", "t must be a float.", "Color");
+            cpov.error("fatal", "t must be a float.", "Color", this);
         }
     }
 
@@ -12409,7 +12418,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isBoolean(val))) {
             this._srgb = val;
         } else {
-            cpov.error("fatal", "srgb must be a boolean.", "Color");
+            cpov.error("fatal", "srgb must be a boolean.", "Color", this);
         }
     }
 

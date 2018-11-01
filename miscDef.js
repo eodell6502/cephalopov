@@ -116,7 +116,7 @@ miscDef.splineTypes = {
 
 
 //------------------------------------------------------------------------------
-// List of juliaFractal types.
+// List of juliaFractal types
 //------------------------------------------------------------------------------
 
 miscDef.juliaFractalTypes = [
@@ -143,11 +143,57 @@ miscDef.juliaFractalTypes = [
 
 
 //------------------------------------------------------------------------------
+// List of legal character sets for text strings.
+//------------------------------------------------------------------------------
+
+miscDef.charsets = [ 'ascii', 'utf8', 'sys' ];
+
+
+//------------------------------------------------------------------------------
+// List of noise generators.
+//------------------------------------------------------------------------------
+
+miscDef.noiseGenerators = {
+    1: "The original noise generator from POV-Ray 3.1 and earlier",
+    2: "An improved noise generator with fewer artifacts",
+    3: "Perlin noise",
+};
+
+//------------------------------------------------------------------------------
+// List of camera types
+//------------------------------------------------------------------------------
+
+miscDef.cameraTypes = {
+    perspective:    'perspective',
+    orthographic:   'orthographic',
+    fisheye:        'fisheye',
+    ultraWideAngle: 'ultra_wide_angle',
+    omnimax:        'omnimax',
+    panoramic:      'panoramic',
+    spherical:      'spherical',
+    cylinder:       'cylinder',
+    meshCamera:     'mesh_camera'
+};
+
+
+//------------------------------------------------------------------------------
+// Cylindrical camera types
+//------------------------------------------------------------------------------
+
+miscDef.cylindricalCameraTypes = {
+    1: "vertical cylinder, fixed viewpoint",
+    2: "horizontal cylinder, fixed viewpoint",
+    3: "vertical cylinder, viewpoint moves along the cylinder's axis",
+    4: "horizontal cylinder, viewpoint moves along the cylinder's axis",
+};
+
+
+//------------------------------------------------------------------------------
 // List of heightField image types
 //------------------------------------------------------------------------------
 
-miscDef.hfTypes = [ "exr", "gif", "hdr", "iff", "jpeg", "pgm", "png", "pot", "ppm",
-    "sys", "tga", "tiff", ];
+miscDef.hfTypes = [ "exr", "gif", "hdr", "iff", "jpeg", "pgm", "png", "pot",
+    "ppm", "sys", "tga", "tiff", ];
 
 
 //------------------------------------------------------------------------------

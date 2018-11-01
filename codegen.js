@@ -290,7 +290,7 @@ ClassBuilder.prototype.toString = function() {
                     tab3 + "this._" + item.name + " = val;\n"
                     + (item.child ? (tab3 + "this.adopt(this._" + item.name + ");\n") : "")
                     + tab2 + "} else {\n"
-                    + tab3 + "cpov.error(\"fatal\", \"" + item.err + "\", \"" + this.name + "\");\n"
+                    + tab3 + "cpov.error(\"fatal\", \"" + item.err + "\", \"" + this.name + "\", this);\n"
                     + tab2 + "}\n"
                     + tab1 + "}\n"
                 );
@@ -496,17 +496,29 @@ function stringTable(obj, tclass, title, sort = true, anchor = false) {
 
 //==============================================================================
 // Produces a list of quoted strings from a simple array. The strings are
-// wrapped in <code> tags and quotes.
+// wrapped in <code> tags and quotes. If article is supplied, it is inserted
+// before the last item, e.g., "and" or "or".
 //==============================================================================
 
-function stringList(obj) {
+function stringList(obj, article = false) {
     if(Array.isArray(obj)) {
         var list = obj.slice(0);
+    } else {
+        var list = [ ];
+        for(var k in obj)
+            list.push(k);
     }
 
     list.sort();
-
-    return "<code>\"" + list.join("\"</code>, <code>\"") + "\"</code>";
+    if(article) {
+        for(var i = 0; i < list.length; i++) {
+            list[i] = "<code>\"" + list[i] + "\"</code>";
+        }
+        list[list.length - 1] = article + " " + list[list.length - 1];
+        return list.join(", ");
+    } else {
+        return "<code>\"" + list.join("\"</code>, <code>\"") + "\"</code>";
+    }
 }
 
 
@@ -566,7 +578,7 @@ function main() {
 
         docs = docs.replace(/\$strlist\.([A-Za-z]+)/g, function(match, p1) {
             if(cpov[p1] !== undefined) {
-                return stringList(cpov[p1]);
+                return stringList(cpov[p1], "and");
             }
         });
 

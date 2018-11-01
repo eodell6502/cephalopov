@@ -61,13 +61,14 @@ module.exports = {
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
             {
-                name:  "components",
-                req:   true,
-                child: "array",
-                valid: "cpov.isClass(val, ['Sphere', 'Cylinder']) && val.length",
-                err:   "components must be an array of Spheres and/or Cylinders.",
-                desc:  "This is an array of <code>Sphere</code> and <code>Cylinders</code>, optionally with their <code>strength</code> attributes set.",
-                tname: "Array"
+                name:   "components",
+                req:    true,
+                child:  "array",
+                valid:  "cpov.isArrayOfClass(val, ['Sphere', 'Cylinder'], 1, Infinity) && val.length",
+//                custom: "Blob.components.get-set",
+                err:    "components must be an array of Spheres and/or Cylinders.",
+                desc:   "This is an array of <code>Sphere</code> and <code>Cylinders</code>, optionally with their <code>strength</code> attributes set.",
+                tname:  "Array"
             }, {
                 name:  "threshold",
                 valid: "cpov.isFloat(val)",
@@ -133,99 +134,99 @@ module.exports = {
             {
                 name:  "type",
                 req:   true,
-                valid: "cpov.isInArray(val, ['perspective', 'orthographic', 'fisheye', 'ultra_wide_angle', 'omnimax', 'panoramic', 'spherical', 'cylinder', 'mesh_camera'])", // TODO: CamelCased versions
-                err:   "type must be one of perspective, orthographic, fisheye, ultra_wide_angle, omnimax, panoramic, spherical, cylinder, or mesh_camera.",
-                desc:  "TODO",
+                valid: "cpov.isKey(val, cpov.cameraTypes)",
+                err:   "type must be one of " + cpov.keysToTextList(cpov.cameraTypes) + ".",
+                desc:  "Defines the type of the camera. The legal values are $keylist.cameraTypes",
                 tname: "string"
             }, {
                 name:  "angle", //        type: "FIXME" }, // TODO
-                valid: "true",
-                err:   "angle",
-                desc:  "TODO",
-                tname: "TODO"
+                valid: "cpov.isFloat(val) && val > 0 && val <= 360",
+                err:   "angle must be a float greater than zero and less than or equal to 360.",
+                desc:  "Sets the width of the camera's viewing angle in degrees.",
+                tname: "integer"
             }, {
-                name:  "apertureSize",
+                name:  "aperture",
                 valid: "cpov.isFloat(val)",
                 err:   "apertureSize must be a float.",
-                desc:  "TODO",
+                desc:  "A non-zero value will enable simulated focal depth-of-field.",
                 tname: "float"
             }, {
                 name:  "blurSamples",
                 valid: "cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0",
                 err:   "blurSamples must be an array of two floats greater than or equal to zero.",
-                desc:  "TODO",
+                desc:  "Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.",
                 tname: "Array"
             }, {
                 name:  "bokeh",
                 valid: "cpov.isClass(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
                 err:   "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>.",
-                desc:  "TODO",
+                desc:  "Specifies the bokeh color.",
                 tname: "Color"
             }, {
                 name:  "confidence",
-                valid: "cpov.isFloat(val)",
+                valid: "cpov.isFloat(val) && val >= 0 && val < 1",
                 err:   "confidence must be a float.",
-                desc:  "TODO",
+                desc:  "Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.",
                 tname: "float"
             }, {
                 name:  "cylinderType",
                 valid: "cpov.isInt(val) && val > 0 && val < 5",
                 err:   "cylinderType must be an integer in the range (1 - 4).",
-                desc:  "TODO",
+                desc:  "If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to $keylist.cylindricalCameraTypes",
                 tname: "integer"
             }, {
                 name:  "direction",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "direction must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For most purposes, you will not need to set <code>direction</code>, but see the POV-Ray docs for <a href=\"http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4\">more details</a>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "focalPoint",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "focalPoint must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero.",
                 tname: "VectorXYZ"
             }, {
                 name:  "location",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "location must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the location of the camera.",
                 tname: "VectorXYZ"
             }, {
                 name:  "lookAt",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "lookAt must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the point at which the camera is aimed.",
                 tname: "VectorXYZ"
             }, {
                 name:  "right",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "right must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Along with <code>up</code>, the <code>right</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[1.33, 0, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href=\"http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5\">POV-Ray docs</a>. It also determines the handedness of the coordinate system.",
                 tname: "VectorXYZ"
             }, {
                 name:  "sky",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "sky must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Determines where \"up\" is for the camera. By default, this is [0, 1, 0].",
                 tname: "VectorXYZ"
             }, {
                 name:  "up",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "up must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Along with <code>right</code>, the <code>up</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[0, 1, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href=\"http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5\">POV-Ray docs</a>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "variance",
                 valid: "cpov.isFloat(val)",
                 err:   "variance must be a float.",
-                desc:  "TODO",
+                desc:  "When <code>aperture</code> is non-zero, <code>variance</code> tells POV-Ray the value of the smallest displayable color difference. The default, 0.0078125, can produce fairly grainy images. To fix this, try a value around 0.00001.",
                 tname: "float"
             }, {
                 name:  "vertAngle",
                 valid: "cpov.isInt(val)",
                 err:   "vertAngle must be an integer.",
-                desc:  "TODO",
+                desc:  "For the spherical camera, this defines the vertical angle of the viewing area while <code>angle</code> specifies the horizontal angle.",
                 tname: "float"
             }
         ]
@@ -356,21 +357,21 @@ module.exports = {
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
-                name:  "positiveComponent",
-                child: "scalar",
-                req:   true,
-                valid: "cpov.inheritsFrom(val, 'Primitive')",
-                err:   "positiveObject must be a Primitive.",
-                desc:  "This is the single base object from which the object(s) in the <code>negativeComponents</code> array are subtracted.",
-                tname: "Primitive"
+                name:   "positiveComponent",
+                child:  "scalar",
+                req:    true,
+                valid:  "cpov.inheritsFrom(val, 'Primitive')",
+                err:    "positiveObject must be a Primitive.",
+                desc:   "This is the single base object from which the object(s) in the <code>negativeComponents</code> array are subtracted.",
+                tname:  "Primitive"
             }, {
-                name:  "negativeComponents",
-                child: "array",
-                req:   true,
-                valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
-                err:   "negativeObjects must be an array of Primitives.",
-                desc:  "This is an array of objects to subtract from the <code>positiveComponent</code>.",
-                tname: "Array"
+                name:   "negativeComponents",
+                child:  "array",
+                req:    true,
+                valid:  "cpov.isArrayOfBaseClass(val, 'Primitive')",
+                err:    "negativeObjects must be an array of Primitives.",
+                desc:   "This is an array of objects to subtract from the <code>positiveComponent</code>.",
+                tname:  "Array"
             }
         ],
     },
@@ -443,7 +444,7 @@ module.exports = {
                 tname: "boolean"
             }, {
                 name:  "waterLevel",
-                valid: "cpov.isFloat(val) && val >= 0 && val <= 0",
+                valid: "cpov.isFloat(val) && val >= 0 && val <= 1",
                 err:   "waterLevel must be a float in the unit interval (0.0 - 1.0).",
                 desc:  "Defines the point below which the height field is hidden. This defaults to 0.0, which corresponds to the bottom of the height field, i.e., nothing is hidden. At the other extreme, 1.0 will cause the entire height field to be hidden. Note that this does not create a plane representing water; you'll have to do that manually.",
                 tname: "float"
@@ -619,14 +620,14 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isKey(val, cpov.splineTypes)",
                 err:   "type must be one of " + cpov.keysToTextList(cpov.splineTypes) + ".",
-                desc:  "TODO",
+                desc:  "Determines the type of spline used to define the profile. Legal types are $strlist.",
                 tname: "string"
             }, {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)",
                 err:   "points must be an array of two or more VectorXY.",
-                desc:  "TODO",
+                desc:  "An array of points defining the spline.",
                 tname: "VectorXY"
             }, {
                 name:  "sturm",
@@ -813,13 +814,13 @@ module.exports = {
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
-                name:  "components",
-                child: "array",
-                req:   true,
-                valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
-                err:   "objects must be an array of Primitives.",
-                desc:  "TODO",
-                tname: "Array"
+                name:   "components",
+                child:  "array",
+                req:    true,
+                valid:  "cpov.isArrayOfBaseClass(val, 'Primitive')",
+                err:    "objects must be an array of Primitives.",
+                desc:   "An array of objects to merge.",
+                tname:  "Array"
             }
         ],
     },
@@ -837,19 +838,19 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Triangle', 1, Infinity)",
                 err:   "triangles",
-                desc:  "TODO",
+                desc:  "The array of <code>Triangle</code>s comprising the mesh.",
                 tname: "Array"
             }, {
                 name:  "insideVector",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "insideVector must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "For the <code>Mesh</code> to be solid, it must be completely closed and have a defined <code>insideVector</code>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "hierarchy",
                 valid: "cpov.isBoolean(val)",
                 err:   "hierarchy must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>false</code>, turn off the internal bounding hierarchy.",
                 tname: "boolean"
             }
         ],
@@ -879,21 +880,21 @@ module.exports = {
         snippets: ["Ovus.toSDL"],
         immutable: { finite: true, solid: true, csg: false, pseudo: false },
         mutable: [
-        {
-            name:  "bottomRadius",
-            req:   true,
-            valid: "cpov.isFloat(val)",
-            err:   "bottomRadius must be a float.",
-                desc:  "TODO",
+            {
+                name:  "bottomRadius",
+                req:   true,
+                valid: "cpov.isFloat(val)",
+                err:   "bottomRadius must be a float.",
+                desc:  "Sets the radius of the bottom sphere.",
                 tname: "float"
-        }, {
-            name:  "topRadius",
-            req:   true,
-            valid: "cpov.isFloat(val)",
-            err:   "topRadius must be a float.",
-                desc:  "TODO",
+            }, {
+                name:  "topRadius",
+                req:   true,
+                valid: "cpov.isFloat(val)",
+                err:   "topRadius must be a float.",
+                desc:  "Sets the radius of the top sphere.",
                 tname: "float"
-        }
+            }
         ],
 
     },
@@ -911,78 +912,78 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
                 err:   "funcX must be an SDL function.",
-                desc:  "TODO",
+                desc:  "Determines the X coordinate of the surface.",
                 tname: "SDL"
             }, {
                 name:  "funcY",
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
                 err:   "funcY must be an SDL function.",
-                desc:  "TODO",
+                desc:  "Determines the Y coordinate of the surface.",
                 tname: "SDL"
             }, {
                 name:  "funcZ",
                 req:   true,
                 valid: "cpov.isSDLFunction(val)",
                 err:   "funcZ must be an SDL function.",
-                desc:  "TODO",
+                desc:  "Determines the Z coordinate of the surface.",
                 tname: "SDL"
             }, {
                 name:  "uv1",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
                 err:   "uv1 must be a VectorUV.",
-                desc:  "TODO",
+                desc:  "Specifies one corner of the UV plane to which the surface is mapped.",
                 tname: "VectorUV"
             }, {
                 name:  "uv2",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
                 err:   "uv2 must be a VectorUV.",
-                desc:  "TODO",
+                desc:  "Specifies the other corner of the UV plane to which the surface is mapped.",
                 tname: "VectorUV"
             }, {
                 name:  "containedBy",
                 child: "scalar",
                 valid: "cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')",
                 err:   "containedBy must be a Sphere or Box.",
-                desc:  "TODO",
+                desc:  "Defines a <code>Sphere</code> or <code>Box</code> which determines the portion of the (potentially infinite) surface that POV-Ray will render. By default, this is a <code>Box</code> with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.",
                 tname: "Sphere<br/>Box"
             }, {
                 name:  "maxGradient",
                 valid: "cpov.isFloat(val)",
                 err:   "maxGradient must be a float.",
-                desc:  "TODO",
+                desc:  "Rendering will be faster if POV-Ray knows the maximum gradient of the surface functions. The <code>maxGradient</code> value defaults to 1.1, but if this too low, holes and other imperfections may appear, and POV-Ray will emit a warning telling you the maximum gradient it found so that you can manually update this value. Beware of raising the value beyond the actual maximum gradient, as this will slow down the render.",
                 tname: "float"
             }, {
                 name:  "accuracy",
                 valid: "cpov.isFloat(val)",
                 err:   "accuracy must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the amount of subdivision POV-Ray performs to find the surface, with lower values being more accurate. Defaults to 0.001.",
                 tname: "float"
             }, {
                 name:  "precomputeDepth",
                 valid: "cpov.isInt(val)",
                 err:   "precomputeDepth must be an integer.",
-                desc:  "TODO",
+                desc:  "If defined, <code>precomputeDepth</code> can speed up rendering at the expense of memory. The maximum value is 20. At least one of <code>precomputeX</code>, <code>precomputeY</code>, or <code>precomputeZ</code> must be <code>true</code>.",
                 tname: "integer"
             }, {
                 name:  "precomputeX",
                 valid: "cpov.isBoolean(val)",
                 err:   "precomputeX must be a boolean.",
-                desc:  "TODO",
+                desc:  "Enables precalculation of the X coordinate during subdivision of parametric surfaces. <code>precomputeDepth</code> must also be defined.",
                 tname: "boolean"
             }, {
                 name:  "precomputeY",
                 valid: "cpov.isBoolean(val)",
                 err:   "precomputeY must be a boolean.",
-                desc:  "TODO",
+                desc:  "Enables precalculation of the Y coordinate during subdivision of parametric surfaces. <code>precomputeDepth</code> must also be defined.",
                 tname: "boolean"
             }, {
                 name:  "precomputeZ",
                 valid: "cpov.isBoolean(val)",
                 err:   "precomputeZ must be a boolean.",
-                desc:  "TODO",
+                desc:  "Enables precalculation of the Z coordinate during subdivision of parametric surfaces. <code>precomputeDepth</code> must also be defined.",
                 tname: "boolean"
             }
         ],
@@ -1001,14 +1002,14 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the surface normal of the plane, i.e., a vector that points up perpendicularly from the surface of the plane.",
                 tname: "VectorXYZ"
             }, {
                 name:  "distance",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "distance must be a float.",
-                desc:  "TODO",
+                desc:  "Specifies the distance the plane lies from the origin along the <code>normal</code> vector. This is multiplied by the normal, so if <code>distance</code> is 2 and <code>normal</code> is <code>[0, 2, 0]</code>, the plane will lie 4 units from the origin.",
                 tname: "float"
             }
         ],
@@ -1028,14 +1029,14 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isInt(val) && val >= 2 && val <= 35",
                 err:   "order must be an integer in the range (2 - 35).",
-                desc:  "TODO",
+                desc:  "Specifies the order of the polynomial. Must be in the range 2 to 35.",
                 tname: "integer"
             }, {
                 name:  "coefficients",
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 1, Infinity)",
                 err:   "coefficients must be an array of floats.",
-                desc:  "TODO",
+                desc:  "An array defining the coefficients of the polynomial. The number of coefficients required is equal to ((<code>order</code> + 1) * (<code>order</code> + 2) * (<code>order</code> + 3)) / 6.",
                 tname: "Array"
             }, {
                 name:  "sturm",
@@ -1060,7 +1061,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity)",
                 err:   "points must be an array of three or more VectorXY.",
-                desc:  "TODO",
+                desc:  "This is an array of at least three <code>VectorXY</code> objects defining the vertices of the polygon.",
                 tname: "Array"
             }
         ],
@@ -1080,14 +1081,14 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isInt(val)",
                 err:   "order must be an integer.",
-                desc:  "TODO",
+                desc:  "Specifies the order of the polynomial. Must be in the range 2 to 35.",
                 tname: "integer"
             }, {
                 name:  "coefficients",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity)",
                 err:   "coefficients must be a VectorXYZW.",
-                desc:  "TODO",
+                desc:  "An array of <code>VectorXYZW</code> defining the coefficients of the polynomial. The choice of <code>VectorXYZW</code> is a bit of a convenience hack as it doesn't encode a 4D cartesian point. Instead, the X, Y, and Z values specify the corresponding powers of the coefficient and W specifies the value. The members of the array can be specified in any order.",
                 tname: "Array"
             }, {
                 name:  "sturm",
@@ -1112,34 +1113,34 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isKey(val, cpov.prismTypes)",
                 err:   "type must be one of " + cpov.keysToTextList(cpov.prismTypes) + ".",
-                desc:  "TODO",
+                desc:  "Specifies the spline type used for the prism. The legal values are $strlist.prismTypes.",
                 tname: "string"
             }, {
                 name:  "height1",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "height1 must be a float.",
-                desc:  "TODO",
+                desc:  "Specifies the Y coordinate of the top of the prism.",
                 tname: "float"
             }, {
                 name:  "height2",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "height2 must be a float",
-                desc:  "TODO",
+                desc:  "Specifies the Y coordinate of the bottom of the prism.",
                 tname: "float"
             }, {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity)",
                 err:   "points must be an array of VectorXY.",
-                desc:  "TODO",
+                desc:  "The array of spline points to be swept along the Y axis. This can specify multiple sub-shapes: to close a shape, simply repeat the first coordinate.",
                 tname: "Array"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
                 err:   "open must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the top and bottom of the prism are left open.",
                 tname: "boolean"
             }, {
                 name:  "sturm",
@@ -1164,7 +1165,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 10, 10)",
                 err:   "coefficients must be an array of 10 floats.",
-                desc:  "TODO",
+                desc:  "An array of 10 floats defining the coefficients of a second-order polynomial.",
                 tname: "Array"
             }
         ],
@@ -1184,7 +1185,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 35, 35)",
                 err:   "coefficients must be an array of 35 floats.",
-                desc:  "TODO",
+                desc:  "An array of floats defining the coefficients of a fourth-order polynomial.",
                 tname: "Array"
             }, {
                 name:  "sturm",
@@ -1209,20 +1210,20 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "center must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the center point of the sphere.",
                 tname: "VectorXYZ"
             }, {
                 name:  "radius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "radius must be a float.",
-                desc:  "TODO",
+                desc:  "Specifies the radius of the sphere.",
                 tname: "float"
             }, {
                 name:  "strength",    // only used when used as a blob component
                 valid: "cpov.isFloat(val)",
                 err:   "strength must be a float.",
-                desc:  "TODO",
+                desc:  "If and only if the <code>Sphere</code> is being used as a blob component, <code>strength</code> is a float defining its field strength.",
                 tname: "float"
             }
         ],
@@ -1241,7 +1242,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isKey(val, cpov.internalSplineTypes)",
                 err:   "type must be one of " + cpov.keysToTextList(cpov.internalSplineTypes) + ".",
-                desc:  "TODO",
+                desc:  "Sets the spline type to be used for the sweep. The legal values are $strlist.internalSplineTypes.",
                 tname: "string"
             }, {
                 name:  "spheres",
@@ -1249,13 +1250,13 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'Sphere', 2, Infinity)",
                 err:   "spheres must be an an array of two or more Sphere.",
-                desc:  "TODO",
+                desc:  "The array of <code>Sphere</code>s whose positions are interpolated to create the sweep.",
                 tname: "Array"
             }, {
                 name:  "tolerance",
                 valid: "cpov.isFloat(val)",
                 err:   "tolerance must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the depth tolerance used for intersection calculations. The default value, 0.000001, should be adequate in most cases. If imperfections appear on the surface of the sweep, try increasing it to 0.0001.",
                 tname: "float"
             }
         ],
@@ -1274,7 +1275,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "e must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the so-called <em>east-west</em> exponent.",
                 tname: "float"
             },
 			{
@@ -1282,7 +1283,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "n must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the so-called <em>north-south</em> exponent.",
                 tname: "float"
             }
         ],
@@ -1302,13 +1303,13 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)",
                 err:   "points must be an array of two or more VectorXY.",
-                desc:  "TODO",
+                desc:  "An array of at least two points which define the open curve used to generate the surface.",
                 tname: "VectorXY"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
                 err:   "open must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the base and the cap are left open, yielding a hollow surface of revolution.",
                 tname: "boolean"
             }, {
                 name:  "sturm",
@@ -1333,35 +1334,35 @@ module.exports = {
 				req:   true,
 				valid: "cpov.isKey(val, cpov.fontTypes)",
 				err:   "fontType must be one of " + cpov.keysToTextList(cpov.fontTypes) + ".",
-                desc:  "TODO",
+                desc:  "Specifies the file format of the font being used. Legal values are $strlist.fontTypes.",
                 tname: "string"
             }, {
                 name:  "font",
                 req:   true,
                 valid: "cpov.isNonEmptyString(val)",
                 err:   "font must be a non-empty string.",
-                desc:  "TODO",
+                desc:  "The filename of the font.",
                 tname: "string"
             }, {
                 name:  "displayText",
                 req:   true,
                 valid: "cpov.isNonEmptyString(val)",
                 err:   "displayText must be a non-empty string.",
-                desc:  "TODO",
+                desc:  "This contains the text to be rendered.",
                 tname: "string"
             }, {
                 name:  "thickness",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "thickness must be a float.",
-                desc:  "TODO",
+                desc:  "Specifies the front-to-back thickness of the extruded character shapes.",
                 tname: "float"
             }, {
                 name:  "offset",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "offset must be a float.",
-                desc:  "TODO",
+                desc:  "If defined, specifies extra space to be placed between characters.",
                 tname: "float"
             }
         ],
@@ -1381,14 +1382,14 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "majorRadius must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the major radius of the torus, which is the circle along which the perpendicular circle defined by <code>minorRadius</code> is swept.",
                 tname: "float"
             }, {
                 name:  "minorRadius",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "minorRadius must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the minor radius of the torus, which is the radius of its cross section.",
                 tname: "float"
             }, {
                 name:  "sturm",
@@ -1473,18 +1474,18 @@ module.exports = {
         immutable: { finite: null, solid: true, csg: true },
         mutable: [
             {
-                name:  "components",
-                child: "scalar",
-                req:   true,
-                valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
-                err:   "objects must be an array of Primitives.",
-                desc:  "TODO",
-                tname: "Array"
+                name:   "components",
+                child:  "scalar",
+                req:    true,
+                valid:  "cpov.isArrayOfBaseClass(val, 'Primitive')",
+                err:    "objects must be an array of Primitives.",
+                desc:   "This is the array of objects to be combined by the CSG <code>Union</code>.",
+                tname:  "Array"
             }, {
                 name:  "splitUnion",
                 valid: "cpov.isBoolean(val)",
                 err:   "splitUnion must be a boolean.",
-                desc:  "TODO",
+                desc:  "If the composite object lacks holes, setting <code>splitUnion</code> to <code>false</code> can speed up rendering. Defaults to <code>true</code>.",
                 tname: "boolean"
             }
         ]

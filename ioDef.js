@@ -26,25 +26,25 @@ module.exports = {
             name:  "antialias",
             valid: "cpov.isBoolean(val)",
             err:   "antialias must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, enables antialiasing.",
             tname: "boolean"
         }, {
             name:  "antialiasDepth",
             valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 9)",
             err:   "antialiasDepth must be an integer in the range 1-9.",
-            desc:  "TODO",
+            desc:  "Specifies the number of rows and columns within each pixel to be super-sampled. Values in the range 1-9 are permitted, and the default is 3.",
             tname: "integer"
         }, {
             name:  "antialiasGamma",
             valid: "cpov.isFloat(val)",
             err:   "antialiasGamma must be a float.",
-            desc:  "TODO",
+            desc:  "Sets the gamma to be used in antialiasing.",
             tname: "float"
         }, {
             name:  "antialiasThreshold",
             valid: "cpov.isFloat(val) && val >= 0",
             err:   "antialiasThreshold must be a float greater than or equal to zero.",
-            desc:  "TODO",
+            desc:  "Defines the amount by which a pixel must differ from its neighbors to trigger supersampling. The default is 0.3.",
             tname: "float"
         }, {
             name:  "appendFile",
@@ -200,13 +200,13 @@ module.exports = {
             name:  "highReproducibility",
             valid: "cpov.isBoolean(val)",
             err:   "highReproducibility must be a boolean",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, enables the experimental high reproducibility mode, which attempts to impose determinism on calculations in SMP environments. Currently only works with radiosity.",
             tname: "boolean"
         }, {
             name:  "includeHeader",
             valid: "cpov.isNonEmptyString(val)",
             err:   "includeHeader must be a non-empty string.",
-            desc:  "TODO",
+            desc:  "Specifies an SDL include file to be referenced in the SDL output.",
             tname: "string"
         }, {
             name:  "inputFileName",
@@ -218,13 +218,13 @@ module.exports = {
             name:  "jitter",
             valid: "cpov.isBoolean(val)",
             err:   "jitter must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, enables random jittering of antialiasing super-samples to minimize artifacts. This should only be used for static scenes, not animation.",
             tname: "boolean"
         }, {
             name:  "jitterAmount",
             valid: "cpov.isFloat(val)",
             err:   "jitterAmount must be a float.",
-            desc:  "TODO",
+            desc:  "Defines the amount of jitter. The default is 1.0, above which super-samples may stray outside of their pixels.",
             tname: "float"
         }, {
             name:  "libraryPath",
@@ -380,7 +380,7 @@ module.exports = {
             name:  "samplingMethod",
             valid: "cpov.isInt(val) && val >= 1 && val <= 2",
             err:   "samplingMethod must be an integer in the range (1 - 2).",
-            desc:  "TODO",
+            desc:  "Sets the antialiasing sampling method. A value of 1, the default, enables non-recursive sampling, while 2 enables adaptive, recursive sampling.",
             tname: "integer"
         }, {
             name:  "splitUnions",
@@ -476,7 +476,7 @@ module.exports = {
             name:  "workThreads",
             valid: "cpov.isInt(val) && val >= 1 && val <= 512",
             err:   "workThreads must be an integer in the range (1 - 512).",
-            desc:  "TODO",
+            desc:  "Sets the number of processor threads in a multicore environment. Defaults to the detected number of cores or 4 if detection is not possible, but may be set as high as 512.",
             tname: "integer"
         }
     ]

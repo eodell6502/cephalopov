@@ -9,7 +9,7 @@ Results appear in first frame file.
 // TEST #2: ImageOptions: all parameters at init
 //==============================================================================
 
-CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 +C +GIpiddle.ini -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP1 +SP5 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
+CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP2 +SP4 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
 
 INI file:
 
@@ -28,8 +28,6 @@ BSP_ChildAccessCost=2.4
 BSP_IsectCost=3.5
 BSP_MaxDepth=9
 BSP_MissChance=0.03
-Continue_Trace=true
-Create_Ini=piddle.ini
 Display=true
 Display_Gamma=sRGB
 Dither=false
@@ -52,16 +50,12 @@ Output_File_Name=squink.png
 Output_File_Type=S
 Palette=X
 Pause_When_Done=false
-Post_Frame_Command=dir c:\
-Post_Frame_Return=-S
 Post_Scene_Command=dir foo
 Post_Scene_Return=Q
-Pre_Frame_Command=dir d:\
-Pre_Frame_Return=A
 Pre_Scene_Command=dir foo
 Pre_Scene_Return=!F
-Preview_End_Size=1
-Preview_Start_Size=5
+Preview_End_Size=2
+Preview_Start_Size=4
 Quality=11
 Radiosity_File_Name=rfoo
 Radiosity_From_File=true
@@ -90,7 +84,7 @@ Work_Threads=8
 // TEST #3: ImageOptions: all parameters after init
 //==============================================================================
 
-CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 +C +GIpiddle.ini -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP1 +SP5 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
+CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP1 +SP8 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
 
 INI file:
 
@@ -109,8 +103,6 @@ BSP_ChildAccessCost=2.4
 BSP_IsectCost=3.5
 BSP_MaxDepth=9
 BSP_MissChance=0.03
-Continue_Trace=true
-Create_Ini=piddle.ini
 Display=true
 Display_Gamma=sRGB
 Dither=false
@@ -133,16 +125,12 @@ Output_File_Name=squink.png
 Output_File_Type=S
 Palette=X
 Pause_When_Done=false
-Post_Frame_Command=dir c:\
-Post_Frame_Return=-S
 Post_Scene_Command=dir foo
 Post_Scene_Return=Q
-Pre_Frame_Command=dir d:\
-Pre_Frame_Return=A
 Pre_Scene_Command=dir foo
 Pre_Scene_Return=!F
 Preview_End_Size=1
-Preview_Start_Size=5
+Preview_Start_Size=8
 Quality=11
 Radiosity_File_Name=rfoo
 Radiosity_From_File=true
@@ -382,7 +370,7 @@ disc { // discTestMinimum
 //==============================================================================
 
 height_field { // heightFieldTestMinimum
-    png "foo.png" gamma 1.2 premult on
+    png "foo.png" gamma 1.2 
     smooth
     water_level 0.2
 }

@@ -823,7 +823,7 @@ function imageOptionsTestAtInit(fp) {
         inputFileName: "blarp.pov",
         jitter: true,
         jitterAmount: 1.5,
-        libraryPath: "c:\\dat\\lib",
+        libraryPath: ["c:\\dat\\lib"],
         maxImageBufferMemory: 2500000,
         outputAlpha: true,
         outputFileName: "squink.png",
@@ -839,8 +839,8 @@ function imageOptionsTestAtInit(fp) {
         preFrameReturn: "A",
         preSceneCommand: "dir d:\\prog",
         preSceneReturn: "!F",
-        previewEndSize: 1,
-        previewStartSize: 5,
+        previewEndSize: 2,
+        previewStartSize: 4,
         quality: 11,
         radiosityFileName: "rfoo",
         radiosityFromFile: "rbar",
@@ -923,7 +923,7 @@ function imageOptionsTestAfterInit(fp) {
     obj.inputFileName = "blarp.pov";
     obj.jitter = true;
     obj.jitterAmount = 1.5;
-    obj.libraryPath = "c:\\dat\\lib";
+    obj.libraryPath = ["c:\\dat\\lib"];
     obj.maxImageBufferMemory = 2500000;
     obj.outputAlpha = true;
     obj.outputFileName = "squink.png";
@@ -940,7 +940,7 @@ function imageOptionsTestAfterInit(fp) {
     obj.preSceneCommand = "dir d:\\prog";
     obj.preSceneReturn = "!F";
     obj.previewEndSize = 1;
-    obj.previewStartSize = 5;
+    obj.previewStartSize = 8;
     obj.quality = 11;
     obj.radiosityFileName = "rfoo";
     obj.radiosityFromFile = "rbar";

@@ -58,6 +58,30 @@ toSDL(stops = 0) {
 
 
 
+// Blob.components.get-set //---------------------------------------------------
+
+//--------------------------------------------------------------------------
+
+get components() {
+    if(typeof this._components == "function")
+        return this._components(cpov, this);
+    else if(cpov.isSDLFunction(this._components))
+        return this._components.substr(1);
+    else
+        return this._components;
+}
+
+set components(val) {
+    if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, ['Sphere', 'Cylinder'], 1, Infinity) && val.length)) {
+        this._components = val;
+        this.adopt(this._components);
+        this._children = this._components;
+    } else {
+        cpov.error("fatal", "components must be an array of Spheres and/or Cylinders.", "Blob", this);
+    }
+}
+
+
 // Blob.toSDL //----------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -142,18 +166,19 @@ toSDL(stops = 0) {
         content.push(ppad + "angle " + this.angle);
     if(this.lookAt !== null)
         content.push(ppad + "look_at " + this.lookAt.toSDL());
-    if(this.blurSamples !== null)
-        content.push(ppad + "blur_samples " + this.blurSamples.join(", "));
-    if(this.apertureSize !== null)
-        content.push(ppad + "aperture_size " + this.apertureSize);
-    if(this.focalPoint !== null)
-        content.push(ppad + "focal_point " + this.focalPoint.toSDL());
-    if(this.confidence !== null)
-        content.push(ppad + "confidence " + this.confidence);
-    if(this.variance !== null)
-        content.push(ppad + "variance " + this.variance);
-    if(this.bokeh !== null)
-        content.push(ppad + "bokeh " + this.bokeh);
+    if(this.apertureSize !== null) {
+        content.push(ppad + "aperture " + this.aperture);
+        if(this.blurSamples !== null)
+            content.push(ppad + "blur_samples " + this.blurSamples.join(", "));
+        if(this.focalPoint !== null)
+            content.push(ppad + "focal_point " + this.focalPoint.toSDL());
+        if(this.confidence !== null)
+            content.push(ppad + "confidence " + this.confidence);
+        if(this.variance !== null)
+            content.push(ppad + "variance " + this.variance);
+        if(this.bokeh !== null)
+            content.push(ppad + "bokeh " + this.bokeh);
+    }
 
     $Primitive.toSDL-postamble
 }
@@ -344,7 +369,6 @@ toSDL(stops = 0, component = false) {
         $Primitive.toSDL-postamble
     }
 }
-
 
 
 // Difference.toSDL //----------------------------------------------------------
@@ -658,9 +682,6 @@ output() {
                 ini.push("BSP_MissChance=" + this.bspMissChance);
                 break;
 
-            case "constants":
-                break;
-
             case "debugConsole":
                 if(this.allConsole === null)
                     ini.push("Debug_Console=" + this.debugConsole);
@@ -701,7 +722,7 @@ output() {
                 break;
 
             case "endColumn":
-                if(this.startColumn !== null || this.endColumn <= this.startColumn)
+                if(this.startColumn !== null && this.endColumn <= this.startColumn)
                     cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
 
                 ini.push("End_Column=" + this.endColumn);
@@ -709,7 +730,7 @@ output() {
                 break;
 
             case "endRow":
-                if(this.startRow !== null || this.endRow <= this.startRow)
+                if(this.startRow !== null && this.endRow <= this.startRow)
                     cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
 
                 ini.push("End_Row=" + this.endRow);
@@ -954,7 +975,7 @@ output() {
                 break;
 
             case "startColumn":
-                if(this.endColumn !== null || this.endColumn <= this.startColumn)
+                if(this.endColumn !== null && this.endColumn <= this.startColumn)
                     cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
 
                 ini.push("Start_Column=" + this.startColumn);
@@ -962,7 +983,7 @@ output() {
                 break;
 
             case "startRow":
-                if(this.endRow !== null || this.endRow <= this.startRow)
+                if(this.endRow !== null && this.endRow <= this.startRow)
                     cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
 
                 ini.push("Start_Row=" + this.startRow);
@@ -1143,7 +1164,15 @@ toSDL(stops = 0) {
     content.push(pad + "julia_fractal {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + this.juliaParam.toSDL());
 	content.push(ppad + parts[0]); // algebra type
-	content.push(ppad + parts[1]); // function type
+    if(this.type == "hypercomplex:pwr") {
+        if(this.power === null) {
+            cpov.error("fatal", "For JuliaFractal type \"hypercomplex:pwr\", power must be defined.", "JuliaFractal.toSDL", this);
+        } else {
+            content.push(ppad + "pwr(" + this.power.x + ", " + this.power.y + ")");
+        }
+    } else {
+    	content.push(ppad + parts[1]); // function type
+    }
 	if(this.maxIter !== null)
 		content.push(ppad + "max_iteration " + this.maxIter);
 	if(this.precision !== null)
@@ -1746,15 +1775,19 @@ toSDL(stops = 0) {
         content.push(ppad + "max_gradient " + this.maxGradient);
     if(this.accuracy !== null)
         content.push(ppad + "accuracy " + this.accuracy);
-    if(this.precomputeDepth && (this.precomputeX || this.precomputeY || this.precomputeZ)) {
-        var items = [ ];
-        if(this.precomputeX)
-            items.push("x");
-        if(this.precomputeY)
-            items.push("y");
-        if(this.precomputeZ)
-            items.push("z");
-        content.push(ppad + "precompute " + this.precomputeDepth + " " + items.join(", "));
+    if(this.precomputeDepth) {
+        if(this.precomputeX || this.precomputeY || this.precomputeZ) {
+            var items = [ ];
+            if(this.precomputeX)
+                items.push("x");
+            if(this.precomputeY)
+                items.push("y");
+            if(this.precomputeZ)
+                items.push("z");
+            content.push(ppad + "precompute " + this.precomputeDepth + " " + items.join(", "));
+        } else {
+            cpov.error("fatal", "When using precomputeDepth, at least one of precomputeX, precomputeY, or precomputeZ must also be defined.", "Parametric.toSDL", this);
+        }
     }
 
 	$Primitive.toSDL-postamble
@@ -1893,8 +1926,27 @@ _adopt(val) {
     } else if(typeof val == "function") {
         cpov.error("warn", "Cannot mark a JavaScript function as a child. You're on your own here.", "Primitive.adopt", this);
     } else if(cpov.inheritsFrom(val, "Primitive")) {
-        val.parent = this;
+        val._parent = this;
     }
+}
+
+
+
+// Primitive.children.get-set //------------------------------------------------
+
+//--------------------------------------------------------------------------
+
+get children() {
+    if(typeof this._children == "function")
+        return this._children(cpov, this);
+    else if(cpov.isSDLFunction(this._children))
+        return this._children.substr(1);
+    else
+        return this._children;
+}
+
+set children(val) {
+    cpov.error("fatal", "children is read-only.", "Primitive", this);
 }
 
 
@@ -1907,7 +1959,7 @@ cpov.initObject(this, options);
 // Create serial number and register with cpov object
 
 cpov.objectSerial++;
-this.serial = cpov.objectSerial;
+this._serial = cpov.objectSerial;
 cpov.serialMap[this.serial] = this;
 
 
@@ -1953,6 +2005,52 @@ destroy() {
 
 
 
+// Primitive.disown //----------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Called on formerly contained objects to set their parent attribute to null.
+// Intelligently handles singletons, arrays, and functions.
+//------------------------------------------------------------------------------
+
+disown(val) {
+    if(Array.isArray(val)) {
+        for(var i = 0; i < val.length; i++) {
+            this._adopt(val[i]);
+        }
+    } else {
+        this._adopt(val);
+    }
+}
+
+_adopt(val) {
+    if(cpov.isSDLFunction(val)) {
+        cpov.error("warn", "Cannot mark an SDL function as a child. You're on your own here.", "Primitive.adopt", this);
+    } else if(typeof val == "function") {
+        cpov.error("warn", "Cannot mark a JavaScript function as a child. You're on your own here.", "Primitive.adopt", this);
+    } else if(cpov.inheritsFrom(val, "Primitive")) {
+        val._parent = null;
+    }
+}
+
+
+// Primitive.parent.get-set //--------------------------------------------------
+
+//--------------------------------------------------------------------------
+
+get parent() {
+    if(typeof this._parent == "function")
+        return this._parent(cpov, this);
+    else if(cpov.isSDLFunction(this._parent))
+        return this._parent.substr(1);
+    else
+        return this._parent;
+}
+
+set parent(val) {
+    cpov.error("fatal", "parent is read-only.", "Primitive", this);
+}
+
+
 // Primitive.requiredParameterTest //-------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -1982,9 +2080,27 @@ requiredParameterTest(requiredParams) {
 // Primitive.resetTransform //--------------------------------------------------
 
 resetTransform() {
-    this._transform = this._baseTransform;
+    this._transform = this._baseTransform.copy();
 }
 
+
+
+// Primitive.serial.get-set //--------------------------------------------------
+
+//--------------------------------------------------------------------------
+
+get serial() {
+    if(typeof this._serial == "function")
+        return this._serial(cpov, this);
+    else if(cpov.isSDLFunction(this._serial))
+        return this._serial.substr(1);
+    else
+        return this._serial;
+}
+
+set serial(val) {
+    cpov.error("fatal", "The serial attribute is read-only.", "Primitive", this);
+}
 
 
 // Primitive.snapshot //--------------------------------------------------------

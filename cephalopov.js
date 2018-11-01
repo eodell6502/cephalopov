@@ -51,6 +51,8 @@ cpov.imageOptions   = null;      // current settings for CLI or .ini file
 cpov.globalSettings = null;      // current globalSettings values
 cpov.snapshots      = [ ];       // snapshots for current frame
 cpov.snapshotMode   = false;     // switch for snapshot mode, defaults to false
+cpov.frameBegin     = null;      // user callback before frame output
+cpov.frameEnd       = null;      // user callback after frame output
 
 cpov.currentFrame = 0;    // current animation frame
 cpov.objectSerial = 0;    // running count of Primitives created
@@ -80,11 +82,10 @@ cpov.isFloat = function(val) {
 //------------------------------------------------------------------------------
 
 cpov.isPowerOfTwo = function(val) {
-    var sqrt = Math.sqrt(val);
-    if(sqrt == Math.floor(sqrt))
-        return true;
-    else
-        return false;
+    for(var i = 0; i < 65; i++)
+        if(Math.pow(2, i) == val)
+            return true;
+    return false;
 }
 
 //------------------------------------------------------------------------------
@@ -230,7 +231,7 @@ cpov.isClass = function(val, classname) {
 cpov.isArrayOfClass = function(val, classname, min, max) {
     if(Array.isArray(val)) {
         for(var i = 0; i < val.length; i++) {
-            if(Object.getPrototypeOf(val[i]).constructor.name != classname)
+            if(!cpov.isClass(val[i], classname))
                 return false;
         }
         if(val.length < min || val.length > max)
@@ -651,6 +652,13 @@ cpov.deg2rad = function(deg) {
 cpov.outputFrame = function() {
 
     //--------------------------------------------------------------------------
+    // Call the global frameBegin function if it exists.
+    //--------------------------------------------------------------------------
+
+    if(cpov.frameBegin)
+        cpov.frameBegin(cpov);
+
+    //--------------------------------------------------------------------------
     // Using cpov.serialMap, walk through all objects. For each object that is
     // active, call the frameBegin function if it exists.
     //--------------------------------------------------------------------------
@@ -755,6 +763,13 @@ cpov.outputFrame = function() {
             obj.frameEnd(cpov);
         }
     }
+
+    //--------------------------------------------------------------------------
+    // Call the global frameEnd function if it exists.
+    //--------------------------------------------------------------------------
+
+    if(cpov.frameEnd)
+        cpov.frameEnd(cpov);
 
     //--------------------------------------------------------------------------
     // Advance time and frame count.

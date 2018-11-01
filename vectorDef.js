@@ -11,15 +11,15 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "x must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The X coordinate of the vector.",
+                tname: "float"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "y must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The Y coordinate of the vector.",
+                tname: "float"
             },
         ],
     },
@@ -35,15 +35,15 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "u must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The U coordinate of the vector.",
+                tname: "float"
             }, {
                 name:  "v",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "v must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The V coordinate of the vector.",
+                tname: "float"
             },
         ],
     },
@@ -59,22 +59,22 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "x must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The X coordinate of the vector.",
+                tname: "float"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "y must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The Y coordinate of the vector.",
+                tname: "float"
             }, {
                 name:  "z",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "z must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The Z coordinate of the vector.",
+                tname: "float"
             },
         ],
     },
@@ -90,29 +90,29 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "x must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The X coordinate of the vector.",
+                tname: "float"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "y must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The Y coordinate of the vector.",
+                tname: "float"
             }, {
                 name:  "z",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "z must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The Z coordinate of the vector.",
+                tname: "float"
             }, {
                 name:  "w",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "w must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The W coordinate of the vector.",
+                tname: "float"
             },
         ],
     },
@@ -128,40 +128,40 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "r must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The red component of the color, in the unit interval (0.0-1.0).",
+                tname: "float"
             }, {
                 name:  "g",
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "g must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The green component of the color, in the unit interval (0.0-1.0).",
+                tname: "float"
             }, {
                 name:  "b",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "b must be a float.",
+                desc:  "The blue component of the color, in the unit interval (0.0-1.0).",
                 desc:  "TODO",
-                tname: "TODO"
+                tname: "float"
             }, {
                 name:  "f",
                 valid: "cpov.isFloat(val)",
                 err:   "f must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The filter component of the color, in the unit interval (0.0-1.0).",
+                tname: "float"
             }, {
                 name:  "t",
                 valid: "cpov.isFloat(val)",
                 err:   "t must be a float.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "The transmit component of the color, in the unit interval (0.0-1.0).",
+                tname: "float"
             }, {
                 name:  "srgb",
                 valid: "cpov.isBoolean(val)",
                 err:   "srgb must be a boolean.",
-                desc:  "TODO",
-                tname: "TODO"
+                desc:  "If <code>true</code>, specifies sRGB gamma values. This will produce an error when POV-Ray parses CephaloPOV's output if <code>cpov.globalSettings.assumedGamma</code> is not set.",
+                tname: "float"
             },
         ],
     },
