@@ -159,9 +159,10 @@ function cameraTestMinimum(fp) {
 function lightSourceTestMinimum(fp) {
 
     var params = {
+        type: "point",
         location: new VectorXYZ({x: 1, y: 1, z: 1}),
         color: new Color({r: 1, g: 1, b: 1}),
-        adaptive: 0.5,
+        adaptive: 1,
         fadeDistance: 5.1,
         fadePower: 1.2,
         id: "point_lightSourceTestMinimum"
@@ -1003,7 +1004,7 @@ function globalSettingsTestAtInit(fp) {
         photonJitter: 1.2,
         photonLoadFile: "foo",
         photonMaxTraceLevel: 4,
-        photonMedia: [5.6, 0.222],
+        photonMedia: [5, 0.222],
         photonRadius: [1.2, 6, 0.02, -1.2],
         photonSaveFile: "bar",
         photonSpacing: null,
@@ -1062,7 +1063,7 @@ function globalSettingsTestAfterInit(fp) {
     gs.photonJitter = 1.2;
     gs.photonLoadFile = "foo";
     gs.photonMaxTraceLevel = 4;
-    gs.photonMedia = [5.6, 0.222];
+    gs.photonMedia = [5, 0.222];
     gs.photonRadius = [1.2, 6, 0.02, -1.2];
     gs.photonSaveFile = "bar";
     gs.photonSpacing = null;

@@ -256,7 +256,28 @@ once for each object.</p>
 
 <h3>Global Parameters</h3>
 
+<p>POV-Ray has two sets of global parameters which remain separate here. The
+first, represented in CephaloPOV by the <code>cpov.imageOptions</code> object,
+corresponds to POV-Ray's command line switches and the contents of
+<code>.ini</code> files. The second is the <code>global_settings</code> block in
+<code>.pov</code> scene files, which is represented by
+<code>cpov.globalSettings</code>.</p>
+
+<!-- From the standpoint of CephaloPOV, there doesn't appear to be a compelling
+reason to keep these separate, so the interface may be refactored in the future.
+-->
+
 <h4>ImageOptions</h4>
+
+<p>The <code>ImageOptions</code> class represents the global parameters that are
+set either by POV-Ray command line switches or by <code>.ini</code> files.
+CephaloPOV itself never uses the command line switches, but they are output in a
+comment at the beginning of the generated <code>.ini</code> files for the
+curious. It should be noted that not all of the values that can be set in a
+<code>.ini</code> file have corresponding command line switches.</p>
+
+<p>By default, CephaloPOV initializes <code>cpov.imageOptions</code> with an
+<code>ImageOptions</code> object at the beginning of a job. [...]</code>
 
 <p>TODO</p>
 
@@ -1600,24 +1621,23 @@ replaced before the first public beta are quite high.</pre>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='pending'>pending</td><td>Implement</td><td>Method documentation</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
+
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>All geometric primitives</td></tr>
+
         <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td><code>Camera.normal</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> photon parameters</td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> radiosity parameters</td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td>Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
 
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>All geometric primitives</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Transformation validation and fixes</td></tr>
-        <tr><td class='done'>done</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Camera</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive in CSG integration</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive transform integration</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera.angle</code>: Determine legal values and enforce</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>cpov.js</code>: More selective scope management</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
@@ -1634,7 +1654,7 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Matrix</code>: Improve constructor validation</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
-        <tr><td class='pending'>TDB</td><td>Implement/Test</td><td class='subtask'><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Mesh2</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Primitive</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</code></td></tr>
@@ -1645,9 +1665,12 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.texture</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Reorg: Move things needed for <code>codegen</code> to separate file not included at runtime</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Reports</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Text.toSDL</code>: Handle escaping of double quotes in <code>Text.displayText</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
 
+        <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Camera.angle</code>: Determine legal values and enforce</td></tr>
+        <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
+        <tr><td class='done'>done</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
+        <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Text.toSDL</code>: Handle escaping of double quotes in <code>Text.displayText</code></td></tr>
         <tr><td class='done'>done</td><td>Implement</td><td>Make <code>serial</code> read-only.</td></tr>
         <tr><td class='done'>done</td><td>Implement</td><td>Add <code>power</code> to <code>JuliaFractal.toSDL()</code>.</td></tr>
         <tr><td class='done'>done</td><td>Implement</td><td>Global <code>frameBegin/frameEnd</code> callbacks.</td></tr>

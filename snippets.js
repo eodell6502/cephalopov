@@ -153,7 +153,7 @@ toSDL(stops = 0) {
         cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
 
     content.push(pad + "camera {" + (this.id === null ? "" : " // " + this.id));
-    content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
+    content.push(ppad + cpov.cameraTypes[this.type] + (this.type == "cylinder" ? " " + this.cylinderType : ""));
     if(this.location !== null)
         content.push(ppad + "location " + this.location.toSDL());
     if(this.right !== null)
@@ -2464,7 +2464,7 @@ toSDL(stops = 0) {
     // TODO: Handle escaping of double quotes in this.displayText
 
     content.push(pad + "text {" + (this.id === null ? "" : " // " + this.id));
-    content.push(ppad + this.fontType + " " + "\"" + this.font + "\"");
+    content.push(ppad + this.fontType + " " + "\"" + this.font + "\" \"" + this.displayText.replace(/"/g, "\\\"") + "\"");
     content.push(ppad + this.thickness + ", " + this.offset);
 
     $Primitive.toSDL-postamble

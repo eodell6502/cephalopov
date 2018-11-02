@@ -95,7 +95,7 @@ module.exports = {
             tname: "integer"
         }, {
             name:  "photonExpandThresholds",
-            valid: "Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isWithin(val, 0, 1) && cpov.isInt(val[1])",
+            valid: "Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isWithin(val[0], 0, 1) && cpov.isInt(val[1])",
             err:   "photonExpandThresholds must be an array consisting of a float in the unit interval (0.0 - 1.0) and and integer.",
             desc:  "An array of a float in the unit interval (0.0 - 1.0) and an integer which define how much the adaptive search radius can be increased before reverting to <code>photonRadius</code> and the minimum number of photons to gather, respectively. The default is <code>[0.2, 40]</code>.",
             tname: "Array"
@@ -125,7 +125,7 @@ module.exports = {
             tname: "integer"
         }, {
             name:  "photonMedia",
-            valid: "Array.isArray(val) && val.length == 2 && cpov.isInt(val[0]) && cpov.isInt(val[1])",
+            valid: "Array.isArray(val) && val.length == 2 && cpov.isInt(val[0]) && cpov.isFloat(val[1])",
             err:   "photonMedia must be an array of an integer and a float.",
             desc:  "If specified, media photons are enabled. This is an array of an integer and a float. The integer specifies the maximum number of photons to deposit over an interval, and the float specifies the difference in media spacing relative to surface spacing.",
             tname: "Array"

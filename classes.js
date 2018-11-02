@@ -343,7 +343,7 @@ class GlobalSettings {
     }
 
     set photonExpandThresholds(val) {
-        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isWithin(val, 0, 1) && cpov.isInt(val[1]))) {
+        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isWithin(val[0], 0, 1) && cpov.isInt(val[1]))) {
             this._photonExpandThresholds = val;
         } else {
             cpov.error("fatal", "photonExpandThresholds must be an array consisting of a float in the unit interval (0.0 - 1.0) and and integer.", "GlobalSettings", this);
@@ -438,7 +438,7 @@ class GlobalSettings {
     }
 
     set photonMedia(val) {
-        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isInt(val[0]) && cpov.isInt(val[1]))) {
+        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isInt(val[0]) && cpov.isFloat(val[1]))) {
             this._photonMedia = val;
         } else {
             cpov.error("fatal", "photonMedia must be an array of an integer and a float.", "GlobalSettings", this);
@@ -1078,84 +1078,84 @@ class ImageOptions {
 
         // Mutable properties //
 
-        this._allConsole            = null;
-        this._allFile               = null;
-        this._antialias             = null;
-        this._antialiasDepth        = null;
-        this._antialiasGamma        = null;
-        this._antialiasThreshold    = null;
-        this._appendFile            = null;
-        this._bitsPerColor          = null;
-        this._bounding              = null;
-        this._boundingMethod        = null;
-        this._boundingThreshold     = null;
-        this._bspBaseAccessCost     = null;
-        this._bspChildAccessCost    = null;
-        this._bspIsectCost          = null;
-        this._bspMaxDepth           = null;
-        this._bspMissChance         = null;
-        this._debugConsole          = null;
-        this._debugFile             = null;
-        this._display               = null;
-        this._displayGamma          = null;
-        this._dither                = null;
-        this._ditherMethod          = null;
-        this._endColumn             = null;
-        this._endRow                = null;
-        this._exePath               = null;
-        this._fatalConsole          = null;
-        this._fatalErrorCommand     = null;
-        this._fatalErrorReturn      = null;
-        this._fatalFile             = null;
-        this._fileGamma             = null;
-        this._height                = null;
-        this._highReproducibility   = null;
-        this._includeHeader         = null;
-        this._inputFileName         = null;
-        this._jitter                = null;
-        this._jitterAmount          = null;
-        this._libraryPath           = null;
-        this._maxImageBufferMemory  = null;
-        this._outputAlpha           = null;
-        this._outputFileName        = null;
-        this._outputFileType        = null;
-        this._outputToFile          = null;
-        this._palette               = null;
-        this._pauseWhenDone         = null;
-        this._postSceneCommand      = null;
-        this._postSceneReturn       = null;
-        this._preSceneCommand       = null;
-        this._preSceneReturn        = null;
-        this._previewEndSize        = null;
-        this._previewStartSize      = null;
-        this._quality               = null;
-        this._radiosityFileName     = null;
-        this._radiosityFromFile     = null;
-        this._radiosityToFile       = null;
-        this._radiosityVainPretrace = null;
-        this._removeBounds          = null;
-        this._renderBlockSize       = null;
-        this._renderBlockStep       = null;
-        this._renderConsole         = null;
-        this._renderFile            = null;
-        this._renderPattern         = null;
-        this._samplingMethod        = null;
-        this._splitUnions           = null;
-        this._startColumn           = null;
-        this._startRow              = null;
-        this._statisticConsole      = null;
-        this._statisticFile         = null;
-        this._testAbort             = null;
-        this._testAbortCount        = null;
-        this._userAbortCommand      = null;
-        this._userAbortReturn       = null;
-        this._verbose               = null;
-        this._videoMode             = null;
-        this._warningConsole        = null;
-        this._warningFile           = null;
-        this._warningLevel          = null;
-        this._width                 = null;
-        this._workThreads           = null;
+        this._allConsole          = null;
+        this._allFile             = null;
+        this._antialias           = null;
+        this._antialiasDepth      = null;
+        this._antialiasGamma      = null;
+        this._antialiasThreshold  = null;
+        this._appendFile          = null;
+        this._bitsPerColor        = null;
+        this._bounding            = null;
+        this._boundingMethod      = null;
+        this._boundingThreshold   = null;
+        this._bspBaseAccessCost   = null;
+        this._bspChildAccessCost  = null;
+        this._bspIsectCost        = null;
+        this._bspMaxDepth         = null;
+        this._bspMissChance       = null;
+        this._debugConsole        = null;
+        this._debugFile           = null;
+        this._display             = null;
+        this._displayGamma        = null;
+        this._dither              = null;
+        this._ditherMethod        = null;
+        this._endColumn           = null;
+        this._endRow              = null;
+        this._exePath             = null;
+        this._fatalConsole        = null;
+        this._fatalErrorCommand   = null;
+        this._fatalErrorReturn    = null;
+        this._fatalFile           = null;
+        this._fileGamma           = null;
+        this._height              = null;
+        this._highReproducibility = null;
+        this._includeHeader       = null;
+        this._inputFileName       = null;
+        this._jitter              = null;
+        this._jitterAmount        = null;
+        this._libraryPath         = null;
+        this._maxImageBuffer      = null;
+        this._outputAlpha         = null;
+        this._outputFileName      = null;
+        this._outputFileType      = null;
+        this._outputToFile        = null;
+        this._palette             = null;
+        this._pauseWhenDone       = null;
+        this._postSceneCommand    = null;
+        this._postSceneReturn     = null;
+        this._preSceneCommand     = null;
+        this._preSceneReturn      = null;
+        this._previewEndSize      = null;
+        this._previewStartSize    = null;
+        this._quality             = null;
+        this._radFileName         = null;
+        this._radFromFile         = null;
+        this._radToFile           = null;
+        this._radVainPretrace     = null;
+        this._removeBounds        = null;
+        this._renderBlockSize     = null;
+        this._renderBlockStep     = null;
+        this._renderConsole       = null;
+        this._renderFile          = null;
+        this._renderPattern       = null;
+        this._samplingMethod      = null;
+        this._splitUnions         = null;
+        this._startColumn         = null;
+        this._startRow            = null;
+        this._statisticConsole    = null;
+        this._statisticFile       = null;
+        this._testAbort           = null;
+        this._testAbortCount      = null;
+        this._userAbortCommand    = null;
+        this._userAbortReturn     = null;
+        this._verbose             = null;
+        this._videoMode           = null;
+        this._warningConsole      = null;
+        this._warningFile         = null;
+        this._warningLevel        = null;
+        this._width               = null;
+        this._workThreads         = null;
 
         // Initialization //
 
@@ -1798,18 +1798,18 @@ class ImageOptions {
 
     //--------------------------------------------------------------------------
 
-    get maxImageBufferMemory() {
-        if(typeof this._maxImageBufferMemory == "function")
-            return this._maxImageBufferMemory(cpov, this);
+    get maxImageBuffer() {
+        if(typeof this._maxImageBuffer == "function")
+            return this._maxImageBuffer(cpov, this);
         else
-            return this._maxImageBufferMemory;
+            return this._maxImageBuffer;
     }
 
-    set maxImageBufferMemory(val) {
+    set maxImageBuffer(val) {
         if(cpov.isNullOrJSFunction(val) || (cpov.isInt(val) && val > 0)) {
-            this._maxImageBufferMemory = val;
+            this._maxImageBuffer = val;
         } else {
-            cpov.error("fatal", "maxImageBufferMemory must be an integer greater than zero.", "ImageOptions", this);
+            cpov.error("fatal", "maxImageBuffer must be an integer greater than zero.", "ImageOptions", this);
         }
     }
 
@@ -2036,69 +2036,69 @@ class ImageOptions {
 
     //--------------------------------------------------------------------------
 
-    get radiosityFileName() {
-        if(typeof this._radiosityFileName == "function")
-            return this._radiosityFileName(cpov, this);
+    get radFileName() {
+        if(typeof this._radFileName == "function")
+            return this._radFileName(cpov, this);
         else
-            return this._radiosityFileName;
+            return this._radFileName;
     }
 
-    set radiosityFileName(val) {
+    set radFileName(val) {
         if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
-            this._radiosityFileName = val;
+            this._radFileName = val;
         } else {
-            cpov.error("fatal", "radiosityFileName must be a non-empty string.", "ImageOptions", this);
+            cpov.error("fatal", "radFileName must be a non-empty string.", "ImageOptions", this);
         }
     }
 
     //--------------------------------------------------------------------------
 
-    get radiosityFromFile() {
-        if(typeof this._radiosityFromFile == "function")
-            return this._radiosityFromFile(cpov, this);
+    get radFromFile() {
+        if(typeof this._radFromFile == "function")
+            return this._radFromFile(cpov, this);
         else
-            return this._radiosityFromFile;
+            return this._radFromFile;
     }
 
-    set radiosityFromFile(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
-            this._radiosityFromFile = val;
-        } else {
-            cpov.error("fatal", "radiosityFromFile must be a non-empty string.", "ImageOptions", this);
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get radiosityToFile() {
-        if(typeof this._radiosityToFile == "function")
-            return this._radiosityToFile(cpov, this);
-        else
-            return this._radiosityToFile;
-    }
-
-    set radiosityToFile(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
-            this._radiosityToFile = val;
-        } else {
-            cpov.error("fatal", "radiosityToFile must be a non-empty string.", "ImageOptions", this);
-        }
-    }
-
-    //--------------------------------------------------------------------------
-
-    get radiosityVainPretrace() {
-        if(typeof this._radiosityVainPretrace == "function")
-            return this._radiosityVainPretrace(cpov, this);
-        else
-            return this._radiosityVainPretrace;
-    }
-
-    set radiosityVainPretrace(val) {
+    set radFromFile(val) {
         if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
-            this._radiosityVainPretrace = val;
+            this._radFromFile = val;
         } else {
-            cpov.error("fatal", "radiosityVainPretrace must be a boolean.", "ImageOptions", this);
+            cpov.error("fatal", "radFromFile must be a boolean.", "ImageOptions", this);
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get radToFile() {
+        if(typeof this._radToFile == "function")
+            return this._radToFile(cpov, this);
+        else
+            return this._radToFile;
+    }
+
+    set radToFile(val) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
+            this._radToFile = val;
+        } else {
+            cpov.error("fatal", "radToFile must be a boolean.", "ImageOptions", this);
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    get radVainPretrace() {
+        if(typeof this._radVainPretrace == "function")
+            return this._radVainPretrace(cpov, this);
+        else
+            return this._radVainPretrace;
+    }
+
+    set radVainPretrace(val) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isBoolean(val))) {
+            this._radVainPretrace = val;
+        } else {
+            cpov.error("fatal", "radVainPretrace must be a boolean.", "ImageOptions", this);
         }
     }
 
@@ -2501,84 +2501,84 @@ class ImageOptions {
 
         var newObj = new ImageOptions();
 
-        newObj.allConsole            = this.allConsole;           
-        newObj.allFile               = this.allFile;              
-        newObj.antialias             = this.antialias;            
-        newObj.antialiasDepth        = this.antialiasDepth;       
-        newObj.antialiasGamma        = this.antialiasGamma;       
-        newObj.antialiasThreshold    = this.antialiasThreshold;   
-        newObj.appendFile            = this.appendFile;           
-        newObj.bitsPerColor          = this.bitsPerColor;         
-        newObj.bounding              = this.bounding;             
-        newObj.boundingMethod        = this.boundingMethod;       
-        newObj.boundingThreshold     = this.boundingThreshold;    
-        newObj.bspBaseAccessCost     = this.bspBaseAccessCost;    
-        newObj.bspChildAccessCost    = this.bspChildAccessCost;   
-        newObj.bspIsectCost          = this.bspIsectCost;         
-        newObj.bspMaxDepth           = this.bspMaxDepth;          
-        newObj.bspMissChance         = this.bspMissChance;        
-        newObj.debugConsole          = this.debugConsole;         
-        newObj.debugFile             = this.debugFile;            
-        newObj.display               = this.display;              
-        newObj.displayGamma          = this.displayGamma;         
-        newObj.dither                = this.dither;               
-        newObj.ditherMethod          = this.ditherMethod;         
-        newObj.endColumn             = this.endColumn;            
-        newObj.endRow                = this.endRow;               
-        newObj.exePath               = this.exePath;              
-        newObj.fatalConsole          = this.fatalConsole;         
-        newObj.fatalErrorCommand     = this.fatalErrorCommand;    
-        newObj.fatalErrorReturn      = this.fatalErrorReturn;     
-        newObj.fatalFile             = this.fatalFile;            
-        newObj.fileGamma             = this.fileGamma;            
-        newObj.height                = this.height;               
-        newObj.highReproducibility   = this.highReproducibility;  
-        newObj.includeHeader         = this.includeHeader;        
-        newObj.inputFileName         = this.inputFileName;        
-        newObj.jitter                = this.jitter;               
-        newObj.jitterAmount          = this.jitterAmount;         
-        newObj.libraryPath           = this.libraryPath;          
-        newObj.maxImageBufferMemory  = this.maxImageBufferMemory; 
-        newObj.outputAlpha           = this.outputAlpha;          
-        newObj.outputFileName        = this.outputFileName;       
-        newObj.outputFileType        = this.outputFileType;       
-        newObj.outputToFile          = this.outputToFile;         
-        newObj.palette               = this.palette;              
-        newObj.pauseWhenDone         = this.pauseWhenDone;        
-        newObj.postSceneCommand      = this.postSceneCommand;     
-        newObj.postSceneReturn       = this.postSceneReturn;      
-        newObj.preSceneCommand       = this.preSceneCommand;      
-        newObj.preSceneReturn        = this.preSceneReturn;       
-        newObj.previewEndSize        = this.previewEndSize;       
-        newObj.previewStartSize      = this.previewStartSize;     
-        newObj.quality               = this.quality;              
-        newObj.radiosityFileName     = this.radiosityFileName;    
-        newObj.radiosityFromFile     = this.radiosityFromFile;    
-        newObj.radiosityToFile       = this.radiosityToFile;      
-        newObj.radiosityVainPretrace = this.radiosityVainPretrace;
-        newObj.removeBounds          = this.removeBounds;         
-        newObj.renderBlockSize       = this.renderBlockSize;      
-        newObj.renderBlockStep       = this.renderBlockStep;      
-        newObj.renderConsole         = this.renderConsole;        
-        newObj.renderFile            = this.renderFile;           
-        newObj.renderPattern         = this.renderPattern;        
-        newObj.samplingMethod        = this.samplingMethod;       
-        newObj.splitUnions           = this.splitUnions;          
-        newObj.startColumn           = this.startColumn;          
-        newObj.startRow              = this.startRow;             
-        newObj.statisticConsole      = this.statisticConsole;     
-        newObj.statisticFile         = this.statisticFile;        
-        newObj.testAbort             = this.testAbort;            
-        newObj.testAbortCount        = this.testAbortCount;       
-        newObj.userAbortCommand      = this.userAbortCommand;     
-        newObj.userAbortReturn       = this.userAbortReturn;      
-        newObj.verbose               = this.verbose;              
-        newObj.videoMode             = this.videoMode;            
-        newObj.warningConsole        = this.warningConsole;       
-        newObj.warningFile           = this.warningFile;          
-        newObj.warningLevel          = this.warningLevel;         
-        newObj.width                 = this.width;                
-        newObj.workThreads           = this.workThreads;          
+        newObj.allConsole          = this.allConsole;         
+        newObj.allFile             = this.allFile;            
+        newObj.antialias           = this.antialias;          
+        newObj.antialiasDepth      = this.antialiasDepth;     
+        newObj.antialiasGamma      = this.antialiasGamma;     
+        newObj.antialiasThreshold  = this.antialiasThreshold; 
+        newObj.appendFile          = this.appendFile;         
+        newObj.bitsPerColor        = this.bitsPerColor;       
+        newObj.bounding            = this.bounding;           
+        newObj.boundingMethod      = this.boundingMethod;     
+        newObj.boundingThreshold   = this.boundingThreshold;  
+        newObj.bspBaseAccessCost   = this.bspBaseAccessCost;  
+        newObj.bspChildAccessCost  = this.bspChildAccessCost; 
+        newObj.bspIsectCost        = this.bspIsectCost;       
+        newObj.bspMaxDepth         = this.bspMaxDepth;        
+        newObj.bspMissChance       = this.bspMissChance;      
+        newObj.debugConsole        = this.debugConsole;       
+        newObj.debugFile           = this.debugFile;          
+        newObj.display             = this.display;            
+        newObj.displayGamma        = this.displayGamma;       
+        newObj.dither              = this.dither;             
+        newObj.ditherMethod        = this.ditherMethod;       
+        newObj.endColumn           = this.endColumn;          
+        newObj.endRow              = this.endRow;             
+        newObj.exePath             = this.exePath;            
+        newObj.fatalConsole        = this.fatalConsole;       
+        newObj.fatalErrorCommand   = this.fatalErrorCommand;  
+        newObj.fatalErrorReturn    = this.fatalErrorReturn;   
+        newObj.fatalFile           = this.fatalFile;          
+        newObj.fileGamma           = this.fileGamma;          
+        newObj.height              = this.height;             
+        newObj.highReproducibility = this.highReproducibility;
+        newObj.includeHeader       = this.includeHeader;      
+        newObj.inputFileName       = this.inputFileName;      
+        newObj.jitter              = this.jitter;             
+        newObj.jitterAmount        = this.jitterAmount;       
+        newObj.libraryPath         = this.libraryPath;        
+        newObj.maxImageBuffer      = this.maxImageBuffer;     
+        newObj.outputAlpha         = this.outputAlpha;        
+        newObj.outputFileName      = this.outputFileName;     
+        newObj.outputFileType      = this.outputFileType;     
+        newObj.outputToFile        = this.outputToFile;       
+        newObj.palette             = this.palette;            
+        newObj.pauseWhenDone       = this.pauseWhenDone;      
+        newObj.postSceneCommand    = this.postSceneCommand;   
+        newObj.postSceneReturn     = this.postSceneReturn;    
+        newObj.preSceneCommand     = this.preSceneCommand;    
+        newObj.preSceneReturn      = this.preSceneReturn;     
+        newObj.previewEndSize      = this.previewEndSize;     
+        newObj.previewStartSize    = this.previewStartSize;   
+        newObj.quality             = this.quality;            
+        newObj.radFileName         = this.radFileName;        
+        newObj.radFromFile         = this.radFromFile;        
+        newObj.radToFile           = this.radToFile;          
+        newObj.radVainPretrace     = this.radVainPretrace;    
+        newObj.removeBounds        = this.removeBounds;       
+        newObj.renderBlockSize     = this.renderBlockSize;    
+        newObj.renderBlockStep     = this.renderBlockStep;    
+        newObj.renderConsole       = this.renderConsole;      
+        newObj.renderFile          = this.renderFile;         
+        newObj.renderPattern       = this.renderPattern;      
+        newObj.samplingMethod      = this.samplingMethod;     
+        newObj.splitUnions         = this.splitUnions;        
+        newObj.startColumn         = this.startColumn;        
+        newObj.startRow            = this.startRow;           
+        newObj.statisticConsole    = this.statisticConsole;   
+        newObj.statisticFile       = this.statisticFile;      
+        newObj.testAbort           = this.testAbort;          
+        newObj.testAbortCount      = this.testAbortCount;     
+        newObj.userAbortCommand    = this.userAbortCommand;   
+        newObj.userAbortReturn     = this.userAbortReturn;    
+        newObj.verbose             = this.verbose;            
+        newObj.videoMode           = this.videoMode;          
+        newObj.warningConsole      = this.warningConsole;     
+        newObj.warningFile         = this.warningFile;        
+        newObj.warningLevel        = this.warningLevel;       
+        newObj.width               = this.width;              
+        newObj.workThreads         = this.workThreads;        
 
         return newObj;
     }
@@ -4905,7 +4905,7 @@ class Camera extends Primitive {
             cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
     
         content.push(pad + "camera {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.type + (this.type == "cylinder" ? " " + this.cylinderType : ""));
+        content.push(ppad + cpov.cameraTypes[this.type] + (this.type == "cylinder" ? " " + this.cylinderType : ""));
         if(this.location !== null)
             content.push(ppad + "location " + this.location.toSDL());
         if(this.right !== null)
@@ -7172,7 +7172,7 @@ class LightSource extends Primitive {
 
         // Required parameters //
 
-        this.requiredParams = [ "location", "color" ];
+        this.requiredParams = [ "location", "color", "type" ];
 
     }
 
@@ -7266,10 +7266,10 @@ class LightSource extends Primitive {
     }
 
     set adaptive(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val >= 0)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._adaptive = val;
         } else {
-            cpov.error("fatal", "adaptive must be a float greater than or equal to zero.", "LightSource", this);
+            cpov.error("fatal", "adaptive must be an integer greater than or equal to zero.", "LightSource", this);
         }
     }
 
@@ -7629,10 +7629,10 @@ class LightSource extends Primitive {
     }
 
     set size1(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._size1 = val;
         } else {
-            cpov.error("fatal", "size1 must be a float greater than zero.", "LightSource", this);
+            cpov.error("fatal", "size1 must be an integer greater than or equal to zero.", "LightSource", this);
         }
     }
 
@@ -7648,10 +7648,10 @@ class LightSource extends Primitive {
     }
 
     set size2(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isInt(val) && val >= 0)) {
             this._size2 = val;
         } else {
-            cpov.error("fatal", "size2 must be a float greater than zero.", "LightSource", this);
+            cpov.error("fatal", "undefined", "LightSource", this);
         }
     }
 
@@ -7686,10 +7686,10 @@ class LightSource extends Primitive {
     }
 
     set type(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isString(val) && (val == 'spotlight' || val == 'cylinder'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isString(val) && (cpov.isInArray(val, cpov.lightTypes)))) {
             this._type = val;
         } else {
-            cpov.error("fatal", "type must be either 'spotlight' or 'cylinder'.", "LightSource", this);
+            cpov.error("fatal", "type must be one of point, spotlight, or cylinder.", "LightSource", this);
         }
     }
 
@@ -10900,7 +10900,7 @@ class Text extends Primitive {
         // TODO: Handle escaping of double quotes in this.displayText
     
         content.push(pad + "text {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.fontType + " " + "\"" + this.font + "\"");
+        content.push(ppad + this.fontType + " " + "\"" + this.font + "\" \"" + this.displayText.replace(/"/g, "\\\"") + "\"");
         content.push(ppad + this.thickness + ", " + this.offset);
     
         var superSDL = super.toSDL(stops + 1);

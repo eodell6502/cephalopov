@@ -9,7 +9,7 @@ Results appear in first frame file.
 // TEST #2: ImageOptions: all parameters at init
 //==============================================================================
 
-CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP2 +SP4 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
+CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +UA +Osquink.png +S8 +DYX -P +EP2 +SP4 +Q11 -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
 
 INI file:
 
@@ -44,7 +44,6 @@ Input_File_Name=blarp.pov
 Jitter=true
 Jitter_Amount=1.5
 Library_Path=c:\dat\lib
-Max_Image_Buffer_Memory=2500000
 Output_Alpha=true
 Output_File_Name=squink.png
 Output_File_Type=S
@@ -57,10 +56,6 @@ Pre_Scene_Return=!F
 Preview_End_Size=2
 Preview_Start_Size=4
 Quality=11
-Radiosity_File_Name=rfoo
-Radiosity_From_File=true
-Radiosity_To_File=true
-Radiosity_Vain_Pretrace=false
 Remove_Bounds=false
 Render_Block_Size=4
 Render_Block_Step=1
@@ -84,7 +79,7 @@ Work_Threads=8
 // TEST #3: ImageOptions: all parameters after init
 //==============================================================================
 
-CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +MI2500000 +UA +Osquink.png +S8 +DYX -P +EP1 +SP8 +Q11 +RFrfoo +RFI +RFO -RVP -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
+CLI string: c:\bin\povray.exe +GApoof +R5 +AG1.81 +A2.2 +GP +BM1 +MB5 -THFS +EC256 +ER256 +H480 +HIfoop +Iblarp.pov +J1.5 +Lc:\dat\lib +UA +Osquink.png +S8 +DYX -P +EP1 +SP8 +Q11 -UR +BS4 +RS1 +RP4 +AM2 -SU +SC32 +SR32 -X -X2 +V +WL5 +W640 +WT8
 
 INI file:
 
@@ -119,7 +114,6 @@ Input_File_Name=blarp.pov
 Jitter=true
 Jitter_Amount=1.5
 Library_Path=c:\dat\lib
-Max_Image_Buffer_Memory=2500000
 Output_Alpha=true
 Output_File_Name=squink.png
 Output_File_Type=S
@@ -132,10 +126,6 @@ Pre_Scene_Return=!F
 Preview_End_Size=1
 Preview_Start_Size=8
 Quality=11
-Radiosity_File_Name=rfoo
-Radiosity_From_File=true
-Radiosity_To_File=true
-Radiosity_Vain_Pretrace=false
 Remove_Bounds=false
 Render_Block_Size=4
 Render_Block_Step=1
@@ -195,7 +185,7 @@ global_settings {
     photon {
         count 66
         gather 5, 8
-        media 5.6, 0.222
+        media 5, 0.222
         jitter 1.2
         max_trace_level 4
         adc_bailout 4.5
@@ -248,7 +238,7 @@ global_settings {
     photon {
         count 66
         gather 5, 8
-        media 5.6, 0.222
+        media 5, 0.222
         jitter 1.2
         max_trace_level 4
         adc_bailout 4.5
@@ -609,7 +599,7 @@ superellipsoid { // superellipsoidTestMinimum
 //==============================================================================
 
 text { // textTestMinimum
-    ttf "Arial"
+    ttf "Arial" "POV-Ray rules!"
     1, 1.2
 }
 
@@ -718,6 +708,7 @@ difference { // differenceTestMinimum
 
 light_source { // point_lightSourceTestMinimum
     <1, 1, 1>, rgb <1, 1, 1>
+    point
     fade_distance 5.1
     fade_power 1.2
 }
@@ -732,6 +723,7 @@ camera { // cameraTestMinimum
     perspective
     location <5, 5, 5>
     look_at <0, 0, 0>
+    aperture null
 }
 
 
