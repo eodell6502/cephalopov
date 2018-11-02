@@ -172,6 +172,26 @@ miscDef.prismTypes = {
 
 
 //------------------------------------------------------------------------------
+// List of rendering quality settings.
+//------------------------------------------------------------------------------
+
+miscDef.renderQuality = {
+    0:   "Just show quick colors. Use full ambient lighting only. Quick colors are used only at 5 or below.",
+    1:	 "Just show quick colors. Use full ambient lighting only. Quick colors are used only at 5 or below.",
+    2:   "Show specified diffuse and ambient light.",
+    3:	 "Show specified diffuse and ambient light.",
+    4:	 "Render shadows, but no extended lights.",
+    5:	 "Render shadows, including extended lights.",
+    6:   "Compute texture patterns, compute photons.",
+    7:	 "Compute texture patterns, compute photons.",
+    8:	 "Compute reflected, refracted, and transmitted rays.",
+    9:	 "Compute media, radiosity and subsurface light transport.",
+    10:	 "Compute media, radiosity and subsurface light transport.",
+    11:	 "Compute media, radiosity and subsurface light transport.",
+};
+
+
+//------------------------------------------------------------------------------
 // All supported return actions mapped to textual descriptions.
 //------------------------------------------------------------------------------
 
@@ -195,6 +215,20 @@ miscDef.returnActions = {
     "!U": "[invert] generate a user abort in POV-Ray",
     "!F": "[invert] generate a fatal error in POV-Ray",
 };
+
+
+//------------------------------------------------------------------------------
+// Return actions listed without negations.
+//------------------------------------------------------------------------------
+
+miscDef.returnActionsRaw = {
+    "I":  "ignore code",
+    "S":  "skip one step",
+    "A":  "all steps skipped",
+    "Q":  "quit POV-Ray immediately",
+    "U":  "generate a user abort in POV-Ray",
+    "F":  "generate a fatal error in POV-Ray",
+}
 
 
 //------------------------------------------------------------------------------

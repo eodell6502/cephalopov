@@ -62,49 +62,49 @@ module.exports = {
             name:  "bounding",
             valid: "cpov.isBoolean(val)",
             err:   "bounding must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code> (the default), turns automatic bounding control on.",
             tname: "boolean"
         }, {
             name:  "boundingMethod",
             valid: "cpov.isInt(val) && cpov.isWithin(val, 1, 2)",
             err:   "boundingMethod must be either 1 or 2.",
-            desc:  "TODO",
+            desc:  "If set to 1 (the default), the POV-Ray 3.0+ automatic bounding system is used. If set to 2, the new (and very much beta) Binary Space Partitioning method is used.",
             tname: "integer"
         }, {
             name:  "boundingThreshold",
             valid: "cpov.isInt(val) && val >= 0",
             err:   "boundingThreshold must be an integer greater than or equal to zero.",
-            desc:  "TODO",
+            desc:  "Sets the minimum number of objects that must be in a scene before automatic bounding control is used. Defaults to 25.",
             tname: "integer"
         }, {
             name:  "bspBaseAccessCost",
             valid: "cpov.isFloat(val)",
             err:   "bspBaseAccessCost must be a float.",
-            desc:  "TODO",
+            desc:  "Parameter for the beta Binary Space Partioning System. See <a href=\"http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8\">this article</a> for details.",
             tname: "float"
         }, {
             name:  "bspChildAccessCost",
             valid: "cpov.isFloat(val)",
             err:   "bspChildAccessCost must be a float.",
-            desc:  "TODO",
+            desc:  "Parameter for the beta Binary Space Partioning System. See <a href=\"http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8\">this article</a> for details.",
             tname: "float"
         }, {
             name:  "bspIsectCost",
             valid: "cpov.isFloat(val)",
             err:   "bspIsectCost must be a float.",
-            desc:  "TODO",
+            desc:  "Parameter for the beta Binary Space Partioning System. See <a href=\"http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8\">this article</a> for details.",
             tname: "float"
         }, {
             name:  "bspMaxDepth",
             valid: "cpov.isInt(val) && val > 0",
             err:   "bspMaxDepth must be an integer greater than zero.",
-            desc:  "TODO",
+            desc:  "Parameter for the beta Binary Space Partioning System. See <a href=\"http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8\">this article</a> for details.",
             tname: "float"
         }, {
             name:  "bspMissChance",
             valid: "cpov.isFloat(val)",
             err:   "bspMissChance must be a float.",
-            desc:  "TODO",
+            desc:  "Parameter for the beta Binary Space Partioning System. See <a href=\"http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8\">this article</a> for details.",
             tname: "float"
         }, {
             name:  "debugConsole",
@@ -158,7 +158,7 @@ module.exports = {
             name:  "exePath",
             valid: "cpov.isNonEmptyString(val)",
             err:   "exePath must be a non-empty string.",
-            desc:  "TODO",
+            desc:  "This should contain the full path to the POV-Ray executable if it is not in the system path.",
             tname: "string"
         }, {
             name:  "fatalConsole",
@@ -176,7 +176,7 @@ module.exports = {
             name:  "fatalErrorReturn",
             valid: "cpov.isKey(val, cpov.returnActions)",
             err:   "fatalErrorReturn must be one of " + cpov.keysToTextList(cpov.returnActions) + ".",
-            desc:  "TODO",
+            desc:  "Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with \"<code>-</code>\" or \"<code>!</code> to negate the action. The legal codes are $keylist.returnActionsRaw",
             tname: "string"
         }, {
             name:  "fatalFile",
@@ -236,7 +236,7 @@ module.exports = {
             name:  "maxImageBuffer",
             valid: "cpov.isInt(val) && val > 0",
             err:   "maxImageBuffer must be an integer greater than zero.",
-            desc:  "TODO",
+            desc:  "Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.",
             tname: "integer"
         }, {
             name:  "outputAlpha",
@@ -284,7 +284,7 @@ module.exports = {
             name:  "postSceneReturn",
             valid: "cpov.isKey(val, cpov.returnActions)",
             err:   "postSceneReturn must be one of " + cpov.keysToTextList(cpov.returnActions) + ".",
-            desc:  "TODO",
+            desc:  "Specifies the action to take when the <code>postSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.",
             tname: "string"
         }, {
             name:  "preSceneCommand",
@@ -296,7 +296,7 @@ module.exports = {
             name:  "preSceneReturn",
             valid: "cpov.isKey(val, cpov.returnActions)",
             err:   "preSceneReturn must be one of " + cpov.keysToTextList(cpov.returnActions) + ".",
-            desc:  "TODO",
+            desc:  "Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.",
             tname: "string"
         }, {
             name:  "previewEndSize",
@@ -314,49 +314,49 @@ module.exports = {
             name:  "quality",
             valid: "cpov.isInt(val) && val >= 0 && val <= 11",
             err:   "quality must be an integer in the range (0 - 11)",
-            desc:  "TODO",
+            desc:  "Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are $keylist.renderQuality",
             tname: "integer"
         }, {
             name:  "radFileName",
             valid: "cpov.isNonEmptyString(val)",
             err:   "radFileName must be a non-empty string.",
-            desc:  "TODO",
+            desc:  "If specified, manually sets the name of the radiosity cache file.",
             tname: "string"
         }, {
             name:  "radFromFile",
-            valid: "cpov.isNonEmptyString(val)",
-            err:   "radFromFile must be a non-empty string.",
-            desc:  "TODO",
+            valid: "cpov.isBoolean(val)",
+            err:   "radFromFile must be a boolean.",
+            desc:  "If <code>true</code>, loads sample data from an existing radiosity cache file.",
             tname: "string"
         }, {
             name:  "radToFile",
-            valid: "cpov.isNonEmptyString(val)",
-            err:   "radToFile must be a non-empty string.",
-            desc:  "TODO",
+            valid: "cpov.isBoolean(val)",
+            err:   "radToFile must be a boolean.",
+            desc:  "If <code>true</code>, saves sample data to a radiosity cache file for reuse.",
             tname: "string"
         }, {
             name:  "radVainPretrace",
             valid: "cpov.isBoolean(val)",
             err:   "radVainPretrace must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code> (the default), an extra radiosity trace will be taken to improve the quality of the preview. If not needed, this can be turned off to improve rendering speed.",
             tname: "boolean"
         }, {
             name:  "removeBounds",
             valid: "cpov.isBoolean(val)",
             err:   "removeBounds must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code> (the default), manual bounds will be removed if automatic bounding control is turned on.",
             tname: "boolean"
         }, {
             name:  "renderBlockSize",
             valid: "cpov.isInt(val) && val >= 4",
             err:   "renderBlockSize must be an integer greater than or equal to 4.",
-            desc:  "TODO",
+            desc:  "Specifies the size of blocks of pixels to be rendered. Must be 4 or greater.",
             tname: "integer"
         }, {
             name:  "renderBlockStep",
             valid: "cpov.isInt(val) && val >= 1",
             err:   "renderBlockStep must be an integer greater than or equal to 1.",
-            desc:  "TODO",
+            desc:  "Sets the step size for walking through the blocks numbered by <code>renderPattern</code>",
             tname: "integer"
         }, {
             name:  "renderConsole",
@@ -374,7 +374,7 @@ module.exports = {
             name:  "renderPattern",
             valid: "cpov.isInt(val) && val >= 0 && val <= 5",
             err:   "renderPattern must be an integer in the range (0 - 5).",
-            desc:  "TODO",
+            desc:  "Determines the order in which render blocks will be rendered. See the POV-Ray documentation for <a href=\"http://povray.org/documentation/3.7.0/r3_2.html#r3_2_8_2_1\">details</a>.",
             tname: "integer"
         }, {
             name:  "samplingMethod",
@@ -386,7 +386,7 @@ module.exports = {
             name:  "splitUnions",
             valid: "cpov.isBoolean(val)",
             err:   "splitUnions must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, manually bound <code>Union</code> objects will be rebound by the automatic bounding system. The default is <code>false</code>.",
             tname: "boolean"
         }, {
             name:  "startColumn",
@@ -434,7 +434,7 @@ module.exports = {
             name:  "userAbortReturn",
             valid: "cpov.isKey(val, cpov.returnActions)",
             err:   "userAbortReturn must be one of " + cpov.keysToTextList(cpov.returnActions) + ".",
-            desc:  "TODO",
+            desc:  "Specifies the action to take when the <code>userAbortAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.",
             tname: "string"
         }, {
             name:  "verbose",

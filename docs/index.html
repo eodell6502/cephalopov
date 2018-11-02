@@ -108,7 +108,7 @@ table.attrs > tbody > tr > td.dummy { color: #888; background-color: #FFE; }
 table.attrs > tbody > tr > td.niy { color: #A00; font: bold 10pt Roboto; }
 
 table.codeDoc { margin-left: auto; margin-right: auto; margin-bottom: 1em; font-family: ArchivoNarrow;}
-table.codeDoc td { text-align: left; }
+table.codeDoc td { text-align: left; padding-left: 0.5em; padding-right: 0.5em; }
 table.codeDoc > tbody > tr > td:nth-child(1) { text-align: center; font-weight: bold; }
 
 </style>
@@ -273,20 +273,20 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>antialiasThreshold</td><td>float</td><td>Defines the amount by which a pixel must differ from its neighbors to trigger supersampling. The default is 0.3.</td></tr>
 <tr><td>RW</td><td>N</td><td>appendFile</td><td>boolean</td><td>If <code>true</code>, output from the various runtime log files will be appended to existing files. If <code>false</code>, runtime log files will be overwritten.</td></tr>
 <tr><td>RW</td><td>N</td><td>bitsPerColor</td><td>integer</td><td>Specifies the number of bits per color channel in the image file. This only affects PNG and PNM output, which allow 5-16 bits per channel.</td></tr>
-<tr><td>RW</td><td>N</td><td>bounding</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>boundingMethod</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>boundingThreshold</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>bspBaseAccessCost</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>bspChildAccessCost</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>bspIsectCost</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>bspMaxDepth</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>bspMissChance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>bounding</td><td>boolean</td><td>If <code>true</code> (the default), turns automatic bounding control on.</td></tr>
+<tr><td>RW</td><td>N</td><td>boundingMethod</td><td>integer</td><td>If set to 1 (the default), the POV-Ray 3.0+ automatic bounding system is used. If set to 2, the new (and very much beta) Binary Space Partitioning method is used.</td></tr>
+<tr><td>RW</td><td>N</td><td>boundingThreshold</td><td>integer</td><td>Sets the minimum number of objects that must be in a scene before automatic bounding control is used. Defaults to 25.</td></tr>
+<tr><td>RW</td><td>N</td><td>bspBaseAccessCost</td><td>float</td><td>Parameter for the beta Binary Space Partioning System. See <a href="http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8">this article</a> for details.</td></tr>
+<tr><td>RW</td><td>N</td><td>bspChildAccessCost</td><td>float</td><td>Parameter for the beta Binary Space Partioning System. See <a href="http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8">this article</a> for details.</td></tr>
+<tr><td>RW</td><td>N</td><td>bspIsectCost</td><td>float</td><td>Parameter for the beta Binary Space Partioning System. See <a href="http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8">this article</a> for details.</td></tr>
+<tr><td>RW</td><td>N</td><td>bspMaxDepth</td><td>float</td><td>Parameter for the beta Binary Space Partioning System. See <a href="http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8">this article</a> for details.</td></tr>
+<tr><td>RW</td><td>N</td><td>bspMissChance</td><td>float</td><td>Parameter for the beta Binary Space Partioning System. See <a href="http://www.realtimerendering.com/resources/RTNews/html/rtnv17n1.html#art8">this article</a> for details.</td></tr>
 <tr><td>RW</td><td>N</td><td>debugConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray debug messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>debugFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray debug messages are written to <code>DEBUG.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -302,10 +302,23 @@ once for each object.</p>
 </td></tr>
 <tr><td>RW</td><td>N</td><td>endColumn</td><td>integer<br/>float</td><td>Forces the end of output at the specified column if an integer is supplied or a fraction of screen width if a float in the unit interval (0.n) is supplied.</td></tr>
 <tr><td>RW</td><td>N</td><td>endRow</td><td>integer<br/>float</td><td>Forces the end of output at the specified row if an integer is supplied or a fraction of screen height if a float in the unit interval (0.n) is supplied.</td></tr>
-<tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
+<table class="sgrid codeDoc">
+<thead>
+
+<tr><th>Code</th><th>Meaning</th></tr>
+</thead><tbody>
+<tr><td>A</td><td>all steps skipped</td></tr>
+<tr><td>F</td><td>generate a fatal error in POV-Ray</td></tr>
+<tr><td>I</td><td>ignore code</td></tr>
+<tr><td>Q</td><td>quit POV-Ray immediately</td></tr>
+<tr><td>S</td><td>skip one step</td></tr>
+<tr><td>U</td><td>generate a user abort in POV-Ray</td></tr>
+</tbody></table>
+</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray fatal error messages are written to <code>FATAL.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
 <tr><td>RW</td><td>N</td><td>fileGamma</td><td>float<br/>string</td><td>Sets the display target gamma for the output file. This may be given as either a float or the string <code>"sRGB"</code> (approx. 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>height</td><td>integer</td><td>Height of output image in pixels.</td></tr>
@@ -315,10 +328,10 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>jitter</td><td>boolean</td><td>If <code>true</code>, enables random jittering of antialiasing super-samples to minimize artifacts. This should only be used for static scenes, not animation.</td></tr>
 <tr><td>RW</td><td>N</td><td>jitterAmount</td><td>float</td><td>Defines the amount of jitter. The default is 1.0, above which super-samples may stray outside of their pixels.</td></tr>
 <tr><td>RW</td><td>N</td><td>libraryPath</td><td>Array</td><td>An array of one or more paths to search for include files.</td></tr>
-<tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -339,24 +352,43 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>palette</td><td>char</td><td>A single character which selects a hardware-dependent palette for display during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>pauseWhenDone</td><td>boolean</td><td>If <code>true</code>, POV-Ray will wait for a keypress at the end of rendering before clearing the display.</td></tr>
 <tr><td>RW</td><td>N</td><td>postSceneCommand</td><td>string</td><td>Shell command to execute after rendering a scene. Since CephaloPOV replaces POV-Ray's native animation system, this happens after every frame in an animation.</td></tr>
-<tr><td>RW</td><td>N</td><td>postSceneReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>postSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>postSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>preSceneCommand</td><td>string</td><td>Shell command to execute before rendering a scene. Since CephaloPOV replaces POV-Ray's native animation system, this happens before every frame in an animation.</td></tr>
-<tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>radFileName</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>radFromFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>radToFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>radVainPretrace</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>removeBounds</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>renderBlockSize</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>renderBlockStep</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
+<table class="sgrid codeDoc">
+<thead>
+
+<tr><th>Code</th><th>Meaning</th></tr>
+</thead><tbody>
+<tr><td>0</td><td>Just show quick colors. Use full ambient lighting only. Quick colors are used only at 5 or below.</td></tr>
+<tr><td>1</td><td>Just show quick colors. Use full ambient lighting only. Quick colors are used only at 5 or below.</td></tr>
+<tr><td>10</td><td>Compute media, radiosity and subsurface light transport.</td></tr>
+<tr><td>11</td><td>Compute media, radiosity and subsurface light transport.</td></tr>
+<tr><td>2</td><td>Show specified diffuse and ambient light.</td></tr>
+<tr><td>3</td><td>Show specified diffuse and ambient light.</td></tr>
+<tr><td>4</td><td>Render shadows, but no extended lights.</td></tr>
+<tr><td>5</td><td>Render shadows, including extended lights.</td></tr>
+<tr><td>6</td><td>Compute texture patterns, compute photons.</td></tr>
+<tr><td>7</td><td>Compute texture patterns, compute photons.</td></tr>
+<tr><td>8</td><td>Compute reflected, refracted, and transmitted rays.</td></tr>
+<tr><td>9</td><td>Compute media, radiosity and subsurface light transport.</td></tr>
+</tbody></table>
+</td></tr>
+<tr><td>RW</td><td>N</td><td>radFileName</td><td>string</td><td>If specified, manually sets the name of the radiosity cache file.</td></tr>
+<tr><td>RW</td><td>N</td><td>radFromFile</td><td>string</td><td>If <code>true</code>, loads sample data from an existing radiosity cache file.</td></tr>
+<tr><td>RW</td><td>N</td><td>radToFile</td><td>string</td><td>If <code>true</code>, saves sample data to a radiosity cache file for reuse.</td></tr>
+<tr><td>RW</td><td>N</td><td>radVainPretrace</td><td>boolean</td><td>If <code>true</code> (the default), an extra radiosity trace will be taken to improve the quality of the preview. If not needed, this can be turned off to improve rendering speed.</td></tr>
+<tr><td>RW</td><td>N</td><td>removeBounds</td><td>boolean</td><td>If <code>true</code> (the default), manual bounds will be removed if automatic bounding control is turned on.</td></tr>
+<tr><td>RW</td><td>N</td><td>renderBlockSize</td><td>integer</td><td>Specifies the size of blocks of pixels to be rendered. Must be 4 or greater.</td></tr>
+<tr><td>RW</td><td>N</td><td>renderBlockStep</td><td>integer</td><td>Sets the step size for walking through the blocks numbered by <code>renderPattern</code></td></tr>
 <tr><td>RW</td><td>N</td><td>renderConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray rendering information is sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>renderFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray rendering information is written to <code>RENDER.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>renderPattern</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>renderPattern</td><td>integer</td><td>Determines the order in which render blocks will be rendered. See the POV-Ray documentation for <a href="http://povray.org/documentation/3.7.0/r3_2.html#r3_2_8_2_1">details</a>.</td></tr>
 <tr><td>RW</td><td>N</td><td>samplingMethod</td><td>integer</td><td>Sets the antialiasing sampling method. A value of 1, the default, enables non-recursive sampling, while 2 enables adaptive, recursive sampling.</td></tr>
-<tr><td>RW</td><td>N</td><td>splitUnions</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>splitUnions</td><td>boolean</td><td>If <code>true</code>, manually bound <code>Union</code> objects will be rebound by the automatic bounding system. The default is <code>false</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>startColumn</td><td>integer<br/>float</td><td>Forces the start of output at the specified column if an integer is supplied or a fraction of screen width if a float in the unit interval (0.n) is supplied.</td></tr>
 <tr><td>RW</td><td>N</td><td>startRow</td><td>integer<br/>float</td><td>Forces the end of output at the specified row if an integer is supplied or a fraction of screen height if a float in the unit interval (0.n) is supplied.</td></tr>
 <tr><td>RW</td><td>N</td><td>statisticConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray statistics are sent to the console.</td></tr>
@@ -364,12 +396,12 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>testAbort</td><td>boolean</td><td>If <code>true</code>, POV-Ray will poll the keyboard for <code>Ctrl-C</code> to halt the program. If false, <code>Ctrl-C</code> is ignored.</td></tr>
 <tr><td>RW</td><td>N</td><td>testAbortCount</td><td>integer</td><td>If <code>testAbort</code> is <code>true</code>, <code>testAbortCount</code> specifies the number of pixels rendered between tests for <code>Ctrl-C</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>userAbortCommand</td><td>string</td><td>Shell command to execute when the user aborts rendering.</td></tr>
-<tr><td>RW</td><td>N</td><td>userAbortReturn</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>userAbortReturn</td><td>string</td><td>Specifies the action to take when the <code>userAbortAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>verbose</td><td>boolean</td><td>If true, POV-Ray will output additional information about each render. Not to be confused with CephaloPOV's <code>-v</code> switch, which only increses the verbosity of its own output.</td></tr>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -402,7 +434,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -634,7 +666,7 @@ once for each object.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -656,7 +688,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>blurSamples</td><td>Array</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
 <tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -854,7 +886,7 @@ once for each object.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
