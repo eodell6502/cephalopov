@@ -1,6 +1,42 @@
 miscDef = { };
 
 //------------------------------------------------------------------------------
+// List of camera types
+//------------------------------------------------------------------------------
+
+miscDef.cameraTypes = {
+    perspective:    'perspective',
+    orthographic:   'orthographic',
+    fisheye:        'fisheye',
+    ultraWideAngle: 'ultra_wide_angle',
+    omnimax:        'omnimax',
+    panoramic:      'panoramic',
+    spherical:      'spherical',
+    cylinder:       'cylinder',
+    meshCamera:     'mesh_camera'
+};
+
+
+//------------------------------------------------------------------------------
+// List of legal character sets for text strings.
+//------------------------------------------------------------------------------
+
+miscDef.charsets = [ 'ascii', 'utf8', 'sys' ];
+
+
+//------------------------------------------------------------------------------
+// Cylindrical camera types
+//------------------------------------------------------------------------------
+
+miscDef.cylindricalCameraTypes = {
+    1: "vertical cylinder, fixed viewpoint",
+    2: "horizontal cylinder, fixed viewpoint",
+    3: "vertical cylinder, viewpoint moves along the cylinder's axis",
+    4: "horizontal cylinder, viewpoint moves along the cylinder's axis",
+};
+
+
+//------------------------------------------------------------------------------
 // Legal dither types mapped to textual descriptions.
 //------------------------------------------------------------------------------
 
@@ -23,59 +59,13 @@ miscDef.fontTypes = {
 	"ttc": "TrueType collection",
 };
 
-//------------------------------------------------------------------------------
-// All (graphics) output file formats, mapped to textual descriptions.
-//------------------------------------------------------------------------------
-
-miscDef.outputFileTypes = {
-    "B": "BMP",
-    "C": "TGA, RLE compression",
-    "E": "OpenEXR HDR",
-    "H": "Radiance HDR",
-    "J": "JPEG",
-    "N": "PNG",
-    "P": "PPM",
-    "S": "System default",
-    "T": "TGA, uncompressed"
-};
-
 
 //------------------------------------------------------------------------------
-// List of geometric primitive type names.
+// List of heightField image types
 //------------------------------------------------------------------------------
 
-miscDef.primitiveDefs = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
-    "cylinder", "difference", "disc", "heightField", "intersection",
-    "isoSurface", "juliaFractal", "lathe", "lightSource", "merge", "mesh", "ovus",
-    "parametric", "plane", "poly", "polygon", "polynomial", "prism", "quadric",
-    "quartic", "sor", "sphere", "sphereSweep", "superellipsoid", "text",
-    "torus", "triangle", "union" ];
-
-
-//------------------------------------------------------------------------------
-// All supported return actions mapped to textual descriptions.
-//------------------------------------------------------------------------------
-
-miscDef.returnActions = {
-    "I":  "ignore code",
-    "S":  "skip one step",
-    "A":  "all steps skipped",
-    "Q":  "quit POV-Ray immediately",
-    "U":  "generate a user abort in POV-Ray",
-    "F":  "generate a fatal error in POV-Ray",
-    "-I": "[invert] ignore code",
-    "-S": "[invert] skip one step",
-    "-A": "[invert] all steps skipped",
-    "-Q": "[invert] quit POV-Ray immediately",
-    "-U": "[invert] generate a user abort in POV-Ray",
-    "-F": "[invert] generate a fatal error in POV-Ray",
-    "!I": "[invert] ignore code",
-    "!S": "[invert] skip one step",
-    "!A": "[invert] all steps skipped",
-    "!Q": "[invert] quit POV-Ray immediately",
-    "!U": "[invert] generate a user abort in POV-Ray",
-    "!F": "[invert] generate a fatal error in POV-Ray",
-};
+miscDef.hfTypes = [ "exr", "gif", "hdr", "iff", "jpeg", "pgm", "png", "pot",
+    "ppm", "sys", "tga", "tiff", ];
 
 
 //------------------------------------------------------------------------------
@@ -86,32 +76,6 @@ miscDef.internalSplineTypes = {
     linearSpline: "linear_spline",
     bezierSpline: "b_spline",
     cubicSpline:  "cubic_spline"
-};
-
-
-//------------------------------------------------------------------------------
-// Map of prism (spline) types to their SDL representations.
-//------------------------------------------------------------------------------
-
-miscDef.prismTypes = {
-    bezierSpline:    "bezier_spline",
-    conicSweep:      "conic_sweep",
-    cubicSpline:     "cubic_spline",
-    linearSpline:    "linear_spline",
-    linearSweep:     "linear_sweep",
-    quadraticSpline: "quadratic_spline",
-};
-
-
-//------------------------------------------------------------------------------
-// Map of spline types to their SDL representations.
-//------------------------------------------------------------------------------
-
-miscDef.splineTypes = {
-    bezierSpline:    "bezier_spline",
-    cubicSpline:     "cubicSpline",
-    linearSpline:    "linear_spline",
-    quadraticSpline: "quadratic_spline",
 };
 
 
@@ -143,10 +107,14 @@ miscDef.juliaFractalTypes = [
 
 
 //------------------------------------------------------------------------------
-// List of legal character sets for text strings.
+// List of light types.
 //------------------------------------------------------------------------------
 
-miscDef.charsets = [ 'ascii', 'utf8', 'sys' ];
+miscDef.lightTypes = [
+    "point",
+    "spotlight",
+    "cylinder"
+];
 
 
 //------------------------------------------------------------------------------
@@ -159,52 +127,75 @@ miscDef.noiseGenerators = {
     3: "Perlin noise",
 };
 
+
 //------------------------------------------------------------------------------
-// List of camera types
+// All (graphics) output file formats, mapped to textual descriptions.
 //------------------------------------------------------------------------------
 
-miscDef.cameraTypes = {
-    perspective:    'perspective',
-    orthographic:   'orthographic',
-    fisheye:        'fisheye',
-    ultraWideAngle: 'ultra_wide_angle',
-    omnimax:        'omnimax',
-    panoramic:      'panoramic',
-    spherical:      'spherical',
-    cylinder:       'cylinder',
-    meshCamera:     'mesh_camera'
+miscDef.outputFileTypes = {
+    "B": "BMP",
+    "C": "TGA, RLE compression",
+    "E": "OpenEXR HDR",
+    "H": "Radiance HDR",
+    "J": "JPEG",
+    "N": "PNG",
+    "P": "PPM",
+    "S": "System default",
+    "T": "TGA, uncompressed"
 };
 
 
 //------------------------------------------------------------------------------
-// Cylindrical camera types
+// List of geometric primitive type names.
 //------------------------------------------------------------------------------
 
-miscDef.cylindricalCameraTypes = {
-    1: "vertical cylinder, fixed viewpoint",
-    2: "horizontal cylinder, fixed viewpoint",
-    3: "vertical cylinder, viewpoint moves along the cylinder's axis",
-    4: "horizontal cylinder, viewpoint moves along the cylinder's axis",
+miscDef.primitiveDefs = [ "bicubicPatch", "blob", "box", "camera", "cone", "cubic",
+    "cylinder", "difference", "disc", "heightField", "intersection",
+    "isoSurface", "juliaFractal", "lathe", "lightSource", "merge", "mesh", "ovus",
+    "parametric", "plane", "poly", "polygon", "polynomial", "prism", "quadric",
+    "quartic", "sor", "sphere", "sphereSweep", "superellipsoid", "text",
+    "torus", "triangle", "union" ];
+
+
+//------------------------------------------------------------------------------
+// Map of prism (spline) types to their SDL representations.
+//------------------------------------------------------------------------------
+
+miscDef.prismTypes = {
+    bezierSpline:    "bezier_spline",
+    conicSweep:      "conic_sweep",
+    cubicSpline:     "cubic_spline",
+    linearSpline:    "linear_spline",
+    linearSweep:     "linear_sweep",
+    quadraticSpline: "quadratic_spline",
 };
 
 
 //------------------------------------------------------------------------------
-// List of heightField image types
+// All supported return actions mapped to textual descriptions.
 //------------------------------------------------------------------------------
 
-miscDef.hfTypes = [ "exr", "gif", "hdr", "iff", "jpeg", "pgm", "png", "pot",
-    "ppm", "sys", "tga", "tiff", ];
+miscDef.returnActions = {
+    "I":  "ignore code",
+    "S":  "skip one step",
+    "A":  "all steps skipped",
+    "Q":  "quit POV-Ray immediately",
+    "U":  "generate a user abort in POV-Ray",
+    "F":  "generate a fatal error in POV-Ray",
+    "-I": "[invert] ignore code",
+    "-S": "[invert] skip one step",
+    "-A": "[invert] all steps skipped",
+    "-Q": "[invert] quit POV-Ray immediately",
+    "-U": "[invert] generate a user abort in POV-Ray",
+    "-F": "[invert] generate a fatal error in POV-Ray",
+    "!I": "[invert] ignore code",
+    "!S": "[invert] skip one step",
+    "!A": "[invert] all steps skipped",
+    "!Q": "[invert] quit POV-Ray immediately",
+    "!U": "[invert] generate a user abort in POV-Ray",
+    "!F": "[invert] generate a fatal error in POV-Ray",
+};
 
-
-//------------------------------------------------------------------------------
-// List of POV-Ray warning levels.
-//------------------------------------------------------------------------------
-
-miscDef.warningLevels = {
-     0: "Turn off all warnings.",
-     5: "Turn off language version warnings.",
-    10: "Turn on all warnings (default)."
-}
 
 //------------------------------------------------------------------------------
 // List of SDL keywords.
@@ -292,5 +283,29 @@ miscDef.sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accura
     "vlength", "vnormalize", "vrotate", "vstr", "vturbulence", "warning",
     "warp", "water_level", "waves", "while", "width", "wood", "wrinkles",
     "write", "x", "y", "yes", "z" ];
+
+
+//------------------------------------------------------------------------------
+// Map of spline types to their SDL representations.
+//------------------------------------------------------------------------------
+
+miscDef.splineTypes = {
+    bezierSpline:    "bezier_spline",
+    cubicSpline:     "cubicSpline",
+    linearSpline:    "linear_spline",
+    quadraticSpline: "quadratic_spline",
+};
+
+
+//------------------------------------------------------------------------------
+// List of POV-Ray warning levels.
+//------------------------------------------------------------------------------
+
+miscDef.warningLevels = {
+     0: "Turn off all warnings.",
+     5: "Turn off language version warnings.",
+    10: "Turn on all warnings (default)."
+}
+
 
 module.exports = miscDef;

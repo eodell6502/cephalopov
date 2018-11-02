@@ -401,30 +401,30 @@ function docHumper(doc, classname, def) {
 			}
 		}
 	}
-console.log(members);
+
 	//--------------------------------------------------------------------------
 	// We want most attribute lists sorted, but there are a few, chiefly vectors
 	// that should appear in the order given.
 	//--------------------------------------------------------------------------
 
-	if(!cpov.isInArray(classname, ["VectorUV", "VectorXY", "VectorXYZ", "VectorXYZW", "Color"])) {
+	if(!cpov.isInArray(classname, ["VectorUV", "VectorXY", "VectorXYZ", "VectorXYZW", "Color"]))
 		members.sort();
-		for(var i = 0; i < members.length; i++)
-			members[i] = members[i].substr(1);
-	}
+
+    for(var i = 0; i < members.length; i++)
+        members[i] = members[i].substr(1);
 
 	content.push("<div dh=\"" + classname + "\">\n<table class='sgrid attrs'>\n"
         + "<thead>\n"
-        + "<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>\n"
+        + "<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>\n"
         + "<thead><tbody>");
 
 	for(var m = 0; m < members.length; m++) {
 		if(def.immutable !== undefined && def.immutable[members[m]] !== undefined) {
             content.push("<tr><td>RO</td>"
-                + "<td>n/a</td>"
+                + "<td>&nbsp;</td>"
                 + "<td>" + members[m] + "</td>"
                 + "<td>boolean</td>"
-                + "<td>" + immutableDesc[members[m]] + " For a " + classname + ", this is always <code>" + (def.immutable[members[m]] ? "true" : "false") + "</code>.</td>"
+                + "<td>" + immutableDesc[members[m]] + " For a <code>" + classname + "</code>, this is always <code>" + (def.immutable[members[m]] ? "true" : "false") + "</code>.</td>"
                 + "</td></tr>");
 		} else if(def.mutable !== undefined) {
             for(var i = 0; i < def.mutable.length; i++) {

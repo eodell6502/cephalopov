@@ -233,9 +233,9 @@ module.exports = {
             desc:  "An array of one or more paths to search for include files.",
             tname: "Array"
         }, {
-            name:  "maxImageBufferMemory",
+            name:  "maxImageBuffer",
             valid: "cpov.isInt(val) && val > 0",
-            err:   "maxImageBufferMemory must be an integer greater than zero.",
+            err:   "maxImageBuffer must be an integer greater than zero.",
             desc:  "TODO",
             tname: "integer"
         }, {
@@ -317,27 +317,27 @@ module.exports = {
             desc:  "TODO",
             tname: "integer"
         }, {
-            name:  "radiosityFileName",
+            name:  "radFileName",
             valid: "cpov.isNonEmptyString(val)",
-            err:   "radiosityFileName must be a non-empty string.",
+            err:   "radFileName must be a non-empty string.",
             desc:  "TODO",
             tname: "string"
         }, {
-            name:  "radiosityFromFile",
+            name:  "radFromFile",
             valid: "cpov.isNonEmptyString(val)",
-            err:   "radiosityFromFile must be a non-empty string.",
+            err:   "radFromFile must be a non-empty string.",
             desc:  "TODO",
             tname: "string"
         }, {
-            name:  "radiosityToFile",
+            name:  "radToFile",
             valid: "cpov.isNonEmptyString(val)",
-            err:   "radiosityToFile must be a non-empty string.",
+            err:   "radToFile must be a non-empty string.",
             desc:  "TODO",
             tname: "string"
         }, {
-            name:  "radiosityVainPretrace",
+            name:  "radVainPretrace",
             valid: "cpov.isBoolean(val)",
-            err:   "radiosityVainPretrace must be a boolean.",
+            err:   "radVainPretrace must be a boolean.",
             desc:  "TODO",
             tname: "boolean"
         }, {

@@ -65,7 +65,6 @@ module.exports = {
                 req:    true,
                 child:  "array",
                 valid:  "cpov.isArrayOfClass(val, ['Sphere', 'Cylinder'], 1, Infinity) && val.length",
-//                custom: "Blob.components.get-set",
                 err:    "components must be an array of Spheres and/or Cylinders.",
                 desc:   "This is an array of <code>Sphere</code> and <code>Cylinders</code>, optionally with their <code>strength</code> attributes set.",
                 tname:  "Array"
@@ -652,81 +651,81 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "location must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the location of the light source.",
                 tname: "VectorXYZ"
             }, {
                 name:  "color",
                 req:   true,
                 valid: "cpov.isClass(val, 'Color') || (val = cpov.convertToVector('Color', val))",
                 err:   "color must be a Color.",
-                desc:  "TODO",
+                desc:  "Specifies the color of the light source.",
                 tname: "Color"
             }, {
                 name:  "adaptive",
-                valid: "cpov.isFloat(val) && val >= 0",
-                err:   "adaptive must be a float greater than or equal to zero.",
-                desc:  "TODO",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "adaptive must be an integer greater than or equal to zero.",
+                desc:  "Used with area lights. If defind, POV-Ray will use adaptive sampling in an attempt to speed up rendering. Higher values are more accurate.",
                 tname: "float"
             }, {
                 name:  "areaIllumination",
                 valid: "cpov.isBoolean(val)",
                 err:   "areaIllumination must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the experimental support in POV-Ray 3.7 for full area light diffuse and specular illumination is enabled.",
                 tname: "boolean"
             }, {
                 name:  "areaLight",
                 valid: "cpov.isBoolean(val)",
                 err:   "areaLight must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the light becomes an area light, and <code>axis1</code>, <code>axis2</code>, <code>size1</code>, and <code>size2</code> must be defined.",
                 tname: "boolean"
             }, {
                 name:  "axis1",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "axis1 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "When <code>areaLight</code> is <code>true</code>, <code>axis1</code> defines the orientation of the area light along one axis.",
                 tname: "VectorXYZ"
             }, {
                 name:  "axis2",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "axis2 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "When <code>areaLight</code> is <code>true</code>, <code>axis2</code> defines the orientation of the area light along one axis.",
                 tname: "VectorXYZ"
             }, {
                 name:  "circular",
                 valid: "cpov.isBoolean(val)",
                 err:   "circular must be a boolean.",
-                desc:  "TODO",
+                desc:  "Used with area lights. If <code>true</code>, the default rectilinear grid is modified to approximate a circle or ellipse.",
                 tname: "boolean"
             }, {
                 name:  "fadeDistance",
                 valid: "cpov.isFloat(val) && val > 0.",
                 err:   "fadeDistance must be a float greater than zero.",
-                desc:  "TODO",
+                desc:  "Defines the distance at which the light will be at full intensity.",
                 tname: "float"
             }, {
                 name:  "fadePower",
                 valid: "cpov.isFloat(val)",
                 err:   "fadePower must be a float.",
-                desc:  "TODO",
+                desc:  "Defines the rate at which light intensity decreases with distance beyond <code>fadeDistance</code>. A value of 1 is linear, 2 is quadratic, and so on.",
                 tname: "float"
             }, {
                 name:  "falloff",
                 valid: "cpov.isFloat(val) && val < 90.",
                 err:   "falloff must be a float less than 90.",
-                desc:  "TODO",
+                desc:  "If specified, <code>falloff</code> describes a larger cone than <code>radius</code> within which the light fades from its original intensity to nothing. Note that this will still cast sharp shadows.",
                 tname: "float"
             }, {
                 name:  "jitter",
                 valid: "cpov.isBoolean(val)",
                 err:   "jitter must be a boolean.",
-                desc:  "TODO",
+                desc:  "Used with area lights. If <code>true</code>, the positions of the lights are randomly moved during rendering so that banding effects are minimized. Should not be used with animations.",
                 tname: "boolean"
             }, {
                 name:  "looksLike", // TODO
                 child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "looksLike must be a Primitive.",
-                desc:  "TODO",
+                desc:  "Assigns an object (with an implicit <code>noShadow</code> flag) to act as the physical source of the light.",
                 tname: "Primitive"
             }, {
                 name:  "mediaAttenuation", // TODO
@@ -744,62 +743,62 @@ module.exports = {
                 name:  "orient",
                 valid: "cpov.isBoolean(val)",
                 err:   "orient must be a boolean.",
-                desc:  "TODO",
+                desc:  "Used with area lights, and causes the array of lights to be oriented toward every surface being tested. The <code>orient</code> flag can only be used along with <code>circular</code> when both axes are of equal length and use an equal number of samples.",
                 tname: "boolean"
             }, {
                 name:  "parallel",
                 valid: "cpov.isBoolean(val)",
                 err:   "parallel must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, all of the light rays will be parallel to the line between <code>location</code> and <code>pointAt</code>. This is useful for simulating very distant light sources like the sun, but be aware that shadows cease to work behind the light plane.",
                 tname: "boolean"
             }, {
                 name:  "pointAt",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "pointAt must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the point the spotlight is aimed at.",
                 tname: "VectorXYZ"
             }, {
                 name:  "projectedThrough",
                 child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "projectedThrough",
-                desc:  "TODO",
+                desc:  "Specifies an object through which the light rays must pass in order to be visible.",
                 tname: "Primitive"
             }, {
                 name:  "radius",
                 valid: "cpov.isFloat(val) && val < 90",
                 err:   "radius must be a float less than 90.",
-                desc:  "TODO",
+                desc:  "Specifies the angle of the cone of light produced by a spotlight.",
                 tname: "float"
             }, {
                 name:  "shadowless",
                 valid: "cpov.isBoolean(val)",
                 err:   "shadowless must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the light will neither cast shadows nor cause highlights.",
                 tname: "boolean"
             }, {
                 name:  "size1",
-                valid: "cpov.isFloat(val) && val > 0",
-                err:   "size1 must be a float greater than zero.",
-                desc:  "TODO",
+                valid: "cpov.isInt(val) && val >= 0",
+                err:   "size1 must be an integer greater than or equal to zero.",
+                desc:  "When <code>areaLight</code> is <code>true</code>, <code>size1</code> defines the number of rows of lights.",
                 tname: "float"
             }, {
                 name:  "size2",
-                valid: "cpov.isFloat(val) && val > 0",
-                err:   "size2 must be a float greater than zero.",
-                desc:  "TODO",
+                valid: "cpov.isInt(val) && val >= 0",
+                desc:  "When <code>areaLight</code> is <code>true</code>, <code>size2</code> defines the number of columns of lights.",
                 tname: "float"
             }, {
                 name:  "tightness",
                 valid: "cpov.isFloat(val) && val >= 0 && val <= 100",
                 err:   "tightness must be a float in the range (0 - 100).",
-                desc:  "TODO",
+                desc:  "The <code>tightness</code> attribute is a number between 0 and 100 that modifies the relationship between <code>radius</code> and <code>falloff</code>. Counterintuitively, lower values produce a sharper, brighter spotlight and higher values produce a dimmer, softer spotlight. To exercise complete control over the spotlight with <code>tightness</code> alone, set <code>radius = 0</code> and <code>falloff = 90</code>.",
                 tname: "float"
             }, {
                 name:  "type",
-                valid: "cpov.isString(val) && (val == 'spotlight' || val == 'cylinder')",
-                err:   "type must be either 'spotlight' or 'cylinder'.",
-                desc:  "TODO",
+                req:   true,
+                valid: "cpov.isString(val) && (cpov.isInArray(val, cpov.lightTypes))",
+                err:   "type must be one of " +  cpov.arrayToTextList(cpov.lightTypes) + ".",
+                desc:  "Determines the type of the light. The legal values are $strlist.lightTypes.",
                 tname: "string"
             }
         ],
