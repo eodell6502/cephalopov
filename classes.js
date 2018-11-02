@@ -343,10 +343,10 @@ class GlobalSettings {
     }
 
     set photonExpandThresholds(val) {
-        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isInt(val[1]))) {
+        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isWithin(val, 0, 1) && cpov.isInt(val[1]))) {
             this._photonExpandThresholds = val;
         } else {
-            cpov.error("fatal", "photonExpandThresholds must be an array consisting of a float and and integer.", "GlobalSettings", this);
+            cpov.error("fatal", "photonExpandThresholds must be an array consisting of a float in the unit interval (0.0 - 1.0) and and integer.", "GlobalSettings", this);
         }
     }
 
@@ -438,10 +438,10 @@ class GlobalSettings {
     }
 
     set photonMedia(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfFloats(val, 2, 2))) {
+        if(cpov.isNullOrFunction(val) || (Array.isArray(val) && val.length == 2 && cpov.isInt(val[0]) && cpov.isInt(val[1]))) {
             this._photonMedia = val;
         } else {
-            cpov.error("fatal", "photonMedia must be an array of two floats.", "GlobalSettings", this);
+            cpov.error("fatal", "photonMedia must be an array of an integer and a float.", "GlobalSettings", this);
         }
     }
 

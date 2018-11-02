@@ -117,7 +117,8 @@ module.exports = {
             valid:  "cpov.inheritsFrom(val, 'Primitive')",
             err:    "parent must be a Primitive.",
             custom: "Primitive.parent.get-set",
-            desc:   "TODO",
+			dperm:  "RO",
+            desc:   "This is a read-only reference to the parent object of which the current object is a component, e.g., <code>Blob</code>, <code>Mesh</code>, and CSG objects.",
             tname:  "Primitive"
         }, {
             name:  "photons", //          type: "Photons",    test: null }, TODO FIXME

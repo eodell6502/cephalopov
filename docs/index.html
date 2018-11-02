@@ -9,6 +9,7 @@
 	div.code { white-space: pre; font: 10pt Consolas,Courier,fixed; background-color: #EEF; border: 1px solid #CCF; margin-top: 1em; padding: 1em; }
     code { font: 10pt Consolas,Courier,fixed; }
     pre { font: 10pt Consolas,Courier,fixed; }
+    .beta { color: #A00; }
 
     h1 { counter-reset: h2counter; }
     h2 { counter-reset: h3counter; font-size: 18pt; color: white; background-color: #666; border: 2pt solid black; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2em; margin-bottom: 0.3em; }
@@ -42,9 +43,9 @@
     table.sgrid > td { padding-left: 0.5em; padding-right: 0.5em; vertical-align: top; }
 
     table.todo { width: 100%; }
-    table.todo td.pending { text-align: center; background-color: red;    color: yellow; font-weight: bold; white-space: nowrap; }
-    table.todo td.working { text-align: center; background-color: yellow; color: red;    font-weight: bold; white-space: nowrap; }
-    table.todo td.done    { text-align: center; background-color: green;  color: white;  font-weight: bold; white-space: nowrap; }
+    table.todo td.pending { text-align: center; background-color: #A00;   color: yellow; font-weight: bold; white-space: nowrap; }
+    table.todo td.working { text-align: center; background-color: yellow; color: #A00;   font-weight: bold; white-space: nowrap; }
+    table.todo td.done    { text-align: center; background-color: #0A0;   color: white;  font-weight: bold; white-space: nowrap; }
     table.todo td.tbd     { text-align: center; background-color: #888;   color: white;  font-weight: bold; white-space: nowrap; }
     table.todo td.subtask { padding-left: 3em; }
 
@@ -216,7 +217,7 @@ once for each object.</p>
 <div dh="ImageOptions">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>N</td><td>allConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray debug messages, fatal errors, rendering info, statistics, and warnings are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>allFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray debug messages, fatal errors, rendering info, statistics, and warnings are written to <code>ALLTEXT.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
@@ -345,7 +346,7 @@ once for each object.</p>
 <div dh="GlobalSettings">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>N</td><td>adcBailout</td><td>float</td><td>Defines the Adaptive Depth Control bailout value, which determines when to stop tracing further reflections once they cease to contribute significantly to the color of the current pixel. This defaults to 0.0039 and should not require changing. If it is set to zero, only <code>maxTraceLevel</code> will interrupt the tracing of reflections.</td></tr>
 <tr><td>RW</td><td>N</td><td>ambientLight</td><td>Color</td><td>Specifies the color of the ambient light, i.e., the illumination that falls on every object from all directions in the absence of any explicit <code>LightSource</code>.</td></tr>
@@ -368,18 +369,18 @@ once for each object.</p>
 </td></tr>
 <tr><td>RW</td><td>N</td><td>numberOfWaves</td><td>integer</td><td>Specifies the number of waves used by the <code>waves</code> and <code>ripples</code> texture patterns. The default is 10.</td></tr>
 <tr><td>RW</td><td>N</td><td>photon</td><td>boolean</td><td>If <code>true</code>, photons are enabled and the <code>photon*</code> parameters are emitted in output.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonAdcBailout</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonAutostop</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonCount</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonExpandThresholds</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonGather</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonJitter</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonLoadFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonMaxTraceLevel</td><td>integer</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonMedia</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonRadius</td><td>Array</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonSaveFile</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>photonSpacing</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonAdcBailout</td><td>float</td><td>Specifies an Adaptive Depth Control for photons. If not specified, the regular <code>adcBailout</code> will be used.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonAutostop</td><td>float</td><td>This is a float in the unit interval (0.0 - 1.0) that determines how much of an object's bounding volume must be tested before aborting. It defaults to 0, but objects with holes often require a higher value.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonCount</td><td>integer</td><td>Determines the number of photons to use. Cannot be used at the same time as <code>photonSpacing</code></td></tr>
+<tr><td>RW</td><td>N</td><td>photonExpandThresholds</td><td>Array</td><td>An array of a float in the unit interval (0.0 - 1.0) and an integer which define how much the adaptive search radius can be increased before reverting to <code>photonRadius</code> and the minimum number of photons to gather, respectively. The default is <code>[0.2, 40]</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonGather</td><td>Array</td><td>This is an array of two integers which specify the minimum and maximum number of photons to gather at each point. The default is <code>[20, 100]</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonJitter</td><td>float</td><td>Specifies the amount of jitter to use in the pre-processing step. The default is 0.4 and rarely needs to be changed.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonLoadFile</td><td>string</td><td>Specifies a photon map to load instead of performing the calculations.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonMaxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a photon can undergo before calculations are stopped. Legal values are in the range 1-256. If unspecified, the global <code>maxTraceLevel</code> is used.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonMedia</td><td>Array</td><td>If specified, media photons are enabled. This is an array of an integer and a float. The integer specifies the maximum number of photons to deposit over an interval, and the float specifies the difference in media spacing relative to surface spacing.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonRadius</td><td>Array</td><td>This is an array of four floats that specify the gather radius, its multiplier, the media gather radius, and its multiplier.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonSaveFile</td><td>string</td><td>Saves the calculated photon map to this file for reuse.</td></tr>
+<tr><td>RW</td><td>N</td><td>photonSpacing</td><td>float</td><td>Specifies the average distance between photons on surfaces. Cannot be used at the same time as <code>photonCount</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>radAdcBailout</td><td>float</td><td>Specifies an Adaptive Depth Control for radiosity rays. The default is 0.01.</td></tr>
 <tr><td>RW</td><td>N</td><td>radAlwaysSample</td><td>boolean</td><td>If <code>true</code>, new samples will be gathered during the final radiosity pass. This is slower and often produces lower-quality results, so the default is <code>false</code>, but there are some cases where turning it on can correct blotchy imperfections.</td></tr>
 <tr><td>RW</td><td>N</td><td>radBrightness</td><td>float</td><td>Specifies the amount by which the brightness of objects should be adjusted before being returned to the rest of the system. The default value is 1.0 and should almost never be changed; individual object properties should be adjusted instead.</td></tr>
@@ -391,7 +392,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>radMaximumReuse</td><td>float</td><td>Sets an upper bound on the reuse of samples. See the POV-Ray documentation for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_4_3">more details</a>.</td></tr>
 <tr><td>RW</td><td>N</td><td>radMinimumReuse</td><td>float</td><td>Sets a lower bound on the reuse of samples. See the POV-Ray documentation for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_4_3">more details</a>.</td></tr>
 <tr><td>RW</td><td>N</td><td>radNearestCount</td><td>integer</td><td>Specifies minimum number of old radiosity values blended together to create a new interpolated value. Defaults to 5 with an upper limit of 20.</td></tr>
-<tr><td>RW</td><td>N</td><td>radNormal</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>radNormal</td><td>boolean</td><td>If <code>true</code>, radiosity will be affected by normals.</td></tr>
 <tr><td>RW</td><td>N</td><td>radPretraceEnd</td><td>float</td><td>Specifies the size of mosaic blocks at the end of the pretrace phase as a fraction of image size. This is float in the unit interval (0.0 - 1.0).</td></tr>
 <tr><td>RW</td><td>N</td><td>radPretraceStart</td><td>float</td><td>Specifies the size of mosaic blocks at the start of the pretrace phase as a fraction of image size. This is float in the unit interval (0.0 - 1.0).</td></tr>
 <tr><td>RW</td><td>N</td><td>radRecursionLimit</td><td>integer</td><td>Determines how many recursion levels are used to calculate the diffuse inter-reflection. The legal range is 1 - 20, but values above 3 are rarely useful.</td></tr>
@@ -412,10 +413,8 @@ once for each object.</p>
 <div dh="VectorUV">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>u</td><td>float</td><td>The U coordinate of the vector.</td></tr>
-<tr><td>RW</td><td>Y</td><td>v</td><td>float</td><td>The V coordinate of the vector.</td></tr>
 </tbody></table>
 </div dh="VectorUV">
 
@@ -426,10 +425,8 @@ once for each object.</p>
 <div dh="VectorXY">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>x</td><td>float</td><td>The X coordinate of the vector.</td></tr>
-<tr><td>RW</td><td>Y</td><td>y</td><td>float</td><td>The Y coordinate of the vector.</td></tr>
 </tbody></table>
 </div dh="VectorXY">
 
@@ -440,11 +437,8 @@ once for each object.</p>
 <div dh="VectorXYZ">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>x</td><td>float</td><td>The X coordinate of the vector.</td></tr>
-<tr><td>RW</td><td>Y</td><td>y</td><td>float</td><td>The Y coordinate of the vector.</td></tr>
-<tr><td>RW</td><td>Y</td><td>z</td><td>float</td><td>The Z coordinate of the vector.</td></tr>
 </tbody></table>
 </div dh="VectorXYZ">
 
@@ -455,12 +449,8 @@ once for each object.</p>
 <div dh="VectorXYZW">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>w</td><td>float</td><td>The W coordinate of the vector.</td></tr>
-<tr><td>RW</td><td>Y</td><td>x</td><td>float</td><td>The X coordinate of the vector.</td></tr>
-<tr><td>RW</td><td>Y</td><td>y</td><td>float</td><td>The Y coordinate of the vector.</td></tr>
-<tr><td>RW</td><td>Y</td><td>z</td><td>float</td><td>The Z coordinate of the vector.</td></tr>
 </tbody></table>
 </div dh="VectorXYZW">
 
@@ -471,14 +461,8 @@ once for each object.</p>
 <div dh="Color">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>b</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>f</td><td>float</td><td>The filter component of the color, in the unit interval (0.0-1.0).</td></tr>
-<tr><td>RW</td><td>Y</td><td>g</td><td>float</td><td>The green component of the color, in the unit interval (0.0-1.0).</td></tr>
-<tr><td>RW</td><td>Y</td><td>r</td><td>float</td><td>The red component of the color, in the unit interval (0.0-1.0).</td></tr>
-<tr><td>RW</td><td>N</td><td>srgb</td><td>float</td><td>If <code>true</code>, specifies sRGB gamma values. This will produce an error when POV-Ray parses CephaloPOV's output if <code>cpov.globalSettings.assumedGamma</code> is not set.</td></tr>
-<tr><td>RW</td><td>N</td><td>t</td><td>float</td><td>The transmit component of the color, in the unit interval (0.0-1.0).</td></tr>
 </tbody></table>
 </div dh="Color">
 
@@ -491,7 +475,7 @@ once for each object.</p>
 <div dh="Primitive">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>N</td><td>active</td><td>boolean</td><td>If <code>active == false</code>, it will not be output to the current .pov frame file. Defaults to <code>true</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>baseTransform</td><td>Matrix</td><td>The <code>baseTransform</code> attribute contains the "default" transformation of the object. As new transformations are applied, the original <code>baseTransform</code> remains unchanged, making it easy to revert to the original state by calling the <code>resetTransform</code> method.</td></tr>
@@ -510,7 +494,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>noRadiosity</td><td>boolean</td><td>If <code>true</code>, the object will be invisible to radiosity rays.</td></tr>
 <tr><td>RW</td><td>N</td><td>noReflection</td><td>boolean</td><td>If <code>true</code>, the object will not be visible in reflections.</td></tr>
 <tr><td>RW</td><td>N</td><td>noShadow</td><td>boolean</td><td>If <code>true</code>, the object will not cast shadows.</td></tr>
-<tr><td>RW</td><td>N</td><td>parent</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RO</td><td>N</td><td>parent</td><td>Primitive</td><td>This is a read-only reference to the parent object of which the current object is a component, e.g., <code>Blob</code>, <code>Mesh</code>, and CSG objects.</td></tr>
 <tr><td>RW</td><td>N</td><td>photons</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>radiosity</td><td>TOOD</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>serial</td><td>integer</td><td>This is a unique read-only integer serial number automatically assigned by CephaloPOV upon object creation. It is displayed in error messages, and objects can be looked up using <code>cpov.serialMap</code>.</td></tr>
@@ -526,17 +510,17 @@ once for each object.</p>
 <div dh="BicubicPatch">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a BicubicPatch, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>flatness</td><td>float</td><td>If <code>flatness</code> is 0 (the default), the patch will be subdivided into only as many triangles as specified by <code>uSteps</code> and <code>vSteps</code>. Increasing it up to a maximum of 1.0 will encourage POV-Ray to automatically subdivide the patch into additional triangles as needed.</td></tr>
 <tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td>The <code>points</code> attribute is an array of 16 <code>VectorXYZ</code> points which define the 4 &mult; 4 array of control points that define the patch.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>type</td><td>integer</td><td>This may be either 0 or 1. Type 0 reduces the amount of memory used to store the patch in memory at the cost of slower rendering. Type 1 does the reverse, consuming more memory but reducing the number of calculations required.</td></tr>
+<tr><td>RW</td><td>N</td><td>flatness</td><td>float</td><td>If <code>flatness</code> is 0 (the default), the patch will be subdivided into only as many triangles as specified by <code>uSteps</code> and <code>vSteps</code>. Increasing it up to a maximum of 1.0 will encourage POV-Ray to automatically subdivide the patch into additional triangles as needed.</td></tr>
 <tr><td>RW</td><td>N</td><td>uSteps</td><td>integer</td><td>Defines the number of rows of triangles used to create the patch. Most patches can be acceptably rendered using 3 rows.</td></tr>
 <tr><td>RW</td><td>N</td><td>vSteps</td><td>integer</td><td>Defines the number of columns of triangles used to create the patch. Most patches can be acceptably rendered using 3 columns.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a BicubicPatch, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a BicubicPatch, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
 </div dh="BicubicPatch">
 
@@ -547,16 +531,16 @@ once for each object.</p>
 <div dh="Blob">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td>This is an array of <code>Sphere</code> and <code>Cylinders</code>, optionally with their <code>strength</code> attributes set.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Blob, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Blob, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>hierarchy</td><td>hierarchy</td><td>If <code>false</code>, turn off the internal bounding hierarchy.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Blob, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Blob, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td>The <code>threshold</code> determines the field strength that distinguishes between the inside and outside of a <code>Blob</code>, i.e., <code>threshold</code> defines the surface of a <code>Blob</code>.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Blob, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Blob, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Blob, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Blob, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Blob">
 
@@ -567,7 +551,7 @@ once for each object.</p>
 <div dh="Box">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>corner1</td><td>VectorXYZ</td><td>The first of two opposite corners of the cube.</td></tr>
 <tr><td>RW</td><td>Y</td><td>corner2</td><td>VectorXYZ</td><td>The first of two opposite corners of the cube.</td></tr>
@@ -585,35 +569,8 @@ once for each object.</p>
 <div dh="Camera">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>N</td><td>angle</td><td>integer</td><td>Sets the width of the camera's viewing angle in degrees.</td></tr>
-<tr><td>RW</td><td>N</td><td>aperture</td><td>float</td><td>A non-zero value will enable simulated focal depth-of-field.</td></tr>
-<tr><td>RW</td><td>N</td><td>blurSamples</td><td>Array</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
-<tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Camera, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
-<table class="sgrid codeDoc">
-<thead>
-
-<tr><th>Code</th><th>Meaning</th></tr>
-</thead><tbody>
-<tr><td>1</td><td>vertical cylinder, fixed viewpoint</td></tr>
-<tr><td>2</td><td>horizontal cylinder, fixed viewpoint</td></tr>
-<tr><td>3</td><td>vertical cylinder, viewpoint moves along the cylinder's axis</td></tr>
-<tr><td>4</td><td>horizontal cylinder, viewpoint moves along the cylinder's axis</td></tr>
-</tbody></table>
-</td></tr>
-<tr><td>RW</td><td>N</td><td>direction</td><td>VectorXYZ</td><td>Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For most purposes, you will not need to set <code>direction</code>, but see the POV-Ray docs for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4">more details</a>.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Camera, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>focalPoint</td><td>VectorXYZ</td><td>Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>location</td><td>VectorXYZ</td><td>Specifies the location of the camera.</td></tr>
-<tr><td>RW</td><td>N</td><td>lookAt</td><td>VectorXYZ</td><td>Specifies the point at which the camera is aimed.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Camera, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>right</td><td>VectorXYZ</td><td>Along with <code>up</code>, the <code>right</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[1.33, 0, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5">POV-Ray docs</a>. It also determines the handedness of the coordinate system.</td></tr>
-<tr><td>RW</td><td>N</td><td>sky</td><td>VectorXYZ</td><td>Determines where "up" is for the camera. By default, this is [0, 1, 0].</td></tr>
-<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Camera, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
@@ -631,9 +588,36 @@ once for each object.</p>
 <tr><td>ultraWideAngle</td><td>ultra_wide_angle</td></tr>
 </tbody></table>
 </td></tr>
+<tr><td>RW</td><td>N</td><td>angle</td><td>integer</td><td>Sets the width of the camera's viewing angle in degrees.</td></tr>
+<tr><td>RW</td><td>N</td><td>aperture</td><td>float</td><td>A non-zero value will enable simulated focal depth-of-field.</td></tr>
+<tr><td>RW</td><td>N</td><td>blurSamples</td><td>Array</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
+<tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
+<table class="sgrid codeDoc">
+<thead>
+
+<tr><th>Code</th><th>Meaning</th></tr>
+</thead><tbody>
+<tr><td>1</td><td>vertical cylinder, fixed viewpoint</td></tr>
+<tr><td>2</td><td>horizontal cylinder, fixed viewpoint</td></tr>
+<tr><td>3</td><td>vertical cylinder, viewpoint moves along the cylinder's axis</td></tr>
+<tr><td>4</td><td>horizontal cylinder, viewpoint moves along the cylinder's axis</td></tr>
+</tbody></table>
+</td></tr>
+<tr><td>RW</td><td>N</td><td>direction</td><td>VectorXYZ</td><td>Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For most purposes, you will not need to set <code>direction</code>, but see the POV-Ray docs for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4">more details</a>.</td></tr>
+<tr><td>RW</td><td>N</td><td>focalPoint</td><td>VectorXYZ</td><td>Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>location</td><td>VectorXYZ</td><td>Specifies the location of the camera.</td></tr>
+<tr><td>RW</td><td>N</td><td>lookAt</td><td>VectorXYZ</td><td>Specifies the point at which the camera is aimed.</td></tr>
+<tr><td>RW</td><td>N</td><td>right</td><td>VectorXYZ</td><td>Along with <code>up</code>, the <code>right</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[1.33, 0, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5">POV-Ray docs</a>. It also determines the handedness of the coordinate system.</td></tr>
+<tr><td>RW</td><td>N</td><td>sky</td><td>VectorXYZ</td><td>Determines where "up" is for the camera. By default, this is [0, 1, 0].</td></tr>
 <tr><td>RW</td><td>N</td><td>up</td><td>VectorXYZ</td><td>Along with <code>right</code>, the <code>up</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[0, 1, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5">POV-Ray docs</a>.</td></tr>
 <tr><td>RW</td><td>N</td><td>variance</td><td>float</td><td>When <code>aperture</code> is non-zero, <code>variance</code> tells POV-Ray the value of the smallest displayable color difference. The default, 0.0078125, can produce fairly grainy images. To fix this, try a value around 0.00001.</td></tr>
 <tr><td>RW</td><td>N</td><td>vertAngle</td><td>float</td><td>For the spherical camera, this defines the vertical angle of the viewing area while <code>angle</code> specifies the horizontal angle.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Camera, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Camera, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Camera, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Camera, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
 </div dh="Camera">
 
@@ -644,15 +628,15 @@ once for each object.</p>
 <div dh="Cone">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>basePoint</td><td>VectorXYZ</td><td>Defines the location of the center of the cone's base end.</td></tr>
 <tr><td>RW</td><td>Y</td><td>baseRadius</td><td>float</td><td>Defines the radius of the cone's base end.</td></tr>
 <tr><td>RW</td><td>Y</td><td>capPoint</td><td>VectorXYZ</td><td>Defines the location of the center of the cone's cap end.</td></tr>
 <tr><td>RW</td><td>Y</td><td>capRadius</td><td>float</td><td>Defines the radius of the cone's cap end. If this is non-zero, it technically ceases to be a cone and instead becomes a frustum.</td></tr>
+<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the base and the cap are left open, yielding a hollow cone.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Cone, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Cone, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the base and the cap are left open, yielding a hollow cone.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cone, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Cone, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
@@ -665,14 +649,14 @@ once for each object.</p>
 <div dh="Cubic">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td>An array of 20 floats that act as the coefficients of a third-order polynomial.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Cubic, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Cubic, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cubic, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Cubic, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 </tbody></table>
 </div dh="Cubic">
 
@@ -683,17 +667,17 @@ once for each object.</p>
 <div dh="Cylinder">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>basePoint</td><td>VectorXYZ</td><td>Defines the center of the base end of the cylinder.</td></tr>
 <tr><td>RW</td><td>Y</td><td>capPoint</td><td>VectorXYZ</td><td>Defines the center of the cap end of the cylinder.</td></tr>
+<tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td>Defines the radius of the cylinder.</td></tr>
+<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the cap and base planes are are eliminating, yielding a hollow tube.</td></tr>
+<tr><td>RW</td><td>N</td><td>strength</td><td>float</td><td>Defines the field strength of the cylinder. This is only used when the cylinder is a component of a <code>Blob</code> object.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Cylinder, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Cylinder, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the cap and base planes are are eliminating, yielding a hollow tube.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Cylinder, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td>Defines the radius of the cylinder.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Cylinder, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>strength</td><td>float</td><td>Defines the field strength of the cylinder. This is only used when the cylinder is a component of a <code>Blob</code> object.</td></tr>
 </tbody></table>
 </div dh="Cylinder">
 
@@ -704,12 +688,12 @@ once for each object.</p>
 <div dh="Difference">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Difference, this is always <code>true</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Difference, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>negativeComponents</td><td>Array</td><td>This is an array of objects to subtract from the <code>positiveComponent</code>.</td></tr>
 <tr><td>RW</td><td>Y</td><td>positiveComponent</td><td>Primitive</td><td>This is the single base object from which the object(s) in the <code>negativeComponents</code> array are subtracted.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Difference, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Difference, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Difference, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Difference">
@@ -721,15 +705,15 @@ once for each object.</p>
 <div dh="Disc">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>center</td><td>VectorXYZ</td><td>This is the center point of the disc.</td></tr>
+<tr><td>RW</td><td>Y</td><td>normal</td><td>VectorXYZ</td><td>This defines the normal or orientation of the disc in space.</td></tr>
+<tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td>Defines the radius of the disc.</td></tr>
+<tr><td>RW</td><td>N</td><td>holeRadius</td><td>float</td><td>If supplied and non-zero, defines the radius of the hole in the center of the disc.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Disc, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Disc, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>holeRadius</td><td>float</td><td>If supplied and non-zero, defines the radius of the hole in the center of the disc.</td></tr>
-<tr><td>RW</td><td>Y</td><td>normal</td><td>VectorXYZ</td><td>This defines the normal or orientation of the disc in space.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Disc, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td>Defines the radius of the disc.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Disc, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
 </div dh="Disc">
@@ -741,19 +725,19 @@ once for each object.</p>
 <div dh="HeightField">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a HeightField, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a HeightField, this is always <code>true</code>.</td></td></tr>
+<tr><td>RW</td><td>Y</td><td>source</td><td>SDL<br/>string</td><td>Defines the source of the points that comprise the height field. This may be either an SDL function or the path to a graphics file.</td></tr>
 <tr><td>RW</td><td>N</td><td>gamma</td><td>float<br/>string</td><td>Defines the gamma value to be used in interpreting an image file. This may be either a float or the string <code>"sRGB"</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>hfType</td><td>string</td><td>If <code>source</code> is a graphics file, the <code>hfType</code> attribute declares the file format, which must be one of <code>"exr"</code>, <code>"gif"</code>, <code>"hdr"</code>, <code>"iff"</code>, <code>"jpeg"</code>, <code>"pgm"</code>, <code>"png"</code>, <code>"pot"</code>, <code>"ppm"</code>, <code>"sys"</code>, <code>"tga"</code>, and <code>"tiff"</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>hierarchy</td><td>boolean</td><td>If <code>false</code>, turn off the internal bounding hierarchy.</td></tr>
 <tr><td>RW</td><td>N</td><td>premultiplied</td><td>boolean</td><td>Specifies whether the file is stored in premultiplied associated or non-premultiplied straight alpha format, overriding the file format specific default. This keyword has no effect on files without an alpha channel.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a HeightField, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>smooth</td><td>boolean</td><td>If <code>true</code>, POV-Ray will manipulate the surface normals of the generated triangles to create a smoother-looking surface.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a HeightField, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>source</td><td>SDL<br/>string</td><td>Defines the source of the points that comprise the height field. This may be either an SDL function or the path to a graphics file.</td></tr>
 <tr><td>RW</td><td>N</td><td>waterLevel</td><td>float</td><td>Defines the point below which the height field is hidden. This defaults to 0.0, which corresponds to the bottom of the height field, i.e., nothing is hidden. At the other extreme, 1.0 will cause the entire height field to be hidden. Note that this does not create a plane representing water; you'll have to do that manually.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a HeightField, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a HeightField, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a HeightField, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a HeightField, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="HeightField">
 
@@ -764,7 +748,7 @@ once for each object.</p>
 <div dh="Intersection">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td>An array of objects whose intersection will produce the resulting object.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Intersection, this is always <code>true</code>.</td></td></tr>
@@ -780,20 +764,20 @@ once for each object.</p>
 <div dh="IsoSurface">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
+<tr><td>RW</td><td>Y</td><td>source</td><td>SDL</td><td>This is a string containing the SDL function code which defines the surface.</td></tr>
 <tr><td>RW</td><td>N</td><td>accuracy</td><td>float</td><td>Defines the amount of subdivision POV-Ray performs to find the surface, with lower values being more accurate. Defaults to 0.001.</td></tr>
 <tr><td>RW</td><td>N</td><td>containedBy</td><td>Sphere<br/>Box</td><td>Defines a <code>Sphere</code> or <code>Box</code> which determines the portion of the (potentially infinite) surface that POV-Ray will render. By default, this is a <code>Box</code> with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a IsoSurface, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>evaluate</td><td>Array</td><td>This is an array of three floats that optionally guides POV-Ray in dynamically adapting <code>maxGradient</code>. See the official POV-Ray documentation for <a href="specifies whether the file is stored in premultiplied associated or non-premultiplied straight alpha format, overriding the file format specific default. This keyword has no effect on files without an alpha channel.">details.</a></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a IsoSurface, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>maxGradient</td><td>float</td><td>Rendering will be faster if POV-Ray knows the maximum gradient of the <code>source</code> function. The <code>maxGradient</code> value defaults to 1.1, but if this too low, holes and other imperfections may appear, and POV-Ray will emit a warning telling you the maximum gradient it found so that you can manually update this value. Beware of raising the value beyond the actual maximum gradient, as this will slow down the render.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTrace</td><td>integer<br/>string</td><td>When used as part of a CSG object, this determines the maximum number of surfaces to look for when constructing the final CSG object. By default, only the <code>containedBy</code> object is examined. For complete accuracy at the expense of speed, use the string <code>"all_intersections".</td></tr>
 <tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</cope>, the boundaries where the isosurface intersects with the <code>containedBy</code> object will be left open.</td></tr>
+<tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td>The surface appears where the value of <code>source</code> equals this value, which defaults to 0.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a IsoSurface, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a IsoSurface, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a IsoSurface, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a IsoSurface, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>source</td><td>SDL</td><td>This is a string containing the SDL function code which defines the surface.</td></tr>
-<tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td>The surface appears where the value of <code>source</code> equals this value, which defaults to 0.</td></tr>
 </tbody></table>
 </div dh="IsoSurface">
 
@@ -804,18 +788,9 @@ once for each object.</p>
 <div dh="JuliaFractal">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>distance</td><td>float</td><td>Specifies the distance of the <code>slice</code> from the origin.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>N</td><td>maxIter</td><td>integer</td><td>Determines the number of iterations used to find the surface of the fractal, with higher values being more accurate but slower to render. The default is 20.</td></tr>
-<tr><td>RW</td><td>N</td><td>power</td><td>VectorXY</td><td>For the <code>hypercomplex:pwr</code> formula, this <code>VectorXY</code> contains the X and Y exponents used in the calculations. Has no effect on other formula types.</td></tr>
-<tr><td>RW</td><td>N</td><td>precision</td><td>integer</td><td>Determines the accuracy of the calculations for finding the surface of the julia set. The default is 20. Higher values result in greater accuracy but longer rendering times.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>slice</td><td>VectorXYZW</td><td>Specifies the 3D slice through 4D space used to view the fractal.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
@@ -842,6 +817,15 @@ once for each object.</p>
 <tr><td><code>quaternion:sqr</code></td></tr>
 </tbody></table>
 </td></tr>
+<tr><td>RW</td><td>N</td><td>distance</td><td>float</td><td>Specifies the distance of the <code>slice</code> from the origin.</td></tr>
+<tr><td>RW</td><td>N</td><td>maxIter</td><td>integer</td><td>Determines the number of iterations used to find the surface of the fractal, with higher values being more accurate but slower to render. The default is 20.</td></tr>
+<tr><td>RW</td><td>N</td><td>power</td><td>VectorXY</td><td>For the <code>hypercomplex:pwr</code> formula, this <code>VectorXY</code> contains the X and Y exponents used in the calculations. Has no effect on other formula types.</td></tr>
+<tr><td>RW</td><td>N</td><td>precision</td><td>integer</td><td>Determines the accuracy of the calculations for finding the surface of the julia set. The default is 20. Higher values result in greater accuracy but longer rendering times.</td></tr>
+<tr><td>RW</td><td>N</td><td>slice</td><td>VectorXYZW</td><td>Specifies the 3D slice through 4D space used to view the fractal.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a JuliaFractal, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a JuliaFractal, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="JuliaFractal">
 
@@ -852,15 +836,15 @@ once for each object.</p>
 <div dh="Lathe">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
+<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of points defining the spline.</td></tr>
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Determines the type of spline used to define the profile. Legal types are $strlist.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Lathe, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Lathe, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of points defining the spline.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Lathe, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Lathe, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Determines the type of spline used to define the profile. Legal types are $strlist.</td></tr>
 </tbody></table>
 </div dh="Lathe">
 
@@ -871,22 +855,20 @@ once for each object.</p>
 <div dh="LightSource">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
+<tr><td>RW</td><td>Y</td><td>color</td><td>Color</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>Y</td><td>location</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>adaptive</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>areaIllumination</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>areaLight</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>axis1</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>axis2</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>circular</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>Y</td><td>color</td><td>Color</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a LightSource, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>fadeDistance</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>fadePower</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>falloff</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a LightSource, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>jitter</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>Y</td><td>location</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>looksLike</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>mediaAttenuation</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>mediaInteraction</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
@@ -894,14 +876,16 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>parallel</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>pointAt</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>projectedThrough</td><td>Primitive</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a LightSource, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>radius</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>shadowless</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>size1</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>size2</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a LightSource, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>tightness</td><td>float</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>type</td><td>string</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a LightSource, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a LightSource, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a LightSource, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a LightSource, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
 </div dh="LightSource">
 
@@ -912,7 +896,7 @@ once for each object.</p>
 <div dh="Merge">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td>An array of objects to merge.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Merge, this is always <code>true</code>.</td></td></tr>
@@ -928,15 +912,15 @@ once for each object.</p>
 <div dh="Mesh">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Mesh, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Mesh, this is always <code>true</code>.</td></td></tr>
+<tr><td>RW</td><td>Y</td><td>triangles</td><td>Array</td><td>The array of <code>Triangle</code>s comprising the mesh.</td></tr>
 <tr><td>RW</td><td>N</td><td>hierarchy</td><td>boolean</td><td>If <code>false</code>, turn off the internal bounding hierarchy.</td></tr>
 <tr><td>RW</td><td>N</td><td>insideVector</td><td>VectorXYZ</td><td>For the <code>Mesh</code> to be solid, it must be completely closed and have a defined <code>insideVector</code>.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Mesh, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Mesh, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Mesh, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Mesh, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>triangles</td><td>Array</td><td>The array of <code>Triangle</code>s comprising the mesh.</td></tr>
 </tbody></table>
 </div dh="Mesh">
 
@@ -947,14 +931,14 @@ once for each object.</p>
 <div dh="Ovus">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>bottomRadius</td><td>float</td><td>Sets the radius of the bottom sphere.</td></tr>
+<tr><td>RW</td><td>Y</td><td>topRadius</td><td>float</td><td>Sets the radius of the top sphere.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Ovus, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Ovus, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Ovus, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Ovus, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>topRadius</td><td>float</td><td>Sets the radius of the top sphere.</td></tr>
 </tbody></table>
 </div dh="Ovus">
 
@@ -965,24 +949,24 @@ once for each object.</p>
 <div dh="Parametric">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>N</td><td>accuracy</td><td>float</td><td>Defines the amount of subdivision POV-Ray performs to find the surface, with lower values being more accurate. Defaults to 0.001.</td></tr>
-<tr><td>RW</td><td>N</td><td>containedBy</td><td>Sphere<br/>Box</td><td>Defines a <code>Sphere</code> or <code>Box</code> which determines the portion of the (potentially infinite) surface that POV-Ray will render. By default, this is a <code>Box</code> with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Parametric, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Parametric, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>funcX</td><td>SDL</td><td>Determines the X coordinate of the surface.</td></tr>
 <tr><td>RW</td><td>Y</td><td>funcY</td><td>SDL</td><td>Determines the Y coordinate of the surface.</td></tr>
 <tr><td>RW</td><td>Y</td><td>funcZ</td><td>SDL</td><td>Determines the Z coordinate of the surface.</td></tr>
+<tr><td>RW</td><td>Y</td><td>uv1</td><td>VectorUV</td><td>Specifies one corner of the UV plane to which the surface is mapped.</td></tr>
+<tr><td>RW</td><td>Y</td><td>uv2</td><td>VectorUV</td><td>Specifies the other corner of the UV plane to which the surface is mapped.</td></tr>
+<tr><td>RW</td><td>N</td><td>accuracy</td><td>float</td><td>Defines the amount of subdivision POV-Ray performs to find the surface, with lower values being more accurate. Defaults to 0.001.</td></tr>
+<tr><td>RW</td><td>N</td><td>containedBy</td><td>Sphere<br/>Box</td><td>Defines a <code>Sphere</code> or <code>Box</code> which determines the portion of the (potentially infinite) surface that POV-Ray will render. By default, this is a <code>Box</code> with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxGradient</td><td>float</td><td>Rendering will be faster if POV-Ray knows the maximum gradient of the surface functions. The <code>maxGradient</code> value defaults to 1.1, but if this too low, holes and other imperfections may appear, and POV-Ray will emit a warning telling you the maximum gradient it found so that you can manually update this value. Beware of raising the value beyond the actual maximum gradient, as this will slow down the render.</td></tr>
 <tr><td>RW</td><td>N</td><td>precomputeDepth</td><td>integer</td><td>If defined, <code>precomputeDepth</code> can speed up rendering at the expense of memory. The maximum value is 20. At least one of <code>precomputeX</code>, <code>precomputeY</code>, or <code>precomputeZ</code> must be <code>true</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>precomputeX</td><td>boolean</td><td>Enables precalculation of the X coordinate during subdivision of parametric surfaces. <code>precomputeDepth</code> must also be defined.</td></tr>
 <tr><td>RW</td><td>N</td><td>precomputeY</td><td>boolean</td><td>Enables precalculation of the Y coordinate during subdivision of parametric surfaces. <code>precomputeDepth</code> must also be defined.</td></tr>
 <tr><td>RW</td><td>N</td><td>precomputeZ</td><td>boolean</td><td>Enables precalculation of the Z coordinate during subdivision of parametric surfaces. <code>precomputeDepth</code> must also be defined.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Parametric, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Parametric, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Parametric, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Parametric, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>uv1</td><td>VectorUV</td><td>Specifies one corner of the UV plane to which the surface is mapped.</td></tr>
-<tr><td>RW</td><td>Y</td><td>uv2</td><td>VectorUV</td><td>Specifies the other corner of the UV plane to which the surface is mapped.</td></tr>
 </tbody></table>
 </div dh="Parametric">
 
@@ -993,12 +977,12 @@ once for each object.</p>
 <div dh="Plane">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Plane, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>distance</td><td>float</td><td>Specifies the distance the plane lies from the origin along the <code>normal</code> vector. This is multiplied by the normal, so if <code>distance</code> is 2 and <code>normal</code> is <code>[0, 2, 0]</code>, the plane will lie 4 units from the origin.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Plane, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>normal</td><td>VectorXYZ</td><td>Defines the surface normal of the plane, i.e., a vector that points up perpendicularly from the surface of the plane.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Plane, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Plane, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Plane, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Plane, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
@@ -1011,15 +995,15 @@ once for each object.</p>
 <div dh="Poly">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td>An array defining the coefficients of the polynomial. The number of coefficients required is equal to ((<code>order</code> + 1) * (<code>order</code> + 2) * (<code>order</code> + 3)) / 6.</td></tr>
+<tr><td>RW</td><td>Y</td><td>order</td><td>integer</td><td>Specifies the order of the polynomial. Must be in the range 2 to 35.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Poly, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Poly, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>order</td><td>integer</td><td>Specifies the order of the polynomial. Must be in the range 2 to 35.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Poly, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Poly, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 </tbody></table>
 </div dh="Poly">
 
@@ -1030,11 +1014,11 @@ once for each object.</p>
 <div dh="Polygon">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
+<tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td>This is an array of at least three <code>VectorXY</code> objects defining the vertices of the polygon.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Polygon, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Polygon, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td>This is an array of at least three <code>VectorXY</code> objects defining the vertices of the polygon.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polygon, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Polygon, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
@@ -1047,15 +1031,15 @@ once for each object.</p>
 <div dh="Polynomial">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td>An array of <code>VectorXYZW</code> defining the coefficients of the polynomial. The choice of <code>VectorXYZW</code> is a bit of a convenience hack as it doesn't encode a 4D cartesian point. Instead, the X, Y, and Z values specify the corresponding powers of the coefficient and W specifies the value. The members of the array can be specified in any order.</td></tr>
+<tr><td>RW</td><td>Y</td><td>order</td><td>integer</td><td>Specifies the order of the polynomial. Must be in the range 2 to 35.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Polynomial, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Polynomial, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>order</td><td>integer</td><td>Specifies the order of the polynomial. Must be in the range 2 to 35.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Polynomial, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Polynomial, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 </tbody></table>
 </div dh="Polynomial">
 
@@ -1066,18 +1050,18 @@ once for each object.</p>
 <div dh="Prism">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Prism, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Prism, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>height1</td><td>float</td><td>Specifies the Y coordinate of the top of the prism.</td></tr>
 <tr><td>RW</td><td>Y</td><td>height2</td><td>float</td><td>Specifies the Y coordinate of the bottom of the prism.</td></tr>
-<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the top and bottom of the prism are left open.</td></tr>
 <tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td>The array of spline points to be swept along the Y axis. This can specify multiple sub-shapes: to close a shape, simply repeat the first coordinate.</td></tr>
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the spline type used for the prism. The legal values are <code>"bezierSpline"</code>, <code>"conicSweep"</code>, <code>"cubicSpline"</code>, <code>"linearSpline"</code>, <code>"linearSweep"</code>, and <code>"quadraticSpline"</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the top and bottom of the prism are left open.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Prism, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Prism, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Prism, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Prism, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the spline type used for the prism. The legal values are <code>"bezierSpline"</code>, <code>"conicSweep"</code>, <code>"cubicSpline"</code>, <code>"linearSpline"</code>, <code>"linearSweep"</code>, and <code>"quadraticSpline"</code>.</td></tr>
 </tbody></table>
 </div dh="Prism">
 
@@ -1088,7 +1072,7 @@ once for each object.</p>
 <div dh="Quadric">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td>An array of 10 floats defining the coefficients of a second-order polynomial.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Quadric, this is always <code>false</code>.</td></td></tr>
@@ -1105,14 +1089,14 @@ once for each object.</p>
 <div dh="Quartic">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td>An array of floats defining the coefficients of a fourth-order polynomial.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Quartic, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Quartic, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Quartic, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Quartic, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 </tbody></table>
 </div dh="Quartic">
 
@@ -1123,15 +1107,15 @@ once for each object.</p>
 <div dh="Sor">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
+<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of at least two points which define the open curve used to generate the surface.</td></tr>
+<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the base and the cap are left open, yielding a hollow surface of revolution.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Sor, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Sor, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the base and the cap are left open, yielding a hollow surface of revolution.</td></tr>
-<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of at least two points which define the open curve used to generate the surface.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sor, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Sor, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 </tbody></table>
 </div dh="Sor">
 
@@ -1142,15 +1126,15 @@ once for each object.</p>
 <div dh="Sphere">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>center</td><td>VectorXYZ</td><td>Defines the center point of the sphere.</td></tr>
+<tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td>Specifies the radius of the sphere.</td></tr>
+<tr><td>RW</td><td>N</td><td>strength</td><td>float</td><td>If and only if the <code>Sphere</code> is being used as a blob component, <code>strength</code> is a float defining its field strength.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Sphere, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Sphere, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Sphere, this is always <code>false</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>radius</td><td>float</td><td>Specifies the radius of the sphere.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Sphere, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>strength</td><td>float</td><td>If and only if the <code>Sphere</code> is being used as a blob component, <code>strength</code> is a float defining its field strength.</td></tr>
 </tbody></table>
 </div dh="Sphere">
 
@@ -1161,15 +1145,15 @@ once for each object.</p>
 <div dh="SphereSweep">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
+<tr><td>RW</td><td>Y</td><td>spheres</td><td>Array</td><td>The array of <code>Sphere</code>s whose positions are interpolated to create the sweep.</td></tr>
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Sets the spline type to be used for the sweep. The legal values are <code>"bezierSpline"</code>, <code>"cubicSpline"</code>, and <code>"linearSpline"</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>tolerance</td><td>float</td><td>Defines the depth tolerance used for intersection calculations. The default value, 0.000001, should be adequate in most cases. If imperfections appear on the surface of the sweep, try increasing it to 0.0001.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a SphereSweep, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a SphereSweep, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a SphereSweep, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a SphereSweep, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>spheres</td><td>Array</td><td>The array of <code>Sphere</code>s whose positions are interpolated to create the sweep.</td></tr>
-<tr><td>RW</td><td>N</td><td>tolerance</td><td>float</td><td>Defines the depth tolerance used for intersection calculations. The default value, 0.000001, should be adequate in most cases. If imperfections appear on the surface of the sweep, try increasing it to 0.0001.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Sets the spline type to be used for the sweep. The legal values are <code>"bezierSpline"</code>, <code>"cubicSpline"</code>, and <code>"linearSpline"</code>.</td></tr>
 </tbody></table>
 </div dh="SphereSweep">
 
@@ -1180,12 +1164,12 @@ once for each object.</p>
 <div dh="Superellipsoid">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Superellipsoid, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>e</td><td>float</td><td>Defines the so-called <em>east-west</em> exponent.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Superellipsoid, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>n</td><td>float</td><td>Defines the so-called <em>north-south</em> exponent.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Superellipsoid, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Superellipsoid, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Superellipsoid, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Superellipsoid, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
@@ -1198,17 +1182,17 @@ once for each object.</p>
 <div dh="Text">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Text, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>displayText</td><td>string</td><td>This contains the text to be rendered.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Text, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>font</td><td>string</td><td>The filename of the font.</td></tr>
 <tr><td>RW</td><td>Y</td><td>fontType</td><td>string</td><td>Specifies the file format of the font being used. Legal values are <code>"ttc"</code>, and <code>"ttf"</code>.</td></tr>
 <tr><td>RW</td><td>Y</td><td>offset</td><td>float</td><td>If defined, specifies extra space to be placed between characters.</td></tr>
+<tr><td>RW</td><td>Y</td><td>thickness</td><td>float</td><td>Specifies the front-to-back thickness of the extruded character shapes.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Text, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Text, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Text, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Text, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>Y</td><td>thickness</td><td>float</td><td>Specifies the front-to-back thickness of the extruded character shapes.</td></tr>
 </tbody></table>
 </div dh="Text">
 
@@ -1219,15 +1203,15 @@ once for each object.</p>
 <div dh="Torus">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Torus, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Torus, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>Y</td><td>majorRadius</td><td>float</td><td>Defines the major radius of the torus, which is the circle along which the perpendicular circle defined by <code>minorRadius</code> is swept.</td></tr>
 <tr><td>RW</td><td>Y</td><td>minorRadius</td><td>float</td><td>Defines the minor radius of the torus, which is the radius of its cross section.</td></tr>
+<tr><td>RW</td><td>N</td><td>sturm</td><td>float</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Torus, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Torus, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Torus, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Torus, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>sturm</td><td>float</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 </tbody></table>
 </div dh="Torus">
 
@@ -1238,20 +1222,20 @@ once for each object.</p>
 <div dh="Triangle">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>corner1</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>Y</td><td>corner2</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>Y</td><td>corner3</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Triangle, this is always <code>false</code>.</td></td></tr>
-<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Triangle, this is always <code>true</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>normal1</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>normal2</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>normal3</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Triangle, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>smooth</td><td>boolean</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Triangle, this is always <code>false</code>.</td></td></tr>
 <tr><td>RW</td><td>N</td><td>textures</td><td>VectorXYZ</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Triangle, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Triangle, this is always <code>true</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a Triangle, this is always <code>false</code>.</td></td></tr>
+<tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Triangle, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
 </div dh="Triangle">
 
@@ -1262,13 +1246,13 @@ once for each object.</p>
 <div dh="Union">
 <table class='sgrid attrs'>
 <thead>
-<tr><th>&nbsp;</th><th>Req'd</th><th>Name</th><th>Type</th><th>Description</th></tr>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td>This is the array of objects to be combined by the CSG <code>Union</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>splitUnion</td><td>boolean</td><td>If the composite object lacks holes, setting <code>splitUnion</code> to <code>false</code> can speed up rendering. Defaults to <code>true</code>.</td></tr>
 <tr><td>RO</td><td>n/a</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG type. For a Union, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a Union, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>n/a</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a Union, this is always <code>true</code>.</td></td></tr>
-<tr><td>RW</td><td>N</td><td>splitUnion</td><td>boolean</td><td>If the composite object lacks holes, setting <code>splitUnion</code> to <code>false</code> can speed up rendering. Defaults to <code>true</code>.</td></tr>
 </tbody></table>
 </div dh="Union">
 
@@ -1499,6 +1483,7 @@ They each use some or all of the following parameters:
                               property is itself a primitive or array of
                               primitives whose parent property should be
                               updated upon assignment.
+                      dperm:  If present, overrides the RW designation
 
 cpov.vectorDef follows the same format, but the odds of it being entirely
 replaced before the first public beta are quite high.</pre>
@@ -1536,7 +1521,6 @@ replaced before the first public beta are quite high.</pre>
 
         <tr><td class='pending'>pending</td><td>Implement</td><td>Method documentation</td></tr>
         <tr><td class='working'>working</td><td>Implement</td><td>Attribute documentation</td></tr>
-            <tr><td class='working'>working</td><td>Document</td><td class='subtask'>GlobalSettings attributes</td></tr>
             <tr><td class='working'>working</td><td>Document</td><td class='subtask'>ImageOptions attributes</td></tr>
             <tr><td class='pending'>pending</td><td>Document</td><td class='subtask'>LightSource attributes</td></tr>
             <tr><td class='working'>working</td><td>Document</td><td class='subtask'>Primitive attributes</td></tr>
@@ -1551,6 +1535,7 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Cylinder attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Difference attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Disc attributes</td></tr>
+            <tr><td class='done'>done</td><td>Document</td><td class='subtask'>GlobalSettings attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>HeightField attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Intersection attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>IsoSurface attributes</td></tr>
@@ -1578,7 +1563,7 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>VectorXY attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>VectorXYZ attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>VectorXYZW attributes</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td>Add readOnly attr to "mutable" object definitions, update doc generation accordingly.</td></tr>
+        <tr><td class='done'>done</td><td>Implement</td><td>Add dperm attr to "mutable" object definitions, update doc generation accordingly.</td></tr>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
             <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
             <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
@@ -1622,6 +1607,8 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td><code>Camera.normal</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> photon parameters</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> radiosity parameters</td></tr>
     </tbody>
 </table>
 

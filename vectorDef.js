@@ -141,8 +141,8 @@ module.exports = {
                 name:  "b",
                 req:   true,
                 valid: "cpov.isFloat(val)",
+                desc:  "b must be a float",
                 desc:  "The blue component of the color, in the unit interval (0.0-1.0).",
-                desc:  "TODO",
                 tname: "float"
             }, {
                 name:  "f",

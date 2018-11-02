@@ -79,73 +79,73 @@ module.exports = {
             name:  "photonAdcBailout",
             valid: "cpov.isFloat(val) && val >= 0",
             err:   "photonAdcBailout must be a float greater than or equal to zero.",
-            desc:  "TODO",
+            desc:  "Specifies an Adaptive Depth Control for photons. If not specified, the regular <code>adcBailout</code> will be used.",
             tname: "float"
         }, {
             name:  "photonAutostop",
             valid: "cpov.isFloat(val) && cpov.isWithin(val, 0, 1)",
             err:   "photonAutostop must be a float within the unit interval (0.0 - 1.0)",
-            desc:  "TODO",
+            desc:  "This is a float in the unit interval (0.0 - 1.0) that determines how much of an object's bounding volume must be tested before aborting. It defaults to 0, but objects with holes often require a higher value.",
             tname: "float"
         }, {
             name:  "photonCount",
             valid: "cpov.isInt(val) && val >= 0",
             err:   "photonCount must be an integer greater than or equal to zero",
-            desc:  "TODO",
+            desc:  "Determines the number of photons to use. Cannot be used at the same time as <code>photonSpacing</code>",
             tname: "integer"
         }, {
             name:  "photonExpandThresholds",
-            valid: "Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isInt(val[1])",
-            err:   "photonExpandThresholds must be an array consisting of a float and and integer.",
-            desc:  "TODO",
+            valid: "Array.isArray(val) && val.length == 2 && cpov.isFloat(val[0]) && cpov.isWithin(val, 0, 1) && cpov.isInt(val[1])",
+            err:   "photonExpandThresholds must be an array consisting of a float in the unit interval (0.0 - 1.0) and and integer.",
+            desc:  "An array of a float in the unit interval (0.0 - 1.0) and an integer which define how much the adaptive search radius can be increased before reverting to <code>photonRadius</code> and the minimum number of photons to gather, respectively. The default is <code>[0.2, 40]</code>.",
             tname: "Array"
         }, {
             name:  "photonGather",
             valid: "cpov.isArrayOfInts(val, 2, 2) && val[0] >= 0 && val[1] >= 0 && val[0] <= val[1]",
             err:   "photonGather must be an array of two integers greater than zero in ascending order.",
-            desc:  "TODO",
+            desc:  "This is an array of two integers which specify the minimum and maximum number of photons to gather at each point. The default is <code>[20, 100]</code>.",
             tname: "Array"
         }, {
             name:  "photonJitter",
             valid: "cpov.isFloat(val)",
             err:   "photonJitter must be a float.",
-            desc:  "TODO",
+            desc:  "Specifies the amount of jitter to use in the pre-processing step. The default is 0.4 and rarely needs to be changed.",
             tname: "float"
         }, {
             name:  "photonLoadFile",
             valid: "cpov.isNonEmptyString(val)",
             err:   "photonLoadFile must be a non-empty string.",
-            desc:  "TODO",
+            desc:  "Specifies a photon map to load instead of performing the calculations.",
             tname: "string"
         }, {
             name:  "photonMaxTraceLevel",
             valid: "cpov.isInt(val) && val >= 0",
             err:   "photonMaxTraceLevel must be an integer greater than or equal to zero.",
-            desc:  "TODO",
+            desc:  "Sets an upper limit on the number of reflections that a photon can undergo before calculations are stopped. Legal values are in the range 1-256. If unspecified, the global <code>maxTraceLevel</code> is used.",
             tname: "integer"
         }, {
             name:  "photonMedia",
-            valid: "cpov.isArrayOfFloats(val, 2, 2)",
-            err:   "photonMedia must be an array of two floats.",
-            desc:  "TODO",
+            valid: "Array.isArray(val) && val.length == 2 && cpov.isInt(val[0]) && cpov.isInt(val[1])",
+            err:   "photonMedia must be an array of an integer and a float.",
+            desc:  "If specified, media photons are enabled. This is an array of an integer and a float. The integer specifies the maximum number of photons to deposit over an interval, and the float specifies the difference in media spacing relative to surface spacing.",
             tname: "Array"
         }, {
             name:  "photonRadius",
             valid: "cpov.isArrayOfFloats(val, 4, 4)",
             err:   "photonRadius must be an array of four floats.",
-            desc:  "TODO",
+            desc:  "This is an array of four floats that specify the gather radius, its multiplier, the media gather radius, and its multiplier.",
             tname: "Array"
         }, {
             name:  "photonSaveFile",
             valid: "cpov.isNonEmptyString(val)",
             err:   "photonSaveFile must be a non-empty string.",
-            desc:  "TODO",
+            desc:  "Saves the calculated photon map to this file for reuse.",
             tname: "string"
         }, {
             name:  "photonSpacing",
             valid: "cpov.isFloat(val) && val > 0",
             err:   "photonSpacing must be a float greater than zero.",
-            desc:  "TODO",
+            desc:  "Specifies the average distance between photons on surfaces. Cannot be used at the same time as <code>photonCount</code>.",
             tname: "float"
         }, {
             name:  "radAdcBailout",
@@ -223,7 +223,7 @@ module.exports = {
             name:  "radNormal",
             valid: "cpov.isBoolean(val)",
             err:   "radNormal must be a boolean.",
-            desc:  "TODO",
+            desc:  "If <code>true</code>, radiosity will be affected by normals.",
             tname: "boolean"
         }, {
             name:  "radPretraceEnd",
