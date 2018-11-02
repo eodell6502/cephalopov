@@ -92,7 +92,7 @@ table.sgrid th { background-color: #3C607B; }
 table.todo { width: 100%; }
 table.todo td.pending { text-align: center; background-color: #A00;    color: yellow; font-weight: bold; white-space: nowrap; }
 table.todo td.working { text-align: center; background-color: yellow;  color: #A00;   font-weight: bold; white-space: nowrap; }
-table.todo td.done    { text-align: center; background-color: #0A0;    color: white;  font-weight: bold; white-space: nowrap; }
+table.todo td.done    { text-align: center; background-color: #060;    color: white;  font-weight: bold; white-space: nowrap; }
 table.todo td.tbd     { text-align: center; background-color: #3C607B; color: white;  font-weight: bold; white-space: nowrap; }
 table.todo td.subtask { padding-left: 3em; }
 
@@ -286,7 +286,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -305,7 +305,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -331,7 +331,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -357,7 +357,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -401,7 +401,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -434,7 +434,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -666,7 +666,7 @@ once for each object.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -688,7 +688,7 @@ once for each object.</p>
 <tr><td>RW</td><td>N</td><td>blurSamples</td><td>Array</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
 <tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
 <table class="sgrid codeDoc">
 <thead>
 
@@ -886,7 +886,7 @@ once for each object.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
@@ -1599,6 +1599,55 @@ replaced before the first public beta are quite high.</pre>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
+        <tr><td class='pending'>pending</td><td>Implement</td><td>Method documentation</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Camera.normal</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> photon parameters</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> radiosity parameters</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td>Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
+
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>All geometric primitives</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Transformation validation and fixes</td></tr>
+        <tr><td class='done'>done</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Camera</code></td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive in CSG integration</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive transform integration</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera.angle</code>: Determine legal values and enforce</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>cpov.js</code>: More selective scope management</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>LightSource</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.looksLike</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaAttenuation</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaInteraction</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.projectedThrough</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Management of array attributes</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Matrix, Vector, Color</code>: Use JS/SDL func in lieu of individual attributes</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Matrix</code>: Improve constructor validation</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
+        <tr><td class='pending'>TDB</td><td>Implement/Test</td><td class='subtask'><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Mesh2</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Primitive</code></td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</code></td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interior</code></td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interiorTexture</code></td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.photons</code></td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.radiosity</code></td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.texture</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Reorg: Move things needed for <code>codegen</code> to separate file not included at runtime</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Reports</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Text.toSDL</code>: Handle escaping of double quotes in <code>Text.displayText</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
+
         <tr><td class='done'>done</td><td>Implement</td><td>Make <code>serial</code> read-only.</td></tr>
         <tr><td class='done'>done</td><td>Implement</td><td>Add <code>power</code> to <code>JuliaFractal.toSDL()</code>.</td></tr>
         <tr><td class='done'>done</td><td>Implement</td><td>Global <code>frameBegin/frameEnd</code> callbacks.</td></tr>
@@ -1613,10 +1662,7 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.endRow</code>: post check startRow</td></tr>
             <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.startColumn</code>: post check endColumn</td></tr>
             <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.startRow</code>: post check endRow</td></tr>
-
-        <tr><td class='pending'>pending</td><td>Implement</td><td>Method documentation</td></tr>
-        <tr><td class='working'>working</td><td>Implement</td><td>Attribute documentation</td></tr>
-            <tr><td class='working'>working</td><td>Document</td><td class='subtask'>ImageOptions attributes</td></tr>
+        <tr><td class='done'>done</td><td>Implement</td><td>Attribute documentation</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>BicubicPatch attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Blob attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Box attributes</td></tr>
@@ -1629,6 +1675,7 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Disc attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>GlobalSettings attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>HeightField attributes</td></tr>
+            <tr><td class='done'>done</td><td>Document</td><td class='subtask'>ImageOptions attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>Intersection attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>IsoSurface attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>JuliaFractal attributes</td></tr>
@@ -1659,52 +1706,6 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>VectorXYZ attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'>VectorXYZW attributes</td></tr>
         <tr><td class='done'>done</td><td>Implement</td><td>Add dperm attr to "mutable" object definitions, update doc generation accordingly.</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid checkered platform, n x n</td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>All geometric primitives</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Transformation validation and fixes</td></tr>
-        <tr><td class='done'>done</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Camera</code></td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive in CSG integration</td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive transform integration</td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Camera.angle</code>: Determine legal values and enforce</td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>cpov.js</code>: More selective scope management</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Optionally generate .sh/.bat files</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>LightSource</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.looksLike</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaAttenuation</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaInteraction</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>LightSource.projectedThrough</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Management of array attributes</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Matrix, Vector, Color</code>: Use JS/SDL func in lieu of individual attributes</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Matrix</code>: Improve constructor validation</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'>Compact output format for Triangles in Mesh</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
-        <tr><td class='tbd'>TDB</td><td>Implement/Test</td><td class='subtask'>uvVectors member in Triangle, ck Mesh compatibility.</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Mesh2</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Primitive</code></td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</code></td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interior</code></td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interiorTexture</code></td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.photons</code></td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.radiosity</code></td></tr>
-            <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td class='subtask'><code>Primitive.texture</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reorg: Move things needed for codegen to separate file not included at runtime</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Reports</td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td><code>Text.toSDL</code>: Handle escaping of double quotes in <code>Text.displayText</code></td></tr>
-        <tr><td class='tbd'>TBD</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Camera.normal</code></td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> photon parameters</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> radiosity parameters</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td>Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
     </tbody>
 </table>
 
