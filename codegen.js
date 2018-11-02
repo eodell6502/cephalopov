@@ -434,6 +434,9 @@ function docHumper(doc, classname, def) {
                 if(def.mutable[i].desc === undefined || def.mutable[i].desc == "TODO") {
                     var desc = descDummy;
                     var td = "<td class='dummy'>";
+                } else if(def.mutable[i].desc == "NIY") {
+                    var desc = "NOT IMPLEMENTED YET";
+                    var td = "<td class=\"niy\">";
                 } else {
                     var desc = def.mutable[i].desc;
                     td = "<td>";

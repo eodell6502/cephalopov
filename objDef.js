@@ -6,8 +6,6 @@
 
 module.exports = {
 
-    // TODO: need way to specify special methods, e.g., editing the components array
-
     bicubicPatch: {
         superclass: "Primitive",
         desc: false,
@@ -138,11 +136,11 @@ module.exports = {
                 desc:  "Defines the type of the camera. The legal values are $keylist.cameraTypes",
                 tname: "string"
             }, {
-                name:  "angle", //        type: "FIXME" }, // TODO
+                name:  "angle",
                 valid: "cpov.isFloat(val) && val > 0 && val <= 360",
                 err:   "angle must be a float greater than zero and less than or equal to 360.",
                 desc:  "Sets the width of the camera's viewing angle in degrees.",
-                tname: "integer"
+                tname: "float"
             }, {
                 name:  "aperture",
                 valid: "cpov.isFloat(val)",
@@ -721,23 +719,23 @@ module.exports = {
                 desc:  "Used with area lights. If <code>true</code>, the positions of the lights are randomly moved during rendering so that banding effects are minimized. Should not be used with animations.",
                 tname: "boolean"
             }, {
-                name:  "looksLike", // TODO
+                name:  "looksLike",
                 child: "scalar",
                 valid: "cpov.inheritsFrom(val, 'Primitive')",
                 err:   "looksLike must be a Primitive.",
                 desc:  "Assigns an object (with an implicit <code>noShadow</code> flag) to act as the physical source of the light.",
                 tname: "Primitive"
             }, {
-                name:  "mediaAttenuation", // TODO
+                name:  "mediaAttenuation",
                 valid: "cpov.isBoolean(val)",
                 err:   "mediaAttenuation must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code>, the light will be attenuated by passing through media. The default is <code>false</code>.",
                 tname: "boolean"
             }, {
-                name:  "mediaInteraction", // TODO
+                name:  "mediaInteraction",
                 valid: "cpov.isBoolean(val)",
                 err:   "mediaInteraction must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>true</code> (the default), the light will interact with media.",
                 tname: "boolean"
             }, {
                 name:  "orient",
@@ -1400,7 +1398,7 @@ module.exports = {
         ],
     },
 
-    triangle: {               // combines triangle and smooth_triangle
+    triangle: {
         superclass: "Primitive",
         desc: "The Triangle class combines POV-Ray's triangle and smooth_triangle "
             + "based on the supplied parameters and the smooth flag.",
@@ -1414,45 +1412,45 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner1 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the first corner of the triangle.",
                 tname: "VectorXYZ"
             }, {
                 name:  "corner2",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner2 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the second corner of the triangle.",
                 tname: "VectorXYZ"
             }, {
                 name:  "corner3",
                 req:   true,
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner3 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Defines the third corner of the triangle.",
                 tname: "VectorXYZ"
             }, {
-                name:  "smooth", // if smooth and normal1...3 are defined, it's a smooth triangle
+                name:  "smooth",
                 valid: "cpov.isBoolean(val)",
                 err:   "smooth must be a boolean.",
-                desc:  "TODO",
+                desc:  "If <code>smooth</code> is <code>true</code> and <code>normal1...3</code> are defined, the triangle will be output as a smooth triangle.",
                 tname: "boolean"
             }, {
                 name:  "normal1",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal1 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the surface normal for <code>corner1</code>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "normal2",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal2 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the surface normal for <code>corner2</code>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "normal3",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal3 must be a VectorXYZ.",
-                desc:  "TODO",
+                desc:  "Specifies the surface normal for <code>corner3</code>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "textures",

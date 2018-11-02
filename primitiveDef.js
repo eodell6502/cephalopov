@@ -74,7 +74,7 @@ module.exports = {
             name:  "interior",
             valid: "cpov.isClass(val, 'Interior')",
             err:   "interior must be an Interior.",
-            desc:  "TODO",
+            desc:  "NIY",
             tname: "Interior"
         }, {
             name:  "inverse",
@@ -86,7 +86,7 @@ module.exports = {
             name:  "material",
             valid: "cpov.isClass(val, 'Material')",
             err:   "material must be a Material.",
-            desc:  "TODO",
+            desc:  "NIY",
             tname: "Material"
         }, {
             name:  "noImage",
@@ -145,7 +145,7 @@ module.exports = {
             // err:   "texture must be a Texture."            // a texture subsystem by letting users
             valid: "cpov.isString(val)",                      // just stick an SDL string in its
             err:   "texture must be a string (for now).",     // place.
-            desc:  "TODO",
+            desc:  "Pending implementation of CephaloPOV's texture subsystem, this is a literal SDL string which will be output as-is.",
             tname: "string"
         }, {
             name:   "transform",
