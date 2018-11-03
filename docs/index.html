@@ -47,6 +47,14 @@
 @font-face { font-family: RobotoThin; src: url("./fonts/roboto/Roboto-Thin.ttf"); }
 @font-face { font-family: RobotoThin; src: url("./fonts/roboto/Roboto-ThinItalic.ttf"); font-style: italic; }
 
+@font-face { font-family: RobotoCondensed; src: url("./fonts/robotocondensed/RobotoCondensed-Bold.ttf"); font-weight: bold; }
+@font-face { font-family: RobotoCondensed; src: url("./fonts/robotocondensed/RobotoCondensed-BoldItalic.ttf"); font-weight: bold; font-style: italic; }
+@font-face { font-family: RobotoCondensed; src: url("./fonts/robotocondensed/RobotoCondensed-Italic.ttf"); font-style: italic; }
+@font-face { font-family: RobotoCondensed; src: url("./fonts/robotocondensed/RobotoCondensed-Regular.ttf"); }
+
+@font-face { font-family: RobotoCondensedLight; src: url("./fonts/robotocondensed/RobotoCondensed-Light.ttf"); }
+@font-face { font-family: RobotoCondensedLight; src: url("./fonts/robotocondensed/RobotoCondensed-LightItalic.ttf"); font-style: italic; }
+
 body,table,input { font: 10pt Roboto; }
 body { width: 7.5in; margin-left: auto; margin-right: auto; counter-reset: h2counter; }
 div.code { white-space: pre; font: 10pt Inconsolata; background-color: #DCECF2; border: 1px dashed #3C607B; margin-top: 1em; margin-bottom: 1em; padding: 1em; }
@@ -96,18 +104,18 @@ table.todo td.done    { text-align: center; background-color: #060;    color: wh
 table.todo td.tbd     { text-align: center; background-color: #3C607B; color: white;  font-weight: bold; white-space: nowrap; }
 table.todo td.subtask { padding-left: 3em; }
 
-table.attrs { width: 100%; font-family: ArchivoNarrow; }
+table.attrs { width: 100%; font-family: RobotoCondensed; }
 table.attrs > tbody > tr > td { padding: 0.25em; }
 table.attrs > tbody > tr > td:nth-child(1) { white-space: pre; text-align: center; }
 table.attrs > tbody > tr > td:nth-child(2) { text-align: center; }
 table.attrs > tbody > tr > td:nth-child(3) { font-family: Inconsolata; font-weight: bold; }
 table.attrs > tbody > tr > td:nth-child(4) { font-family: Inconsolata; }
-table.attrs > tbody > tr > td:nth-child(5) { padding-left: 0.5em; padding-right: 0.5em; white-space: normal; font-family: ArchivoNarrowMedium; width: 100%; }
+table.attrs > tbody > tr > td:nth-child(5) { padding-left: 0.5em; padding-right: 0.5em; white-space: normal; font-family: RobotoCondensed; width: 100%; }
 table.attrs > tbody > tr > td { vertical-align: top; }
 table.attrs > tbody > tr > td.dummy { color: #888; background-color: #FFE; }
 table.attrs > tbody > tr > td.niy { color: #A00; font: bold 10pt Roboto; }
 
-table.codeDoc { margin-left: auto; margin-right: auto; margin-bottom: 1em; font-family: ArchivoNarrow;}
+table.codeDoc { margin-left: auto; margin-right: auto; margin-bottom: 1em; font-family: RobotoCondensed;}
 table.codeDoc td { text-align: left; padding-left: 0.5em; padding-right: 0.5em; }
 table.codeDoc > tbody > tr > td:nth-child(1) { text-align: center; font-weight: bold; }
 
