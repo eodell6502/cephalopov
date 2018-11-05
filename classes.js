@@ -1163,7 +1163,7 @@ class ImageOptions {
 
         // Required parameters //
 
-        this.requiredParams = [ ];
+        this.requiredParams = [ "height", "width" ];
 
     }
 
@@ -4918,7 +4918,7 @@ class Camera extends Primitive {
             content.push(ppad + "angle " + this.angle);
         if(this.lookAt !== null)
             content.push(ppad + "look_at " + this.lookAt.toSDL());
-        if(this.apertureSize !== null) {
+        if(this.aperture !== null) {
             content.push(ppad + "aperture " + this.aperture);
             if(this.blurSamples !== null)
                 content.push(ppad + "blur_samples " + this.blurSamples.join(", "));
@@ -7750,7 +7750,7 @@ class LightSource extends Primitive {
         content.push(pad + "light_source {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
     
-        if(this.type !== null)
+        if(this.type !== null && this.type != "point")
             content.push(ppad + this.type);
     
         if(this.type == "spotlight" || this.type == "cylindrical") {

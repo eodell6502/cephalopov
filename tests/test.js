@@ -53,11 +53,25 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "LightSource: minimal test");                  lightSourceTestMinimum(fp);
     testHeader(fp, ++testSerial, "Camera: minimal test");                       cameraTestMinimum(fp);
 
-    testHeader(fp, ++testSerial, "Vector* initializer tests");                 vectorInitializerTest(fp);
-    testHeader(fp, ++testSerial, "Member Vector initializer tests");           memberVectorInitializerTest(fp);
+    testHeader(fp, ++testSerial, "Vector* initializer tests");                  vectorInitializerTest(fp);
+    testHeader(fp, ++testSerial, "Member Vector initializer tests");            memberVectorInitializerTest(fp);
+
+    testHeader(fp, ++testSerial, "testStage corner test");                      testStageCornerTest(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function testStageCornerTest(fp) {
+
+    var result = cpov.testStage("corner", 6);
+    for(var i = 0; i < result.length; i++)
+        fp.write(result[i].toSDL() + "\n");
+    fp.write("\n");
+
+}
+
 
 //==============================================================================
 
