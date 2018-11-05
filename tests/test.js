@@ -57,9 +57,21 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "Member Vector initializer tests");            memberVectorInitializerTest(fp);
 
     testHeader(fp, ++testSerial, "testStage corner test");                      testStageCornerTest(fp);
+    testHeader(fp, ++testSerial, "testStage triplane test");                    testStageTriplaneTest(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function testStageTriplaneTest(fp) {
+
+    var result = cpov.testStage("triplane", 6);
+    for(var i = 0; i < result.length; i++)
+        fp.write(result[i].toSDL() + "\n");
+    fp.write("\n");
+
+}
 
 //==============================================================================
 
@@ -71,7 +83,6 @@ function testStageCornerTest(fp) {
     fp.write("\n");
 
 }
-
 
 //==============================================================================
 

@@ -798,10 +798,11 @@ cpov.outputFrame = function() {
 
 cpov.testStage = function(type, size) {
 
-    var t = 0.1;        // thickness of boxes
     var h = size / 2;
 
     if(type == "corner") {
+
+        var t = 0.1;        // thickness of boxes
 
         var bottom = new Box({ corner1: [ -h - t, -h, h + t ],  corner2: [  h, -h - t, -h ] });
         var left   = new Box({ corner1: [ -h - t,  h, h + t ],  corner2: [ -h, -h - t, -h ] });
@@ -817,6 +818,21 @@ cpov.testStage = function(type, size) {
         return [ union, camera ];
 
     } else if(type == "triplane") {
+
+        var p = 0.01;       // thickness of boxes
+
+        var xy = new Box({ corner1: [ -h, h,  p ],  corner2: [ h, -h, -p ] });
+        var yz = new Box({ corner1: [ -p, h,  h ],  corner2: [ p, -h, -h ] });
+        var xz = new Box({ corner1: [ -h, p, -h ],  corner2: [ h, -p,  h ] });
+
+        var light  = new LightSource({ type: "point", color: [1,1,1], location: [ size, size, 0 ]});
+
+        var union = new Union({ components: [xy, yz, xz, light] });
+        union.texture = "texture { pigment { color <0.5, 0.5, 0.5> }}";
+
+        var camera = new Camera({ type: "perspective", location: [ size * 1.7, size, -size * 1.7 ], lookAt: [0,-0.8,0], right: [1,0.05,0], angle: 38 });
+
+        return [ union, camera ];
 
     } else {
         cpov.error("fatal", "Unsupported testStage type \"" + type + "\".", "CEPHALOPOV.testStage");

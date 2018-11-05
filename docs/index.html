@@ -64,6 +64,7 @@ code { font: bold 10pt Inconsolata; }
 pre { font: 10pt Inconsolata; }
 .beta { color: #A00; }
 p,li { text-align: justify; }
+.fixme { color: #A00; background-color: #FF0; font-weight: bold; }
 
 h1 { counter-reset: h2counter; }
 h2 { counter-reset: h3counter; font-size: 22pt; color: white; background-color: #3C607B; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2.5em; margin-bottom: 0.6em; font-family: ChivoBlack; border-top-right-radius: 40px; text-shadow: 2pt 2pt #263E4F; }
@@ -2015,7 +2016,7 @@ replaced before the first public beta are quite high.</pre>
 
 <h2>TODO</h2>
 
-<h3>Milestone C1: Preparation for public beta</h3>
+<h3>Milestone C1: Phase 0, Part 1</h3>
 
 <table class='sgrid todo'>
     <thead>
@@ -2032,37 +2033,31 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>VectorXYZ</code> methods</td></tr>
             <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>VectorXYZW</code> methods</td></tr>
             <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>Color</code> methods</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement</td><td class='subtask'><code>Matrix</code> methods</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement</td><td class='subtask'><code>Primitive</code> methods</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
 
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid <strike>checkered</strike> platform, n x n</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: translucent XYZ planes, n x n</td></tr>
+        <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
+            <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid <span class='fixme'>checkered</span> platform, n x n</td></tr>
+            <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>All geometric primitives</td></tr>
 
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Default option in *Def codegen. Esp. splitUnion = true</td></tr>
-
         <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Camera.normal</code></td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> photon parameters</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td><code>Primitive</code> radiosity parameters</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement</td><td>Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
 
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Transformation validation and fixes</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Camera</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td class='subtask'><code>Camera.normal</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive in CSG integration</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Pseudo-primitive transform integration</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>cpov.js</code>: More selective scope management</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>cpov.js</code>: More selective scope management, untangle internal dependencies</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>LightSource</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.looksLike</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaAttenuation</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.mediaInteraction</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource.projectedThrough</code></td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Management of array attributes</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Matrix, Vector, Color</code>: Use JS/SDL func in lieu of individual attributes</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Matrix</code>: Improve constructor validation</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
@@ -2070,15 +2065,18 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Mesh2</code></td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Primitive</code></td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.boundedBy: "cpov.inheritsFrom('Primitive') ",  // TODO: limit to actual allowable Primitives.</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interior</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.interiorTexture</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.photons</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.radiosity</code></td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive.texture</code></td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Management of array attributes</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Default option in *Def codegen. Esp. splitUnion = true</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Reorg: Move things needed for <code>codegen</code> to separate file not included at runtime</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Execution: Oversee execution directly</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Reports</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Untangle internal dependencies</td></tr>
 
         <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Camera.angle</code>: Determine legal values and enforce</td></tr>
         <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
@@ -2184,6 +2182,7 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Texture</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Reorg: Script to pretty-print definition files</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Turtle graphics</td></tr>
     </tbody>
 </table>
 
