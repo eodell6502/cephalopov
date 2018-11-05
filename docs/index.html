@@ -66,9 +66,9 @@ pre { font: 10pt Inconsolata; }
 p,li { text-align: justify; }
 
 h1 { counter-reset: h2counter; }
-h2 { counter-reset: h3counter; font-size: 22pt; color: white; background-color: #3C607B; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2em; margin-bottom: 0.6em; font-family: ChivoBlack; border-top-right-radius: 40px; text-shadow: 2pt 2pt #263E4F; }
-h3 { counter-reset: h4counter; font-size: 14pt; color: white; background-color: #3C607B; margin-top: 1.5em; margin-bottom: 0.5em; padding: 0.15em 0.15em 0.15em 0.35em; font-family: Chivo; }
-h4 { counter-reset: h5counter; font-size: 14pt; color: #263E4F; margin-top: 1em; margin-bottom: 0.4em; border-bottom: 1.5pt solid #263E4F; font-family: Chivo; }
+h2 { counter-reset: h3counter; font-size: 22pt; color: white; background-color: #3C607B; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2.5em; margin-bottom: 0.6em; font-family: ChivoBlack; border-top-right-radius: 40px; text-shadow: 2pt 2pt #263E4F; }
+h3 { counter-reset: h4counter; font-size: 14pt; color: white; background-color: #3C607B; margin-top: 2em; margin-bottom: 0.5em; padding: 0.15em 0.15em 0.15em 0.35em; font-family: Chivo; }
+h4 { counter-reset: h5counter; font-size: 14pt; color: #263E4F; margin-top: 1.5em; margin-bottom: 0.3em; border-bottom: 1.5pt solid #263E4F; font-family: Chivo; }
 h5 { font-size: 13pt; color: #263E4F; margin-top: 1em; margin-bottom: 0.4em; font-family: Chivo; }
 h6 { font-size: 11pt; color: #263E4F; margin-top: 1em; margin-bottom: 0.4em; font-family: Chivo; font-weight: bold; }
 
@@ -93,7 +93,7 @@ table.matrixDemo td.null { background-color: #CCC; }
 table.matrixDemo div.cpName { text-align: center; font: bold 10pt Inconsolata; }
 table.matrixDemo div.op { text-align: center; font-weight: bold; margin-top: 0.25em; }
 
-table.sgrid { background-color: #263E4F; border-spacing: 1pt; margin-top: 1em; }
+table.sgrid { background-color: #263E4F; border-spacing: 1pt; margin-top: 0.5em; }
 table.sgrid > thead { color: white; }
 table.sgrid > tbody { background-color: white; }
 table.sgrid > td { padding-left: 0.5em; padding-right: 0.5em; vertical-align: top; }
@@ -120,6 +120,10 @@ table.attrs > tbody > tr > td.niy { color: #A00; font: bold 10pt Roboto; }
 table.codeDoc { margin-left: auto; margin-right: auto; margin-bottom: 1em; font-family: RobotoCondensed;}
 table.codeDoc td { text-align: left; padding-left: 0.5em; padding-right: 0.5em; }
 table.codeDoc > tbody > tr > td:nth-child(1) { text-align: center; font-weight: bold; }
+
+div.fsig { font: bold 10pt Inconsolata; margin-bottom: 0.3em; margin-top: 1em; }
+p+div.fsig { margin-top: 1.25em; }
+.fdesc { margin-left: 1em; }
 
 </style>
 
@@ -186,6 +190,14 @@ a ways off.</span></p>
 <p>TODO</p>
 
 <h3>API Conventions</h3>
+
+<h4>Naming</h4>
+
+<p>To make things easier for experienced POV-Ray users, the
+<code>snake_cased</code> names of objects and properties in SDL are, with a few
+exceptions, converted directly into the <code>camelCased</code> names which are
+the norm in JavaScript. Class names begin with a capital letter, so
+<code>julia_fractal</code> becomes <code>JuliaFractal</code>.
 
 <h4>Type Discipline</h4>
 
@@ -287,9 +299,13 @@ curious. It should be noted that not all of the values that can be set in a
 <code>.ini</code> file have corresponding command line switches.</p>
 
 <p>By default, CephaloPOV initializes <code>cpov.imageOptions</code> with an
-<code>ImageOptions</code> object at the beginning of a job. [...]</code>
+<code>ImageOptions</code> object at the beginning of a job. You can create
+additional <code>ImageOptions</code> objects, but only the one assigned to
+<code>cpov.imageOptions</code> when <code>cpov.outputFrame()</code> is called is
+actually used.</p>
 
-<p>TODO</p>
+<p>All of the parameters are optional except for <code>height</code> and
+<code>width</code>.</p>
 
 <div dh="ImageOptions">
 <table class='sgrid attrs'>
@@ -450,7 +466,10 @@ curious. It should be noted that not all of the values that can be set in a
 
 <h4>GlobalSettings</h4>
 
-<p>TODO</p>
+<p>The <code>GlobalSettings</code> class defines the behavior of light in the
+image along with a few odds and ends like the character set used for input
+files. At startup, <code>cpov.globalSettings</code> is initialized with a
+pristine instance of the class. None of its parameters are mandatory.</p>
 
 <div dh="GlobalSettings">
 <table class='sgrid attrs'>
@@ -515,10 +534,47 @@ curious. It should be noted that not all of the values that can be set in a
 
 <h3>Vectors and Colors</h3>
 
+<p>Most of the geometry in POV-Ray is defined in terms of vectors, i.e., arrays of floats
+whose interpretation depends on context. For the sake of better type checking, CephaloPOV
+implements vectors as distinct classes even though some of them, like <code>VectorUV</code>
+and <code>VectorXY</code>, are identical save for their attribute names.</p>
+
+<p>Because initializing vector objects involves more typing than POV-Ray's admirably concise
+generic notation, all of CephaloPOV's vector types and other object methods that accept
+vectors will take JavaScript arrays as initializers in addition to the generic JavaScript objects that
+all CephaloPOV class constructors accept.</p>
+
+<div class='code'>var vec = new VectorXYZ();      // The long way
+vec.x = 2;
+vec.y = -1;
+vec.z = 5.2;
+
+var vec = new VectorXYZ({ x: 2, y: -1, z: 5.2 }); // The shorter generic way
+
+var vec = new VectorXYZ([2, -1, 5.2]);            // The shortest way
+
+// A vector can also copy the values of another vector:
+
+var vec1 = new VectorXYZ([3, 4, 5]);
+var vec2 = new VectorXYZ(vec1);
+
+// Since you rarely ever need a bare vector, you can also assign arrays
+// to vector attributes in other objects:
+
+var box = new Box();
+box.corner1 = [ 0, 0, 0 ];
+box.corner2 = [ 1, 1, 1 ];</div>
+
+<p>Like most CephaloPOV objects, all of the vector classes have a <code>toSDL()</code>
+method which returns the vector in the form of an SDL string.</p>
+
 <h4>VectorUV</h4>
 
-<p>TODO</p>
+<p>The <code>VectorUV</code> class is used to define 2D coordinates on the UV
+plane for texture mapping. Aside from having coordinates named <code>u</code>
+and <code>v</code>, it is otherwise identical to <code>VectorXY</code>.</p>
 
+<h5>Attributes</h5>
 <div dh="VectorUV">
 <table class='sgrid attrs'>
 <thead>
@@ -529,9 +585,36 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="VectorUV">
 
+<h5>Methods</h5>
+
+<div class='fsig'>VectorUV(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers, an array of two floats, or another <code>VectorUV</code>
+object. The following are all equivalent:</p>
+
+<div class='code fdesc'>var vec1 = new VectorUV({ u: 1, v: 3 });
+var vec2 = new VectorUV([1, 3]);
+var vec3 = new VectorUV(vec1);</div>
+
+<div class='fsig'>toSDL(<i>stops</i>)</div>
+
+<p class='fdesc'>Returns the SDL representation of the vector as a string,
+indented by the optional number of tab <code>stops</code>. If the mandatory
+attributes are not specified, a fatal error message is emitted and CephaloPOV
+halts.</p>
+
 <h4>VectorXY</h4>
 
-<p>TODO</p>
+<p>The <code>VectorXY</code> class is used to define 2D coordinates. It is
+mostly used to define splines and the outlines of objects which are essentially
+sweeps, like the <code>Prism</code>. (For prisms, the points defined are
+actually on the XZ plane and the shape is swept along the Y axis, but coming up
+with a separate <code>VectorXZ</code> seems excessively pedantic.</p>
+
+<h5>Attributes</h5>
 
 <div dh="VectorXY">
 <table class='sgrid attrs'>
@@ -543,9 +626,33 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="VectorXY">
 
+<h5>Methods</h5>
+
+<div class='fsig'>VectorXY(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers, an array of two floats, or another <code>VectorXY</code>
+object. The following are all equivalent:</p>
+
+<div class='code fdesc'>var vec1 = new VectorXY({ x: 1, y: 3 });
+var vec2 = new VectorXY([1, 3]);
+var vec3 = new VectorXY(vec1);</div>
+
+<div class='fsig'>toSDL(<i>stops</i>)</div>
+
+<p class='fdesc'>Returns the SDL representation of the vector as a string,
+indented by the optional number of tab <code>stops</code>. If the mandatory
+attributes are not specified, a fatal error message is emitted and CephaloPOV
+halts.</p>
+
 <h4>VectorXYZ</h4>
 
-<p>TODO</p>
+<p>Probably the most commonly used vector type for most users, the <code>VectorXYZ</code> class
+defines points in three-dimensional space.</p>
+
+<h5>Attributes</h5>
 
 <div dh="VectorXYZ">
 <table class='sgrid attrs'>
@@ -558,9 +665,36 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="VectorXYZ">
 
+<h5>Methods</h5>
+
+<div class='fsig'>VectorXYZ(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers, an array of three floats, or another <code>VectorXYZ</code>
+object. The following are all equivalent:</p>
+
+<div class='code fdesc'>var vec1 = new VectorXYZ({ x: 1, y: 3, z: 4 });
+var vec2 = new VectorXYZ([1, 3, 4]);
+var vec3 = new VectorXYZ(vec1);</div>
+
+<div class='fsig'>toSDL(<i>stops</i>)</div>
+
+<p class='fdesc'>Returns the SDL representation of the vector as a string,
+indented by the optional number of tab <code>stops</code>. If the mandatory
+attributes are not specified, a fatal error message is emitted and CephaloPOV
+halts.</p>
+
 <h4>VectorXYZW</h4>
 
-<p>TODO</p>
+<p>The <code>VectorXYZW</code> class defines points in four-dimensional space,
+and as such, it is not often used. One use case is the four-dimensional
+<code>JuliaFractal</code>. In the <code>Polynomial</code> type, it is used as a
+convenient (and somewhat hackish) way of grouping sets of four floats that are
+not actually coordinates.</p>
+
+<h5>Attributes</h5>
 
 <div dh="VectorXYZW">
 <table class='sgrid attrs'>
@@ -574,9 +708,36 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="VectorXYZW">
 
+<h5>Methods</h5>
+
+<div class='fsig'>VectorXYZW(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers, an array of four floats, or another <code>VectorXYZW</code>
+object. The following are all equivalent:</p>
+
+<div class='code fdesc'>var vec1 = new VectorXYZW({ x: 1, y: 3, z: 4, w: -1 });
+var vec2 = new VectorXYZW([1, 3, 4, -1]);
+var vec3 = new VectorXYZW(vec1);</div>
+
+<div class='fsig'>toSDL(<i>stops</i>)</div>
+
+<p class='fdesc'>Returns the SDL representation of the vector as a string,
+indented by the optional number of tab <code>stops</code>. If the mandatory
+attributes are not specified, a fatal error message is emitted and CephaloPOV
+halts.</p>
+
 <h4>Color</h4>
 
-<p>TODO</p>
+<p>The <code>Color</code> class is used to represent RGB colors. In addition to
+the usual <code>r</code>, <code>g</code>, and <code>b</code> attributes, it has
+two optional attributes, <code>f</code> (filter) and <code>t</code> (transmit).
+There is a final optional boolean attribute, <code>sRGB</code> which, if
+<code>true</code>, maps the colors to the sRGB color space.</p>
+
+<h5>Attributes</h5>
 
 <div dh="Color">
 <table class='sgrid attrs'>
@@ -592,11 +753,38 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Color">
 
+<h5>Methods</h5>
+
+<div class='fsig'>Color(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers, an array of three to six values, or another
+<code>Color</code> object. The following are all equivalent:</p>
+
+<div class='code fdesc'>var color1 = new Color({ r: 1.0, g: 0.2, b: 0.33, f: 0.2, t: 1.0, srgb: true });
+var color2 = new Color([1.0, 0.2, 0.33, 0.2, 1.0, true]);
+var color3 = new Color(color2);</div>
+
+<p class='fdesc'>Note that the <code>f</code>, <code>t</code>, and
+<code>srgb</code> attributes are optional, so none, any, or all of them can be
+used, they must be specified in order when passing a bare array.</p>
+
+<div class='fsig'>toSDL(<i>stops</i>)</div>
+
+<p class='fdesc'>Returns the SDL representation of the vector as a string,
+indented by the optional number of tab <code>stops</code>. If the mandatory
+attributes are not specified, a fatal error message is emitted and CephaloPOV
+halts.</p>
+
 <h3>Geometric Primitives</h3>
 
 <h4>Primitive</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Primitive">
 <table class='sgrid attrs'>
@@ -629,9 +817,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Primitive">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>BicubicPatch</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="BicubicPatch">
 <table class='sgrid attrs'>
@@ -650,9 +844,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="BicubicPatch">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Blob</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Blob">
 <table class='sgrid attrs'>
@@ -670,9 +870,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Blob">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Box</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Box">
 <table class='sgrid attrs'>
@@ -688,9 +894,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Box">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Camera</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Camera">
 <table class='sgrid attrs'>
@@ -747,9 +959,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Camera">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Cone</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Cone">
 <table class='sgrid attrs'>
@@ -768,9 +986,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Cone">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Cubic</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Cubic">
 <table class='sgrid attrs'>
@@ -786,9 +1010,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Cubic">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Cylinder</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Cylinder">
 <table class='sgrid attrs'>
@@ -807,9 +1037,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Cylinder">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Difference</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Difference">
 <table class='sgrid attrs'>
@@ -824,9 +1060,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Difference">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Disc</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Disc">
 <table class='sgrid attrs'>
@@ -844,7 +1086,13 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Disc">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>HeightField</h4>
+
+<h5>Attributes</h5>
 
 <p>TODO</p>
 
@@ -867,9 +1115,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="HeightField">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Intersection</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Intersection">
 <table class='sgrid attrs'>
@@ -883,9 +1137,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Intersection">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>IsoSurface</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="IsoSurface">
 <table class='sgrid attrs'>
@@ -907,9 +1167,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="IsoSurface">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>JuliaFractal</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="JuliaFractal">
 <table class='sgrid attrs'>
@@ -955,9 +1221,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="JuliaFractal">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Lathe</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Lathe">
 <table class='sgrid attrs'>
@@ -974,9 +1246,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Lathe">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>LightSource</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="LightSource">
 <table class='sgrid attrs'>
@@ -1015,9 +1293,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="LightSource">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Merge</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Merge">
 <table class='sgrid attrs'>
@@ -1031,9 +1315,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Merge">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Mesh</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Mesh">
 <table class='sgrid attrs'>
@@ -1050,9 +1340,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Mesh">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Ovus</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Ovus">
 <table class='sgrid attrs'>
@@ -1068,9 +1364,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Ovus">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Parametric</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Parametric">
 <table class='sgrid attrs'>
@@ -1096,9 +1398,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Parametric">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Plane</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Plane">
 <table class='sgrid attrs'>
@@ -1114,9 +1422,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Plane">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Poly</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Poly">
 <table class='sgrid attrs'>
@@ -1133,9 +1447,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Poly">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Polygon</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Polygon">
 <table class='sgrid attrs'>
@@ -1150,9 +1470,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Polygon">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Polynomial</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Polynomial">
 <table class='sgrid attrs'>
@@ -1169,9 +1495,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Polynomial">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Prism</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Prism">
 <table class='sgrid attrs'>
@@ -1191,9 +1523,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Prism">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Quadric</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Quadric">
 <table class='sgrid attrs'>
@@ -1208,9 +1546,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Quadric">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Quartic</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Quartic">
 <table class='sgrid attrs'>
@@ -1226,9 +1570,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Quartic">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Sor</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Sor">
 <table class='sgrid attrs'>
@@ -1245,9 +1595,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Sor">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Sphere</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Sphere">
 <table class='sgrid attrs'>
@@ -1264,9 +1620,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Sphere">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>SphereSweep</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="SphereSweep">
 <table class='sgrid attrs'>
@@ -1283,9 +1645,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="SphereSweep">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Superellipsoid</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Superellipsoid">
 <table class='sgrid attrs'>
@@ -1301,9 +1669,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Superellipsoid">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Text</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Text">
 <table class='sgrid attrs'>
@@ -1322,9 +1696,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Text">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Torus</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Torus">
 <table class='sgrid attrs'>
@@ -1341,9 +1721,15 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Torus">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Triangle</h4>
 
 <p>TODO</p>
+
+<h5>Attributes</h5>
 
 <div dh="Triangle">
 <table class='sgrid attrs'>
@@ -1365,7 +1751,13 @@ curious. It should be noted that not all of the values that can be set in a
 </tbody></table>
 </div dh="Triangle">
 
+<h5>Methods</h5>
+
+<p>TODO</p>
+
 <h4>Union</h4>
+
+<h5>Attributes</h5>
 
 <p>TODO</p>
 
@@ -1381,6 +1773,10 @@ curious. It should be noted that not all of the values that can be set in a
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Union</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Union">
+
+<h5>Methods</h5>
+
+<p>TODO</p>
 
 
 <h2>Appendices</h2>

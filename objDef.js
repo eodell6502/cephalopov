@@ -27,7 +27,7 @@ module.exports = {
                 valid: "cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16)",
                 err:   "points must be an array of 16 VectorXYZ.",
                 desc:  "The <code>points</code> attribute is an array of 16 <code>VectorXYZ</code> points which define the 4 &mult; 4 array of control points that define the patch.",
-                tname: "Array"
+                tname: "[VectorXYZ]"
             }, {
                 name:  "uSteps",
                 valid: "cpov.isInt(val)",
@@ -152,7 +152,7 @@ module.exports = {
                 valid: "cpov.isArrayOfFloats(val, 2, 2) && val[0] >= 0 && val[1] >= 0",
                 err:   "blurSamples must be an array of two floats greater than or equal to zero.",
                 desc:  "Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.",
-                tname: "Array"
+                tname: "[float]"
             }, {
                 name:  "bokeh",
                 valid: "cpov.isClass(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
@@ -289,7 +289,7 @@ module.exports = {
                 valid: "cpov.isArrayOfFloats(val, 20, 20)",
                 err:   "coefficients must be an array of 20 floats.",
                 desc:  "An array of 20 floats that act as the coefficients of a third-order polynomial.",
-                tname: "Array"
+                tname: "[float]"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
@@ -482,7 +482,7 @@ module.exports = {
                 valid: "cpov.isArrayOfBaseClass(val, 'Primitive')",
                 err:   "objects must be an array of Primitives.",
                 desc:  "An array of objects whose intersection will produce the resulting object.",
-                tname: "Array"
+                tname: "[Primitive]"
             }
         ],
     },
@@ -531,7 +531,7 @@ module.exports = {
                 valid: "cpov.isArrayOfFloats(val, 3, 3)",
                 err:   "evaluate must be an array of three floats.",
                 desc:  "This is an array of three floats that optionally guides POV-Ray in dynamically adapting <code>maxGradient</code>. See the official POV-Ray documentation for <a href=\"specifies whether the file is stored in premultiplied associated or non-premultiplied straight alpha format, overriding the file format specific default. This keyword has no effect on files without an alpha channel.\">details.</a>",
-                tname: "Array"
+                tname: "[float]"
             }, {
                 name:  "open",
                 valid: "cpov.isBoolean(val)",
@@ -836,7 +836,7 @@ module.exports = {
                 valid: "cpov.isArrayOfClass(val, 'Triangle', 1, Infinity)",
                 err:   "triangles",
                 desc:  "The array of <code>Triangle</code>s comprising the mesh.",
-                tname: "Array"
+                tname: "[Triangle]"
             }, {
                 name:  "insideVector",
                 valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
@@ -1034,7 +1034,7 @@ module.exports = {
                 valid: "cpov.isArrayOfFloats(val, 1, Infinity)",
                 err:   "coefficients must be an array of floats.",
                 desc:  "An array defining the coefficients of the polynomial. The number of coefficients required is equal to ((<code>order</code> + 1) * (<code>order</code> + 2) * (<code>order</code> + 3)) / 6.",
-                tname: "Array"
+                tname: "[float]"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",
@@ -1059,7 +1059,7 @@ module.exports = {
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity)",
                 err:   "points must be an array of three or more VectorXY.",
                 desc:  "This is an array of at least three <code>VectorXY</code> objects defining the vertices of the polygon.",
-                tname: "Array"
+                tname: "[VectorXY]"
             }
         ],
 
@@ -1086,7 +1086,7 @@ module.exports = {
                 valid: "cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity)",
                 err:   "coefficients must be a VectorXYZW.",
                 desc:  "An array of <code>VectorXYZW</code> defining the coefficients of the polynomial. The choice of <code>VectorXYZW</code> is a bit of a convenience hack as it doesn't encode a 4D cartesian point. Instead, the X, Y, and Z values specify the corresponding powers of the coefficient and W specifies the value. The members of the array can be specified in any order.",
-                tname: "Array"
+                tname: "[VectorXYZW]"
             }, {
                 name:  "sturm",
                 valid: "cpov.isBoolean(val)",

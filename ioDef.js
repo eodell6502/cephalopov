@@ -193,6 +193,7 @@ module.exports = {
         }, {
             name:  "height",
             valid: "cpov.isInt(val) && val > 0",
+            req:   true,
             err:   "height must be an integer greater than zero.",
             desc:  "Height of output image in pixels.",
             tname: "integer"
@@ -469,6 +470,7 @@ module.exports = {
         }, {
             name:  "width",
             valid: "cpov.isInt(val) && val > 0",
+            req:   true,
             err:   "width must be an integer greater than zero.",
             desc:  "Width of output image in pixels.",
             tname: "integer"
