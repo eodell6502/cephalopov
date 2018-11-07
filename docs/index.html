@@ -66,12 +66,15 @@ pre { font: 10pt Inconsolata; }
 p,li { text-align: justify; }
 .fixme { color: #A00; background-color: #FF0; font-weight: bold; }
 
-h1 { counter-reset: h2counter; }
+h1 { counter-reset: h2counter; font: 36pt ChivoBlack; position: relative; color: #3C607B; top: 36pt; }
 h2 { counter-reset: h3counter; font-size: 22pt; color: white; background-color: #3C607B; padding: 0.25em 0.0em 0.25em 0.5em; margin-top: 2.5em; margin-bottom: 0.6em; font-family: ChivoBlack; border-top-right-radius: 40px; text-shadow: 2pt 2pt #263E4F; }
 h3 { counter-reset: h4counter; font-size: 14pt; color: white; background-color: #3C607B; margin-top: 2em; margin-bottom: 0.5em; padding: 0.15em 0.15em 0.15em 0.35em; font-family: Chivo; }
 h4 { counter-reset: h5counter; font-size: 14pt; color: #263E4F; margin-top: 1.5em; margin-bottom: 0.3em; border-bottom: 1.5pt solid #263E4F; font-family: Chivo; }
 h5 { font-size: 13pt; color: #263E4F; margin-top: 1em; margin-bottom: 0.4em; font-family: Chivo; }
 h6 { font-size: 11pt; color: #263E4F; margin-top: 1em; margin-bottom: 0.4em; font-family: Chivo; font-weight: bold; }
+
+span.h2num { margin: 0pt 0pt 36pt 12pt; font: 144pt LogicTwentyFive; float: right; position: relative; bottom: 18pt; left: 13pt; color: #3C607B; }
+span.h2num:before { content: counter(h2counter); }
 
 h2:before { counter-increment: h2counter; content: counter(h2counter) "\0000a0\0000a0";                                               }
 h3:before { counter-increment: h3counter; content: counter(h2counter) "." counter(h3counter) "\0000a0\0000a0";                        }
@@ -132,21 +135,21 @@ p+div.fsig { margin-top: 1.25em; }
 
 </head>
 <body>
-<img src='cplogo_small.png' style='float: right; margin-left: 1em; margin-bottom: 1em;'><h1>CephaloPOV Documentation</h1>
-
-<p><i>Before CephaloPOV reaches a preliminary beta phase, this will be the user
-manual. Right now, it's very much a work in progress.</i></p>
-
-<br/><br/>
+<img src='cplogo_small.png' style='float: right; margin-left: 1em; margin-bottom: 1em; position: relative; top: 12pt;'>
+<h1>CephaloPOV v0.1<br/>User's Manual</h1>
 
 <h2>Introduction</h2>
 
-<p>CephaloPOV is a JavaScript scripting engine for POV-Ray. It is implemented as
+<p><span class='h2num'></span>CephaloPOV is a JavaScript scripting engine for POV-Ray. It is implemented as
 a Node command line program that loads a user script and executes it in an
 environment in which it can manipulate various JavaScript classes that map to
 POV-Ray's native objects, in addition to having full access to the Node
 ecosystem. CephaloPOV takes care of generating POV-Ray Scene Description
 Language files, both for static scenes and multi-frame animations.</p>
+
+<p><i>The documentation as it stands is more or less complete as far as CephaloPOV
+itself is concerned, but the longer-term goal of being self-sufficient without
+requiring familiarity with POV-Ray is still a good ways away.</i></p>
 
 <h3>What you need (and don't need) to know</h3>
 
@@ -182,9 +185,18 @@ a ways off.</span></p>
 
 <h2>Tutorial</h2>
 
-<p>TODO</p>
+<p><span class='h2num'></span>This section will take you step-by-step through
+learning how to use CephaloPOV and all its features. It will be, sadly, likely the
+last section to be completed.</p>
+
+<p><br/><br/><br/><br/></p>
 
 <h2>Reference</h2>
+
+<p><span class='h2num'></span>The reference section contains a complete summary
+of the CephaloPOV API.</p>
+
+<p><br/><br/><br/><br/><br/><br/><br/></p>
 
 <h3>Documentation Conventions</h3>
 
@@ -1782,6 +1794,11 @@ halts.</p>
 
 <h2>Appendices</h2>
 
+<p><span class='h2num'></span>The appendices contain further details and discussions about
+CephaloPOV and ray tracing supplementary to the main text.</p>
+
+<p><br/><br/><br/><br/><br/><br/><br/></p>
+
 <h3>Matrices</h3>
 
 <p>SDL matrices are an abbreviated form of the entire matrix being used. The
@@ -2014,9 +2031,11 @@ replaced before the first public beta are quite high.</pre>
 
 
 
-<h2>TODO</h2>
+<h2>Administrivia</h2>
 
-<h3>Milestone C1: Phase 0, Part 1</h3>
+<h3>TODO</h3>
+
+<h4>Milestone C1: Phase 0, Part 1</h4>
 
 <table class='sgrid todo'>
     <thead>
@@ -2144,9 +2163,7 @@ replaced before the first public beta are quite high.</pre>
 </table>
 
 
-
-
-<h3>Backlog</h3>
+<h4>Backlog</h4>
 
 <table class='sgrid todo'>
     <thead>
@@ -2187,7 +2204,7 @@ replaced before the first public beta are quite high.</pre>
 </table>
 
 
-<h4>CephaloPOV Scene Graph</h4>
+<h3>CephaloPOV Scene Graph</h3>
 
 <p>Master objects are defined relative to the origin. More precisely, the origin is
 their primary point of articulation. In each frame, they are transformed to
@@ -2205,7 +2222,7 @@ into master objects amounts to just positioning them appropriately relative to
 the origin after construction.</p>
 
 
-<h2>Changelog</h2>
+<h3>Changelog</h3>
 
 <p>Oh geez, not yet.</p>
 

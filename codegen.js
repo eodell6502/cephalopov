@@ -557,7 +557,7 @@ function main() {
         proplist:  { short: "p", cnt: 0 },
         objlist:   { short: "o", cnt: 0 },
         docs:      { short: "d", cnt: 0 },
-        help:      { short: "h", cnt: 0 },
+		help:      { short: "h", cnt: 0 },
     };
 
     cpov.parseCLI(opts);

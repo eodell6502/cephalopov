@@ -1,4 +1,7 @@
-
+//==============================================================================
+// This file contains unit/regression tests that output to regression.log, which
+// can then be compared with the last known good copy thereof.
+//==============================================================================
 
 function main(cpov) {
     var testSerial = 0;
