@@ -684,12 +684,12 @@ cpov.outputFrame = function() {
         var iniContent = cpov.imageOptions.output();
 
         iniFile.write(
-              "//==========================================================================\n"
-            + "// INI FILE: " + iniFile.path + "\n"
-            + "// FRAME: " + cpov.currentFrame + "\n"
-            + "// CLOCK TIME: " + cpov.clockTime + "\n"
-            + "// CLI EQUIV: " + iniContent.cli + "\n"
-            + "//==========================================================================\n\n"
+              ";;==========================================================================\n"
+            + ";; INI FILE: " + iniFile.path + "\n"
+            + ";; FRAME: " + cpov.currentFrame + "\n"
+            + ";; CLOCK TIME: " + cpov.clockTime + "\n"
+            + ";; CLI EQUIV: " + iniContent.cli + "\n"
+            + ";;==========================================================================\n\n"
             + iniContent.ini + "\n\n"
         );
         iniFile.close();
@@ -737,6 +737,8 @@ cpov.outputFrame = function() {
         } else {
             povFile.write(cpov.snapshots.join("\n\n"));
         }
+
+        cpov.snapshots = [ ];
 
     } else {
 

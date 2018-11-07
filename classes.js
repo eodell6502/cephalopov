@@ -3716,9 +3716,9 @@ class Primitive {
 
 
     destroy() {
-        delete cpov.serialMap(this.serial);
+        delete cpov.serialMap[this.serial];
         if(this.id)
-            delete cpov.idMap(this.id);
+            delete cpov.idMap[this.id];
     }
 
 
@@ -3768,6 +3768,15 @@ class Primitive {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
         }
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Copies current SDL representation of the object to the snapshot buffer.
+    //--------------------------------------------------------------------------
+    
+    snapshot() {
+        cpov.snapshots.push(this.toSDL());
     }
 
 

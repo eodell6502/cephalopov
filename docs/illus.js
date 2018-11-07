@@ -5,6 +5,57 @@
 
 
 function main(cpov) {
+    cpov.snapshotMode = true;
+    cpov.imageOptions.height = 320;
+    cpov.imageOptions.width  = 320;
+    cpov.imageOptions.outputFileType = "N";
+    cpov.imageOptions.createIni = true;
+    cpov.imageOptions.outputAlpha = true;
+    cpov.imageOptions.antialias = true;
+    cpov.imageOptions.antialiasDepth = 3;
+
+    var texture = "texture { pigment { color <1, 1, 0> }}";
+    var stage = cpov.testStage("corner", 6);
+
+    // Box //-------------------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/box_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new Box({ corner1: [2,2,2], corner2: [-2, -2, -2], texture: texture });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+    // Cone //------------------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/cone_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new Cone({
+        basePoint: [0, -2, 0],
+        baseRadius: 2,
+        capPoint: [0, 2, 0],
+        capRadius: 0,
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+    // Sphere //----------------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/sphere_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new Sphere({ center: [0,0,0], radius: 2, texture: texture});
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
 
 
 }

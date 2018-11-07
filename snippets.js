@@ -1998,9 +1998,9 @@ copyFrom(obj) {
 // Primitive.destroy //---------------------------------------------------------
 
 destroy() {
-    delete cpov.serialMap(this.serial);
+    delete cpov.serialMap[this.serial];
     if(this.id)
-        delete cpov.idMap(this.id);
+        delete cpov.idMap[this.id];
 }
 
 

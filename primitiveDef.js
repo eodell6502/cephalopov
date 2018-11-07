@@ -8,7 +8,15 @@ module.exports = {
         + "shared across (nearly) all geometric primitives.",
     conArgs: false,
     conBlock: "Primitive.conBlock",
-    snippets: [ "Primitive.adopt", "Primitive.copyCommonFrom", "Primitive.destroy", "Primitive.disown", "Primitive.requiredParameterTest", "Primitive.toSDL" ],
+    snippets: [
+        "Primitive.adopt",
+        "Primitive.copyCommonFrom",
+        "Primitive.destroy",
+        "Primitive.disown",
+        "Primitive.requiredParameterTest",
+        "Primitive.snapshot",
+        "Primitive.toSDL",
+    ],
     mutable: [
         {
             name:  "active",
