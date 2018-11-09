@@ -1068,7 +1068,30 @@ at right was created by the following code:</p>
 
 <h4>Cylinder</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Cylinder</code> type produces a solid cylinder by default and
+defined by the coordinates of the centers of its two circular ends,
+<code>basePoint</code> and <code>capPoint</code>, plus the <code>radius</code>
+of both. If the <code>open</code> attribute is true, the end caps are omitted
+and the interior is hollow, leaving an infinitely thin tube.</p>
+
+<p>If it is being used as a component in a <code>Blob</code>, the <code>strength</code>
+attribute can be used to assign a field strength to the cylinder.</p>
+
+<p>The following code produces the example at right:</p>
+
+<div class='code'>var obj = new Cylinder({
+    basePoint: [0, -2, 0],
+    capPoint: [0, 2, 0],
+    radius: 2,
+});</div>
+
+</td><td>
+
+    <img src="img/cylinder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 

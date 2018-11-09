@@ -12,7 +12,7 @@ function main(cpov) {
     cpov.imageOptions.createIni = true;
     cpov.imageOptions.outputAlpha = true;
     cpov.imageOptions.antialias = true;
-    cpov.imageOptions.antialiasDepth = 3;
+    cpov.imageOptions.antialiasDepth = 9;
 
     var texture = "texture { pigment { color <1, 1, 0> }}";
     var stage = cpov.testStage("corner", 6);
@@ -38,6 +38,22 @@ function main(cpov) {
         baseRadius: 2,
         capPoint: [0, 2, 0],
         capRadius: 0,
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+    // Cylinder //--------------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/cylinder_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new Cylinder({
+        basePoint: [0, -2, 0],
+        capPoint: [0, 2, 0],
+        radius: 2,
         texture: texture
     });
     obj.snapshot();

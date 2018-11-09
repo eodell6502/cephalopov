@@ -794,6 +794,8 @@ cpov.outputFrame = function() {
 //
 //     triplane ... Three translucent planes intersect at the origin.
 //
+// The size argument determines the size of the planes.
+//
 // Cameras and lighting are automatically added. It is assumed -- i.e., you'll
 // need to change camera.right -- that the image has a 1:1 aspect ratio.
 //==============================================================================
@@ -806,14 +808,31 @@ cpov.testStage = function(type, size) {
 
         var t = 0.1;        // thickness of boxes
 
-        var bottom = new Box({ corner1: [ -h - t, -h, h + t ],  corner2: [  h, -h - t, -h ] });
-        var left   = new Box({ corner1: [ -h - t,  h, h + t ],  corner2: [ -h, -h - t, -h ] });
-        var right  = new Box({ corner1: [ -h - t,  h, h + t ],  corner2: [  h, -h - t,  h ] });
+		var components = [ ];
 
-        var light  = new LightSource({ type: "point", color: [1,1,1], location: [ size, size, 0 ]});
+		// Panel boxes
 
-        var union = new Union({ components: [bottom, left, right, light] });
-        union.texture = "texture { pigment { color <0.5, 0.5, 0.5> }}";
+        components.push(new Box({ corner1: [ -h - t, -h, h + t ],  corner2: [  h, -h - t, -h ], texture: "texture { pigment { color <0.75, 0.75, 0.75> }}", id: "panelBottom" }));
+        components.push(new Box({ corner1: [ -h - t,  h, h + t ],  corner2: [ -h, -h - t, -h ], texture: "texture { pigment { color <0.75, 0.75, 0.75> }}", id: "panelLeft" }));
+        components.push(new Box({ corner1: [ -h - t,  h, h + t ],  corner2: [  h, -h - t,  h ], texture: "texture { pigment { color <0.75, 0.75, 0.75> }}", id: "panelRight" }));
+
+		// Grid
+
+		for(var c = Math.floor(-h); c < h + t; c++) {
+			var texture = c == 0 ? "texture { pigment { color <0.5, 0.0, 0.0> }}" : "texture { pigment { color <0.5, 0.5, 0.5> }}";
+			components.push(new Cylinder({ radius: t/2, capPoint: [ -h, c, -h ], basePoint: [ -h, c, h ], texture: texture, id: "leftMajorGridA" + c }));
+			components.push(new Cylinder({ radius: t/2, capPoint: [ -h, h, c ], basePoint: [ -h, -h, c ], texture: texture, id: "leftMajorGridB" + c }));
+			components.push(new Cylinder({ radius: t/2, capPoint: [ -h, c, h ], basePoint: [  h, c, h ], texture: texture, id: "rightMajorGridA" + c }));
+			components.push(new Cylinder({ radius: t/2, capPoint: [ c, h, h ], basePoint: [  c, -h, h ], texture: texture, id: "rightMajorGridB" + c }));
+			components.push(new Cylinder({ radius: t/2, capPoint: [ -h, -h, c ], basePoint: [  h, -h, c ], texture: texture, id: "bottomMajorGridA" + c }));
+			components.push(new Cylinder({ radius: t/2, capPoint: [ c, -h, h ], basePoint: [  c, -h, -h ], texture: texture, id: "bottomMajorGridB" + c }));
+		}
+
+		// Light
+
+        components.push(new LightSource({ type: "point", color: [1.5,1.5,1.5], location: [ size * 0.75, size * 0.75, 0 ], id: "light" }));
+
+        var union = new Union({ components: components });
 
         var camera = new Camera({ type: "perspective", location: [ size * 1.7, size, -size * 1.7 ], lookAt: [0,-0.8,0], right: [1,0.05,0], angle: 38 });
 
@@ -830,7 +849,7 @@ cpov.testStage = function(type, size) {
         var light  = new LightSource({ type: "point", color: [1,1,1], location: [ size, size, 0 ]});
 
         var union = new Union({ components: [xy, yz, xz, light] });
-        union.texture = "texture { pigment { color <0.5, 0.5, 0.5> }}";
+        union.texture = "texture { pigment { color <0.75, 0.75, 0.75> }}";
 
         var camera = new Camera({ type: "perspective", location: [ size * 1.7, size, -size * 1.7 ], lookAt: [0,-0.8,0], right: [1,0.05,0], angle: 38 });
 
