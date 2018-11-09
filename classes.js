@@ -9138,7 +9138,7 @@ class Polygon extends Primitive {
     }
 
     set points(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity) || (val = cpov.convertToVectorArray("VectorXY", val)))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of three or more VectorXY.", "Polygon", this);

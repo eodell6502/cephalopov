@@ -1056,7 +1056,7 @@ module.exports = {
             {
                 name:  "points",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity)",
+                valid: "cpov.isArrayOfClass(val, 'VectorXY', 3, Infinity) || (val = cpov.convertToVectorArray(\"VectorXY\", val))",
                 err:   "points must be an array of three or more VectorXY.",
                 desc:  "This is an array of at least three <code>VectorXY</code> objects defining the vertices of the polygon.",
                 tname: "[VectorXY]"

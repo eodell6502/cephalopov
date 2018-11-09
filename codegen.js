@@ -375,7 +375,7 @@ function docHumper(doc, classname, def) {
     var immutableDesc = {
         finite:  "If <code>true</code>, the shape is finite in extent.",
         solid:   "If <code>true</code>, the shape is solid.",
-        csg:     "If <code>true</code>, the primitive is a composite CSG type.",
+        csg:     "If <code>true</code>, the primitive is a composite CSG container.",
         pseudo:  "If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects."
     };
 

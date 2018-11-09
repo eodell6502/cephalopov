@@ -378,6 +378,45 @@ cpov.convertToVector = function(type, val) {
     return val;
 }
 
+//------------------------------------------------------------------------------
+// Analogous to convertToVector, convertToVectorArray attempts to convert the
+// convenient bare array forms of the named vector type to an equivalent array
+// of vector instances. If the bare arrays are malformed, the vector constructor
+// will terminate the script with a fatal error.
+//------------------------------------------------------------------------------
+
+cpov.convertToVectorArray = function(type, val) {
+
+    switch(type) {
+        case "VectorXY":
+			for(var i = 0; i < val.length; i++)
+	            val[i] = new VectorXY(val[i]);
+            break;
+        case "VectorUV":
+			for(var i = 0; i < val.length; i++)
+	            val[i] = new VectorUV(val[i]);
+            break;
+        case "VectorXYZ":
+			for(var i = 0; i < val.length; i++)
+		        val[i] = new VectorXYZ(val[i]);
+            break;
+        case "VectorXYZW":
+			for(var i = 0; i < val.length; i++)
+			    val[i] = new VectorXYZW(val[i]);
+            break;
+        case "Color":
+			for(var i = 0; i < val.length; i++)
+				val[i] = new Color(val[i]);
+            break;
+        default:
+            cpov.error("fatal", "System error, invalid type '" + type + "'.", "cpov.convertToVectorArray");
+    }
+
+    return val;
+
+}
+
+
 var miscDef = require("./miscDef.js");  // miscellaneous/minor definitions
 for(var k in miscDef)
     cpov[k] = miscDef[k];
