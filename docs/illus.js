@@ -61,6 +61,53 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+	// Disc //------------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/disc_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Disc({
+        center: [0, 0, 0],
+		radius: 2,
+		holeRadius: 1,
+		normal: [0, 1, 0],
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Ovus //------------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/ovus_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Ovus({
+		bottomRadius: 2,
+	    topRadius: 1,
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Plane //----------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/plane_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Plane({
+		distance: 0,
+		normal: [0, 1, 0],
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
     // Sphere //----------------------------------------------------------------
 
     cpov.outputBase = "./docs/src/sphere_basic";

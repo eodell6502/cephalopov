@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/sphere_basic.pov
-// FRAME: 6
-// CLOCK TIME: 6
+// POV FILE: ./docs/src/ovus_basic.pov
+// FRAME: 4
+// CLOCK TIME: 4
 //==========================================================================
 
 union {
@@ -199,7 +199,7 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-sphere {
-    <0, 0, 0>, 2
+ovus {
+    2, 1
     texture { pigment { color <1, 1, 0> }}
 }

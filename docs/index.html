@@ -130,7 +130,7 @@ p+div.fsig { margin-top: 1.25em; }
 .fdesc { margin-left: 1em; }
 
 table.illusBasic td { vertical-align: top; }
-
+table.illusBasic td.infinite { padding-left: 1em; }
 </style>
 
 <script src="jquery-3.3.1.min.js"></script>
@@ -138,7 +138,7 @@ table.illusBasic td { vertical-align: top; }
 </head>
 <body>
 <img src='cplogo_small.png' style='float: right; margin-left: 1em; margin-bottom: 1em; position: relative; top: 12pt;'>
-<h1>CephaloPOV v0.1<br/>User's Manual</h1>
+<h1>CephaloPOV v0.1&alpha;<br/>User's Manual</h1>
 
 <h2>Introduction</h2>
 
@@ -1002,8 +1002,10 @@ at right was created by the following code:</p>
 
 <p>The <code>Cone</code> type is deceptively simple. At a minimum, you must
 specify a <code>basePoint</code> and a <code>capPoint</code> along with their
-respective radii, <code>The example
-at right was created by the following code:</p>
+respective radii. For the result to be a cone, one of the radii must be zero,
+but non-zero values will produce a frustum, i.e., a truncated cone. You can also
+remove the endcaps and create a hollow cone by setting <code>open</code> to
+true. The example at right was created by the following code:</p>
 
 <div class='code'>var obj = new Cone({
     basePoint: [0, -2, 0],
@@ -1141,7 +1143,25 @@ attribute can be used to assign a field strength to the cylinder.</p>
 
 <h4>Disc</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Disc</code> type is a two-dimensional circular disc defined by its
+<code>center</code>, <code>radius</code>, and <code>normal</code>. As in the
+example below, it is possible to turn it into a washer-like ring by specifying a
+non-zero <code>holeRadius</code>.</p>
+
+<div class='code'>var obj = new Disc({
+    center: [0, 0, 0],
+    radius: 2,
+    holeRadius: 1,
+    normal: [0, 1, 0]
+});</div>
+
+</td><td>
+
+    <img src="img/disc_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -1421,7 +1441,28 @@ attribute can be used to assign a field strength to the cylinder.</p>
 
 <h4>Ovus</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Ovus</code> type is one of POV-Ray's more interesting and versatile
+geometric primitives. It consists of two spheres defined by
+<code>bottomRadius</code> and <code>topRadius</code> such that the center of the
+top sphere is positioned on the top of the bottom sphere, and then a smooth
+curved surface connects the two. The center of the bottom sphere is at the
+origin, and the centers of both spheres are aligned along the y-axis.</p>
+
+<p>In the example code below, the result is the egg-like shape to the right, but
+a wide variety of other shapes can be constructed with it.</p>
+
+<div class='code'>var obj = new Ovus({
+    bottomRadius: 2,
+    topRadius: 1
+});</div>
+
+</td><td>
+
+    <img src="img/ovus_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -1479,7 +1520,31 @@ attribute can be used to assign a field strength to the cylinder.</p>
 
 <h4>Plane</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>Arguably POV-Ray's simplest primitive, the <code>Plane</code> is an infinite
+solid dividing all space into two halves. It is defined by a
+<code>distance</code> from the origin and a <code>normal</code> which determines
+the orientation of its surface. It provides a convenient infinite ground plane,
+of course, but because it creates a solid half-surface, you can use a CSG
+<code>Intersection</code> of planes to create complex shapes like solid
+polyhedra.</p>
+
+<p>In the example below, the plane is oriented perpendicularly to the y-axis at
+the origin. Its infinite extent is amusingly clear in the rendering to the
+right, where our standard demonstration stage looks like it has been caught in a
+flood!</p>
+
+<div class='code'>var obj = new Plane({
+    distance: 0,
+    normal: [0, 1, 0]
+});</div>
+
+</td><td class='infinite'>
+
+    <img src="img/plane_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 

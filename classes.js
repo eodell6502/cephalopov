@@ -8286,7 +8286,7 @@ class Ovus extends Primitive {
         var content = [ ];
     
         content.push(pad + "ovus {" + (this.id === null ? "" : " // " + this.id));
-        content.push(ppad + this.topRadius + ", " + this.bottomRadius);
+        content.push(ppad + this.bottomRadius + ", " + this.topRadius);
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)

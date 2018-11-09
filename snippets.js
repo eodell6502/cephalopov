@@ -1745,7 +1745,7 @@ toSDL(stops = 0) {
     $Primitive.toSDL-preamble
 
     content.push(pad + "ovus {" + (this.id === null ? "" : " // " + this.id));
-    content.push(ppad + this.topRadius + ", " + this.bottomRadius);
+    content.push(ppad + this.bottomRadius + ", " + this.topRadius);
 
     $Primitive.toSDL-postamble
 }

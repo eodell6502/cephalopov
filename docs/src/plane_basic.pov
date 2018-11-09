@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/sphere_basic.pov
-// FRAME: 6
-// CLOCK TIME: 6
+// POV FILE: ./docs/src/plane_basic.pov
+// FRAME: 5
+// CLOCK TIME: 5
 //==========================================================================
 
 union {
@@ -199,7 +199,7 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-sphere {
-    <0, 0, 0>, 2
+plane {
+    <0, 1, 0>, 0
     texture { pigment { color <1, 1, 0> }}
 }
