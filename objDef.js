@@ -1129,9 +1129,9 @@ module.exports = {
             }, {
                 name:  "points",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity)",
+                valid: "cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity) || (val = cpov.convertToVectorArray(\"VectorXY\", val))",
                 err:   "points must be an array of VectorXY.",
-                desc:  "The array of spline points to be swept along the Y axis. This can specify multiple sub-shapes: to close a shape, simply repeat the first coordinate.",
+                desc:  "The array of spline points to be swept along the Y axis. This can specify multiple sub-shapes: to close a shape, simply repeat the first coordinate. When using any <code>type</code> other than <code>linearSpline</code>, all shapes must be closed.",
                 tname: "Array"
             }, {
                 name:  "open",

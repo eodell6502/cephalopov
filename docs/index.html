@@ -350,7 +350,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -369,7 +369,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -394,7 +394,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -420,7 +420,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -464,7 +464,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -499,7 +499,7 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -942,7 +942,7 @@ at right was created by the following code:</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -964,7 +964,7 @@ at right was created by the following code:</p>
 <tr><td>RW</td><td>N</td><td>blurSamples</td><td>[float]</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
 <tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1278,7 +1278,7 @@ non-zero <code>holeRadius</code>.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
@@ -1665,7 +1665,34 @@ is in fact the same color as all the other examples.</p>
 
 <h4>Prism</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Prism</code> type is the three-dimensional analogue of the
+<code>Polygon</code>. It sweeps the shape defined by the array of
+<code>VectorXY</code> in the <code>points</code> parameter along the y-axis from
+<code>height1</code> to <code>height2</code>. The points may define multiple
+sub-polygons provided that each polygon is closed by repeating the first point
+as the last.</p>
+
+<p>Unlike <code>Polygon.points</code>, <code>Prism.points</code> may specify
+more than just simple linear splines depending on the value of <code>type</code>.</p>
+
+<p>The example below uses the same <code>points</code> argument as the example for
+the <code>Polygon</code>.</p>
+
+<div class='code'>var obj = new Polygon({
+    height1: -2,
+    height2: 2,
+    type: "linearSpline",
+    points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2],
+        [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
+});</div>
+
+</td><td class='infinite'>
+
+    <img src="img/prism_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -1676,7 +1703,7 @@ is in fact the same color as all the other examples.</p>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>height1</td><td>float</td><td>Specifies the Y coordinate of the top of the prism.</td></tr>
 <tr><td>RW</td><td>Y</td><td>height2</td><td>float</td><td>Specifies the Y coordinate of the bottom of the prism.</td></tr>
-<tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td>The array of spline points to be swept along the Y axis. This can specify multiple sub-shapes: to close a shape, simply repeat the first coordinate.</td></tr>
+<tr><td>RW</td><td>Y</td><td>points</td><td>Array</td><td>The array of spline points to be swept along the Y axis. This can specify multiple sub-shapes: to close a shape, simply repeat the first coordinate. When using any <code>type</code> other than <code>linearSpline</code>, all shapes must be closed.</td></tr>
 <tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the spline type used for the prism. The legal values are <code>"bezierSpline"</code>, <code>"conicSweep"</code>, <code>"cubicSpline"</code>, <code>"linearSpline"</code>, <code>"linearSweep"</code>, and <code>"quadraticSpline"</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the top and bottom of the prism are left open.</td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>

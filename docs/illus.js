@@ -122,6 +122,24 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+	// Prism //-----------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/prism_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Prism({
+		height1: -2,
+		height2: 2,
+		type: "linearSpline",
+		points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+
     // Sphere //----------------------------------------------------------------
 
     cpov.outputBase = "./docs/src/sphere_basic";

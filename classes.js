@@ -9543,7 +9543,7 @@ class Prism extends Primitive {
     }
 
     set points(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 0, Infinity) || (val = cpov.convertToVectorArray("VectorXY", val)))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of VectorXY.", "Prism", this);
