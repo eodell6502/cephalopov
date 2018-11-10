@@ -1,5 +1,5 @@
 //==========================================================================
-// POV FILE: ./docs/src/Superellipsoid_basic.pov
+// POV FILE: ./docs/src/superellipsoid_basic.pov
 // FRAME: 10
 // CLOCK TIME: 10
 //==========================================================================

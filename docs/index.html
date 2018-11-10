@@ -1954,7 +1954,28 @@ have the same value, the result is a cube with rounded edges. When both values r
 
 <h4>Torus</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Torus</code> type specifies a torus with its major and minor radii.
+If you think of a torus as the surface described by a smaller two-dimensional
+ring swept perpendicularly to a larger ring, the <code>majorRadius</code> is the
+radius of the larger ring, and the <code>minorRadius is the radius of the
+smaller ring.</p>
+
+<p>The example code and rendering demonstrates a <code>Torus</code> with a minor radius
+of 0.5 units and a major radius of 2 units.</p>
+
+<div class='code'>var obj = new Torus({
+    minorRadius: 0.5,
+    majorRadius: 2,
+    texture: texture
+});</div>
+
+</td><td class='infinite'>
+
+    <img src="img/torus_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2297,45 +2318,45 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Add multi-setter that takes an object full of params like the constructor.</td></tr>
 
         <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
-            <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid <span class='fixme'>checkered</span> platform, n x n</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid <span class='fixme'>checkered</span> platform, n x n</td></tr>
             <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>BicubicPatch</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Blob</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Box</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Color</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Cone</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Cubic</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Cylinder</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Difference</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Disc</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>GlobalSettings</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>HeightField</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Intersection</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>IsoSurface</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>JuliaFractal</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Lathe</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Merge</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Mesh</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Ovus</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Parametric</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Plane</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Poly</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Polygon</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Polynomial</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Prism</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quadric</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quartic</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Sor</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Sphere</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>SphereSweep</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Superellipsoid</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Text</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Torus</code> attributes</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Triangle</code> attributes</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>BicubicPatch</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Blob</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Box</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Color</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Cone</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Cylinder</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Difference</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Disc</code> description and example</td></tr>
+            <tr><td class='pending'>done</td><td>Implement/Test</td><td class='subtask'><code>GlobalSettings</code> description</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>HeightField</code> description and example</td></tr>
+            <tr><td class='pending'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions</code> description</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Intersection</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>IsoSurface</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>JuliaFractal</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Lathe</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Merge</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Ovus</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Parametric</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Plane</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Poly</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Polygon</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Polynomial</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Prism</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quadric</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quartic</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Sor</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Sphere</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>SphereSweep</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Superellipsoid</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Text</code> description and example</td></tr>
+            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Torus</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Triangle</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
 

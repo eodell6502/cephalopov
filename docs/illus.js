@@ -170,12 +170,27 @@ function main(cpov) {
 
 	// Superellipsoid //--------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/Superellipsoid_basic";
+	cpov.outputBase = "./docs/src/superellipsoid_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Superellipsoid({
 		e: 0.25,
 		n: 0.25,
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Torus //-----------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/torus_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Torus({
+		minorRadius: 0.5,
+		majorRadius: 2,
         texture: texture
     });
     obj.snapshot();
