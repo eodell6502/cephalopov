@@ -592,13 +592,13 @@ module.exports = {
                 name:  "slice",
                 valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "slice must be a VectorXYZW.",
-                desc:  "Specifies the 3D slice through 4D space used to view the fractal.",
+                desc:  "Specifies the 3D slice through 4D space used to view the fractal. Defaults to <code>[0, 0, 0, 1]</code>.",
                 tname: "VectorXYZW"
             }, {
                 name:  "distance",
                 valid: "cpov.isFloat(val)",
                 err:   "distance must be a float.",
-                desc:  "Specifies the distance of the <code>slice</code> from the origin.",
+                desc:  "Specifies the distance of the <code>slice</code> from the origin. Defaults to 0.",
                 tname: "float"
             }
         ],
@@ -1270,7 +1270,7 @@ module.exports = {
             {
                 name:  "e",
                 req:   true,
-                valid: "cpov.isFloat(val)",
+                valid: "cpov.isFloat(val) && val > 0",
                 err:   "e must be a float.",
                 desc:  "Defines the so-called <em>east-west</em> exponent.",
                 tname: "float"
@@ -1278,7 +1278,7 @@ module.exports = {
 			{
                 name:  "n",
                 req:   true,
-                valid: "cpov.isFloat(val)",
+                valid: "cpov.isFloat(val) && val > 0",
                 err:   "n must be a float.",
                 desc:  "Defines the so-called <em>north-south</em> exponent.",
                 tname: "float"

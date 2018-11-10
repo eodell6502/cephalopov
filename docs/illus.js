@@ -78,6 +78,23 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+	// JuliaFractal //----------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/julia_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new JuliaFractal({
+		juliaParam: [-0.083, 0.0, -0.83, -0.025],
+		type: "quaternion:sqr",
+		maxIter: 8,
+		precision: 15,
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
 	// Ovus //------------------------------------------------------------------
 
 	cpov.outputBase = "./docs/src/ovus_basic";
@@ -151,7 +168,20 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+	// Superellipsoid //--------------------------------------------------------
 
+	cpov.outputBase = "./docs/src/Superellipsoid_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Superellipsoid({
+		e: 0.25,
+		n: 0.25,
+        texture: texture
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
 
 }
 

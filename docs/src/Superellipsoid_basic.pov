@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/sphere_basic.pov
-// FRAME: 9
-// CLOCK TIME: 9
+// POV FILE: ./docs/src/Superellipsoid_basic.pov
+// FRAME: 10
+// CLOCK TIME: 10
 //==========================================================================
 
 union {
@@ -199,7 +199,7 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-sphere {
-    <0, 0, 0>, 2
+superellipsoid {
+    <0.25, 0.25>
     texture { pigment { color <1, 1, 0> }}
 }

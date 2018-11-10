@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/sphere_basic.pov
-// FRAME: 9
-// CLOCK TIME: 9
+// POV FILE: ./docs/src/julia_basic.pov
+// FRAME: 4
+// CLOCK TIME: 4
 //==========================================================================
 
 union {
@@ -199,7 +199,11 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-sphere {
-    <0, 0, 0>, 2
+julia_fractal {
+    <-0.083, 0, -0.83, -0.025>
+    quaternion
+    sqr
+    max_iteration 8
+    precision 15
     texture { pigment { color <1, 1, 0> }}
 }

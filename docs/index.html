@@ -1268,7 +1268,27 @@ non-zero <code>holeRadius</code>.</p>
 
 <h4>JuliaFractal</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>JuliaFractal</code> is a three-dimensional slice of a
+four-dimensional Julia fractal set. See the <a
+href="http://www.povray.org/documentation/3.7.0/r3_4.html#r3_4_5_1_7">POV-Ray
+docs</a> for a little more detail. The CephaloPOV interface follows the POV-Ray
+model quite closely, the major difference being that POV-Ray's anonymous algebra
+type and function type parameters are combined in <code>type</code>.</p>
+
+<div class='code'>var obj = new JuliaFractal({
+    juliaParam: [-0.083, 0.0, -0.83, -0.025],
+    type: "quaternion:sqr",
+    maxIter: 8,
+    precision: 15
+});</div>
+
+</td><td class='infinite'>
+
+    <img src="img/julia_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -1304,11 +1324,11 @@ non-zero <code>holeRadius</code>.</p>
 <tr><td><code>quaternion:sqr</code></td></tr>
 </tbody></table>
 </td></tr>
-<tr><td>RW</td><td>N</td><td>distance</td><td>float</td><td>Specifies the distance of the <code>slice</code> from the origin.</td></tr>
+<tr><td>RW</td><td>N</td><td>distance</td><td>float</td><td>Specifies the distance of the <code>slice</code> from the origin. Defaults to 0.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxIter</td><td>integer</td><td>Determines the number of iterations used to find the surface of the fractal, with higher values being more accurate but slower to render. The default is 20.</td></tr>
 <tr><td>RW</td><td>N</td><td>power</td><td>VectorXY</td><td>For the <code>hypercomplex:pwr</code> formula, this <code>VectorXY</code> contains the X and Y exponents used in the calculations. Has no effect on other formula types.</td></tr>
 <tr><td>RW</td><td>N</td><td>precision</td><td>integer</td><td>Determines the accuracy of the calculations for finding the surface of the julia set. The default is 20. Higher values result in greater accuracy but longer rendering times.</td></tr>
-<tr><td>RW</td><td>N</td><td>slice</td><td>VectorXYZW</td><td>Specifies the 3D slice through 4D space used to view the fractal.</td></tr>
+<tr><td>RW</td><td>N</td><td>slice</td><td>VectorXYZW</td><td>Specifies the 3D slice through 4D space used to view the fractal. Defaults to <code>[0, 0, 0, 1]</code>.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>JuliaFractal</code>, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a <code>JuliaFractal</code>, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a <code>JuliaFractal</code>, this is always <code>false</code>.</td></td></tr>
@@ -1861,7 +1881,29 @@ the field strength.
 
 <h4>Superellipsoid</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Superellipsoid</code> type implements what is more properly known
+as a superquadric ellipsoid whose shape can vary from a cube with rounded edges
+to fat, egg-like cylinders. It is defined solely by two float parameters,
+<code>e</code> and <code>n</code>, the so-called east-west and north-south
+exponents, respectively. It occupies roughly the same space as a <code>Box</code>
+with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.</p>
+
+<p>As the example code and rendering indicate, when <code>e</code> and <code>n</code>
+have the same value, the result is a cube with rounded edges. When both values reach
+1.0, the result is equivalent to a unit sphere.</p>
+
+<div class='code'>var obj = new Superellipsoid({
+    e: 0.25,
+    n: 0.25
+});</div>
+
+</td><td class='infinite'>
+
+    <img src="img/superellipsoid_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
