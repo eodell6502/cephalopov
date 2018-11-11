@@ -209,10 +209,11 @@ of the CephaloPOV API.</p>
 <h4>Naming</h4>
 
 <p>To make things easier for experienced POV-Ray users, the
-<code>snake_cased</code> names of objects and properties in SDL are, with a few
-exceptions, converted directly into the <code>camelCased</code> names which are
-the norm in JavaScript. Class names begin with a capital letter, so
-<code>julia_fractal</code> becomes <code>JuliaFractal</code>.
+<code>snake_cased</code> names of objects and properties in SDL, with a few
+exceptions (mostly truncations), are converted directly into the
+<code>camelCased</code> names which are the norm in JavaScript. Class names
+begin with a capital letter, so <code>julia_fractal</code> becomes
+<code>JuliaFractal</code>.
 
 <h4>Type Discipline</h4>
 
@@ -290,6 +291,54 @@ that every <code>Primitive</code> object has two callback methods,
 <code>frameBegin</code> and <code>frameEnd</code>. These methods are guaranteed
 to only be called by CephaloPOV at the beginning and end of a frame, exactly
 once for each object.</p>
+
+<h3>The Animation Cycles</h3>
+
+<p>From CephaloPOV's perspective, every user program is an animation. Static
+scenes are just animations with a single frame. If you're only making static
+scenes, you don't need to know much about the animation features beyond setting
+up a scene and triggering its output. Conversely, once you know how to create
+static scenes, there's not much more you have to know in order to create
+animations.</p>
+
+<p>One of the major design goals of CephaloPOV was to have more flexible options
+than POV-Ray's native animation system which, while more than adequate for many
+animations, can be awkward for others. Consequently, there are two main ways to
+produce animations in CephaloPOV:</p>
+
+<ul class='spacious'>
+
+    <li><b>Snapshot Mode:</b> In snapshot mode, which is triggered by setting
+    <code>cpov.snapshotMode</code> to <code>true</code>, the user provides the
+    main loop. Objects are created and destroyed as needed, but they remain
+    invisible until their <code>snapshot</code> methods are called. When
+    <code>cpov.outputFrame()</code> is called, the <code>.pov</code> file for
+    the frame is output. This mode is often used for still scenes as well. It is
+    important to remember that object <code>active</code> flags are still
+    respected in snapshot mode.</li>
+
+    <li><b>Automatic Mode:</b> In automatic mode, the user program does not call
+    <code>cpov.outputFrame()</code> directly; instead, it hands off control to
+    <code>cpov.runAnimation()</code>. Before each frame is output, the
+    <code>cpov.frameBegin</code> callback function is called, followed by each
+    object's own <code>frameBegin</code> callbacks. The frame is then output.
+    Afterwards, each object's <code>frameEnd</code> callback is called, followed
+    by the global <code>cpov.frameEnd</code> callback. Finally, both the animation
+    time clock variable, <code>cpov.clockTime</code> is incremented by <code>cpov.tickVal</code>,
+    and the frame number, <code>cpov.currentFrame</code>, is incremented. The cycle
+    repeats until any of the callbacks invokes <code>cpov.endAnimation</code>.</li>
+
+</ul>
+
+<p>Aside from the greater flexibility of writing procedural code in JavaScript
+instead of SDL, having both a time counter and a frame counter in automatic mode
+can make certain kinds of animations and programming styles easier. At the same
+time, the ability to work within the implicit Newtonian time of the native
+POV-Ray animation system is preserved.</p>
+
+<h4>Animation Parameters</h4>
+
+
 
 <h3>Global Parameters</h3>
 
