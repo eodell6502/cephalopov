@@ -1,8 +1,14 @@
 //==========================================================================
 // POV FILE: ./docs/src/cone_basic.pov
-// FRAME: 1
-// CLOCK TIME: 1
+// FRAME: 3
+// CLOCK TIME: 3
 //==========================================================================
+
+#version 3.7
+
+global_settings {
+    ambient_light  <0.25, 0.25, 0.25>
+}
 
 union {
     box { // panelBottom
@@ -186,7 +192,7 @@ union {
         texture { pigment { color <0.5, 0.5, 0.5> }}
     }
     light_source { // light
-        <4.5, 4.5, 0>, rgb <1.5, 1.5, 1.5>
+        <4.5, 4.5, -4.5>, rgb <1.5, 1.5, 1.5>
     }
     split_union off
 }

@@ -13,16 +13,64 @@ function main(cpov) {
     cpov.imageOptions.outputAlpha = true;
     cpov.imageOptions.antialias = true;
     cpov.imageOptions.antialiasDepth = 9;
+	cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];
 
     var texture = "texture { pigment { color <1, 1, 0> }}";
     var stage = cpov.testStage("corner", 6);
+
+    // BicubicPatch //----------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/bicubicpatch_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new BicubicPatch({
+		type: 0,
+		flatness: 0.01,
+		uSteps: 4,
+		vSteps: 4,
+		points: [
+			[-2,  2, -2], [-2, -1, -1], [-2,  0, 0], [-2,  1, 1],
+			[-1,  1, -2], [-1,  2, -1], [-1, -1, 0], [-1,  0, 1],
+			[ 0,  0, -2], [ 0,  1, -1], [ 0,  2, 0], [ 0, -1, 1],
+			[ 2, -1, -2], [ 2,  0, -1], [ 2,  1, 0], [ 2,  2, 1],
+		],
+		texture: texture
+	});
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Blob //------------------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/blob_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+
+
+    var obj = new Blob({
+		components: [
+			new Sphere({ center: [-1.5, -1.5, -1.5], radius: 2, strength: 4 }),
+			new Sphere({ center: [   0,    0,    0], radius: 2, strength: 4 }),
+			new Sphere({ center: [ 1.5,  1.5,  1.5], radius: 2, strength: 4 }),
+		],
+		texture: texture
+	});
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
 
     // Box //-------------------------------------------------------------------
 
     cpov.outputBase = "./docs/src/box_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-    var obj = new Box({ corner1: [2,2,2], corner2: [-2, -2, -2], texture: texture });
+    var obj = new Box({
+		corner1: [2,2,2],
+		corner2: [-2, -2, -2],
+		texture: texture
+	});
     obj.snapshot();
 
     cpov.outputFrame();
@@ -199,5 +247,6 @@ function main(cpov) {
     obj.destroy();
 
 }
+
 
 module.exports = main;

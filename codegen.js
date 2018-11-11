@@ -239,20 +239,6 @@ ClassBuilder.prototype.toString = function() {
 
     // Accessors and Mutators --------------------------------------------------
 
-    if(this.obj.immutable) {
-        for(var i in this.obj.immutable) {
-            src.push(
-                this.divider(1, "-") + "\n\n"
-                + tab1 + "get " + i + "() {\n"
-                + tab2 + "return this._" + i + ";\n"
-                + tab1 + "}\n\n"
-                + tab1 + "set " + i + "(val) {\n"
-                + tab2 + "throw new TypeError(\"[" + this.name + "]: " + i + " is a read-only property.\");\n"
-                + tab1 + "}\n"
-            );
-        }
-    }
-
     if(this.obj.mutable) {
         for(var i = 0; i < this.obj.mutable.length; i++) {
             var item = this.obj.mutable[i];

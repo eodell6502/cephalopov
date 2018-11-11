@@ -809,7 +809,7 @@ halts.</p>
 <tr><td>RW</td><td>N</td><td>active</td><td>boolean</td><td>If <code>active == false</code>, it will not be output to the current .pov frame file. Defaults to <code>true</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>baseTransform</td><td>Matrix</td><td>The <code>baseTransform</code> attribute contains the "default" transformation of the object. As new transformations are applied, the original <code>baseTransform</code> remains unchanged, making it easy to revert to the original state by calling the <code>resetTransform</code> method.</td></tr>
 <tr><td>RW</td><td>N</td><td>boundedBy</td><td>Primitive</td><td>Defines a manual bounding volume for the object.</td></tr>
-<tr><td>RW</td><td>N</td><td>clippedBy</td><td>Primitive</td><td>Specifies a <code>Primitive</code> that the object is clipped by in a manner similar to CSG intersection.</td></tr>
+<tr><td>RW</td><td>N</td><td>clippedBy</td><td>Primitive</td><td>Specifies a solid <code>Primitive</code> that the object is clipped by in a manner similar to CSG intersection.</td></tr>
 <tr><td>RW</td><td>N</td><td>doubleIlluminate</td><td>boolean</td><td>If <code>true</code>, the object is illuminated on its shadow side.</td></tr>
 <tr><td>RW</td><td>N</td><td>finish</td><td>Finish</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>frameBegin</td><td>function</td><td>If defined, this function will be called at the beginning of a frame before output.</td></tr>
@@ -838,7 +838,32 @@ halts.</p>
 
 <h4>BicubicPatch</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>BicubicPatch</code> type is a curved surface defined by a
+4&nbsp;&times;&nbsp;4 array of <code>VectorXYZ</code> control points which are
+interpolated behind the scenes using Bezier splines and converted to a mesh of
+triangles. The number of triangles used along the u- and v-axes are defined by
+<code>uSteps</code> and <code>vSteps</code>.</p>
+
+<div class='code'>var obj = new BicubicPatch({
+    type: 0,
+    flatness: 0.01,
+    uSteps: 4,
+    vSteps: 4,
+    points: [
+        [0, 2, 0], [0, 0, 1], [0, 0, 2], [0, -2, 3],
+        [1, 0, 0], [1, 0, 1], [1, 0, 2], [1,  0, 3],
+        [2, 0, 0], [2, 0, 1], [2, 0, 2], [2,  0, 3],
+        [3, 2, 0], [3, 0, 1], [3, 0, 2], [3, -2, 3]
+    ]
+});</div>
+
+</td><td>
+
+    <img src="img/bicubicpatch_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -847,7 +872,7 @@ halts.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>points</td><td>[VectorXYZ]</td><td>The <code>points</code> attribute is an array of 16 <code>VectorXYZ</code> points which define the 4 &mult; 4 array of control points that define the patch.</td></tr>
+<tr><td>RW</td><td>Y</td><td>points</td><td>[VectorXYZ]</td><td>The <code>points</code> attribute is an array of 16 <code>VectorXYZ</code> points which define the 4 &times; 4 array of control points that define the patch.</td></tr>
 <tr><td>RW</td><td>Y</td><td>type</td><td>integer</td><td>This may be either 0 or 1. Type 0 reduces the amount of memory used to store the patch in memory at the cost of slower rendering. Type 1 does the reverse, consuming more memory but reducing the number of calculations required.</td></tr>
 <tr><td>RW</td><td>N</td><td>flatness</td><td>float</td><td>If <code>flatness</code> is 0 (the default), the patch will be subdivided into only as many triangles as specified by <code>uSteps</code> and <code>vSteps</code>. Increasing it up to a maximum of 1.0 will encourage POV-Ray to automatically subdivide the patch into additional triangles as needed.</td></tr>
 <tr><td>RW</td><td>N</td><td>uSteps</td><td>integer</td><td>Defines the number of rows of triangles used to create the patch. Most patches can be acceptably rendered using 3 rows.</td></tr>
@@ -865,7 +890,36 @@ halts.</p>
 
 <h4>Blob</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Blob</code> type is an isosurface of scalar fields produced by
+points and lines represented in the <code>components</code> array by
+<code>Sphere</code> and <code>Cylinder</code> objects. What this means in
+practice is that each object has a field <code>strength</code> that starts at
+the center of the object and drops to zero at its <code>radius</code>. The
+surface of the blob is wherever the overlapping fields have a value equal to the
+blob's <code>threshold</code> value, which defaults to 1.0. The effect is a smooth
+surface like drops and strings of honey.</p>
+
+<p>This makes the <code>Blob</code> an excellent tool for building smooth,
+organic shapes. In the simple example here, a <code>Blob</code> composed of
+three <code>Sphere</code> objects forms a lumpy diagonal line through the demo
+stage space.</p>
+
+<div class='code'>var obj = new Blob({
+    components: [
+        new Sphere({ center: [-1.5, -1.5, -1.5], radius: 2, strength: 4 }),
+        new Sphere({ center: [   0,    0,    0], radius: 2, strength: 4 }),
+        new Sphere({ center: [ 1.5,  1.5,  1.5], radius: 2, strength: 4 }),
+    ],
+    texture: texture
+});</div>
+
+</td><td>
+
+    <img src="img/blob_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -877,7 +931,7 @@ halts.</p>
 <tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td>This is an array of <code>Sphere</code> and <code>Cylinders</code>, optionally with their <code>strength</code> attributes set.</td></tr>
 <tr><td>RW</td><td>N</td><td>hierarchy</td><td>hierarchy</td><td>If <code>false</code>, turn off the internal bounding hierarchy.</td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
-<tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td>The <code>threshold</code> determines the field strength that distinguishes between the inside and outside of a <code>Blob</code>, i.e., <code>threshold</code> defines the surface of a <code>Blob</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td>The <code>threshold</code> determines the field strength that distinguishes between the inside and outside of a <code>Blob</code>, i.e., <code>threshold</code> defines the surface of a <code>Blob</code>. The default is 1.0.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Blob</code>, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a <code>Blob</code>, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a <code>Blob</code>, this is always <code>false</code>.</td></td></tr>
@@ -2307,58 +2361,37 @@ replaced before the first public beta are quite high.</pre>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='working'>working</td><td>Implement</td><td>Method documentation</td></tr>
-            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>VectorUV</code> methods</td></tr>
-            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>VectorXY</code> methods</td></tr>
-            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>VectorXYZ</code> methods</td></tr>
-            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>VectorXYZW</code> methods</td></tr>
-            <tr><td class='done'>done</td><td>Implement</td><td class='subtask'><code>Color</code> methods</td></tr>
             <tr><td class='pending'>pending</td><td>Implement</td><td class='subtask'><code>Matrix</code> methods</td></tr>
             <tr><td class='pending'>pending</td><td>Implement</td><td class='subtask'><code>Primitive</code> methods</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Add multi-setter that takes an object full of params like the constructor.</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Eliminate unused Methods sections in API docs, esp. where child classes of Primitive add no methods.</td></tr>
 
         <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: solid <span class='fixme'>checkered</span> platform, n x n</td></tr>
             <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>BicubicPatch</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Blob</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Box</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Color</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Cone</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Cylinder</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Difference</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Disc</code> description and example</td></tr>
-            <tr><td class='pending'>done</td><td>Implement/Test</td><td class='subtask'><code>GlobalSettings</code> description</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>HeightField</code> description and example</td></tr>
-            <tr><td class='pending'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions</code> description</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Intersection</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>IsoSurface</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>JuliaFractal</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Lathe</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Merge</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Ovus</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Parametric</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Plane</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Poly</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Polygon</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Polynomial</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Prism</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quadric</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quartic</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Sor</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Sphere</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>SphereSweep</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Superellipsoid</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Text</code> description and example</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>Torus</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Triangle</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement</td><td><code>codegen</code>: the immutable accessors should be eliminated and go live in <code>Primitive</code>.</td></tr>
 
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Transformation validation and fixes</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>Camera</code></td></tr>
@@ -2455,7 +2488,7 @@ replaced before the first public beta are quite high.</pre>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>VectorXY</code> attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>VectorXYZ</code> attributes</td></tr>
             <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>VectorXYZW</code> attributes</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Add dperm attr to "mutable" object definitions, update doc generation accordingly.</td></tr>
+            <tr><td class='done'>done</td><td>Implement</td><td>Add dperm attr to "mutable" object definitions, update doc generation accordingly.</td></tr>
     </tbody>
 </table>
 

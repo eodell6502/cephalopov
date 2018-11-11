@@ -13,6 +13,7 @@ module.exports = {
         "Primitive.copyCommonFrom",
         "Primitive.destroy",
         "Primitive.disown",
+		"Primitive.immutables",
         "Primitive.requiredParameterTest",
         "Primitive.snapshot",
         "Primitive.toSDL",
@@ -38,9 +39,9 @@ module.exports = {
             tname: "Primitive"
         }, {
             name:  "clippedBy",
-            valid: "cpov.inheritsFrom(val, 'Primitive')",
-            err:   "clippedBy must be a Primitive.",
-            desc:  "Specifies a <code>Primitive</code> that the object is clipped by in a manner similar to CSG intersection.",
+            valid: "cpov.inheritsFrom(val, 'Primitive') && !cpov.isClass(val, ['bicubicPatch', 'disc', 'triangle', 'polygon', 'mesh', 'mesh2'])",
+            err:   "clippedBy must be a solid Primitive.",
+            desc:  "Specifies a solid <code>Primitive</code> that the object is clipped by in a manner similar to CSG intersection.",
             tname: "Primitive"
         }, {
             name:  "doubleIlluminate",

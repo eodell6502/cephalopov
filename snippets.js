@@ -2033,6 +2033,50 @@ _adopt(val) {
 }
 
 
+// Primitive.immutables //------------------------------------------------------
+
+//--------------------------------------------------------------------------
+
+get finite() {
+	return this._finite;
+}
+
+set finite(val) {
+	cpov.error("fatal", "finite is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+}
+
+//--------------------------------------------------------------------------
+
+get solid() {
+	return this._solid;
+}
+
+set solid(val) {
+	cpov.error("fatal", "solid is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+}
+
+//--------------------------------------------------------------------------
+
+get csg() {
+	return this._csg;
+}
+
+set csg(val) {
+	cpov.error("fatal", "csg is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+}
+
+//--------------------------------------------------------------------------
+
+get pseudo() {
+	return this._pseudo;
+}
+
+set pseudo(val) {
+	cpov.error("fatal", "pseudo is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+}
+
+
+
 // Primitive.parent.get-set //--------------------------------------------------
 
 //--------------------------------------------------------------------------

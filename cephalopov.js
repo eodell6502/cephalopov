@@ -204,6 +204,9 @@ cpov.isNull = function(val) {
 }
 
 //------------------------------------------------------------------------------
+// Returns true if val is a member of classname and false otherwise. Both val
+// and classname may be scalars or arrays.
+//------------------------------------------------------------------------------
 
 cpov.isClass = function(val, classname) {
     if(!Array.isArray(val))
@@ -749,6 +752,7 @@ cpov.outputFrame = function() {
         + "// FRAME: " + cpov.currentFrame + "\n"
         + "// CLOCK TIME: " + cpov.clockTime + "\n"
         + "//==========================================================================\n\n"
+		+ "#version 3.7\n\n"
     );
 
     if(cpov.preamble) {
@@ -774,6 +778,7 @@ cpov.outputFrame = function() {
         if(!cpov.snapshots.length) {
             cpov.error("warn", "Snapshot buffer is empty.", "CEPHALOPOV.outputFrame");
         } else {
+			povFile.write(cpov.globalSettings.toSDL() + "\n\n");
             povFile.write(cpov.snapshots.join("\n\n"));
         }
 
@@ -869,7 +874,7 @@ cpov.testStage = function(type, size) {
 
 		// Light
 
-        components.push(new LightSource({ type: "point", color: [1.5,1.5,1.5], location: [ size * 0.75, size * 0.75, 0 ], id: "light" }));
+        components.push(new LightSource({ type: "point", color: [1.5,1.5,1.5], location: [ size * 0.75, size * 0.75, -size * 0.75 ], id: "light" }));
 
         var union = new Union({ components: components });
 

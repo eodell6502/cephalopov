@@ -17,7 +17,7 @@ module.exports = {
             tname: "float"
         }, {
             name:  "ambientLight",
-            valid: "cpov.isClass(val, 'Color')",
+            valid: "cpov.isClass(val, 'Color') || (val = new Color(val))",
             err:   "ambientLight must be a Color.",
             desc:  "Specifies the color of the ambient light, i.e., the illumination that falls on every object from all directions in the absence of any explicit <code>LightSource</code>.",
             tname: "Color"

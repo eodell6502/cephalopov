@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/disc_basic.pov
-// FRAME: 5
-// CLOCK TIME: 5
+// POV FILE: ./docs/src/blob_basic.pov
+// FRAME: 1
+// CLOCK TIME: 1
 //==========================================================================
 
 #version 3.7
@@ -205,7 +205,9 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-disc {
-    <0, 0, 0>, <0, 1, 0>, 2, 1
+blob {
+    sphere { <-1.5, -1.5, -1.5>, 2, 4 }
+    sphere { <0, 0, 0>, 2, 4 }
+    sphere { <1.5, 1.5, 1.5>, 2, 4 }
     texture { pigment { color <1, 1, 0> }}
 }

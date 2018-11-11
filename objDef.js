@@ -24,9 +24,9 @@ module.exports = {
             }, {
                 name:  "points",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16)",
+                valid: "cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16) || (val = cpov.convertToVectorArray('VectorXYZ', val))",
                 err:   "points must be an array of 16 VectorXYZ.",
-                desc:  "The <code>points</code> attribute is an array of 16 <code>VectorXYZ</code> points which define the 4 &mult; 4 array of control points that define the patch.",
+                desc:  "The <code>points</code> attribute is an array of 16 <code>VectorXYZ</code> points which define the 4 &times; 4 array of control points that define the patch.",
                 tname: "[VectorXYZ]"
             }, {
                 name:  "uSteps",

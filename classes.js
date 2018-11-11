@@ -96,7 +96,7 @@ class GlobalSettings {
     }
 
     set ambientLight(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color') || (val = new Color(val)))) {
             this._ambientLight = val;
         } else {
             cpov.error("fatal", "ambientLight must be a Color.", "GlobalSettings", this);
@@ -3227,10 +3227,10 @@ class Primitive {
     }
 
     set clippedBy(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive') && !cpov.isClass(val, ['bicubicPatch', 'disc', 'triangle', 'polygon', 'mesh', 'mesh2']))) {
             this._clippedBy = val;
         } else {
-            cpov.error("fatal", "clippedBy must be a Primitive.", "Primitive", this);
+            cpov.error("fatal", "clippedBy must be a solid Primitive.", "Primitive", this);
         }
     }
 
@@ -3749,6 +3749,47 @@ class Primitive {
 
 
     //--------------------------------------------------------------------------
+    
+    get finite() {
+    	return this._finite;
+    }
+    
+    set finite(val) {
+    	cpov.error("fatal", "finite is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    get solid() {
+    	return this._solid;
+    }
+    
+    set solid(val) {
+    	cpov.error("fatal", "solid is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    get csg() {
+    	return this._csg;
+    }
+    
+    set csg(val) {
+    	cpov.error("fatal", "csg is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    get pseudo() {
+    	return this._pseudo;
+    }
+    
+    set pseudo(val) {
+    	cpov.error("fatal", "pseudo is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
+    }
+
+
+    //--------------------------------------------------------------------------
     // Tests to see whether the required parameters for the class have been
     // filled prior to output. Aborts if not. There are currently (10/15/2018)
     // no required params for the Primitive base class; this is meant to be
@@ -3891,46 +3932,6 @@ class BicubicPatch extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[BicubicPatch]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[BicubicPatch]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[BicubicPatch]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[BicubicPatch]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type(cpov, this);
@@ -3960,7 +3961,7 @@ class BicubicPatch extends Primitive {
     }
 
     set points(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZ', 16, 16) || (val = cpov.convertToVectorArray('VectorXYZ', val)))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of 16 VectorXYZ.", "BicubicPatch", this);
@@ -4124,46 +4125,6 @@ class Blob extends Primitive {
 
         this.requiredParams = [ "components" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Blob]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Blob]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Blob]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Blob]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -4343,46 +4304,6 @@ class Box extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Box]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Box]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Box]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Box]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get corner1() {
         if(typeof this._corner1 == "function")
             return this._corner1(cpov, this);
@@ -4514,46 +4435,6 @@ class Camera extends Primitive {
 
         this.requiredParams = [ "type" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Camera]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Camera]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Camera]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Camera]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -4995,46 +4876,6 @@ class Cone extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Cone]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Cone]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Cone]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Cone]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get basePoint() {
         if(typeof this._basePoint == "function")
             return this._basePoint(cpov, this);
@@ -5218,46 +5059,6 @@ class Cubic extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Cubic]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Cubic]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Cubic]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Cubic]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients(cpov, this);
@@ -5380,46 +5181,6 @@ class Cylinder extends Primitive {
 
         this.requiredParams = [ "basePoint", "capPoint", "radius" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Cylinder]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Cylinder]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Cylinder]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Cylinder]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -5612,36 +5373,6 @@ class Difference extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Difference]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Difference]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Difference]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get positiveComponent() {
         if(typeof this._positiveComponent == "function")
             return this._positiveComponent(cpov, this);
@@ -5766,46 +5497,6 @@ class Disc extends Primitive {
 
         this.requiredParams = [ "center", "normal", "radius" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Disc]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Disc]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Disc]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Disc]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -5972,46 +5663,6 @@ class HeightField extends Primitive {
 
         this.requiredParams = [ "source" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[HeightField]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[HeightField]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[HeightField]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[HeightField]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -6250,36 +5901,6 @@ class Intersection extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Intersection]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Intersection]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Intersection]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get components() {
         if(typeof this._components == "function")
             return this._components(cpov, this);
@@ -6386,46 +6007,6 @@ class IsoSurface extends Primitive {
 
         this.requiredParams = [ "source" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[IsoSurface]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[IsoSurface]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[IsoSurface]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[IsoSurface]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -6690,46 +6271,6 @@ class JuliaFractal extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[JuliaFractal]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[JuliaFractal]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[JuliaFractal]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[JuliaFractal]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type(cpov, this);
@@ -6973,46 +6514,6 @@ class Lathe extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Lathe]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Lathe]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Lathe]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Lathe]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get type() {
         if(typeof this._type == "function")
             return this._type(cpov, this);
@@ -7183,46 +6684,6 @@ class LightSource extends Primitive {
 
         this.requiredParams = [ "location", "color", "type" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[LightSource]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[LightSource]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[LightSource]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[LightSource]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -7856,36 +7317,6 @@ class Merge extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Merge]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Merge]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Merge]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get components() {
         if(typeof this._components == "function")
             return this._components(cpov, this);
@@ -7987,46 +7418,6 @@ class Mesh extends Primitive {
 
         this.requiredParams = [ "triangles" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Mesh]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Mesh]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Mesh]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Mesh]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -8178,46 +7569,6 @@ class Ovus extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Ovus]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Ovus]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Ovus]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Ovus]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get bottomRadius() {
         if(typeof this._bottomRadius == "function")
             return this._bottomRadius(cpov, this);
@@ -8345,46 +7696,6 @@ class Parametric extends Primitive {
 
         this.requiredParams = [ "funcX", "funcY", "funcZ", "uv1", "uv2" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Parametric]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Parametric]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Parametric]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Parametric]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -8736,46 +8047,6 @@ class Plane extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Plane]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Plane]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Plane]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Plane]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get normal() {
         if(typeof this._normal == "function")
             return this._normal(cpov, this);
@@ -8895,46 +8166,6 @@ class Poly extends Primitive {
 
         this.requiredParams = [ "order", "coefficients" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Poly]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Poly]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Poly]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Poly]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -9088,46 +8319,6 @@ class Polygon extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Polygon]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Polygon]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Polygon]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Polygon]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get points() {
         if(typeof this._points == "function")
             return this._points(cpov, this);
@@ -9235,46 +8426,6 @@ class Polynomial extends Primitive {
 
         this.requiredParams = [ "order", "coefficients" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Polynomial]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Polynomial]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Polynomial]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Polynomial]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -9432,46 +8583,6 @@ class Prism extends Primitive {
 
         this.requiredParams = [ "type", "height1", "height2", "points" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Prism]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Prism]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Prism]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Prism]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -9690,46 +8801,6 @@ class Quadric extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Quadric]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Quadric]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Quadric]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Quadric]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get coefficients() {
         if(typeof this._coefficients == "function")
             return this._coefficients(cpov, this);
@@ -9833,46 +8904,6 @@ class Quartic extends Primitive {
 
         this.requiredParams = [ "coefficients" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Quartic]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Quartic]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Quartic]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Quartic]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -9997,46 +9028,6 @@ class Sphere extends Primitive {
 
         this.requiredParams = [ "center", "radius" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Sphere]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Sphere]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Sphere]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Sphere]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -10187,46 +9178,6 @@ class SphereSweep extends Primitive {
 
         this.requiredParams = [ "type", "spheres" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[SphereSweep]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[SphereSweep]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[SphereSweep]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[SphereSweep]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -10386,46 +9337,6 @@ class Superellipsoid extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Superellipsoid]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Superellipsoid]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Superellipsoid]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Superellipsoid]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get e() {
         if(typeof this._e == "function")
             return this._e(cpov, this);
@@ -10436,7 +9347,7 @@ class Superellipsoid extends Primitive {
     }
 
     set e(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._e = val;
         } else {
             cpov.error("fatal", "e must be a float.", "Superellipsoid", this);
@@ -10455,7 +9366,7 @@ class Superellipsoid extends Primitive {
     }
 
     set n(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val) && val > 0)) {
             this._n = val;
         } else {
             cpov.error("fatal", "n must be a float.", "Superellipsoid", this);
@@ -10544,46 +9455,6 @@ class Sor extends Primitive {
 
         this.requiredParams = [ "points" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Sor]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Sor]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Sor]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Sor]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -10735,46 +9606,6 @@ class Text extends Primitive {
 
         this.requiredParams = [ "fontType", "font", "displayText", "thickness", "offset" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Text]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Text]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Text]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Text]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -10964,46 +9795,6 @@ class Torus extends Primitive {
 
     //--------------------------------------------------------------------------
 
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Torus]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Torus]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Torus]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Torus]: pseudo is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
     get majorRadius() {
         if(typeof this._majorRadius == "function")
             return this._majorRadius(cpov, this);
@@ -11149,46 +9940,6 @@ class Triangle extends Primitive {
 
         this.requiredParams = [ "corner1", "corner2", "corner3" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Triangle]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Triangle]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Triangle]: csg is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get pseudo() {
-        return this._pseudo;
-    }
-
-    set pseudo(val) {
-        throw new TypeError("[Triangle]: pseudo is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
@@ -11452,36 +10203,6 @@ class Union extends Primitive {
 
         this.requiredParams = [ "components" ];
 
-    }
-
-    //--------------------------------------------------------------------------
-
-    get finite() {
-        return this._finite;
-    }
-
-    set finite(val) {
-        throw new TypeError("[Union]: finite is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get solid() {
-        return this._solid;
-    }
-
-    set solid(val) {
-        throw new TypeError("[Union]: solid is a read-only property.");
-    }
-
-    //--------------------------------------------------------------------------
-
-    get csg() {
-        return this._csg;
-    }
-
-    set csg(val) {
-        throw new TypeError("[Union]: csg is a read-only property.");
     }
 
     //--------------------------------------------------------------------------
