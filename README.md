@@ -5,8 +5,8 @@ SDL (Scene Description Language) files for POV-Ray. It makes it easy to create
 complex scenes and animations by writing JavaScript programs without having to 
 deal with SDL at all, though it is easy to mix with existing SDL code. 
 
-It's also currently (2018-09-20) pre-alpha, but should reach stable beta by the
-end of 2018.
+**It's also currently (2018-09-20) pre-alpha, but should reach stable beta by the
+end of 2018 or early 2019.**
 
 ## Major Features
 
