@@ -1311,6 +1311,13 @@ class Matrix {
 			0, 0, 0
 		];
 
+		if(Array.isArray(v01)) {
+			if(!cpov.isArrayOfFloats(v01, 3, 3))
+				cpov.error("fatal", "When given as an array, v01 must be an array of three floats.", "Matrix", this);
+			v10 = v01[2]; v02 = v01[1]; v01 = v01[0];
+		}
+
+
 		if(cpov.isArrayOfFloats(v00) && v00.length == 12) {
 
 			this.raw = v00.slice(0);
@@ -1326,25 +1333,25 @@ class Matrix {
 			if(v01 != 0) {                             // X
 				this.raw = Matrix._xMatrix(this.raw, [
 					1,              0,             0,
-					0,  Math.cos(v01), Math.sin(v01),
-					0, -Math.sin(v01), Math.cos(v01),
+					0,  Math.cos(cpov.deg2rad(v01)), Math.sin(cpov.deg2rad(v01)),
+					0, -Math.sin(cpov.deg2rad(v01)), Math.cos(cpov.deg2rad(v01)),
 					0,              0,             0
 				]);
 			}
 
 			if(v02 != 0) {                             // Y
 				this.raw = Matrix._xMatrix(this.raw, [
-					Math.cos(v02), 0, -Math.sin(v02),
+					Math.cos(cpov.deg2rad(v02)), 0, -Math.sin(cpov.deg2rad(v02)),
 					0,             1,              0,
-					Math.sin(v02), 0,  Math.cos(v02),
+					Math.sin(cpov.deg2rad(v02)), 0,  Math.cos(cpov.deg2rad(v02)),
 					0,             0,              0
 				]);
 			}
 
 			if(v10 != 0) {                             // Z
 				this.raw = Matrix._xMatrix(this.raw, [
-					 Math.cos(v10), Math.sin(v10), 0,
-					-Math.sin(v10), Math.cos(v10), 0,
+					 Math.cos(cpov.deg2rad(v10)), Math.sin(cpov.deg2rad(v10)), 0,
+					-Math.sin(cpov.deg2rad(v10)), Math.cos(cpov.deg2rad(v10)), 0,
 								 0,             0, 1,
 								 0,             0, 0
 				]);

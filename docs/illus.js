@@ -15,7 +15,8 @@ function main(cpov) {
     cpov.imageOptions.antialiasDepth = 9;
 	cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];
 
-    var texture = "texture { pigment { color <1, 1, 0> }}";
+    var yellow = "texture { pigment { color <1, 1, 0> }}";
+	var red = "texture { pigment { color <1, 0, 0> }}";
     var stage = cpov.testStage("corner", 6);
 
     // BicubicPatch //----------------------------------------------------------
@@ -34,7 +35,7 @@ function main(cpov) {
 			[ 0,  0, -2], [ 0,  1, -1], [ 0,  2, 0], [ 0, -1, 1],
 			[ 2, -1, -2], [ 2,  0, -1], [ 2,  1, 0], [ 2,  2, 1],
 		],
-		texture: texture
+		texture: yellow
 	});
     obj.snapshot();
 
@@ -54,7 +55,7 @@ function main(cpov) {
 			new Sphere({ center: [   0,    0,    0], radius: 2, strength: 4 }),
 			new Sphere({ center: [ 1.5,  1.5,  1.5], radius: 2, strength: 4 }),
 		],
-		texture: texture
+		texture: yellow
 	});
     obj.snapshot();
 
@@ -69,7 +70,7 @@ function main(cpov) {
     var obj = new Box({
 		corner1: [2,2,2],
 		corner2: [-2, -2, -2],
-		texture: texture
+		texture: yellow
 	});
     obj.snapshot();
 
@@ -86,7 +87,7 @@ function main(cpov) {
         baseRadius: 2,
         capPoint: [0, 2, 0],
         capRadius: 0,
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -102,7 +103,7 @@ function main(cpov) {
         basePoint: [0, -2, 0],
         capPoint: [0, 2, 0],
         radius: 2,
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -119,7 +120,7 @@ function main(cpov) {
 		radius: 2,
 		holeRadius: 1,
 		normal: [0, 1, 0],
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -136,7 +137,7 @@ function main(cpov) {
 		type: "quaternion:sqr",
 		maxIter: 8,
 		precision: 15,
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -151,7 +152,7 @@ function main(cpov) {
 	var obj = new Ovus({
 		bottomRadius: 2,
 	    topRadius: 1,
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -166,7 +167,7 @@ function main(cpov) {
 	var obj = new Plane({
 		distance: 0,
 		normal: [0, 1, 0],
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -180,7 +181,7 @@ function main(cpov) {
 
 	var obj = new Polygon({
 		points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -197,7 +198,7 @@ function main(cpov) {
 		height2: 2,
 		type: "linearSpline",
 		points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -210,7 +211,7 @@ function main(cpov) {
     cpov.outputBase = "./docs/src/sphere_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-    var obj = new Sphere({ center: [0,0,0], radius: 2, texture: texture});
+    var obj = new Sphere({ center: [0,0,0], radius: 2, texture: yellow});
     obj.snapshot();
 
     cpov.outputFrame();
@@ -224,7 +225,7 @@ function main(cpov) {
 	var obj = new Superellipsoid({
 		e: 0.25,
 		n: 0.25,
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
@@ -239,13 +240,32 @@ function main(cpov) {
 	var obj = new Torus({
 		minorRadius: 0.5,
 		majorRadius: 2,
-        texture: texture
+        texture: yellow
     });
     obj.snapshot();
 
     cpov.outputFrame();
     obj.destroy();
 
+
+	// Transforms: Rotate //----------------------------------------------------
+
+	cpov.outputBase = "./docs/src/trans_rotate";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Box({
+		corner1: [1, 1, 1],
+		corner2: [-1, -1, -1],
+		texture: yellow
+	});
+	obj.snapshot();
+
+	obj.transform = new Matrix("skew", { xz: 2 });
+	obj.texture = red;
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
 }
 
 

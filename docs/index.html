@@ -338,6 +338,161 @@ POV-Ray animation system is preserved.</p>
 
 <h4>Animation Parameters</h4>
 
+<p>The animation loop is configured through attributes of the global <code>cpov</code>
+object. All of them are directly writeable by the user program, but some of them should
+be manipulated with care as noted in the table below.</p>
+
+<div>
+<table class='sgrid attrs'>
+<thead>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>RW</td><td>Y</td><td>cpov.clockTime</td><td>float</td><td>This attribute holds the current clock time for the animation. It defaults to <code>0.0</code>.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.currentFrame</td><td>integer</td><td>The number of the current frame. In most cases, you should treat this as a read-only value, but there is no reason you can't at least change it to a higher number to skip frames if you do it at the end of the animation loop.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.endFrame</td><td>integer</td><td>The user program will halt if and when <code>cpov.currentFrame</code> is greater than this number. Defaults to <code>Infinity</code>.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.endTime</td><td>float</td><td>The user program will halt if and when <code>cpov.clockTime</code> is greater than this number. Defaults to <code>Infinity</code>.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.frameBegin</td><td>function</td><td>This is a user-supplied callback function which is called at the beginning of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.frameEnd</td><td>function</td><td>This is a user-supplied callback function which is called at the end of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.outputBase</td><td>string</td><td>The generated <code>.pov</code> and <code>.ini</code> filenames will be based on this template, which defaults to <code>cpov0000</code>. The first sequence of zeroes in the template string will be replaced with the frame number, left-padded with to the same number of digits as the zero sequence.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.snapshotMode</td><td>boolean</td><td>If <code>true</code>, puts CephaloPOV in snapshot mode.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.snapshots</td><td>array</td><td>This is an array containing the output SDL strings which will be written to the <code>.pov</code> file at the end of the frame loop. Normally read-only, but if you know what you're doing, feel free to <code>push()</code> additional content to it.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.startFrame</td><td>integer</td><td>The user program will run but not produce any output until <code>cpov.currentFrame</code> is greater than or equal to this number. Defaults to <code>0</code>.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.startTime</td><td>float</td><td>The user program will run but not produce any output until <code>cpov.clockTime</code> is greater than or equal to this number. Defaults to <code>0</code>.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.tickVal</td><td>float</td><td>Contains the value added to <code>cpov.clockTime</code> after each iteration of the animation loop. Defaults to <code>1.0</code>.</td></tr>
+</tbody>
+</table>
+
+<h4>Snapshot Mode</h4>
+
+<p>Snapshot mode is arguably the easier of the two animation modes to get
+started with, especially if the animation is simple or you want to construct
+your own animation loop to suit your needs. Just set
+<code>cpov.snapshotMode</code> to <code>true</code>, which disables the built-in
+loop.</p>
+
+<div class="code">cpov.snapshotMode = true;</div>
+
+<p>All you need to do after that is create your objects and call their
+<code>snapshot</code> methods. If you move them afterwards, you can call
+<code>snapshot</code> again to "plot" them in their new positions. And once
+you've created a snapshot of every object you want in the frame, call
+<code>cpov.outputFrame</code> to generate the
+<code>.pov</code>/<code>.ini</code> files and clear the snapshot buffer.</p>
+
+<p>Two things are important to remember in snapshot mode. First, your light
+sources and cameras are objects themselves, so you have to remember to add their
+snapshots to the buffer in each frame. Second, objects don't magically cease to
+exist if you only use them once. This may not matter much in short, simple
+animations, but if you are creating a lot of single-use objects, you'll want to
+call their <code>destroy</code> methods to avoid filling up memory.</p>
+
+<p>The script that generates the illustrations for this documentation uses
+snapshot mode. Here's a somewhat simplified version of what it does. (See <code>/docs/illus.js</code>
+if you want to dig into the full, somewhat hairy details.) First, it just does
+the usual setup and housekeeping, the only germane part of which is the first
+line that activates snapshot mode:</p>
+
+<div class="code"><b>cpov.snapshotMode                = true;  // Don't forget this part</b>
+cpov.imageOptions.height         = 320;
+cpov.imageOptions.width          = 320;
+cpov.imageOptions.outputFileType = "N";
+cpov.imageOptions.createIni      = true;
+cpov.imageOptions.outputAlpha    = true;
+cpov.imageOptions.antialias      = true;
+cpov.imageOptions.antialiasDepth = 9;
+cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];</div>
+
+<p>Then it creates the generic texture string that all of the object examples
+reuse, and it calls an undocumented internal function to produce the stage
+objects, which come as an array with two members, the stage and lights, and the
+camera. We go ahead and push those right into the snapshot buffer.</p>
+
+<div class='code'>var texture = "texture { pigment { color <1, 1, 0> }}";
+var stage   = cpov.testStage("corner", 6);
+stage[0].snapshot();
+stage[1].snapshot();</div>
+
+<p>Because this isn't actually an animation, the script sets <code>cpov.outputBase</code>
+at the beginning of each "frame" to make it easier to find the files. (I'm mentioning
+this to point out that snapshot mode is also a convenient way to crank out a bunch of
+static images.)</p>
+
+<div class="code">cpov.outputBase = "./docs/src/box_basic";</div>
+
+<p>Now we can get down to business and create our example box:</p>
+
+<div class="code">var obj = new Box({
+    corner1: [2,2,2],
+    corner2: [-2, -2, -2],
+    texture: texture
+});
+obj.snapshot();</div>
+
+<p>And that's it as far as objects go. We just need to output the frame and clean
+up after ourselves:</p>
+
+<div class="code">cpov.outputFrame();  // This outputs box_basic.pov and box_basic.ini
+obj.destroy();</div>
+
+<p>Naturally, if you're only doing a single frame or a short animation with
+relatively few objects, you don't have to bother with calling
+<code>destroy</code>, but it's a good habit to get into before you start working
+on more ambitious projects.</p>
+
+
+<h4>Automatic Mode</h4>
+
+<p>Automatic mode is not actually any harder to use than snapshot mode. In fact,
+it's a lot easier because it automates a lot of the stuff you'd otherwise have
+to do manually, but it does require you to understand the CephaloPOV animation
+loop, at least if you want to avoid tying yourself into knots. Let's just get
+that out of the way first:</p>
+
+<ol class="spacious">
+    <li>The global <code>cpov.frameBegin</code> callback is called.</li>
+    <li>Each object's individual <code>frameBegin</code> callback is called.</li>
+    <li>All <code>active</code> objects are written to file by <code>cpov.outputFrame</code>.</li>
+    <li>Each object's individual <code>frameEnd</code> callback is called.</li>
+    <li>The global <code>cpov.frameEnd</code> callback is called.</li>
+    <li>The <code>cpov.clockTime</code> is incremented by <code>cpov.tickVal</code> and <code>cpov.currentFrame</code> is incremented.</li>
+</ol>
+
+<p>This loop starts when your program calls <code>cpov.runAnimation</code> and
+continues until either your program calls <code>cpov.endAnimation</code>,
+<code>cpov.clockTime</code> exceeds <code>cpov.endTime</code>, or
+<code>cpov.currentFrame</code> exceeds <code>cpov.endFrame</code>. Besides
+setting up the initial scene, all you have to do is write the necessary
+<code>beginFrame</code> and <code>endFrame</code> callbacks.</p>
+
+
+<h5>Callbacks</h5>
+
+<p>As far as the callbacks are concerned, how you want to structure things is up
+to you. If you want, you can stuff all of your logic into
+<code>cpov.beginFrame</code> and/or <code>cpov.endFrame</code>. You can also
+leave them set to <code>null</code> and pack everything into the
+<code>beginFrame</code> and <code>endFrame</code> methods of individual objects.
+You can also use both. CephaloPOV is not opinionated about your code.</p>
+
+<p>All of the callbacks are the same. Each one is called with a single argument,
+the global <code>cpov</code> object, which it can then interrogate to determine
+the current clock value and frame number, as well as use
+<code>cpov.serialMap</code> or <code>cpov.idMap</code> to find other objects.
+You can feel free to attach additional data and function members to
+<code>cpov</code> as well.</p>
+
+<h5>Using the Clock and the Frame Count</h5>
+
+<p>The animation clock, <code>cpov.clockTime</code>, is a continuous
+floating-point value that is incremented by <code>cpov.tickVal</code> at the end
+of each frame and measures time inside the animation. The current frame number,
+<code>cpov.currentFrame</code>, is a discrete integer value that increases by
+one at the end of each frame, and which effectively measures the number of times
+that the simulated world of the animation has been sampled.</p>
+
+<p>You can just use one or the other if your needs are simple enough, but the
+combination of the two is powerful enough to make it worth understanding their
+relationship.</p>
 
 
 <h3>Global Parameters</h3>
@@ -957,9 +1112,12 @@ stage space.</p>
 
 <div class='code'>var obj = new Blob({
     components: [
-        new Sphere({ center: [-1.5, -1.5, -1.5], radius: 2, strength: 4 }),
-        new Sphere({ center: [   0,    0,    0], radius: 2, strength: 4 }),
-        new Sphere({ center: [ 1.5,  1.5,  1.5], radius: 2, strength: 4 }),
+        new Sphere({ center: [-1.5, -1.5, -1.5],
+            radius: 2, strength: 4 }),
+        new Sphere({ center: [   0,    0,    0],
+            radius: 2, strength: 4 }),
+        new Sphere({ center: [ 1.5,  1.5,  1.5],
+            radius: 2, strength: 4 }),
     ],
     texture: texture
 });</div>
@@ -2415,6 +2573,7 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Add multi-setter that takes an object full of params like the constructor.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Eliminate unused Methods sections in API docs, esp. where child classes of Primitive add no methods.</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>cpov.runAnimation</code> and <code>cpov.endAnimation</code></td></tr>
 
         <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
             <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
@@ -2476,68 +2635,6 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Reports</td></tr>
 
-        <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Camera.angle</code>: Determine legal values and enforce</td></tr>
-        <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Camera.type</code>: replace SDL literals with camelCased cpov versions</td></tr>
-        <tr><td class='done'>done</td><td>Implement/Test</td><td>Array of arrays or objects to vectors</td></tr>
-        <tr><td class='done'>done</td><td>Implement/Test</td><td><code>Text.toSDL</code>: Handle escaping of double quotes in <code>Text.displayText</code></td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Make <code>serial</code> read-only.</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Add <code>power</code> to <code>JuliaFractal.toSDL()</code>.</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Global <code>frameBegin/frameEnd</code> callbacks.</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>In <code>codegen.js</code>, add and/or option to <code>strlist</code>.</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Test for at least one of <code>precompute[X|Y|Z]</code> if <code>precomputeDepth</code> is defined in <code>Parametric.toSDL()</code>. Also, maximum depth is 20.</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Documentation generation</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Fix <code>children/parent/components</code> relationship and update attribute docs accordingly.</td></tr>
-        <tr><td class='done'>done</td><td>Implement/Test</td><td>ImageOptions</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.boundingThreshold</code>: convert zero to boolean on output</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><strike><code>ImageOptions.constants</code>: gets special handling</code></strike> Not applicable in CephaloPOV.</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.endColumn</code>: post check startColumn</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.endRow</code>: post check startRow</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.startColumn</code>: post check endColumn</td></tr>
-            <tr><td class='done'>done</td><td>Implement/Test</td><td class='subtask'><code>ImageOptions.startRow</code>: post check endRow</td></tr>
-        <tr><td class='done'>done</td><td>Implement</td><td>Attribute documentation</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>BicubicPatch</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Blob</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Box</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Camera</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Color</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Cone</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Cubic</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Cylinder</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Difference</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Disc</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>GlobalSettings</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>HeightField</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>ImageOptions</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Intersection</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>IsoSurface</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>JuliaFractal</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Lathe</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>LightSource</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Merge</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Mesh</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Ovus</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Parametric</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Plane</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Poly</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Polygon</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Polynomial</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Primitive</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Prism</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Quadric</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Quartic</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Sor</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Sphere</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>SphereSweep</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Superellipsoid</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Text</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Torus</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Triangle</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>Union</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>VectorUV</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>VectorXY</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>VectorXYZ</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Document</td><td class='subtask'><code>VectorXYZW</code> attributes</td></tr>
-            <tr><td class='done'>done</td><td>Implement</td><td>Add dperm attr to "mutable" object definitions, update doc generation accordingly.</td></tr>
     </tbody>
 </table>
 

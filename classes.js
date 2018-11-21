@@ -11304,25 +11304,25 @@ class Matrix {
 			if(v01 != 0) {                             // X
 				this.raw = Matrix._xMatrix(this.raw, [
 					1,              0,             0,
-					0,  Math.cos(v01), Math.sin(v01),
-					0, -Math.sin(v01), Math.cos(v01),
+					0,  Math.cos(cpov.deg2rad(v01)), Math.sin(cpov.deg2rad(v01)),
+					0, -Math.sin(cpov.deg2rad(v01)), Math.cos(cpov.deg2rad(v01)),
 					0,              0,             0
 				]);
 			}
 
 			if(v02 != 0) {                             // Y
 				this.raw = Matrix._xMatrix(this.raw, [
-					Math.cos(v02), 0, -Math.sin(v02),
+					Math.cos(cpov.deg2rad(v02)), 0, -Math.sin(cpov.deg2rad(v02)),
 					0,             1,              0,
-					Math.sin(v02), 0,  Math.cos(v02),
+					Math.sin(cpov.deg2rad(v02)), 0,  Math.cos(cpov.deg2rad(v02)),
 					0,             0,              0
 				]);
 			}
 
 			if(v10 != 0) {                             // Z
 				this.raw = Matrix._xMatrix(this.raw, [
-					 Math.cos(v10), Math.sin(v10), 0,
-					-Math.sin(v10), Math.cos(v10), 0,
+					 Math.cos(cpov.deg2rad(v10)), Math.sin(cpov.deg2rad(v10)), 0,
+					-Math.sin(cpov.deg2rad(v10)), Math.cos(cpov.deg2rad(v10)), 0,
 								 0,             0, 1,
 								 0,             0, 0
 				]);
