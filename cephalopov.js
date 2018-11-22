@@ -55,6 +55,7 @@ cpov.frameBegin     = null;      // user callback before frame output
 cpov.frameEnd       = null;      // user callback after frame output
 
 cpov.currentFrame = 0;    // current animation frame
+cpov.frameCount   = 0;    // actual number of frames output
 cpov.objectSerial = 0;    // running count of Primitives created
 cpov.serialMap    = { };  // maps serials to objects
 cpov.idMap        = { };  // maps identifiers to serials
@@ -693,6 +694,22 @@ cpov.deg2rad = function(deg) {
 
 cpov.outputFrame = function() {
 
+	//--------------------------------------------------------------------------
+	// Check for termination conditions.
+	//--------------------------------------------------------------------------
+
+	if(cpov.clockTime > cpov.endTime) {
+		cpov.error("info", "Animation terminated normally because cpov.clockTime > cpov.endTime.", "cpov.outputFrame");
+		cpov.error("debug", "cpov.clockTime == " + cpov.clockTime + ", cpov.endTime == " + cpov.endTime, "cpov.outputFrame");
+		cpov.process.exit(0);
+	}
+
+	if(cpov.currentFrame > cpov.endFrame) {
+		cpov.error("info", "Animation terminated normally because cpov.currentFrame > cpov.endFrame.", "cpov.outputFrame");
+		cpov.error("debug", "cpov.currentFrame == " + cpov.currentFrame + ", cpov.endFrame == " + cpov.endFrame, "cpov.outputFrame");
+		cpov.process.exit(0);
+	}
+
     //--------------------------------------------------------------------------
     // Call the global frameBegin function if it exists.
     //--------------------------------------------------------------------------
@@ -708,19 +725,19 @@ cpov.outputFrame = function() {
     for(var serial in cpov.serialMap) {
         var obj = cpov.serialMap[serial];
         if(obj.active && obj.frameBegin) {
-            cpov.error("debug", "Calling frameBegin on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
+            cpov.error("debug", "Calling frameBegin on object serial " + serial + ".", "cpov.outputFrame", obj);
             obj.frameBegin(cpov);
         }
     }
 
     //--------------------------------------------------------------------------
-    // Create the .ini file.
+    // Create the .ini file if within time and frame bounds.
     //--------------------------------------------------------------------------
 
-    if(cpov.imageOptions.createIni === true) {
+    if(cpov.imageOptions.createIni === true && cpov.clockTime >= cpov.startTime && cpov.currentFrame >= cpov.startFrame) {
         var iniFile = new File(cpov.outputBase + ".ini", "w", cpov.currentFrame);
         if(iniFile.open == false) {
-            cpov.error("error", "Unable to open " + iniFile.path + " for writing.", "CEPHALOPOV.outputFrame", this);
+            cpov.error("error", "Unable to open " + iniFile.path + " for writing.", "cpov.outputFrame", this);
         }
 
         var iniContent = cpov.imageOptions.output();
@@ -734,68 +751,74 @@ cpov.outputFrame = function() {
             + ";;==========================================================================\n\n"
             + iniContent.ini + "\n\n"
         );
-        iniFile.close();
+		iniFile.close();
+
+		cpov.frameCount++;
     }
 
     //--------------------------------------------------------------------------
-    // Create the .pov file.
+    // Create the .pov file if within time and frame bounds.
     //--------------------------------------------------------------------------
 
-    var povFile = new File(cpov.outputBase + ".pov", "w", cpov.currentFrame);
-    if(povFile.open == false) {
-        cpov.error("error", "Unable to open " + povFile.path + " for writing.", "CEPHALOPOV.outputFrame", this);
-    }
+	if(cpov.clockTime >= cpov.startTime && cpov.currentFrame >= cpov.startFrame) {
+		var povFile = new File(cpov.outputBase + ".pov", "w", cpov.currentFrame);
+		if(povFile.open == false) {
+			cpov.error("error", "Unable to open " + povFile.path + " for writing.", "cpov.outputFrame", this);
+		}
 
-    povFile.write(
-          "//==========================================================================\n"
-        + "// POV FILE: " + povFile.path + "\n"
-        + "// FRAME: " + cpov.currentFrame + "\n"
-        + "// CLOCK TIME: " + cpov.clockTime + "\n"
-        + "//==========================================================================\n\n"
-		+ "#version 3.7\n\n"
-    );
+		povFile.write(
+			  "//==========================================================================\n"
+			+ "// POV FILE: " + povFile.path + "\n"
+			+ "// FRAME: " + cpov.currentFrame + "\n"
+			+ "// CLOCK TIME: " + cpov.clockTime + "\n"
+			+ "//==========================================================================\n\n"
+			+ "#version 3.7\n\n"
+		);
 
-    if(cpov.preamble) {
-        povFile.write(cpov.preamble + "\n\n");
-    }
+		if(cpov.preamble) {
+			povFile.write(cpov.preamble + "\n\n");
+		}
 
-    if(cpov.sdlIncludes) {
-        for(var i = 0; i < cpov.sdlIncludes.length; i++) {
-            povFile.write("#include \"" + cpov.sdlIncludes[i] + "\"\n");
-        }
-        povFile.write("\n");
-    }
+		if(cpov.sdlIncludes) {
+			for(var i = 0; i < cpov.sdlIncludes.length; i++) {
+				povFile.write("#include \"" + cpov.sdlIncludes[i] + "\"\n");
+			}
+			povFile.write("\n");
+		}
 
-    //--------------------------------------------------------------------------
-    // If we're in snapshot mode, we just dump the snapshots to the file and
-    // then clear the snapshot buffer. Otherwise, we walk through all of the
-    // (active) objects and call their .toSDL methods and write the output to
-    // the file.
-    //--------------------------------------------------------------------------
+		//--------------------------------------------------------------------------
+		// If we're in snapshot mode, we just dump the snapshots to the file and
+		// then clear the snapshot buffer. Otherwise, we walk through all of the
+		// (active) objects and call their .toSDL methods and write the output to
+		// the file.
+		//--------------------------------------------------------------------------
 
-    if(cpov.snapshotMode) {
+		if(cpov.snapshotMode) {
 
-        if(!cpov.snapshots.length) {
-            cpov.error("warn", "Snapshot buffer is empty.", "CEPHALOPOV.outputFrame");
-        } else {
-			povFile.write(cpov.globalSettings.toSDL() + "\n\n");
-            povFile.write(cpov.snapshots.join("\n\n"));
-        }
+			if(!cpov.snapshots.length) {
+				cpov.error("warn", "Snapshot buffer is empty.", "cpov.outputFrame");
+			} else {
+				povFile.write(cpov.globalSettings.toSDL() + "\n\n");
+				povFile.write(cpov.snapshots.join("\n\n"));
+			}
 
-        cpov.snapshots = [ ];
+			cpov.snapshots = [ ];
 
-    } else {
+		} else {
 
-        for(var serial in cpov.serialMap) {
-            var obj = cpov.serialMap[serial];
-            if(obj.active && obj.parent === null) {
-                cpov.error("debug", "Calling toSDL on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
-                povFile.write("// Object " + (obj.id ? obj.id : "" ) + " #" + serial + "\n\n");
-                povFile.write(obj.toSDL() + "\n\n");
-            }
-        }
+			for(var serial in cpov.serialMap) {
+				var obj = cpov.serialMap[serial];
+				if(obj.active && obj.parent === null) {
+					cpov.error("debug", "Calling toSDL on object serial " + serial + ".", "cpov.outputFrame", obj);
+					povFile.write("// Object" + (obj.id ? obj.id : " " ) + " #" + serial + "\n\n");
+					povFile.write(obj.toSDL() + "\n\n");
+				}
+			}
 
-    }
+		}
+
+		povFile.close();
+	}
 
     //--------------------------------------------------------------------------
     // Using cpov.serialMap, walk through all objects. For each object that is
@@ -805,7 +828,7 @@ cpov.outputFrame = function() {
     for(var serial in cpov.serialMap) {
         var obj = cpov.serialMap[serial];
         if(obj.active && obj.frameEnd) {
-            cpov.error("debug", "Calling frameEnd on object serial " + serial + ".", "CEPHALOPOV.outputFrame", obj);
+            cpov.error("debug", "Calling frameEnd on object serial " + serial + ".", "cpov.outputFrame", obj);
             obj.frameEnd(cpov);
         }
     }
@@ -825,6 +848,85 @@ cpov.outputFrame = function() {
     cpov.currentFrame++;
 
 }
+
+
+//==============================================================================
+// When called, starts the animation loop and continues until one of the end
+// conditions is reached or the user program calls cpov.endAnimation.
+//==============================================================================
+
+cpov.runAnimation = function() {
+	var startAnim = new Date();
+
+	while(true) {
+		var frameCount = cpov.frameCount;
+		var startFrame = new Date();
+		cpov.outputFrame();
+		var endFrame = new Date();
+		var frameStats = cpov.timerStats(startFrame, endFrame, frameCount);
+
+		if(frameCount == cpov.frameCount) {
+			cpov.error("info", "Skipped frame " + (cpov.currentFrame - 1) + ".", "cpov.runAnimation");
+		} else {
+			cpov.error("info",
+				"Output frame " + (cpov.currentFrame - 1) + " in "
+				+ frameStats.msecs + " msecs/" + frameStats.secs
+				+ "secs.", "cpov.runAnimation");
+		}
+
+		var animStats = cpov.timerStats(startAnim, new Date(), frameCount);
+
+		cpov.error("info",
+			"Frames: " + frameCount + " in " + animStat.secs
+			+ " seconds, average seconds per frame: " + animStats.avgSecs
+			+ ", average frames per second: " + cpov.round(units / animStats.secs, 2)
+			+ ".", "cpov.runAnimation");
+	}
+
+	var endAnim = new Date();
+}
+
+
+//==============================================================================
+// Takes a starting and ending Date objects and an optional number of units of
+// work, and returns an object containing the elapsed time in milliseconds and
+// seconds and the averages per unit:
+//
+//     { msecs: ?, secs: ?, avgMsecs: ?, avgSecs: ? }
+//==============================================================================
+
+cpov.timerStats = function(start, end, units = 1) {
+	var result = { };
+
+	result.msecs    = end.getTime() - start.getTime();
+	result.secs     = result.msecs / 1000;
+	result.avgMsecs = cpov.round(result.msecs / units, 2);
+	result.avgSecs  = cpov.round(result.secs / units, 2);
+	result.secs     = cpov.round(result.secs, 2);
+
+	return result;
+}
+
+
+//==============================================================================
+// Returns n rounded to d decimal places.
+//==============================================================================
+
+cpov.round = function(n, d) {
+	n = Math.round(n * (d * 10)) / ( d * 10);
+}
+
+
+//==============================================================================
+// Terminates the animation. This happens immediately, i.e., any work done in
+// the current frame will not be output.
+//==============================================================================
+
+cpov.endAnimation = function() {
+	cpov.error("info", "Animation terminated at request of user program.", "cpov.endAnimation");
+}
+
+
 
 
 //==============================================================================
@@ -900,7 +1002,7 @@ cpov.testStage = function(type, size) {
         return [ union, camera ];
 
     } else {
-        cpov.error("fatal", "Unsupported testStage type \"" + type + "\".", "CEPHALOPOV.testStage");
+        cpov.error("fatal", "Unsupported testStage type \"" + type + "\".", "cpov.testStage");
     }
 
 }
