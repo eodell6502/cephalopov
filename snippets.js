@@ -1311,6 +1311,9 @@ class Matrix {
 			0, 0, 0
 		];
 
+		if(v01 == "none")
+			return;
+
 		if(Array.isArray(v01)) {
 			if(!cpov.isArrayOfFloats(v01, 3, 3))
 				cpov.error("fatal", "When given as an array, v01 must be an array of three floats.", "Matrix", this);

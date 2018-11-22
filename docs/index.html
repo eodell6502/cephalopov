@@ -202,7 +202,41 @@ of the CephaloPOV API.</p>
 
 <h3>Documentation Conventions</h3>
 
-<p>TODO</p>
+<p>Code and literals in body text are distinguished by the use of a
+<code>fixed-pitch font</code>. Blocks of code appear in boxes like the
+one below:</p>
+
+<div class='code'>cpov.primitiveDefIdentifier = function(obj) {
+    var result = [ ];
+    result.push("#" + obj.serial);
+    if(obj.id !== null)
+        result.push(obj.id);
+    return result.join(":");
+}</div>
+
+<p>Most tables of object attributes have a standard set of columns:</p>
+
+<ol class="spacious">
+
+<li>The first (unlabeled) column specifies the read and write permissions
+of the attribute, <code>RO</code> for read-only or <code>RW</code> for
+read-write.</li>
+
+<li><em>Req:</em> Indicates whether the field is required using <code>Y</code>
+or <code>N</code>. This is left blank for read-only attributes.</li>
+
+<li><em>Name:</em> Gives the name of the attribute. This is left unqualified
+in object class descriptions, but where the global <code>cpov</code> object
+is described, it is given in full, e.g., <code>cpov.currentFrame</code>.</li>
+
+<li><em>Type(s):</em> Lists the type or types accepted by the setter function.
+This is usually a single type, but if multiple types are accepted, they will
+be listed one after the other.</li>
+
+<li><em>Description:</em> Contains the full details you'll need to use the
+attribute, including default values, if any.</li>
+
+</ol>
 
 <h3>API Conventions</h3>
 
@@ -211,7 +245,7 @@ of the CephaloPOV API.</p>
 <p>To make things easier for experienced POV-Ray users, the
 <code>snake_cased</code> names of objects and properties in SDL, with a few
 exceptions (mostly truncations), are converted directly into the
-<code>camelCased</code> names which are the norm in JavaScript. Class names
+camelCased names which are the norm in JavaScript. Class names
 begin with a capital letter, so <code>julia_fractal</code> becomes
 <code>JuliaFractal</code>.
 
@@ -226,8 +260,8 @@ stricter type discipline than the default JavaScript type system:</p>
     <li>The most important rule is that primitive types are <em>never</em>
     silently converted to other types. If a parameter or method calls for a
     string and you pass a number (or vice versa), you'll get a fatal error. The
-    string "2" and the number 2 are as different in CephaloPOV as if it had been
-    written in C.</li>
+    string <code>"2"</code> and the number <code>2</code> are as different in
+    CephaloPOV as if it had been written in C.</li>
 
     <li>CephaloPOV is particularly picky about numbers. JavaScript has only one
     numeric type, <code>Number</code>, which is internally a double-precision
@@ -751,7 +785,7 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 </tbody></table>
 </div dh="GlobalSettings">
 
-<h3>Vectors and Colors</h3>
+<h3>Vectors, Colors, and Matrices</h3>
 
 <p>Most of the geometry in POV-Ray is defined in terms of vectors, i.e., arrays of floats
 whose interpretation depends on context. For the sake of better type checking, CephaloPOV
@@ -818,7 +852,7 @@ object. The following are all equivalent:</p>
 var vec2 = new VectorUV([1, 3]);
 var vec3 = new VectorUV(vec1);</div>
 
-<div class='fsig'>toSDL(<i>stops</i>)</div>
+<div class='fsig'>toSDL(<i>stops</i>);</div>
 
 <p class='fdesc'>Returns the SDL representation of the vector as a string,
 indented by the optional number of tab <code>stops</code>. If the mandatory
@@ -859,7 +893,7 @@ object. The following are all equivalent:</p>
 var vec2 = new VectorXY([1, 3]);
 var vec3 = new VectorXY(vec1);</div>
 
-<div class='fsig'>toSDL(<i>stops</i>)</div>
+<div class='fsig'>toSDL(<i>stops</i>);</div>
 
 <p class='fdesc'>Returns the SDL representation of the vector as a string,
 indented by the optional number of tab <code>stops</code>. If the mandatory
@@ -898,7 +932,7 @@ object. The following are all equivalent:</p>
 var vec2 = new VectorXYZ([1, 3, 4]);
 var vec3 = new VectorXYZ(vec1);</div>
 
-<div class='fsig'>toSDL(<i>stops</i>)</div>
+<div class='fsig'>toSDL(<i>stops</i>);</div>
 
 <p class='fdesc'>Returns the SDL representation of the vector as a string,
 indented by the optional number of tab <code>stops</code>. If the mandatory
@@ -941,7 +975,7 @@ object. The following are all equivalent:</p>
 var vec2 = new VectorXYZW([1, 3, 4, -1]);
 var vec3 = new VectorXYZW(vec1);</div>
 
-<div class='fsig'>toSDL(<i>stops</i>)</div>
+<div class='fsig'>toSDL(<i>stops</i>);</div>
 
 <p class='fdesc'>Returns the SDL representation of the vector as a string,
 indented by the optional number of tab <code>stops</code>. If the mandatory
@@ -990,12 +1024,91 @@ var color3 = new Color(color2);</div>
 <code>srgb</code> attributes are optional, so none, any, or all of them can be
 used, but they must be specified in order when passing a bare array.</p>
 
-<div class='fsig'>toSDL(<i>stops</i>)</div>
+<div class='fsig'>toSDL(<i>stops</i>);</div>
 
 <p class='fdesc'>Returns the SDL representation of the vector as a string,
 indented by the optional number of tab <code>stops</code>. If the mandatory
 attributes are not specified, a fatal error message is emitted and CephaloPOV
 halts.</p>
+
+<h4>Matrix</h4>
+
+<p>The <code>Matrix</code> type is the workhorse of transformations and
+one of the areas where CephaloPOV differs most from the way POV-Ray handles
+transformations, though this is more a matter of syntax than anything else.</p>
+
+<h5>Attributes</h5>
+
+<table class='sgrid attrs'>
+<thead>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>RW</td><td>Y</td><td>v00</td><td>float</td><td>Row 0, column 0 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v01</td><td>float</td><td>Row 0, column 1 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v02</td><td>float</td><td>Row 0, column 2 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v10</td><td>float</td><td>Row 1, column 0 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v11</td><td>float</td><td>Row 1, column 1 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v12</td><td>float</td><td>Row 1, column 2 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v20</td><td>float</td><td>Row 2, column 0 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v21</td><td>float</td><td>Row 2, column 1 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v22</td><td>float</td><td>Row 2, column 2 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v30</td><td>float</td><td>Row 3, column 0 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v31</td><td>float</td><td>Row 3, column 1 of the matrix.</td></tr>
+<tr><td>RW</td><td>Y</td><td>v32</td><td>float</td><td>Row 3, column 2 of the matrix.</td></tr>
+</tbody></table>
+
+<h5>Methods</h5>
+
+<div class="fsig">Matrix(<i>v00</i>, <i>v01</i>, <i>v02</i>, <i>v10</i>, <i>v11</i>, <i>v12</i>, <i>v20</i>, <i>v21</i>, <i>v22</i>, <i>v30</i>, <i>v31</i>, <i>v32</i>);</div>
+
+<p class='fdesc'>In its basic form, which few users will often use, the
+constructor takes twelve floats for each of the values in the matrix, just as it
+is done in SDL. Like SDL, there are several short convenience forms for the
+basic transformations:</p>
+
+<div class='code fdesc'>var scale     = new Matrix("scale", 1.5, 2, 1);
+var translate = new Matrix("translate", 5, 2.2, 0);
+var rotate    = new Matrix("rotate", 45, 15, 0);</div>
+
+<p class='fdesc'>In each of the examples above, the name of the transformation
+is the first argument, followed by three float arguments, one for each of the
+axes. As with POV-Ray, the values for rotations are given in degrees.</p>
+
+<p class='fdesc'>The <code>Matrix</code> constructor has a couple of additional
+short forms. The first of these lets you specify skews without having to
+construct the whole matrix by hand. Just pass <code>"skew"</code> as the first
+argument, and the second argument is an object containing the axis pairs to
+perform the skew by, like so:</p>
+
+<div class='code fdesc'>var skew = new Matrix("skew", { xy: 1.5, zy: 0.2 });</div>
+
+<p class='fdesc'>The complete set of axis pairs is <code>yx</code>,
+<code>zx</code>, <code>xy</code>, <code>zy</code>, <code>xz</code>, and
+<code>yz</code>. You can omit the pairs you don't need.</p>
+
+<p class='fdesc'>Finally, you can just pass <code>"none"</code> as the sole
+argument and get a <code>Matrix</code> that does nothing. This is useful if your
+"base" transformation (see the <code>Primitive</code> type for more details)
+doesn't require any actual transformations.</p>
+
+<div class='fsig'>toSDL(<i>stops</i>);</div>
+
+<p class='fdesc'>Returns the SDL representation of the matrix as a string,
+indented by the optional number of tab <code>stops</code>. Unlike most other
+<code>toSDL</code> methods, this one always succeeds because the constructor
+either requires or supplies all of the mandatory values.</p>
+
+<div class='fsig'>Matrix.xMatrix(<i>that</i>);</div>
+
+<p class='fdesc'>Given another <code>Matrix</code>, <code><i>that</i></code>,
+returns a new <code>Matrix</code> that is the product of
+<code><i>this</i></code> &times; <code><i>that</i></code>.</p>
+
+<div class='fsig'>Matrix.xPoint(<i>point</i>);</div>
+
+<p class='fdesc'>Given a <code>VectorXYZ</code>, <code><i>point</i></code>,
+returns a new <code>VectorXYZ</code> which has been transformed by the
+matrix.</p>
 
 <h3>Geometric Primitives</h3>
 

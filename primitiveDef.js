@@ -15,6 +15,7 @@ module.exports = {
         "Primitive.disown",
 		"Primitive.immutables",
         "Primitive.requiredParameterTest",
+		"Primitive.resetTransform",
         "Primitive.snapshot",
         "Primitive.toSDL",
     ],

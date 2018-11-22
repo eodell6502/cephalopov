@@ -250,7 +250,7 @@ function main(cpov) {
 
 	// Transforms: Rotate //----------------------------------------------------
 
-	cpov.outputBase = "./docs/src/trans_rotate";
+	cpov.outputBase = "./docs/src/xtestx";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Box({
@@ -258,11 +258,11 @@ function main(cpov) {
 		corner2: [-1, -1, -1],
 		texture: yellow
 	});
-	obj.snapshot();
+	obj.transform = new Matrix("rotate", 0, 0, 0);
+	obj.transform = new Matrix("rotate", 45, 0, 0);
 
-	obj.transform = new Matrix("skew", { xz: 2 });
-	obj.texture = red;
-    obj.snapshot();
+	obj.resetTransform();
+	obj.snapshot();
 
     cpov.outputFrame();
     obj.destroy();
