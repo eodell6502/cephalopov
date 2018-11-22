@@ -596,6 +596,8 @@ actually used.</p>
 <p>All of the parameters are optional except for <code>height</code> and
 <code>width</code>.</p>
 
+<h5>Attributes</h5>
+
 <div dh="ImageOptions">
 <table class='sgrid attrs'>
 <thead>
@@ -753,12 +755,38 @@ actually used.</p>
 </tbody></table>
 </div dh="ImageOptions">
 
+<h5>Methods</h5>
+
+<div class='fsig'>ImageOptions(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers. User programs will rarely have to call the <code>ImageOptions</code>
+constructor directly as <code>cpov.imageOptions</code> is already initialized.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>cpov.imageOptions.verbose = true;
+cpov.imageOptions.quality = 9;
+
+// is the same as...
+
+cpov.imageOptions.xset({verbose: true, quality: 9});</div>
+
 <h4>GlobalSettings</h4>
 
 <p>The <code>GlobalSettings</code> class defines the behavior of light in the
 image along with a few odds and ends like the character set used for input
 files. At startup, <code>cpov.globalSettings</code> is initialized with a
 pristine instance of the class. None of its parameters are mandatory.</p>
+
+<h5>Attributes</h5>
 
 <div dh="GlobalSettings">
 <table class='sgrid attrs'>
@@ -821,6 +849,31 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 </tbody></table>
 </div dh="GlobalSettings">
 
+<h5>Methods</h5>
+
+<div class='fsig'>GlobalSettings(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers. User programs will rarely have to call the <code>GlobalSettings</code>
+constructor directly as <code>cpov.globalSettings</code> is already initialized.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>cpov.globalSettings.numberOfWaves = 3;
+cpov.globalSettings.charset = "utf8";
+
+// is the same as...
+
+cpov.globalSettings.xset({numberOfWaves: 3, charset: "utf8"});</div>
+
+
 <h3>Vectors, Colors, and Matrices</h3>
 
 <p>Most of the geometry in POV-Ray is defined in terms of vectors, i.e., arrays of floats
@@ -876,6 +929,20 @@ and <code>v</code>, it is otherwise identical to <code>VectorXY</code>.</p>
 
 <h5>Methods</h5>
 
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>vec.u = 4;
+vec.v = 3.2;;
+
+// is the same as...
+
+vec.xset({u: 4, v: 3.2});</div>
+
 <div class='fsig'>VectorUV(<i>options</i>)</div>
 
 <p class='fdesc'>The constructor may be called without arguments, returning an
@@ -894,6 +961,20 @@ var vec3 = new VectorUV(vec1);</div>
 indented by the optional number of tab <code>stops</code>. If the mandatory
 attributes are not specified, a fatal error message is emitted and CephaloPOV
 halts.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>vec.u = 4;
+vec.v = 3.2;;
+
+// is the same as...
+
+vec.xset({u: 4, v: 3.2});</div>
 
 <h4>VectorXY</h4>
 
@@ -936,6 +1017,20 @@ indented by the optional number of tab <code>stops</code>. If the mandatory
 attributes are not specified, a fatal error message is emitted and CephaloPOV
 halts.</p>
 
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>vec.x = 4;
+vec.y = 3.2;;
+
+// is the same as...
+
+vec.xset({x: 4, y: 3.2});</div>
+
 <h4>VectorXYZ</h4>
 
 <p>Probably the most commonly used vector type for most users, the <code>VectorXYZ</code> class
@@ -974,6 +1069,20 @@ var vec3 = new VectorXYZ(vec1);</div>
 indented by the optional number of tab <code>stops</code>. If the mandatory
 attributes are not specified, a fatal error message is emitted and CephaloPOV
 halts.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>vec.x = 4;
+vec.y = 3.2;;
+
+// is the same as...
+
+vec.xset({x: 4, y: 3.2});</div>
 
 <h4>VectorXYZW</h4>
 
@@ -1017,6 +1126,20 @@ var vec3 = new VectorXYZW(vec1);</div>
 indented by the optional number of tab <code>stops</code>. If the mandatory
 attributes are not specified, a fatal error message is emitted and CephaloPOV
 halts.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>vec.x = 4;
+vec.y = 3.2;;
+
+// is the same as...
+
+vec.xset({x: 4, y: 3.2});</div>
 
 <h4>Color</h4>
 
@@ -1066,6 +1189,20 @@ used, but they must be specified in order when passing a bare array.</p>
 indented by the optional number of tab <code>stops</code>. If the mandatory
 attributes are not specified, a fatal error message is emitted and CephaloPOV
 halts.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>color.r = 0.2;
+vec.g = 1.0;;
+
+// is the same as...
+
+vec.xset({r: 0.2, g: 1.0});</div>
 
 <h4>Matrix</h4>
 
@@ -1145,6 +1282,20 @@ returns a new <code>Matrix</code> that is the product of
 <p class='fdesc'>Given a <code>VectorXYZ</code>, <code><i>point</i></code>,
 returns a new <code>VectorXYZ</code> which has been transformed by the
 matrix.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>matrix.v01 = 4;
+matrix.v02 = 3.2;
+
+// is the same as...
+
+matrix.xset({v01: 4, v02: 3.2});</div>
 
 <h3>Geometric Primitives</h3>
 
@@ -1254,6 +1405,20 @@ by the <code>toSDL</code> methods in the subclasses. Those subclass methods will
 emit a fatal error message if any mandatory attributes are not specified, but
 the <code>Primitive</code> base class has no mandatory attributes, so this call
 will always succed.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>box.corner1 = [-1, -1, -1];
+box.corner2 = [1, 1, 1];
+
+// is the same as...
+
+box.xset({corner1: [-1, -1, -1], corner2: [1, 1, 1]});</div>
 
 <h4>BicubicPatch</h4>
 
@@ -2651,7 +2816,6 @@ replaced before the first public beta are quite high.</pre>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
-        <tr><td class='pending'>pending</td><td>Document</td><td>*.xset()</td></tr>
 
         <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
             <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
