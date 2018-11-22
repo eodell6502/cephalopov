@@ -59,7 +59,7 @@
 
 body,table,input { font: 10pt Roboto; }
 body { width: 7.5in; margin-left: auto; margin-right: auto; counter-reset: h2counter; }
-div.code { white-space: pre; font: 10pt Inconsolata; background-color: #DCECF2; border: 1px dashed #3C607B; margin-top: 1em; margin-bottom: 1em; padding: 1em; clear: both; }
+div.code { white-space: pre; font: 10pt Inconsolata; background-color: #E1F1F7; border: 1px dashed #3C607B; margin-top: 1em; margin-bottom: 1em; padding: 1em; clear: both; }
 code { font: bold 10pt Inconsolata; }
 pre { font: 10pt Inconsolata; }
 .beta { color: #A00; }
@@ -1114,7 +1114,54 @@ matrix.</p>
 
 <h4>Primitive</h4>
 
-<p>TODO</p>
+<p>The <code>Primitive</code> type is the base class for all of the other
+geometric primitives. Unless you're implementing a new primitive, perhaps for
+one of the experimental forks of POV-Ray like MegaPOV, you don't need to worry
+about its internals, but you do need to be familiar with the public attributes
+and methods it shares with all of its subclasses.</p>
+
+<p>Two of those attributes, <code>baseTransform</code> and
+<code>transform</code>, are important enough to discuss outside of the
+attributes table, below. In order to support several significant features
+now and in the future, CephaloPOV distinguishes between an initial
+transformation that is effectively part of the definition of an object and
+subsequent transformations applied to it. That initial transformation is the
+<code>baseTransform</code>, and the subsequent transformations are combined
+mathematically in the <code>transform</code> attribute.</p>
+
+<p>When a <code>Primitive</code> is output to SDL, the current value of its
+<code>transform</code> attribute is included in the object definition. The
+<code>baseTransform</code> is kept internal to CephaloPOV to help with geometric
+queries and the scene graph system. Most of the time, you won't have to do
+anything more than set the <code>baseTransform</code>, though it can be useful
+in user code in snapshot mode, as we will see.</p>
+
+<p>The easiest way and clearest way to establish the <code>baseTransform</code>
+is simply to assign it:</p>
+
+<div class='code'>someBox.baseTransform = new Matrix("rotate", 0, 45, 15);</div>
+
+<p>If you don't set <code>baseTransform</code> explicitly, setting
+<code>transform</code> will set it at the same time. Naturally, if you are
+defining an object that doesn't change from frame to frame and its initial
+parameters are fine without any transformations at all, you don't have to bother
+with either transform attribute.</p>
+
+<p>Each time thereafter that you set <code>transform</code>, the supplied
+<code>Matrix</code> is <em>multiplied</em> by the existing
+<code>transform</code> value. Because of the way matrix multiplication works,
+this will effectively add the new transformation to the transformations that
+have already been applied. If you want to start over fresh with the
+<code>baseTransform</code> value, just call the <code>transformReset</code>
+method.</p>
+
+<p>The main purpose of all of this behind-the-scenes plumbing is to provide the
+necessary basis for higher-level features like the <span class='ephemeral'>not
+yet implemented</span> scene graph, and you don't have to worry about it much in
+your own user programs. One exception to this is if you are using snapshot mode,
+where multiple output objects can be created using a single primitive object and
+repeatedly setting <code>transform</code> and then calling
+<code>baseTransform</code>.</p>
 
 <h5>Attributes</h5>
 
@@ -1151,7 +1198,26 @@ matrix.</p>
 
 <h5>Methods</h5>
 
-<p>TODO</p>
+<div class='fsig'>resetTransform();</div>
+
+<p class='fdesc'>Restores the object's current <code>transform</code> to the
+value of its <code>baseTransform</code>.</p>
+
+<div class='fsig'>snapshot();</div>
+
+<p class='fdesc'>If <code>cpov.snapshotMode</code> is <code>true</code>, this
+method sends the output of <code>toSDL</code> to the snapshot output buffer,
+where it will remain until <code>cpov.outputFrame</code> is called.</p>
+
+<div class='fsig'>toSDL(<i>stops</i>);</div>
+
+<p class='fdesc'>Returns the SDL representation of the <code>Primitive</code> as
+a string, indented by the optional number of tab <code>stops</code>. User
+programs will seldom if ever call this directly, but it is overridden and called
+by the <code>toSDL</code> methods in the subclasses. Those subclass methods will
+emit a fatal error message if any mandatory attributes are not specified, but
+the <code>Primitive</code> base class has no mandatory attributes, so this call
+will always succed.</p>
 
 <h4>BicubicPatch</h4>
 
@@ -1200,10 +1266,6 @@ triangles. The number of triangles used along the u- and v-axes are defined by
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>BicubicPatch</code>, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
 </div dh="BicubicPatch">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Blob</h4>
 
@@ -1259,10 +1321,6 @@ stage space.</p>
 </tbody></table>
 </div dh="Blob">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Box</h4>
 
 <table class="illusBasic"><tr><td>
@@ -1300,10 +1358,6 @@ at right was created by the following code:</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Box</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Box">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Camera</h4>
 
@@ -1414,10 +1468,6 @@ true. The example at right was created by the following code:</p>
 </tbody></table>
 </div dh="Cone">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Cubic</h4>
 
 <p>TODO</p>
@@ -1437,10 +1487,6 @@ true. The example at right was created by the following code:</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Cubic</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Cubic">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Cylinder</h4>
 
@@ -1488,10 +1534,6 @@ attribute can be used to assign a field strength to the cylinder.</p>
 </tbody></table>
 </div dh="Cylinder">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Difference</h4>
 
 <p>TODO</p>
@@ -1510,10 +1552,6 @@ attribute can be used to assign a field strength to the cylinder.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Difference</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Difference">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Disc</h4>
 
@@ -1555,10 +1593,6 @@ non-zero <code>holeRadius</code>.</p>
 </tbody></table>
 </div dh="Disc">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>HeightField</h4>
 
 <h5>Attributes</h5>
@@ -1584,10 +1618,6 @@ non-zero <code>holeRadius</code>.</p>
 </tbody></table>
 </div dh="HeightField">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Intersection</h4>
 
 <p>TODO</p>
@@ -1605,10 +1635,6 @@ non-zero <code>holeRadius</code>.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Intersection</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Intersection">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>IsoSurface</h4>
 
@@ -1635,10 +1661,6 @@ non-zero <code>holeRadius</code>.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>IsoSurface</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="IsoSurface">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>JuliaFractal</h4>
 
@@ -1710,10 +1732,6 @@ type and function type parameters are combined in <code>type</code>.</p>
 </tbody></table>
 </div dh="JuliaFractal">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Lathe</h4>
 
 <p>TODO</p>
@@ -1734,10 +1752,6 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Lathe</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Lathe">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>LightSource</h4>
 
@@ -1782,10 +1796,6 @@ type and function type parameters are combined in <code>type</code>.</p>
 </tbody></table>
 </div dh="LightSource">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Merge</h4>
 
 <p>TODO</p>
@@ -1803,10 +1813,6 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Merge</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Merge">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Mesh</h4>
 
@@ -1828,10 +1834,6 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Mesh</code>, this is always <code>false</code>.</td></td></tr>
 </tbody></table>
 </div dh="Mesh">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Ovus</h4>
 
@@ -1874,10 +1876,6 @@ a wide variety of other shapes can be constructed with it.</p>
 </tbody></table>
 </div dh="Ovus">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Parametric</h4>
 
 <p>TODO</p>
@@ -1907,10 +1905,6 @@ a wide variety of other shapes can be constructed with it.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Parametric</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Parametric">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Plane</h4>
 
@@ -1956,10 +1950,6 @@ flood!</p>
 </tbody></table>
 </div dh="Plane">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Poly</h4>
 
 <p>TODO</p>
@@ -1980,10 +1970,6 @@ flood!</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Poly</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Poly">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Polygon</h4>
 
@@ -2028,10 +2014,6 @@ is in fact the same color as all the other examples.</p>
 </tbody></table>
 </div dh="Polygon">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Polynomial</h4>
 
 <p>TODO</p>
@@ -2052,10 +2034,6 @@ is in fact the same color as all the other examples.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Polynomial</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Polynomial">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Prism</h4>
 
@@ -2108,10 +2086,6 @@ the <code>Polygon</code>.</p>
 </tbody></table>
 </div dh="Prism">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Quadric</h4>
 
 <p>TODO</p>
@@ -2130,10 +2104,6 @@ the <code>Polygon</code>.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Quadric</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Quadric">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Quartic</h4>
 
@@ -2155,10 +2125,6 @@ the <code>Polygon</code>.</p>
 </tbody></table>
 </div dh="Quartic">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Sor</h4>
 
 <p>TODO</p>
@@ -2179,10 +2145,6 @@ the <code>Polygon</code>.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Sor</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Sor">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Sphere</h4>
 
@@ -2224,10 +2186,6 @@ the field strength.
 </tbody></table>
 </div dh="Sphere">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>SphereSweep</h4>
 
 <p>TODO</p>
@@ -2248,10 +2206,6 @@ the field strength.
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>SphereSweep</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="SphereSweep">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Superellipsoid</h4>
 
@@ -2295,10 +2249,6 @@ have the same value, the result is a cube with rounded edges. When both values r
 </tbody></table>
 </div dh="Superellipsoid">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Text</h4>
 
 <p>TODO</p>
@@ -2321,10 +2271,6 @@ have the same value, the result is a cube with rounded edges. When both values r
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Text</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Text">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 <h4>Torus</h4>
 
@@ -2368,10 +2314,6 @@ of 0.5 units and a major radius of 2 units.</p>
 </tbody></table>
 </div dh="Torus">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Triangle</h4>
 
 <p>TODO</p>
@@ -2398,10 +2340,6 @@ of 0.5 units and a major radius of 2 units.</p>
 </tbody></table>
 </div dh="Triangle">
 
-<h5>Methods</h5>
-
-<p>TODO</p>
-
 <h4>Union</h4>
 
 <h5>Attributes</h5>
@@ -2420,10 +2358,6 @@ of 0.5 units and a major radius of 2 units.</p>
 <tr><td>RO</td><td>&nbsp;</td><td>solid</td><td>boolean</td><td>If <code>true</code>, the shape is solid. For a <code>Union</code>, this is always <code>true</code>.</td></td></tr>
 </tbody></table>
 </div dh="Union">
-
-<h5>Methods</h5>
-
-<p>TODO</p>
 
 
 <h2>Appendices</h2>
@@ -2680,11 +2614,8 @@ replaced before the first public beta are quite high.</pre>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='working'>working</td><td>Implement</td><td>Method documentation</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement</td><td class='subtask'><code>Primitive</code> methods</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Add multi-setter that takes an object full of params like the constructor.</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Eliminate unused Methods sections in API docs, esp. where child classes of Primitive add no methods.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td><code>cpov.runAnimation</code> and <code>cpov.endAnimation</code></td></tr>
 
         <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>

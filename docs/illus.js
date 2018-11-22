@@ -258,10 +258,9 @@ function main(cpov) {
 		corner2: [-1, -1, -1],
 		texture: yellow
 	});
-	obj.transform = new Matrix("rotate", 0, 0, 0);
-	obj.transform = new Matrix("rotate", 45, 0, 0);
+	obj.transform = new Matrix("rotate", -25, 0, 0);
+	obj.transform = new Matrix("rotate", 25, 0, 0);
 
-	obj.resetTransform();
 	obj.snapshot();
 
     cpov.outputFrame();
