@@ -1629,6 +1629,14 @@ class Matrix {
 
     }
 
+	//------------------------------------------------------------------------------
+	// Sets multiple attributes at once using an object.
+	//------------------------------------------------------------------------------
+
+	xset(vals) {
+		cpov.initObject(this, vals);
+	}
+
     //--------------------------------------------------------------------------
     // A private method for multiplying matrices in the form of arrays of 12
     // elements, returning the same.
@@ -2318,6 +2326,16 @@ set transform(val) {
 
 }
 
+
+// Primitive.xset //------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Sets multiple attributes at once using an object.
+//------------------------------------------------------------------------------
+
+xset(vals) {
+	cpov.initObject(this, vals);
+}
 
 
 // Prism.toSDL //---------------------------------------------------------------

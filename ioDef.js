@@ -8,7 +8,7 @@ module.exports = {
         + "in the form of command line switches.",
     conArgs: false,
     conBlock: false,
-    snippets: ["ImageOptions.output"],
+    snippets: ["ImageOptions.output", "Primitive.xset"],
     mutable: [
         {
             name:  "allConsole",

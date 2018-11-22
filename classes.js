@@ -1060,6 +1060,15 @@ class GlobalSettings {
     }
 
 
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
+    }
+
+
 
 }
 
@@ -3099,6 +3108,15 @@ class ImageOptions {
     }
 
 
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
+    }
+
+
 
 }
 
@@ -3888,6 +3906,15 @@ class Primitive {
             content.push(this.transform.toSDL(stops));
     
         return content.join("\n");
+    }
+
+
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
     }
 
 
@@ -10446,6 +10473,15 @@ class VectorXY {
     }
 
 
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
+    }
+
+
 
 }
 
@@ -10595,6 +10631,15 @@ class VectorUV {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
         }
+    }
+
+
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
     }
 
 
@@ -10770,6 +10815,15 @@ class VectorXYZ {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
         }
+    }
+
+
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
     }
 
 
@@ -10968,6 +11022,15 @@ class VectorXYZW {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
         }
+    }
+
+
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
     }
 
 
@@ -11261,6 +11324,15 @@ class Color {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
         }
+    }
+
+
+    //------------------------------------------------------------------------------
+    // Sets multiple attributes at once using an object.
+    //------------------------------------------------------------------------------
+    
+    xset(vals) {
+    	cpov.initObject(this, vals);
     }
 
 
@@ -11610,6 +11682,14 @@ class Matrix {
         return new Matrix(this.raw);
 
     }
+
+	//------------------------------------------------------------------------------
+	// Sets multiple attributes at once using an object.
+	//------------------------------------------------------------------------------
+
+	xset(vals) {
+		cpov.initObject(this, vals);
+	}
 
     //--------------------------------------------------------------------------
     // A private method for multiplying matrices in the form of arrays of 12

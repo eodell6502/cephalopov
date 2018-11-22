@@ -4,7 +4,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorXY.conBlock",
-        snippets: ["VectorXY.copy", "VectorXY.toSDL", "Primitive.requiredParameterTest"],
+        snippets: ["VectorXY.copy", "VectorXY.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
         mutable: [
             {
                 name:  "x",
@@ -28,7 +28,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorUV.conBlock",
-        snippets: ["VectorUV.copy", "VectorUV.toSDL", "Primitive.requiredParameterTest"],
+        snippets: ["VectorUV.copy", "VectorUV.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
         mutable: [
             {
                 name:  "u",
@@ -52,7 +52,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorXYZ.conBlock",
-        snippets: ["VectorXYZ.copy", "VectorXYZ.toSDL", "Primitive.requiredParameterTest"],
+        snippets: ["VectorXYZ.copy", "VectorXYZ.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
         mutable: [
             {
                 name:  "x",
@@ -83,7 +83,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorXYZW.conBlock",
-        snippets: ["VectorXYZW.copy", "VectorXYZW.toSDL", "Primitive.requiredParameterTest"],
+        snippets: ["VectorXYZW.copy", "VectorXYZW.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
         mutable: [
             {
                 name:  "x",
@@ -121,7 +121,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "Color.conBlock",
-        snippets: ["Color.copy", "Color.toSDL", "Color.toPlainRGBVector", "Primitive.requiredParameterTest"],
+        snippets: ["Color.copy", "Color.toSDL", "Color.toPlainRGBVector", "Primitive.requiredParameterTest", "Primitive.xset"],
         mutable: [
             {
                 name:  "r",

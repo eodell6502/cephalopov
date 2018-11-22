@@ -1349,7 +1349,7 @@ stage space.</p>
 <tr><td>RW</td><td>Y</td><td>components</td><td>Array</td><td>This is an array of <code>Sphere</code> and <code>Cylinders</code>, optionally with their <code>strength</code> attributes set.</td></tr>
 <tr><td>RW</td><td>N</td><td>hierarchy</td><td>hierarchy</td><td>If <code>false</code>, turn off the internal bounding hierarchy.</td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
-<tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td>The <code>threshold</code> determines the field strength that distinguishes between the inside and outside of a <code>Blob</code>, i.e., <code>threshold</code> defines the surface of a <code>Blob</code>. The default is 1.0.</td></tr>
+<tr><td>RW</td><td>N</td><td>threshold</td><td>float</td><td>The <code>threshold</code> determines the field strength that distinguishes between the inside and outside of a <code>Blob</code>, i.e., <code>threshold</code> defines the surface of a <code>Blob</code>.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Blob</code>, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a <code>Blob</code>, this is always <code>true</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>pseudo</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects. For a <code>Blob</code>, this is always <code>false</code>.</td></td></tr>
@@ -2651,7 +2651,7 @@ replaced before the first public beta are quite high.</pre>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
-        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Add multi-setter that takes an object full of params like the constructor.</td></tr>
+        <tr><td class='pending'>pending</td><td>Document</td><td>*.xset()</td></tr>
 
         <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
             <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>

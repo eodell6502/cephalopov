@@ -7,7 +7,10 @@ module.exports = {
         + "into the SDL global_settings block.",
     conArgs: false,
     conBlock: false,
-    snippets: ["GlobalSettings.toSDL"],
+    snippets: [
+		"GlobalSettings.toSDL",
+		"Primitive.xset",
+			],
     mutable: [
         {
             name:  "adcBailout",
