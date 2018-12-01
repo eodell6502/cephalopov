@@ -11758,3 +11758,150 @@ class Matrix {
 exports.Matrix = Matrix;
 
 
+//--------------------------------------------------------------------------
+// GenMap and its subclasses are gathered together here because this is a
+// case in which the classes are nearly identical and mostly exist for the
+// purpose of type-checking.
+//
+// The data for the entries attribute consists of an array of 2-256 entries
+// following the general form
+//
+//      [ idx, data ]
+//
+// where idx is a float and data is the locally relevant type or a type that
+// can be automatically converted into the relevant type. Prior to assignment,
+// the elements are sorted by idx, which need not be unique.
+//--------------------------------------------------------------------------
+
+class GenMap {
+
+    this._entries   = null;
+
+    constructor(options) {
+        cpov.initObject(this, options);
+    }
+
+    get entries() {
+        return this.entries;
+    }
+
+    set entries(val) {
+        var result = this.normalizeEntries(val);
+        this._entries = result;
+        this._entries.sort(this.sortEntries);
+    }
+
+    normalizeEntries(val) {
+        if(Array.isArray(val) || val.length < 2 || val.length > 256)
+            cpov.error("fatal", "Map entries must be an array of 2-256 elements.", Object.getPrototypeOf(this).constructor.name + ".toSDL", this);
+        for(var i = 0; i < val.length; i++) {
+            if(!cpov.isFloat(val[i][0]))
+                cpov.error("fatal", "Map indices must be floats.", Object.getPrototypeOf(this).constructor.name + ".toSDL", this);
+        }
+        var result = [ ];
+        for(var i = 0; i < val.length; i++) {
+            if(cpov.isClass(val[i][1], this._itemClass.name)) {
+                result.push([val[i][0], val[i][1].copy()]);
+                continue;
+            }
+            var item = new this._itemClass(val[i][1]); // will produce a fatal error if value is bad
+            result.push([val[i][0], item]);
+        }
+        return result;
+    }
+
+    // Sorts the entries for more readable output, subclass specific.
+
+    sortEntries(a, b) {
+        return a[0] - b[0];
+    }
+
+    toSDL(stops) {
+
+        var pad     = cpov.tab(stops);
+        var ppad    = cpov.tab(stops + 1);
+        var content = [ ];
+
+        content.push(pad + this._SDLName + " {");
+        for(var i = 0; i < this._entries; i++)
+            content.push(ppad + "[" + this._entries[i][0] + " " + this._entries[i][1].toSDL() + "]");
+        content.push(pad + "}");
+
+        return content.join("\n");
+    }
+
+}
+
+
+//--------------------------------------------------------------------------
+
+class ColorMap extends GenMap {
+
+    constructor(options) {
+        super(options);
+    }
+
+}
+
+ColorMap.prototype._itemClass = Color;
+ColorMap.prototype._SDLName   = "color_map";
+
+//--------------------------------------------------------------------------
+
+/*
+class NormalMap extends GenMap {
+
+    constructor(options) {
+        super(options);
+    }
+
+}
+
+NormalMap.prototype._itemClass = Normal;
+NormalMap.prototype._SDLName   = "normal_map";
+*/
+
+//--------------------------------------------------------------------------
+
+/*
+class PigmentMap extends GenMap {
+
+    constructor(options) {
+        super(options);
+    }
+
+}
+
+PigmentMap.prototype._itemClass = Pigment;
+PigmentMap.prototype._SDLName   = "pigment_map";
+*/
+
+//--------------------------------------------------------------------------
+
+class SlopeMap extends GenMap {
+
+    constructor(options) {
+        super(options);
+    }
+
+}
+
+SlopeMap.prototype._itemClass = VectorXY;
+SlopeMap.prototype._SDLName   = "slope_map";
+
+//--------------------------------------------------------------------------
+
+/*
+class TextureMap extends GenMap {
+
+    constructor(options) {
+        super(options);
+    }
+
+}
+
+TextureMap.prototype._itemClass = Texture;
+TextureMap.prototype._SDLName   = "texture_map";
+*/
+
+

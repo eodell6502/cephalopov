@@ -673,8 +673,24 @@ function main() {
             fp.write("exports." + cname + " = " + cname + ";\n\n\n");
         }
 
+        // Stuff that wasn't generated ends up in snippets.js just to keep it all
+        // in one place. It ends up in separate snippets records instead of one
+        // big one so the various (fully) manually written classes aren't forgotten
+        // and so that they can be more easily located and analyzed for future
+        // generations of codegen-like tools.
+
 		var snippets = cpov.objectImport("./snippets.js");
-		fp.write(snippets.Matrix + "\n\n\n");
+
+        // This is an ordered set where class names are concerned. (JS class
+        // declarations are *not* hoisted.)
+
+        var manual = [
+            "Matrix",
+            "GenMap-and-children",
+        ];
+
+        for(var m = 0; m < manual.length; m++)
+    		fp.write(snippets[manual[m]] + "\n\n\n");
 
         fp.close();
     }
