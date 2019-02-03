@@ -1796,9 +1796,37 @@ non-zero <code>holeRadius</code>.</p>
 
 <h4>HeightField</h4>
 
-<h5>Attributes</h5>
+<table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>A <code>HeightField</code> takes a bitmapped graphics file and converts it into a triangle mesh in which the height
+of each point is determined by either the intensity of the corresponding pixel or, for indexed graphics, its index number.
+It is frequently used for creating landscapes.</p>
+
+<p>The resulting mesh fits into a unit cube. The optional <code>waterLevel</code> attribute, set to a value in the unit
+interval (0.0 - 1.0), progressively hides a portion of the mesh to simulate water. (It does not provide a water plane; you
+will have to do that yourself.) A <code>waterLevel</code> value of 0.0 reveals the entire mesh, while a value of 1.0 hides all of it;
+intermediate values hide only part of it.</p>
+
+<p>For complete details on the graphics formats accepted, see the <a
+href="http://www.povray.org/documentation/3.7.0/r3_4.html#r3_4_5_1_5">POV-Ray
+documentation</a>. The example here uses a 16-bit greyscale PNG file.</p>
+
+<div class='code'>	var obj = new HeightField({
+    source: "hf_demo.png",
+    waterLevel: 0.4,
+    smooth: true,
+    texture: yellow
+});
+var xform = new Matrix("translate", -0.5, -0.5, -0.5);
+obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));</div>
+
+</td><td>
+
+    <img src="img/heightfield_basic.png">
+
+</td></tr></table>
+
+<h5>Attributes</h5>
 
 <div dh="HeightField">
 <table class='sgrid attrs'>
@@ -2912,8 +2940,9 @@ replaced before the first public beta are quite high.</pre>
 
             <!-- finite patches -->
 
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Triangle</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
 
             <!-- infinite solids -->
 

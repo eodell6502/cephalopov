@@ -127,6 +127,24 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+	// HeightField //-----------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/heightfield_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new HeightField({
+        source: "hf_demo.png",
+        waterLevel: 0.4,
+        smooth: true,
+        texture: yellow
+    });
+    var xform = new Matrix("translate", -0.5, -0.5, -0.5);
+    obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
 	// JuliaFractal //----------------------------------------------------------
 
 	cpov.outputBase = "./docs/src/julia_basic";
