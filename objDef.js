@@ -617,12 +617,12 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isKey(val, cpov.splineTypes)",
                 err:   "type must be one of " + cpov.keysToTextList(cpov.splineTypes) + ".",
-                desc:  "Determines the type of spline used to define the profile. Legal types are $strlist.",
+                desc:  "Determines the type of spline used to define the profile. Legal types are $strlist.splineTypes.",
                 tname: "string"
             }, {
                 name:  "points",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)",
+                valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity) || (val = cpov.convertToVectorArray('VectorXY', val))",
                 err:   "points must be an array of two or more VectorXY.",
                 desc:  "An array of points defining the spline.",
                 tname: "VectorXY"

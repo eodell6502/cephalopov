@@ -431,10 +431,9 @@ toSDL(stops = 0) {
 
 class GenMap {
 
-    this._entries   = null;
-
     constructor(options) {
         cpov.initObject(this, options);
+        this._entries   = null;
     }
 
     get entries() {

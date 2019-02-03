@@ -144,6 +144,39 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+    // Lathe //-----------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/lathe_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Lathe({
+        points: [
+            [0, -1.2],
+            [1, -1.2],
+            [1, -0.8],
+            [0.8, -0.6],
+            [0.8, -0.4],
+            [1, -0.4],
+            [1, -0.2],
+            [0.8, -0.2],
+            [0.8, 0],
+            [1, 0],
+            [1, 0.2],
+            [0.8, 0.2],
+            [0.6, 0.8],
+            [0.6, 1.2],
+            [0.8, 1.2],
+            [0.8, 1.4],
+            [0, 1.4]
+        ],
+        type: "linearSpline",
+        texture: yellow
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
 	// Ovus //------------------------------------------------------------------
 
 	cpov.outputBase = "./docs/src/ovus_basic";

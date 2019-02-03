@@ -1,0 +1,35 @@
+{
+  "name": "cephalopov",
+  "version": "0.1.0",
+  "description": "A JavaScript library for POV-Ray 3.7+.",
+  "main": "cpov.js",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "package.json": "^2.0.1",
+    "word-wrap": "^1.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Waidthaler/cephalopov.git"
+  },
+  "keywords": [
+    "3D"
+    "graphics",
+    "pov",
+    "pov-ray",
+    "povray",
+    "ray tracing",
+    "ray-tracing",
+    "raytracing",
+  ],
+  "author": "Erich Waidthaler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Waidthaler/cephalopov/issues"
+  },
+  "homepage": "https://github.com/Waidthaler/cephalopov#readme"
+}
