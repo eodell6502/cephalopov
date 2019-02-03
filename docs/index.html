@@ -1974,8 +1974,6 @@ object, <code>Sor</code>, but it is also substantially slower to render.</p>
 
 </td></tr></table>
 
-
-
 <h5>Attributes</h5>
 
 <div dh="Lathe">
@@ -2367,7 +2365,46 @@ the <code>Polygon</code>.</p>
 
 <h4>Sor</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>The <code>Sor</code> object, in addition to being an example of how camelCase
+breaks down when forced to ingest acronyms, is a simpler and faster form of a
+surface of revolution than the <code>Lathe</code> object. It supports only a
+single type of smoothly interpolated curve which cannot be closed and can have
+only a single radius value at any given point, i.e., it's a normal mathematical
+function. However, unlike a <code>Lathe</code>, a <code>Sor</code> has an
+<code>open</code> attribute which, if <code>true</code>, eliminates the normal
+endcaps and yields a hollow shape.</p>
+
+<div class='code'>var obj = new Sor({
+    points: [
+        [0,   -1.4],
+        [0,   -1.3],
+        [1,   -1.2],
+        [1,   -0.8],
+        [0.8, -0.6],
+        [0.8, -0.5],
+        [1,   -0.4],
+        [1,   -0.3],
+        [0.8, -0.2],
+        [0.8,  0.1],
+        [1,    0.2],
+        [1,    0.3],
+        [0.8,  0.4],
+        [0.6,  0.8],
+        [0.6,  1.2],
+        [0.8,  1.3],
+        [0.8,  1.4],
+        [0,    1.5],
+        [0,    1.6]
+    ]
+});</div>
+
+</td><td class='infinite'>
+
+    <img src="img/sor_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2376,7 +2413,7 @@ the <code>Polygon</code>.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of at least two points which define the open curve used to generate the surface.</td></tr>
+<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of at least two points which define the open curve used to generate the surface. The first and last points are not part of the rendered surface; they serve only to establish the slope of the line at its endpoints.</td></tr>
 <tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the base and the cap are left open, yielding a hollow surface of revolution.</td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Sor</code>, this is always <code>false</code>.</td></td></tr>
@@ -2864,26 +2901,27 @@ replaced before the first public beta are quite high.</pre>
 
         <tr><td class='working'>working</td><td>Implement/Test</td><td>Documentation illustration generator script, further tests</td></tr>
             <tr><td class='working'>working</td><td>Implement/Test</td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera</code> description and example</td></tr>
+
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Difference</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>HeightField</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Intersection</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>IsoSurface</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Lathe</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Merge</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Parametric</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Poly</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Polynomial</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Primitive</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quadric</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Quartic</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Sor</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>SphereSweep</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Text</code> description and example</td></tr>
+
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Triangle</code> description and example</td></tr>
+
+
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Camera</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Difference</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>HeightField</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Intersection</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>LightSource</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Merge</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>Implement</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
 

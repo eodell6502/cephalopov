@@ -9500,7 +9500,7 @@ class Sor extends Primitive {
     }
 
     set points(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity) || (val = cpov.convertToVectorArray('VectorXY', val)))) {
             this._points = val;
         } else {
             cpov.error("fatal", "points must be an array of two or more VectorXY.", "Sor", this);

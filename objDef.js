@@ -1298,7 +1298,7 @@ module.exports = {
             {
                 name:  "points",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity)",
+                valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity) || (val = cpov.convertToVectorArray('VectorXY', val))",
                 err:   "points must be an array of two or more VectorXY.",
                 desc:  "An array of at least two points which define the open curve used to generate the surface.",
                 tname: "VectorXY"
