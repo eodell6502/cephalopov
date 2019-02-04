@@ -13,6 +13,7 @@ function main(cpov) {
     cpov.imageOptions.outputAlpha = true;
     cpov.imageOptions.antialias = true;
     cpov.imageOptions.antialiasDepth = 9;
+    cpov.imageOptions.includeHeader = "functions.inc";
 	cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];
 
     var yellow = "texture { pigment { color <1, 1, 0> }}";
@@ -140,6 +141,22 @@ function main(cpov) {
     });
     var xform = new Matrix("translate", -0.5, -0.5, -0.5);
     obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// IsoSurface //------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/isosurface_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new IsoSurface({
+        source: "&function { f_noise3d(x,y,z)-0.5 }",
+        texture: yellow
+    });
+    var xform = new Matrix("translate", 0.5, 0.5, -0.5);
+    obj.transform = xform.xMatrix(new Matrix("scale", 2, 2, 2));
     obj.snapshot();
 
     cpov.outputFrame();

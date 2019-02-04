@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/sphere_basic.pov
-// FRAME: 15
-// CLOCK TIME: 15
+// POV FILE: ./docs/src/isosurface_basic.pov
+// FRAME: 7
+// CLOCK TIME: 7
 //==========================================================================
 
 #version 3.7
@@ -205,7 +205,8 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-sphere {
-    <0, 0, 0>, 2
+isosurface {
+    function { f_noise3d(x,y,z)-0.5 }
     texture { pigment { color <1, 1, 0> }}
+    matrix <2, 0, 0, 0, 2, 0, 0, 0, 2, 1, 1, -1>
 }

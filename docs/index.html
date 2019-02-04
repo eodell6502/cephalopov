@@ -1376,7 +1376,7 @@ repeatedly setting <code>transform</code> and then calling
 <tr><td>RW</td><td>N</td><td>noShadow</td><td>boolean</td><td>If <code>true</code>, the object will not cast shadows.</td></tr>
 <tr><td>RO</td><td>N</td><td>parent</td><td>Primitive</td><td>This is a read-only reference to the parent object of which the current object is a component, e.g., <code>Blob</code>, <code>Mesh</code>, and CSG objects.</td></tr>
 <tr><td>RW</td><td>N</td><td>photons</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>radiosity</td><td>TOOD</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>radiosity</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>serial</td><td>integer</td><td>This is a unique read-only integer serial number automatically assigned by CephaloPOV upon object creation. It is displayed in error messages, and objects can be looked up using <code>cpov.serialMap</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>texture</td><td>string</td><td>Pending implementation of CephaloPOV's texture subsystem, this is a literal SDL string which will be output as-is.</td></tr>
 <tr><td>RW</td><td>N</td><td>transform</td><td>Matrix</td><td>This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.</td></tr>
@@ -1671,7 +1671,19 @@ true. The example at right was created by the following code:</p>
 
 <h4>Cubic</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -1737,7 +1749,19 @@ attribute can be used to assign a field strength to the cylinder.</p>
 
 <h4>Difference</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -1849,7 +1873,19 @@ obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));</div>
 
 <h4>Intersection</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -1867,7 +1903,36 @@ obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));</div>
 
 <h4>IsoSurface</h4>
 
-<p>TODO</p>
+<table class="illusBasic"><tr><td>
+
+<p>Remember way up at the top of this document when I said that not having to
+depend on the POV-Ray documentation was a goal that had not yet been achieved?
+Well, the <code>IsoSurface</code> is one of those cases where that goal is still
+especially aspirational. Go familiarize yourself with the official <a
+href="http://www.povray.org/documentation/3.7.0/t2_3.html#t2_3_3_3">IsoSurface</a>
+documentation and come back to see how it's implemented in CephaloPOV.</p>
+
+<p>Short of the dubious goal of writing a JavaScript-to-SDL compiler, complete
+independence from POV-Ray's Scene Description Language is not possible in a few
+cases. The <code>IsoSurface</code> object is one of these because its sole
+required attribute, <code>source</code>, is a function or functions written in
+SDL. It's worth the effort of understanding, however, because the definition of
+isosurfaces is one of POV-Ray's most powerful features.</p>
+
+<p>In this example, we're just grabbing an example from the POV-Ray docs to serve
+as the <code>source</code> attribute. Don't forget to include the leading <code>'&'</code>
+that tells CephaloPOV that it's getting SDL code instead of an ordinary string.</p>
+
+<div class='code'>var obj = new IsoSurface({
+    source: "&function{fn_A(x,y,z) + "
+        + "pow(Blob_Threshold,(fn_B(x,y,z) + Strength))}"
+});</div>
+
+</td><td>
+
+    <img src="img/isosurface_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2064,7 +2129,19 @@ object, <code>Sor</code>, but it is also substantially slower to render.</p>
 
 <h4>Merge</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2082,7 +2159,19 @@ object, <code>Sor</code>, but it is also substantially slower to render.</p>
 
 <h4>Mesh</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2144,7 +2233,19 @@ a wide variety of other shapes can be constructed with it.</p>
 
 <h4>Parametric</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2218,7 +2319,19 @@ flood!</p>
 
 <h4>Poly</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2250,9 +2363,7 @@ create an additional polygon which, if it is enclosed in the first (or another) 
 defines a hole in it.</p>
 
 <p>In the example code below, two rectangles are defined with the second being a hole
-in the first. Thanks to the polygons' position on the XY-plane and the position
-of the <code>LightSource</code> illuminating the scene, it appears completely black but
-is in fact the same color as all the other examples.</p>
+in the first.</p>
 
 <div class='code'>var obj = new Polygon({
     points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2],
@@ -2282,7 +2393,19 @@ is in fact the same color as all the other examples.</p>
 
 <h4>Polynomial</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2354,7 +2477,19 @@ the <code>Polygon</code>.</p>
 
 <h4>Quadric</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2373,7 +2508,19 @@ the <code>Polygon</code>.</p>
 
 <h4>Quartic</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2399,10 +2546,10 @@ the <code>Polygon</code>.</p>
 breaks down when forced to ingest acronyms, is a simpler and faster form of a
 surface of revolution than the <code>Lathe</code> object. It supports only a
 single type of smoothly interpolated curve which cannot be closed and can have
-only a single radius value at any given point, i.e., it's a normal mathematical
-function. However, unlike a <code>Lathe</code>, a <code>Sor</code> has an
-<code>open</code> attribute which, if <code>true</code>, eliminates the normal
-endcaps and yields a hollow shape.</p>
+only a single radius (x) value at any given point (y), i.e., it's a normal
+mathematical function. However, unlike a <code>Lathe</code>, a <code>Sor</code>
+has an <code>open</code> attribute which, if <code>true</code>, eliminates the
+normal endcaps and yields a hollow shape.</p>
 
 <div class='code'>var obj = new Sor({
     points: [
@@ -2441,7 +2588,7 @@ endcaps and yields a hollow shape.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of at least two points which define the open curve used to generate the surface. The first and last points are not part of the rendered surface; they serve only to establish the slope of the line at its endpoints.</td></tr>
+<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of at least two points which define the open curve used to generate the surface.</td></tr>
 <tr><td>RW</td><td>N</td><td>open</td><td>boolean</td><td>If <code>true</code>, the base and the cap are left open, yielding a hollow surface of revolution.</td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Sor</code>, this is always <code>false</code>.</td></td></tr>
@@ -2493,7 +2640,19 @@ the field strength.
 
 <h4>SphereSweep</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2556,7 +2715,19 @@ have the same value, the result is a cube with rounded edges. When both values r
 
 <h4>Text</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2621,7 +2792,19 @@ of 0.5 units and a major radius of 2 units.</p>
 
 <h4>Triangle</h4>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <h5>Attributes</h5>
 
@@ -2649,7 +2832,19 @@ of 0.5 units and a major radius of 2 units.</p>
 
 <h5>Attributes</h5>
 
+<table class="illusBasic"><tr><td>
+
 <p>TODO</p>
+
+<div class='code'>var obj = new PlaceholderObj({
+    // TODO
+});</div>
+
+</td><td>
+
+    <img src="img/placeholder_basic.png">
+
+</td></tr></table>
 
 <div dh="Union">
 <table class='sgrid attrs'>
@@ -2920,6 +3115,7 @@ replaced before the first public beta are quite high.</pre>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Make it <i>much</i> easier to apply transformations.</td></tr>
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Turn <code>imageOptions.includeHeader</code> into an array to allow multiple headers.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td>Document the various spline types.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Atmospheric effects</td></tr>
 
@@ -2933,7 +3129,6 @@ replaced before the first public beta are quite high.</pre>
 
             <!-- finite solids -->
 
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>IsoSurface</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Parametric</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>SphereSweep</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Text</code> description and example</td></tr>
@@ -3013,6 +3208,7 @@ replaced before the first public beta are quite high.</pre>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>A large set of sample functions for the <code>IsoSurface</code> type.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Additional splines, easing functions, esp. Catmull-Rom</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>Atmospheric effects</td></tr>

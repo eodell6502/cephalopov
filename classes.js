@@ -1,7 +1,7 @@
 var cpov = require("./cephalopov.js");
 
 //==============================================================================
-// The GlobalSettings class manages the variables that will be output into the 
+// The GlobalSettings class manages the variables that will be output into the
 // SDL global_settings block.
 //==============================================================================
 
@@ -890,49 +890,49 @@ class GlobalSettings {
 
         var newObj = new GlobalSettings();
 
-        newObj.adcBailout             = this.adcBailout;            
-        newObj.ambientLight           = this.ambientLight;          
-        newObj.assumedGamma           = this.assumedGamma;          
-        newObj.charset                = this.charset;               
-        newObj.iridWavelength         = this.iridWavelength;        
-        newObj.maxIntersections       = this.maxIntersections;      
-        newObj.maxTraceLevel          = this.maxTraceLevel;         
-        newObj.mmPerUnit              = this.mmPerUnit;             
-        newObj.noiseGenerator         = this.noiseGenerator;        
-        newObj.numberOfWaves          = this.numberOfWaves;         
-        newObj.photon                 = this.photon;                
-        newObj.photonAdcBailout       = this.photonAdcBailout;      
-        newObj.photonAutostop         = this.photonAutostop;        
-        newObj.photonCount            = this.photonCount;           
+        newObj.adcBailout             = this.adcBailout;
+        newObj.ambientLight           = this.ambientLight;
+        newObj.assumedGamma           = this.assumedGamma;
+        newObj.charset                = this.charset;
+        newObj.iridWavelength         = this.iridWavelength;
+        newObj.maxIntersections       = this.maxIntersections;
+        newObj.maxTraceLevel          = this.maxTraceLevel;
+        newObj.mmPerUnit              = this.mmPerUnit;
+        newObj.noiseGenerator         = this.noiseGenerator;
+        newObj.numberOfWaves          = this.numberOfWaves;
+        newObj.photon                 = this.photon;
+        newObj.photonAdcBailout       = this.photonAdcBailout;
+        newObj.photonAutostop         = this.photonAutostop;
+        newObj.photonCount            = this.photonCount;
         newObj.photonExpandThresholds = this.photonExpandThresholds;
-        newObj.photonGather           = this.photonGather;          
-        newObj.photonJitter           = this.photonJitter;          
-        newObj.photonLoadFile         = this.photonLoadFile;        
-        newObj.photonMaxTraceLevel    = this.photonMaxTraceLevel;   
-        newObj.photonMedia            = this.photonMedia;           
-        newObj.photonRadius           = this.photonRadius;          
-        newObj.photonSaveFile         = this.photonSaveFile;        
-        newObj.photonSpacing          = this.photonSpacing;         
-        newObj.radAdcBailout          = this.radAdcBailout;         
-        newObj.radAlwaysSample        = this.radAlwaysSample;       
-        newObj.radBrightness          = this.radBrightness;         
-        newObj.radCount               = this.radCount;              
-        newObj.radErrorBound          = this.radErrorBound;         
-        newObj.radGrayThreshold       = this.radGrayThreshold;      
-        newObj.radiosity              = this.radiosity;             
-        newObj.radLowErrorFactor      = this.radLowErrorFactor;     
-        newObj.radMaximumReuse        = this.radMaximumReuse;       
-        newObj.radMaxSample           = this.radMaxSample;          
-        newObj.radMinimumReuse        = this.radMinimumReuse;       
-        newObj.radNearestCount        = this.radNearestCount;       
-        newObj.radNormal              = this.radNormal;             
-        newObj.radPretraceEnd         = this.radPretraceEnd;        
-        newObj.radPretraceStart       = this.radPretraceStart;      
-        newObj.radRecursionLimit      = this.radRecursionLimit;     
-        newObj.radSubsurface          = this.radSubsurface;         
-        newObj.subRadiosity           = this.subRadiosity;          
-        newObj.subSamples             = this.subSamples;            
-        newObj.subsurface             = this.subsurface;            
+        newObj.photonGather           = this.photonGather;
+        newObj.photonJitter           = this.photonJitter;
+        newObj.photonLoadFile         = this.photonLoadFile;
+        newObj.photonMaxTraceLevel    = this.photonMaxTraceLevel;
+        newObj.photonMedia            = this.photonMedia;
+        newObj.photonRadius           = this.photonRadius;
+        newObj.photonSaveFile         = this.photonSaveFile;
+        newObj.photonSpacing          = this.photonSpacing;
+        newObj.radAdcBailout          = this.radAdcBailout;
+        newObj.radAlwaysSample        = this.radAlwaysSample;
+        newObj.radBrightness          = this.radBrightness;
+        newObj.radCount               = this.radCount;
+        newObj.radErrorBound          = this.radErrorBound;
+        newObj.radGrayThreshold       = this.radGrayThreshold;
+        newObj.radiosity              = this.radiosity;
+        newObj.radLowErrorFactor      = this.radLowErrorFactor;
+        newObj.radMaximumReuse        = this.radMaximumReuse;
+        newObj.radMaxSample           = this.radMaxSample;
+        newObj.radMinimumReuse        = this.radMinimumReuse;
+        newObj.radNearestCount        = this.radNearestCount;
+        newObj.radNormal              = this.radNormal;
+        newObj.radPretraceEnd         = this.radPretraceEnd;
+        newObj.radPretraceStart       = this.radPretraceStart;
+        newObj.radRecursionLimit      = this.radRecursionLimit;
+        newObj.radSubsurface          = this.radSubsurface;
+        newObj.subRadiosity           = this.subRadiosity;
+        newObj.subSamples             = this.subSamples;
+        newObj.subsurface             = this.subsurface;
 
         return newObj;
     }
@@ -942,16 +942,16 @@ class GlobalSettings {
     // does not take a stops argument because the SDL global_settings
     // declaration always happens at the top level.
     //--------------------------------------------------------------------------
-    
+
     toSDL() {
-    
+
         if(this.photonSpacing !== null && this.photonCount !== null)
             cpov.error("fatal", "photonSpacing and photonCount cannot be defined simultaneously.", "GlobalSettings", this);
-    
+
         var contents = [ ];
-    
+
         contents.push("global_settings {");
-    
+
         var params = {
             adcBailout: "adc_bailout",
             ambientLight: "ambient_light",
@@ -964,7 +964,7 @@ class GlobalSettings {
             numberOfWaves: "number_of_waves",
             noiseGenerator: "noise_generator"
         };
-    
+
         var radParams = {
             radAdcBailout: "adc_bailout",
             radAlwaysSample: "always_sample",
@@ -983,12 +983,12 @@ class GlobalSettings {
             radRecursionLimit: "recursion_limit",
             radSubsurface: "subsurface"
         };
-    
+
         var subParams = {
             subRadiosity: "radiosity",
             subSamples: "samples"
         };
-    
+
         var photonParams = {
             photonSpacing: "spacing",
             photonCount: "count",
@@ -1003,7 +1003,7 @@ class GlobalSettings {
             photonExpandThresholds: "expand_thresholds",
             photonRadius: "radius"
         };
-    
+
         for(var i in params) {
             if(this[i] !== null) {
                 if(Array.isArray(this[i]))
@@ -1014,7 +1014,7 @@ class GlobalSettings {
                     contents.push("    " + params[i] + " " + this[i].toPlainRGBVector());
             }
         }
-    
+
         if(this.radiosity) {
             contents.push("    radiosity {");
             for(var i in radParams) {
@@ -1027,7 +1027,7 @@ class GlobalSettings {
             }
             contents.push("    }");
         }
-    
+
         if(this.subsurface) {
             contents.push("    subsurface {");
             for(var i in subParams) {
@@ -1040,7 +1040,7 @@ class GlobalSettings {
             }
             contents.push("    }");
         }
-    
+
         if(this.photon) {
             contents.push("    photon {");
             for(var i in photonParams) {
@@ -1053,9 +1053,9 @@ class GlobalSettings {
             }
             contents.push("    }");
         }
-    
+
         contents.push("}");
-    
+
         return contents.join("\n");
     }
 
@@ -1063,7 +1063,7 @@ class GlobalSettings {
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
@@ -1076,8 +1076,8 @@ exports.GlobalSettings = GlobalSettings;
 
 
 //==============================================================================
-// The ImageOptions class manages the variables that will be output into .ini 
-// files for each frame and which can, optionally, be emitted in the form of 
+// The ImageOptions class manages the variables that will be output into .ini
+// files for each frame and which can, optionally, be emitted in the form of
 // command line switches.
 //==============================================================================
 
@@ -2510,84 +2510,84 @@ class ImageOptions {
 
         var newObj = new ImageOptions();
 
-        newObj.allConsole          = this.allConsole;         
-        newObj.allFile             = this.allFile;            
-        newObj.antialias           = this.antialias;          
-        newObj.antialiasDepth      = this.antialiasDepth;     
-        newObj.antialiasGamma      = this.antialiasGamma;     
-        newObj.antialiasThreshold  = this.antialiasThreshold; 
-        newObj.appendFile          = this.appendFile;         
-        newObj.bitsPerColor        = this.bitsPerColor;       
-        newObj.bounding            = this.bounding;           
-        newObj.boundingMethod      = this.boundingMethod;     
-        newObj.boundingThreshold   = this.boundingThreshold;  
-        newObj.bspBaseAccessCost   = this.bspBaseAccessCost;  
-        newObj.bspChildAccessCost  = this.bspChildAccessCost; 
-        newObj.bspIsectCost        = this.bspIsectCost;       
-        newObj.bspMaxDepth         = this.bspMaxDepth;        
-        newObj.bspMissChance       = this.bspMissChance;      
-        newObj.debugConsole        = this.debugConsole;       
-        newObj.debugFile           = this.debugFile;          
-        newObj.display             = this.display;            
-        newObj.displayGamma        = this.displayGamma;       
-        newObj.dither              = this.dither;             
-        newObj.ditherMethod        = this.ditherMethod;       
-        newObj.endColumn           = this.endColumn;          
-        newObj.endRow              = this.endRow;             
-        newObj.exePath             = this.exePath;            
-        newObj.fatalConsole        = this.fatalConsole;       
-        newObj.fatalErrorCommand   = this.fatalErrorCommand;  
-        newObj.fatalErrorReturn    = this.fatalErrorReturn;   
-        newObj.fatalFile           = this.fatalFile;          
-        newObj.fileGamma           = this.fileGamma;          
-        newObj.height              = this.height;             
+        newObj.allConsole          = this.allConsole;
+        newObj.allFile             = this.allFile;
+        newObj.antialias           = this.antialias;
+        newObj.antialiasDepth      = this.antialiasDepth;
+        newObj.antialiasGamma      = this.antialiasGamma;
+        newObj.antialiasThreshold  = this.antialiasThreshold;
+        newObj.appendFile          = this.appendFile;
+        newObj.bitsPerColor        = this.bitsPerColor;
+        newObj.bounding            = this.bounding;
+        newObj.boundingMethod      = this.boundingMethod;
+        newObj.boundingThreshold   = this.boundingThreshold;
+        newObj.bspBaseAccessCost   = this.bspBaseAccessCost;
+        newObj.bspChildAccessCost  = this.bspChildAccessCost;
+        newObj.bspIsectCost        = this.bspIsectCost;
+        newObj.bspMaxDepth         = this.bspMaxDepth;
+        newObj.bspMissChance       = this.bspMissChance;
+        newObj.debugConsole        = this.debugConsole;
+        newObj.debugFile           = this.debugFile;
+        newObj.display             = this.display;
+        newObj.displayGamma        = this.displayGamma;
+        newObj.dither              = this.dither;
+        newObj.ditherMethod        = this.ditherMethod;
+        newObj.endColumn           = this.endColumn;
+        newObj.endRow              = this.endRow;
+        newObj.exePath             = this.exePath;
+        newObj.fatalConsole        = this.fatalConsole;
+        newObj.fatalErrorCommand   = this.fatalErrorCommand;
+        newObj.fatalErrorReturn    = this.fatalErrorReturn;
+        newObj.fatalFile           = this.fatalFile;
+        newObj.fileGamma           = this.fileGamma;
+        newObj.height              = this.height;
         newObj.highReproducibility = this.highReproducibility;
-        newObj.includeHeader       = this.includeHeader;      
-        newObj.inputFileName       = this.inputFileName;      
-        newObj.jitter              = this.jitter;             
-        newObj.jitterAmount        = this.jitterAmount;       
-        newObj.libraryPath         = this.libraryPath;        
-        newObj.maxImageBuffer      = this.maxImageBuffer;     
-        newObj.outputAlpha         = this.outputAlpha;        
-        newObj.outputFileName      = this.outputFileName;     
-        newObj.outputFileType      = this.outputFileType;     
-        newObj.outputToFile        = this.outputToFile;       
-        newObj.palette             = this.palette;            
-        newObj.pauseWhenDone       = this.pauseWhenDone;      
-        newObj.postSceneCommand    = this.postSceneCommand;   
-        newObj.postSceneReturn     = this.postSceneReturn;    
-        newObj.preSceneCommand     = this.preSceneCommand;    
-        newObj.preSceneReturn      = this.preSceneReturn;     
-        newObj.previewEndSize      = this.previewEndSize;     
-        newObj.previewStartSize    = this.previewStartSize;   
-        newObj.quality             = this.quality;            
-        newObj.radFileName         = this.radFileName;        
-        newObj.radFromFile         = this.radFromFile;        
-        newObj.radToFile           = this.radToFile;          
-        newObj.radVainPretrace     = this.radVainPretrace;    
-        newObj.removeBounds        = this.removeBounds;       
-        newObj.renderBlockSize     = this.renderBlockSize;    
-        newObj.renderBlockStep     = this.renderBlockStep;    
-        newObj.renderConsole       = this.renderConsole;      
-        newObj.renderFile          = this.renderFile;         
-        newObj.renderPattern       = this.renderPattern;      
-        newObj.samplingMethod      = this.samplingMethod;     
-        newObj.splitUnions         = this.splitUnions;        
-        newObj.startColumn         = this.startColumn;        
-        newObj.startRow            = this.startRow;           
-        newObj.statisticConsole    = this.statisticConsole;   
-        newObj.statisticFile       = this.statisticFile;      
-        newObj.testAbort           = this.testAbort;          
-        newObj.testAbortCount      = this.testAbortCount;     
-        newObj.userAbortCommand    = this.userAbortCommand;   
-        newObj.userAbortReturn     = this.userAbortReturn;    
-        newObj.verbose             = this.verbose;            
-        newObj.videoMode           = this.videoMode;          
-        newObj.warningConsole      = this.warningConsole;     
-        newObj.warningFile         = this.warningFile;        
-        newObj.warningLevel        = this.warningLevel;       
-        newObj.width               = this.width;              
-        newObj.workThreads         = this.workThreads;        
+        newObj.includeHeader       = this.includeHeader;
+        newObj.inputFileName       = this.inputFileName;
+        newObj.jitter              = this.jitter;
+        newObj.jitterAmount        = this.jitterAmount;
+        newObj.libraryPath         = this.libraryPath;
+        newObj.maxImageBuffer      = this.maxImageBuffer;
+        newObj.outputAlpha         = this.outputAlpha;
+        newObj.outputFileName      = this.outputFileName;
+        newObj.outputFileType      = this.outputFileType;
+        newObj.outputToFile        = this.outputToFile;
+        newObj.palette             = this.palette;
+        newObj.pauseWhenDone       = this.pauseWhenDone;
+        newObj.postSceneCommand    = this.postSceneCommand;
+        newObj.postSceneReturn     = this.postSceneReturn;
+        newObj.preSceneCommand     = this.preSceneCommand;
+        newObj.preSceneReturn      = this.preSceneReturn;
+        newObj.previewEndSize      = this.previewEndSize;
+        newObj.previewStartSize    = this.previewStartSize;
+        newObj.quality             = this.quality;
+        newObj.radFileName         = this.radFileName;
+        newObj.radFromFile         = this.radFromFile;
+        newObj.radToFile           = this.radToFile;
+        newObj.radVainPretrace     = this.radVainPretrace;
+        newObj.removeBounds        = this.removeBounds;
+        newObj.renderBlockSize     = this.renderBlockSize;
+        newObj.renderBlockStep     = this.renderBlockStep;
+        newObj.renderConsole       = this.renderConsole;
+        newObj.renderFile          = this.renderFile;
+        newObj.renderPattern       = this.renderPattern;
+        newObj.samplingMethod      = this.samplingMethod;
+        newObj.splitUnions         = this.splitUnions;
+        newObj.startColumn         = this.startColumn;
+        newObj.startRow            = this.startRow;
+        newObj.statisticConsole    = this.statisticConsole;
+        newObj.statisticFile       = this.statisticFile;
+        newObj.testAbort           = this.testAbort;
+        newObj.testAbortCount      = this.testAbortCount;
+        newObj.userAbortCommand    = this.userAbortCommand;
+        newObj.userAbortReturn     = this.userAbortReturn;
+        newObj.verbose             = this.verbose;
+        newObj.videoMode           = this.videoMode;
+        newObj.warningConsole      = this.warningConsole;
+        newObj.warningFile         = this.warningFile;
+        newObj.warningLevel        = this.warningLevel;
+        newObj.width               = this.width;
+        newObj.workThreads         = this.workThreads;
 
         return newObj;
     }
@@ -2598,20 +2598,20 @@ class ImageOptions {
     // and cli, corresponding to the contents of the ini file and the
     // commandline version, respectively.
     //--------------------------------------------------------------------------
-    
+
     output() {
         var ini     = [];
         var cli     = [];
         var iniWarn = [];
         var cliWarn = [];
-    
+
         for(var i = 0; i < cpov.ioDef.mutable.length; i++) {
-    
+
             var opt = cpov.ioDef.mutable[i].name;
-    
+
             if(opt != "Width" && opt != "Height" && this[opt] === null)
                 continue;
-    
+
             switch(opt) {
                 case "allConsole":
                     if(this.allFile === null) {
@@ -2619,7 +2619,7 @@ class ImageOptions {
                         cli.push((this.allConsole ? "+" : "-") + "GA");
                     }
                     break;
-    
+
                 case "allFile":
                     ini.push("All_File=" + this.allFile);
                     cli.push(
@@ -2628,50 +2628,50 @@ class ImageOptions {
                         + (typeof this.allFile == "string" ? this.allFile : "")
                     );
                     break;
-    
+
                 case "antialias":
                     ini.push("Antialias=" + (this.antialias ? "true" : "false"));
                     if(this.antialiasThreshold === null) {
                         cli.push((this.antialias ? "+" : "-") + "A");
                     }
                     break;
-    
+
                 case "antialiasDepth":
                     ini.push("Antialias_Depth=" + this.antialiasDepth);
                     cli.push("+R" + this.antialiasDepth);
                     break;
-    
+
                 case "antialiasGamma":
                     ini.push("Antialias_Gamma=" + this.antialiasGamma);
                     cli.push("+AG" + this.antialiasGamma);
                     break;
-    
+
                 case "antialiasThreshold":
                     ini.push("Antialias_Threshold=" + this.antialiasThreshold);
                     cli.push((this.antialias ? "+" : "-") + "A" + this.antialiasThreshold);
                     break;
-    
+
                 case "appendFile":
                     ini.push("Append_File=" + (this.appendFile ? "true" : "false"));
                     cli.push((this.appendFile ? "+" : "-") + "GP");
                     break;
-    
+
                 case "bitsPerColor":
                     ini.push("Bits_Per_Color=" + this.bitsPerColor);
                     break;
-    
+
                 case "bounding":
                     ini.push("Bounding=" + (this.bounding ? "true" : "false"));
                     if(this.boundingThreshold === null) {
                         cli.push((this.bounding ? "+" : "-") + "MB");
                     };
                     break;
-    
+
                 case "boundingMethod":
                     ini.push("Bounding_Method=" + this.boundingMethod);
                     cli.push("+BM" + this.boundingMethod);
                     break;
-    
+
                 case "boundingThreshold":
                     ini.push("Bounding_Threshold=" + (this.boundingThreshold ? this.boundingThreshold : "false"));
                     cli.push(
@@ -2679,34 +2679,34 @@ class ImageOptions {
                         + "MB" + this.boundingThreshold
                     );
                     break;
-    
+
                 case "bspBaseAccessCost":
                     ini.push("BSP_BaseAccessCost=" + this.bspBaseAccessCost);
                     break;
-    
+
                 case "bspChildAccessCost":
                     ini.push("BSP_ChildAccessCost=" + this.bspChildAccessCost);
                     break;
-    
+
                 case "bspIsectCost":
                     ini.push("BSP_IsectCost=" + this.bspIsectCost);
                     break;
-    
+
                 case "bspMaxDepth":
                     ini.push("BSP_MaxDepth=" + this.bspMaxDepth);
                     break;
-    
+
                 case "bspMissChance":
                     ini.push("BSP_MissChance=" + this.bspMissChance);
                     break;
-    
+
                 case "debugConsole":
                     if(this.allConsole === null)
                         ini.push("Debug_Console=" + this.debugConsole);
                     if(this.debugFile === null && this.allFile === null)
                         cli.push((this.debugConsole ? "+" : "-") + "GD");
                     break;
-    
+
                 case "debugFile":
                     if(this.optAllFile === null) {
                         ini.push("Debug_File=" + this.debugFile);
@@ -2717,59 +2717,59 @@ class ImageOptions {
                         );
                     }
                     break;
-    
+
                 case "display":
                     ini.push("Display=" + (this.display ? "true" : "false"));
                     if(this.videoMode === null)
                         cli.push(this.display ? "+D" : "-D");
                     break;
-    
+
                 case "displayGamma":
                     ini.push("Display_Gamma=" + this.displayGamma);
                     break;
-    
+
                 case "dither":
                     ini.push("Dither=" + (this.dither ? "true" : "false"));
                     if(this.ditherMethod === null)
                         cli.push((this.dither ? "+" : "-") + "TH");
                     break;
-    
+
                 case "ditherMethod":
                     ini.push("Dither_Method=" + this.ditherMethod);
                     cli.push((this.dither ? "+" : "-") + "TH" + this.ditherMethod);
                     break;
-    
+
                 case "endColumn":
                     if(this.startColumn !== null && this.endColumn <= this.startColumn)
                         cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
-    
+
                     ini.push("End_Column=" + this.endColumn);
                     cli.push("+EC" + this.endColumn);
                     break;
-    
+
                 case "endRow":
                     if(this.startRow !== null && this.endRow <= this.startRow)
                         cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
-    
+
                     ini.push("End_Row=" + this.endRow);
                     cli.push("+ER" + this.endRow);
                     break;
-    
+
                 case "fatalConsole":
                     if(this.allConsole === null)
                             ini.push("Fatal_Console=" + this.fatalConsole);
                     if(this.fatalFile === null && this.allFile === null)
                         cli.push((this.fatalConsole ? "+" : "-") + "GF");
                     break;
-    
+
                 case "fatalErrorCommand":
                     ini.push("Fatal_Error_Command=" + this.fatalErrorCommand);
                     break;
-    
+
                 case "fatalErrorReturn":
                     ini.push("Fatal_Error_Return=" + this.fatalErrorReturn);
                     break;
-    
+
                 case "fatalFile":
                     if(this.optAllFile === null) {
                         ini.push("Fatal_File=" + this.fatalFile);
@@ -2780,68 +2780,68 @@ class ImageOptions {
                         );
                     }
                     break;
-    
+
                 case "fileGamma":
                     ini.push("File_Gamma=" + this.fileGamma);
                     break;
-    
+
                 case "height":
                     if(this.width === null || this.height === null)
                         throw new RangeError("[ImageOptions]: Both width and height must be defined.");
                     ini.push("Height=" + this.height);
                     cli.push("+H" + this.height);
                     break;
-    
+
                 case "highReproducibility":
                     ini.push("High_Reproducibility=" + (this.highReproducibility ? "true" : "false"));
                     if(this.highReproducibility)
                         cli.push("+HR");
                     break;
-    
+
                 case "includeHeader":
                     ini.push("Include_Header=" + this.includeHeader);
                     cli.push("+HI" + this.includeHeader);
                     break;
-    
+
                 case "inputFileName":
                     ini.push("Input_File_Name=" + this.inputFileName);
                     cli.push("+I" + this.inputFileName);
                     break;
-    
+
                 case "jitter":
                     ini.push("Jitter=" + (this.jitter ? "true" : "false"));
                     if(this.jitterAmount === null) {
                         cli.push((this.jitter ? "+" : "-") + "J");
                     }
                     break;
-    
+
                 case "jitterAmount":
                     ini.push("Jitter_Amount=" + this.jitterAmount);
                     cli.push((this.jitterAmount > 0 ? "+" : "-" ) + "J" + this.jitterAmount);
                     break;
-    
+
                 case "libraryPath":
                     for(var j = 0; j < this.libraryPath.length; j++) {
                         ini.push("Library_Path=" + this.libraryPath[j]);
                         cli.push("+L" + this.libraryPath[j]);
                     }
                     break;
-    
+
                 case "maxImageBufferMemory":
                     ini.push("Max_Image_Buffer_Memory=" + this.maxImageBufferMemory);
                     cli.push("+MI" + this.maxImageBufferMemory);
                     break;
-    
+
                 case "outputAlpha":
                     ini.push("Output_Alpha=" + (this.outputAlpha ? "true" : "false"));
                     cli.push((this.outputAlpha ? "+" : "-") + "UA");
                     break;
-    
+
                 case "outputFileName":
                     ini.push("Output_File_Name=" + this.outputFileName);
                     cli.push("+O" + this.outputFileName);
                     break;
-    
+
                 case "outputFileType":
                     ini.push("Output_File_Type=" + this.outputFileType);
                     cli.push(
@@ -2850,14 +2850,14 @@ class ImageOptions {
                         + (this.bitsPerColor === null ? "" : this.bitsPerColor)
                     );
                     break;
-    
+
                 case "outputToFile":
                     if(this.outputFileType === null) {
                         ini.push("Output_to_File=" + (this.outputToFile ? "true" : "false"));
                         cli.push(this.outputToFile ? "+F" : "-F");
                     }
                     break;
-    
+
                 case "palette":
                     ini.push("Palette=" + this.palette);
                     if(this.videoMode !== null)
@@ -2867,105 +2867,105 @@ class ImageOptions {
                             + this.videoMode + this.palette
                         );
                     break;
-    
+
                 case "pauseWhenDone":
                     ini.push("Pause_When_Done=" + (this.pauseWhenDone ? "true" : "false"));
                     cli.push(this.pauseWhenDone ? "+P" : "-P");
                     break;
-    
+
                 case "postFrameCommand":
                     ini.push("Post_Frame_Command=" + this.postFrameCommand);
                     break;
-    
+
                 case "postFrameReturn":
                     ini.push("Post_Frame_Return=" + this.postFrameReturn);
                     break;
-    
+
                 case "postSceneCommand":
                     ini.push("Post_Scene_Command=" + this.postSceneCommand);
                     break;
-    
+
                 case "postSceneReturn":
                     ini.push("Post_Scene_Return=" + this.postSceneReturn);
                     break;
-    
+
                 case "preFrameCommand":
                     ini.push("Pre_Frame_Command=" + this.preFrameCommand);
                     break;
-    
+
                 case "preFrameReturn":
                     ini.push("Pre_Frame_Return=" + this.preFrameReturn);
                     break;
-    
+
                 case "preSceneCommand":
                     ini.push("Pre_Scene_Command=" + this.postSceneCommand);
                     break;
-    
+
                 case "preSceneReturn":
                     ini.push("Pre_Scene_Return=" + this.preSceneReturn);
                     break;
-    
+
                 case "previewEndSize":
                     if(this.previewStartSize !== null) {
                         ini.push("Preview_End_Size=" + this.previewEndSize);
                         cli.push("+EP" + this.previewEndSize);
                     }
                     break;
-    
+
                 case "previewStartSize":
                     ini.push("Preview_Start_Size=" + this.previewStartSize);
                     cli.push("+SP" + this.previewStartSize);
                     break;
-    
+
                 case "quality":
                     ini.push("Quality=" + this.quality);
                     cli.push("+Q" + this.quality);
                     break;
-    
+
                 case "radiosityFileName":
                     ini.push("Radiosity_File_Name=" + this.radiosityFileName);
                     cli.push("+RF" + this.radiosityFileName);
                     break;
-    
+
                 case "radiosityFromFile":
                     ini.push("Radiosity_From_File=" + (this.radiosityFromFile ? "true" : "false"));
                     if(this.radiosityFromFile)
                         cli.push("+RFI");
                     break;
-    
+
                 case "radiosityToFile":
                     ini.push("Radiosity_To_File=" + (this.radiosityToFile ? "true" : "false"));
                     if(this.radiosityToFile)
                         cli.push("+RFO");
                     break;
-    
+
                 case "radiosityVainPretrace":
                     ini.push("Radiosity_Vain_Pretrace=" + (this.radiosityVainPretrace ? "true" : "false"));
                     cli.push(this.radiosityVainPretrace ? "+RVP" : "-RVP");
                     break;
-    
+
                 case "removeBounds":
                     ini.push("Remove_Bounds=" + (this.removeBounds ? "true" : "false"));
                     cli.push((this.removeBounds ? "+" : "-") + "UR");
                     break;
-    
+
                 case "renderBlockSize":
                     ini.push("Render_Block_Size=" + this.renderBlockSize);
                     cli.push("+BS" + this.renderBlockSize);
                     break;
-    
+
                 case "renderBlockStep":
                     ini.push("Render_Block_Step=" + this.renderBlockStep);
                     cli.push("+RS" + this.renderBlockStep);
                     break;
-    
+
                 case "renderConsole":
                     if(this.allConsole === null)
                         ini.push("Render_Console=" + this.renderConsole);
                     if(this.renderFile === null && this.allFile === null)
                         cli.push((this.renderConsole ? "+" : "-") + "GR");
                         break;
-    
+
                 case "renderFile":
                     if(this.optAllFile === null) {
                         ini.push("Render_File=" + this.renderFile);
@@ -2976,45 +2976,45 @@ class ImageOptions {
                         );
                     }
                     break;
-    
+
                 case "renderPattern":
                     ini.push("Render_Pattern=" + this.renderPattern);
                     cli.push("+RP" + this.renderPattern);
                     break;
-    
+
                 case "samplingMethod":
                     ini.push("Sampling_Method=" + this.samplingMethod);
                     cli.push("+AM" + this.samplingMethod);
                     break;
-    
+
                 case "splitUnions":
                     ini.push("Split_Unions=" + (this.splitUnions ? "true" : "false"));
                     cli.push((this.splitUnions ? "+" : "-") + "SU");
                     break;
-    
+
                 case "startColumn":
                     if(this.endColumn !== null && this.endColumn <= this.startColumn)
                         cpov.error("fatal", "endColumn must be greater than startColumn.", "ImageOptions");
-    
+
                     ini.push("Start_Column=" + this.startColumn);
                     cli.push("+SC" + this.startColumn);
                     break;
-    
+
                 case "startRow":
                     if(this.endRow !== null && this.endRow <= this.startRow)
                         cpov.error("fatal", "endRow must be greater than startRow.", "ImageOptions");
-    
+
                     ini.push("Start_Row=" + this.startRow);
                     cli.push("+SR" + this.startRow);
                     break;
-    
+
                 case "statisticConsole":
                     if(this.allConsole === null)
                         ini.push("Statistic_Console=" + this.statisticConsole);
                     if(this.statisticFile === null && this.allFile === null)
                         cli.push((this.statisticConsole ? "+" : "-") + "GS");
                     break;
-    
+
                 case "statisticFile":
                     if(this.optAllFile === null) {
                         ini.push("Statistic_File=" + this.statisticFile);
@@ -3025,14 +3025,14 @@ class ImageOptions {
                         );
                     }
                     break;
-    
+
                 case "testAbort":
                     if(this.testAbortCount !== null) {
                         ini.push("Test_Abort=" + (this.testAbort ? "true" : "false"));
                         cli.push(this.testAbort ? "+X" : "-X");
                     }
                     break;
-    
+
                 case "testAbortCount":
                     ini.push("Test_Abort_Count=" + this.testAbortCount);
                     if(this.testAbort !== null)
@@ -3040,33 +3040,33 @@ class ImageOptions {
                     else
                         cli.push("+X" + this.testAbortCount);
                     break;
-    
+
                 case "userAbortCommand":
                     ini.push("User_Abort_Command=" + this.userAbortCommand);
                     break;
-    
+
                 case "userAbortReturn":
                     ini.push("User_Abort_Return=" + this.userAbortReturn);
                     break;
-    
+
                 case "verbose":
                     ini.push("Verbose=" + (this.verbose ? "true" : "false"));
                     cli.push(this.verbose ? "+V" : "-V");
                     break;
-    
+
                 case "videoMode":
                     ini.push("Video_Mode=" + this.videoMode);
                     if(this.palette === null)
                         cli.push((this.videoMode ? "+" : "-") + "D" + this.videoMode);
                     break;
-    
+
                 case "warningConsole":
                     if(this.allConsole === null)
                         ini.push("Warning_Console=" + this.warningConsole);
                     if(this.warningFile === null && this.allFile === null)
                         cli.push((this.warningConsole ? "+" : "-") + "GW");
                     break;
-    
+
                 case "warningFile":
                     if(this.optAllFile === null) {
                         ini.push("Warning_File=" + this.warningFile);
@@ -3077,41 +3077,41 @@ class ImageOptions {
                         );
                     }
                     break;
-    
+
                 case "warningLevel":
                     ini.push("Warning_Level=" + this.warningLevel);
                     cli.push("+WL" + this.warningLevel);
                     break;
-    
+
                 case "width":
                     if(this.width === null || this.height === null)
                         throw new RangeError("[ImageOptions]: Both width and height must be defined.");
                     ini.push("Width=" + this.width);
                     cli.push("+W" + this.width);
                     break;
-    
+
                 case "workThreads":
                     ini.push("Work_Threads=" + this.workThreads);
                     cli.push("+WT" + this.workThreads);
                     break;
-    
+
                 default:
                     break;
-    
+
             }
         }
-    
+
         cli.unshift(this.exePath === null ? "povray" : this.exePath);
-    
+
         return { ini: ini.join("\n"), cli: cli.join(" ") };
-    
+
     }
 
 
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
@@ -3124,7 +3124,7 @@ exports.ImageOptions = ImageOptions;
 
 
 //==============================================================================
-// The Primitive class implements parameters and functionality that are shared 
+// The Primitive class implements parameters and functionality that are shared
 // across (nearly) all geometric primitives.
 //==============================================================================
 
@@ -3162,14 +3162,14 @@ class Primitive {
 
         this.active = true;
         cpov.initObject(this, options);
-        
+
         // Create serial number and register with cpov object
-        
+
         cpov.objectSerial++;
         this._serial = cpov.objectSerial;
         cpov.serialMap[this.serial] = this;
-        
-        
+
+
         // Required parameters //
 
         this.requiredParams = [ ];
@@ -3500,7 +3500,7 @@ class Primitive {
     }
 
     //--------------------------------------------------------------------------
-    
+
     get parent() {
         if(typeof this._parent == "function")
             return this._parent(cpov, this);
@@ -3509,7 +3509,7 @@ class Primitive {
         else
             return this._parent;
     }
-    
+
     set parent(val) {
         cpov.error("fatal", "parent is read-only.", "Primitive", this);
     }
@@ -3554,7 +3554,7 @@ class Primitive {
     }
 
     //--------------------------------------------------------------------------
-    
+
     get serial() {
         if(typeof this._serial == "function")
             return this._serial(cpov, this);
@@ -3563,7 +3563,7 @@ class Primitive {
         else
             return this._serial;
     }
-    
+
     set serial(val) {
         cpov.error("fatal", "The serial attribute is read-only.", "Primitive", this);
     }
@@ -3595,9 +3595,9 @@ class Primitive {
     // copy the baseTransform to transform and then perform the requested
     // action.
     //--------------------------------------------------------------------------
-    
+
     get transform() {
-    
+
         if(this._transform === null) {
             if(this._baseTransform === null) {
                 return null;
@@ -3605,7 +3605,7 @@ class Primitive {
                 this.transform = this.baseTransform;
             }
         }
-    
+
         if(typeof this._transform == "function")
             return this._transform();
         else if(typeof this._transform == "string" && this._transform.substr(0, 1) == "&")
@@ -3613,33 +3613,33 @@ class Primitive {
         else
             return this._transform;
     }
-    
+
     set transform(val) {
-    
+
         if(val === null) {                       // essentially the same as transformReset
             this._transform = null;
             return;
         }
-    
+
         if(cpov.isSDLFunction(val)) {     // can't do math with SDL functions
             cpov.error("fatal", "transform cannot be an SDL function.", "Primitive.transform", this);
             return;
         }
-    
+
         if(typeof val == "function") {
             val = val();
         }
-    
+
         if(!cpov.isClass(val, "Matrix"))
             cpov.error("fatal", "transform value must evaluate to a Matrix.", "Primitive.transform", this);
-    
+
         if(this._baseTransform === null) {
             this._baseTransform = val;
             this._transform = val;
         } else {
             this._transform = val.xMatrix(this.transform);
         }
-    
+
     }
 
 
@@ -3651,29 +3651,29 @@ class Primitive {
 
         var newObj = new Primitive();
 
-        newObj.active           = this.active;          
-        newObj.baseTransform    = this.baseTransform;   
-        newObj.boundedBy        = this.boundedBy;       
-        newObj.clippedBy        = this.clippedBy;       
+        newObj.active           = this.active;
+        newObj.baseTransform    = this.baseTransform;
+        newObj.boundedBy        = this.boundedBy;
+        newObj.clippedBy        = this.clippedBy;
         newObj.doubleIlluminate = this.doubleIlluminate;
-        newObj.finish           = this.finish;          
-        newObj.frameBegin       = this.frameBegin;      
-        newObj.frameEnd         = this.frameEnd;        
-        newObj.hollow           = this.hollow;          
-        newObj.id               = this.id;              
-        newObj.interior         = this.interior;        
-        newObj.inverse          = this.inverse;         
-        newObj.material         = this.material;        
-        newObj.noImage          = this.noImage;         
-        newObj.noRadiosity      = this.noRadiosity;     
-        newObj.noReflection     = this.noReflection;    
-        newObj.noShadow         = this.noShadow;        
-        newObj.parent           = this.parent;          
-        newObj.photons          = this.photons;         
-        newObj.radiosity        = this.radiosity;       
-        newObj.serial           = this.serial;          
-        newObj.texture          = this.texture;         
-        newObj.transform        = this.transform;       
+        newObj.finish           = this.finish;
+        newObj.frameBegin       = this.frameBegin;
+        newObj.frameEnd         = this.frameEnd;
+        newObj.hollow           = this.hollow;
+        newObj.id               = this.id;
+        newObj.interior         = this.interior;
+        newObj.inverse          = this.inverse;
+        newObj.material         = this.material;
+        newObj.noImage          = this.noImage;
+        newObj.noRadiosity      = this.noRadiosity;
+        newObj.noReflection     = this.noReflection;
+        newObj.noShadow         = this.noShadow;
+        newObj.parent           = this.parent;
+        newObj.photons          = this.photons;
+        newObj.radiosity        = this.radiosity;
+        newObj.serial           = this.serial;
+        newObj.texture          = this.texture;
+        newObj.transform        = this.transform;
 
         return newObj;
     }
@@ -3682,7 +3682,7 @@ class Primitive {
     // Called on contained objects to aim their parent attributes at the container.
     // Intelligently handles singletons, arrays, and functions.
     //------------------------------------------------------------------------------
-    
+
     adopt(val) {
         if(Array.isArray(val)) {
             for(var i = 0; i < val.length; i++) {
@@ -3692,7 +3692,7 @@ class Primitive {
             this._adopt(val);
         }
     }
-    
+
     _adopt(val) {
         if(cpov.isSDLFunction(val)) {
             cpov.error("warn", "Cannot mark an SDL function as a child. You're on your own here.", "Primitive.adopt", this);
@@ -3743,7 +3743,7 @@ class Primitive {
     // Called on formerly contained objects to set their parent attribute to null.
     // Intelligently handles singletons, arrays, and functions.
     //------------------------------------------------------------------------------
-    
+
     disown(val) {
         if(Array.isArray(val)) {
             for(var i = 0; i < val.length; i++) {
@@ -3753,7 +3753,7 @@ class Primitive {
             this._adopt(val);
         }
     }
-    
+
     _adopt(val) {
         if(cpov.isSDLFunction(val)) {
             cpov.error("warn", "Cannot mark an SDL function as a child. You're on your own here.", "Primitive.adopt", this);
@@ -3766,41 +3766,41 @@ class Primitive {
 
 
     //--------------------------------------------------------------------------
-    
+
     get finite() {
     	return this._finite;
     }
-    
+
     set finite(val) {
     	cpov.error("fatal", "finite is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
     }
-    
+
     //--------------------------------------------------------------------------
-    
+
     get solid() {
     	return this._solid;
     }
-    
+
     set solid(val) {
     	cpov.error("fatal", "solid is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
     }
-    
+
     //--------------------------------------------------------------------------
-    
+
     get csg() {
     	return this._csg;
     }
-    
+
     set csg(val) {
     	cpov.error("fatal", "csg is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
     }
-    
+
     //--------------------------------------------------------------------------
-    
+
     get pseudo() {
     	return this._pseudo;
     }
-    
+
     set pseudo(val) {
     	cpov.error("fatal", "pseudo is a read-only property.", Object.getPrototypeOf(this).constructor.name, this);
     }
@@ -3812,16 +3812,16 @@ class Primitive {
     // no required params for the Primitive base class; this is meant to be
     // called from the subclasses.
     //--------------------------------------------------------------------------
-    
+
     requiredParameterTest(requiredParams) {
         var missing = [ ];
-    
+
         for(var i = 0; i < requiredParams.length; i++) {
             if(this[requiredParams[i]] === null) {
                 missing.push(requiredParams[i]);
             }
         }
-    
+
         if(missing.length > 0) {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
@@ -3837,7 +3837,7 @@ class Primitive {
     //--------------------------------------------------------------------------
     // Copies current SDL representation of the object to the snapshot buffer.
     //--------------------------------------------------------------------------
-    
+
     snapshot() {
         cpov.snapshots.push(this.toSDL());
     }
@@ -3846,21 +3846,21 @@ class Primitive {
     //--------------------------------------------------------------------------
     // Generates SDL from parameters.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-    
+
         var pad = cpov.tab(stops);
         var content = [ ];
-    
+
         if(this.clippedBy !== null) {
             content.push(pad + "clipped_by {");
             content.push(this.clippedBy.toSDL(stops + 1));
             content.push(pad + "}");
         }
-    
+
         if(this.boundedBy !== null) {
             content.push(pad + "bounded_by {");
             if(this.boundedBy === this.clippedBy) {
@@ -3870,41 +3870,41 @@ class Primitive {
             }
             content.push(pad + "}");
         }
-    
+
         if(this.noShadow)
             content.push(pad + "no_shadow");
-    
+
         if(this.noImage)
             content.push(pad + "no_image");
-    
+
         if(this.noRadiosity)
             content.push(pad + "no_radiosity");
-    
+
         if(this.noReflection)
             content.push(pad + "no_reflection");
-    
+
         if(this.inverse)
             content.push(pad + "inverse");
-    
+
         if(this.double_illuminate)
             content.push(pad + "double_illuminate");
-    
+
         if(this.hollow)
             content.push(pad + "hollow");
-    
+
         // TODO: interior
         // TODO: interior_texture
         // TODO: texture (real)
-    
+
         if(this.texture)
             content.push(pad + this.texture);
-    
+
         // TODO: photons
         // TODO: radiosity
-    
+
         if(this.transform !== undefined && this.transform !== null)
             content.push(this.transform.toSDL(stops));
-    
+
         return content.join("\n");
     }
 
@@ -3912,7 +3912,7 @@ class Primitive {
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
@@ -3938,7 +3938,7 @@ class BicubicPatch extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
+        this._finite = true;
         this._solid  = false;
         this._csg    = false;
         this._pseudo = false;
@@ -4065,10 +4065,10 @@ class BicubicPatch extends Primitive {
         var newObj = new BicubicPatch();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.type     = this.type;    
-        newObj.points   = this.points;  
-        newObj.uSteps   = this.uSteps;  
-        newObj.vSteps   = this.vSteps;  
+        newObj.type     = this.type;
+        newObj.points   = this.points;
+        newObj.uSteps   = this.uSteps;
+        newObj.vSteps   = this.vSteps;
         newObj.flatness = this.flatness;
 
         return newObj;
@@ -4078,18 +4078,18 @@ class BicubicPatch extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "bicubic_patch {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + "type " + this.type);
     	if(this.uSteps !== null)
@@ -4098,7 +4098,7 @@ class BicubicPatch extends Primitive {
     		content.push(ppad + "v_steps " + this.vSteps);
     	if(this.flatness !== null)
     		content.push(ppad + "flatness " + this.flatness);
-    
+
     	for(var row = 0; row < 4; row++) {
     		var items = [ ];
     		for(var col = 0; col < 4; col++) {
@@ -4106,12 +4106,12 @@ class BicubicPatch extends Primitive {
     		}
     		content.push(ppad + items.join(", ") + (row != 3 ? "," : ""));
     	}
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -4136,8 +4136,8 @@ class Blob extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -4245,9 +4245,9 @@ class Blob extends Primitive {
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.components = this.components;
-        newObj.threshold  = this.threshold; 
-        newObj.sturm      = this.sturm;     
-        newObj.hierarchy  = this.hierarchy; 
+        newObj.threshold  = this.threshold;
+        newObj.sturm      = this.sturm;
+        newObj.hierarchy  = this.hierarchy;
 
         return newObj;
     }
@@ -4256,18 +4256,18 @@ class Blob extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "blob {" + (this.id === null ? "" : " // " + this.id));
     	if(this.threshold !== null)
     		content.push(ppad + "threshold " + this.threshold);
@@ -4283,12 +4283,12 @@ class Blob extends Primitive {
     		content.push(ppad + "hierarchy " + (this.hierarchy ? "on" : "off"));
     	if(this.sturm)
     		content.push(ppad + "sturm");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -4313,8 +4313,8 @@ class Box extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -4390,26 +4390,26 @@ class Box extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "box {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL());
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -4434,10 +4434,10 @@ class Camera extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
+        this._finite = true;
         this._solid  = false;
         this._csg    = false;
-        this._pseudo = true; 
+        this._pseudo = true;
 
         // Mutable properties //
 
@@ -4781,22 +4781,22 @@ class Camera extends Primitive {
         var newObj = new Camera();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.type         = this.type;        
-        newObj.angle        = this.angle;       
-        newObj.aperture     = this.aperture;    
-        newObj.blurSamples  = this.blurSamples; 
-        newObj.bokeh        = this.bokeh;       
-        newObj.confidence   = this.confidence;  
+        newObj.type         = this.type;
+        newObj.angle        = this.angle;
+        newObj.aperture     = this.aperture;
+        newObj.blurSamples  = this.blurSamples;
+        newObj.bokeh        = this.bokeh;
+        newObj.confidence   = this.confidence;
         newObj.cylinderType = this.cylinderType;
-        newObj.direction    = this.direction;   
-        newObj.focalPoint   = this.focalPoint;  
-        newObj.location     = this.location;    
-        newObj.lookAt       = this.lookAt;      
-        newObj.right        = this.right;       
-        newObj.sky          = this.sky;         
-        newObj.up           = this.up;          
-        newObj.variance     = this.variance;    
-        newObj.vertAngle    = this.vertAngle;   
+        newObj.direction    = this.direction;
+        newObj.focalPoint   = this.focalPoint;
+        newObj.location     = this.location;
+        newObj.lookAt       = this.lookAt;
+        newObj.right        = this.right;
+        newObj.sky          = this.sky;
+        newObj.up           = this.up;
+        newObj.variance     = this.variance;
+        newObj.vertAngle    = this.vertAngle;
 
         return newObj;
     }
@@ -4808,23 +4808,23 @@ class Camera extends Primitive {
     // Cameras are not true primitives, but CephaloPOV makes sure they act like
     // one in most instances. (TODO)
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         if(this.type == "cylinder" && this.cylinderType === null)
             cpov.error("type is cylinder but cylinderType is undefined.", "Camera.toSDL", this);
         else if(this.type == "orthographic" && (this.angle === null || (this.up === null && this.right === null)))
             cpov.error("The orthographic camera requires either angle or up and right to be defined.", "Camera.toSDL", this);
-    
+
         content.push(pad + "camera {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + cpov.cameraTypes[this.type] + (this.type == "cylinder" ? " " + this.cylinderType : ""));
         if(this.location !== null)
@@ -4852,12 +4852,12 @@ class Camera extends Primitive {
             if(this.bokeh !== null)
                 content.push(ppad + "bokeh " + this.bokeh);
         }
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -4882,8 +4882,8 @@ class Cone extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -5009,11 +5009,11 @@ class Cone extends Primitive {
         var newObj = new Cone();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.basePoint  = this.basePoint; 
+        newObj.basePoint  = this.basePoint;
         newObj.baseRadius = this.baseRadius;
-        newObj.capPoint   = this.capPoint;  
-        newObj.capRadius  = this.capRadius; 
-        newObj.open       = this.open;      
+        newObj.capPoint   = this.capPoint;
+        newObj.capRadius  = this.capRadius;
+        newObj.open       = this.open;
 
         return newObj;
     }
@@ -5022,28 +5022,28 @@ class Cone extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "cone {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.basePoint.toSDL() + ", " + this.baseRadius + ", " + this.capPoint.toSDL() + ", " + this.capRadius);
         if(this.open)
             content.push(pad + "    open");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -5069,7 +5069,7 @@ class Cubic extends Primitive {
         // Immutable properties //
 
         this._finite = false;
-        this._solid  = true; 
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -5136,7 +5136,7 @@ class Cubic extends Primitive {
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
+        newObj.sturm        = this.sturm;
 
         return newObj;
     }
@@ -5145,28 +5145,28 @@ class Cubic extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "cubic {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + "< " + this.coefficients.join(", ") + " >");
         if(this.sturm)
             content.push(ppad + "sturm");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -5191,8 +5191,8 @@ class Cylinder extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -5319,10 +5319,10 @@ class Cylinder extends Primitive {
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.basePoint = this.basePoint;
-        newObj.capPoint  = this.capPoint; 
-        newObj.radius    = this.radius;   
-        newObj.open      = this.open;     
-        newObj.strength  = this.strength; 
+        newObj.capPoint  = this.capPoint;
+        newObj.radius    = this.radius;
+        newObj.open      = this.open;
+        newObj.strength  = this.strength;
 
         return newObj;
     }
@@ -5331,18 +5331,18 @@ class Cylinder extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0, component = false) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         if(component) {
             return pad + "cylinder { " + this.basePoint.toSDL() + ", "
                 + this.capPoint.toSDL() + ", " + this.radius
@@ -5357,7 +5357,7 @@ class Cylinder extends Primitive {
             if(superSDL)
                 content.push(superSDL);
             content.push(pad + "}");
-            
+
             return content.join("\n");
         }
     }
@@ -5451,7 +5451,7 @@ class Difference extends Primitive {
         var newObj = new Difference();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.positiveComponent  = this.positiveComponent; 
+        newObj.positiveComponent  = this.positiveComponent;
         newObj.negativeComponents = this.negativeComponents;
 
         return newObj;
@@ -5461,29 +5461,29 @@ class Difference extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "difference {" + (this.id === null ? "" : " // " + this.id));
         content.push(this.positiveComponent.toSDL(stops + 1));
         for(var i = 0; i < this.negativeComponents.length; i++) {
             content.push(this.negativeComponents[i].toSDL(stops + 1));
         }
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -5508,7 +5508,7 @@ class Disc extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
+        this._finite = true;
         this._solid  = false;
         this._csg    = false;
         this._pseudo = false;
@@ -5615,9 +5615,9 @@ class Disc extends Primitive {
         var newObj = new Disc();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.center     = this.center;    
-        newObj.normal     = this.normal;    
-        newObj.radius     = this.radius;    
+        newObj.center     = this.center;
+        newObj.normal     = this.normal;
+        newObj.radius     = this.radius;
         newObj.holeRadius = this.holeRadius;
 
         return newObj;
@@ -5627,26 +5627,26 @@ class Disc extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "disc {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.center.toSDL() + ", " + this.normal.toSDL() + ", " + this.radius + (this.holeRadius === null ? "" : (", " + this.holeRadius)));
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -5671,8 +5671,8 @@ class HeightField extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -5838,12 +5838,12 @@ class HeightField extends Primitive {
         var newObj = new HeightField();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.source        = this.source;       
-        newObj.hfType        = this.hfType;       
-        newObj.smooth        = this.smooth;       
-        newObj.waterLevel    = this.waterLevel;   
-        newObj.hierarchy     = this.hierarchy;    
-        newObj.gamma         = this.gamma;        
+        newObj.source        = this.source;
+        newObj.hfType        = this.hfType;
+        newObj.smooth        = this.smooth;
+        newObj.waterLevel    = this.waterLevel;
+        newObj.hierarchy     = this.hierarchy;
+        newObj.gamma         = this.gamma;
         newObj.premultiplied = this.premultiplied;
 
         return newObj;
@@ -5853,18 +5853,18 @@ class HeightField extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "height_field {" + (this.id === null ? "" : " // " + this.id));
         if(cpov.isSDLFunction(this.source)) {
             content.push(pad + "    " + this.userFunc);
@@ -5877,17 +5877,17 @@ class HeightField extends Primitive {
                 + (this.premultiplied === null ? "" : "premultiplied " + (this.premultiplied ? "on" : "off"))
             );
         }
-    
+
         if(this.smooth === true)
             content.push(pad + "    smooth");
         if(this.waterLevel !== null)
             content.push(pad + "    water_level " + this.waterLevel);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -5968,28 +5968,28 @@ class Intersection extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "intersection {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.components.length; i++) {
             content.push(this.components[i].toSDL(stops + 1));
         }
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -6014,8 +6014,8 @@ class IsoSurface extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -6201,14 +6201,14 @@ class IsoSurface extends Primitive {
         var newObj = new IsoSurface();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.source      = this.source;     
+        newObj.source      = this.source;
         newObj.containedBy = this.containedBy;
-        newObj.threshold   = this.threshold;  
-        newObj.accuracy    = this.accuracy;   
+        newObj.threshold   = this.threshold;
+        newObj.accuracy    = this.accuracy;
         newObj.maxGradient = this.maxGradient;
-        newObj.evaluate    = this.evaluate;   
-        newObj.open        = this.open;       
-        newObj.maxTrace    = this.maxTrace;   
+        newObj.evaluate    = this.evaluate;
+        newObj.open        = this.open;
+        newObj.maxTrace    = this.maxTrace;
 
         return newObj;
     }
@@ -6217,18 +6217,18 @@ class IsoSurface extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "isosurface {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.source);
         if(this.containedBy !== null)
@@ -6245,12 +6245,12 @@ class IsoSurface extends Primitive {
             content.push(ppad + "open");
         if(this.maxTrace !== null)
             content.push(ppad + "max_trace " + this.maxTrace);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -6275,8 +6275,8 @@ class JuliaFractal extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -6442,13 +6442,13 @@ class JuliaFractal extends Primitive {
         var newObj = new JuliaFractal();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.type       = this.type;      
+        newObj.type       = this.type;
         newObj.juliaParam = this.juliaParam;
-        newObj.power      = this.power;     
-        newObj.maxIter    = this.maxIter;   
-        newObj.precision  = this.precision; 
-        newObj.slice      = this.slice;     
-        newObj.distance   = this.distance;  
+        newObj.power      = this.power;
+        newObj.maxIter    = this.maxIter;
+        newObj.precision  = this.precision;
+        newObj.slice      = this.slice;
+        newObj.distance   = this.distance;
 
         return newObj;
     }
@@ -6457,23 +6457,23 @@ class JuliaFractal extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
     	if((this.slice !== null && this.distance === null) || (this.slice === null && this.distance !== null))
     		cpov.error("fatal", "To use either, both slice and distance must be specified together.", "JuliaFractal.toSDL", this);
-    
+
     	var parts = this.type.split(/:/);
-    
+
         content.push(pad + "julia_fractal {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.juliaParam.toSDL());
     	content.push(ppad + parts[0]); // algebra type
@@ -6492,12 +6492,12 @@ class JuliaFractal extends Primitive {
     		content.push(ppad + "precision " + this.precision);
     	if(this.slice !== null)
     		content.push(ppad + "slice " + this.slice.toSDL() + ", " + this.distance);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -6522,8 +6522,8 @@ class Lathe extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -6609,9 +6609,9 @@ class Lathe extends Primitive {
         var newObj = new Lathe();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.type   = this.type;  
+        newObj.type   = this.type;
         newObj.points = this.points;
-        newObj.sturm  = this.sturm; 
+        newObj.sturm  = this.sturm;
 
         return newObj;
     }
@@ -6620,36 +6620,36 @@ class Lathe extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
     	// TODO: add check for correct minimum number of points
-    
+
         content.push(pad + "lathe {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + cpov.splineTypes[this.type]);
-    
+
     	var items = [ ];
     	for(var i = 0; i < this.points.length; i++)
     		items.push(this.points[i].toSDL());
     	content.push(ppad + items.length + ", " + items.join(", "));
-    
+
     	if(this.sturm)
     		content.push(ppad + "sturm");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -6674,7 +6674,7 @@ class LightSource extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
+        this._finite = true;
         this._solid  = false;
         this._csg    = false;
         this._pseudo = false;
@@ -7203,31 +7203,31 @@ class LightSource extends Primitive {
         var newObj = new LightSource();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.location         = this.location;        
-        newObj.color            = this.color;           
-        newObj.adaptive         = this.adaptive;        
+        newObj.location         = this.location;
+        newObj.color            = this.color;
+        newObj.adaptive         = this.adaptive;
         newObj.areaIllumination = this.areaIllumination;
-        newObj.areaLight        = this.areaLight;       
-        newObj.axis1            = this.axis1;           
-        newObj.axis2            = this.axis2;           
-        newObj.circular         = this.circular;        
-        newObj.fadeDistance     = this.fadeDistance;    
-        newObj.fadePower        = this.fadePower;       
-        newObj.falloff          = this.falloff;         
-        newObj.jitter           = this.jitter;          
-        newObj.looksLike        = this.looksLike;       
+        newObj.areaLight        = this.areaLight;
+        newObj.axis1            = this.axis1;
+        newObj.axis2            = this.axis2;
+        newObj.circular         = this.circular;
+        newObj.fadeDistance     = this.fadeDistance;
+        newObj.fadePower        = this.fadePower;
+        newObj.falloff          = this.falloff;
+        newObj.jitter           = this.jitter;
+        newObj.looksLike        = this.looksLike;
         newObj.mediaAttenuation = this.mediaAttenuation;
         newObj.mediaInteraction = this.mediaInteraction;
-        newObj.orient           = this.orient;          
-        newObj.parallel         = this.parallel;        
-        newObj.pointAt          = this.pointAt;         
+        newObj.orient           = this.orient;
+        newObj.parallel         = this.parallel;
+        newObj.pointAt          = this.pointAt;
         newObj.projectedThrough = this.projectedThrough;
-        newObj.radius           = this.radius;          
-        newObj.shadowless       = this.shadowless;      
-        newObj.size1            = this.size1;           
-        newObj.size2            = this.size2;           
-        newObj.tightness        = this.tightness;       
-        newObj.type             = this.type;            
+        newObj.radius           = this.radius;
+        newObj.shadowless       = this.shadowless;
+        newObj.size1            = this.size1;
+        newObj.size2            = this.size2;
+        newObj.tightness        = this.tightness;
+        newObj.type             = this.type;
 
         return newObj;
     }
@@ -7236,24 +7236,24 @@ class LightSource extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "light_source {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.location.toSDL() + ", " + this.color.toSDL());
-    
+
         if(this.type !== null && this.type != "point")
             content.push(ppad + this.type);
-    
+
         if(this.type == "spotlight" || this.type == "cylindrical") {
             if(this.pointAt === null)
                 throw new Error("[Light]: pointAt must be specified.");
@@ -7264,13 +7264,13 @@ class LightSource extends Primitive {
             if(this.tightness !== null)
                 content.push(ppad + "tightness " + this.tightness);
         }
-    
+
         if(this.parallel)
             content.push(ppad + "parallel");
-    
+
         if(this.pointAt !== null)
             content.push(ppad + "point_at " + this.pointAt.toSDL());
-    
+
         if(this.areaLight) {
             if(this.axis1 === null || this.axis2 === null || this.size1 === null || this.size2 === null)
                 throw new Error("[Light]: Area lights require axis1, axis2, size1, and size2 to be defined.");
@@ -7285,25 +7285,25 @@ class LightSource extends Primitive {
             if(this.orient)
                 content.push(ppad + "orient");
         }
-    
+
         if(this.shadowless)
             content.push(ppad + "shadowless");
-    
+
         // TODO: looksLike
         // TODO: projectedThrough
-    
+
         if(this.fadeDistance !== null)
             content.push(ppad + "fade_distance " + this.fadeDistance);
         if(this.fadePower !== null)
             content.push(ppad + "fade_power " + this.fadePower);
-    
+
         if(this.mediaInteraction === false)
             content.push(ppad + "media_interaction off");
         if(this.mediaAttenuation === true)
             content.push(ppad + "media_attenuation on");
-    
+
         content.push(pad + "}");
-    
+
         return content.join("\n");
     }
 
@@ -7384,28 +7384,28 @@ class Merge extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "merge {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.components.length; i++) {
             content.push(this.components[i].toSDL(stops + 1));
         }
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -7430,7 +7430,7 @@ class Mesh extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
+        this._finite = true;
         this._solid  = false;
         this._csg    = false;
         this._pseudo = false;
@@ -7517,9 +7517,9 @@ class Mesh extends Primitive {
         var newObj = new Mesh();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.triangles    = this.triangles;   
+        newObj.triangles    = this.triangles;
         newObj.insideVector = this.insideVector;
-        newObj.hierarchy    = this.hierarchy;   
+        newObj.hierarchy    = this.hierarchy;
 
         return newObj;
     }
@@ -7528,18 +7528,18 @@ class Mesh extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "mesh {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.triangles.length; i++) {
             content.push(this.triangles[i].toSDL(1));
@@ -7548,12 +7548,12 @@ class Mesh extends Primitive {
             content.push(ppad + "inside_vector " + this.insideVector.toSDL());
     	if(this.hierarchy !== null)
     		content.push(ppad + "hierarchy " + (this.hierarchy ? "on" : "off"));
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -7578,8 +7578,8 @@ class Ovus extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -7646,7 +7646,7 @@ class Ovus extends Primitive {
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.bottomRadius = this.bottomRadius;
-        newObj.topRadius    = this.topRadius;   
+        newObj.topRadius    = this.topRadius;
 
         return newObj;
     }
@@ -7655,26 +7655,26 @@ class Ovus extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "ovus {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.bottomRadius + ", " + this.topRadius);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -7699,8 +7699,8 @@ class Parametric extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -7967,18 +7967,18 @@ class Parametric extends Primitive {
         var newObj = new Parametric();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.funcX           = this.funcX;          
-        newObj.funcY           = this.funcY;          
-        newObj.funcZ           = this.funcZ;          
-        newObj.uv1             = this.uv1;            
-        newObj.uv2             = this.uv2;            
-        newObj.containedBy     = this.containedBy;    
-        newObj.maxGradient     = this.maxGradient;    
-        newObj.accuracy        = this.accuracy;       
+        newObj.funcX           = this.funcX;
+        newObj.funcY           = this.funcY;
+        newObj.funcZ           = this.funcZ;
+        newObj.uv1             = this.uv1;
+        newObj.uv2             = this.uv2;
+        newObj.containedBy     = this.containedBy;
+        newObj.maxGradient     = this.maxGradient;
+        newObj.accuracy        = this.accuracy;
         newObj.precomputeDepth = this.precomputeDepth;
-        newObj.precomputeX     = this.precomputeX;    
-        newObj.precomputeY     = this.precomputeY;    
-        newObj.precomputeZ     = this.precomputeZ;    
+        newObj.precomputeX     = this.precomputeX;
+        newObj.precomputeY     = this.precomputeY;
+        newObj.precomputeZ     = this.precomputeZ;
 
         return newObj;
     }
@@ -7987,24 +7987,24 @@ class Parametric extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
     	content.push(pad + "parametric {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.funcX);
         content.push(ppad + this.funcY);
         content.push(ppad + this.funcZ);
         content.push(ppad + this.uv1.toSDL() + ", " + this.uv2.toSDL());
-    
+
         if(this.containedBy)
             content.push(ppad + "contained_by {\n" + this.containedBy.toSDL(stops + 2) + "\n" + ppad + "}");
         if(this.maxGradient !== null)
@@ -8025,14 +8025,14 @@ class Parametric extends Primitive {
                 cpov.error("fatal", "When using precomputeDepth, at least one of precomputeX, precomputeY, or precomputeZ must also be defined.", "Parametric.toSDL", this);
             }
         }
-    
+
     	var superSDL = super.toSDL(stops + 1);
     	if(superSDL)
     	    content.push(superSDL);
     	content.push(pad + "}");
-    	
+
     	return content.join("\n");
-    
+
     }
 
 
@@ -8057,7 +8057,7 @@ class Plane extends Primitive {
         // Immutable properties //
 
         this._finite = false;
-        this._solid  = true; 
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -8123,7 +8123,7 @@ class Plane extends Primitive {
         var newObj = new Plane();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.normal   = this.normal;  
+        newObj.normal   = this.normal;
         newObj.distance = this.distance;
 
         return newObj;
@@ -8133,28 +8133,28 @@ class Plane extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
     	content.push(pad + "plane {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.normal.toSDL() + ", " + this.distance);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
-    
+
     }
 
 
@@ -8179,7 +8179,7 @@ class Poly extends Primitive {
         // Immutable properties //
 
         this._finite = false;
-        this._solid  = true; 
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -8265,9 +8265,9 @@ class Poly extends Primitive {
         var newObj = new Poly();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.order        = this.order;       
+        newObj.order        = this.order;
         newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
+        newObj.sturm        = this.sturm;
 
         return newObj;
     }
@@ -8276,36 +8276,36 @@ class Poly extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
-    
+
         if(this.coefficients.length != ccnt)
             cpov.error("fatal", "A Poly of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Poly.toSDL", this);
-    
+
     	content.push(pad + "poly {" + (this.id === null ? "" : " // " + this.id));
         var items = this.coefficients.slice(0);
     	content.push(ppad + this.order + ", < " + items.join(", ") + " >");
         if(this.sturm)
             content.push(ppad + "sturm")
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
-    
+
     }
 
 
@@ -8329,7 +8329,7 @@ class Polygon extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
+        this._finite = true;
         this._solid  = false;
         this._csg    = false;
         this._pseudo = false;
@@ -8385,21 +8385,21 @@ class Polygon extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
       	if(this.points.length < 3)
     		cpov.error("fatal", "points must contain at least three VectorXY.", "Polygon.toSDL", this);
-    
+
     	content.push(pad + "polygon {" + (this.id === null ? "" : " // " + this.id));
     	content.push(ppad + this.points.length + ",");
         var items = [ ];
@@ -8407,14 +8407,14 @@ class Polygon extends Primitive {
             items.push(this.points[i].toSDL());
         }
         content.push(ppad + items.join(", "));
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
-    
+
     }
 
 
@@ -8439,7 +8439,7 @@ class Polynomial extends Primitive {
         // Immutable properties //
 
         this._finite = false;
-        this._solid  = true; 
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -8525,9 +8525,9 @@ class Polynomial extends Primitive {
         var newObj = new Polynomial();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.order        = this.order;       
+        newObj.order        = this.order;
         newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
+        newObj.sturm        = this.sturm;
 
         return newObj;
     }
@@ -8536,23 +8536,23 @@ class Polynomial extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
-    
+
         if(this.coefficients.length != ccnt)
             cpov.error("fatal", "A Polynomial of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Polynomial.toSDL", this);
-    
+
     	content.push(pad + "polynomial {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.order + ", ");
         var coefficients = [ ];
@@ -8561,14 +8561,14 @@ class Polynomial extends Primitive {
         content.push(coefficients.join(",\n"))
         if(this.sturm)
             content.push(ppad + "sturm")
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
-    
+
     }
 
 
@@ -8592,8 +8592,8 @@ class Prism extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -8739,12 +8739,12 @@ class Prism extends Primitive {
         var newObj = new Prism();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.type    = this.type;   
+        newObj.type    = this.type;
         newObj.height1 = this.height1;
         newObj.height2 = this.height2;
-        newObj.points  = this.points; 
-        newObj.open    = this.open;   
-        newObj.sturm   = this.sturm;  
+        newObj.points  = this.points;
+        newObj.open    = this.open;
+        newObj.sturm   = this.sturm;
 
         return newObj;
     }
@@ -8753,21 +8753,21 @@ class Prism extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
       	if(this.points.length < 3)
     		cpov.error("fatal", "points must contain at least three VectorXY.", "Prism.toSDL", this);
-    
+
     	content.push(pad + "prism {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + cpov.prismTypes[this.type]);
         content.push(ppad + this.height1 + ", " + this.height2 + ", " + this.points.length + ",");
@@ -8780,14 +8780,14 @@ class Prism extends Primitive {
             content.push(ppad + "open");
         if(this.sturm)
             content.push(ppad + "sturm");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
-    
+
     }
 
 
@@ -8812,7 +8812,7 @@ class Quadric extends Primitive {
         // Immutable properties //
 
         this._finite = false;
-        this._solid  = true; 
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -8867,18 +8867,18 @@ class Quadric extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "quadric {" + (this.id === null ? "" : " // " + this.id));
         content.push(
             ppad
@@ -8887,12 +8887,12 @@ class Quadric extends Primitive {
             + "<" + this.coefficients[6] + ", " + this.coefficients[7] + ", " + this.coefficients[8] + ">, "
             + this.coefficients[9]
         );
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -8918,7 +8918,7 @@ class Quartic extends Primitive {
         // Immutable properties //
 
         this._finite = false;
-        this._solid  = true; 
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -8985,7 +8985,7 @@ class Quartic extends Primitive {
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.coefficients = this.coefficients;
-        newObj.sturm        = this.sturm;       
+        newObj.sturm        = this.sturm;
 
         return newObj;
     }
@@ -8994,28 +8994,28 @@ class Quartic extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "quartic {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + "< " + this.coefficients.join(", ") + " >");
         if(this.sturm)
             content.push(ppad + "sturm");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -9040,8 +9040,8 @@ class Sphere extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -9127,8 +9127,8 @@ class Sphere extends Primitive {
         var newObj = new Sphere();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.center   = this.center;  
-        newObj.radius   = this.radius;  
+        newObj.center   = this.center;
+        newObj.radius   = this.radius;
         newObj.strength = this.strength;
 
         return newObj;
@@ -9140,18 +9140,18 @@ class Sphere extends Primitive {
     // method take an optional second argument, component, which will emit code
     // appropriate for a Blob component if true.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0, component = false) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         if(component) {
             return pad + "sphere { " + this.center.toSDL() + ", " + this.radius
                 + (this.strength !== null ? ", " + this.strength : "")
@@ -9163,10 +9163,10 @@ class Sphere extends Primitive {
             if(superSDL)
                 content.push(superSDL);
             content.push(pad + "}");
-            
+
             return content.join("\n");
         }
-    
+
     }
 
 
@@ -9190,8 +9190,8 @@ class SphereSweep extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -9278,8 +9278,8 @@ class SphereSweep extends Primitive {
         var newObj = new SphereSweep();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.type      = this.type;     
-        newObj.spheres   = this.spheres;  
+        newObj.type      = this.type;
+        newObj.spheres   = this.spheres;
         newObj.tolerance = this.tolerance;
 
         return newObj;
@@ -9289,23 +9289,23 @@ class SphereSweep extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         if(this.type == "linearSpline" && this.spheres.length < 2)
             cpov.error("fatal", "A linear spline requires at least two spheres.", "SphereSweep.toSDL", this);
         else if((this.type == "bezierSpline" || this.type == "cubicSpline") && this.spheres.length < 4)
             cpov.error("fatal", "Bezier and cubic splines require at least four spheres.", "SphereSweep.toSDL", this);
-    
+
         content.push(pad + "sphere_sweep {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + cpov.internalSplineTypes[this.type]);
         content.push(ppad + this.spheres.length + ",");
@@ -9316,12 +9316,12 @@ class SphereSweep extends Primitive {
         content.push(items.join(",\n"));
         if(this.tolerance !== null)
             content.push(ppad + "tolerance " + this.tolerance);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -9346,8 +9346,8 @@ class Superellipsoid extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -9423,26 +9423,26 @@ class Superellipsoid extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "superellipsoid {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + "<" + this.e + ", " + this.n + ">");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -9467,8 +9467,8 @@ class Sor extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -9555,8 +9555,8 @@ class Sor extends Primitive {
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.points = this.points;
-        newObj.open   = this.open;  
-        newObj.sturm  = this.sturm; 
+        newObj.open   = this.open;
+        newObj.sturm  = this.sturm;
 
         return newObj;
     }
@@ -9565,18 +9565,18 @@ class Sor extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "sor {" + (this.id === null ? "" : " // " + this.id));
         var items = [ this.points.length ];
         for(var i = 0; i < this.points.length; i++)
@@ -9586,12 +9586,12 @@ class Sor extends Primitive {
             content.push(ppad + "open");
         if(this.sturm)
             content.push(ppad + "sturm");
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -9616,8 +9616,8 @@ class Text extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -9743,11 +9743,11 @@ class Text extends Primitive {
         var newObj = new Text();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.fontType    = this.fontType;   
-        newObj.font        = this.font;       
+        newObj.fontType    = this.fontType;
+        newObj.font        = this.font;
         newObj.displayText = this.displayText;
-        newObj.thickness   = this.thickness;  
-        newObj.offset      = this.offset;     
+        newObj.thickness   = this.thickness;
+        newObj.offset      = this.offset;
 
         return newObj;
     }
@@ -9756,29 +9756,29 @@ class Text extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         // TODO: Handle escaping of double quotes in this.displayText
-    
+
         content.push(pad + "text {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.fontType + " " + "\"" + this.font + "\" \"" + this.displayText.replace(/"/g, "\\\"") + "\"");
         content.push(ppad + this.thickness + ", " + this.offset);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -9803,8 +9803,8 @@ class Torus extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
-        this._solid  = true; 
+        this._finite = true;
+        this._solid  = true;
         this._csg    = false;
         this._pseudo = false;
 
@@ -9892,7 +9892,7 @@ class Torus extends Primitive {
         newObj.copyCommonFrom(this); // copy Primitive attributes
         newObj.majorRadius = this.majorRadius;
         newObj.minorRadius = this.minorRadius;
-        newObj.sturm       = this.sturm;      
+        newObj.sturm       = this.sturm;
 
         return newObj;
     }
@@ -9901,28 +9901,28 @@ class Torus extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "torus {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.majorRadius + ", " + this.minorRadius);
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
-    
+
     }
 
 
@@ -9933,7 +9933,7 @@ exports.Torus = Torus;
 
 
 //==============================================================================
-// The Triangle class combines POV-Ray's triangle and smooth_triangle based on 
+// The Triangle class combines POV-Ray's triangle and smooth_triangle based on
 // the supplied parameters and the smooth flag.
 //==============================================================================
 
@@ -9947,7 +9947,7 @@ class Triangle extends Primitive {
 
         // Immutable properties //
 
-        this._finite = true; 
+        this._finite = true;
         this._solid  = false;
         this._csg    = false;
         this._pseudo = false;
@@ -10134,13 +10134,13 @@ class Triangle extends Primitive {
         var newObj = new Triangle();
 
         newObj.copyCommonFrom(this); // copy Primitive attributes
-        newObj.corner1  = this.corner1; 
-        newObj.corner2  = this.corner2; 
-        newObj.corner3  = this.corner3; 
-        newObj.smooth   = this.smooth;  
-        newObj.normal1  = this.normal1; 
-        newObj.normal2  = this.normal2; 
-        newObj.normal3  = this.normal3; 
+        newObj.corner1  = this.corner1;
+        newObj.corner2  = this.corner2;
+        newObj.corner3  = this.corner3;
+        newObj.smooth   = this.smooth;
+        newObj.normal1  = this.normal1;
+        newObj.normal2  = this.normal2;
+        newObj.normal3  = this.normal3;
         newObj.textures = this.textures;
 
         return newObj;
@@ -10154,45 +10154,45 @@ class Triangle extends Primitive {
     // smooth_triangle types. If smooth is true and normal1-3 are defined, it
     // will output a smooth_triangle. Otherwise a triangle is output.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         if(!this.smooth) {
-    
+
             content.push(pad + "triangle {" + (this.id === null ? "" : " // " + this.id));
             content.push(ppad + this.corner1.toSDL() + ", " + this.corner2.toSDL() + ", " + this.corner3.toSDL());
-    
+
         } else {
-    
+
             if(this.normal1 === null)
                 cpov.error("fatal", "normal1 is undefined.", "Triangle.toSDL", this);
             if(this.normal2 === null)
                 cpov.error("fatal", "normal2 is undefined.", "Triangle.toSDL", this);
             if(this.normal3 === null)
                 cpov.error("fatal", "normal3 is undefined.", "Triangle.toSDL", this);
-    
+
             content.push(pad + "smooth_triangle {");
             content.push(ppad
                 + this.corner1.toSDL() + ", " + this.normal1.toSDL() + ", "
                 + this.corner2.toSDL() + ", " + this.normal2.toSDL() + ", "
                 + this.corner3.toSDL() + ", " + this.normal3.toSDL());
-    
+
         }
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -10294,29 +10294,29 @@ class Union extends Primitive {
     // Produces SDL representation of the object. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         if(!this.active)
             return "";
-        
+
         super.requiredParameterTest(this.requiredParams);
-        
+
         var pad     = cpov.tab(stops);
         var ppad    = cpov.tab(stops + 1);
         var content = [ ];
-    
+
         content.push(pad + "union {" + (this.id === null ? "" : " // " + this.id));
         for(var i = 0; i < this.components.length; i++) {
             content.push(this.components[i].toSDL(stops + 1));
         }
         content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
-    
+
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)
             content.push(superSDL);
         content.push(pad + "}");
-        
+
         return content.join("\n");
     }
 
@@ -10346,7 +10346,7 @@ class VectorXY {
             if(cpov.isClass(options, "VectorXY")) { // copy
                 options = { x: options.x, y: options.y };
             }
-        
+
             if(Array.isArray(options)) {
                 if(options.length != 2) {
                     cpov.error("fatal", "When initializing a VectorXY with an array, it must have exactly two values.", "VectorXY.constructor", this);
@@ -10362,8 +10362,8 @@ class VectorXY {
                 cpov.error("fatal", "Invalid initializer.", "VectorXY.constructor", this);
             }
         }
-        
-        
+
+
         // Required parameters //
 
         this.requiredParams = [ "x", "y" ];
@@ -10426,13 +10426,13 @@ class VectorXY {
     // Produces a copy of the vector. Does so quickly by directly copying
     // "private" members instead of going through get/set methods.
     //--------------------------------------------------------------------------
-    
+
     copy() {
-    
+
         var that = new VectorXY();
         that._x = this._x;
         that._y = this._y;
-    
+
         return that;
     }
 
@@ -10441,11 +10441,11 @@ class VectorXY {
     // Produces SDL representation of the vector. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         this.requiredParameterTest(this.requiredParams);
-    
+
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ">";
     }
 
@@ -10456,16 +10456,16 @@ class VectorXY {
     // no required params for the Primitive base class; this is meant to be
     // called from the subclasses.
     //--------------------------------------------------------------------------
-    
+
     requiredParameterTest(requiredParams) {
         var missing = [ ];
-    
+
         for(var i = 0; i < requiredParams.length; i++) {
             if(this[requiredParams[i]] === null) {
                 missing.push(requiredParams[i]);
             }
         }
-    
+
         if(missing.length > 0) {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
@@ -10476,7 +10476,7 @@ class VectorXY {
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
@@ -10507,7 +10507,7 @@ class VectorUV {
             if(cpov.isClass(options, "VectorUV")) { // copy
                 options = { u: options.u, v: options.v };
             }
-        
+
             if(Array.isArray(options)) {
                 if(options.length != 2) {
                     cpov.error("fatal", "When initializing a VectorUV with an array, it must have exactly two values.", "VectorUV.constructor", this);
@@ -10523,8 +10523,8 @@ class VectorUV {
                 cpov.error("fatal", "Invalid initializer.", "VectorUV.constructor", this);
             }
         }
-        
-        
+
+
         // Required parameters //
 
         this.requiredParams = [ "u", "v" ];
@@ -10587,13 +10587,13 @@ class VectorUV {
     // Produces a copy of the vector. Does so quickly by directly copying
     // "private" members instead of going through get/set methods.
     //--------------------------------------------------------------------------
-    
+
     copy() {
-    
+
         var that = new VectorUV();
         that._u = this._u;
         that._v = this._v;
-    
+
         return that;
     }
 
@@ -10602,11 +10602,11 @@ class VectorUV {
     // Produces SDL representation of the vector. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         this.requiredParameterTest(this.requiredParams);
-    
+
         return cpov.tab(stops) + "<" + this.u + ", " + this.v + ">";
     }
 
@@ -10617,16 +10617,16 @@ class VectorUV {
     // no required params for the Primitive base class; this is meant to be
     // called from the subclasses.
     //--------------------------------------------------------------------------
-    
+
     requiredParameterTest(requiredParams) {
         var missing = [ ];
-    
+
         for(var i = 0; i < requiredParams.length; i++) {
             if(this[requiredParams[i]] === null) {
                 missing.push(requiredParams[i]);
             }
         }
-    
+
         if(missing.length > 0) {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
@@ -10637,7 +10637,7 @@ class VectorUV {
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
@@ -10669,7 +10669,7 @@ class VectorXYZ {
             if(cpov.isClass(options, "VectorXYZ")) { // copy
                 options = { x: options.x, y: options.y, z: options.z };
             }
-        
+
             if(Array.isArray(options)) {
                 if(options.length != 3) {
                     cpov.error("fatal", "When initializing a VectorXYZ with an array, it must have exactly three values.", "VectorXYZ.constructor", this);
@@ -10686,8 +10686,8 @@ class VectorXYZ {
                 cpov.error("fatal", "Invalid initializer.", "VectorXYZ.constructor", this);
             }
         }
-        
-        
+
+
         // Required parameters //
 
         this.requiredParams = [ "x", "y", "z" ];
@@ -10770,14 +10770,14 @@ class VectorXYZ {
     // Produces a copy of the vector. Does so quickly by directly copying
     // "private" members instead of going through get/set methods.
     //--------------------------------------------------------------------------
-    
+
     copy() {
-    
+
         var that = new VectorXYZ();
         that._x = this._x;
         that._y = this._y;
         that._z = this._z;
-    
+
         return that;
     }
 
@@ -10786,11 +10786,11 @@ class VectorXYZ {
     // Produces SDL representation of the vector. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         this.requiredParameterTest(this.requiredParams);
-    
+
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ">";
     }
 
@@ -10801,16 +10801,16 @@ class VectorXYZ {
     // no required params for the Primitive base class; this is meant to be
     // called from the subclasses.
     //--------------------------------------------------------------------------
-    
+
     requiredParameterTest(requiredParams) {
         var missing = [ ];
-    
+
         for(var i = 0; i < requiredParams.length; i++) {
             if(this[requiredParams[i]] === null) {
                 missing.push(requiredParams[i]);
             }
         }
-    
+
         if(missing.length > 0) {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
@@ -10821,7 +10821,7 @@ class VectorXYZ {
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
@@ -10854,7 +10854,7 @@ class VectorXYZW {
             if(cpov.isClass(options, "VectorXYZW")) { // copy
                 options = { x: options.x, y: options.y, z: options.z, w: options.w };
             }
-        
+
             if(Array.isArray(options)) {
                 if(options.length != 4) {
                     cpov.error("fatal", "When initializing a VectorXYZW with an array, it must have exactly four values.", "VectorXYZW.constructor", this);
@@ -10872,8 +10872,8 @@ class VectorXYZW {
                 cpov.error("fatal", "Invalid initializer.", "VectorXYZW.constructor", this);
             }
         }
-        
-        
+
+
         // Required parameters //
 
         this.requiredParams = [ "x", "y", "z", "w" ];
@@ -10976,15 +10976,15 @@ class VectorXYZW {
     // Produces a copy of the vector. Does so quickly by directly copying
     // "private" members instead of going through get/set methods.
     //--------------------------------------------------------------------------
-    
+
     copy() {
-    
+
         var that = new VectorXYZW();
         that._x = this._x;
         that._y = this._y;
         that._z = this._z;
         that._w = this._w;
-    
+
         return that;
     }
 
@@ -10993,11 +10993,11 @@ class VectorXYZW {
     // Produces SDL representation of the vector. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         this.requiredParameterTest(this.requiredParams);
-    
+
         return cpov.tab(stops) + "<" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + ">";
     }
 
@@ -11008,16 +11008,16 @@ class VectorXYZW {
     // no required params for the Primitive base class; this is meant to be
     // called from the subclasses.
     //--------------------------------------------------------------------------
-    
+
     requiredParameterTest(requiredParams) {
         var missing = [ ];
-    
+
         for(var i = 0; i < requiredParams.length; i++) {
             if(this[requiredParams[i]] === null) {
                 missing.push(requiredParams[i]);
             }
         }
-    
+
         if(missing.length > 0) {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
@@ -11028,7 +11028,7 @@ class VectorXYZW {
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
@@ -11070,9 +11070,9 @@ class Color {
                     srgb: options.srgb === undefined ? null : options.srgb
                 };
             }
-        
+
             if(Array.isArray(options)) {
-        
+
                 if(options.length < 3 || options.length > 6) {
                     cpov.error("fatal", "When initializing a Color with an array, it must have three to six values.", "Color.constructor", this);
                 } else {
@@ -11086,19 +11086,19 @@ class Color {
                     if(options.length > 5)
                         this.srgb = options[5];
                 }
-        
+
             } else if(typeof options == "object") {
-        
+
                 if(options.r === undefined || options.g === undefined || options.b === undefined)
                     cpov.error("fatal", "When initializing a Color with an object, r, g, and b must be defined.", "Color.constructor", this);
                 cpov.initObject(this, options);
-        
+
             } else {
                 cpov.error("fatal", "Invalid initializer.", "Color.constructor", this);
             }
         }
-        
-        
+
+
         // Required parameters //
 
         this.requiredParams = [ "r", "g", "b" ];
@@ -11227,11 +11227,11 @@ class Color {
 
         var newObj = new Color();
 
-        newObj.r    = this.r;   
-        newObj.g    = this.g;   
-        newObj.b    = this.b;   
-        newObj.f    = this.f;   
-        newObj.t    = this.t;   
+        newObj.r    = this.r;
+        newObj.g    = this.g;
+        newObj.b    = this.b;
+        newObj.f    = this.f;
+        newObj.t    = this.t;
         newObj.srgb = this.srgb;
 
         return newObj;
@@ -11241,9 +11241,9 @@ class Color {
     // Produces a copy of the color. Does so quickly by directly copying
     // "private" members instead of going through get/set methods.
     //--------------------------------------------------------------------------
-    
+
     copy() {
-    
+
         var that = new Color();
         that._r    = this._r;
         that._g    = this._g;
@@ -11251,7 +11251,7 @@ class Color {
         that._f    = this._f;
         that._t    = this._t;
         that._srgb = this._srgb;
-    
+
         return that;
     }
 
@@ -11260,16 +11260,16 @@ class Color {
     // Produces SDL representation of the vector. Will terminate the program if
     // any necessary attributes are undefined.
     //--------------------------------------------------------------------------
-    
+
     toSDL(stops = 0) {
-    
+
         stops = cpov.tab(stops);
-    
+
         this.requiredParameterTest(this.requiredParams);
-    
+
         var form = (this.srgb ? "s" : "") + "rgb";
         var args = [this.r, this.g, this.b];
-    
+
         if(this.f) {
             form += "f";
             args.push(this.f);
@@ -11278,9 +11278,9 @@ class Color {
                 args.push(this.t);
             }
         }
-    
+
         return stops + form + " <" + args.join(", ") + ">";
-    
+
     }
 
 
@@ -11288,18 +11288,18 @@ class Color {
     // Produces a minimal RGB vector literal -- <0.5, 0.2, 1.0> -- as is needed in
     // globalSettings and other places.
     //------------------------------------------------------------------------------
-    
+
     toPlainRGBVector(stops = 0) {
-    
+
         stops = cpov.tab(stops);
-    
+
         if(this.r === null)
             cpov.error("fatal", "r is undefined.", "Color.toSDL", this);
         if(this.g === null)
             cpov.error("fatal", "g is undefined.", "Color.toSDL", this);
         if(this.b === null)
             cpov.error("fatal", "b is undefined.", "Color.toSDL", this);
-    
+
         return stops + " <" + this.r + ", " + this.g + ", " + this.b + ">";
     }
 
@@ -11310,16 +11310,16 @@ class Color {
     // no required params for the Primitive base class; this is meant to be
     // called from the subclasses.
     //--------------------------------------------------------------------------
-    
+
     requiredParameterTest(requiredParams) {
         var missing = [ ];
-    
+
         for(var i = 0; i < requiredParams.length; i++) {
             if(this[requiredParams[i]] === null) {
                 missing.push(requiredParams[i]);
             }
         }
-    
+
         if(missing.length > 0) {
             cpov.error("fatal", "Missing required parameters: " + missing.join(", ")
                 + ".", Object.getPrototypeOf(this).constructor.name + ".requiredParameterTest", this);
@@ -11330,7 +11330,7 @@ class Color {
     //------------------------------------------------------------------------------
     // Sets multiple attributes at once using an object.
     //------------------------------------------------------------------------------
-    
+
     xset(vals) {
     	cpov.initObject(this, vals);
     }
