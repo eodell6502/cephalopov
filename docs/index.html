@@ -1905,19 +1905,13 @@ obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));</div>
 
 <table class="illusBasic"><tr><td>
 
-<p>Remember way up at the top of this document when I said that not having to
-depend on the POV-Ray documentation was a goal that had not yet been achieved?
-Well, the <code>IsoSurface</code> is one of those cases where that goal is still
-especially aspirational. Go familiarize yourself with the official <a
-href="http://www.povray.org/documentation/3.7.0/t2_3.html#t2_3_3_3">IsoSurface</a>
-documentation and come back to see how it's implemented in CephaloPOV.</p>
-
 <p>Short of the dubious goal of writing a JavaScript-to-SDL compiler, complete
 independence from POV-Ray's Scene Description Language is not possible in a few
 cases. The <code>IsoSurface</code> object is one of these because its sole
 required attribute, <code>source</code>, is a function or functions written in
 SDL. It's worth the effort of understanding, however, because the definition of
-isosurfaces is one of POV-Ray's most powerful features.</p>
+isosurfaces is one of POV-Ray's most powerful features. For complete details, see the
+<a href="http://www.povray.org/documentation/3.7.0/r3_4.html#r3_4_5_1_6">POV-Ray docs</a>.</p>
 
 <p>In this example, we're just grabbing an example from the POV-Ray docs to serve
 as the <code>source</code> attribute. Don't forget to include the leading <code>'&'</code>
@@ -2235,15 +2229,50 @@ a wide variety of other shapes can be constructed with it.</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>Along with <code>IsoSurface</code>, the <code>Parametric</code> type is one of the
+places where CephaloPOV cannot shield you from the POV-Ray Scene Description Language, or
+at least a subset of it. However, also like <code>IsoSurface</code>, the <code>Parametric</code>
+type is one of POV-Ray's most powerful features, so it's well worth the effort of understanding
+the <a href="http://www.povray.org/documentation/3.7.0/r3_4.html#r3_4_5_1_10">POV-Ray docs</a> and a
+few online <a href="http://www.f-lohmueller.de/pov_tut/all_shapes/shapes570e.htm">tutorials</a> unless you're
+especially math-averse. (And if so, do you know where you are?)</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
+<p>The short version is that <code>Parametric</code> objects are hollow surfaces defined by three functions
+that map the UV-plane to explicit <i>xyz</i>-coordinates whereas <code>IsoSurface</code> objects are solid and
+have surfaces implicitly defined by a single function yielding a potential field. Ergo, in place of the single <code>source</code>
+attribute of the <code>IsoSurface</code>, a <code>Parametric</code> has an attribute for each of the three
+axes, <code>funcX</code>, <code>funcY</code>, and <code>funcZ</code>.</p>
+
+<div class='code'>var p2 = 2 * Math.PI;
+
+var obj = new Parametric({
+    funcX: "&function { 1.0 * (1 - 0.5 * v / pi) "
+        + "* sin(5 * v + 0.5 *pi) "
+        + "* (1 - cos(u)) + 0.2 * sin(5 * v + 0.5 * pi) }",
+    funcY: "&function { 8 * 0.5 * v / pi + 1.0 "
+        + "* (1 - 0.5 * v / pi) * sin(u) }",
+    funcZ: "&function { 1.0 * (1 - 0.5 * v / pi) "
+        + "* cos(5 * v + 0.5 * pi) "
+        + * (1 - cos(u)) + 0.2 * cos(5 * v + 0.5 * pi) }",
+    uv1: [0, 0],
+    uv2: [p2, p2],
+    accuracy: 0.0035,
+    precomputeDepth: 18,
+    precomputeX: true,
+    precomputeY: true,
+    precomputeZ: true,
+    maxGradient: 10,
+    containedBy: new Box({
+        corner1: [-p2, -p2, -p2],
+        corner2: [p2, 8/3 *p2, p2],
+    }),
+});
+obj.transform = new Matrix("scale", 0.4, 0.4, 0.4);
+obj.transform = new Matrix("rotate", 0, 90, 0);</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/parametric_basic.png">
 
 </td></tr></table>
 
@@ -3114,6 +3143,7 @@ replaced before the first public beta are quite high.</pre>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
+        <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Make it <i>much</i> easier to apply transformations.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement/Test</td><td>Turn <code>imageOptions.includeHeader</code> into an array to allow multiple headers.</td></tr>
         <tr><td class='pending'>pending</td><td>Implement</td><td>Document the various spline types.</td></tr>
@@ -3129,7 +3159,6 @@ replaced before the first public beta are quite high.</pre>
 
             <!-- finite solids -->
 
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Parametric</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>SphereSweep</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Text</code> description and example</td></tr>
 

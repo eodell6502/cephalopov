@@ -1,13 +1,14 @@
 //==========================================================================
 // POV FILE: ./docs/src/superellipsoid_basic.pov
-// FRAME: 16
-// CLOCK TIME: 16
+// FRAME: 17
+// CLOCK TIME: 17
 //==========================================================================
 
-#version 3.7
+#version 3.7;
 
 global_settings {
     ambient_light  <0.25, 0.25, 0.25>
+    assumed_gamma 1
 }
 
 union {

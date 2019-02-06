@@ -1,13 +1,14 @@
 //==========================================================================
 // POV FILE: ./docs/src/sor_basic.pov
-// FRAME: 14
-// CLOCK TIME: 14
+// FRAME: 15
+// CLOCK TIME: 15
 //==========================================================================
 
-#version 3.7
+#version 3.7;
 
 global_settings {
     ambient_light  <0.25, 0.25, 0.25>
+    assumed_gamma 1
 }
 
 union {

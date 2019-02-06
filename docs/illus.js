@@ -15,6 +15,7 @@ function main(cpov) {
     cpov.imageOptions.antialiasDepth = 9;
     cpov.imageOptions.includeHeader = "functions.inc";
 	cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];
+    cpov.globalSettings.assumedGamma = 1.0;
 
     var yellow = "texture { pigment { color <1, 1, 0> }}";
 	var red = "texture { pigment { color <1, 0, 0> }}";
@@ -222,6 +223,38 @@ function main(cpov) {
 	    topRadius: 1,
         texture: yellow
     });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Plane //----------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/parametric_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var p2 = 2 * Math.PI;
+
+	var obj = new Parametric({
+        funcX: "&function { 1.0 * (1 - 0.5 * v / pi) * sin(5 * v + 0.5 *pi) * (1 - cos(u)) + 0.2 * sin(5 * v + 0.5 * pi) }",
+        funcY: "&function { 8 * 0.5 * v / pi + 1.0 * (1 - 0.5 * v / pi) * sin(u) }",
+        funcZ: "&function { 1.0 * (1 - 0.5 * v / pi ) * cos(5 * v + 0.5 * pi) * (1 - cos(u)) + 0.2 * cos(5 * v + 0.5 * pi) }",
+        uv1: [0, 0],
+        uv2: [p2, p2],
+        accuracy: 0.0035,
+        precomputeDepth: 18,
+        precomputeX: true,
+        precomputeY: true,
+        precomputeZ: true,
+        maxGradient: 10,
+        containedBy: new Box({
+            corner1: [-p2, -p2, -p2],
+            corner2: [p2, 8/3 *p2, p2],
+        }),
+        texture: yellow
+    });
+    obj.transform = new Matrix("scale", 0.4, 0.4, 0.4);
+    obj.transform = new Matrix("rotate", 0, 90, 0);
     obj.snapshot();
 
     cpov.outputFrame();

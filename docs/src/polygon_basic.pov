@@ -1,13 +1,14 @@
 //==========================================================================
 // POV FILE: ./docs/src/polygon_basic.pov
-// FRAME: 12
-// CLOCK TIME: 12
+// FRAME: 13
+// CLOCK TIME: 13
 //==========================================================================
 
-#version 3.7
+#version 3.7;
 
 global_settings {
     ambient_light  <0.25, 0.25, 0.25>
+    assumed_gamma 1
 }
 
 union {

@@ -1,13 +1,14 @@
 //==========================================================================
 // POV FILE: ./docs/src/plane_basic.pov
-// FRAME: 11
-// CLOCK TIME: 11
+// FRAME: 12
+// CLOCK TIME: 12
 //==========================================================================
 
-#version 3.7
+#version 3.7;
 
 global_settings {
     ambient_light  <0.25, 0.25, 0.25>
+    assumed_gamma 1
 }
 
 union {

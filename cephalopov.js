@@ -772,7 +772,7 @@ cpov.outputFrame = function() {
 			+ "// FRAME: " + cpov.currentFrame + "\n"
 			+ "// CLOCK TIME: " + cpov.clockTime + "\n"
 			+ "//==========================================================================\n\n"
-			+ "#version 3.7\n\n"
+			+ "#version 3.7;\n\n"
 		);
 
 		if(cpov.preamble) {

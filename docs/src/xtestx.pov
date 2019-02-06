@@ -1,13 +1,14 @@
 //==========================================================================
 // POV FILE: ./docs/src/xtestx.pov
-// FRAME: 18
-// CLOCK TIME: 18
+// FRAME: 19
+// CLOCK TIME: 19
 //==========================================================================
 
-#version 3.7
+#version 3.7;
 
 global_settings {
     ambient_light  <0.25, 0.25, 0.25>
+    assumed_gamma 1
 }
 
 union {

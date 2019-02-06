@@ -132,7 +132,7 @@ function main() {
         cpov.endFrame = endFrame;
     }
 
-    cpov.globalSettings = new GlobalSettings();
+    cpov.globalSettings = new GlobalSettings({ assumedGamma: 1.0 });
     cpov.imageOptions   = new ImageOptions();
 
     // FIXME: We really want to be *much* more selective than this.

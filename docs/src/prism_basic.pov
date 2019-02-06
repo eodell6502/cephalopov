@@ -1,13 +1,14 @@
 //==========================================================================
 // POV FILE: ./docs/src/prism_basic.pov
-// FRAME: 13
-// CLOCK TIME: 13
+// FRAME: 14
+// CLOCK TIME: 14
 //==========================================================================
 
-#version 3.7
+#version 3.7;
 
 global_settings {
     ambient_light  <0.25, 0.25, 0.25>
+    assumed_gamma 1
 }
 
 union {
