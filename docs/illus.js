@@ -228,7 +228,7 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Plane //----------------------------------------------------------------
+	// Parametric //-----------------------------------------------------------
 
 	cpov.outputBase = "./docs/src/parametric_basic";
     stage[0].snapshot(); stage[1].snapshot();
@@ -346,6 +346,27 @@ function main(cpov) {
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Sphere({ center: [0,0,0], radius: 2, texture: yellow});
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+    // SphereSweep //-----------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/spheresweep_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new SphereSweep({
+        spheres: [
+            new Sphere({ center: [-1, 1, -1], radius: 0.25 }),
+            new Sphere({ center: [-1, 1, 1],  radius: 0.5  }),
+            new Sphere({ center: [1, -1, 1],  radius: 0.25 }),
+            new Sphere({ center: [1, -1, -1], radius: 0.5  }),
+            new Sphere({ center: [-1, 1, -1], radius: 0.25 }),
+        ],
+        type: "linearSpline",
+        texture: yellow
+    });
     obj.snapshot();
 
     cpov.outputFrame();

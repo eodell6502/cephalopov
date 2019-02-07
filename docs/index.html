@@ -2671,15 +2671,29 @@ the field strength.
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>A <code>SphereSweep</code> is a shape consisting of the space occupied by a
+sphere moving along a spline. The radius of the sphere can vary over time. It is
+defined by an array of spheres, with a minimum of two for a linear spline
+or four spheres for a bezier spline or a cubic spline.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
+<p>For the sake of brevity, the example consists of a linear spline arranged in
+a rectangle with two different sizes of spheres acting as control points, but
+you can construct arbitrarily complicated shapes with a <code>SphereSweep</code>.</p>
+
+<div class='code'>var obj = new SphereSweep({
+    spheres: [
+        new Sphere({ center: [-1, 1, -1], radius: 0.25 }),
+        new Sphere({ center: [-1, 1, 1],  radius: 0.5  }),
+        new Sphere({ center: [1, -1, 1],  radius: 0.25 }),
+        new Sphere({ center: [1, -1, -1], radius: 0.5  }),
+        new Sphere({ center: [-1, 1, -1], radius: 0.25 }),
+    ],
+    type: "linearSpline"
 });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/spheresweep_basic.png">
 
 </td></tr></table>
 

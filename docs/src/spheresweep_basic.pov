@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/superellipsoid_basic.pov
-// FRAME: 18
-// CLOCK TIME: 18
+// POV FILE: ./docs/src/spheresweep_basic.pov
+// FRAME: 17
+// CLOCK TIME: 17
 //==========================================================================
 
 #version 3.7;
@@ -206,7 +206,13 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-superellipsoid {
-    <0.25, 0.25>
+sphere_sweep {
+    linear_spline
+    5,
+    <-1, 1, -1>, 0.25,
+    <-1, 1, 1>, 0.5,
+    <1, -1, 1>, 0.25,
+    <1, -1, -1>, 0.5,
+    <-1, 1, -1>, 0.25
     texture { pigment { color <1, 1, 0> }}
 }
