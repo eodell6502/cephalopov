@@ -2760,15 +2760,30 @@ have the same value, the result is a cube with rounded edges. When both values r
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Text</code> type is very similar to the <code>Prism</code> type,
+the main difference being that instead of specifying a spline yourself, you hand
+it a string and the pathname of a TrueType font or a TrueType collection from
+which the first font will be used.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
+<p>Fonts, even professionally-designed ones, vary in their obedience to
+conventions, so some experimentation is often needed. In most cases, individual
+characters will be one unit high. The extruded text will begin at the origin and
+run in the +x direction along the x-axis. The front of the text will be parallel
+to the xy-plane and the extrusion will go in the +z direction.</p>
+
+<div class='code'>var obj = new Text({
+    displayText: "CPOV",
+    font: "BebasNeueBold.ttf",
+    fontType: "ttf",
+    thickness: 0.25,
+    offset: 0
+});
+obj.transform = new Matrix("scale", 2, 2, 2);
+obj.transform = new Matrix("translate", 0, 0, -1);</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/text_basic.png">
 
 </td></tr></table>
 
@@ -3173,7 +3188,6 @@ replaced before the first public beta are quite high.</pre>
 
             <!-- finite solids -->
 
-            <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>SphereSweep</code> description and example</td></tr>
             <tr><td class='pending'>pending</td><td>Implement/Test</td><td class='subtask'><code>Text</code> description and example</td></tr>
 
             <!-- finite patches -->

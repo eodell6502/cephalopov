@@ -1359,7 +1359,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isFloat(val)",
                 err:   "offset must be a float.",
-                desc:  "If defined, specifies extra space to be placed between characters.",
+                desc:  "Specifies extra space to be placed between characters, 0 for none.",
                 tname: "float"
             }
         ],

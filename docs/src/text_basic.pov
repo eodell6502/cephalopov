@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/xtestx.pov
-// FRAME: 21
-// CLOCK TIME: 21
+// POV FILE: ./docs/src/text_basic.pov
+// FRAME: 19
+// CLOCK TIME: 19
 //==========================================================================
 
 #version 3.7;
@@ -206,8 +206,10 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-box {
-    <1, 1, 1>, <-1, -1, -1>
+text {
+    ttf "BebasNeueBold.ttf" "CPOV"
+    0.25, 0
+    
     texture { pigment { color <1, 1, 0> }}
-    matrix <1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0>
+    matrix <2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -2>
 }
