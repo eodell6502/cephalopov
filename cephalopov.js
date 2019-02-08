@@ -923,7 +923,7 @@ cpov.round = function(n, d) {
 //==============================================================================
 
 cpov.endAnimation = function() {
-	cpov.error("info", "Animation terminated at request of user program.", "cpov.endAnimation");
+	cpov.error("fatal", "Animation terminated at request of user program.", "cpov.endAnimation");
 }
 
 

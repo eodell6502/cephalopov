@@ -3192,179 +3192,356 @@ the time to familiarize yourself with them.</p>
 
 <div class="fsig">cpov.arrayToTextList(<i>items</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Used in error messages and the auto-generated parts of the
+documentation, this function takes an array of strings and returns a string in
+which they are delimited by commas and the conjunction "or". For example,
+<code>["one", "two", "three"]</code> becomes <code>"one, two, or
+three"</code>.</p>
 
 <div class="fsig">cpov.convertToVector(<i>type</i>, <i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Setter methods in CephaloPOV objects that accept types
+<code>VectorXY</code>, <code>VectorUV</code>, <code>VectorXYZ</code>,
+<code>VectorXYZW</code>, or <code>Color</code> will also accept bare arrays
+just like the constructors for those classes. This is not coincidentally accomplished by
+passing <code>val</code> to the constructor for <code>type</code> and
+returning the result. Validation of <code>val</code> is left to the class'
+constructor and setter methods.</p>
 
 <div class="fsig">cpov.convertToVectorArray(<i>type</i>, <i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">This is just the array version of
+<code>cpov.convertToVector</code>, where <code>val</code> is an array of numeric
+arrays instead of a single array. Returns the an array of objects of the
+specified <code>type</code>.</p>
 
 <div class="fsig">cpov.deg2rad(<i>deg</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Converts the value of <code>deg</code> from degrees to radians
+and returns the result.</p>
 
 <div class="fsig">cpov.endAnimation()</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">When called by the user program, this method terminates the
+animation loop. If a frame is in progress when it is called, it will not be
+output, so it is normally called after file output.</p>
 
 <div class="fsig">cpov.error(<i>level</i>, <i>message</i>, <i>location</i> = "CEPHALOPOV", <i>obj</i> = null)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Outputs an error <code>message</code> using pretty colors if
+supported by the terminal. The <code>level</code> argument may be one of
+<code>"fatal"</code>, <code>"warn"</code>, <code>"info"</code>, or
+<code>"debug"</code>. If <code>level</code> is <code>"fatal"</code>, the program
+terminates immediately unless <code>cpov.debug</code> is greater than
+<code>1</code>. (This is useful for debugging when working on CephaloPOV
+itself.) All other error levels simply emit an error message. This will appear
+on the terminal for <code>"warn"</code>, <code>"info"</code>, and
+<code>"debug"</code> at <code>cpov.verbosity</code> levels of <code>1</code>,
+<code>2</code>, and <code>3</code>, respectively. In all cases, the error will
+also be written to <code>cpov.debugLog</code> if initialized.</p>
+
+<p class='fdesc'>The error message is prefixed with the <code>location</code>
+where the error occurred, usually a class and method name, and the object <code>serial</code>
+and <code>id</code>, if any, are appended to the end of the line.</p>
 
 <div class="fsig">cpov.indentTextBlock(<i>block</i>, <i>stops</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Takes a <code>block</code> of text in the form of a single
+string with embedded newlines and prefaces each line with the specified number
+of tab <code>stops</code>, returning the result. This function is heavily used
+in code generation.</p>
 
 <div class="fsig">cpov.inheritsFrom(<i>val</i>, <i>classname</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns a boolean indicating whether object <code>val</code>
+is an instance of <code>classname</code>.</p>
 
 <div class="fsig">cpov.initObject(<i>obj</i>, <i>vals</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Standard initialization routine for most objects. Attempts to
+assign the values in <code>vals</code>, a simple JavaScript <code>Object</code>
+to the CephaloPOV object <code>obj</code>. Attributes that do not exist in
+<code>obj</code> will be ignored, and the setter methods of <code>obj</code> may
+throw a fatal error if the values fail whatever validation is applied to them.
+This routine is used for objects without an explicitly defined
+<code>conBlock</code>.</p>
 
 <div class="fsig">cpov.isArrayOfBaseClass(<i>val</i>, <i>classname</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is an array of
+objects of any class inheriting from base class <code>classname</code> with
+<code>min</code> to <code>max</code> elements, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isArrayOfClass(<i>val</i>, <i>classname</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is an array of
+objects of class <code>classname</code> with <code>min</code> to
+<code>max</code> elements, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isArrayOfFloats(<i>val</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is an array of
+floats (i.e., type <code>Number</code>) with <code>min</code> to
+<code>max</code> elements, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isArrayOfInts(<i>val</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is an array of
+integers with <code>min</code> to <code>max</code> elements, <code>false</code>
+otherwise. See <code>cpov.isInt</code> for what constitutes an integer in
+JavaScript's int-less type system.</p>
 
 <div class="fsig">cpov.isArrayOfNonEmptyStrings(<i>val</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc"><p class="fdesc">Returns <code>true</code> if <code>val</code>
+is an array of non-empty <code>String</code>s with <code>min</code> to
+<code>max</code> elements, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isArrayOfStrings(<i>val</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc"><p class="fdesc">Returns <code>true</code> if <code>val</code>
+is an array of <code>String</code>s with <code>min</code> to <code>max</code>
+elements, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isArrayOfSubclass(<i>val</i>, <i>classname</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is a member of a
+class inheriting from <code>classname</code>, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isBetween(<i>val</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>min</code> &lt;
+<code>val</code> &gt; <code>max</code>, <code>false</code> otherwise. See
+also <code>cpov.isWithin</code>.</p>
 
 <div class="fsig">cpov.isBoolean(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is of type
+<code>boolean</code>, <code>false</code> otherwise. Note that it is the type
+of <code>val</code> that is being tested for, not its literal boolean value.</p>
 
 <div class="fsig">cpov.isChar(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is of type
+<code>String</code> with a length of <code>1</code>, <code>false</code> otherwise. JavaScript
+of course does not have a <code>char</code> type; we're just emulating one for
+POV-Ray's sake using single-character strings.</p>
 
 <div class="fsig">cpov.isClass(<i>val</i>, <i>classname</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is a member of
+class <code>classname</code>, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isFloat(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns a boolean indicating whether <code>val</code> is a
+<code>Number</code>. It is so named because POV-Ray makes a distinction between
+floats and ints, and hopefully JavaScript will eventually be able to make the
+same distinction.</p>
 
 <div class="fsig">cpov.isInArray(<i>val</i>, <i>array</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> appears as an
+element of <code>array</code>, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isInt(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is an integer,
+which for the purposes of JavaScript's lack of true integers means that the type
+of <code>val</code> is <code>Number</code> and it has no fractional part.
+Returns <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isKey(<i>val</i>, <i>object</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>object[val]</code> is
+defined, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isNonEmptyString(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is of type
+<code>String</code> and has a non-zero <code>length</code>, <code>false</code>
+otherwise.</p>
 
 <div class="fsig">cpov.isNull(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if </code>val</code> is
+<code>null</code>, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isNullOrFunction(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is
+<code>null</code>, an object of type <code>Function</code>, or an SDL function,
+i.e., a string beginning with <code>"&amp;"</code>. In all other cases, it returns
+<code>false</code>.</p>
 
 <div class="fsig">cpov.isNullOrJSFunction(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is
+<code>null</code> or an object of type <code>Function</code>. In all other
+cases, including SDL function strings, it returns <code>false</code>.</p>
 
 <div class="fsig">cpov.isPowerOfTwo(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is a power of
+two, <code>false</code> otherwise. As implemented, it only operates in the
+interval 2<sup>0</sup>&ndash;2<sup>64</sup>.</p>
 
 <div class="fsig">cpov.isSDLFunction(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is an SDL
+function, which for the purposes of CephaloPOV is a <code>String</code> beginning
+with an ampersand, i.e., <code>"&amp;"</code>.</p>
 
 <div class="fsig">cpov.isString(<i>val</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>val</code> is of type
+<code>String</code>, <code>false</code> otherwise.</p>
 
 <div class="fsig">cpov.isUnusedId(<i>val</i>, <i>obj</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">CephaloPOV objects may contain a user-supplied GUID. This
+function tests whether <code>val</code> is already in use with another object.
+If not, it adds <code>obj</code> to <code>cpov.idMap</code> with <code>val</code>
+as an index and returns <code>true</code>. If <code>val</code> is already in
+use, it returns <code>false</code> instead.</p>
 
 <div class="fsig">cpov.isUnusedSerial(<i>val</i>, <i>obj</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">In addition to optional user-supplied GUIDs (see <code>cpov.isUnusedId</code>, above),
+<em>every</em> CephaloPOV object has a unique serial number.  This
+function tests whether <code>val</code> is already in use with another object.
+If not, it adds <code>obj</code> to <code>cpov.serialMap</code> with <code>val</code>
+as an index and returns <code>true</code>. If <code>val</code> is already in
+use, it returns <code>false</code> instead.</p>
 
 <div class="fsig">cpov.isWithin(<i>val</i>, <i>min</i>, <i>max</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns <code>true</code> if <code>min</code> &le;
+<code>val</code> &ge; <code>max</code>, <code>false</code> otherwise. See
+also <code>cpov.isBetween</code>.</p>
 
 <div class="fsig">cpov.keysToTextList(<i>obj</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">This function converts the keys of <code>obj</code> to an array
+and wraps each element in single quotes before passing it to
+<code>cpov.arrayToTextList</code> to convert it into a comma-delimited string
+for use in the auto-generated parts of the documentation.</p>
 
 <div class="fsig">cpov.objectImport(<i>filename</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Takes a <code>filename</code>, which is currently always
+<code>snippets.js</code>, and parses it using specially formatted comments of
+the form</p>
+
+<div class='code fdesc'>// Keyname //-------------------------------------------------------------------</div>
+
+<p class='fdesc'>where the initial slash appears in the first column. The
+keyname is extracted and used to index the following text up to the next special
+comment. Although the examples you will see in <code>snippets.js</code> all have
+a line of trailing dashes, everything past the last slash is ignored. The spaces
+on either side of the keyname are mandatory, and the name itself cannot contain
+any whitespace.</p>
+
+<p class='fdesc'>The resulting object is returned and used for inserting the
+named blocks of code into the generated code, mostly in
+<code>classes.js</code>.</p>
 
 <div class="fsig">cpov.outputFrame()</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">The <code>cpov.outputFrame</code> method exists for user
+programs to call whenever they have finished setting up a scene. It takes no
+arguments, its behavior being determined mostly by
+<code>cpov.imageOptions</code> and <code>cpov.globalSettings</code>. That
+behavior is already described in great detail in <a
+href="#tocThe%20Animation%20Cycles">The Animation Cycles</a> and will not be
+repeated here.</p>
+
+<p class="fdesc">There is no return value. If any termination conditions are
+met, CephaloPOV will terminate with an exit code of <code>0</code>.</p>
 
 <div class="fsig">cpov.parseCLI(<i>optionMap</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Another function that will eventually migrate elsewhere,
+perhaps into its own package, <code>cpov.parseCLI</code> is a simple command
+line parser which implements the subset of the usual *nix conventions that
+CephaloPOV actually needs. It is passed a single argument, the
+<code>optionMap</code> object, thus:</p>
+
+<div class='code fdesc'>var optionMap = {
+    infile:     { short: "i", vals: [ ] },  // accumulates values
+    outfiles:   { short: "o", vals: [ ] },
+    preamble:   { short: "p", vals: [ ] },
+    sdlinclude: { short: "s", vals: [ ] },
+    verbose:    { short: "v", cnt: 0 },     // accumulates appearance counts
+    quietMode:  { short: "q", cnt: 0 },
+    debug:      { short: "d", cnt: 0 },
+    help:       { short: "h", cnt: 0 },
+}</div>
+
+<p class='fdesc'>The keys of the <code>optionMap</code> are the long options,
+the <code>short</code> members in the value objects are the short options. If a
+<code>vals</code> array is provided, arguments to the switch are accumulated
+therein. If a <code>cnt</code> counter is provided, the number of appearances of
+the switch are counted therein. You can't do both.</p>
+
+<p class='fdesc'>The <code>optionMap</code> is altered in place. If malformed
+user input is encountered, the program is terminated with a call to
+<code>cpov.error</code>.</p>
 
 <div class="fsig">cpov.primitiveDefIdentifier(<i>obj</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Given a CephaloPOV object, returns a unique string consisting
+of the form <code>#serial:id</code>. If the object does not have an <code>id</code>,
+both it and the interstitial colon are omitted. This is appended to the error
+messages emitted by <code>cpov.error</code>.</p>
 
 <div class="fsig">cpov.round(<i>n</i>, <i>d</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Takes a number, <code>n</code>, and returns it rounded
+to <code>d</code> decimal places.</p>
 
 <div class="fsig">cpov.runAnimation()</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">This is the main animation loop which repeats, calling
+<code>cpov.outputFrame()</code> repeatedly until one of its termination
+conditions are met or the user program calls <code>cpov.endAnimation</code>.</p>
 
 <div class="fsig">cpov.tab(<i>stops</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">One of the functions used in formatting generated code, both
+JavaScript and SDL, returns a string containing <code>4 * stops</code>
+spaces. Do not submit a pull request changing this to tabs or other numbers of
+spaces, or I will curse you and your progeny.</p>
 
 <div class="fsig">cpov.testStage(<i>type</i>, <i>size</i>)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">Returns an array of objects that serve as stages or backdrops
+for geometric objects generated for tests and illustrations in the CephaloPOV
+documentation.</p>
+
+<p class="fdesc">If <code>type</code> is given as <code>"corner"</code>, the generated
+stage consists of three adjacent faces of a cube around one corner in the same
+configuration as a corner reflector. The faces are <code>size</code> units square and
+the axes run through the centroids of each face. If <code>type</code> is <code>"triplane"</code>,
+then the stage takes the form of three translucent planes intersecting at the origin.</p>
+
+<p class="fdesc">Cameras and lighting are included in the stage. It is assumed that the final
+image will have a 1:1 aspect ratio, so you will have to adjust the camera
+parameters, particularly <code>camera.right</code>, if you want a different
+aspect ratio.</p>
+
+<p class="fdesc">It is highly likely that this function will be extended and
+changed in backwards-incompatible ways to serve the needs of documentation and
+testing, so if you want to use it outside of CephaloPOV itself, it's best to
+make your own copy of the function.</p>
 
 <div class="fsig">cpov.timerStats(<i>start</i>, <i>end</i>, <i>units</i> = 1)</div>
 
-<p class="fdesc">TODO</p>
+<p class="fdesc">This function is used to calculate performance statistics. It
+takes a <code>start</code> and <code>end</code> time and a number of work
+<code>units</code>, and it returns an object containing the elapsed time in
+milliseconds and seconds and the average times per unit. (The units are usually
+frames.)</p>
 
 
 <h2>Administrivia</h2>
@@ -3393,8 +3570,6 @@ the time to familiarize yourself with them.</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Default option in *Def codegen. Esp. splitUnion = true</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td class='subtask'>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
-
-        <tr><td class='working'>working</td><td>DOC</td><td>D1</td><td>Create an Internals section for CPOV developers.</td></tr>
 
         <!-- CSG operators -->
 
@@ -3432,6 +3607,7 @@ the time to familiarize yourself with them.</p>
             <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>LightSource</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>IMP</td><td></td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
 
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Camera</code></td></tr>
         <tr><td class='pending'>pending</td><td>IMP</td><td></td><td class='subtask'><code>Camera.normal</code></td></tr>
@@ -3475,36 +3651,37 @@ the time to familiarize yourself with them.</p>
         <tr>
             <th>Status</th>
             <th>Type</th>
+            <th>Pri</th>
             <th>Description</th>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>A large set of sample functions for the <code>IsoSurface</code> type.</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Additional splines, easing functions, esp. Catmull-Rom</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Atmospheric effects</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Direct support for ffmpeg/avisynth + Google speech API</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Eric Haines' table of object intersections, collision detection</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Extensive warn, info, debug output</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Geometric query system</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix (?)</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Interior</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Level-of-Detail</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Macro/Function generation, i.e., in separate file to use directly with POV-Ray</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Output frame range</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Parametric types</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Particle systems</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Polyhedron library</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Porting of functions in .inc files</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script execution on events</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Script to parse as much as possible of POV-Ray .inc files into JS/cpov</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Spline-builder UI</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Stereo pseudo-cameras</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Reorg: Script to pretty-print definition files</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>Turtle graphics</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>A large set of sample functions for the <code>IsoSurface</code> type.</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Additional splines, easing functions, esp. Catmull-Rom</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Atmospheric effects</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Direct support for ffmpeg/avisynth + Google speech API</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Eric Haines' table of object intersections, collision detection</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Extensive warn, info, debug output</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Geometric query system</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix (?)</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Interior</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Level-of-Detail</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Macro/Function generation, i.e., in separate file to use directly with POV-Ray</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Output frame range</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Parametric types</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Particle systems</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Polyhedron library</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Porting of functions in .inc files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Script execution on events</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Script to parse as much as possible of POV-Ray .inc files into JS/cpov</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Spline-builder UI</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Stereo pseudo-cameras</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Reorg: Script to pretty-print definition files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Turtle graphics</td></tr>
     </tbody>
 </table>
 
