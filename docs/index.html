@@ -664,7 +664,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>fatalFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray fatal error messages are written to <code>FATAL.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
 <tr><td>RW</td><td>N</td><td>fileGamma</td><td>float<br/>string</td><td>Sets the display target gamma for the output file. This may be given as either a float or the string <code>"sRGB"</code> (approx. 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>highReproducibility</td><td>boolean</td><td>If <code>true</code>, enables the experimental high reproducibility mode, which attempts to impose determinism on calculations in SMP environments. Currently only works with radiosity.</td></tr>
-<tr><td>RW</td><td>N</td><td>includeHeader</td><td>string</td><td>Specifies an SDL include file to be referenced in the SDL output.</td></tr>
+<tr><td>RW</td><td>N</td><td>includeHeaders</td><td>string</td><td>An array containing the names of SDL include files to be referenced in the SDL output.</td></tr>
 <tr><td>RW</td><td>N</td><td>inputFileName</td><td>string</td><td>Explicitly sets an input .pov file name.</td></tr>
 <tr><td>RW</td><td>N</td><td>jitter</td><td>boolean</td><td>If <code>true</code>, enables random jittering of antialiasing super-samples to minimize artifacts. This should only be used for static scenes, not animation.</td></tr>
 <tr><td>RW</td><td>N</td><td>jitterAmount</td><td>float</td><td>Defines the amount of jitter. The default is 1.0, above which super-samples may stray outside of their pixels.</td></tr>
@@ -1378,7 +1378,7 @@ repeatedly setting <code>transform</code> and then calling
 <tr><td>RW</td><td>N</td><td>noShadow</td><td>boolean</td><td>If <code>true</code>, the object will not cast shadows.</td></tr>
 <tr><td>RO</td><td>N</td><td>parent</td><td>Primitive</td><td>This is a read-only reference to the parent object of which the current object is a component, e.g., <code>Blob</code>, <code>Mesh</code>, and CSG objects.</td></tr>
 <tr><td>RW</td><td>N</td><td>photons</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
-<tr><td>RW</td><td>N</td><td>radiosity</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>radiosity</td><td>TOOD</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>serial</td><td>integer</td><td>This is a unique read-only integer serial number automatically assigned by CephaloPOV upon object creation. It is displayed in error messages, and objects can be looked up using <code>cpov.serialMap</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>texture</td><td>string</td><td>Pending implementation of CephaloPOV's texture subsystem, this is a literal SDL string which will be output as-is.</td></tr>
 <tr><td>RW</td><td>N</td><td>transform</td><td>Matrix</td><td>This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.</td></tr>
@@ -2799,7 +2799,7 @@ obj.transform = new Matrix("translate", 0, 0, -1);</div>
 <tr><td>RW</td><td>Y</td><td>displayText</td><td>string</td><td>This contains the text to be rendered.</td></tr>
 <tr><td>RW</td><td>Y</td><td>font</td><td>string</td><td>The filename of the font.</td></tr>
 <tr><td>RW</td><td>Y</td><td>fontType</td><td>string</td><td>Specifies the file format of the font being used. Legal values are <code>"ttc"</code>, and <code>"ttf"</code>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>offset</td><td>float</td><td>If defined, specifies extra space to be placed between characters.</td></tr>
+<tr><td>RW</td><td>Y</td><td>offset</td><td>float</td><td>Specifies extra space to be placed between characters, 0 for none.</td></tr>
 <tr><td>RW</td><td>Y</td><td>thickness</td><td>float</td><td>Specifies the front-to-back thickness of the extruded character shapes.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Text</code>, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a <code>Text</code>, this is always <code>true</code>.</td></td></tr>
@@ -3560,22 +3560,21 @@ frames.)</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C1</td><td>Turn <code>imageOptions.includeHeader</code> into an array to allow multiple headers.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td><code>Primitive</code> methods to prepend/append raw SDL.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&star;</td><td><code>Primitive</code> methods to prepend/append raw SDL.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Transformations fix/extend</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td class='subtask'>Implicit arguments, e.g. <code>"rotate", 45</code> means <code>"rotate", 45, 45, 45</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td class='subtask'>Add generic transformation methods to <code>Primitive</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td class='subtask'>Add parallel methods to <code>Matrix</code> with chaining.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Default option in *Def codegen. Esp. splitUnion = true</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td class='subtask'>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
 
         <!-- CSG operators -->
 
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D2</td><td class='subtask'><code>Difference</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td class='subtask'><code>Intersection</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td class='subtask'><code>Merge</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Difference</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Intersection</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Merge</code> description and example</td></tr>
 
         <!-- infinite solids -->
 

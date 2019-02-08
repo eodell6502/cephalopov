@@ -204,10 +204,10 @@ module.exports = {
             desc:  "If <code>true</code>, enables the experimental high reproducibility mode, which attempts to impose determinism on calculations in SMP environments. Currently only works with radiosity.",
             tname: "boolean"
         }, {
-            name:  "includeHeader",
-            valid: "cpov.isNonEmptyString(val)",
-            err:   "includeHeader must be a non-empty string.",
-            desc:  "Specifies an SDL include file to be referenced in the SDL output.",
+            name:  "includeHeaders",
+            valid: "cpov.isArrayOfNonEmptyStrings(val, 0, Infinity)",
+            err:   "includeHeader must be an array of non-empty strings.",
+            desc:  "An array containing the names of SDL include files to be referenced in the SDL output.",
             tname: "string"
         }, {
             name:  "inputFileName",

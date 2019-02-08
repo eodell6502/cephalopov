@@ -1119,7 +1119,7 @@ class ImageOptions {
         this._fileGamma           = null;
         this._height              = null;
         this._highReproducibility = null;
-        this._includeHeader       = null;
+        this._includeHeaders      = null;
         this._inputFileName       = null;
         this._jitter              = null;
         this._jitterAmount        = null;
@@ -1722,18 +1722,18 @@ class ImageOptions {
 
     //--------------------------------------------------------------------------
 
-    get includeHeader() {
-        if(typeof this._includeHeader == "function")
-            return this._includeHeader(cpov, this);
+    get includeHeaders() {
+        if(typeof this._includeHeaders == "function")
+            return this._includeHeaders(cpov, this);
         else
-            return this._includeHeader;
+            return this._includeHeaders;
     }
 
-    set includeHeader(val) {
-        if(cpov.isNullOrJSFunction(val) || (cpov.isNonEmptyString(val))) {
-            this._includeHeader = val;
+    set includeHeaders(val) {
+        if(cpov.isNullOrJSFunction(val) || (cpov.isArrayOfNonEmptyStrings(val, 0, Infinity))) {
+            this._includeHeaders = val;
         } else {
-            cpov.error("fatal", "includeHeader must be a non-empty string.", "ImageOptions", this);
+            cpov.error("fatal", "includeHeader must be an array of non-empty strings.", "ImageOptions", this);
         }
     }
 
@@ -2542,7 +2542,7 @@ class ImageOptions {
         newObj.fileGamma           = this.fileGamma;          
         newObj.height              = this.height;             
         newObj.highReproducibility = this.highReproducibility;
-        newObj.includeHeader       = this.includeHeader;      
+        newObj.includeHeaders      = this.includeHeaders;     
         newObj.inputFileName       = this.inputFileName;      
         newObj.jitter              = this.jitter;             
         newObj.jitterAmount        = this.jitterAmount;       
@@ -2798,9 +2798,11 @@ class ImageOptions {
                         cli.push("+HR");
                     break;
     
-                case "includeHeader":
-                    ini.push("Include_Header=" + this.includeHeader);
-                    cli.push("+HI" + this.includeHeader);
+                case "includeHeaders":
+                    for(var h = 0; h < this.includeHeaders.length; h++) {
+                        ini.push("Include_Header=" + this.includeHeaders[h]);
+                        cli.push("+HI" + this.includeHeaders[h]);
+                    }
                     break;
     
                 case "inputFileName":

@@ -13,7 +13,7 @@ function main(cpov) {
     cpov.imageOptions.outputAlpha = true;
     cpov.imageOptions.antialias = true;
     cpov.imageOptions.antialiasDepth = 9;
-    cpov.imageOptions.includeHeader = "functions.inc";
+    cpov.imageOptions.includeHeaders = ["functions.inc"];
 	cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];
     cpov.globalSettings.assumedGamma = 1.0;
 

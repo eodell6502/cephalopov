@@ -927,9 +927,11 @@ output() {
                     cli.push("+HR");
                 break;
 
-            case "includeHeader":
-                ini.push("Include_Header=" + this.includeHeader);
-                cli.push("+HI" + this.includeHeader);
+            case "includeHeaders":
+                for(var h = 0; h < this.includeHeaders.length; h++) {
+                    ini.push("Include_Header=" + this.includeHeaders[h]);
+                    cli.push("+HI" + this.includeHeaders[h]);
+                }
                 break;
 
             case "inputFileName":
