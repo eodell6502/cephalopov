@@ -61,9 +61,20 @@ function main(cpov) {
 
     testHeader(fp, ++testSerial, "testStage corner test");                      testStageCornerTest(fp);
     testHeader(fp, ++testSerial, "testStage triplane test");                    testStageTriplaneTest(fp);
+
+    testHeader(fp, ++testSerial, "Primitive/Sphere SDL wrapper test");          testPrimitiveWrappers(fp);
 }
 
 module.exports = main;
+
+//==============================================================================
+
+function testPrimitiveWrappers(fp) {
+    var sphere = new Sphere({ center: [0,0,0], radius: 2 });
+    sphere.SDLPrepend = "// This should be a comment before";
+    sphere.SDLAppend = "// This should be a comment after";
+    fp.write(sphere.toSDL() + "\n\n");
+}
 
 //==============================================================================
 

@@ -82,6 +82,7 @@ set components(val) {
 }
 
 
+
 // Blob.toSDL //----------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -227,6 +228,7 @@ if(options !== undefined) {
 }
 
 
+
 // Color.copy //----------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -369,6 +371,7 @@ toSDL(stops = 0, component = false) {
         $Primitive.toSDL-postamble
     }
 }
+
 
 
 // Difference.toSDL //----------------------------------------------------------
@@ -558,6 +561,8 @@ class TextureMap extends GenMap {
 TextureMap.prototype._itemClass = Texture;
 TextureMap.prototype._SDLName   = "texture_map";
 */
+
+
 
 // GlobalSettings.toSDL //------------------------------------------------------
 
@@ -2200,6 +2205,7 @@ _adopt(val) {
 }
 
 
+
 // Primitive.immutables //------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -2262,6 +2268,7 @@ set parent(val) {
 }
 
 
+
 // Primitive.requiredParameterTest //-------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -2312,6 +2319,7 @@ get serial() {
 set serial(val) {
     cpov.error("fatal", "The serial attribute is read-only.", "Primitive", this);
 }
+
 
 
 // Primitive.snapshot //--------------------------------------------------------
@@ -2402,6 +2410,9 @@ if(superSDL)
     content.push(superSDL);
 content.push(pad + "}");
 
+if(this.SDLAppend !== null)
+    content.push("\n" + this.SDLAppend);
+
 return content.join("\n");
 
 
@@ -2416,6 +2427,9 @@ super.requiredParameterTest(this.requiredParams);
 var pad     = cpov.tab(stops);
 var ppad    = cpov.tab(stops + 1);
 var content = [ ];
+
+if(this.SDLPrepend !== null)
+    content.push(this.SDLPrepend + "\n");
 
 
 
@@ -2476,6 +2490,7 @@ set transform(val) {
 }
 
 
+
 // Primitive.xset //------------------------------------------------------------
 
 //------------------------------------------------------------------------------
@@ -2485,6 +2500,7 @@ set transform(val) {
 xset(vals) {
 	cpov.initObject(this, vals);
 }
+
 
 
 // Prism.toSDL //---------------------------------------------------------------
@@ -2806,6 +2822,7 @@ if(options !== undefined) {
 }
 
 
+
 // VectorUV.copy //-------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -2862,6 +2879,7 @@ if(options !== undefined) {
         cpov.error("fatal", "Invalid initializer.", "VectorXY.constructor", this);
     }
 }
+
 
 
 // VectorXY.copy //-------------------------------------------------------------
@@ -2923,6 +2941,7 @@ if(options !== undefined) {
 }
 
 
+
 // VectorXYZ.copy //------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -2982,6 +3001,7 @@ if(options !== undefined) {
         cpov.error("fatal", "Invalid initializer.", "VectorXYZW.constructor", this);
     }
 }
+
 
 
 // VectorXYZW.copy //-----------------------------------------------------------

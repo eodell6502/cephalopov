@@ -143,7 +143,22 @@ module.exports = {
             err:   "radiosity",
             desc:  "TODO",
             tname: "TOOD"
-        }, {
+        },
+        {
+            name:   "SDLPrepend",
+            valid:  "cpov.isString(val)",
+            err:    "val must be a string.",
+            desc:   "A string supplied here (presumably SDL) will be output before the object. It does not require the usual <code>'&'</code> prefix.",
+            tname:  "string",
+        },
+        {
+            name:   "SDLAppend",
+            valid:  "cpov.isString(val)",
+            err:    "val must be a string.",
+            desc:   "A string supplied here (presumably SDL) will be output after the object. It does not require the usual <code>'&'</code> prefix.",
+            tname:  "string",
+        },
+        {
             name:   "serial",
             valid:  "cpov.isInt(val) && cpov.isUnusedSerial(val, this)",
             err:    "serial must be an integer.",

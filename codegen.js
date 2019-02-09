@@ -394,7 +394,7 @@ function docHumper(doc, classname, def) {
 	//--------------------------------------------------------------------------
 
 	if(!cpov.isInArray(classname, ["VectorUV", "VectorXY", "VectorXYZ", "VectorXYZW", "Color"]))
-		members.sort();
+		members.sort(function(a,b) { return a.localeCompare(b, 'en', { sensitivity: "base" }) });
 
     for(var i = 0; i < members.length; i++)
         members[i] = members[i].substr(1);

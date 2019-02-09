@@ -113,8 +113,6 @@ table.sgrid > thead { color: white; }
 table.sgrid > tbody { background-color: white; }
 table.sgrid > td { padding-left: 0.5em; padding-right: 0.5em; vertical-align: top; }
 table.sgrid th { background-color: #3C607B; }
-table.sgrid > tbody > tr > td:nth-child(2) { text-align: center; }
-table.sgrid > tbody > tr > td:nth-child(3) { text-align: center; color: #A00; font-weight: bold; }
 
 table.todo { width: 100%; }
 table.todo td.pending { text-align: center; background-color: #A00;    color: yellow; font-weight: bold; white-space: nowrap; }
@@ -122,6 +120,8 @@ table.todo td.working { text-align: center; background-color: yellow;  color: #A
 table.todo td.done    { text-align: center; background-color: #060;    color: white;  font-weight: bold; white-space: nowrap; }
 table.todo td.tbd     { text-align: center; background-color: #3C607B; color: white;  font-weight: bold; white-space: nowrap; }
 table.todo td.subtask { padding-left: 3em; }
+table.todo > tbody > tr > td:nth-child(2) { text-align: center; }
+table.todo > tbody > tr > td:nth-child(3) { text-align: center; color: #A00; font-weight: bold; }
 
 table.attrs { width: 100%; font-family: RobotoCondensed; }
 table.attrs > tbody > tr > td { padding: 0.25em; }
@@ -133,6 +133,7 @@ table.attrs > tbody > tr > td:nth-child(5) { padding-left: 0.5em; padding-right:
 table.attrs > tbody > tr > td { vertical-align: top; }
 table.attrs > tbody > tr > td.dummy { color: #888; background-color: #FFE; }
 table.attrs > tbody > tr > td.niy { color: #A00; font: bold 10pt Roboto; }
+
 
 table.codeDoc { margin-left: auto; margin-right: auto; margin-bottom: 1em; font-family: RobotoCondensed;}
 table.codeDoc td { text-align: left; padding-left: 0.5em; padding-right: 0.5em; }
@@ -834,9 +835,10 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 <tr><td>RW</td><td>N</td><td>radCount</td><td>Array</td><td>This is an array which specifies the number of radiosity rays emitted when a new radiosity value is needed. The default is 35. The second, optional element sets the number of directions to choose rays from.</td></tr>
 <tr><td>RW</td><td>N</td><td>radErrorBound</td><td>float</td><td>Specifies the tolerated error and defaults to 1.8. Lower values are more accurate but require higher <code>radCount</code> values to avoid artifacts and dramatically increase rendering times.</td></tr>
 <tr><td>RW</td><td>N</td><td>radGrayThreshold</td><td>float</td><td>This is a float in the unit interval (0.0 - 1.0) that counteracts color bleed by desaturating reflected light. At 0.0 (the default), it has no effect, while at the other extreme, 1.0, reflected light is greyscale only.</td></tr>
+<tr><td>RW</td><td>N</td><td>radiosity</td><td>boolean</td><td>If <code>true</code>, radiosity is enabled and the <code>rad*</code> parameters are emitted in output.</td></tr>
 <tr><td>RW</td><td>N</td><td>radLowErrorFactor</td><td>float</td><td>The <code>radErrorBound</code> is multiplied by <code>radLowErrorFactor</code> during preliminary passes to reduce the blotchy artifacts that would otherwise occur. The default is 0.5.</td></tr>
-<tr><td>RW</td><td>N</td><td>radMaxSample</td><td>float</td><td>Defines an upper limit on the brightness of radiosity samples, which can correct for some brightness artifacts at the expense of realism. Setting <code>radMaxSample</code> to a negative value (the default) will disable it.</td></tr>
 <tr><td>RW</td><td>N</td><td>radMaximumReuse</td><td>float</td><td>Sets an upper bound on the reuse of samples. See the POV-Ray documentation for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_4_3">more details</a>.</td></tr>
+<tr><td>RW</td><td>N</td><td>radMaxSample</td><td>float</td><td>Defines an upper limit on the brightness of radiosity samples, which can correct for some brightness artifacts at the expense of realism. Setting <code>radMaxSample</code> to a negative value (the default) will disable it.</td></tr>
 <tr><td>RW</td><td>N</td><td>radMinimumReuse</td><td>float</td><td>Sets a lower bound on the reuse of samples. See the POV-Ray documentation for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_4_3">more details</a>.</td></tr>
 <tr><td>RW</td><td>N</td><td>radNearestCount</td><td>integer</td><td>Specifies minimum number of old radiosity values blended together to create a new interpolated value. Defaults to 5 with an upper limit of 20.</td></tr>
 <tr><td>RW</td><td>N</td><td>radNormal</td><td>boolean</td><td>If <code>true</code>, radiosity will be affected by normals.</td></tr>
@@ -844,7 +846,6 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 <tr><td>RW</td><td>N</td><td>radPretraceStart</td><td>float</td><td>Specifies the size of mosaic blocks at the start of the pretrace phase as a fraction of image size. This is float in the unit interval (0.0 - 1.0).</td></tr>
 <tr><td>RW</td><td>N</td><td>radRecursionLimit</td><td>integer</td><td>Determines how many recursion levels are used to calculate the diffuse inter-reflection. The legal range is 1 - 20, but values above 3 are rarely useful.</td></tr>
 <tr><td>RW</td><td>N</td><td>radSubsurface</td><td>boolean</td><td>If <code>true</code>, radiosity calculations will take subsurface light transport into account. This will increase realism where translucent objects are concerned at the expense of increased rendering time.</td></tr>
-<tr><td>RW</td><td>N</td><td>radiosity</td><td>boolean</td><td>If <code>true</code>, radiosity is enabled and the <code>rad*</code> parameters are emitted in output.</td></tr>
 <tr><td>RW</td><td>N</td><td>subRadiosity</td><td>boolean</td><td>If <code>true</code>, subsurface effects will be applied to incoming radiosity illumination.</td></tr>
 <tr><td>RW</td><td>N</td><td>subSamples</td><td>Array</td><td>This is an array of two integers which set the number of samples to use for diffuse scattering and single-scattering approximation. The default for both is 50.</td></tr>
 <tr><td>RW</td><td>N</td><td>subsurface</td><td>boolean</td><td>If <code>true</code>, subsurface light transport is enabled and the <code>sub*</code> parameters are emitted in output.</td></tr>
@@ -1379,6 +1380,8 @@ repeatedly setting <code>transform</code> and then calling
 <tr><td>RO</td><td>N</td><td>parent</td><td>Primitive</td><td>This is a read-only reference to the parent object of which the current object is a component, e.g., <code>Blob</code>, <code>Mesh</code>, and CSG objects.</td></tr>
 <tr><td>RW</td><td>N</td><td>photons</td><td>TODO</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
 <tr><td>RW</td><td>N</td><td>radiosity</td><td>TOOD</td><td class='dummy'>TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.</td></tr>
+<tr><td>RW</td><td>N</td><td>SDLAppend</td><td>string</td><td>A string supplied here (presumably SDL) will be output after the object. It does not require the usual <code>'&'</code> prefix.</td></tr>
+<tr><td>RW</td><td>N</td><td>SDLPrepend</td><td>string</td><td>A string supplied here (presumably SDL) will be output before the object. It does not require the usual <code>'&'</code> prefix.</td></tr>
 <tr><td>RW</td><td>N</td><td>serial</td><td>integer</td><td>This is a unique read-only integer serial number automatically assigned by CephaloPOV upon object creation. It is displayed in error messages, and objects can be looked up using <code>cpov.serialMap</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>texture</td><td>string</td><td>Pending implementation of CephaloPOV's texture subsystem, this is a literal SDL string which will be output as-is.</td></tr>
 <tr><td>RW</td><td>N</td><td>transform</td><td>Matrix</td><td>This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.</td></tr>
@@ -3603,9 +3606,8 @@ frames.)</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td><code>Primitive</code> methods to prepend/append raw SDL.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Transformations fix/extend</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&star;</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td class='subtask'>Implicit arguments, e.g. <code>"rotate", 45</code> means <code>"rotate", 45, 45, 45</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td class='subtask'>Add generic transformation methods to <code>Primitive</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td class='subtask'>Add parallel methods to <code>Matrix</code> with chaining.</td></tr>
@@ -3615,7 +3617,7 @@ frames.)</p>
 
         <!-- infinite solids -->
 
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D6</td><td class='subtask'><code>Poly</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D7</td><td class='subtask'><code>Polynomial</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D8</td><td class='subtask'><code>Quadric</code> description and example</td></tr>
