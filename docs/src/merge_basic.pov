@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/julia_basic.pov
-// FRAME: 12
-// CLOCK TIME: 12
+// POV FILE: ./docs/src/merge_basic.pov
+// FRAME: 6
+// CLOCK TIME: 6
 //==========================================================================
 
 #version 3.7;
@@ -206,11 +206,13 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-julia_fractal {
-    <-0.083, 0, -0.83, -0.025>
-    quaternion
-    sqr
-    max_iteration 8
-    precision 15
-    texture { pigment { color <1, 1, 0> }}
+merge {
+    sphere {
+        <1, 0, -2>, 1.5
+        texture { pigment { color <1, 1, 0> }}
+    }
+    sphere {
+        <3, 0, -1>, 1.5
+        texture { pigment { color <1, 1, 0> }}
+    }
 }

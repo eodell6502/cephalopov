@@ -96,6 +96,66 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+    // CSG: Difference //-------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/difference_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
+    var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5, texture: yellow});
+    var diff = new Difference({ positiveComponent: obj1, negativeComponents: [obj2] });
+    diff.snapshot();
+
+    cpov.outputFrame();
+    obj1.destroy();
+    obj2.destroy();
+    diff.destroy();
+
+    // CSG: Intersection //-----------------------------------------------------
+
+    cpov.outputBase = "./docs/src/intersection_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
+    var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5, texture: yellow});
+    var intersection = new Intersection({ components: [ obj1, obj2 ] });
+    intersection.snapshot();
+
+    cpov.outputFrame();
+    obj1.destroy();
+    obj2.destroy();
+    intersection.destroy();
+
+    // CSG: Merge //------------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/merge_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
+    var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5, texture: yellow});
+    var merge = new Merge({ components: [ obj1, obj2 ] });
+    merge.snapshot();
+
+    cpov.outputFrame();
+    obj1.destroy();
+    obj2.destroy();
+    merge.destroy();
+
+    // CSG: Union //------------------------------------------------------------
+
+    cpov.outputBase = "./docs/src/union_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
+    var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5, texture: yellow});
+    var union = new Union({ components: [ obj1, obj2 ] });
+    union.snapshot();
+
+    cpov.outputFrame();
+    obj1.destroy();
+    obj2.destroy();
+    union.destroy();
+
     // Cylinder //--------------------------------------------------------------
 
     cpov.outputBase = "./docs/src/cylinder_basic";
@@ -439,7 +499,9 @@ function main(cpov) {
 
     cpov.outputFrame();
     obj.destroy();
+
 }
+
 
 
 module.exports = main;

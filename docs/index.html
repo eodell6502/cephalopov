@@ -1753,15 +1753,23 @@ attribute can be used to assign a field strength to the cylinder.</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Difference</code> type is one of the four CSG operations. It has
+two required attributes. The <code>positiveComponent</code> is a single object
+(which may be another composite CSG object) from which the array of objects in
+<code>negativeComponents</code> is subtracted. In this case, one sphere has been
+subtracted from another, producing a sphere with a dish-shaped depression in one
+side.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
+<div class='code'>var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5 });
+var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5 });
+var diff = new Difference({
+    positiveComponent: obj1,
+    negativeComponents: [obj2]
 });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/difference_basic.png">
 
 </td></tr></table>
 
@@ -1877,15 +1885,22 @@ obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));</div>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Intersection</code> type is one of the four CSG operations. Like
+all of the CSG operations other than <code>Difference</code>, it has a single
+mandatory attribute, <code>components</code>, which is an array of objects. The
+result is their set-theoretical intersection, i.e., the space in which all of
+the components overlap.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
+<p>In the example, we have taken the intersection of two overlapping spheres,
+yielding an object shaped like the lens of a magnifying glass.</p>
+
+<div class='code'>var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5 });
+var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5 });
+var intersection = new Intersection({ components: [ obj1, obj2 ] });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/intersection_basic.png">
 
 </td></tr></table>
 
@@ -2127,15 +2142,29 @@ object, <code>Sor</code>, but it is also substantially slower to render.</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Merge</code> type is one of the four CSG operations. Like all of
+the CSG operations other than <code>Difference</code>, it has a single mandatory
+attribute, <code>components</code>, which is an array of objects. The result is
+their set-theoretical union, which is different from the original ad hoc
+collection of objects in that it can be treated as a single object and
+tranformed and textured as a whole, as well as participating in further CSG
+operations.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
+<p>A <code>Merge</code> differs from the otherwise identical <code>Union</code>
+by eliminating the hidden inner surfaces. This doesn't matter with opaque
+objects, of course, but it is often useful when creating transparent or
+translucent objects.</p>
+
+<p>In the example, we have merged two spheres, resulting in a single object
+that looks, um, exactly like two spheres.</p>
+
+<div class='code'>var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5 });
+var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5 });
+var merge = new Merge({ components: [ obj1, obj2 ] });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/merge_basic.png">
 
 </td></tr></table>
 
@@ -2894,15 +2923,29 @@ of 0.5 units and a major radius of 2 units.</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Union</code> type is one of the four CSG operations. Like all of
+the CSG operations other than <code>Difference</code>, it has a single mandatory
+attribute, <code>components</code>, which is an array of objects. The result is
+their set-theoretical union, which is different from the original ad hoc
+collection of objects in that it can be treated as a single object and
+tranformed and textured as a whole, as well as participating in further CSG
+operations.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
+<p>A <code>Union</code> differs from the otherwise identical <code>Merge</code>
+by retaining the hidden inner surfaces. This doesn't matter with opaque
+objects, of course, but it is often useful when creating transparent or
+translucent objects.</p>
+
+<p>In the example, we have merged two spheres, resulting in a single object
+that looks, um, exactly like two spheres.</p>
+
+<div class='code'>var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5 });
+var obj2 = new Sphere({ center: [3,0,-1], radius: 1.5 });
+var union = new Union({ components: [ obj1, obj2 ] });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/union_basic.png">
 
 </td></tr></table>
 
@@ -3560,7 +3603,7 @@ frames.)</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&star;</td><td><code>Primitive</code> methods to prepend/append raw SDL.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td><code>Primitive</code> methods to prepend/append raw SDL.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Transformations fix/extend</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td class='subtask'>Implicit arguments, e.g. <code>"rotate", 45</code> means <code>"rotate", 45, 45, 45</code>.</td></tr>
@@ -3570,15 +3613,9 @@ frames.)</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td class='subtask'>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
 
-        <!-- CSG operators -->
-
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Difference</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Intersection</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Merge</code> description and example</td></tr>
-
         <!-- infinite solids -->
 
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D6</td><td class='subtask'><code>Poly</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D7</td><td class='subtask'><code>Polynomial</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D8</td><td class='subtask'><code>Quadric</code> description and example</td></tr>
@@ -3637,6 +3674,7 @@ frames.)</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Execution: Oversee execution directly</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Make sure <code>Primitive.destroy</code> recurses through child objects.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Reports</td></tr>
 
     </tbody>
