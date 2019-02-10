@@ -1676,19 +1676,9 @@ true. The example at right was created by the following code:</p>
 
 <h4>Cubic</h4>
 
-<table class="illusBasic"><tr><td>
-
-<p>TODO</p>
-
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
-
-</td><td>
-
-    <img src="img/placeholder_basic.png">
-
-</td></tr></table>
+<p>A <code>Cubic</code> is a third-order polynomial surface. It has a single required
+attribute like the rest of the polynomial types, <code>coefficients</code>, which is
+an array of 20 floats.</p>
 
 <h5>Attributes</h5>
 
@@ -2384,15 +2374,39 @@ flood!</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Poly</code> type offers a generic interface to create polynomial
+surfaces of orders 2 to 35. You must specify the <code>order</code> of the
+polynomial and then supply its <code>coefficients</code>, the number of which
+depends on the order:</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
+<div class='code'>n = ((order + 1) * (order + 2) * (order + 3)) / 6;</div>
+
+<p>(CephaloPOV will helpfully throw a fatal error if you get the number of
+coefficients wrong.)</p>
+
+<p>The example below, adapted from POV-Ray's <code>shapesq.inc</code> file, is a
+variant of a lemniscate.</p>
+
+<div class='code'>var obj = new Poly({
+    order: 6,
+    coefficients: [
+         4, 0, 0, 0, 0, 0, 0, 0, 0, -4,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 1, 0, 0
+    ],
+    texture: yellow
+});
+obj.transform = new Matrix("scale", 2, 2, 2);</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/poly_basic.png">
 
 </td></tr></table>
 
@@ -2458,15 +2472,33 @@ in the first.</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Polynomial</code> type is another arbitrary polynomial shape object
+that provides an alternative to the <code>Poly</code> type, and like it, it must
+have an <code>order</code> in the range 2&ndash;35. The coefficients are encoded
+in an array of <code>VectorXYZW</code> where the <code>x</code>, <code>y</code>,
+and <code>z</code> attributes signify the powers of the respective
+indeterminates and <code>w</code> is repurposed to contain the coefficient.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
+<p>As noted in the description of <code>Poly</code>, the order determines the
+number of coefficients thus:</p>
+
+<div class='code'>n = ((order + 1) * (order + 2) * (order + 3)) / 6;</div>
+
+<p>In the example shown, a sphere is produced by a second-order polynomial.</p>
+
+<div class='code'>var obj = new Polynomial({
+    order: 2,
+    coefficients: [
+        [2, 0, 0,  1],
+        [0, 2, 0,  1],
+        [0, 0, 2,  1],
+        [0, 0, 0, -1]
+    ]
 });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/polynomial_basic.png">
 
 </td></tr></table>
 
@@ -2542,15 +2574,20 @@ the <code>Polygon</code>.</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Quadric</code> type is an optimized second-order polynomial
+shape. Its sole required attribute is <code>coefficients</code>, an array
+of 10 floats.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
+<p>The example shown is an infinite hyperboloid aligned with the y-axis.</p>
+
+<div class='code'>var obj = new Quadric({
+    coefficients: [ 1, -1, 1, 0, 0, 0, 0, 0, 0, -1 ],
+    texture: yellow
 });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/quadric_basic.png">
 
 </td></tr></table>
 
@@ -2573,15 +2610,27 @@ the <code>Polygon</code>.</p>
 
 <table class="illusBasic"><tr><td>
 
-<p>TODO</p>
+<p>The <code>Quartic</code> type is an optimized fourth-order polynomial shape.
+Its sole required attribute is <code>coefficients</code>, an array of 35
+floats.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
-});</div>
+<p>The example here is a torus, albeit one that renders more slowly than
+the optimized, dedicated <code>Torus</code> type.</p>
+
+<div class='code'>var obj = new Quartic({
+    coefficients: [
+        1, 0, 0, 0, 2, 0, 0, 2, 0, -104,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 0, 0, 2, 0, 56, 0, 0, 0, 0,
+        1, 0, -104, 0, 784
+    ],
+    texture: yellow
+});
+obj.transform = new Matrix("scale", 0.2, 0.2, 0.2);</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/quartic_basic.png">
 
 </td></tr></table>
 
@@ -3607,21 +3656,13 @@ frames.)</p>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Transformations fix/extend</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&star;</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td class='subtask'>Implicit arguments, e.g. <code>"rotate", 45</code> means <code>"rotate", 45, 45, 45</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td class='subtask'>Add generic transformation methods to <code>Primitive</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td class='subtask'>Add parallel methods to <code>Matrix</code> with chaining.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td class='subtask'>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
-
-        <!-- infinite solids -->
-
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td class='subtask'><code>Cubic</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D6</td><td class='subtask'><code>Poly</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D7</td><td class='subtask'><code>Polynomial</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D8</td><td class='subtask'><code>Quadric</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D9</td><td class='subtask'><code>Quartic</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>DOC</td><td></td><td>Document the various spline types.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Atmospheric effects</td></tr>
@@ -3636,13 +3677,13 @@ frames.)</p>
 
             <!-- finite patches -->
 
-            <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Triangle</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Mesh</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td class='subtask'><code>Triangle</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>I+T</td><td>D2</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
 
             <!-- Lights and Cameras -->
 
-            <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Camera</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>LightSource</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td class='subtask'><code>Camera</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td class='subtask'><code>LightSource</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>IMP</td><td></td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
@@ -3677,6 +3718,7 @@ frames.)</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Execution: Oversee execution directly</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Make sure <code>Primitive.destroy</code> recurses through child objects.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Validate <code>Polynomial.order</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Reports</td></tr>
 
     </tbody>

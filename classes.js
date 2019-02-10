@@ -8663,7 +8663,7 @@ class Polynomial extends Primitive {
     }
 
     set coefficients(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity) || (val = cpov.convertToVectorArray("VectorXYZW", val)))) {
             this._coefficients = val;
         } else {
             cpov.error("fatal", "coefficients must be a VectorXYZW.", "Polynomial", this);
@@ -8726,8 +8726,10 @@ class Polynomial extends Primitive {
     
         var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
     
+        /* // FIXME
         if(this.coefficients.length != ccnt)
             cpov.error("fatal", "A Polynomial of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Polynomial.toSDL", this);
+        */
     
     	content.push(pad + "polynomial {" + (this.id === null ? "" : " // " + this.id));
         content.push(ppad + this.order + ", ");

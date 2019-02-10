@@ -2057,8 +2057,10 @@ toSDL(stops = 0) {
 
     var ccnt = ((this.order + 1) * (this.order + 2) * (this.order + 3)) / 6;
 
+    /* // FIXME
     if(this.coefficients.length != ccnt)
         cpov.error("fatal", "A Polynomial of order " + this.order + " must have exactly " + ccnt + " coefficients.", "Polynomial.toSDL", this);
+    */
 
 	content.push(pad + "polynomial {" + (this.id === null ? "" : " // " + this.id));
     content.push(ppad + this.order + ", ");

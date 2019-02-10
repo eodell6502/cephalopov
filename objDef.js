@@ -1083,7 +1083,7 @@ module.exports = {
             }, {
                 name:  "coefficients",
                 req:   true,
-                valid: "cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity)",
+                valid: "cpov.isArrayOfClass(val, 'VectorXYZW', 1, Infinity) || (val = cpov.convertToVectorArray(\"VectorXYZW\", val))",
                 err:   "coefficients must be a VectorXYZW.",
                 desc:  "An array of <code>VectorXYZW</code> defining the coefficients of the polynomial. The choice of <code>VectorXYZW</code> is a bit of a convenience hack as it doesn't encode a 4D cartesian point. Instead, the X, Y, and Z values specify the corresponding powers of the coefficient and W specifies the value. The members of the array can be specified in any order.",
                 tname: "[VectorXYZW]"
@@ -1182,7 +1182,7 @@ module.exports = {
                 req:   true,
                 valid: "cpov.isArrayOfFloats(val, 35, 35)",
                 err:   "coefficients must be an array of 35 floats.",
-                desc:  "An array of floats defining the coefficients of a fourth-order polynomial.",
+                desc:  "An array of 35 floats defining the coefficients of a fourth-order polynomial.",
                 tname: "Array"
             }, {
                 name:  "sturm",

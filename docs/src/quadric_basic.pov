@@ -1,7 +1,7 @@
 //==========================================================================
-// POV FILE: ./docs/src/text_basic.pov
-// FRAME: 27
-// CLOCK TIME: 27
+// POV FILE: ./docs/src/quadric_basic.pov
+// FRAME: 21
+// CLOCK TIME: 21
 //==========================================================================
 
 #version 3.7;
@@ -206,9 +206,7 @@ camera {
     look_at <0, -0.8, 0>
 }
 
-text {
-    ttf "BebasNeueBold.ttf" "CPOV"
-    0.25, 0
+quadric {
+    <1, -1, 1>, <0, 0, 0>, <0, 0, 0>, -1
     texture { pigment { color <1, 1, 0> }}
-    matrix <2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -2>
 }

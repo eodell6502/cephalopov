@@ -156,6 +156,20 @@ function main(cpov) {
     obj2.destroy();
     union.destroy();
 
+    // Cubic //-----------------------------------------------------------------
+/*
+    cpov.outputBase = "./docs/src/cubic_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+    var obj = new Cubic({
+
+        texture: yellow
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+*/
     // Cylinder //--------------------------------------------------------------
 
     cpov.outputBase = "./docs/src/cylinder_basic";
@@ -335,6 +349,32 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
+    // Poly //-----------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/poly_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Poly({
+		order: 6,
+        coefficients: [
+             4, 0, 0, 0, 0, 0, 0, 0, 0, -4,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 1, 0, 0
+        ],
+        texture: yellow
+    });
+    obj.transform = new Matrix("scale", 2, 2, 2);
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
 	// Polygon //--------------------------------------------------------------
 
 	cpov.outputBase = "./docs/src/polygon_basic";
@@ -342,6 +382,26 @@ function main(cpov) {
 
 	var obj = new Polygon({
 		points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
+        texture: yellow
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+    // Poly //-----------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/polynomial_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Polynomial({
+		order: 2,
+        coefficients: [
+            [2, 0, 0,  1],
+            [0, 2, 0,  1],
+            [0, 0, 2,  1],
+            [0, 0, 0, -1]
+        ],
         texture: yellow
     });
     obj.snapshot();
@@ -361,6 +421,40 @@ function main(cpov) {
 		points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
         texture: yellow
     });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Quadric //-----------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/quadric_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Quadric({
+        coefficients: [ 1, -1, 1, 0, 0, 0, 0, 0, 0, -1 ],
+        texture: yellow
+    });
+    obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Quartic //-----------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/quartic_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Quartic({
+        coefficients: [
+            1, 0, 0, 0, 2, 0, 0, 2, 0, -104,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 0, 0, 2, 0, 56, 0, 0, 0, 0,
+            1, 0, -104, 0, 784
+        ],
+        texture: yellow
+    });
+    obj.transform = new Matrix("scale", 0.2, 0.2, 0.2);
     obj.snapshot();
 
     cpov.outputFrame();
