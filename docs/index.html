@@ -108,11 +108,11 @@ table.matrixDemo td.null { background-color: #CCC; }
 table.matrixDemo div.cpName { text-align: center; font: bold 10pt Inconsolata; }
 table.matrixDemo div.op { text-align: center; font-weight: bold; margin-top: 0.25em; }
 
-table.sgrid { background-color: #263E4F; border-spacing: 1pt; margin-top: 0.5em; }
-table.sgrid > thead { color: white; }
-table.sgrid > tbody { background-color: white; }
+table.sgrid { margin-top: 0.5em; border-collapse: collapse; }
+table.sgrid > thead { background-color: #263E4F;  color: white; }
 table.sgrid > td { padding-left: 0.5em; padding-right: 0.5em; vertical-align: top; }
-table.sgrid th { background-color: #3C607B; }
+table.sgrid td { border: 0.25pt solid black; }
+table.sgrid th { background-color: #3C607B; border: 0.25pt solid black; }
 
 table.todo { width: 100%; }
 table.todo td.pending { text-align: center; background-color: #A00;    color: yellow; font-weight: bold; white-space: nowrap; }
@@ -143,6 +143,7 @@ div.fsig { font: bold 10pt Inconsolata; margin-bottom: 0.3em; margin-top: 1em; }
 p+div.fsig { margin-top: 1.25em; }
 .fdesc { margin-left: 1em; }
 
+table.illusBasic { page-break-inside: avoid; }
 table.illusBasic td { vertical-align: top; }
 table.illusBasic td.infinite { padding-left: 1em; }
 </style>
@@ -177,12 +178,13 @@ $(document).ready(function() {
 
 <h2>Introduction</h2>
 
-<p><span class='h2num'></span>CephaloPOV is a JavaScript scripting engine for POV-Ray. It is implemented as
-a Node command line program that loads a user script and executes it in an
-environment in which it can manipulate various JavaScript classes that map to
-POV-Ray's native objects, in addition to having full access to the Node
-ecosystem. CephaloPOV takes care of generating POV-Ray Scene Description
-Language files, both for static scenes and multi-frame animations.</p>
+<p><span class='h2num'></span>CephaloPOV is a JavaScript scripting engine for
+POV-Ray. It is implemented as a Node command line program that loads a user
+script and executes it in an environment in which it can manipulate various
+JavaScript classes that map to POV-Ray's native objects, in addition to having
+full access to the Node ecosystem. CephaloPOV takes care of generating POV-Ray
+Scene Description Language files, both for static scenes and multi-frame
+animations.</p>
 
 <p><i>The documentation as it stands is more or less complete as far as CephaloPOV
 itself is concerned, but the longer-term goal of being self-sufficient without
@@ -1425,9 +1427,9 @@ box.corner2 = [1, 1, 1];
 
 box.xset({corner1: [-1, -1, -1], corner2: [1, 1, 1]});</div>
 
-<h4>BicubicPatch</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>BicubicPatch</h4></td></tr>
+<tr><td>
 
 <p>The <code>BicubicPatch</code> type is a curved surface defined by a
 4&nbsp;&times;&nbsp;4 array of <code>VectorXYZ</code> control points which are
@@ -1473,9 +1475,9 @@ triangles. The number of triangles used along the u- and v-axes are defined by
 </tbody></table>
 </div dh="BicubicPatch">
 
-<h4>Blob</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Blob</h4></td></tr>
+<tr><td>
 
 <p>The <code>Blob</code> type is an isosurface of scalar fields produced by
 points and lines represented in the <code>components</code> array by
@@ -1527,9 +1529,9 @@ stage space.</p>
 </tbody></table>
 </div dh="Blob">
 
-<h4>Box</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Box</h4></td></tr>
+<tr><td>
 
 <p>The <code>Box</code> type is exactly what it sounds like: a rectangular box.
 It is defined by the coordinates of two diagonally opposite corners,
@@ -1630,9 +1632,9 @@ at right was created by the following code:</p>
 
 <p>TODO</p>
 
-<h4>Cone</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Cone</h4></td></tr>
+<tr><td>
 
 <p>The <code>Cone</code> type is deceptively simple. At a minimum, you must
 specify a <code>basePoint</code> and a <code>capPoint</code> along with their
@@ -1696,9 +1698,9 @@ an array of 20 floats.</p>
 </tbody></table>
 </div dh="Cubic">
 
-<h4>Cylinder</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Cylinder</h4></td></tr>
+<tr><td>
 
 <p>The <code>Cylinder</code> type produces a solid cylinder by default and
 defined by the coordinates of the centers of its two circular ends,
@@ -1742,9 +1744,9 @@ attribute can be used to assign a field strength to the cylinder.</p>
 </tbody></table>
 </div dh="Cylinder">
 
-<h4>Difference</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Difference</h4></td></tr>
+<tr><td>
 
 <p>The <code>Difference</code> type is one of the four CSG operations. It has
 two required attributes. The <code>positiveComponent</code> is a single object
@@ -1781,9 +1783,9 @@ var diff = new Difference({
 </tbody></table>
 </div dh="Difference">
 
-<h4>Disc</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Disc</h4></td></tr>
+<tr><td>
 
 <p>The <code>Disc</code> type is a two-dimensional circular disc defined by its
 <code>center</code>, <code>radius</code>, and <code>normal</code>. As in the
@@ -1821,9 +1823,9 @@ non-zero <code>holeRadius</code>.</p>
 </tbody></table>
 </div dh="Disc">
 
-<h4>HeightField</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>HeightField</h4></td></tr>
+<tr><td>
 
 <p>A <code>HeightField</code> takes a bitmapped graphics file and converts it into a triangle mesh in which the height
 of each point is determined by either the intensity of the corresponding pixel or, for indexed graphics, its index number.
@@ -1874,9 +1876,9 @@ obj.transform = xform.xMatrix(new Matrix("scale", 6, 3, 6));</div>
 </tbody></table>
 </div dh="HeightField">
 
-<h4>Intersection</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Intersection</h4></td></tr>
+<tr><td>
 
 <p>The <code>Intersection</code> type is one of the four CSG operations. Like
 all of the CSG operations other than <code>Difference</code>, it has a single
@@ -1911,9 +1913,9 @@ var intersection = new Intersection({ components: [ obj1, obj2 ] });</div>
 </tbody></table>
 </div dh="Intersection">
 
-<h4>IsoSurface</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>IsoSurface</h4></td></tr>
+<tr><td>
 
 <p>Short of the dubious goal of writing a JavaScript-to-SDL compiler, complete
 independence from POV-Ray's Scene Description Language is not possible in a few
@@ -1960,9 +1962,9 @@ that tells CephaloPOV that it's getting SDL code instead of an ordinary string.<
 </tbody></table>
 </div dh="IsoSurface">
 
-<h4>JuliaFractal</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>JuliaFractal</h4></td></tr>
+<tr><td>
 
 <p>The <code>JuliaFractal</code> is a three-dimensional slice of a
 four-dimensional Julia fractal set. See the <a
@@ -2030,9 +2032,9 @@ type and function type parameters are combined in <code>type</code>.</p>
 </tbody></table>
 </div dh="JuliaFractal">
 
-<h4>Lathe</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Lathe</h4></td></tr>
+<tr><td>
 
 <p>The <code>Lathe</code> object is a surface of revolution created by sweeping
 a spline around the y-axis, centered at the origin. The resulting object is
@@ -2131,9 +2133,9 @@ object, <code>Sor</code>, but it is also substantially slower to render.</p>
 </tbody></table>
 </div dh="LightSource">
 
-<h4>Merge</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Merge</h4></td></tr>
+<tr><td>
 
 <p>The <code>Merge</code> type is one of the four CSG operations. Like all of
 the CSG operations other than <code>Difference</code>, it has a single mandatory
@@ -2175,9 +2177,9 @@ var merge = new Merge({ components: [ obj1, obj2 ] });</div>
 </tbody></table>
 </div dh="Merge">
 
-<h4>Mesh</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Mesh</h4></td></tr>
+<tr><td>
 
 <p>TODO</p>
 
@@ -2208,9 +2210,9 @@ var merge = new Merge({ components: [ obj1, obj2 ] });</div>
 </tbody></table>
 </div dh="Mesh">
 
-<h4>Ovus</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Ovus</h4></td></tr>
+<tr><td>
 
 <p>The <code>Ovus</code> type is one of POV-Ray's more interesting and versatile
 geometric primitives. It consists of two spheres defined by
@@ -2249,9 +2251,9 @@ a wide variety of other shapes can be constructed with it.</p>
 </tbody></table>
 </div dh="Ovus">
 
-<h4>Parametric</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Parametric</h4></td></tr>
+<tr><td>
 
 <p>Along with <code>IsoSurface</code>, the <code>Parametric</code> type is one of the
 places where CephaloPOV cannot shield you from the POV-Ray Scene Description Language, or
@@ -2326,9 +2328,9 @@ obj.transform = new Matrix("rotate", 0, 90, 0);</div>
 </tbody></table>
 </div dh="Parametric">
 
-<h4>Plane</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Plane</h4></td></tr>
+<tr><td>
 
 <p>Arguably POV-Ray's simplest primitive, the <code>Plane</code> is an infinite
 solid dividing all space into two halves. It is defined by a
@@ -2370,9 +2372,9 @@ flood!</p>
 </tbody></table>
 </div dh="Plane">
 
-<h4>Poly</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Poly</h4></td></tr>
+<tr><td>
 
 <p>The <code>Poly</code> type offers a generic interface to create polynomial
 surfaces of orders 2 to 35. You must specify the <code>order</code> of the
@@ -2427,9 +2429,9 @@ obj.transform = new Matrix("scale", 2, 2, 2);</div>
 </tbody></table>
 </div dh="Poly">
 
-<h4>Polygon</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Polygon</h4></td></tr>
+<tr><td>
 
 <p>Another versatile two-dimensional primitive, the <code>Polygon</code> type is
 defined by it's sole <code>points</code> parameter, which is an array of
@@ -2468,9 +2470,9 @@ in the first.</p>
 </tbody></table>
 </div dh="Polygon">
 
-<h4>Polynomial</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Polynomial</h4></td></tr>
+<tr><td>
 
 <p>The <code>Polynomial</code> type is another arbitrary polynomial shape object
 that provides an alternative to the <code>Poly</code> type, and like it, it must
@@ -2519,9 +2521,9 @@ number of coefficients thus:</p>
 </tbody></table>
 </div dh="Polynomial">
 
-<h4>Prism</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Prism</h4></td></tr>
+<tr><td>
 
 <p>The <code>Prism</code> type is the three-dimensional analogue of the
 <code>Polygon</code>. It sweeps the shape defined by the array of
@@ -2570,9 +2572,9 @@ the <code>Polygon</code>.</p>
 </tbody></table>
 </div dh="Prism">
 
-<h4>Quadric</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Quadric</h4></td></tr>
+<tr><td>
 
 <p>The <code>Quadric</code> type is an optimized second-order polynomial
 shape. Its sole required attribute is <code>coefficients</code>, an array
@@ -2606,9 +2608,9 @@ of 10 floats.</p>
 </tbody></table>
 </div dh="Quadric">
 
-<h4>Quartic</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Quartic</h4></td></tr>
+<tr><td>
 
 <p>The <code>Quartic</code> type is an optimized fourth-order polynomial shape.
 Its sole required attribute is <code>coefficients</code>, an array of 35
@@ -2650,9 +2652,9 @@ obj.transform = new Matrix("scale", 0.2, 0.2, 0.2);</div>
 </tbody></table>
 </div dh="Quartic">
 
-<h4>Sor</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Sor</h4></td></tr>
+<tr><td>
 
 <p>The <code>Sor</code> object, in addition to being an example of how camelCase
 breaks down when forced to ingest acronyms, is a simpler and faster form of a
@@ -2710,9 +2712,9 @@ normal endcaps and yields a hollow shape.</p>
 </tbody></table>
 </div dh="Sor">
 
-<h4>Sphere</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Sphere</h4></td></tr>
+<tr><td>
 
 <p>The <code>Sphere</code> is defined by the coordinates of its
 <code>center</code> and the measure of its <code>radius</code>. The example at
@@ -2750,9 +2752,9 @@ the field strength.
 </tbody></table>
 </div dh="Sphere">
 
-<h4>SphereSweep</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>SphereSweep</h4></td></tr>
+<tr><td>
 
 <p>A <code>SphereSweep</code> is a shape consisting of the space occupied by a
 sphere moving along a spline. The radius of the sphere can vary over time. It is
@@ -2797,9 +2799,9 @@ you can construct arbitrarily complicated shapes with a <code>SphereSweep</code>
 </tbody></table>
 </div dh="SphereSweep">
 
-<h4>Superellipsoid</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Superellipsoid</h4></td></tr>
+<tr><td>
 
 <p>The <code>Superellipsoid</code> type implements what is more properly known
 as a superquadric ellipsoid whose shape can vary from a cube with rounded edges
@@ -2839,9 +2841,9 @@ have the same value, the result is a cube with rounded edges. When both values r
 </tbody></table>
 </div dh="Superellipsoid">
 
-<h4>Text</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Text</h4></td></tr>
+<tr><td>
 
 <p>The <code>Text</code> type is very similar to the <code>Prism</code> type,
 the main difference being that instead of specifying a spline yourself, you hand
@@ -2889,9 +2891,9 @@ obj.transform = new Matrix("translate", 0, 0, -1);</div>
 </tbody></table>
 </div dh="Text">
 
-<h4>Torus</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Torus</h4></td></tr>
+<tr><td>
 
 <p>The <code>Torus</code> type specifies a torus with its major and minor radii.
 If you think of a torus as the surface described by a smaller two-dimensional
@@ -2931,9 +2933,9 @@ of 0.5 units and a major radius of 2 units.</p>
 </tbody></table>
 </div dh="Torus">
 
-<h4>Triangle</h4>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Triangle</h4></td></tr>
+<tr><td>
 
 <p>TODO</p>
 
@@ -2969,11 +2971,9 @@ of 0.5 units and a major radius of 2 units.</p>
 </tbody></table>
 </div dh="Triangle">
 
-<h4>Union</h4>
-
-<h5>Attributes</h5>
-
-<table class="illusBasic"><tr><td>
+<table class="illusBasic">
+<tr><td colspan='2'><h4>Union</h4></td></tr>
+<tr><td>
 
 <p>The <code>Union</code> type is one of the four CSG operations. Like all of
 the CSG operations other than <code>Difference</code>, it has a single mandatory
@@ -3000,6 +3000,8 @@ var union = new Union({ components: [ obj1, obj2 ] });</div>
     <img src="img/union_basic.png">
 
 </td></tr></table>
+
+<h5>Attributes</h5>
 
 <div dh="Union">
 <table class='sgrid attrs'>
@@ -3655,14 +3657,16 @@ frames.)</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Transformations fix/extend</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C?</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>...</td><td>Transformations fix/extend</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td class='subtask'>Implicit arguments, e.g. <code>"rotate", 45</code> means <code>"rotate", 45, 45, 45</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td class='subtask'>Add generic transformation methods to <code>Primitive</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td class='subtask'>Add parallel methods to <code>Matrix</code> with chaining.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td class='subtask'>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td class='subtask'>Implicit arguments, e.g. <code>"rotate", 45</code> means <code>"rotate", 45, 45, 45</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td class='subtask'>Add generic transformation methods to <code>Primitive</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td class='subtask'>Add parallel methods to <code>Matrix</code> with chaining.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Mutate <code>codegen.js</code> into <code>build.js</code> and document.</td></tr>
 
         <tr><td class='pending'>pending</td><td>DOC</td><td></td><td>Document the various spline types.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Atmospheric effects</td></tr>
@@ -3672,8 +3676,8 @@ frames.)</p>
             <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'><code>Pigment</code> and <code>PigmentMap</code></td></tr>
             <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'><code>Texture</code> and <code>TextureMap</code></td></tr>
 
+        <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
         <tr><td class='working'>working</td><td>I+T</td><td></td><td>Documentation illustration generator script, further tests</td></tr>
-            <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
 
             <!-- finite patches -->
 
