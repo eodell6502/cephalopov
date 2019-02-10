@@ -28,6 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 global.cpov = { };
 
+cpov.version = "0.0.1";
 
 //------------------------------------------------------------------------------
 // Internal global state.
