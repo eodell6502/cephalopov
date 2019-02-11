@@ -18,6 +18,7 @@ module.exports = {
 		"Primitive.resetTransform",
         "Primitive.snapshot",
         "Primitive.toSDL",
+        "Primitive.transformations",
 		"Primitive.xset",
     ],
     mutable: [
@@ -175,7 +176,7 @@ module.exports = {
             tname: "string"
         }, {
             name:   "transform",
-            valid:  "cpov.isClass(val, 'Matrix')",
+            valid:  "cpov.isClass(val, 'Matrix') || (val = new Matrix(val))",
             err:    "transform must be a Matrix.",
             custom: "Primitive.transform.get-set",
             desc:   "This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.",

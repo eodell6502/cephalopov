@@ -66,14 +66,33 @@ function main(cpov) {
 
     testHeader(fp, ++testSerial, "Transform debug test #1");                    testTransformDebug1(fp);
     testHeader(fp, ++testSerial, "Transform scale/rotate/translate test");      testTransformSRT(fp);
+    testHeader(fp, ++testSerial, "Primitive transformations test");             testPrimitiveTransformations(fp);
 }
 
 module.exports = main;
 
 //------------------------------------------------------------------------------
 // One-off debugging functions remain in here because they're still useful for
-// detecting regressions.
+// detecting regressions after the bug has been fixed.
 //------------------------------------------------------------------------------
+
+
+//==============================================================================
+
+function testPrimitiveTransformations(fp) {
+
+    var sphere = new Sphere({ center: [0,0,0], radius: 2, transform: "none" });
+    fp.write("INIT NONE:  " + sphere.transform.toSDL() + "\n");
+    sphere.scale(2, 2, 2);
+    fp.write("SCALED:     " + sphere.transform.toSDL() + "\n");
+    sphere.rotate(90, 90, 90);
+    fp.write("ROTATED:    " + sphere.transform.toSDL() + "\n");
+    sphere.translate(3, 3, 3);
+    fp.write("TRANSLATED: " + sphere.transform.toSDL() + "\n");
+    sphere.skew({ yx: 1.5 });
+    fp.write("SKEWED:     " + sphere.transform.toSDL() + "\n\n");
+}
+
 
 //==============================================================================
 

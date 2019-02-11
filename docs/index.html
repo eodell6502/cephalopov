@@ -1441,6 +1441,30 @@ repeatedly setting <code>transform</code> and then calling
 <p class='fdesc'>Restores the object's current <code>transform</code> to the
 value of its <code>baseTransform</code>.</p>
 
+<div class='fsig'>rotate(<i>x</i>, <i>y</i>, <i>z</i>)</div>
+
+<p class='fdesc'>This is a convenience method for applying a rotation to the
+current object. Values are in degrees, and if <code>y</code> and <code>z</code>
+are <code>undefined</code>, the value of <code>x</code> will be used for both of
+them.</p>
+
+<div class='fsig'>scale(<i>x</i>, <i>y</i>, <i>z</i>)</div>
+
+<p class='fdesc'>This is a convenience method for applying a scale
+transformation to the current object. If <code>y</code> and <code>z</code> are
+<code>undefined</code>, the value of <code>x</code> will be used for both of
+them.</p>
+
+<div class='fsig'>skew(<i>pairs</i>)</div>
+
+<p class='fdesc'>This is a convenience method for applying skew transformations
+to the current object. As with the similar convenience form in the constructor,
+the pairs of axes are passed as members of the <code>pairs</code> object,
+e.g.</p>
+
+<div class='fdesc code'>someObj.skew({ yx: 1.5 });</div>
+
+
 <div class='fsig'>snapshot();</div>
 
 <p class='fdesc'>If <code>cpov.snapshotMode</code> is <code>true</code>, this
@@ -1456,6 +1480,12 @@ by the <code>toSDL</code> methods in the subclasses. Those subclass methods will
 emit a fatal error message if any mandatory attributes are not specified, but
 the <code>Primitive</code> base class has no mandatory attributes, so this call
 will always succed.</p>
+
+<div class='fsig'>translate(<i>x</i>, <i>y</i>, <i>z</i>)</div>
+
+<p class='fdesc'>This is a convenience method for applying a translation to the
+current object. If <code>y</code> and <code>z</code> are <code>undefined</code>,
+the value of <code>x</code> will be used for both of them.</p>
 
 <div class='fsig'>xset(<i>valObj</i>)</div>
 

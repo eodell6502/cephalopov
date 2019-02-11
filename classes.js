@@ -3672,6 +3672,9 @@ class Primitive {
             val = val();
         }
     
+        if(val == "none")
+            val = new Matrix("none");
+    
         if(!cpov.isClass(val, "Matrix"))
             cpov.error("fatal", "transform value must evaluate to a Matrix.", "Primitive.transform", this);
     
@@ -3950,6 +3953,38 @@ class Primitive {
             content.push(this.transform.toSDL(stops));
     
         return content.join("\n");
+    }
+
+
+    //--------------------------------------------------------------------------
+    // This set of four methods, rotate, scale, skew, and translate, are
+    // convenience methods for applying transformations to Primitives. They all
+    // call the corresponding Matrix methods after checking that the transform
+    // member has been initialized.
+    //--------------------------------------------------------------------------
+    
+    rotate(x, y, z) {
+        if(this.transform === null)
+            cpov.error("fatal", "Cannot perform rotation on uninitialized transform.", "Primitive.rotate", this);
+        this.transform.rotate(x, y, z);
+    }
+    
+    scale(x, y, z) {
+        if(this.transform === null)
+            cpov.error("fatal", "Cannot perform scale on uninitialized transform.", "Primitive.scale", this);
+        this.transform.scale(x, y, z);
+    }
+    
+    skew(pairs) {
+        if(this.transform === null)
+            cpov.error("fatal", "Cannot perform skew on uninitialized transform.", "Primitive.skew", this);
+        this.transform.skew(pairs);
+    }
+    
+    translate(x, y, z) {
+        if(this.transform === null)
+            cpov.error("fatal", "Cannot perform translation on uninitialized transform.", "Primitive.translate", this);
+        this.transform.translate(x, y, z);
     }
 
 
