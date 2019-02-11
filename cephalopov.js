@@ -550,7 +550,7 @@ cpov.initObject = function(obj, vals) {
     for(var k in vals) {
         if(k == "serial")
             continue;
-        if(obj[k] !== undefined) {
+        if(obj[k] !== undefined && obj[k] === null) {
             obj[k] = vals[k];
         }
     }

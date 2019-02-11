@@ -561,21 +561,6 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Torus //-----------------------------------------------------------------
-
-	cpov.outputBase = "./docs/src/torus_basic";
-    stage[0].snapshot(); stage[1].snapshot();
-
-	var obj = new Torus({
-		minorRadius: 0.5,
-		majorRadius: 2,
-        texture: yellow
-    });
-    obj.snapshot();
-
-    cpov.outputFrame();
-    obj.destroy();
-
 	// Transforms: Rotate //----------------------------------------------------
 
 	cpov.outputBase = "./docs/src/xtestx";
@@ -590,6 +575,22 @@ function main(cpov) {
 	obj.transform = new Matrix("rotate", 25, 0, 0);
 
 	obj.snapshot();
+
+    cpov.outputFrame();
+    obj.destroy();
+
+	// Triangle //--------------------------------------------------------------
+
+	cpov.outputBase = "./docs/src/triangle_basic";
+    stage[0].snapshot(); stage[1].snapshot();
+
+	var obj = new Triangle({
+        corner1: [ -1, -1, -1 ],
+        corner2: [  1, -1, -1 ],
+        corner3: [  0,  1,  1 ],
+        texture: yellow
+    });
+    obj.snapshot();
 
     cpov.outputFrame();
     obj.destroy();

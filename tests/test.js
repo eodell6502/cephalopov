@@ -63,9 +63,42 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "testStage triplane test");                    testStageTriplaneTest(fp);
 
     testHeader(fp, ++testSerial, "Primitive/Sphere SDL wrapper test");          testPrimitiveWrappers(fp);
+
+    testHeader(fp, ++testSerial, "Transform debug test #1");                    testTransformDebug1(fp);
 }
 
 module.exports = main;
+
+//------------------------------------------------------------------------------
+// One-off debugging functions remain in here because they're still useful for
+// detecting regressions.
+//------------------------------------------------------------------------------
+
+
+
+//==============================================================================
+
+
+
+function testTransformDebug1(fp) {
+    var scale  = new Matrix("scale", 2, 2, 2);
+    var rotate = new Matrix("rotate", 90, 90, 90);
+
+    fp.write("SCALE RAW:  " + scale.toSDL() + "\n");
+    fp.write("ROTATE RAW: " + rotate.toSDL() + "\n");
+
+    var sphere = new Sphere({ center: [0,0,0], radius: 2, transform: rotate });
+    sphere.transform = scale;
+    fp.write("MARKER 2: " + sphere.transform.foo + "\n");
+    fp.write("PRE INIT 2: " + sphere.transform.toSDL() + "\n");
+    var sphere = new Sphere({ center: [0,0,0], radius: 2 });
+    sphere.transform = rotate;
+    fp.write("POST INIT 1: " + sphere.transform.toSDL() + "\n");
+    sphere.transform = scale;
+    fp.write("POST INIT 2: " + sphere.transform.toSDL() + "\n\n");
+
+}
+
 
 //==============================================================================
 

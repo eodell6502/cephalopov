@@ -1465,7 +1465,7 @@ class Matrix {
 			0, 0, 0
 		];
 
-		if(v01 == "none")
+		if(v01 == "none") // identity matrix
 			return;
 
 		if(Array.isArray(v01)) {
@@ -1481,11 +1481,15 @@ class Matrix {
 
 		} else if(v00 == "scale") {
 
+            if(v02 === undefined) v02 = v10 = v01;
+
             this.raw[0] = v01; // x
             this.raw[4] = v02; // y
             this.raw[8] = v10; // z
 
         } else if(v00 == "rotate") {
+
+            if(v02 === undefined) v02 = v10 = v01;
 
 			if(v01 != 0) {                             // X
 				this.raw = Matrix._xMatrix(this.raw, [
@@ -1515,6 +1519,8 @@ class Matrix {
 			}
 
         } else if(v00 == "translate") {
+
+            if(v02 === undefined) v02 = v10 = v01;
 
             this.raw[9]  = v01; // x
             this.raw[10] = v02; // y

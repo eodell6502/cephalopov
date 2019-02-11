@@ -225,6 +225,9 @@ sophisticated but easy-to-use geometric query system that will let you leverage
 quite complex math without having to understand the details, but that's still
 a ways off.</span></p>
 
+<h3>Installation</h3>
+
+<p>TODO</p>
 
 <h2>Tutorial</h2>
 
@@ -1252,11 +1255,18 @@ var rotate    = new Matrix("rotate", 45, 15, 0);</div>
 is the first argument, followed by three float arguments, one for each of the
 axes. As with POV-Ray, the values for rotations are given in degrees.</p>
 
-<p class='fdesc'>The <code>Matrix</code> constructor has a couple of additional
-short forms. The first of these lets you specify skews without having to
-construct the whole matrix by hand. Just pass <code>"skew"</code> as the first
-argument, and the second argument is an object containing the axis pairs to
-perform the skew by, like so:</p>
+<p class='fdesc'>The <code>Matrix</code> constructor has a few additional short
+forms. The first is a convenience form of scale, translate, and rotate for
+cases where all three floats are the same:</p>
+
+<div class='code fdesc'>var scale     = new Matrix("scale", 2.2);
+var translate = new Matrix("translate", 5);
+var rotate    = new Matrix("rotate", 45);</div>
+
+<p>The next lets you specify skews without having to construct the whole matrix
+by hand. Just pass <code>"skew"</code> as the first argument, and the second
+argument is an object containing the axis pairs to perform the skew by, like
+so:</p>
 
 <div class='code fdesc'>var skew = new Matrix("skew", { xy: 1.5, zy: 0.2 });</div>
 
@@ -2643,7 +2653,7 @@ obj.transform = new Matrix("scale", 0.2, 0.2, 0.2);</div>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td>An array of floats defining the coefficients of a fourth-order polynomial.</td></tr>
+<tr><td>RW</td><td>Y</td><td>coefficients</td><td>Array</td><td>An array of 35 floats defining the coefficients of a fourth-order polynomial.</td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Quartic</code>, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>finite</td><td>boolean</td><td>If <code>true</code>, the shape is finite in extent. For a <code>Quartic</code>, this is always <code>false</code>.</td></td></tr>
@@ -2937,15 +2947,33 @@ of 0.5 units and a major radius of 2 units.</p>
 <tr><td colspan='2'><h4>Triangle</h4></td></tr>
 <tr><td>
 
-<p>TODO</p>
+<p>The <code>Triangle</code> type describes a triangular patch that can be used
+independently or as part of a mesh. There are two kinds of triangles in
+POV-Ray, <code>triangle</code> and <code>smooth_triangle</code>, and both
+are subsumed in CephaloPOV's <code>Triangle</code>.</p>
 
-<div class='code'>var obj = new PlaceholderObj({
-    // TODO
+<p>A (plain) triangle has only three required attributes, <code>corner1</code>,
+<code>corner2</code>, and <code>corner3</code>, all <code>VectorXYZ</code>
+objects with an obvious purpose.</p>
+
+<p>A smooth triangle takes four more attributes. The first is
+<code>smooth</code>, which must be <code>true</code>, in addition to which
+<code>normal1</code>, <code>normal2</code>, and <code>normal3</code> must be
+set. This enables the use of Phong shading. If <code>smooth</code> is
+<code>false</code>, the triangle will be output as a plain triangle. Toggling
+between the two can be useful for speeding up preview renders or effects in
+animations.</p>
+
+<div class='code'>var obj = new Triangle({
+    corner1: [ -1, -1, -1 ],
+    corner2: [  1, -1, -1 ],
+    corner3: [  0,  1,  1 ],
+    texture: yellow
 });</div>
 
 </td><td>
 
-    <img src="img/placeholder_basic.png">
+    <img src="img/triangle_basic.png">
 
 </td></tr></table>
 
@@ -3645,7 +3673,7 @@ frames.)</p>
 
 <h3>TODO</h3>
 
-<h4>Milestone C1: Phase 0, Part 1</h4>
+<h4>Version 0.0.2</h4>
 
 <table class='sgrid todo'>
     <thead>
@@ -3656,78 +3684,83 @@ frames.)</p>
             <th>Description</th>
         </tr>
     <thead><tbody>
-        <!-- <tr><td></td><td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C?</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>...</td><td>Transformations fix/extend</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td class='subtask'>Fix bug with init-time assignment of <code>transform</code> attribute.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td class='subtask'>Implicit arguments, e.g. <code>"rotate", 45</code> means <code>"rotate", 45, 45, 45</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td class='subtask'>Add generic transformation methods to <code>Primitive</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td class='subtask'>Add parallel methods to <code>Matrix</code> with chaining.</td></tr>
+        <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td><b>Transform:</b> Add generic transformation methods to <code>Primitive</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td><b>Transform:</b> Add parallel methods to <code>Matrix</code> with chaining.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Mutate <code>codegen.js</code> into <code>build.js</code> and document.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td>Organize test processes for Windows and Linux.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>CA</td><td>Get SDL Functions to return the leading <code>'&'</code>, adjust toSDL methods accordingly.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>CB</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>CC</td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>CD</td><td><code>Matrix, Vector, Color</code>: Use JS/SDL func in lieu of individual attributes</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>CE</td><td><code>Matrix</code>: Improve constructor validation</td></tr>
 
-        <tr><td class='pending'>pending</td><td>DOC</td><td></td><td>Document the various spline types.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Atmospheric effects</td></tr>
+            <!-- finite patches -->
 
+            <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td><code>Mesh</code> description and example</td></tr>
+
+            <!-- Lights and Cameras -->
+
+            <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
+            <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
+
+        <tr><td class='pending'>pending</td><td>DOC</td><td>D5</td><td>Document the various spline types.</td></tr>
+
+        <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Camera</code>: Pseudo-primitive in CSG integration</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Camera</code>: Pseudo-primitive transform integration</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaAttenuation</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaInteraction</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.projectedThrough</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td class='subtask'><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Mesh2</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Reorg: Move things needed for <code>codegen</code> to separate file not included at runtime</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
+    </tbody>
+</table>
+
+<h4>Version 0.0.?</h4>
+
+<table class='sgrid todo'>
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Pri</th>
+            <th>Description</th>
+        </tr>
+    <thead><tbody>
+        <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Make sure <code>Primitive.destroy</code> recurses through child objects.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Validate <code>Polynomial.order</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>cpov.js</code>: More selective scope management, untangle internal dependencies</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Management of array attributes</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Execution: Oversee execution directly</td></tr>
         <tr><td class='working'>working</td><td>I+T</td><td></td><td>Texture subsystem</td></tr>
             <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'><code>Normal</code> and <code>NormalMap</code></td></tr>
             <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'><code>Pigment</code> and <code>PigmentMap</code></td></tr>
             <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'><code>Texture</code> and <code>TextureMap</code></td></tr>
-
-        <tr><td class='working'>working</td><td>I+T</td><td></td><td class='subtask'>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
-        <tr><td class='working'>working</td><td>I+T</td><td></td><td>Documentation illustration generator script, further tests</td></tr>
-
-            <!-- finite patches -->
-
-            <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td class='subtask'><code>Triangle</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>I+T</td><td>D2</td><td class='subtask'><code>Mesh</code> description and example</td></tr>
-
-            <!-- Lights and Cameras -->
-
-            <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td class='subtask'><code>Camera</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td class='subtask'><code>LightSource</code> description and example</td></tr>
-
-        <tr><td class='pending'>pending</td><td>IMP</td><td></td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
-
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Camera</code></td></tr>
-        <tr><td class='pending'>pending</td><td>IMP</td><td></td><td class='subtask'><code>Camera.normal</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'>Pseudo-primitive in CSG integration</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'>Pseudo-primitive transform integration</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>cpov.js</code>: More selective scope management, untangle internal dependencies</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>LightSource</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'>Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>LightSource.looksLike</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>LightSource.mediaAttenuation</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>LightSource.mediaInteraction</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>LightSource.projectedThrough</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Matrix, Vector, Color</code>: Use JS/SDL func in lieu of individual attributes</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Matrix</code>: Improve constructor validation</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Mesh2</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Primitive</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Primitive.interior</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Primitive.interiorTexture</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Primitive.photons</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Primitive.radiosity</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td class='subtask'><code>Primitive.texture</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Management of array attributes</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Reorg: Move things needed for <code>codegen</code> to separate file not included at runtime</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Execution: Oversee execution directly</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Make sure <code>Primitive.destroy</code> recurses through child objects.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Validate <code>Polynomial.order</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Atmospheric effects</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Reports</td></tr>
-
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
     </tbody>
 </table>
-
 
 <h4>Backlog</h4>
 

@@ -552,12 +552,12 @@ function main() {
     for(var i in opts)
         optCount += opts[i].cnt;
 
-    if(opts.help.cnt) {
+    if(opts.help.cnt || optCount == 0) {
         console.log("\nUsage: codegen [options]\n\n"
             + "-c, --classes   Generate classes.js\n"
+            + "-d, --docs      Update autogen text in index.html\n"
             + "-s, --snippets  Regenerate snippets.js --> snippets.new.js\n"
             + "-o, --objlist   Produce list of object classes\n"
-            + "-d, --docs      Update autogen text in index.html\n"
             + "-h, --help      Display this text\n\n");
         return;
     }
