@@ -65,6 +65,7 @@ function main(cpov) {
     testHeader(fp, ++testSerial, "Primitive/Sphere SDL wrapper test");          testPrimitiveWrappers(fp);
 
     testHeader(fp, ++testSerial, "Transform debug test #1");                    testTransformDebug1(fp);
+    testHeader(fp, ++testSerial, "Transform scale/rotate/translate test");      testTransformSRT(fp);
 }
 
 module.exports = main;
@@ -74,11 +75,24 @@ module.exports = main;
 // detecting regressions.
 //------------------------------------------------------------------------------
 
-
-
 //==============================================================================
 
+function testTransformSRT(fp) {
 
+    var m = new Matrix("none");
+
+    fp.write("INIT NONE:  " + m.toSDL() + "\n");
+    m.scale(2, 2, 2);
+    fp.write("SCALED:     " + m.toSDL() + "\n");
+    m.rotate(90, 90, 90);
+    fp.write("ROTATED:    " + m.toSDL() + "\n");
+    m.translate(3, 3, 3);
+    fp.write("TRANSLATED: " + m.toSDL() + "\n");
+    m.skew({yx: 1.5});
+    fp.write("SKEWED:     " + m.toSDL() + "\n\n");
+}
+
+//==============================================================================
 
 function testTransformDebug1(fp) {
     var scale  = new Matrix("scale", 2, 2, 2);
@@ -89,7 +103,6 @@ function testTransformDebug1(fp) {
 
     var sphere = new Sphere({ center: [0,0,0], radius: 2, transform: rotate });
     sphere.transform = scale;
-    fp.write("MARKER 2: " + sphere.transform.foo + "\n");
     fp.write("PRE INIT 2: " + sphere.transform.toSDL() + "\n");
     var sphere = new Sphere({ center: [0,0,0], radius: 2 });
     sphere.transform = rotate;

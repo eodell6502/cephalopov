@@ -11612,7 +11612,7 @@ class Matrix {
 			0, 0, 0
 		];
 
-		if(v01 == "none") // identity matrix
+		if(v00 == "none") // identity matrix
 			return;
 
 		if(Array.isArray(v01)) {
@@ -11936,9 +11936,18 @@ class Matrix {
 
     }
 
-	//------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // Copies the values of that to this.
+    //--------------------------------------------------------------------------
+
+    copyFrom(that) {
+        for(var i = 0; i < 12; i++)
+            this.raw[i] = that.raw[i];
+    }
+
+	//--------------------------------------------------------------------------
 	// Sets multiple attributes at once using an object.
-	//------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------
 
 	xset(vals) {
 		cpov.initObject(this, vals);
@@ -11977,6 +11986,58 @@ class Matrix {
 
 		return new Matrix(Matrix._xMatrix(this.raw, that.raw));
     }
+
+    //--------------------------------------------------------------------------
+    // Convenience method for applying a rotation to the current Matrix. If
+    // y and z are undefined, the value of x is copied to them.
+    //--------------------------------------------------------------------------
+
+    rotate(x, y, z) {
+        if(y === undefined)
+            z = y = x;
+        var that = new Matrix("rotate", x, y, z);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
+
+    //--------------------------------------------------------------------------
+    // Convenience method for scaling the current Matrix. If y and z are
+    // undefined, the value of x is copied to them.
+    //--------------------------------------------------------------------------
+
+    scale(x, y, z) {
+        if(y === undefined)
+            z = y = x;
+        var that = new Matrix("scale", x, y, z);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
+
+    //--------------------------------------------------------------------------
+    // Convenience method for scaling the current Matrix. If y and z are
+    // undefined, the value of x is copied to them.
+    //--------------------------------------------------------------------------
+
+    translate(x, y, z) {
+        if(y === undefined)
+            z = y = x;
+        var that = new Matrix("translate", x, y, z);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
+
+    //--------------------------------------------------------------------------
+    // Convenience method for skewing the current Matrix. As with the short-
+    // hand version for initializing a skew matrix, the single argument is an
+    // object with the desired axis pairs.
+    //--------------------------------------------------------------------------
+
+    skew(pairs) {
+        var that = new Matrix("skew", pairs);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
+
 
     //--------------------------------------------------------------------------
     // Given a VectorXYZ, point, returns a new VectorXYZ this * point.
