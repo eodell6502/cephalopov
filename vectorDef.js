@@ -10,14 +10,14 @@ module.exports = {
                 name:  "x",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "x must be a float.",
+                err:   "x must be a float or a function returning a float.",
                 desc:  "The X coordinate of the vector.",
                 tname: "float"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "y must be a float.",
+                err:   "y must be a float or a function returning a float.",
                 desc:  "The Y coordinate of the vector.",
                 tname: "float"
             },
@@ -34,14 +34,14 @@ module.exports = {
                 name:  "u",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "u must be a float.",
+                err:   "u must be a float or a function returning a float.",
                 desc:  "The U coordinate of the vector.",
                 tname: "float"
             }, {
                 name:  "v",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "v must be a float.",
+                err:   "v must be a float or a function returning a float.",
                 desc:  "The V coordinate of the vector.",
                 tname: "float"
             },
@@ -58,21 +58,21 @@ module.exports = {
                 name:  "x",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "x must be a float.",
+                err:   "x must be a float or a function returning a float.",
                 desc:  "The X coordinate of the vector.",
                 tname: "float"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "y must be a float.",
+                err:   "y must be a float or a function returning a float.",
                 desc:  "The Y coordinate of the vector.",
                 tname: "float"
             }, {
                 name:  "z",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "z must be a float.",
+                err:   "z must be a float or a function returning a float.",
                 desc:  "The Z coordinate of the vector.",
                 tname: "float"
             },
@@ -89,28 +89,28 @@ module.exports = {
                 name:  "x",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "x must be a float.",
+                err:   "x must be a float or a function returning a float.",
                 desc:  "The X coordinate of the vector.",
                 tname: "float"
             }, {
                 name:  "y",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "y must be a float.",
+                err:   "y must be a float or a function returning a float.",
                 desc:  "The Y coordinate of the vector.",
                 tname: "float"
             }, {
                 name:  "z",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "z must be a float.",
+                err:   "z must be a float or a function returning a float.",
                 desc:  "The Z coordinate of the vector.",
                 tname: "float"
             }, {
                 name:  "w",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "w must be a float.",
+                err:   "w must be a float or a function returning a float.",
                 desc:  "The W coordinate of the vector.",
                 tname: "float"
             },
@@ -127,33 +127,33 @@ module.exports = {
                 name:  "r",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "r must be a float.",
+                err:   "r must be a float or a function returning a float.",
                 desc:  "The red component of the color, in the unit interval (0.0-1.0).",
                 tname: "float"
             }, {
                 name:  "g",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                err:   "g must be a float.",
+                err:   "g must be a float or a function returning a float.",
                 desc:  "The green component of the color, in the unit interval (0.0-1.0).",
                 tname: "float"
             }, {
                 name:  "b",
                 req:   true,
                 valid: "cpov.isFloat(val)",
-                desc:  "b must be a float",
+                desc:  "b must be a float or a function returning a float",
                 desc:  "The blue component of the color, in the unit interval (0.0-1.0).",
                 tname: "float"
             }, {
                 name:  "f",
                 valid: "cpov.isFloat(val)",
-                err:   "f must be a float.",
+                err:   "f must be a float or a function returning a float.",
                 desc:  "The filter component of the color, in the unit interval (0.0-1.0).",
                 tname: "float"
             }, {
                 name:  "t",
                 valid: "cpov.isFloat(val)",
-                err:   "t must be a float.",
+                err:   "t must be a float or a function returning a float.",
                 desc:  "The transmit component of the color, in the unit interval (0.0-1.0).",
                 tname: "float"
             }, {

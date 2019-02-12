@@ -10667,7 +10667,7 @@ class VectorXY {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
         } else {
-            cpov.error("fatal", "x must be a float.", "VectorXY", this);
+            cpov.error("fatal", "x must be a float or a function returning a float.", "VectorXY", this);
         }
     }
 
@@ -10686,7 +10686,7 @@ class VectorXY {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
         } else {
-            cpov.error("fatal", "y must be a float.", "VectorXY", this);
+            cpov.error("fatal", "y must be a float or a function returning a float.", "VectorXY", this);
         }
     }
 
@@ -10828,7 +10828,7 @@ class VectorUV {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._u = val;
         } else {
-            cpov.error("fatal", "u must be a float.", "VectorUV", this);
+            cpov.error("fatal", "u must be a float or a function returning a float.", "VectorUV", this);
         }
     }
 
@@ -10847,7 +10847,7 @@ class VectorUV {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._v = val;
         } else {
-            cpov.error("fatal", "v must be a float.", "VectorUV", this);
+            cpov.error("fatal", "v must be a float or a function returning a float.", "VectorUV", this);
         }
     }
 
@@ -10991,7 +10991,7 @@ class VectorXYZ {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
         } else {
-            cpov.error("fatal", "x must be a float.", "VectorXYZ", this);
+            cpov.error("fatal", "x must be a float or a function returning a float.", "VectorXYZ", this);
         }
     }
 
@@ -11010,7 +11010,7 @@ class VectorXYZ {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
         } else {
-            cpov.error("fatal", "y must be a float.", "VectorXYZ", this);
+            cpov.error("fatal", "y must be a float or a function returning a float.", "VectorXYZ", this);
         }
     }
 
@@ -11029,7 +11029,7 @@ class VectorXYZ {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._z = val;
         } else {
-            cpov.error("fatal", "z must be a float.", "VectorXYZ", this);
+            cpov.error("fatal", "z must be a float or a function returning a float.", "VectorXYZ", this);
         }
     }
 
@@ -11177,7 +11177,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._x = val;
         } else {
-            cpov.error("fatal", "x must be a float.", "VectorXYZW", this);
+            cpov.error("fatal", "x must be a float or a function returning a float.", "VectorXYZW", this);
         }
     }
 
@@ -11196,7 +11196,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._y = val;
         } else {
-            cpov.error("fatal", "y must be a float.", "VectorXYZW", this);
+            cpov.error("fatal", "y must be a float or a function returning a float.", "VectorXYZW", this);
         }
     }
 
@@ -11215,7 +11215,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._z = val;
         } else {
-            cpov.error("fatal", "z must be a float.", "VectorXYZW", this);
+            cpov.error("fatal", "z must be a float or a function returning a float.", "VectorXYZW", this);
         }
     }
 
@@ -11234,7 +11234,7 @@ class VectorXYZW {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._w = val;
         } else {
-            cpov.error("fatal", "w must be a float.", "VectorXYZW", this);
+            cpov.error("fatal", "w must be a float or a function returning a float.", "VectorXYZW", this);
         }
     }
 
@@ -11402,7 +11402,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._r = val;
         } else {
-            cpov.error("fatal", "r must be a float.", "Color", this);
+            cpov.error("fatal", "r must be a float or a function returning a float.", "Color", this);
         }
     }
 
@@ -11421,7 +11421,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._g = val;
         } else {
-            cpov.error("fatal", "g must be a float.", "Color", this);
+            cpov.error("fatal", "g must be a float or a function returning a float.", "Color", this);
         }
     }
 
@@ -11459,7 +11459,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._f = val;
         } else {
-            cpov.error("fatal", "f must be a float.", "Color", this);
+            cpov.error("fatal", "f must be a float or a function returning a float.", "Color", this);
         }
     }
 
@@ -11478,7 +11478,7 @@ class Color {
         if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
             this._t = val;
         } else {
-            cpov.error("fatal", "t must be a float.", "Color", this);
+            cpov.error("fatal", "t must be a float or a function returning a float.", "Color", this);
         }
     }
 
@@ -11651,8 +11651,10 @@ class Matrix {
 			return;
 
 		if(Array.isArray(v01)) {
-			if(!cpov.isArrayOfFloats(v01, 3, 3))
-				cpov.error("fatal", "When given as an array, v01 must be an array of three floats.", "Matrix", this);
+            for(var i = 0; i < v01.length; i++) {
+                if(!(cpov.isNullOrFunction(v01[i]) || cpov.isFloat(v01[i])))
+                    cpov.error("fatal", "When given as an array, v01 must be an array of three floats.", "Matrix", this);
+            }
 			v10 = v01[2]; v02 = v01[1]; v01 = v01[0];
 		}
 
@@ -11665,48 +11667,72 @@ class Matrix {
 
             if(v02 === undefined) v02 = v10 = v01;
 
-            this.raw[0] = v01; // x
-            this.raw[4] = v02; // y
-            this.raw[8] = v10; // z
+            if((cpov.isNullOrFunction(v01) || cpov.isFloat(v01))
+                && (cpov.isNullOrFunction(v02) || cpov.isFloat(v02))
+                && (cpov.isNullOrFunction(v10) || cpov.isFloat(v10))) {
+
+                this.raw[0] = v01; // x
+                this.raw[4] = v02; // y
+                this.raw[8] = v10; // z
+
+            } else {
+                cpov.error("fatal", "All arguments to \"scale\" short form must be floats or functions returning floats.", "Matrix", this);
+            }
 
         } else if(v00 == "rotate") {
 
             if(v02 === undefined) v02 = v10 = v01;
 
-			if(v01 != 0) {                             // X
-				this.raw = Matrix._xMatrix(this.raw, [
-					1,              0,             0,
-					0,  Math.cos(cpov.deg2rad(v01)), Math.sin(cpov.deg2rad(v01)),
-					0, -Math.sin(cpov.deg2rad(v01)), Math.cos(cpov.deg2rad(v01)),
-					0,              0,             0
-				]);
-			}
+            if((cpov.isNullOrFunction(v01) || cpov.isFloat(v01))
+                && (cpov.isNullOrFunction(v02) || cpov.isFloat(v02))
+                && (cpov.isNullOrFunction(v10) || cpov.isFloat(v10))) {
 
-			if(v02 != 0) {                             // Y
-				this.raw = Matrix._xMatrix(this.raw, [
-					Math.cos(cpov.deg2rad(v02)), 0, -Math.sin(cpov.deg2rad(v02)),
-					0,             1,              0,
-					Math.sin(cpov.deg2rad(v02)), 0,  Math.cos(cpov.deg2rad(v02)),
-					0,             0,              0
-				]);
-			}
+                if(v01 != 0) {                             // X
+                    this.raw = Matrix._xMatrix(this.raw, [
+                        1,              0,             0,
+                        0,  Math.cos(cpov.deg2rad(v01)), Math.sin(cpov.deg2rad(v01)),
+                        0, -Math.sin(cpov.deg2rad(v01)), Math.cos(cpov.deg2rad(v01)),
+                        0,              0,             0
+                    ]);
+                }
 
-			if(v10 != 0) {                             // Z
-				this.raw = Matrix._xMatrix(this.raw, [
-					 Math.cos(cpov.deg2rad(v10)), Math.sin(cpov.deg2rad(v10)), 0,
-					-Math.sin(cpov.deg2rad(v10)), Math.cos(cpov.deg2rad(v10)), 0,
-								 0,             0, 1,
-								 0,             0, 0
-				]);
-			}
+                if(v02 != 0) {                             // Y
+                    this.raw = Matrix._xMatrix(this.raw, [
+                        Math.cos(cpov.deg2rad(v02)), 0, -Math.sin(cpov.deg2rad(v02)),
+                        0,             1,              0,
+                        Math.sin(cpov.deg2rad(v02)), 0,  Math.cos(cpov.deg2rad(v02)),
+                        0,             0,              0
+                    ]);
+                }
+
+                if(v10 != 0) {                             // Z
+                    this.raw = Matrix._xMatrix(this.raw, [
+                         Math.cos(cpov.deg2rad(v10)), Math.sin(cpov.deg2rad(v10)), 0,
+                        -Math.sin(cpov.deg2rad(v10)), Math.cos(cpov.deg2rad(v10)), 0,
+                                     0,             0, 1,
+                                     0,             0, 0
+                    ]);
+                }
+
+            } else {
+                cpov.error("fatal", "All arguments to \"rotate\" short form must be floats or functions returning floats.", "Matrix", this);
+            }
 
         } else if(v00 == "translate") {
 
             if(v02 === undefined) v02 = v10 = v01;
 
-            this.raw[9]  = v01; // x
-            this.raw[10] = v02; // y
-            this.raw[11] = v10; // z
+            if((cpov.isNullOrFunction(v01) || cpov.isFloat(v01))
+                && (cpov.isNullOrFunction(v02) || cpov.isFloat(v02))
+                && (cpov.isNullOrFunction(v10) || cpov.isFloat(v10))) {
+
+                this.raw[9]  = v01; // x
+                this.raw[10] = v02; // y
+                this.raw[11] = v10; // z
+
+            } else {
+                cpov.error("fatal", "All arguments to \"translate\" short form must be floats or functions returning floats.", "Matrix", this);
+            }
 
         } else if(v00 == "skew") {
 
@@ -11725,8 +11751,14 @@ class Matrix {
 
         } else {
 
-            this.raw = [ v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31,
-				v32 ];
+            var vals = [ v00, v01, v02, v10, v11, v12, v20, v21, v22, v30, v31, v32 ];
+
+            for(var i = 0; i < vals.length; i++) {
+                if(!(cpov.isNullOrFunction(vals[i]) || cpov.isFloat(vals[i])))
+                    cpov.error("fatal", "All arguments to full form of constructor must be floats or functions returning floats.", "Matrix", this);
+            }
+
+            this.raw = vals;
 
         }
 
@@ -11745,10 +11777,10 @@ class Matrix {
     }
 
     set v00(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[0] = val;
         } else {
-            cpov.error("fatal", "v00 must be a float.", "Matrix");
+            cpov.error("fatal", "v00 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11764,10 +11796,10 @@ class Matrix {
     }
 
     set v01(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[1] = val;
         } else {
-            cpov.error("fatal", "v01 must be a float.", "Matrix");
+            cpov.error("fatal", "v01 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11783,10 +11815,10 @@ class Matrix {
     }
 
     set v02(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[2] = val;
         } else {
-            cpov.error("fatal", "v02 must be a float.", "Matrix");
+            cpov.error("fatal", "v02 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11802,10 +11834,10 @@ class Matrix {
     }
 
     set v10(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[3] = val;
         } else {
-            cpov.error("fatal", "v10 must be a float.", "Matrix");
+            cpov.error("fatal", "v10 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11821,10 +11853,10 @@ class Matrix {
     }
 
     set v11(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[4] = val;
         } else {
-            cpov.error("fatal", "v11 must be a float.", "Matrix");
+            cpov.error("fatal", "v11 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11840,10 +11872,10 @@ class Matrix {
     }
 
     set v12(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[5] = val;
         } else {
-            cpov.error("fatal", "v12 must be a float.", "Matrix");
+            cpov.error("fatal", "v12 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11859,10 +11891,10 @@ class Matrix {
     }
 
     set v20(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[6] = val;
         } else {
-            cpov.error("fatal", "v20 must be a float.", "Matrix");
+            cpov.error("fatal", "v20 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11878,10 +11910,10 @@ class Matrix {
     }
 
     set v21(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[7] = val;
         } else {
-            cpov.error("fatal", "v21 must be a float.", "Matrix");
+            cpov.error("fatal", "v21 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11897,10 +11929,10 @@ class Matrix {
     }
 
     set v22(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[8] = val;
         } else {
-            cpov.error("fatal", "v22 must be a float.", "Matrix");
+            cpov.error("fatal", "v22 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11916,10 +11948,10 @@ class Matrix {
     }
 
     set v30(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[9] = val;
         } else {
-            cpov.error("fatal", "v30 must be a float.", "Matrix");
+            cpov.error("fatal", "v30 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11935,10 +11967,10 @@ class Matrix {
     }
 
     set v31(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[10] = val;
         } else {
-            cpov.error("fatal", "v31 must be a float.", "Matrix");
+            cpov.error("fatal", "v31 must be a float or a function returning a float.", "Matrix");
         }
     }
 
@@ -11954,10 +11986,10 @@ class Matrix {
     }
 
     set v32(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isFloat(val))) {
+        if(cpov.isNullOrFunction(val) || cpov.isFloat(val)) {
             this.raw[11] = val;
         } else {
-            cpov.error("fatal", "v32 must be a float.", "Matrix");
+            cpov.error("fatal", "v32 must be a float or a function returning a float.", "Matrix");
         }
     }
 
