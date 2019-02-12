@@ -4,7 +4,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorXY.conBlock",
-        snippets: ["VectorXY.copy", "VectorXY.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
+        snippets: ["VectorXY.copy", "VectorXY.toSDL", "Primitive.requiredParameterTest", "Primitive.xset", "VectorXY.asArray"],
         mutable: [
             {
                 name:  "x",
@@ -28,7 +28,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorUV.conBlock",
-        snippets: ["VectorUV.copy", "VectorUV.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
+        snippets: ["VectorUV.copy", "VectorUV.toSDL", "Primitive.requiredParameterTest", "Primitive.xset", "VectorUV.asArray"],
         mutable: [
             {
                 name:  "u",
@@ -52,7 +52,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorXYZ.conBlock",
-        snippets: ["VectorXYZ.copy", "VectorXYZ.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
+        snippets: ["VectorXYZ.copy", "VectorXYZ.toSDL", "Primitive.requiredParameterTest", "Primitive.xset", "VectorXYZ.asArray"],
         mutable: [
             {
                 name:  "x",
@@ -83,7 +83,7 @@ module.exports = {
         desc: false,
         conArgs: false,
         conBlock: "VectorXYZW.conBlock",
-        snippets: ["VectorXYZW.copy", "VectorXYZW.toSDL", "Primitive.requiredParameterTest", "Primitive.xset"],
+        snippets: ["VectorXYZW.copy", "VectorXYZW.toSDL", "Primitive.requiredParameterTest", "Primitive.xset", "VectorXYZW.asArray"],
         mutable: [
             {
                 name:  "x",

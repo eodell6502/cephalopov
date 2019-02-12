@@ -10764,6 +10764,71 @@ class VectorXY {
     }
 
 
+    //--------------------------------------------------------------------------
+    // Returns the VectorXY as an array [x, y] based on mode, which may be one
+    // of:
+    //
+    //     normal ... This is the default. Returns an array in which
+    //                all JS functions have been replaced by their return
+    //                values.
+    //     literal ... Returns an exact copy.
+    //     calc ...... As normal, except that the presence of an SDL function
+    //                 will return null instead of the expected array.
+    //     sdl ....... As normal, except that SDL functions are included, minus
+    //                 their leading '&'.
+    //--------------------------------------------------------------------------
+    
+    asArray(mode = "normal") {
+    
+        var result = [ ];
+        var source = [ this._x, this._y ];
+    
+        switch(mode) {
+    
+            case "normal":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "literal":
+                result = source;
+                break;
+    
+            case "calc":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        return null;
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "sdl":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        result[i] = source[i].substr(1);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            default:
+                cpov.error("fatal", "mode argument must be one of 'normal', 'literal', 'calc', or 'sdl'.", "VectorXY.asArray", this);
+                break;
+        }
+    
+        return result;
+    }
+
+
 
 }
 
@@ -10922,6 +10987,71 @@ class VectorUV {
     
     xset(vals) {
     	cpov.initObject(this, vals);
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Returns the VectorUV as an array [u, v] based on mode, which may be one
+    // of:
+    //
+    //     normal ... This is the default. Returns an array in which
+    //                all JS functions have been replaced by their return
+    //                values.
+    //     literal ... Returns an exact copy.
+    //     calc ...... As normal, except that the presence of an SDL function
+    //                 will return null instead of the expected array.
+    //     sdl ....... As normal, except that SDL functions are included, minus
+    //                 their leading '&'.
+    //--------------------------------------------------------------------------
+    
+    asArray(mode = "normal") {
+    
+        var result = [ ];
+        var source = [ this._u, this._v ];
+    
+        switch(mode) {
+    
+            case "normal":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "literal":
+                result = source;
+                break;
+    
+            case "calc":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        return null;
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "sdl":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        result[i] = source[i].substr(1);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            default:
+                cpov.error("fatal", "mode argument must be one of 'normal', 'literal', 'calc', or 'sdl'.", "VectorUV.asArray", this);
+                break;
+        }
+    
+        return result;
     }
 
 
@@ -11106,6 +11236,71 @@ class VectorXYZ {
     
     xset(vals) {
     	cpov.initObject(this, vals);
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Returns the VectorXYZ as an array [x,y,z] based on mode, which may be one
+    // of:
+    //
+    //     normal ... This is the default. Returns an array in which
+    //                all JS functions have been replaced by their return
+    //                values.
+    //     literal ... Returns an exact copy.
+    //     calc ...... As normal, except that the presence of an SDL function
+    //                 will return null instead of the expected array.
+    //     sdl ....... As normal, except that SDL functions are included, minus
+    //                 their leading '&'.
+    //--------------------------------------------------------------------------
+    
+    asArray(mode = "normal") {
+    
+        var result = [ ];
+        var source = [ this._x, this._y, this._z ];
+    
+        switch(mode) {
+    
+            case "normal":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "literal":
+                result = source;
+                break;
+    
+            case "calc":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        return null;
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "sdl":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        result[i] = source[i].substr(1);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            default:
+                cpov.error("fatal", "mode argument must be one of 'normal', 'literal', 'calc', or 'sdl'.", "VectorXYZ.asArray", this);
+                break;
+        }
+    
+        return result;
     }
 
 
@@ -11313,6 +11508,71 @@ class VectorXYZW {
     
     xset(vals) {
     	cpov.initObject(this, vals);
+    }
+
+
+    //--------------------------------------------------------------------------
+    // Returns the VectorXYZW as an array [x,y,z,w] based on mode, which may be
+    // one of:
+    //
+    //     normal ... This is the default. Returns an array in which
+    //                all JS functions have been replaced by their return
+    //                values.
+    //     literal ... Returns an exact copy.
+    //     calc ...... As normal, except that the presence of an SDL function
+    //                 will return null instead of the expected array.
+    //     sdl ....... As normal, except that SDL functions are included, minus
+    //                 their leading '&'.
+    //--------------------------------------------------------------------------
+    
+    asArray(mode = "normal") {
+    
+        var result = [ ];
+        var source = [ this._x, this._y, this._z, this._w ];
+    
+        switch(mode) {
+    
+            case "normal":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "literal":
+                result = source;
+                break;
+    
+            case "calc":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        return null;
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            case "sdl":
+                for(var i = 0; i < source.length; i++) {
+                    if(typeof source[i] == "function")
+                        result[i] = source[i](cpov, this);
+                    else if(cpov.isSDLFunction(source[i]))
+                        result[i] = source[i].substr(1);
+                    else
+                        result[i] = source[i];
+                }
+                break;
+    
+            default:
+                cpov.error("fatal", "mode argument must be one of 'normal', 'literal', 'calc', or 'sdl'.", "VectorXYZ.asArray", this);
+                break;
+        }
+    
+        return result;
     }
 
 
@@ -11630,8 +11890,6 @@ exports.Color = Color;
 // from codegen made it easier to copy the original generated code over to
 // the snippets file and use it as a starting point for a largely hand-coded
 // class.
-//
-// FIXME: There is squat for validation in the constructor subroutines.
 //==============================================================================
 
 class Matrix {
@@ -11769,7 +12027,7 @@ class Matrix {
 
     get v00() {
         if(typeof this.raw[0] == "function")
-            return this.raw[0]();
+            return this.raw[0](cpov, this);
         else if(cpov.isSDLFunction(this.raw[0]))
             return this.raw[0].substr(1);
         else
@@ -11788,7 +12046,7 @@ class Matrix {
 
     get v01() {
         if(typeof this.raw[1] == "function")
-            return this.raw[1]();
+            return this.raw[1](cpov, this);
         else if(cpov.isSDLFunction(this.raw[1]))
             return this.raw[1].substr(1);
         else
@@ -11807,7 +12065,7 @@ class Matrix {
 
     get v02() {
         if(typeof this.raw[2] == "function")
-            return this.raw[2]();
+            return this.raw[2](cpov, this);
         else if(cpov.isSDLFunction(this.raw[2]))
             return this.raw[2].substr(1);
         else
@@ -11826,7 +12084,7 @@ class Matrix {
 
     get v10() {
         if(typeof this.raw[3] == "function")
-            return this.raw[3]();
+            return this.raw[3](cpov, this);
         else if(cpov.isSDLFunction(this.raw[3]))
             return this.raw[3].substr(1);
         else
@@ -11845,7 +12103,7 @@ class Matrix {
 
     get v11() {
         if(typeof this.raw[4] == "function")
-            return this.raw[4]();
+            return this.raw[4](cpov, this);
         else if(cpov.isSDLFunction(this.raw[4]))
             return this.raw[4].substr(1);
         else
@@ -11864,7 +12122,7 @@ class Matrix {
 
     get v12() {
         if(typeof this.raw[5] == "function")
-            return this.raw[5]();
+            return this.raw[5](cpov, this);
         else if(cpov.isSDLFunction(this.raw[5]))
             return this.raw[5].substr(1);
         else
@@ -11883,7 +12141,7 @@ class Matrix {
 
     get v20() {
         if(typeof this.raw[6] == "function")
-            return this.raw[6]();
+            return this.raw[6](cpov, this);
         else if(cpov.isSDLFunction(this.raw[6]))
             return this.raw[6].substr(1);
         else
@@ -11902,7 +12160,7 @@ class Matrix {
 
     get v21() {
         if(typeof this.raw[7] == "function")
-            return this.raw[7]();
+            return this.raw[7](cpov, this);
         else if(cpov.isSDLFunction(this.raw[7]))
             return this.raw[7].substr(1);
         else
@@ -11921,7 +12179,7 @@ class Matrix {
 
     get v22() {
         if(typeof this.raw[8] == "function")
-            return this.raw[8]();
+            return this.raw[8](cpov, this);
         else if(cpov.isSDLFunction(this.raw[8]))
             return this.raw[8].substr(1);
         else
@@ -11940,7 +12198,7 @@ class Matrix {
 
     get v30() {
         if(typeof this.raw[9] == "function")
-            return this.raw[9]();
+            return this.raw[9](cpov, this);
         else if(cpov.isSDLFunction(this.raw[9]))
             return this.raw[9].substr(1);
         else
@@ -11959,7 +12217,7 @@ class Matrix {
 
     get v31() {
         if(typeof this.raw[10] == "function")
-            return this.raw[10]();
+            return this.raw[10](cpov, this);
         else if(cpov.isSDLFunction(this.raw[10]))
             return this.raw[10].substr(1);
         else
@@ -11978,7 +12236,7 @@ class Matrix {
 
     get v32() {
         if(typeof this.raw[11] == "function")
-            return this.raw[11]();
+            return this.raw[11](cpov, this);
         else if(cpov.isSDLFunction(this.raw[11]))
             return this.raw[11].substr(1);
         else
@@ -11991,6 +12249,70 @@ class Matrix {
         } else {
             cpov.error("fatal", "v32 must be a float or a function returning a float.", "Matrix");
         }
+    }
+
+    //--------------------------------------------------------------------------
+    // Returns the contents of this.raw based on mode, which may be one of:
+    //
+    //     normal ... This is the default. Returns a copy of this.raw in which
+    //                all JS functions have been replaced by their return
+    //                values.
+    //     literal ... Returns an exact copy.
+    //     calc ...... As normal, except that the presence of an SDL function
+    //                 will return null instead of the expected array.
+    //     sdl ....... As normal, except that SDL functions are included, minus
+    //                 their leading '&'.
+    //--------------------------------------------------------------------------
+
+    asArray(mode = "normal") {
+
+        var result = [ ];
+
+        switch(mode) {
+
+            case "normal":
+                for(var i = 0; i < 12; i++) {
+                    if(typeof this.raw[i] == "function")
+                        result[i] = this.raw[i](cpov, this);
+                    else
+                        result[i] = this.raw[i];
+                }
+                break;
+
+            case "literal":
+                for(var i = 0; i < 12; i++) {
+                    result[i] = this.raw[i];
+                }
+                break;
+
+            case "calc":
+                for(var i = 0; i < 12; i++) {
+                    if(typeof this.raw[i] == "function")
+                        result[i] = this.raw[i](cpov, this);
+                    else if(cpov.isSDLFunction(this.raw[i]))
+                        return null;
+                    else
+                        result[i] = this.raw[i];
+                }
+                break;
+
+            case "sdl":
+                for(var i = 0; i < 12; i++) {
+                    if(typeof this.raw[i] == "function")
+                        result[i] = this.raw[i](cpov, this);
+                    else if(cpov.isSDLFunction(this.raw[i]))
+                        result[i] = this.raw[i].substr(1);
+                    else
+                        result[i] = this.raw[i];
+                }
+                break;
+
+            default:
+                cpov.error("fatal", "mode argument must be one of 'normal', 'literal', 'calc', or 'sdl'.", "Matrix.asArray", this);
+                break;
+        }
+
+        return result;
     }
 
     //--------------------------------------------------------------------------
@@ -12012,13 +12334,56 @@ class Matrix {
             this.raw[i] = that.raw[i];
     }
 
-	//--------------------------------------------------------------------------
-	// Sets multiple attributes at once using an object.
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // Convenience method for applying a rotation to the current Matrix. If
+    // y and z are undefined, the value of x is copied to them.
+    //--------------------------------------------------------------------------
 
-	xset(vals) {
-		cpov.initObject(this, vals);
-	}
+    rotate(x, y, z) {
+        if(y === undefined)
+            z = y = x;
+        var that = new Matrix("rotate", x, y, z);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
+
+    //--------------------------------------------------------------------------
+    // Convenience method for scaling the current Matrix. If y and z are
+    // undefined, the value of x is copied to them.
+    //--------------------------------------------------------------------------
+
+    scale(x, y, z) {
+        if(y === undefined)
+            z = y = x;
+        var that = new Matrix("scale", x, y, z);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
+
+    //--------------------------------------------------------------------------
+    // Convenience method for skewing the current Matrix. As with the short-
+    // hand version for initializing a skew matrix, the single argument is an
+    // object with the desired axis pairs.
+    //--------------------------------------------------------------------------
+
+    skew(pairs) {
+        var that = new Matrix("skew", pairs);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
+
+    //--------------------------------------------------------------------------
+    // Convenience method for scaling the current Matrix. If y and z are
+    // undefined, the value of x is copied to them.
+    //--------------------------------------------------------------------------
+
+    translate(x, y, z) {
+        if(y === undefined)
+            z = y = x;
+        var that = new Matrix("translate", x, y, z);
+        var newMatrix = this.xMatrix(that);
+        this.copyFrom(newMatrix);
+    }
 
     //--------------------------------------------------------------------------
     // A private method for multiplying matrices in the form of arrays of 12
@@ -12051,60 +12416,19 @@ class Matrix {
         if(!cpov.isClass(that, "Matrix"))
             cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix", this);
 
-		return new Matrix(Matrix._xMatrix(this.raw, that.raw));
+        var a = this.asArray("calc");
+        var b = that.asArray("calc");
+
+        var badObj = false;
+        if(b === null)
+            badObj = that;
+        if(a === null)
+            badObj = this;
+        if(badObj)
+            cpov("fatal", "Cannot perform matrix computations if elements are SDL functions.", "Matrix.xMatrix", badObj);
+
+		return new Matrix(Matrix._xMatrix(a, b));
     }
-
-    //--------------------------------------------------------------------------
-    // Convenience method for applying a rotation to the current Matrix. If
-    // y and z are undefined, the value of x is copied to them.
-    //--------------------------------------------------------------------------
-
-    rotate(x, y, z) {
-        if(y === undefined)
-            z = y = x;
-        var that = new Matrix("rotate", x, y, z);
-        var newMatrix = this.xMatrix(that);
-        this.copyFrom(newMatrix);
-    }
-
-    //--------------------------------------------------------------------------
-    // Convenience method for scaling the current Matrix. If y and z are
-    // undefined, the value of x is copied to them.
-    //--------------------------------------------------------------------------
-
-    scale(x, y, z) {
-        if(y === undefined)
-            z = y = x;
-        var that = new Matrix("scale", x, y, z);
-        var newMatrix = this.xMatrix(that);
-        this.copyFrom(newMatrix);
-    }
-
-    //--------------------------------------------------------------------------
-    // Convenience method for scaling the current Matrix. If y and z are
-    // undefined, the value of x is copied to them.
-    //--------------------------------------------------------------------------
-
-    translate(x, y, z) {
-        if(y === undefined)
-            z = y = x;
-        var that = new Matrix("translate", x, y, z);
-        var newMatrix = this.xMatrix(that);
-        this.copyFrom(newMatrix);
-    }
-
-    //--------------------------------------------------------------------------
-    // Convenience method for skewing the current Matrix. As with the short-
-    // hand version for initializing a skew matrix, the single argument is an
-    // object with the desired axis pairs.
-    //--------------------------------------------------------------------------
-
-    skew(pairs) {
-        var that = new Matrix("skew", pairs);
-        var newMatrix = this.xMatrix(that);
-        this.copyFrom(newMatrix);
-    }
-
 
     //--------------------------------------------------------------------------
     // Given a VectorXYZ, point, returns a new VectorXYZ this * point.
@@ -12115,12 +12439,36 @@ class Matrix {
         if(!cpov.isClass(point, "VectorXYZ"))
             cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint", this);
 
+        var m = this.asArray("calc");
+        if(m === null)
+            cpov("fatal", "Cannot perform matrix computations if elements are SDL functions.", "Matrix.xPoint", this);
+
+        var v = point.asArray("calc");
+        if(v === null)
+            cpov("fatal", "Cannot perform matrix computations if elements are SDL functions.", "Matrix.xPoint", this);
+
+        return new VectorXYZ(
+            m[0] * v[0] + m[3] * v[1] + m[6] * v[2] + m[9],
+            m[1] * v[0] + m[4] * v[1] + m[7] * v[2] + m[10],
+            m[2] * v[0] + m[5] * v[1] + m[8] * v[2] + m[11]
+        );
+
+/*
         return new VectorXYZ(
             this.v00 * point.x + this.v10 * point.y + this.v20 * point.z + this.v30,
             this.v01 * point.x + this.v11 * point.y + this.v21 * point.z + this.v31,
             this.v02 * point.x + this.v12 * point.y + this.v22 * point.z + this.v32
         );
+*/
     }
+
+    //--------------------------------------------------------------------------
+	// Sets multiple attributes at once using an object.
+	//--------------------------------------------------------------------------
+
+	xset(vals) {
+		cpov.initObject(this, vals);
+	}
 
     //--------------------------------------------------------------------------
     // Produces the SDL representation of the Matrix.
@@ -12129,9 +12477,9 @@ class Matrix {
     toSDL(stops = 0) {
         var pad = cpov.tab(stops);
 
-        return pad + "matrix <" + [this.v00, this.v01, this.v02, this.v10, this.v11,
-            this.v12, this.v20, this.v21, this.v22, this.v30, this.v31,
-            this.v32 ].join(", ") + ">";
+        var m = this.asArray("sdl");
+
+        return pad + "matrix <" + m.join(", ") + ">";
     }
 
 }

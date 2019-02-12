@@ -634,7 +634,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -653,7 +653,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -678,7 +678,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -704,7 +704,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -748,7 +748,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -809,7 +809,7 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -937,6 +937,39 @@ and <code>v</code>, it is otherwise identical to <code>VectorXY</code>.</p>
 
 <h5>Methods</h5>
 
+<div class='fsig'>asArray(<i>mode</i> = "normal")</div>
+
+<p class='fdesc'>Depending on the value of <code>mode</code>, returns the internal
+coordinates as a two-element array or, in one case, a <code>null</code>
+indicating an error condition. The legal values of <code>mode</code> and their
+results are:</p>
+
+<table class='sgrid fdesc'>
+    <thead>
+        <tr><th>Value</th><th>Results</th></tr>
+    </thead><tbody>
+        <tr>
+            <td><code>"normal"</code></td>
+            <td>This is the default. Returns a copy of this.raw in which
+            all JavaScript functions have been replaced by their return values.</td>
+        </tr><tr>
+            <td><code>"literal"</code></td>
+            <td>Returns an exact copy of the internal representation.</td>
+        </tr><tr>
+            <td><code>"calc"</code></td>
+            <td>As with <code>"normal"</code>, except that the presence of an SDL
+            function will return <code>null</code> instead of the expected array.
+            CephaloPOV uses this internally to determine whether a <code>VectorUV</code>
+            can be used in numeric computations.</td>
+        </tr><tr>
+            <td><code>"sdl"</code></td>
+            <td>As with <code>"normal"</code>, except that SDL functions are included,
+            minus the leading ampersand. CephaloPOV uses this internally to generate
+            SDL output.</td>
+        </tr>
+    </tbody>
+</table>
+
 <div class='fsig'>xset(<i>valObj</i>)</div>
 
 <p class='fdesc'>This is a convenience function which takes an object full
@@ -1018,6 +1051,39 @@ object. The following are all equivalent:</p>
 var vec2 = new VectorXY([1, 3]);
 var vec3 = new VectorXY(vec1);</div>
 
+<div class='fsig'>asArray(<i>mode</i> = "normal")</div>
+
+<p class='fdesc'>Depending on the value of <code>mode</code>, returns the internal
+coordinates as a two-element array or, in one case, a <code>null</code>
+indicating an error condition. The legal values of <code>mode</code> and their
+results are:</p>
+
+<table class='sgrid fdesc'>
+    <thead>
+        <tr><th>Value</th><th>Results</th></tr>
+    </thead><tbody>
+        <tr>
+            <td><code>"normal"</code></td>
+            <td>This is the default. Returns a copy of this.raw in which
+            all JavaScript functions have been replaced by their return values.</td>
+        </tr><tr>
+            <td><code>"literal"</code></td>
+            <td>Returns an exact copy of the internal representation.</td>
+        </tr><tr>
+            <td><code>"calc"</code></td>
+            <td>As with <code>"normal"</code>, except that the presence of an SDL
+            function will return <code>null</code> instead of the expected array.
+            CephaloPOV uses this internally to determine whether a <code>VectorXY</code>
+            can be used in numeric computations.</td>
+        </tr><tr>
+            <td><code>"sdl"</code></td>
+            <td>As with <code>"normal"</code>, except that SDL functions are included,
+            minus the leading ampersand. CephaloPOV uses this internally to generate
+            SDL output.</td>
+        </tr>
+    </tbody>
+</table>
+
 <div class='fsig'>toSDL(<i>stops</i>);</div>
 
 <p class='fdesc'>Returns the SDL representation of the vector as a string,
@@ -1070,6 +1136,37 @@ object. The following are all equivalent:</p>
 <div class='code fdesc'>var vec1 = new VectorXYZ({ x: 1, y: 3, z: 4 });
 var vec2 = new VectorXYZ([1, 3, 4]);
 var vec3 = new VectorXYZ(vec1);</div>
+
+<p class='fdesc'>Depending on the value of <code>mode</code>, returns the internal
+coordinates as a three-element array or, in one case, a <code>null</code>
+indicating an error condition. The legal values of <code>mode</code> and their
+results are:</p>
+
+<table class='sgrid fdesc'>
+    <thead>
+        <tr><th>Value</th><th>Results</th></tr>
+    </thead><tbody>
+        <tr>
+            <td><code>"normal"</code></td>
+            <td>This is the default. Returns a copy of this.raw in which
+            all JavaScript functions have been replaced by their return values.</td>
+        </tr><tr>
+            <td><code>"literal"</code></td>
+            <td>Returns an exact copy of the internal representation.</td>
+        </tr><tr>
+            <td><code>"calc"</code></td>
+            <td>As with <code>"normal"</code>, except that the presence of an SDL
+            function will return <code>null</code> instead of the expected array.
+            CephaloPOV uses this internally to determine whether a <code>VectorXYZ</code>
+            can be used in numeric computations.</td>
+        </tr><tr>
+            <td><code>"sdl"</code></td>
+            <td>As with <code>"normal"</code>, except that SDL functions are included,
+            minus the leading ampersand. CephaloPOV uses this internally to generate
+            SDL output.</td>
+        </tr>
+    </tbody>
+</table>
 
 <div class='fsig'>toSDL(<i>stops</i>);</div>
 
@@ -1127,6 +1224,37 @@ object. The following are all equivalent:</p>
 <div class='code fdesc'>var vec1 = new VectorXYZW({ x: 1, y: 3, z: 4, w: -1 });
 var vec2 = new VectorXYZW([1, 3, 4, -1]);
 var vec3 = new VectorXYZW(vec1);</div>
+
+<p class='fdesc'>Depending on the value of <code>mode</code>, returns the internal
+coordinates as a four-element array or, in one case, a <code>null</code>
+indicating an error condition. The legal values of <code>mode</code> and their
+results are:</p>
+
+<table class='sgrid fdesc'>
+    <thead>
+        <tr><th>Value</th><th>Results</th></tr>
+    </thead><tbody>
+        <tr>
+            <td><code>"normal"</code></td>
+            <td>This is the default. Returns a copy of this.raw in which
+            all JavaScript functions have been replaced by their return values.</td>
+        </tr><tr>
+            <td><code>"literal"</code></td>
+            <td>Returns an exact copy of the internal representation.</td>
+        </tr><tr>
+            <td><code>"calc"</code></td>
+            <td>As with <code>"normal"</code>, except that the presence of an SDL
+            function will return <code>null</code> instead of the expected array.
+            CephaloPOV uses this internally to determine whether a <code>VectorXYZW</code>
+            can be used in numeric computations.</td>
+        </tr><tr>
+            <td><code>"sdl"</code></td>
+            <td>As with <code>"normal"</code>, except that SDL functions are included,
+            minus the leading ampersand. CephaloPOV uses this internally to generate
+            SDL output.</td>
+        </tr>
+    </tbody>
+</table>
 
 <div class='fsig'>toSDL(<i>stops</i>);</div>
 
@@ -1278,6 +1406,39 @@ so:</p>
 argument and get a <code>Matrix</code> that does nothing. This is useful if your
 "base" transformation (see the <code>Primitive</code> type for more details)
 doesn't require any actual transformations.</p>
+
+<div class='fsig'>asArray(<i>mode</i> = "normal")</div>
+
+<p class='fdesc'>Depending on the value of <code>mode</code>, returns the internal
+matrix representation as a 12-element array or, in one case, a <code>null</code>
+indicating an error condition. The legal values of <code>mode</code> and their
+results are:</p>
+
+<table class='sgrid fdesc'>
+    <thead>
+        <tr><th>Value</th><th>Results</th></tr>
+    </thead><tbody>
+        <tr>
+            <td><code>"normal"</code></td>
+            <td>This is the default. Returns a copy of this.raw in which
+            all JavaScript functions have been replaced by their return values.</td>
+        </tr><tr>
+            <td><code>"literal"</code></td>
+            <td>Returns an exact copy of the internal representation.</td>
+        </tr><tr>
+            <td><code>"calc"</code></td>
+            <td>As with <code>"normal"</code>, except that the presence of an SDL
+            function will return <code>null</code> instead of the expected array.
+            CephaloPOV uses this internally to determine whether a <code>Matrix</code>
+            can be used in numeric computations.</td>
+        </tr><tr>
+            <td><code>"sdl"</code></td>
+            <td>As with <code>"normal"</code>, except that SDL functions are included,
+            minus the leading ampersand. CephaloPOV uses this internally to generate
+            SDL output.</td>
+        </tr>
+    </tbody>
+</table>
 
 <div class='fsig'>copyFrom(<i>that</i>)</div>
 
@@ -1652,7 +1813,7 @@ at right was created by the following code:</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1674,7 +1835,7 @@ at right was created by the following code:</p>
 <tr><td>RW</td><td>N</td><td>blurSamples</td><td>[float]</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
 <tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2068,7 +2229,7 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
@@ -3749,8 +3910,8 @@ replaced before the first public beta are quite high.</pre>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>?</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td><code>Matrix, Vector, Color</code>: Handle function attributes gracefully.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td>Make setting of <code>baseTransform</code> explicit.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
@@ -3786,6 +3947,7 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Reorg: Move things needed for <code>codegen</code> to separate file not included at runtime</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Intelligent handling of paths to files, esp. Windows</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
     </tbody>
 </table>
 
@@ -3843,24 +4005,21 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Direct support for ffmpeg/avisynth + Google speech API</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Eric Haines' table of object intersections, collision detection</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Extensive warn, info, debug output</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Geometric query system</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix (?)</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Interior</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Level-of-Detail</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Macro/Function generation, i.e., in separate file to use directly with POV-Ray</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Output frame range</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Parametric types</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Parametric compound types, i.e., not the <code>Parametric</code> primitive.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Particle systems</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Polyhedron library</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Porting of functions in .inc files</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Porting of functions/presets in .inc files</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Script execution on events</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Script to parse as much as possible of POV-Ray .inc files into JS/cpov</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Spline-builder UI</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Stereo pseudo-cameras</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Reorg: Script to pretty-print definition files</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Wrap Array attributes with Proxies to enforce type</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Turtle graphics</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Wrap Array attributes with Proxies to enforce type (?)</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Turtle graphics -- snapshot mode forms part of the basis for this.</td></tr>
     </tbody>
 </table>
 
