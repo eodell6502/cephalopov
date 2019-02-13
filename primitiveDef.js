@@ -19,6 +19,8 @@ module.exports = {
         "Primitive.snapshot",
         "Primitive.toSDL",
         "Primitive.transformations",
+        "Primitive.transform.get-set",
+        "Primitive.baseTransform.get-set",
 		"Primitive.xset",
     ],
     mutable: [

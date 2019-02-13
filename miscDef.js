@@ -325,7 +325,7 @@ miscDef.sdlKeywords = [ "aa_level", "aa_threshold", "abs", "absorption", "accura
 
 miscDef.splineTypes = {
     bezierSpline:    "bezier_spline",
-    cubicSpline:     "cubicSpline",
+    cubicSpline:     "cubic_spline",
     linearSpline:    "linear_spline",
     quadraticSpline: "quadratic_spline",
 };

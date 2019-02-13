@@ -623,8 +623,8 @@ module.exports = {
                 name:  "points",
                 req:   true,
                 valid: "cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity) || (val = cpov.convertToVectorArray('VectorXY', val))",
-                err:   "points must be an array of two or more VectorXY.",
-                desc:  "An array of points defining the spline.",
+                err:   "points must be an array of VectorXY.",
+                desc:  "An array of points defining the spline. Linear splines require at least two points, quadratic splines require at least three, and cubic and bezier splines require at least four.",
                 tname: "VectorXY"
             }, {
                 name:  "sturm",

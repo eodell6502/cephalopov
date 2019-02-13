@@ -1377,24 +1377,23 @@ basic transformations:</p>
 
 <div class='code fdesc'>var scale     = new Matrix("scale", 1.5, 2, 1);
 var translate = new Matrix("translate", 5, 2.2, 0);
-var rotate    = new Matrix("rotate", 45, 15, 0);</div>
+var rotate    = new Matrix("rotate", 45, 15, 0);
 
-<p class='fdesc'>In each of the examples above, the name of the transformation
-is the first argument, followed by three float arguments, one for each of the
+var scale     = new Matrix("scale", 2.2);
+var translate = new Matrix("translate", 5);
+var rotate    = new Matrix("rotate", 45);
+</div>
+
+<p class='fdesc'>In the first set of the examples above, the name of the
+transformation is the first argument, followed by three float arguments, one for
+each of the axes. In the second set, the single float is applied to all three
 axes. As with POV-Ray, the values for rotations are given in degrees.</p>
 
 <p class='fdesc'>The <code>Matrix</code> constructor has a few additional short
-forms. The first is a convenience form of scale, translate, and rotate for
-cases where all three floats are the same:</p>
-
-<div class='code fdesc'>var scale     = new Matrix("scale", 2.2);
-var translate = new Matrix("translate", 5);
-var rotate    = new Matrix("rotate", 45);</div>
-
-<p class='fdesc'>The next lets you specify skews without having to construct the whole matrix
-by hand. Just pass <code>"skew"</code> as the first argument, and the second
-argument is an object containing the axis pairs to perform the skew by, like
-so:</p>
+forms. One lets you specify skews without having to construct the whole
+matrix by hand. Just pass <code>"skew"</code> as the first argument, and the
+second argument is an object containing the axis pairs to perform the skew by,
+like so:</p>
 
 <div class='code fdesc'>var skew = new Matrix("skew", { xy: 1.5, zy: 0.2 });</div>
 
@@ -1402,7 +1401,7 @@ so:</p>
 <code>zx</code>, <code>xy</code>, <code>zy</code>, <code>xz</code>, and
 <code>yz</code>. You can omit the pairs you don't need.</p>
 
-<p class='fdesc'>Finally, you can just pass <code>"none"</code> as the sole
+<p class='fdesc'>In another, you can just pass <code>"none"</code> as the sole
 argument and get a <code>Matrix</code> that does nothing. This is useful if your
 "base" transformation (see the <code>Primitive</code> type for more details)
 doesn't require any actual transformations.</p>
@@ -1517,6 +1516,8 @@ one of the experimental forks of POV-Ray like MegaPOV, you don't need to worry
 about its internals, but you do need to be familiar with the public attributes
 and methods it shares with all of its subclasses.</p>
 
+<h5>Transformations</h5>
+
 <p>Two of those attributes, <code>baseTransform</code> and
 <code>transform</code>, are important enough to discuss outside of the
 attributes table, below. In order to support several significant features
@@ -1549,7 +1550,7 @@ with either transform attribute.</p>
 <code>transform</code> value. Because of the way matrix multiplication works,
 this will effectively add the new transformation to the transformations that
 have already been applied. If you want to start over fresh with the
-<code>baseTransform</code> value, just call the <code>transformReset</code>
+<code>baseTransform</code> value, just call the <code>resetTransform</code>
 method.</p>
 
 <p>The main purpose of all of this behind-the-scenes plumbing is to provide the
@@ -1559,6 +1560,23 @@ your own user programs. One exception to this is if you are using snapshot mode,
 where multiple output objects can be created using a single primitive object and
 repeatedly setting <code>transform</code> and then calling
 <code>baseTransform</code>.</p>
+
+<p>Like most other object attributes in CephaloPOV, transformations can be
+either the necessary type (in this case <code>Matrix</code>), or a JavaScript
+function returning a <code>Matrix</code>, or SDL code supplied as a string with
+the usual <code>"&"</code> prefix. Barring bugs, all three are perfectly fine,
+but <code>transform</code> is frequently the subject of matrix multiplication at
+the JavaScript level. How does this work?</p>
+
+<p>A numeric <code>Matrix</code> performs exactly as expected. SDL strings will
+halt the program with an error. If <code>transform</code> is a JavaScript
+function returning a <code>Matrix</code>, it will be replaced with its return
+value and then altered accordingly. The same applies to JavaScript functions as
+individual matrix elements. This is one of the few places that the difference
+between the three execution scopes&mdash;CephaloPOV, the user program, and
+POV-Ray&mdash;is so important to understand clearly. The power and flexibility
+of the approach is great, but you can expect a little eye-crossing confusion at
+first.</p>
 
 <h5>Attributes</h5>
 
@@ -2315,7 +2333,7 @@ object, <code>Sor</code>, but it is also substantially slower to render.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of points defining the spline.</td></tr>
+<tr><td>RW</td><td>Y</td><td>points</td><td>VectorXY</td><td>An array of points defining the spline. Linear splines require at least two points, quadratic splines require at least three, and cubic and bezier splines require at least four.</td></tr>
 <tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Determines the type of spline used to define the profile. Legal types are <code>"bezierSpline"</code>, <code>"cubicSpline"</code>, <code>"linearSpline"</code>, and <code>"quadraticSpline"</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>sturm</td><td>boolean</td><td>If <code>true</code>, POV-Ray will use the slower but more accurate Sturmian root solver. Use this if the surface exhibits holes or other imperfections.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Lathe</code>, this is always <code>false</code>.</td></td></tr>
@@ -3910,24 +3928,23 @@ replaced before the first public beta are quite high.</pre>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;2</td><td>Make setting of <code>baseTransform</code> explicit.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td><code>Lathe</code>: add check for correct minimum number of points</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>Mutate <code>codegen.js</code> into <code>build.js</code> and document.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td>Organize test processes for Windows and Linux.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Get SDL Functions to return the leading <code>'&'</code>, adjust toSDL methods accordingly.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>CA</td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>Mutate <code>codegen.js</code> into <code>build.js</code> and document.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td>Organize test processes for Windows and Linux.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>Get SDL Functions to return the leading <code>'&'</code>, adjust toSDL methods accordingly.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td>Make sure the identity matrix is not output in <code>toSDL</code> methods.</td></tr>
 
-            <!-- finite patches -->
+        <!-- finite patches -->
 
-            <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td><code>Mesh</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td><code>Mesh</code> description and example</td></tr>
 
-            <!-- Lights and Cameras -->
+        <!-- Lights and Cameras -->
 
-            <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
-            <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>DOC</td><td>D5</td><td>Document the various spline types.</td></tr>
 
@@ -3999,7 +4016,6 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>A large set of sample functions/variants for the <code>IsoSurface</code> type and the polynomials.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Additional splines, easing functions, esp. Catmull-Rom</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
-        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Atmospheric effects</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Direct support for ffmpeg/avisynth + Google speech API</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
@@ -4008,6 +4024,7 @@ replaced before the first public beta are quite high.</pre>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix (?)</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Level-of-Detail</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Macro/Function generation, i.e., in separate file to use directly with POV-Ray</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Object serialization and packages.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Parametric compound types, i.e., not the <code>Parametric</code> primitive.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Particle systems</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Polyhedron library</td></tr>

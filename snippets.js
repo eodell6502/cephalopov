@@ -1350,7 +1350,14 @@ toSDL(stops = 0) {
 
     $Primitive.toSDL-preamble
 
-	// TODO: add check for correct minimum number of points
+	if(this.type == "linearSpline" && this.points.length < 2)
+        cpov.error("fatal", "A linear spline requires at least two points.", "Lathe.toSDL", this);
+   	else if(this.type == "quadraticSpline" && this.points.length < 3)
+        cpov.error("fatal", "A quadratic spline requires at least three points.", "Lathe.toSDL", this);
+   	else if(this.type == "cubicSpline" && this.points.length < 4)
+        cpov.error("fatal", "A quadratic spline requires at least four points.", "Lathe.toSDL", this);
+   	else if(this.type == "bezierSpline" && this.points.length < 4)
+        cpov.error("fatal", "A quadratic spline requires at least four points.", "Lathe.toSDL", this);
 
     content.push(pad + "lathe {" + (this.id === null ? "" : " // " + this.id));
 	content.push(ppad + cpov.splineTypes[this.type]);
@@ -1465,6 +1472,12 @@ class Matrix {
 
 		if(v00 == "none") // identity matrix
 			return;
+
+        if(cpov.isClass(v00, "Matrix")) {  // make a copy of an existing Matrix
+            for(var i = 0; i < 12; i++) {
+                this.raw[i] = v00.raw[i];
+            }
+        }
 
 		if(Array.isArray(v01)) {
             for(var i = 0; i < v01.length; i++) {
@@ -1884,7 +1897,7 @@ class Matrix {
     }
 
     //--------------------------------------------------------------------------
-    // Copies the values of that to this.
+    // Copies the values of that to this. Performs no conversions.
     //--------------------------------------------------------------------------
 
     copyFrom(that) {
@@ -1944,11 +1957,39 @@ class Matrix {
     }
 
     //--------------------------------------------------------------------------
+    // Returns a copy of the raw array with any JS function members converted
+    // into numbers. Will produce a fatal error if any of the members yield
+    // non-numeric results.
+    //--------------------------------------------------------------------------
+
+    reify() {
+        var result = [ ];
+
+        for(var i = 0; i < 12; i++) {
+            if(typeof this.raw[i] == "function") {
+                var tmp = this.raw[i](cpov, this);
+                if(typeof tmp != "number")
+                    cpov.error("fatal", "Matrix elements must evaluate to floats.", "Matrix.reify", this);
+                result[i] = tmp;
+            } else if(typeof this.raw[i] == "number") {
+                result[i] = this.raw[i];
+            } else {
+                cpov.error("fatal", "Matrix elements must evaluate to floats.", "Matrix.reify", this);
+            }
+        }
+        return result;
+    }
+
+    //--------------------------------------------------------------------------
     // A private method for multiplying matrices in the form of arrays of 12
     // elements, returning the same.
     //--------------------------------------------------------------------------
 
     static _xMatrix(a, b) {
+
+        if(cpov.isSDLFunction(a) || cpov.isSDLFunction(b))
+            cpov.error("fatal", "Cannot perform JS math operations on SDL functions.", "Matrix._xMatrix", this);
+
     	return [
             /* v00] */ (a[0] * b[0] + a[1]  * b[3] + a[2]  * b[6]),
             /* v01] */ (a[0] * b[1] + a[1]  * b[4] + a[2]  * b[7]),
@@ -2487,7 +2528,7 @@ requiredParameterTest(requiredParams) {
 // Primitive.resetTransform //--------------------------------------------------
 
 resetTransform() {
-    this._transform = this._baseTransform.copy();
+    this._transform = new Matrix(this._baseTransform);
 }
 
 
@@ -2625,11 +2666,24 @@ if(this.SDLPrepend !== null)
 // Primitive.transform.get-set //-----------------------------------------------
 
 //--------------------------------------------------------------------------
-// CephaloPOV primitives differ from their SDL substrates in having an
-// immutable baseTransform which is retained even as additional transforms
-// are applied at runtime. The first time transform is read or written, we
-// copy the baseTransform to transform and then perform the requested
-// action.
+// CephaloPOV objects have two associated transformation matrices, transform
+// and baseTransform. The transform Matrix is what is emitted when the toSDL
+// method is called. It is also the Matrix to which subsequent
+// transformations are applied. If transform is not set (i.e., it is null)
+// when it is accessed, baseTransform is copied to it first. Conversely, if
+// transform is set before baseTransform, baseTransform will be set at the
+// same time. The transformReset method may be called to copy baseTransform
+// to transform when needed.
+//
+// The intended function of baseTransform is to serve as a default state,
+// particularly for complex objects which will be reused.
+//
+// Important: To perform operations on a transform, it is necessary that it
+// be an actual Matrix. You *can* assign an SDL function to the transforms,
+// but operations at the JS level will of course croak with an error. (If
+// you're not performing operations on it, no worries.) If a transform is JS
+// function returning a Matrix or a Matrix whose elements are JS functions,
+// it will be converted to an array of floats first.
 //--------------------------------------------------------------------------
 
 get transform() {
@@ -2637,50 +2691,60 @@ get transform() {
     if(this._transform === null) {
         if(this._baseTransform === null) {
             return null;
+        } else if(typeof this._baseTransform == "function") {
+            this._transform = this._baseTransform;
         } else {
-            this.transform = this.baseTransform;
+            this._transform.copyFrom(this._baseTransform);
         }
     }
 
     if(typeof this._transform == "function")
-        return this._transform();
-    else if(typeof this._transform == "string" && this._transform.substr(0, 1) == "&")
-        return this._transform.substr(1);
+        return this._transform(cpov, this);
     else
         return this._transform;
 }
 
 set transform(val) {
 
-    if(val === null) {                       // essentially the same as transformReset
-        this._transform = null;
+    if(val === null) {
+        this._transform = this.baseTransform;
         return;
-    }
-
-    if(cpov.isSDLFunction(val)) {     // can't do math with SDL functions
-        cpov.error("fatal", "transform cannot be an SDL function.", "Primitive.transform", this);
-        return;
-    }
-
-    if(typeof val == "function") {
-        val = val();
     }
 
     if(val == "none")
         val = new Matrix("none");
 
-    if(!cpov.isClass(val, "Matrix"))
-        cpov.error("fatal", "transform value must evaluate to a Matrix.", "Primitive.transform", this);
+    if(!cpov.isClass(val, "Matrix") && !cpov.isNullOrFunction(val))
+        cpov.error("fatal", "transform value must be a Matrix, JavaScript function, or SDL function", "Primitive.transform", this);
 
     if(this._baseTransform === null) {
         this._baseTransform = val;
         this._transform = val;
     } else {
-        this._transform = val.xMatrix(this.transform);
+        var val = new Matrix(val.reify());
+        this._transform = this.transform.xMatrix(val);
     }
 
 }
 
+// Primitive.baseTransform.get-set //-------------------------------------------
+
+//--------------------------------------------------------------------------
+// The accessors for baseTransform are much simpler than for transform. Any
+// legal value -- Matrix, JS function, SDL function, or "none" -- can be
+// stuffed into it, and except for "none", they are returned unchanged.
+//--------------------------------------------------------------------------
+
+get baseTransform() {
+    return this._baseTransform;
+}
+
+set baseTransform(val) {
+    if(cpov.isClass(val, "Matrix") || typeof val == "function" || cpov.isSDLFunction(val))
+        this._baseTransform = val;
+    else if(val == "none")
+        this._baseTransform = new Matrix("none");
+}
 
 
 // Primitive.transformations //-------------------------------------------------

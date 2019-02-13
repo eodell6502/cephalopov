@@ -219,9 +219,13 @@ cpov.isClass = function(val, classname) {
     for(var v = 0; v < val.length; v++) {
         var okay = false;
         for(var c = 0; c < classname.length; c++) {
-            if(Object.getPrototypeOf(val[v]).constructor.name == classname[c]) {
-                okay = true;
-                break;
+            try {
+                if(Object.getPrototypeOf(val[v]).constructor.name == classname[c]) {
+                    okay = true;
+                    break;
+                }
+            } catch(e) {
+                return false;
             }
         }
         if(!okay)
