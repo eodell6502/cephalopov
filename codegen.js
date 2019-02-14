@@ -1,5 +1,7 @@
-var cpov  = require("./cephalopov.js");
-var File  = require("./file.js");
+#!/usr/bin/env node
+
+var cpov  = require("./lib/cephalopov.js");
+var File  = require("./lib/file.js");
 var chalk = require("chalk");
 
 
@@ -620,8 +622,8 @@ function main() {
     // snippets.new.js ---------------------------------------------------------
 
     if(opts.snippets.cnt) {
-        var fp = new File("./snippets.new.js", "w");
-        var snippets = cpov.objectImport("./snippets.js");
+        var fp = new File("./lib/snippets.new.js", "w");
+        var snippets = cpov.objectImport("./lib/snippets.js");
         var keys = [ ];
         for(var key in snippets)
             keys.push(key);
@@ -647,29 +649,29 @@ function main() {
     // classes.js --------------------------------------------------------------
 
     if(optCount == 0 || opts.classes.cnt) {  // by default, classes.js is produced
-        var fp = new File("./classes.js", "w");
+        var fp = new File("./lib/classes.js", "w");
         fp.write("var cpov = require(\"./cephalopov.js\");\n\n");
 
-        fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./snippets.js") + "\n\n");
+        fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./lib/snippets.js") + "\n\n");
         fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
-        var ioObj = new ClassBuilder("ImageOptions", cpov.ioDef, "./snippets.js");
+        var ioObj = new ClassBuilder("ImageOptions", cpov.ioDef, "./lib/snippets.js");
         ioObj.allowSDL = false;
         fp.write(ioObj + "\n\n");
         fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
 
-        fp.write(new ClassBuilder("Primitive", cpov.primitiveDef, "./snippets.js") + "\n\n");
+        fp.write(new ClassBuilder("Primitive", cpov.primitiveDef, "./lib/snippets.js") + "\n\n");
         fp.write("exports.Primitive = Primitive;\n\n\n");
 
         for(var pname in cpov.objDef) {
             var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-            fp.write(new ClassBuilder(cname, cpov.objDef[pname], "./snippets.js") + "\n\n");
+            fp.write(new ClassBuilder(cname, cpov.objDef[pname], "./lib/snippets.js") + "\n\n");
             fp.write("exports." + cname + " = " + cname + ";\n\n\n");
         }
 
         for(var pname in cpov.vectorDef) {
             var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
-            fp.write(new ClassBuilder(cname, cpov.vectorDef[pname], "./snippets.js") + "\n\n");
+            fp.write(new ClassBuilder(cname, cpov.vectorDef[pname], "./lib/snippets.js") + "\n\n");
             fp.write("exports." + cname + " = " + cname + ";\n\n\n");
         }
 
@@ -679,7 +681,7 @@ function main() {
         // and so that they can be more easily located and analyzed for future
         // generations of codegen-like tools.
 
-		var snippets = cpov.objectImport("./snippets.js");
+		var snippets = cpov.objectImport("./lib/snippets.js");
 
         // This is an ordered set where class names are concerned. (JS class
         // declarations are *not* hoisted.)

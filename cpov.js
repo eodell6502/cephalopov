@@ -5,9 +5,9 @@
 //##############################################################################
 
 var chalk = require("chalk");
-var cpov = require("./cephalopov.js");
-var File = require("./file.js");
-cpov.classes = require("./classes.js");
+var cpov = require("./lib/cephalopov.js");
+var File = require("./lib/file.js");
+cpov.classes = require("./lib/classes.js");
 
 for(var k in cpov.classes) {
     global[k] = cpov.classes[k];
