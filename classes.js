@@ -96,7 +96,7 @@ class GlobalSettings {
     }
 
     set ambientLight(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color') || (val = new Color(val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Color') || (val = new Color(val)))) {
             this._ambientLight = val;
         } else {
             cpov.error("fatal", "ambientLight must be a Color.", "GlobalSettings", this);
@@ -153,7 +153,7 @@ class GlobalSettings {
     }
 
     set iridWavelength(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Color'))) {
             this._iridWavelength = val;
         } else {
             cpov.error("fatal", "iridWavelength must be a Color", "GlobalSettings", this);
@@ -3211,7 +3211,7 @@ class Primitive {
     }
 
     set baseTransform(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Matrix'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Matrix'))) {
             this._baseTransform = val;
         } else {
             cpov.error("fatal", "baseTransform must be a Matrix.", "Primitive", this);
@@ -3249,7 +3249,7 @@ class Primitive {
     }
 
     set clippedBy(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive') && !cpov.isClass(val, ['bicubicPatch', 'disc', 'triangle', 'polygon', 'mesh', 'mesh2']))) {
+        if(cpov.isNullOrFunction(val) || (cpov.inheritsFrom(val, 'Primitive') && !cpov.isClassInstance(val, ['bicubicPatch', 'disc', 'triangle', 'polygon', 'mesh', 'mesh2']))) {
             this._clippedBy = val;
         } else {
             cpov.error("fatal", "clippedBy must be a solid Primitive.", "Primitive", this);
@@ -3287,7 +3287,7 @@ class Primitive {
     }
 
     set finish(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Finish'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Finish'))) {
             this._finish = val;
         } else {
             cpov.error("fatal", "finish must be a Finish.", "Primitive", this);
@@ -3382,7 +3382,7 @@ class Primitive {
     }
 
     set interior(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Interior'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Interior'))) {
             this._interior = val;
         } else {
             cpov.error("fatal", "interior must be an Interior.", "Primitive", this);
@@ -3420,7 +3420,7 @@ class Primitive {
     }
 
     set material(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Material'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Material'))) {
             this._material = val;
         } else {
             cpov.error("fatal", "material must be a Material.", "Primitive", this);
@@ -3679,7 +3679,7 @@ class Primitive {
         if(val == "none")
             val = new Matrix("none");
     
-        if(!cpov.isClass(val, "Matrix") && !cpov.isNullOrFunction(val))
+        if(!cpov.isClassInstance(val, "Matrix") && !cpov.isNullOrFunction(val))
             cpov.error("fatal", "transform value must be a Matrix, JavaScript function, or SDL function", "Primitive.transform", this);
     
         if(this._baseTransform === null) {
@@ -4042,7 +4042,7 @@ class Primitive {
         if(val == "none")
             val = new Matrix("none");
     
-        if(!cpov.isClass(val, "Matrix") && !cpov.isNullOrFunction(val))
+        if(!cpov.isClassInstance(val, "Matrix") && !cpov.isNullOrFunction(val))
             cpov.error("fatal", "transform value must be a Matrix, JavaScript function, or SDL function", "Primitive.transform", this);
     
         if(this._baseTransform === null) {
@@ -4067,7 +4067,7 @@ class Primitive {
     }
     
     set baseTransform(val) {
-        if(cpov.isClass(val, "Matrix") || typeof val == "function" || cpov.isSDLFunction(val))
+        if(cpov.isClassInstance(val, "Matrix") || typeof val == "function" || cpov.isSDLFunction(val))
             this._baseTransform = val;
         else if(val == "none")
             this._baseTransform = new Matrix("none");
@@ -4522,7 +4522,7 @@ class Box extends Primitive {
     }
 
     set corner1(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner1 = val;
         } else {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Box", this);
@@ -4541,7 +4541,7 @@ class Box extends Primitive {
     }
 
     set corner2(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner2 = val;
         } else {
             cpov.error("fatal", "corner2 must be a VectorXYZ.", "Box", this);
@@ -4739,7 +4739,7 @@ class Camera extends Primitive {
     }
 
     set bokeh(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0)) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0)) {
             this._bokeh = val;
         } else {
             cpov.error("fatal", "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>.", "Camera", this);
@@ -4796,7 +4796,7 @@ class Camera extends Primitive {
     }
 
     set direction(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._direction = val;
         } else {
             cpov.error("fatal", "direction must be a VectorXYZ.", "Camera", this);
@@ -4815,7 +4815,7 @@ class Camera extends Primitive {
     }
 
     set focalPoint(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._focalPoint = val;
         } else {
             cpov.error("fatal", "focalPoint must be a VectorXYZ.", "Camera", this);
@@ -4834,7 +4834,7 @@ class Camera extends Primitive {
     }
 
     set location(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._location = val;
         } else {
             cpov.error("fatal", "location must be a VectorXYZ.", "Camera", this);
@@ -4853,7 +4853,7 @@ class Camera extends Primitive {
     }
 
     set lookAt(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._lookAt = val;
         } else {
             cpov.error("fatal", "lookAt must be a VectorXYZ.", "Camera", this);
@@ -4872,7 +4872,7 @@ class Camera extends Primitive {
     }
 
     set right(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._right = val;
         } else {
             cpov.error("fatal", "right must be a VectorXYZ.", "Camera", this);
@@ -4891,7 +4891,7 @@ class Camera extends Primitive {
     }
 
     set sky(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._sky = val;
         } else {
             cpov.error("fatal", "sky must be a VectorXYZ.", "Camera", this);
@@ -4910,7 +4910,7 @@ class Camera extends Primitive {
     }
 
     set up(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._up = val;
         } else {
             cpov.error("fatal", "up must be a VectorXYZ.", "Camera", this);
@@ -5106,7 +5106,7 @@ class Cone extends Primitive {
     }
 
     set basePoint(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._basePoint = val;
         } else {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cone", this);
@@ -5144,7 +5144,7 @@ class Cone extends Primitive {
     }
 
     set capPoint(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._capPoint = val;
         } else {
             cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cone", this);
@@ -5427,7 +5427,7 @@ class Cylinder extends Primitive {
     }
 
     set basePoint(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._basePoint = val;
         } else {
             cpov.error("fatal", "basePoint must be a VectorXYZ.", "Cylinder", this);
@@ -5446,7 +5446,7 @@ class Cylinder extends Primitive {
     }
 
     set capPoint(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._capPoint = val;
         } else {
             cpov.error("fatal", "capPoint must be a VectorXYZ.", "Cylinder", this);
@@ -5755,7 +5755,7 @@ class Disc extends Primitive {
     }
 
     set center(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._center = val;
         } else {
             cpov.error("fatal", "center must be a VectorXYZ.", "Disc", this);
@@ -5774,7 +5774,7 @@ class Disc extends Primitive {
     }
 
     set normal(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal = val;
         } else {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Disc", this);
@@ -6302,7 +6302,7 @@ class IsoSurface extends Primitive {
     }
 
     set containedBy(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Sphere') || cpov.isClassInstance(val, 'Box'))) {
             this._containedBy = val;
         } else {
             cpov.error("fatal", "containedBy must be a Sphere or a Box.", "IsoSurface", this);
@@ -6568,7 +6568,7 @@ class JuliaFractal extends Primitive {
     }
 
     set juliaParam(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val)))) {
             this._juliaParam = val;
         } else {
             cpov.error("fatal", "juliaParam must be a VectorXYZW.", "JuliaFractal", this);
@@ -6587,7 +6587,7 @@ class JuliaFractal extends Primitive {
     }
 
     set power(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val)))) {
             this._power = val;
         } else {
             cpov.error("fatal", "power must be a VectorXY.", "JuliaFractal", this);
@@ -6644,7 +6644,7 @@ class JuliaFractal extends Primitive {
     }
 
     set slice(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val)))) {
             this._slice = val;
         } else {
             cpov.error("fatal", "slice must be a VectorXYZW.", "JuliaFractal", this);
@@ -6985,7 +6985,7 @@ class LightSource extends Primitive {
     }
 
     set location(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._location = val;
         } else {
             cpov.error("fatal", "location must be a VectorXYZ.", "LightSource", this);
@@ -7004,7 +7004,7 @@ class LightSource extends Primitive {
     }
 
     set color(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Color') || (val = cpov.convertToVector('Color', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Color') || (val = cpov.convertToVector('Color', val)))) {
             this._color = val;
         } else {
             cpov.error("fatal", "color must be a Color.", "LightSource", this);
@@ -7080,7 +7080,7 @@ class LightSource extends Primitive {
     }
 
     set axis1(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._axis1 = val;
         } else {
             cpov.error("fatal", "axis1 must be a VectorXYZ.", "LightSource", this);
@@ -7099,7 +7099,7 @@ class LightSource extends Primitive {
     }
 
     set axis2(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._axis2 = val;
         } else {
             cpov.error("fatal", "axis2 must be a VectorXYZ.", "LightSource", this);
@@ -7309,7 +7309,7 @@ class LightSource extends Primitive {
     }
 
     set pointAt(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._pointAt = val;
         } else {
             cpov.error("fatal", "pointAt must be a VectorXYZ.", "LightSource", this);
@@ -7747,7 +7747,7 @@ class Mesh extends Primitive {
     }
 
     set insideVector(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._insideVector = val;
         } else {
             cpov.error("fatal", "insideVector must be a VectorXYZ.", "Mesh", this);
@@ -8075,7 +8075,7 @@ class Parametric extends Primitive {
     }
 
     set uv1(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val)))) {
             this._uv1 = val;
         } else {
             cpov.error("fatal", "uv1 must be a VectorUV.", "Parametric", this);
@@ -8094,7 +8094,7 @@ class Parametric extends Primitive {
     }
 
     set uv2(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val)))) {
             this._uv2 = val;
         } else {
             cpov.error("fatal", "uv2 must be a VectorUV.", "Parametric", this);
@@ -8113,7 +8113,7 @@ class Parametric extends Primitive {
     }
 
     set containedBy(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box'))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'Sphere') || cpov.isClassInstance(val, 'Box'))) {
             this._containedBy = val;
             this.adopt(this._containedBy);
         } else {
@@ -8371,7 +8371,7 @@ class Plane extends Primitive {
     }
 
     set normal(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal = val;
         } else {
             cpov.error("fatal", "normal must be a VectorXYZ.", "Plane", this);
@@ -9400,7 +9400,7 @@ class Sphere extends Primitive {
     }
 
     set center(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._center = val;
         } else {
             cpov.error("fatal", "center must be a VectorXYZ.", "Sphere", this);
@@ -10348,7 +10348,7 @@ class Triangle extends Primitive {
     }
 
     set corner1(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner1 = val;
         } else {
             cpov.error("fatal", "corner1 must be a VectorXYZ.", "Triangle", this);
@@ -10367,7 +10367,7 @@ class Triangle extends Primitive {
     }
 
     set corner2(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner2 = val;
         } else {
             cpov.error("fatal", "corner2 must be a VectorXYZ.", "Triangle", this);
@@ -10386,7 +10386,7 @@ class Triangle extends Primitive {
     }
 
     set corner3(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._corner3 = val;
         } else {
             cpov.error("fatal", "corner3 must be a VectorXYZ.", "Triangle", this);
@@ -10424,7 +10424,7 @@ class Triangle extends Primitive {
     }
 
     set normal1(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal1 = val;
         } else {
             cpov.error("fatal", "normal1 must be a VectorXYZ.", "Triangle", this);
@@ -10443,7 +10443,7 @@ class Triangle extends Primitive {
     }
 
     set normal2(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal2 = val;
         } else {
             cpov.error("fatal", "normal2 must be a VectorXYZ.", "Triangle", this);
@@ -10462,7 +10462,7 @@ class Triangle extends Primitive {
     }
 
     set normal3(val) {
-        if(cpov.isNullOrFunction(val) || (cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
+        if(cpov.isNullOrFunction(val) || (cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val)))) {
             this._normal3 = val;
         } else {
             cpov.error("fatal", "normal3 must be a VectorXYZ.", "Triangle", this);
@@ -10721,7 +10721,7 @@ class VectorXY {
         // Snippet constructor block //
 
         if(options !== undefined) {
-            if(cpov.isClass(options, "VectorXY")) { // copy
+            if(cpov.isClassInstance(options, "VectorXY")) { // copy
                 options = { x: options.x, y: options.y };
             }
         
@@ -10947,7 +10947,7 @@ class VectorUV {
         // Snippet constructor block //
 
         if(options !== undefined) {
-            if(cpov.isClass(options, "VectorUV")) { // copy
+            if(cpov.isClassInstance(options, "VectorUV")) { // copy
                 options = { u: options.u, v: options.v };
             }
         
@@ -11174,7 +11174,7 @@ class VectorXYZ {
         // Snippet constructor block //
 
         if(options !== undefined) {
-            if(cpov.isClass(options, "VectorXYZ")) { // copy
+            if(cpov.isClassInstance(options, "VectorXYZ")) { // copy
                 options = { x: options.x, y: options.y, z: options.z };
             }
         
@@ -11424,7 +11424,7 @@ class VectorXYZW {
         // Snippet constructor block //
 
         if(options !== undefined) {
-            if(cpov.isClass(options, "VectorXYZW")) { // copy
+            if(cpov.isClassInstance(options, "VectorXYZW")) { // copy
                 options = { x: options.x, y: options.y, z: options.z, w: options.w };
             }
         
@@ -11698,7 +11698,7 @@ class Color {
         // Snippet constructor block //
 
         if(options !== undefined) {
-            if(cpov.isClass(options, "Color")) { // copy
+            if(cpov.isClassInstance(options, "Color")) { // copy
                 options = {
                     r: options.r === undefined ? null : options.r,
                     g: options.g === undefined ? null : options.g,
@@ -12004,7 +12004,7 @@ class Matrix {
 		if(v00 == "none") // identity matrix
 			return;
 
-        if(cpov.isClass(v00, "Matrix")) {  // make a copy of an existing Matrix
+        if(cpov.isClassInstance(v00, "Matrix")) {  // make a copy of an existing Matrix
             for(var i = 0; i < 12; i++) {
                 this.raw[i] = v00.raw[i];
             }
@@ -12543,7 +12543,7 @@ class Matrix {
 
     xMatrix(that) {
 
-        if(!cpov.isClass(that, "Matrix"))
+        if(!cpov.isClassInstance(that, "Matrix"))
             cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix", this);
 
         var a = this.asArray("calc");
@@ -12566,7 +12566,7 @@ class Matrix {
 
     xPoint(point) {
 
-        if(!cpov.isClass(point, "VectorXYZ"))
+        if(!cpov.isClassInstance(point, "VectorXYZ"))
             cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint", this);
 
         var m = this.asArray("calc");
@@ -12658,7 +12658,7 @@ class GenMap {
         }
         var result = [ ];
         for(var i = 0; i < val.length; i++) {
-            if(cpov.isClass(val[i][1], this._itemClass.name)) {
+            if(cpov.isClassInstance(val[i][1], this._itemClass.name)) {
                 result.push([val[i][0], val[i][1].copy()]);
                 continue;
             }

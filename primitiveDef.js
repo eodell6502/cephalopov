@@ -32,7 +32,7 @@ module.exports = {
             tname: "boolean"
         }, {
             name:  "baseTransform",
-            valid: "cpov.isClass(val, 'Matrix')",
+            valid: "cpov.isClassInstance(val, 'Matrix')",
             err:   "baseTransform must be a Matrix.",
             desc:  "The <code>baseTransform</code> attribute contains the \"default\" transformation of the object. As new transformations are applied, the original <code>baseTransform</code> remains unchanged, making it easy to revert to the original state by calling the <code>resetTransform</code> method.",
             tname: "Matrix"
@@ -44,7 +44,7 @@ module.exports = {
             tname: "Primitive"
         }, {
             name:  "clippedBy",
-            valid: "cpov.inheritsFrom(val, 'Primitive') && !cpov.isClass(val, ['bicubicPatch', 'disc', 'triangle', 'polygon', 'mesh', 'mesh2'])",
+            valid: "cpov.inheritsFrom(val, 'Primitive') && !cpov.isClassInstance(val, ['bicubicPatch', 'disc', 'triangle', 'polygon', 'mesh', 'mesh2'])",
             err:   "clippedBy must be a solid Primitive.",
             desc:  "Specifies a solid <code>Primitive</code> that the object is clipped by in a manner similar to CSG intersection.",
             tname: "Primitive"
@@ -56,7 +56,7 @@ module.exports = {
             tname: "boolean"
         }, {
             name:  "finish",
-            valid: "cpov.isClass(val, 'Finish')",
+            valid: "cpov.isClassInstance(val, 'Finish')",
             err:   "finish must be a Finish.",
             desc:  "TODO",
             tname: "Finish"
@@ -86,7 +86,7 @@ module.exports = {
             tname: "string"
         }, {
             name:  "interior",
-            valid: "cpov.isClass(val, 'Interior')",
+            valid: "cpov.isClassInstance(val, 'Interior')",
             err:   "interior must be an Interior.",
             desc:  "NIY",
             tname: "Interior"
@@ -98,7 +98,7 @@ module.exports = {
             tname: "boolean"
         }, {
             name:  "material",
-            valid: "cpov.isClass(val, 'Material')",
+            valid: "cpov.isClassInstance(val, 'Material')",
             err:   "material must be a Material.",
             desc:  "NIY",
             tname: "Material"
@@ -170,7 +170,7 @@ module.exports = {
             tname:  "integer"
         }, {
             name:  "texture",
-            // valid: "cpov.isClass(val, 'Texture')",         // Temporarily, we will fake having
+            // valid: "cpov.isClassInstance(val, 'Texture')",         // Temporarily, we will fake having
             // err:   "texture must be a Texture."            // a texture subsystem by letting users
             valid: "cpov.isString(val)",                      // just stick an SDL string in its
             err:   "texture must be a string (for now).",     // place.
@@ -178,7 +178,7 @@ module.exports = {
             tname: "string"
         }, {
             name:   "transform",
-            valid:  "cpov.isClass(val, 'Matrix') || (val = new Matrix(val))",
+            valid:  "cpov.isClassInstance(val, 'Matrix') || (val = new Matrix(val))",
             err:    "transform must be a Matrix.",
             custom: "Primitive.transform.get-set",
             desc:   "This is a <code>Matrix</code> representing the current transformation state of the object, as distinct from <code>baseTransform</code>, which represents its original state. <code>Matrix</code> values assigned to the <code>transform</code> attribute are silently multiplied against its current value.",

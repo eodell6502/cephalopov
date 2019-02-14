@@ -99,14 +99,14 @@ module.exports = {
             {
                 name:  "corner1",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner1 must be a VectorXYZ.",
                 desc:  "The first of two opposite corners of the cube.",
                 tname: "VectorXYZ"
             }, {
                 name:  "corner2",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner2 must be a VectorXYZ.",
                 desc:  "The first of two opposite corners of the cube.",
                 tname: "VectorXYZ"
@@ -155,7 +155,7 @@ module.exports = {
                 tname: "[float]"
             }, {
                 name:  "bokeh",
-                valid: "cpov.isClass(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
+                valid: "cpov.isClassInstance(val, 'Color') && val.r >= 0 && val.r <= 1 && val.g >= 0 && val.g <= 1 && val.b == 0",
                 err:   "bokeh must be a Color in the range <0, 0, 0> to <1, 1, 0>.",
                 desc:  "Specifies the bokeh color.",
                 tname: "Color"
@@ -173,43 +173,43 @@ module.exports = {
                 tname: "integer"
             }, {
                 name:  "direction",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "direction must be a VectorXYZ.",
                 desc:  "Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For most purposes, you will not need to set <code>direction</code>, but see the POV-Ray docs for <a href=\"http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4\">more details</a>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "focalPoint",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "focalPoint must be a VectorXYZ.",
                 desc:  "Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero.",
                 tname: "VectorXYZ"
             }, {
                 name:  "location",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "location must be a VectorXYZ.",
                 desc:  "Specifies the location of the camera.",
                 tname: "VectorXYZ"
             }, {
                 name:  "lookAt",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "lookAt must be a VectorXYZ.",
                 desc:  "Specifies the point at which the camera is aimed.",
                 tname: "VectorXYZ"
             }, {
                 name:  "right",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "right must be a VectorXYZ.",
                 desc:  "Along with <code>up</code>, the <code>right</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[1.33, 0, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href=\"http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5\">POV-Ray docs</a>. It also determines the handedness of the coordinate system.",
                 tname: "VectorXYZ"
             }, {
                 name:  "sky",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "sky must be a VectorXYZ.",
                 desc:  "Determines where \"up\" is for the camera. By default, this is [0, 1, 0].",
                 tname: "VectorXYZ"
             }, {
                 name:  "up",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "up must be a VectorXYZ.",
                 desc:  "Along with <code>right</code>, the <code>up</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[0, 1, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href=\"http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5\">POV-Ray docs</a>.",
                 tname: "VectorXYZ"
@@ -240,7 +240,7 @@ module.exports = {
             {
                 name:  "basePoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "basePoint must be a VectorXYZ.",
                 desc:  "Defines the location of the center of the cone's base end.",
                 tname: "VectorXYZ"
@@ -254,7 +254,7 @@ module.exports = {
             }, {
                 name:  "capPoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "capPoint must be a VectorXYZ.",
                 desc:  "Defines the location of the center of the cone's cap end.",
                 tname: "VectorXYZ"
@@ -311,14 +311,14 @@ module.exports = {
             {
                 name:  "basePoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "basePoint must be a VectorXYZ.",
                 desc:  "Defines the center of the base end of the cylinder.",
                 tname: "VectorXYZ"
             }, {
                 name:  "capPoint",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "capPoint must be a VectorXYZ.",
                 desc:  "Defines the center of the cap end of the cylinder.",
                 tname: "VectorXYZ"
@@ -384,14 +384,14 @@ module.exports = {
             {
                 name:  "center",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "center must be a VectorXYZ.",
                 desc:  "This is the center point of the disc.",
                 tname: "VectorXYZ"
             }, {
                 name:  "normal",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal must be a VectorXYZ.",
                 desc:  "This defines the normal or orientation of the disc in space.",
                 tname: "VectorXYZ"
@@ -504,7 +504,7 @@ module.exports = {
                 tname: "SDL"
             }, {
                 name:  "containedBy",
-                valid: "cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')",
+                valid: "cpov.isClassInstance(val, 'Sphere') || cpov.isClassInstance(val, 'Box')",
                 err:   "containedBy must be a Sphere or a Box.",
                 desc:  "Defines a <code>Sphere</code> or <code>Box</code> which determines the portion of the (potentially infinite) surface that POV-Ray will render. By default, this is a <code>Box</code> with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.",
                 tname: "Sphere<br/>Box"
@@ -566,13 +566,13 @@ module.exports = {
             }, {
                 name:  "juliaParam",
 				req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "juliaParam must be a VectorXYZW.",
                 desc:  "This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.",
                 tname: "VectorXYZW"
             }, {
                 name:  "power",
-                valid: "cpov.isClass(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXY') || (val = cpov.convertToVector('VectorXY', val))",
                 err:   "power must be a VectorXY.",
                 desc:  "For the <code>hypercomplex:pwr</code> formula, this <code>VectorXY</code> contains the X and Y exponents used in the calculations. Has no effect on other formula types.",
                 tname: "VectorXY"
@@ -590,7 +590,7 @@ module.exports = {
                 tname: "integer"
             }, {
                 name:  "slice",
-                valid: "cpov.isClass(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZW') || (val = cpov.convertToVector('VectorXYZW', val))",
                 err:   "slice must be a VectorXYZW.",
                 desc:  "Specifies the 3D slice through 4D space used to view the fractal. Defaults to <code>[0, 0, 0, 1]</code>.",
                 tname: "VectorXYZW"
@@ -647,14 +647,14 @@ module.exports = {
             {
                 name:  "location",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "location must be a VectorXYZ.",
                 desc:  "Specifies the location of the light source.",
                 tname: "VectorXYZ"
             }, {
                 name:  "color",
                 req:   true,
-                valid: "cpov.isClass(val, 'Color') || (val = cpov.convertToVector('Color', val))",
+                valid: "cpov.isClassInstance(val, 'Color') || (val = cpov.convertToVector('Color', val))",
                 err:   "color must be a Color.",
                 desc:  "Specifies the color of the light source.",
                 tname: "Color"
@@ -678,13 +678,13 @@ module.exports = {
                 tname: "boolean"
             }, {
                 name:  "axis1",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "axis1 must be a VectorXYZ.",
                 desc:  "When <code>areaLight</code> is <code>true</code>, <code>axis1</code> defines the orientation of the area light along one axis.",
                 tname: "VectorXYZ"
             }, {
                 name:  "axis2",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "axis2 must be a VectorXYZ.",
                 desc:  "When <code>areaLight</code> is <code>true</code>, <code>axis2</code> defines the orientation of the area light along one axis.",
                 tname: "VectorXYZ"
@@ -751,7 +751,7 @@ module.exports = {
                 tname: "boolean"
             }, {
                 name:  "pointAt",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "pointAt must be a VectorXYZ.",
                 desc:  "Specifies the point the spotlight is aimed at.",
                 tname: "VectorXYZ"
@@ -839,7 +839,7 @@ module.exports = {
                 tname: "[Triangle]"
             }, {
                 name:  "insideVector",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "insideVector must be a VectorXYZ.",
                 desc:  "For the <code>Mesh</code> to be solid, it must be completely closed and have a defined <code>insideVector</code>.",
                 tname: "VectorXYZ"
@@ -928,21 +928,21 @@ module.exports = {
             }, {
                 name:  "uv1",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
+                valid: "cpov.isClassInstance(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
                 err:   "uv1 must be a VectorUV.",
                 desc:  "Specifies one corner of the UV plane to which the surface is mapped.",
                 tname: "VectorUV"
             }, {
                 name:  "uv2",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
+                valid: "cpov.isClassInstance(val, 'VectorUV') || (val = cpov.convertToVector('VectorUV', val))",
                 err:   "uv2 must be a VectorUV.",
                 desc:  "Specifies the other corner of the UV plane to which the surface is mapped.",
                 tname: "VectorUV"
             }, {
                 name:  "containedBy",
                 child: "scalar",
-                valid: "cpov.isClass(val, 'Sphere') || cpov.isClass(val, 'Box')",
+                valid: "cpov.isClassInstance(val, 'Sphere') || cpov.isClassInstance(val, 'Box')",
                 err:   "containedBy must be a Sphere or Box.",
                 desc:  "Defines a <code>Sphere</code> or <code>Box</code> which determines the portion of the (potentially infinite) surface that POV-Ray will render. By default, this is a <code>Box</code> with corners at <code>[1, 1, 1]</code> and <code>[-1, -1, -1]</code>.",
                 tname: "Sphere<br/>Box"
@@ -997,7 +997,7 @@ module.exports = {
             {
                 name:  "normal",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal must be a VectorXYZ.",
                 desc:  "Defines the surface normal of the plane, i.e., a vector that points up perpendicularly from the surface of the plane.",
                 tname: "VectorXYZ"
@@ -1205,7 +1205,7 @@ module.exports = {
             {
                 name:  "center",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "center must be a VectorXYZ.",
                 desc:  "Defines the center point of the sphere.",
                 tname: "VectorXYZ"
@@ -1410,21 +1410,21 @@ module.exports = {
             {
                 name:  "corner1",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner1 must be a VectorXYZ.",
                 desc:  "Defines the first corner of the triangle.",
                 tname: "VectorXYZ"
             }, {
                 name:  "corner2",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner2 must be a VectorXYZ.",
                 desc:  "Defines the second corner of the triangle.",
                 tname: "VectorXYZ"
             }, {
                 name:  "corner3",
                 req:   true,
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "corner3 must be a VectorXYZ.",
                 desc:  "Defines the third corner of the triangle.",
                 tname: "VectorXYZ"
@@ -1436,19 +1436,19 @@ module.exports = {
                 tname: "boolean"
             }, {
                 name:  "normal1",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal1 must be a VectorXYZ.",
                 desc:  "Specifies the surface normal for <code>corner1</code>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "normal2",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal2 must be a VectorXYZ.",
                 desc:  "Specifies the surface normal for <code>corner2</code>.",
                 tname: "VectorXYZ"
             }, {
                 name:  "normal3",
-                valid: "cpov.isClass(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
+                valid: "cpov.isClassInstance(val, 'VectorXYZ') || (val = cpov.convertToVector('VectorXYZ', val))",
                 err:   "normal3 must be a VectorXYZ.",
                 desc:  "Specifies the surface normal for <code>corner3</code>.",
                 tname: "VectorXYZ"

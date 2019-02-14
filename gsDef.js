@@ -20,7 +20,7 @@ module.exports = {
             tname: "float"
         }, {
             name:  "ambientLight",
-            valid: "cpov.isClass(val, 'Color') || (val = new Color(val))",
+            valid: "cpov.isClassInstance(val, 'Color') || (val = new Color(val))",
             err:   "ambientLight must be a Color.",
             desc:  "Specifies the color of the ambient light, i.e., the illumination that falls on every object from all directions in the absence of any explicit <code>LightSource</code>.",
             tname: "Color"
@@ -38,7 +38,7 @@ module.exports = {
             tname: "string"
         }, {
             name:  "iridWavelength",
-            valid: "cpov.isClass(val, 'Color')",
+            valid: "cpov.isClassInstance(val, 'Color')",
             err:   "iridWavelength must be a Color",
             desc:  "Specifies a color to use in iridescence calculations. The default, <code>[0.70, 0.52, 0.48]</code> will rarely if ever need to be changed, but it is available for experimentation.",
             tname: "Color"

@@ -210,7 +210,7 @@ cpov.isNull = function(val) {
 // and classname may be scalars or arrays.
 //------------------------------------------------------------------------------
 
-cpov.isClass = function(val, classname) {
+cpov.isClassInstance = function(val, classname) {
     if(!Array.isArray(val))
         val = [ val ];
     if(!Array.isArray(classname))
@@ -240,7 +240,7 @@ cpov.isClass = function(val, classname) {
 cpov.isArrayOfClass = function(val, classname, min, max) {
     if(Array.isArray(val)) {
         for(var i = 0; i < val.length; i++) {
-            if(!cpov.isClass(val[i], classname))
+            if(!cpov.isClassInstance(val[i], classname))
                 return false;
         }
         if(val.length < min || val.length > max)

@@ -189,7 +189,7 @@ toSDL(stops = 0) {
 // Color.conBlock //------------------------------------------------------------
 
 if(options !== undefined) {
-    if(cpov.isClass(options, "Color")) { // copy
+    if(cpov.isClassInstance(options, "Color")) { // copy
         options = {
             r: options.r === undefined ? null : options.r,
             g: options.g === undefined ? null : options.g,
@@ -458,7 +458,7 @@ class GenMap {
         }
         var result = [ ];
         for(var i = 0; i < val.length; i++) {
-            if(cpov.isClass(val[i][1], this._itemClass.name)) {
+            if(cpov.isClassInstance(val[i][1], this._itemClass.name)) {
                 result.push([val[i][0], val[i][1].copy()]);
                 continue;
             }
@@ -1473,7 +1473,7 @@ class Matrix {
 		if(v00 == "none") // identity matrix
 			return;
 
-        if(cpov.isClass(v00, "Matrix")) {  // make a copy of an existing Matrix
+        if(cpov.isClassInstance(v00, "Matrix")) {  // make a copy of an existing Matrix
             for(var i = 0; i < 12; i++) {
                 this.raw[i] = v00.raw[i];
             }
@@ -2012,7 +2012,7 @@ class Matrix {
 
     xMatrix(that) {
 
-        if(!cpov.isClass(that, "Matrix"))
+        if(!cpov.isClassInstance(that, "Matrix"))
             cpov.error("fatal", "that is not a Matrix.", "Matrix.xMatrix", this);
 
         var a = this.asArray("calc");
@@ -2035,7 +2035,7 @@ class Matrix {
 
     xPoint(point) {
 
-        if(!cpov.isClass(point, "VectorXYZ"))
+        if(!cpov.isClassInstance(point, "VectorXYZ"))
             cpov.error("fatal", "point is not a VectorXYZ.", "Matrix.xPoint", this);
 
         var m = this.asArray("calc");
@@ -2714,7 +2714,7 @@ set transform(val) {
     if(val == "none")
         val = new Matrix("none");
 
-    if(!cpov.isClass(val, "Matrix") && !cpov.isNullOrFunction(val))
+    if(!cpov.isClassInstance(val, "Matrix") && !cpov.isNullOrFunction(val))
         cpov.error("fatal", "transform value must be a Matrix, JavaScript function, or SDL function", "Primitive.transform", this);
 
     if(this._baseTransform === null) {
@@ -2740,7 +2740,7 @@ get baseTransform() {
 }
 
 set baseTransform(val) {
-    if(cpov.isClass(val, "Matrix") || typeof val == "function" || cpov.isSDLFunction(val))
+    if(cpov.isClassInstance(val, "Matrix") || typeof val == "function" || cpov.isSDLFunction(val))
         this._baseTransform = val;
     else if(val == "none")
         this._baseTransform = new Matrix("none");
@@ -3162,7 +3162,7 @@ asArray(mode = "normal") {
 // VectorUV.conBlock //---------------------------------------------------------
 
 if(options !== undefined) {
-    if(cpov.isClass(options, "VectorUV")) { // copy
+    if(cpov.isClassInstance(options, "VectorUV")) { // copy
         options = { u: options.u, v: options.v };
     }
 
@@ -3288,7 +3288,7 @@ asArray(mode = "normal") {
 // VectorXY.conBlock //---------------------------------------------------------
 
 if(options !== undefined) {
-    if(cpov.isClass(options, "VectorXY")) { // copy
+    if(cpov.isClassInstance(options, "VectorXY")) { // copy
         options = { x: options.x, y: options.y };
     }
 
@@ -3413,7 +3413,7 @@ asArray(mode = "normal") {
 // VectorXYZ.conBlock //--------------------------------------------------------
 
 if(options !== undefined) {
-    if(cpov.isClass(options, "VectorXYZ")) { // copy
+    if(cpov.isClassInstance(options, "VectorXYZ")) { // copy
         options = { x: options.x, y: options.y, z: options.z };
     }
 
@@ -3538,7 +3538,7 @@ asArray(mode = "normal") {
 // VectorXYZW.conBlock //-------------------------------------------------------
 
 if(options !== undefined) {
-    if(cpov.isClass(options, "VectorXYZW")) { // copy
+    if(cpov.isClassInstance(options, "VectorXYZW")) { // copy
         options = { x: options.x, y: options.y, z: options.z, w: options.w };
     }
 
