@@ -1449,6 +1449,13 @@ results are:</p>
 
 <p class='fdesc'>Copies the values from <code>that</code> to this <code>Matrix</code>.</p>
 
+<div class='fsig'>isIdentityMatrix()</div>
+
+<p class='fdesc'>Returns <code>true</code> if <code>this.raw</code> is the same
+as the identity matrix with which it was initialized. Note that this only compares
+literal numeric values. If the members of the array are functions, this method
+will return <code>false</code> even if the end result is the identity matrix.</p>
+
 <div class='fsig'>rotate(<i>x</i>, <i>y</i>, <i>z</i>)</div>
 
 <p class='fdesc'>This is a convenience method for applying a rotation to the
@@ -1486,13 +1493,13 @@ indented by the optional number of tab <code>stops</code>. Unlike most other
 <code>toSDL</code> methods, this one always succeeds because the constructor
 either requires or supplies all of the mandatory values.</p>
 
-<div class='fsig'>Matrix.xMatrix(<i>that</i>);</div>
+<div class='fsig'>xMatrix(<i>that</i>);</div>
 
 <p class='fdesc'>Given another <code>Matrix</code>, <code><i>that</i></code>,
 returns a new <code>Matrix</code> that is the product of
 <code><i>this</i></code> &times; <code><i>that</i></code>.</p>
 
-<div class='fsig'>Matrix.xPoint(<i>point</i>);</div>
+<div class='fsig'>xPoint(<i>point</i>);</div>
 
 <p class='fdesc'>Given a <code>VectorXYZ</code>, <code><i>point</i></code>,
 returns a new <code>VectorXYZ</code> which has been transformed by the

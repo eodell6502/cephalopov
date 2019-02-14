@@ -1906,6 +1906,23 @@ class Matrix {
     }
 
     //--------------------------------------------------------------------------
+    // Returns a boolean indicating whether the current value of this.raw is the
+    // same as the initial identity matrix. This only checks for numeric values;
+    // if raw is a function returning an identity matrix, it will still return
+    // false.
+    //--------------------------------------------------------------------------
+
+    isIdentityMatrix() {
+        var ident = [ 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ];
+
+        for(var i = 0; i < 12; i++) {
+            if(this.raw[i] !== ident[i])
+                return false;
+        }
+        return true;
+    }
+
+    //--------------------------------------------------------------------------
     // Convenience method for applying a rotation to the current Matrix. If
     // y and z are undefined, the value of x is copied to them.
     //--------------------------------------------------------------------------
