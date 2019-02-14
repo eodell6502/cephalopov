@@ -3954,7 +3954,7 @@ class Primitive {
         // TODO: photons
         // TODO: radiosity
     
-        if(this.transform !== undefined && this.transform !== null)
+        if(this.transform !== undefined && this.transform !== null && !this.transform.isIdentityMatrix())
             content.push(this.transform.toSDL(stops));
     
         return content.join("\n");

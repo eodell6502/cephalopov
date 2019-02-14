@@ -209,5 +209,4 @@ camera {
 box {
     <1, 1, 1>, <-1, -1, -1>
     texture { pigment { color <1, 1, 0> }}
-    matrix <1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0>
 }

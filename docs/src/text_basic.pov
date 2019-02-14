@@ -210,5 +210,5 @@ text {
     ttf "BebasNeueBold.ttf" "CPOV"
     0.25, 0
     texture { pigment { color <1, 1, 0> }}
-    matrix <2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -2>
+    matrix <2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -1>
 }
