@@ -6820,7 +6820,7 @@ class Lathe extends Primitive {
         if(cpov.isNullOrFunction(val) || (cpov.isArrayOfClass(val, 'VectorXY', 2, Infinity) || (val = cpov.convertToVectorArray('VectorXY', val)))) {
             this._points = val;
         } else {
-            cpov.error("fatal", "points must be an array of VectorXY. Linear splines require at least two points, quadratic splines require at least three, and cubic and bezier splines require at least four.", "Lathe", this);
+            cpov.error("fatal", "points must be an array of VectorXY.", "Lathe", this);
         }
     }
 
@@ -10682,7 +10682,10 @@ class Union extends Primitive {
         for(var i = 0; i < this.components.length; i++) {
             content.push(this.components[i].toSDL(stops + 1));
         }
-        content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
+    
+        var splitUnion = this._splitUnion !== null ? this._splitUnion : cpov.imageOptions.splitUnions;
+    
+        content.push(pad + "    split_union " + (splitUnion ? "on" : "off"));
     
         var superSDL = super.toSDL(stops + 1);
         if(superSDL)

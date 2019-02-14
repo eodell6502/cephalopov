@@ -1479,11 +1479,11 @@ module.exports = {
                 desc:   "This is the array of objects to be combined by the CSG <code>Union</code>.",
                 tname:  "Array"
             }, {
-                name:  "splitUnion",
-                valid: "cpov.isBoolean(val)",
-                err:   "splitUnion must be a boolean.",
-                desc:  "If the composite object lacks holes, setting <code>splitUnion</code> to <code>false</code> can speed up rendering. Defaults to <code>true</code>.",
-                tname: "boolean"
+                name:    "splitUnion",
+                valid:   "cpov.isBoolean(val)",
+                err:     "splitUnion must be a boolean.",
+                desc:    "If the composite object lacks holes, setting <code>splitUnion</code> to <code>false</code> can speed up rendering. Defaults to <code>true</code>.",
+                tname:   "boolean"
             }
         ]
     },

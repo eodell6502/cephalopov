@@ -178,6 +178,8 @@ $(document).ready(function() {
 
 <h2>Introduction</h2>
 
+<div>
+
 <p><span class='h2num'></span>CephaloPOV is a JavaScript scripting engine for
 POV-Ray. It is implemented as a Node command line program that loads a user
 script and executes it in an environment in which it can manipulate various
@@ -189,6 +191,8 @@ animations.</p>
 <p><i>The documentation as it stands is more or less complete as far as CephaloPOV
 itself is concerned, but the longer-term goal of being self-sufficient without
 requiring familiarity with POV-Ray is still a good ways away.</i></p>
+
+</dive>
 
 <h3>Table of Contents</h3>
 
@@ -231,18 +235,20 @@ a ways off.</span></p>
 
 <h2>Tutorial</h2>
 
+<div>
+
 <p><span class='h2num'></span>This section will take you step-by-step through
 learning how to use CephaloPOV and all its features. It will be, sadly, likely the
 last section to be completed.</p>
 
-<p><br/><br/><br/><br/></p>
+<p><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
 
 <h2>Reference</h2>
 
 <p><span class='h2num'></span>The reference section contains a complete summary
 of the CephaloPOV API.</p>
 
-<p><br/><br/><br/><br/><br/><br/><br/></p>
+<p><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
 
 <h3>Documentation Conventions</h3>
 
@@ -634,7 +640,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -653,7 +659,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -678,7 +684,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -704,7 +710,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -748,7 +754,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -809,7 +815,7 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1831,7 +1837,7 @@ at right was created by the following code:</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1853,7 +1859,7 @@ at right was created by the following code:</p>
 <tr><td>RW</td><td>N</td><td>blurSamples</td><td>[float]</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
 <tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2247,7 +2253,7 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
@@ -3287,182 +3293,6 @@ var union = new Union({ components: [ obj1, obj2 ] });</div>
 </tbody></table>
 </div dh="Union">
 
-
-<h2>Appendices</h2>
-
-<p><span class='h2num'></span>The appendices contain further details and discussions about
-CephaloPOV and ray tracing supplementary to the main text.</p>
-
-<p><br/><br/><br/><br/><br/><br/><br/></p>
-
-<h3>Matrices</h3>
-
-<p>SDL matrices are an abbreviated form of the entire matrix being used. The
-fourth column is invariant and therefore omitted from its SDL representation and
-inaccessible within CephaloPOV, but we show it below in grey for the
-math-curious. You <em>don't</em> have to know much about matrix math to use the
-<code>Matrix</code> class. Like SDL, CephaloPOV offers shortcuts to the
-individual transformations in the form of special arguments to the
-<code>Matrix</code> constructor and the <code>apply</code> method.</p>
-
-<h4>Translation, Scaling, and Skewing</h4>
-
-<p>Red elements determine scaling, blue elements determine translation, and
-green elements determine skewing. (The grey elements, as previously mentioned,
-are invariant and hidden in both POV-Ray and CephaloPOV.) Note that there are
-three elements for each axis when scaling and translating, but there are six
-elements for skewing, because skew transformations involve relationships between
-pairs of axes.</p>
-
-<table class='matrixDemo'>
-    <tr><th></th><th>Column<br/>0</th><th>Column<br/>1</th><th>Column<br/>2</th><th>Column<br/>3</th></tr>
-    <tr>
-        <th>Row<br/>0</th>
-        <td class='scale'><div class='cpName'>v00</div><div class='op'>Scale X</div></td>
-        <td class='skew'><div class='cpName'>v01</div><div class='op'>Skew Y by X</div></td>
-        <td class='skew'><div class='cpName'>v02</div><div class='op'>Skew Z by X</div></td>
-        <td class='implicit'><div class='cpName'>(v03)</div><div class='op'>0</div></td>
-    </tr><tr>
-        <th>Row<br/>1</th>
-        <td class='skew'><div class='cpName'>v10</div><div class='op'>Skew X by Y</div></td>
-        <td class='scale'><div class='cpName'>v11</div><div class='op'>Scale Y</div></td>
-        <td class='skew'><div class='cpName'>v12</div><div class='op'>Skew Z by Y</div></td>
-        <td class='implicit'><div class='cpName'>(v13)</div><div class='op'>0</div></td>
-    </tr><tr>
-        <th>Row<br/>2</th>
-        <td class='skew'><div class='cpName'>v20</div><div class='op'>Skew X by Z</div></td>
-        <td class='skew'><div class='cpName'>v21</div><div class='op'>Skew Y by Z</div></td>
-        <td class='scale'><div class='cpName'>v22</div><div class='op'>Scale Z</div></td>
-        <td class='implicit'><div class='cpName'>(v23)</div><div class='op'>0</div></td>
-    </tr><tr>
-        <th>Row<br/>3</th>
-        <td class='translate'><div class='cpName'>v30</div><div class='op'>Translate X</div></td>
-        <td class='translate'><div class='cpName'>v31</div><div class='op'>Translate Y</div></td>
-        <td class='translate'><div class='cpName'>v32</div><div class='op'>Translate Z</div></td>
-        <td class='implicit'><div class='cpName'>(v33)</div><div class='op'>1</div></td>
-    </tr>
-</table>
-
-<p>An important thing to notice here is that while the matrix elements that
-determine translation and skewing are 0 if no translation or skewing is to be
-done, the elements that define scaling must be 1 when no scaling is to be done,
-i.e., it's an identity element. Setting the scaling elements to zero will make
-the object disappear!</p>
-
-<p>Another thing to notice about scaling is that negative values will
-<em>reflect</em> the object across the relevant axis. In the special case of 1,
-this will be a perfect mirror image; other values will stretch or squash the
-object.</p>
-
-<h4>Rotation</h4>
-
-<p>Rotation is a little more complicated because it requires the use of
-trigonometric functions. This is handled for you by the Matrix class'
-<code>rotate</code> constructor argument, but it's worth understanding in case
-you want to try doing the calculations yourself or trying variations to see what
-they do.</p>
-
-<p>Since the values for rotations around the axes overlap, we'll omit the
-invariant fourth column and the translation row so we can cram all three
-rotation matrices into a single row. In this case, we'll color the rotation
-elements red, the single scale identity element blue, and everything else grey.
-If you're entirely innocent of trigonometry, know that <i>cos</i> and <i>sin</i>
-are the trigonometric functions cosine and sine, which are implemented in
-JavaScript as the <code>Math.cos()</code> and <code>Math.sin()</code> methods.
-The angle of rotation is conventionally represented by the Greek letter theta,
-&theta;, and is specified in radians, though POV-Ray and CephaloPOV expect you
-to use degrees instead and quietly translate degrees into radians for you.</p>
-
-
-<table style='width: 100%;'>
-    <tr>
-        <td style='width: 33%;'>
-
-            <table class='matrixDemo'>
-                <tr><th colspan='4'>Rotation around the X axis</th></tr>
-                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
-                <tr>
-                    <th>Row<br/>0</th>
-                    <td class='ident'><div class='cpName'>v00</div><div class='op'>1</div></td>
-                    <td class='null'><div class='cpName'>v01</div><div class='op'>0</div></td>
-                    <td class='null'><div class='cpName'>v02</div><div class='op'>0</div></td>
-                </tr><tr>
-                    <th>Row<br/>1</th>
-                    <td class='null'><div class='cpName'>v10</div><div class='op'>0</div></td>
-                    <td class='rotate'><div class='cpName'>v11</div><div class='op'><i>cos</i>(&theta;)</div></td>
-                    <td class='rotate'><div class='cpName'>v12</div><div class='op'><i>sin</i>(&theta;)</div></td>
-                </tr><tr>
-                    <th>Row<br/>2</th>
-                    <td class='null'><div class='cpName'>v20</div><div class='op'>0</div></td>
-                    <td class='rotate'><div class='cpName'>v21</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
-                    <td class='rotate'><div class='cpName'>v22</div><div class='op'><i>cos</i>(&theta;)</div></td>
-                </tr>
-            </table>
-
-        </td><td style='width: 33%;'>
-
-            <table class='matrixDemo'>
-                <tr><th colspan='4'>Rotation around the Y axis</th></tr>
-                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
-                <tr>
-                    <th>Row<br/>0</th>
-                    <td class='rotate'><div class='cpName'>v00</div><div class='op'><i>cos</i>(&theta;)</div></td>
-                    <td class='null'><div class='cpName'>v01</div><div class='op'>0</div></td>
-                    <td class='rotate'><div class='cpName'>v02</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
-                </tr><tr>
-                    <th>Row<br/>1</th>
-                    <td class='null'><div class='cpName'>v10</div><div class='op'>0</div></td>
-                    <td class='ident'><div class='cpName'>v11</div><div class='op'>1</div></td>
-                    <td class='null'><div class='cpName'>v12</div><div class='op'>0</div></td>
-                </tr><tr>
-                    <th>Row<br/>2</th>
-                    <td class='rotate'><div class='cpName'>v20</div><div class='op'><i>sin</i>(&theta;)</div></td>
-                    <td class='null'><div class='cpName'>v21</div><div class='op'>0</div></td>
-                    <td class='rotate'><div class='cpName'>v22</div><div class='op'><i>cos</i>(&theta;)</div></td>
-                </tr>
-            </table>
-
-        </td><td style='width: 33%;'>
-
-            <table class='matrixDemo'>
-                <tr><th colspan='4'>Rotation around the Z axis</th></tr>
-                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
-                <tr>
-                    <th>Row<br/>0</th>
-                    <td class='rotate'><div class='cpName'>v00</div><div class='op'><i>cos</i>(&theta;)</div></td>
-                    <td class='rotate'><div class='cpName'>v01</div><div class='op'><i>sin</i>(&theta;)</div></td>
-                    <td class='null'><div class='cpName'>v02</div><div class='op'>0</div></td>
-                </tr><tr>
-                    <th>Row<br/>1</th>
-                    <td class='rotate'><div class='cpName'>v10</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
-                    <td class='rotate'><div class='cpName'>v11</div><div class='op'><i>cos</i>(&theta;)</div></td>
-                    <td class='null'><div class='cpName'>v12</div><div class='op'>0</div></td>
-                </tr><tr>
-                    <th>Row<br/>2</th>
-                    <td class='null'><div class='cpName'>v20</div><div class='op'>0</div></td>
-                    <td class='null'><div class='cpName'>v21</div><div class='op'>0</div></td>
-                    <td class='ident'><div class='cpName'>v22</div><div class='op'>1</div></td>
-                </tr>
-            </table>
-
-        </td>
-    </tr>
-</table>
-
-<p>Note the sign of the sine functions. These are specific to the left-handed
-coordinate system that POV-Ray uses. In a right-handed system, you'd reverse the
-signs.</p>
-
-<p>If you want to know more, Jeff Lee's <a
-href="https://www.shipbrook.net/jeff/raytrace/matrix.html">POV-Ray-specific
-tutorial</a> is a good place to start, as are these <a
-href="https://courses.cs.washington.edu/courses/cse457/99au/handouts/lectures/3d-transformations.pdf">course
-notes</a>. To dig deeper than that&mdash;and there's a <em>lot</em> more you can
-do with matrices&mdash;the topic is covered in depth in 3D graphics and linear
-algebra textbooks. And don't be scared off: it's far more tedious than
-difficult. Choose a simple shape, try fiddling with different elements and
-different functions, and look at the results of a rendering.</p>
-
 <h2>Internals: Hacking CephaloPOV</h2>
 
 <p><span class='h2num'></span>This section, it will surprise absolutely no one,
@@ -3476,6 +3306,8 @@ docs? I am even further away from finishing the developer docs.</p>
 <p>In the meantime, feel free to ask questions on the development mailing list,
 and if you feel like adding to the documentation (hint, hint) then just submit a
 pull request.</p>
+
+<p><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
 
 <h3>The File Manifest</h3>
 
@@ -4050,11 +3882,187 @@ takes a <code>start</code> and <code>end</code> time and a number of work
 milliseconds and seconds and the average times per unit. (The units are usually
 frames.)</p>
 
-<h2>Administrivia</h2>
+<h2>Appendices</h2>
 
-<h3>TODO</h3>
+<p><span class='h2num'></span>The appendices contain further details and discussions about
+CephaloPOV and ray tracing supplementary to the main text.</p>
 
-<h4>Version 0.0.2</h4>
+<p><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
+
+<h3>Matrices</h3>
+
+<p>SDL matrices are an abbreviated form of the entire matrix being used. The
+fourth column is invariant and therefore omitted from its SDL representation and
+inaccessible within CephaloPOV, but we show it below in grey for the
+math-curious. You <em>don't</em> have to know much about matrix math to use the
+<code>Matrix</code> class. Like SDL, CephaloPOV offers shortcuts to the
+individual transformations in the form of special arguments to the
+<code>Matrix</code> constructor and the <code>apply</code> method.</p>
+
+<h4>Translation, Scaling, and Skewing</h4>
+
+<p>Red elements determine scaling, blue elements determine translation, and
+green elements determine skewing. (The grey elements, as previously mentioned,
+are invariant and hidden in both POV-Ray and CephaloPOV.) Note that there are
+three elements for each axis when scaling and translating, but there are six
+elements for skewing, because skew transformations involve relationships between
+pairs of axes.</p>
+
+<table class='matrixDemo'>
+    <tr><th></th><th>Column<br/>0</th><th>Column<br/>1</th><th>Column<br/>2</th><th>Column<br/>3</th></tr>
+    <tr>
+        <th>Row<br/>0</th>
+        <td class='scale'><div class='cpName'>v00</div><div class='op'>Scale X</div></td>
+        <td class='skew'><div class='cpName'>v01</div><div class='op'>Skew Y by X</div></td>
+        <td class='skew'><div class='cpName'>v02</div><div class='op'>Skew Z by X</div></td>
+        <td class='implicit'><div class='cpName'>(v03)</div><div class='op'>0</div></td>
+    </tr><tr>
+        <th>Row<br/>1</th>
+        <td class='skew'><div class='cpName'>v10</div><div class='op'>Skew X by Y</div></td>
+        <td class='scale'><div class='cpName'>v11</div><div class='op'>Scale Y</div></td>
+        <td class='skew'><div class='cpName'>v12</div><div class='op'>Skew Z by Y</div></td>
+        <td class='implicit'><div class='cpName'>(v13)</div><div class='op'>0</div></td>
+    </tr><tr>
+        <th>Row<br/>2</th>
+        <td class='skew'><div class='cpName'>v20</div><div class='op'>Skew X by Z</div></td>
+        <td class='skew'><div class='cpName'>v21</div><div class='op'>Skew Y by Z</div></td>
+        <td class='scale'><div class='cpName'>v22</div><div class='op'>Scale Z</div></td>
+        <td class='implicit'><div class='cpName'>(v23)</div><div class='op'>0</div></td>
+    </tr><tr>
+        <th>Row<br/>3</th>
+        <td class='translate'><div class='cpName'>v30</div><div class='op'>Translate X</div></td>
+        <td class='translate'><div class='cpName'>v31</div><div class='op'>Translate Y</div></td>
+        <td class='translate'><div class='cpName'>v32</div><div class='op'>Translate Z</div></td>
+        <td class='implicit'><div class='cpName'>(v33)</div><div class='op'>1</div></td>
+    </tr>
+</table>
+
+<p>An important thing to notice here is that while the matrix elements that
+determine translation and skewing are 0 if no translation or skewing is to be
+done, the elements that define scaling must be 1 when no scaling is to be done,
+i.e., it's an identity element. Setting the scaling elements to zero will make
+the object disappear!</p>
+
+<p>Another thing to notice about scaling is that negative values will
+<em>reflect</em> the object across the relevant axis. In the special case of 1,
+this will be a perfect mirror image; other values will stretch or squash the
+object.</p>
+
+<h4>Rotation</h4>
+
+<p>Rotation is a little more complicated because it requires the use of
+trigonometric functions. This is handled for you by the Matrix class'
+<code>rotate</code> constructor argument, but it's worth understanding in case
+you want to try doing the calculations yourself or trying variations to see what
+they do.</p>
+
+<p>Since the values for rotations around the axes overlap, we'll omit the
+invariant fourth column and the translation row so we can cram all three
+rotation matrices into a single row. In this case, we'll color the rotation
+elements red, the single scale identity element blue, and everything else grey.
+If you're entirely innocent of trigonometry, know that <i>cos</i> and <i>sin</i>
+are the trigonometric functions cosine and sine, which are implemented in
+JavaScript as the <code>Math.cos()</code> and <code>Math.sin()</code> methods.
+The angle of rotation is conventionally represented by the Greek letter theta,
+&theta;, and is specified in radians, though POV-Ray and CephaloPOV expect you
+to use degrees instead and quietly translate degrees into radians for you.</p>
+
+
+<table style='width: 100%;'>
+    <tr>
+        <td style='width: 33%;'>
+
+            <table class='matrixDemo'>
+                <tr><th colspan='4'>Rotation around the X axis</th></tr>
+                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
+                <tr>
+                    <th>Row<br/>0</th>
+                    <td class='ident'><div class='cpName'>v00</div><div class='op'>1</div></td>
+                    <td class='null'><div class='cpName'>v01</div><div class='op'>0</div></td>
+                    <td class='null'><div class='cpName'>v02</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>1</th>
+                    <td class='null'><div class='cpName'>v10</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v11</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v12</div><div class='op'><i>sin</i>(&theta;)</div></td>
+                </tr><tr>
+                    <th>Row<br/>2</th>
+                    <td class='null'><div class='cpName'>v20</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v21</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v22</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                </tr>
+            </table>
+
+        </td><td style='width: 33%;'>
+
+            <table class='matrixDemo'>
+                <tr><th colspan='4'>Rotation around the Y axis</th></tr>
+                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
+                <tr>
+                    <th>Row<br/>0</th>
+                    <td class='rotate'><div class='cpName'>v00</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v01</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v02</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
+                </tr><tr>
+                    <th>Row<br/>1</th>
+                    <td class='null'><div class='cpName'>v10</div><div class='op'>0</div></td>
+                    <td class='ident'><div class='cpName'>v11</div><div class='op'>1</div></td>
+                    <td class='null'><div class='cpName'>v12</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>2</th>
+                    <td class='rotate'><div class='cpName'>v20</div><div class='op'><i>sin</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v21</div><div class='op'>0</div></td>
+                    <td class='rotate'><div class='cpName'>v22</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                </tr>
+            </table>
+
+        </td><td style='width: 33%;'>
+
+            <table class='matrixDemo'>
+                <tr><th colspan='4'>Rotation around the Z axis</th></tr>
+                <tr><th></th><th>Col.<br/>0</th><th>Col.<br/>1</th><th>Col.<br/>2</th></tr>
+                <tr>
+                    <th>Row<br/>0</th>
+                    <td class='rotate'><div class='cpName'>v00</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v01</div><div class='op'><i>sin</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v02</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>1</th>
+                    <td class='rotate'><div class='cpName'>v10</div><div class='op'>-<i>sin</i>(&theta;)</div></td>
+                    <td class='rotate'><div class='cpName'>v11</div><div class='op'><i>cos</i>(&theta;)</div></td>
+                    <td class='null'><div class='cpName'>v12</div><div class='op'>0</div></td>
+                </tr><tr>
+                    <th>Row<br/>2</th>
+                    <td class='null'><div class='cpName'>v20</div><div class='op'>0</div></td>
+                    <td class='null'><div class='cpName'>v21</div><div class='op'>0</div></td>
+                    <td class='ident'><div class='cpName'>v22</div><div class='op'>1</div></td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+<p>Note the sign of the sine functions. These are specific to the left-handed
+coordinate system that POV-Ray uses. In a right-handed system, you'd reverse the
+signs.</p>
+
+<p>If you want to know more, Jeff Lee's <a
+href="https://www.shipbrook.net/jeff/raytrace/matrix.html">POV-Ray-specific
+tutorial</a> is a good place to start, as are these <a
+href="https://courses.cs.washington.edu/courses/cse457/99au/handouts/lectures/3d-transformations.pdf">course
+notes</a>. To dig deeper than that&mdash;and there's a <em>lot</em> more you can
+do with matrices&mdash;the topic is covered in depth in 3D graphics and linear
+algebra textbooks. And don't be scared off: it's far more tedious than
+difficult. Choose a simple shape, try fiddling with different elements and
+different functions, and look at the results of a rendering.</p>
+
+
+<h3>Administrivia</h3>
+
+<h4>TODO</h4>
+
+<h5>Version 0.0.2</h5>
 
 <table class='sgrid todo'>
     <thead>
@@ -4066,14 +4074,12 @@ frames.)</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Default option in <code>*Def</code> codegen. Esp. <code>splitUnion = true</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>Mutate <code>codegen.js</code> into <code>build.js</code> and document.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C1</td><td>Get SDL Functions to return the leading <code>'&'</code>, adjust toSDL methods accordingly.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>Make sure the identity matrix is not output in <code>toSDL</code> methods.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td>Organize test processes for Windows and Linux.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>Get SDL Functions to return the leading <code>'&'</code>, adjust toSDL methods accordingly.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Change <code>cpov.isClass</code> to <code>cpov.isMemberOfClass</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td>Make sure the identity matrix is not output in <code>toSDL</code> methods.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>Automatic normal calculation for <code>Triangle</code>s in a <code>Mesh</code>.</td></tr>
 
         <!-- finite patches -->
 
@@ -4105,7 +4111,7 @@ frames.)</p>
     </tbody>
 </table>
 
-<h4>Version 0.0.3</h4>
+<h5>Version 0.0.3</h5>
 
 <table class='sgrid todo'>
     <thead>
@@ -4139,7 +4145,7 @@ frames.)</p>
     </tbody>
 </table>
 
-<h4>Backlog</h4>
+<h5>Backlog</h5>
 
 <table class='sgrid todo'>
     <thead>
@@ -4178,7 +4184,7 @@ frames.)</p>
 </table>
 
 
-<h3>CephaloPOV Scene Graph</h3>
+<h4>CephaloPOV Scene Graph</h4>
 
 <p>Master objects are defined relative to the origin. More precisely, the origin is
 their primary point of articulation. In each frame, they are transformed to
@@ -4196,7 +4202,7 @@ into master objects amounts to just positioning them appropriately relative to
 the origin after construction.</p>
 
 
-<h3>Changelog</h3>
+<h4>Changelog</h4>
 
 <p>Oh geez, not yet.</p>
 

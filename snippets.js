@@ -3076,7 +3076,10 @@ toSDL(stops = 0) {
     for(var i = 0; i < this.components.length; i++) {
         content.push(this.components[i].toSDL(stops + 1));
     }
-    content.push(pad + "    split_union " + (this._splitUnion ? "on" : "off"));
+
+    var splitUnion = this._splitUnion !== null ? this._splitUnion : cpov.imageOptions.splitUnions;
+
+    content.push(pad + "    split_union " + (splitUnion ? "on" : "off"));
 
     $Primitive.toSDL-postamble
 }
