@@ -7,7 +7,16 @@
 var chalk = require("chalk");
 var cpov = require("./lib/cephalopov.js");
 var File = require("./lib/file.js");
-cpov.classes = require("./lib/classes.js");
+
+var path = require("path");
+var os   = require("os");
+var process = require("process");
+
+cpov.cwd      = process.cwd();
+cpov.platform = os.platform();
+cpov.arch     = os.arch();
+
+cpov.classes  = require("./lib/classes.js");
 
 for(var k in cpov.classes) {
     global[k] = cpov.classes[k];
@@ -141,8 +150,9 @@ function main() {
         global[item] = cpov[item];
 
     try {
-        var userProgram = require(opts.infile.vals[0]);
+        var userProgram = require(path.normalize(cpov.cwd) + "/" + opts.infile.vals[0]);
     } catch(e) {
+        console.log(e);
         cpov.error("fatal", "Unable to require input file '" + opts.infile.vals[0] + "'.", "CEPHALOPOV");
     }
 
