@@ -4,6 +4,11 @@ var cpov  = require("./lib/cephalopov.js");
 var File  = require("./lib/file.js");
 var chalk = require("chalk");
 
+cpov.vectorDef     = require("./lib/vectorDef.js");      // Vector classes
+cpov.primitiveDef  = require("./lib/primitiveDef.js");   // Primitive base class
+cpov.objDef        = require("./lib/objDef.js");         // Primitive subclasses
+cpov.gsDef         = require("./lib/gsDef.js");          // globalSettings
+cpov.ioDef         = require("./lib/ioDef.js");          // imageOptions
 
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of
