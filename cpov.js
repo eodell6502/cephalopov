@@ -29,19 +29,19 @@ main();
 function main() {
 
     var opts = {
+        debug:      { short: "d", cnt: 0 },
+        endFrame:   { short: "F", vals: [ ] },
+        endTime:    { short: "T", vals: [ ] },
+        help:       { short: "h", cnt: 0 },
         infile:     { short: "i", vals: [ ] },  // accumulates values
         outfiles:   { short: "o", vals: [ ] },
         preamble:   { short: "p", vals: [ ] },
-        sdlInclude: { short: "s", vals: [ ] },
-        tickVal:    { short: "c", vals: [ ] },
-        startTime:  { short: "t", vals: [ ] },
-        endTime:    { short: "T", vals: [ ] },
-        startFrame: { short: "f", vals: [ ] },
-        endFrame:   { short: "F", vals: [ ] },
-        verbose:    { short: "v", cnt: 0 },     // accumulates appearance counts
         quietMode:  { short: "q", cnt: 0 },
-        debug:      { short: "d", cnt: 0 },
-        help:       { short: "h", cnt: 0 },
+        sdlInclude: { short: "s", vals: [ ] },
+        startFrame: { short: "f", vals: [ ] },
+        startTime:  { short: "t", vals: [ ] },
+        tickVal:    { short: "c", vals: [ ] },
+        verbose:    { short: "v", cnt: 0 },     // accumulates appearance counts
     }
 
     cpov.parseCLI(opts);
@@ -141,13 +141,14 @@ function main() {
         cpov.endFrame = endFrame;
     }
 
-    cpov.globalSettings = new GlobalSettings({ assumedGamma: 1.0 });
+    cpov.globalSettings = new GlobalSettings({ assumedGamma: 1.0 }); // assumedGamma is required as of POV-Ray 3.7+
     cpov.imageOptions   = new ImageOptions();
 
     // FIXME: We really want to be *much* more selective than this.
 
     for(var item in cpov)
         global[item] = cpov[item];
+
 
     try {
         var userProgram = require(path.normalize(cpov.cwd) + "/" + opts.infile.vals[0]);
@@ -156,11 +157,15 @@ function main() {
         cpov.error("fatal", "Unable to require input file '" + opts.infile.vals[0] + "'.", "CEPHALOPOV");
     }
 
+    var projectConfig = path.normalize(cpov.cwd) + "/" + opts.infile.vals[0];
+    if(projectConfig.substr(-3) == ".js")
+        cpov.configLoad(projectConfig.substr(0, projectConfig.length - 3) + ".config.js");
+    else
+        cpov.configLoad(null);
+
     userProgram(cpov); // main loop
 
 }
-
-
 
 
 
