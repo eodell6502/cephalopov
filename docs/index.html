@@ -233,6 +233,75 @@ a ways off.</span></p>
 
 <p>TODO</p>
 
+<h4>Configuration Files</h4>
+
+<p>CephaloPOV has a lot of settings, the majority of which live in two objects,
+<code>cpov.globalSettings</code> and <code>cpov.imageOptions</code>. You will likely
+find that there are parameters you want to set nearly all the time and a smaller
+group of parameters that you want to set for a specific project. Fortunately,
+CephaloPOV supports configuration files that will take care of this for you if
+you don't mind taking the time to set them up.</p>
+
+<p>There are two (on Windows) or three (on Linux and other Unix clones)
+configuration files that CephaloPOV consults before it runs the user program. The first
+of these, <code>/etc/cpov/config.js</code>, is Linux-only. Note that CephaloPOV
+does not create either the <code>/etc/cpov</code> or its <code>config.js</code> file
+for you. You'll have to do this using <code>sudo</code>. The following commands
+will create the directory and an empty config file:</p>
+
+<div class="code">$ mkdir /etc/cpov
+$ touch /etc/cpov/config.js</div>
+
+<p>Then just open your editor and put the following into <code>config.js</code>:</p>
+
+<div class="code">var config = {
+    imageOptions: {
+    },
+    globalSettings: {
+    }
+};
+
+module.exports = config;     // Don't forget this!</div>
+
+<p>Now you have a global config file that does nothing whatsoever! You'll add
+parameters to the <code>imageOptions</code> and <code>globalSettings</code>
+objects that will be copied to their equivalents inside of CephaloPOV at
+runtime. (For more details, see the <a href="#tocGlobal%20Parameters">Global
+Parameters</a> section.) One thing worth noticing here is the last line in the
+config file, <code>module.exports = config;</code>. It's just an ordinary Node
+module.</p>
+
+<p>There is also a per-user config file that is loaded after the global config
+file. On Linux and other Unix-like systems, it is named <code>.cpov</code> and
+appears in your home directory, e.g., <code>~/.cpov</code>. On Windows, it is
+located at <code>C:\Users\<i>username</i>\cpov\config.js</code>, where
+<code><i>username</i></code> is, of course, your username. For now, just put
+a copy of your empty global config file here.</p>
+
+<p>Finally, there is a per-project config file. It is located in the same
+directory as your user program and is named <code><i>programName</i>.config.js</code>,
+so if your program is named <code>prettyPictures.js</code>, its config file
+will be named <code>prettyPictures.config.js</code>.</p>
+
+<p>To make sure any or all of these files are being loaded correctly, run CephaloPOV
+with the <code>-vv</code> switch, and you'll see something like this:</p>
+
+<div class="code">$ ./cpov.js -i illus.js -vv
+[cpov.configLoad] INFO: Failed to load global config file \etc\cpov\config.js
+[cpov.configLoad] INFO: Successfully loaded and applied user config file C:\Users\eodell\cpov\config.js
+[cpov.configLoad] INFO: Failed to load project config file D:\prog\cephalopov\illus.config.js</div>
+
+<p>This tells me that I don't have a global or project config file, but it found
+my user file and loaded it successfully.</p>
+
+<p>The config files are loaded in the order given above, i.e., global, user,
+project, and if the same parameters are set in each, later files override
+earlier files. Note that <em>none</em> of these files are necessary, but they
+can be convenient for some working styles. If you prefer to keep everything
+self-contained, you can just set parameters inside
+<code>cpov.imageOptions</code> and <code>cpov.globalSettings</code> in your main
+program file.</p>
+
 <h2>Tutorial</h2>
 
 <div>
@@ -4112,8 +4181,7 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Config files: system, user, project -- test/document</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>CLI switch for optional modules like <code>colorsInc.js</code>.</td></tr>
 
@@ -4211,6 +4279,7 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Porting of functions/presets in .inc files</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Script execution on events</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Script to parse as much as possible of POV-Ray .inc files into JS/cpov</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Specify a config file from the command line.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Spline-builder UI</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Stereo pseudo-cameras</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Reorg: Script to pretty-print definition files</td></tr>
