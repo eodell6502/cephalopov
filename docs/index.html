@@ -249,8 +249,8 @@ does not create either the <code>/etc/cpov</code> or its <code>config.js</code> 
 for you. You'll have to do this using <code>sudo</code>. The following commands
 will create the directory and an empty config file:</p>
 
-<div class="code">$ mkdir /etc/cpov
-$ touch /etc/cpov/config.js</div>
+<div class="code">$ sudo mkdir /etc/cpov
+$ sudo touch /etc/cpov/config.js</div>
 
 <p>Then just open your editor and put the following into <code>config.js</code>:</p>
 
@@ -4182,34 +4182,39 @@ different functions, and look at the results of a rendering.</p>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
         <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td>CLI switch for optional modules like <code>colorsInc.js</code>.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td>A CephaloPOV-specific <code>cpov.settings</code> to go with <code>cpov.globalSettings</code> and <code>cpov.imageOptions</code>, with support in the config files.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>CLI switch for optional modules like <code>colorsInc.js</code>. Or <code>cpov.settings</code>?</td></tr>
 
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td>Automatic normal calculation for <code>Triangle</code>.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C9</td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>CA</td><td><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
+        <!-- Mesh/Mesh2 -->
 
-        <!-- finite patches -->
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C8</td><td><code>Mesh2</code></td></tr>
+
+        <!-- Object documentation -->
 
         <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td><code>Mesh</code> description and example</td></tr>
-
-        <!-- Lights and Cameras -->
-
         <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
-
-        <tr><td class='pending'>pending</td><td>DOC</td><td>D5</td><td>Document the various spline types.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>Mesh2</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Camera</code>: Pseudo-primitive in CSG integration</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Camera</code>: Pseudo-primitive transform integration</td></tr>
+
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaAttenuation</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaInteraction</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.projectedThrough</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Mesh2</code></td></tr>
+
+        <tr><td class='pending'>pending</td><td>DOC</td><td>D5</td><td>Document the various spline types.</td></tr>
+
+        <!-- Tests -->
+
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>Separate repo for tests/examples and a <em>lot</em> of stuff to go into it before the next version.</td></tr>
 
     </tbody>
 </table>
@@ -4263,6 +4268,7 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>A large set of sample functions/variants for the <code>IsoSurface</code> type and the polynomials.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Additional splines, easing functions, esp. Catmull-Rom</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Angles in the unit interval</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Automatic normal calculations, etc., for <code>Triangle</code> and <code>Mesh/Mesh2</code> Maybe native code or an external util.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Color and texture SDL generation, i.e., in separate file to use directly with POV-Ray</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Direct support for ffmpeg/avisynth + Google speech API</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>

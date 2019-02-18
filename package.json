@@ -7,6 +7,9 @@
     "doc": "docs",
     "test": "tests"
   },
+  "bin": {
+    "cpov": "cpov"
+  },
   "dependencies": {
     "chalk": "^2.4.1",
     "word-wrap": "^1.2.3"
