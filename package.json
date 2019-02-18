@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "bin": {
-    "cpov": "cpov"
+    "cpov": "cpov.js"
   },
   "dependencies": {
     "chalk": "^2.4.1",
