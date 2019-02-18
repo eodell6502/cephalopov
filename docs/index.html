@@ -219,7 +219,9 @@ the language. CephaloPOV uses ES6 classes instead of bare prototypes for most
 things, but unless you intend to extend them, you can treat them just like
 prototypes. If you're a JavaScript expert, you can of course do much more than a
 beginner, but that is a simple matter of programmer skill and not a matter of
-CephaloPOV's API.</p>
+CephaloPOV's API. All that said, it's worth being very clear that CephaloPOV
+does not run in your browser; it runs under Node.js. To get very far, you'll
+need at least minimal knowledge of writing and running programs with Node.</p>
 
 <p>POV-Ray is a non-interactive 3D graphics program, so knowledge of analytic
 geometry will always be to your advantage, but both POV-Ray and CephaloPOV are
@@ -231,7 +233,23 @@ a ways off.</span></p>
 
 <h3>Installation</h3>
 
-<p>TODO</p>
+<p>CephaloPOV is packaged as a Node module. If you don't already have Node installed,
+<a href="https://nodejs.org/en/">take care of that first</a>. Then, using the Node package
+manager <code>npm</code>, which was installed with Node, you can install CephaloPOV. Open a terminal window --
+on Windows systems, you'll want to launch the "Node.js command prompt" -- and type the following
+command:</p>
+
+<div class='code'>$ npm install cephalopov --global</div>
+
+<p>Boom. That's it. Henceforth, you can type <code>cpov</code> at the command prompt
+to start CephaloPOV.</p>
+
+<p>If you want copies of the examples used in the tutorials and some tools for
+hacking CephaloPOV's internals, you'll need to get the
+<code>cpov_examples</code> package from GitHub <a
+href="https://github.com/Waidthaler/cpov_examples">here</a>. (You can also get
+the <a href="https://github.com/Waidthaler/cephalopov">repo</a> used to build CephaloPOV and the npm package
+but you don't need it to use CephaloPOV or to run the examples.)</p>
 
 <h4>Configuration Files</h4>
 
@@ -4181,8 +4199,7 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Installation and documentation thereof, Windows and Linux.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td>A CephaloPOV-specific <code>cpov.settings</code> to go with <code>cpov.globalSettings</code> and <code>cpov.imageOptions</code>, with support in the config files.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>A CephaloPOV-specific <code>cpov.settings</code> to go with <code>cpov.globalSettings</code> and <code>cpov.imageOptions</code>, with support in the config files.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>CLI switch for optional modules like <code>colorsInc.js</code>. Or <code>cpov.settings</code>?</td></tr>
 
