@@ -22,6 +22,32 @@ for(var k in cpov.classes) {
     global[k] = cpov.classes[k];
 }
 
+cpov.settings = new Settings();
+
+
+//------------------------------------------------------------------------------
+// Internal state variables. These are distinct from the user-defined settings
+// in cpov.settings and should generally be treated as read-only from the POV of
+// user programs.
+//------------------------------------------------------------------------------
+
+cpov.debugLog       = null;      // File handle for debugging log
+cpov.tickVal        = 1.0;       // clock tick
+cpov.clockTime      = 0;         // current clock time
+cpov.startTime      = 0.0;       // starting time for animation
+cpov.endTime        = Infinity;  // ending time for animation
+cpov.startFrame     = 0;         // starting frame number for animation
+cpov.endFrame       = Infinity;  // ending frame number for animation
+cpov.snapshots      = [ ];       // snapshots for current frame
+cpov.frameBegin     = null;      // user callback before frame output
+cpov.frameEnd       = null;      // user callback after frame output
+
+cpov.currentFrame = 0;    // current animation frame
+cpov.frameCount   = 0;    // actual number of frames output
+cpov.objectSerial = 0;    // running count of Primitives created
+cpov.serialMap    = { };  // maps serials to objects
+cpov.idMap        = { };  // maps identifiers to serials
+
 main();
 
 
@@ -65,41 +91,43 @@ function main() {
     }
 
     if(opts.verbose.cnt > 0)
-        cpov.verbosity = Math.max(opts.verbose.cnt, 4);
+        cpov.settings.verbosity = Math.max(opts.verbose.cnt, 4);
 
     if(opts.debug.cnt > 0) {
-        cpov.verbosity = 4;
-        cpov.debug     = Math.min(opts.debug.cnt, 2);
+        cpov.settings.verbosity = 4;
+        cpov.settings.debug     = Math.min(opts.debug.cnt, 2);
 
-        if(cpov.debug == 2) {
+        if(cpov.settings.debug == 2) {
             cpov.debugLog = new File("cpov_debug.log", "w");
         }
     }
 
     if(opts.infile.vals.length == 0)
         cpov.error("fatal", "No input file specified.", "CEPHALOPOV");
+    else
+        cpov.settings.infile = opts.infile.vals[0];
 
     if(opts.outfiles.vals.length == 0) {
-        cpov.error("warn", "No output template specified, using '" + cpov.outputBase + "'.", "CEPHALOPOV");
+        cpov.error("warn", "No output template specified, using '" + cpov.settings.outputBase + "'.", "CEPHALOPOV");
     } else {
-        cpov.outputBase = opts.outfiles.vals[0];
+        cpov.settings.outputBase = opts.outfiles.vals[0];
     }
 
     if(opts.quietMode.cnt > 0) {
-        cpov.verbosity = 0;
-        cpov.quietMode = true;
+        cpov.settings.verbosity = 0;
+        cpov.settings.quietMode = true;
     }
 
     if(opts.sdlInclude.vals.length > 0)
-        cpov.sdlIncludes = opts.sdlInclude.vals.slice(0);
+        cpov.settings.sdlIncludes = opts.sdlInclude.vals.slice(0);
 
     if(opts.preamble.vals.length) {
-        cpov.preamble = "";
+        cpov.settings.preamble = "";
         for(var i = 0; i < opts.preamble.vals.length; i++) {
             var fp = new File(opts.preamble.vals[i], "r");
             if(!fp.open)
                 cpov.error("fatal", "Unable to open file " + opts.preamble.vals[i] + " for reading.", "CEPHALOPOV");
-            cpov.preamble += fp.read();
+            cpov.settings.preamble += fp.read();
             fp.close();
         }
     }
@@ -143,7 +171,6 @@ function main() {
 
     cpov.globalSettings = new GlobalSettings({ assumedGamma: 1.0 }); // assumedGamma is required as of POV-Ray 3.7+
     cpov.imageOptions   = new ImageOptions();
-    cpov.settings       = new Settings();
 
     // FIXME: We really want to be *much* more selective than this.
 
@@ -152,13 +179,13 @@ function main() {
 
 
     try {
-        var userProgram = require(path.normalize(cpov.cwd) + "/" + opts.infile.vals[0]);
+        var userProgram = require(path.normalize(cpov.cwd) + "/" + cpov.settings.infile);
     } catch(e) {
         console.log(e);
-        cpov.error("fatal", "Unable to require input file '" + opts.infile.vals[0] + "'.", "CEPHALOPOV");
+        cpov.error("fatal", "Unable to require input file '" + cpov.settings.infile + "'.", "CEPHALOPOV");
     }
 
-    var projectConfig = path.normalize(cpov.cwd) + "/" + opts.infile.vals[0];
+    var projectConfig = path.normalize(cpov.cwd) + "/" + cpov.settings.infile;
     if(projectConfig.substr(-3) == ".js")
         cpov.configLoad(projectConfig.substr(0, projectConfig.length - 3) + ".config.js");
     else

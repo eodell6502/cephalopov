@@ -276,13 +276,15 @@ $ sudo touch /etc/cpov/config.js</div>
     imageOptions: {
     },
     globalSettings: {
-    }
+    },
+    settings: {
+    },
 };
 
 module.exports = config;     // Don't forget this!</div>
 
 <p>Now you have a global config file that does nothing whatsoever! You'll add
-parameters to the <code>imageOptions</code> and <code>globalSettings</code>
+parameters to the <code>cpov.imageOptions</code>, <code>cpov.globalSettings</code>, and <code>cpov.settings</code>
 objects that will be copied to their equivalents inside of CephaloPOV at
 runtime. (For more details, see the <a href="#tocGlobal%20Parameters">Global
 Parameters</a> section.) One thing worth noticing here is the last line in the
@@ -480,7 +482,7 @@ produce animations in CephaloPOV:</p>
 <ul class='spacious'>
 
     <li><b>Snapshot Mode:</b> In snapshot mode, which is triggered by setting
-    <code>cpov.snapshotMode</code> to <code>true</code>, the user provides the
+    <code>cpov.settings.snapshotMode</code> to <code>true</code>, the user provides the
     main loop. Objects are created and destroyed as needed, but they remain
     invisible until their <code>snapshot</code> methods are called. When
     <code>cpov.outputFrame()</code> is called, the <code>.pov</code> file for
@@ -524,8 +526,8 @@ be manipulated with care as noted in the table below.</p>
 <tr><td>RW</td><td>Y</td><td>cpov.endTime</td><td>float</td><td>The user program will halt if and when <code>cpov.clockTime</code> is greater than this number. Defaults to <code>Infinity</code>.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.frameBegin</td><td>function</td><td>This is a user-supplied callback function which is called at the beginning of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.frameEnd</td><td>function</td><td>This is a user-supplied callback function which is called at the end of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
-<tr><td>RW</td><td>Y</td><td>cpov.outputBase</td><td>string</td><td>The generated <code>.pov</code> and <code>.ini</code> filenames will be based on this template, which defaults to <code>cpov0000</code>. The first sequence of zeroes in the template string will be replaced with the frame number, left-padded with to the same number of digits as the zero sequence.</td></tr>
-<tr><td>RW</td><td>Y</td><td>cpov.snapshotMode</td><td>boolean</td><td>If <code>true</code>, puts CephaloPOV in snapshot mode.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.settings.outputBase</td><td>string</td><td>The generated <code>.pov</code> and <code>.ini</code> filenames will be based on this template, which defaults to <code>cpov0000</code>. The first sequence of zeroes in the template string will be replaced with the frame number, left-padded with to the same number of digits as the zero sequence.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.settings.snapshotMode</td><td>boolean</td><td>If <code>true</code>, puts CephaloPOV in snapshot mode.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.snapshots</td><td>array</td><td>This is an array containing the output SDL strings which will be written to the <code>.pov</code> file at the end of the frame loop. Normally read-only, but if you know what you're doing, feel free to <code>push()</code> additional content to it.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.startFrame</td><td>integer</td><td>The user program will run but not produce any output until <code>cpov.currentFrame</code> is greater than or equal to this number. Defaults to <code>0</code>.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.startTime</td><td>float</td><td>The user program will run but not produce any output until <code>cpov.clockTime</code> is greater than or equal to this number. Defaults to <code>0</code>.</td></tr>
@@ -538,10 +540,10 @@ be manipulated with care as noted in the table below.</p>
 <p>Snapshot mode is arguably the easier of the two animation modes to get
 started with, especially if the animation is simple or you want to construct
 your own animation loop to suit your needs. Just set
-<code>cpov.snapshotMode</code> to <code>true</code>, which disables the built-in
+<code>cpov.settings.snapshotMode</code> to <code>true</code>, which disables the built-in
 loop.</p>
 
-<div class="code">cpov.snapshotMode = true;</div>
+<div class="code">cpov.settings.snapshotMode = true;</div>
 
 <p>All you need to do after that is create your objects and call their
 <code>snapshot</code> methods. If you move them afterwards, you can call
@@ -563,7 +565,7 @@ if you want to dig into the full, somewhat hairy details.) First, it just does
 the usual setup and housekeeping, the only germane part of which is the first
 line that activates snapshot mode:</p>
 
-<div class="code"><b>cpov.snapshotMode                = true;  // Don't forget this part</b>
+<div class="code"><b>cpov.settings.snapshotMode                = true;  // Don't forget this part</b>
 cpov.imageOptions.height         = 320;
 cpov.imageOptions.width          = 320;
 cpov.imageOptions.outputFileType = "N";
@@ -583,12 +585,12 @@ var stage   = cpov.testStage("corner", 6);
 stage[0].snapshot();
 stage[1].snapshot();</div>
 
-<p>Because this isn't actually an animation, the script sets <code>cpov.outputBase</code>
+<p>Because this isn't actually an animation, the script sets <code>cpov.settings.outputBase</code>
 at the beginning of each "frame" to make it easier to find the files. (I'm mentioning
 this to point out that snapshot mode is also a convenient way to crank out a bunch of
 static images.)</p>
 
-<div class="code">cpov.outputBase = "./docs/src/box_basic";</div>
+<div class="code">cpov.settings.outputBase = "./docs/src/box_basic";</div>
 
 <p>Now we can get down to business and create our example box:</p>
 
@@ -674,9 +676,44 @@ corresponds to POV-Ray's command line switches and the contents of
 <code>.pov</code> scene files, which is represented by
 <code>cpov.globalSettings</code>.</p>
 
-<!-- From the standpoint of CephaloPOV, there doesn't appear to be a compelling
-reason to keep these separate, so the interface may be refactored in the future.
--->
+<p>In addition to these, there is a third object, <code>cpov.settings</code>, that
+contains parameters specific to CephaloPOV to avoid confusion with the POV-Ray specific
+settings in the other two objects.</p>
+
+<h4>Settings</h4>
+
+<p>The <code>Settings</code> class represents the global parameters controlling
+the operation of CephaloPOV. Some can be set indirectly by command line switches or
+the config files. All of them are directly accessible to user programs.</p>
+
+<h5>Attributes</h5>
+
+<div dh="Settings">
+<table class='sgrid attrs'>
+<thead>
+<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
+<thead><tbody>
+<tr><td>RW</td><td>N</td><td>debug</td><td>integer</td><td>Determines the debugging mode. The legal values are
+<table class="sgrid codeDoc">
+<thead>
+
+<tr><th>Code</th><th>Meaning</th></tr>
+</thead><tbody>
+<tr><td>0</td><td>Debugging mode is turned off.</td></tr>
+<tr><td>1</td><td>Debugging mode is turned on.</td></tr>
+<tr><td>2</td><td>Debugging mode is turned on <em>and</em> fatal errors are ignored. This is mainly useful if you are modifying CephaloPOV itself.</td></tr>
+</tbody></table>
+</td></tr>
+<tr><td>RW</td><td>N</td><td>infile</td><td>string</td><td>This is the name of the user program file.</td></tr>
+<tr><td>RW</td><td>N</td><td>optionalLibraries</td><td>[string]</td><td>Contains a list of names of optional libraries which will be loaded into cpov.optLib for use in user programs.</td></tr>
+<tr><td>RW</td><td>N</td><td>outputBase</td><td>string</td><td>Provides the template for generated filenames. The first substring of zeroes will be replaced with the frame number zero-padded to the same number of digits, and <code>.ini</code> and <code>.pov</code> will be appended to form the filename. The default is <code>"cpov0000"</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>preamble</td><td>string</td><td>If non-<code>null</code>, this specifies a string&mdash;presumably SDL&mdash;to prepend to all output <code>.pov</code> files. This can also be specified by passing a filename to the <code>-p</code> or <code>--preamble</code> command line switches.</td></tr>
+<tr><td>RW</td><td>N</td><td>quietMode</td><td>boolean</td><td>If true, console output will be suppressed. Can be set with the <code>-q</code> or <code>--quietMode</code> command line switches.</td></tr>
+<tr><td>RW</td><td>N</td><td>sdlIncludes</td><td>boolean</td><td>Specifies an array of one or more SDL include files. These will generate <code>#include</code> statements in the generated <code>.pov</code> files in the order given after the contents of <code>cpov.settings.preamble</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>snapshotMode</td><td>boolean</td><td>If true, snapshot mode will be used for animations.</td></tr>
+<tr><td>RW</td><td>N</td><td>verbosity</td><td>integer</td><td>Sets the verbosity of console output. The default value, <code>1</code>, permits output of fatal errors and warnings, <code>2</code> enables information messages, <code>3</code> enables debugging messages. Quiet mode is the same as a verbosity of <code>0</code>. This value is incremented by the <code>-v</code> command line switch.</td></tr>
+</tbody></table>
+</div dh="Settings">
 
 <h4>ImageOptions</h4>
 
@@ -1745,7 +1782,7 @@ e.g.</p>
 
 <div class='fsig'>snapshot();</div>
 
-<p class='fdesc'>If <code>cpov.snapshotMode</code> is <code>true</code>, this
+<p class='fdesc'>If <code>cpov.settings.snapshotMode</code> is <code>true</code>, this
 method sends the output of <code>toSDL</code> to the snapshot output buffer,
 where it will remain until <code>cpov.outputFrame</code> is called.</p>
 
@@ -3696,13 +3733,13 @@ output, so it is normally called after file output.</p>
 supported by the terminal. The <code>level</code> argument may be one of
 <code>"fatal"</code>, <code>"warn"</code>, <code>"info"</code>, or
 <code>"debug"</code>. If <code>level</code> is <code>"fatal"</code>, the program
-terminates immediately unless <code>cpov.debug</code> is greater than
+terminates immediately unless <code>cpov.settings.debug</code> is greater than
 <code>1</code>. (This is useful for debugging when working on CephaloPOV
 itself.) All other error levels simply emit an error message. This will appear
 on the terminal for <code>"warn"</code>, <code>"info"</code>, and
 <code>"debug"</code> at <code>cpov.verbosity</code> levels of <code>1</code>,
 <code>2</code>, and <code>3</code>, respectively. In all cases, the error will
-also be written to <code>cpov.debugLog</code> if initialized.</p>
+also be written to <code>cpov.settings.debugLog</code> if initialized.</p>
 
 <p class='fdesc'>The error message is prefixed with the <code>location</code>
 where the error occurred, usually a class and method name, and the object <code>serial</code>
@@ -4199,7 +4236,6 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td><strike>A CephaloPOV-specific <code>cpov.settings</code> to go with <code>cpov.globalSettings</code> and <code>cpov.imageOptions</code>, with support in the config files</strike> and documentation.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>CLI switch for optional modules like <code>colorsInc.js</code>. Or <code>cpov.settings</code>?</td></tr>
 

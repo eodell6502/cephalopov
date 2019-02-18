@@ -5,7 +5,7 @@
 
 
 function main(cpov) {
-    cpov.snapshotMode = true;
+    cpov.settings.snapshotMode = true;
     cpov.imageOptions.height = 320;
     cpov.imageOptions.width  = 320;
     cpov.imageOptions.outputFileType = "N";
@@ -23,7 +23,7 @@ function main(cpov) {
 
     // BicubicPatch //----------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/bicubicpatch_basic";
+    cpov.settings.outputBase = "./docs/src/bicubicpatch_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new BicubicPatch({
@@ -46,7 +46,7 @@ function main(cpov) {
 
 	// Blob //------------------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/blob_basic";
+    cpov.settings.outputBase = "./docs/src/blob_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 
@@ -66,7 +66,7 @@ function main(cpov) {
 
     // Box //-------------------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/box_basic";
+    cpov.settings.outputBase = "./docs/src/box_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Box({
@@ -81,7 +81,7 @@ function main(cpov) {
 
     // Cone //------------------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/cone_basic";
+    cpov.settings.outputBase = "./docs/src/cone_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Cone({
@@ -98,7 +98,7 @@ function main(cpov) {
 
     // CSG: Difference //-------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/difference_basic";
+    cpov.settings.outputBase = "./docs/src/difference_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
@@ -113,7 +113,7 @@ function main(cpov) {
 
     // CSG: Intersection //-----------------------------------------------------
 
-    cpov.outputBase = "./docs/src/intersection_basic";
+    cpov.settings.outputBase = "./docs/src/intersection_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
@@ -128,7 +128,7 @@ function main(cpov) {
 
     // CSG: Merge //------------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/merge_basic";
+    cpov.settings.outputBase = "./docs/src/merge_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
@@ -143,7 +143,7 @@ function main(cpov) {
 
     // CSG: Union //------------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/union_basic";
+    cpov.settings.outputBase = "./docs/src/union_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj1 = new Sphere({ center: [1,0,-2], radius: 1.5, texture: yellow});
@@ -158,7 +158,7 @@ function main(cpov) {
 
     // Cubic //-----------------------------------------------------------------
 /*
-    cpov.outputBase = "./docs/src/cubic_basic";
+    cpov.settings.outputBase = "./docs/src/cubic_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Cubic({
@@ -172,7 +172,7 @@ function main(cpov) {
 */
     // Cylinder //--------------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/cylinder_basic";
+    cpov.settings.outputBase = "./docs/src/cylinder_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Cylinder({
@@ -188,7 +188,7 @@ function main(cpov) {
 
 	// Disc //------------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/disc_basic";
+	cpov.settings.outputBase = "./docs/src/disc_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Disc({
@@ -205,7 +205,7 @@ function main(cpov) {
 
 	// HeightField //-----------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/heightfield_basic";
+	cpov.settings.outputBase = "./docs/src/heightfield_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new HeightField({
@@ -223,7 +223,7 @@ function main(cpov) {
 
 	// IsoSurface //------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/isosurface_basic";
+	cpov.settings.outputBase = "./docs/src/isosurface_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new IsoSurface({
@@ -239,7 +239,7 @@ function main(cpov) {
 
 	// JuliaFractal //----------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/julia_basic";
+	cpov.settings.outputBase = "./docs/src/julia_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new JuliaFractal({
@@ -256,7 +256,7 @@ function main(cpov) {
 
     // Lathe //-----------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/lathe_basic";
+	cpov.settings.outputBase = "./docs/src/lathe_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Lathe({
@@ -289,7 +289,7 @@ function main(cpov) {
 
 	// Ovus //------------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/ovus_basic";
+	cpov.settings.outputBase = "./docs/src/ovus_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Ovus({
@@ -304,7 +304,7 @@ function main(cpov) {
 
 	// Parametric //-----------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/parametric_basic";
+	cpov.settings.outputBase = "./docs/src/parametric_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var p2 = 2 * Math.PI;
@@ -336,7 +336,7 @@ function main(cpov) {
 
 	// Plane //----------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/plane_basic";
+	cpov.settings.outputBase = "./docs/src/plane_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Plane({
@@ -351,7 +351,7 @@ function main(cpov) {
 
     // Poly //-----------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/poly_basic";
+	cpov.settings.outputBase = "./docs/src/poly_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Poly({
@@ -377,7 +377,7 @@ function main(cpov) {
 
 	// Polygon //--------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/polygon_basic";
+	cpov.settings.outputBase = "./docs/src/polygon_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Polygon({
@@ -391,7 +391,7 @@ function main(cpov) {
 
     // Poly //-----------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/polynomial_basic";
+	cpov.settings.outputBase = "./docs/src/polynomial_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Polynomial({
@@ -411,7 +411,7 @@ function main(cpov) {
 
 	// Prism //-----------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/prism_basic";
+	cpov.settings.outputBase = "./docs/src/prism_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Prism({
@@ -428,7 +428,7 @@ function main(cpov) {
 
 	// Quadric //-----------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/quadric_basic";
+	cpov.settings.outputBase = "./docs/src/quadric_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Quadric({
@@ -442,7 +442,7 @@ function main(cpov) {
 
 	// Quartic //-----------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/quartic_basic";
+	cpov.settings.outputBase = "./docs/src/quartic_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Quartic({
@@ -462,7 +462,7 @@ function main(cpov) {
 
 	// Sor //-------------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/sor_basic";
+	cpov.settings.outputBase = "./docs/src/sor_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Sor({
@@ -496,7 +496,7 @@ function main(cpov) {
 
     // Sphere //----------------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/sphere_basic";
+    cpov.settings.outputBase = "./docs/src/sphere_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Sphere({ center: [0,0,0], radius: 2, texture: yellow});
@@ -507,7 +507,7 @@ function main(cpov) {
 
     // SphereSweep //-----------------------------------------------------------
 
-    cpov.outputBase = "./docs/src/spheresweep_basic";
+    cpov.settings.outputBase = "./docs/src/spheresweep_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new SphereSweep({
@@ -528,7 +528,7 @@ function main(cpov) {
 
 	// Superellipsoid //--------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/superellipsoid_basic";
+	cpov.settings.outputBase = "./docs/src/superellipsoid_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Superellipsoid({
@@ -543,7 +543,7 @@ function main(cpov) {
 
 	// Text //------------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/text_basic";
+	cpov.settings.outputBase = "./docs/src/text_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Text({
@@ -563,7 +563,7 @@ function main(cpov) {
 
 	// Torus //-----------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/torus_basic";
+	cpov.settings.outputBase = "./docs/src/torus_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Torus({
@@ -578,7 +578,7 @@ function main(cpov) {
 
 	// Transforms: Rotate //----------------------------------------------------
 
-	cpov.outputBase = "./docs/src/xtestx";
+	cpov.settings.outputBase = "./docs/src/xtestx";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Box({
@@ -596,7 +596,7 @@ function main(cpov) {
 
 	// Triangle //--------------------------------------------------------------
 
-	cpov.outputBase = "./docs/src/triangle_basic";
+	cpov.settings.outputBase = "./docs/src/triangle_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
 	var obj = new Triangle({

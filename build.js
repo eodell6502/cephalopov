@@ -584,6 +584,7 @@ function main() {
         docs = docHumper(docs, "ImageOptions", cpov.ioDef);
         docs = docHumper(docs, "GlobalSettings", cpov.gsDef);
         docs = docHumper(docs, "Settings", cpov.settingsDef);
+
         for(var k in cpov.vectorDef) {
             docs = docHumper(docs, k.substr(0, 1).toUpperCase() + k.substr(1), cpov.vectorDef[k]);
         }
