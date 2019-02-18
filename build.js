@@ -9,6 +9,7 @@ cpov.primitiveDef  = require("./lib/primitiveDef.js");   // Primitive base class
 cpov.objDef        = require("./lib/objDef.js");         // Primitive subclasses
 cpov.gsDef         = require("./lib/gsDef.js");          // globalSettings
 cpov.ioDef         = require("./lib/ioDef.js");          // imageOptions
+cpov.settingsDef   = require("./lib/settingsDef.js");    // CephaloPOV-specific settings
 
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of
@@ -582,6 +583,7 @@ function main() {
         docs = docHumper(docs, "Primitive", cpov.primitiveDef);
         docs = docHumper(docs, "ImageOptions", cpov.ioDef);
         docs = docHumper(docs, "GlobalSettings", cpov.gsDef);
+        docs = docHumper(docs, "Settings", cpov.settingsDef);
         for(var k in cpov.vectorDef) {
             docs = docHumper(docs, k.substr(0, 1).toUpperCase() + k.substr(1), cpov.vectorDef[k]);
         }
@@ -612,7 +614,7 @@ function main() {
     // objlist -----------------------------------------------------------------
 
     if(opts.objlist.cnt) {
-        var objects = [ "Primitive", "ImageOptions", "GlobalSettings" ];
+        var objects = [ "Primitive", "ImageOptions", "GlobalSettings", "Settings" ];
         for(var name in cpov.objDef)
             objects.push(name.substr(0, 1).toUpperCase() + name.substr(1));
         for(var name in cpov.vectorDef)
@@ -654,8 +656,12 @@ function main() {
     // classes.js --------------------------------------------------------------
 
     if(optCount == 0 || opts.classes.cnt) {  // by default, classes.js is produced
+
         var fp = new File("./lib/classes.js", "w");
         fp.write("var cpov = require(\"./cephalopov.js\");\n\n");
+
+        fp.write(new ClassBuilder("Settings", cpov.settingsDef, "./lib/snippets.js") + "\n\n");
+        fp.write("exports.Settings = Settings;\n\n\n");
 
         fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./lib/snippets.js") + "\n\n");
         fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");

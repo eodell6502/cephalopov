@@ -143,6 +143,7 @@ function main() {
 
     cpov.globalSettings = new GlobalSettings({ assumedGamma: 1.0 }); // assumedGamma is required as of POV-Ray 3.7+
     cpov.imageOptions   = new ImageOptions();
+    cpov.settings       = new Settings();
 
     // FIXME: We really want to be *much* more selective than this.
 
