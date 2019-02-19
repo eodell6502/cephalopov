@@ -24,7 +24,6 @@ for(var k in cpov.classes) {
 
 cpov.settings = new Settings();
 
-
 //------------------------------------------------------------------------------
 // Internal state variables. These are distinct from the user-defined settings
 // in cpov.settings and should generally be treated as read-only from the POV of
@@ -39,14 +38,12 @@ cpov.endTime        = Infinity;  // ending time for animation
 cpov.startFrame     = 0;         // starting frame number for animation
 cpov.endFrame       = Infinity;  // ending frame number for animation
 cpov.snapshots      = [ ];       // snapshots for current frame
-cpov.frameBegin     = null;      // user callback before frame output
-cpov.frameEnd       = null;      // user callback after frame output
 
-cpov.currentFrame = 0;    // current animation frame
-cpov.frameCount   = 0;    // actual number of frames output
-cpov.objectSerial = 0;    // running count of Primitives created
-cpov.serialMap    = { };  // maps serials to objects
-cpov.idMap        = { };  // maps identifiers to serials
+cpov.currentFrame   = 0;         // current animation frame
+cpov.frameCount     = 0;         // actual number of frames output
+cpov.objectSerial   = 0;         // running count of Primitives created
+cpov.serialMap      = { };       // maps serials to objects
+cpov.idMap          = { };       // maps identifiers to serials
 
 main();
 

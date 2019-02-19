@@ -322,6 +322,33 @@ self-contained, you can just set parameters inside
 <code>cpov.imageOptions</code> and <code>cpov.globalSettings</code> in your main
 program file.</p>
 
+<h3>Getting Help</h3>
+
+<p>Aside from this documentation, there are three mailing lists for CephaloPOV
+users. All three are hosted at Google Groups, so you can participate via the web as well
+as by email:</p>
+
+<ul class='spacious'>
+
+    <li><b><a href="https://groups.google.com/forum/#!forum/cephalopov-users">CephaloPOV
+    Users</a>: This is the main mailing list for users of CephaloPOV. It's a good place
+    to ask and answer questions and to share user programs and libraries.</b></li>
+
+    <li><b><a href="https://groups.google.com/forum/#!forum/cephalopov-announce">CephaloPOV
+    Announce</a>: This is a read-only mailing list where new versions and bug
+    fixes are announced. There may be some other announcements, but it rarely exceeds a
+    message or two per month.</b></li>
+
+    <li><b><a href="https://groups.google.com/forum/#!forum/cephalopov-developers">CephaloPOV
+    Developers</a>:</b> This last one is for developers working on CephaloPOV itself, but
+    any users interested in the internals of the system are welcome to participate. This
+    is <b>not</b> a forum for bug reports (those go to the <a href="https://github.com/Waidthaler/cephalopov/issues">GitHub repo</a>)
+    or feature requests (those go on the <a href="https://groups.google.com/forum/#!forum/cephalopov-users">CephaloPOV</a> Users list).</li>
+
+</ul>
+
+<p>Should you find a bug, you can report it at the <a href="https://github.com/Waidthaler/cephalopov/issues">CephaloPOV repo</a> on GitHub.</p>
+
 <h2>Tutorial</h2>
 
 <div>
@@ -493,10 +520,10 @@ produce animations in CephaloPOV:</p>
     <li><b>Automatic Mode:</b> In automatic mode, the user program does not call
     <code>cpov.outputFrame()</code> directly; instead, it hands off control to
     <code>cpov.runAnimation()</code>. Before each frame is output, the
-    <code>cpov.frameBegin</code> callback function is called, followed by each
+    <code>cpov.settings.frameBegin</code> callback function is called, followed by each
     object's own <code>frameBegin</code> callbacks. The frame is then output.
     Afterwards, each object's <code>frameEnd</code> callback is called, followed
-    by the global <code>cpov.frameEnd</code> callback. Finally, both the animation
+    by the global <code>cpov.settings.frameEnd</code> callback. Finally, both the animation
     time clock variable, <code>cpov.clockTime</code> is incremented by <code>cpov.tickVal</code>,
     and the frame number, <code>cpov.currentFrame</code>, is incremented. The cycle
     repeats until any of the callbacks invokes <code>cpov.endAnimation</code>.</li>
@@ -524,8 +551,8 @@ be manipulated with care as noted in the table below.</p>
 <tr><td>RW</td><td>Y</td><td>cpov.currentFrame</td><td>integer</td><td>The number of the current frame. In most cases, you should treat this as a read-only value, but there is no reason you can't at least change it to a higher number to skip frames if you do it at the end of the animation loop.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.endFrame</td><td>integer</td><td>The user program will halt if and when <code>cpov.currentFrame</code> is greater than this number. Defaults to <code>Infinity</code>.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.endTime</td><td>float</td><td>The user program will halt if and when <code>cpov.clockTime</code> is greater than this number. Defaults to <code>Infinity</code>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>cpov.frameBegin</td><td>function</td><td>This is a user-supplied callback function which is called at the beginning of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
-<tr><td>RW</td><td>Y</td><td>cpov.frameEnd</td><td>function</td><td>This is a user-supplied callback function which is called at the end of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.settings.frameBegin</td><td>function</td><td>This is a user-supplied callback function which is called at the beginning of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
+<tr><td>RW</td><td>Y</td><td>cpov.settings.frameEnd</td><td>function</td><td>This is a user-supplied callback function which is called at the end of the animation loop. It is passed the global <code>cpov</code> object as its sole argument.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.settings.outputBase</td><td>string</td><td>The generated <code>.pov</code> and <code>.ini</code> filenames will be based on this template, which defaults to <code>cpov0000</code>. The first sequence of zeroes in the template string will be replaced with the frame number, left-padded with to the same number of digits as the zero sequence.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.settings.snapshotMode</td><td>boolean</td><td>If <code>true</code>, puts CephaloPOV in snapshot mode.</td></tr>
 <tr><td>RW</td><td>Y</td><td>cpov.snapshots</td><td>array</td><td>This is an array containing the output SDL strings which will be written to the <code>.pov</code> file at the end of the frame loop. Normally read-only, but if you know what you're doing, feel free to <code>push()</code> additional content to it.</td></tr>
@@ -621,11 +648,11 @@ loop, at least if you want to avoid tying yourself into knots. Let's just get
 that out of the way first:</p>
 
 <ol class="spacious">
-    <li>The global <code>cpov.frameBegin</code> callback is called.</li>
+    <li>The global <code>cpov.settings.frameBegin</code> callback is called.</li>
     <li>Each object's individual <code>frameBegin</code> callback is called.</li>
     <li>All <code>active</code> objects are written to file by <code>cpov.outputFrame</code>.</li>
     <li>Each object's individual <code>frameEnd</code> callback is called.</li>
-    <li>The global <code>cpov.frameEnd</code> callback is called.</li>
+    <li>The global <code>cpov.settings.frameEnd</code> callback is called.</li>
     <li>The <code>cpov.clockTime</code> is incremented by <code>cpov.tickVal</code> and <code>cpov.currentFrame</code> is incremented.</li>
 </ol>
 
@@ -667,7 +694,16 @@ combination of the two is powerful enough to make it worth understanding their
 relationship. [TODO]</p>
 
 
-<h3>Global Parameters</h3>
+<h3>The cpov Object</h3>
+
+<p>From the POV of user programs (see what I did there?), CephaloPOV appears as
+the global object <code>cpov</code>, so named because it would be a pain to have
+to type CephaloPOV all the time. Trust me, I know. The innards of
+<code>cpov</code> are actually pretty short and simple because its main job is
+to keep track of various settings and just run the user program. Most of the
+gnarly code lives elsewhere. It does have a few oft-used public methods which
+will be described after the parameter objects. For a complete list, see the <a
+href="#tocInside_the_cpov_Object">developer documentation</a>.</p>
 
 <p>POV-Ray has two sets of global parameters which remain separate here. The
 first, represented in CephaloPOV by the <code>cpov.imageOptions</code> object,
@@ -680,9 +716,9 @@ corresponds to POV-Ray's command line switches and the contents of
 contains parameters specific to CephaloPOV to avoid confusion with the POV-Ray specific
 settings in the other two objects.</p>
 
-<h4>Settings</h4>
+<h4>cpov.settings</h4>
 
-<p>The <code>Settings</code> class represents the global parameters controlling
+<p>The <code>cpov.settings</code> objects represents the global parameters controlling
 the operation of CephaloPOV. Some can be set indirectly by command line switches or
 the config files. All of them are directly accessible to user programs.</p>
 
@@ -693,7 +729,7 @@ the config files. All of them are directly accessible to user programs.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>N</td><td>debug</td><td>integer</td><td>Determines the debugging mode. The legal values are
+<tr><td>RW</td><td>N</td><td>debug</td><td>integer</td><td>Determines the debugging mode. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -704,8 +740,9 @@ the config files. All of them are directly accessible to user programs.</p>
 <tr><td>2</td><td>Debugging mode is turned on <em>and</em> fatal errors are ignored. This is mainly useful if you are modifying CephaloPOV itself.</td></tr>
 </tbody></table>
 </td></tr>
+<tr><td>RW</td><td>N</td><td>frameBegin</td><td>function</td><td>This callback function is called at the beginning of each frame.</td></tr>
+<tr><td>RW</td><td>N</td><td>frameEnd</td><td>function</td><td>This callback function is called at the end of each frame.</td></tr>
 <tr><td>RW</td><td>N</td><td>infile</td><td>string</td><td>This is the name of the user program file.</td></tr>
-<tr><td>RW</td><td>N</td><td>optionalLibraries</td><td>[string]</td><td>Contains a list of names of optional libraries which will be loaded into cpov.optLib for use in user programs.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputBase</td><td>string</td><td>Provides the template for generated filenames. The first substring of zeroes will be replaced with the frame number zero-padded to the same number of digits, and <code>.ini</code> and <code>.pov</code> will be appended to form the filename. The default is <code>"cpov0000"</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>preamble</td><td>string</td><td>If non-<code>null</code>, this specifies a string&mdash;presumably SDL&mdash;to prepend to all output <code>.pov</code> files. This can also be specified by passing a filename to the <code>-p</code> or <code>--preamble</code> command line switches.</td></tr>
 <tr><td>RW</td><td>N</td><td>quietMode</td><td>boolean</td><td>If true, console output will be suppressed. Can be set with the <code>-q</code> or <code>--quietMode</code> command line switches.</td></tr>
@@ -715,14 +752,38 @@ the config files. All of them are directly accessible to user programs.</p>
 </tbody></table>
 </div dh="Settings">
 
-<h4>ImageOptions</h4>
+<h5>Methods</h5>
 
-<p>The <code>ImageOptions</code> class represents the global parameters that are
-set either by POV-Ray command line switches or by <code>.ini</code> files.
-CephaloPOV itself never uses the command line switches, but they are output in a
-comment at the beginning of the generated <code>.ini</code> files for the
-curious. It should be noted that not all of the values that can be set in a
-<code>.ini</code> file have corresponding command line switches.</p>
+<div class='fsig'>Settings(<i>options</i>)</div>
+
+<p class='fdesc'>The constructor may be called without arguments, returning an
+object with its attributes initialized to <code>null</code>. The
+<code>options</code> argument may also be a plain JavaScript object containing
+named initializers. User programs will rarely have to call the <code>Settings</code>
+constructor directly as <code>cpov.settings</code> is already initialized.</p>
+
+<div class='fsig'>xset(<i>valObj</i>)</div>
+
+<p class='fdesc'>This is a convenience function which takes an object full
+of key/value pairs and sets several attributes at the same time, much like
+the constructor, which avoids having to set them individually. The following
+are equivalent:</p>
+
+<div class='code fdesc'>cpov.settings.quietMode = false;
+cpov.settings.snapshotMode = true;
+
+// is the same as...
+
+cpov.settings.xset({quietMode: false, snapshotMode: true});</div>
+
+<h4>cpov.imageOptions</h4>
+
+<p>The <code>cpov.imageOptions</code> object represents the global parameters
+that are set either by POV-Ray command line switches or by <code>.ini</code>
+files. CephaloPOV itself never uses the command line switches, but they are
+output in a comment at the beginning of the generated <code>.ini</code> files
+for the curious. It should be noted that not all of the values that can be set
+in a <code>.ini</code> file have corresponding command line switches.</p>
 
 <p>By default, CephaloPOV initializes <code>cpov.imageOptions</code> with an
 <code>ImageOptions</code> object at the beginning of a job. You can create
@@ -763,7 +824,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -782,7 +843,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -807,7 +868,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -833,7 +894,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -877,7 +938,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -916,12 +977,14 @@ cpov.imageOptions.quality = 9;
 
 cpov.imageOptions.xset({verbose: true, quality: 9});</div>
 
-<h4>GlobalSettings</h4>
+<h4>cpov.globalSettings</h4>
 
-<p>The <code>GlobalSettings</code> class defines the behavior of light in the
-image along with a few odds and ends like the character set used for input
+<p>The <code>cpov.globalSettings</code> class defines the behavior of light in
+the image along with a few odds and ends like the character set used for input
 files. At startup, <code>cpov.globalSettings</code> is initialized with a
-pristine instance of the class. None of its parameters are mandatory.</p>
+pristine instance of the <code>GlobalSettings</code> class. None of its
+parameters are mandatory except for <code>assumedGamma</code>, which is
+initialized to a default value of <code>1.0</code>.</p>
 
 <h5>Attributes</h5>
 
@@ -938,7 +1001,7 @@ pristine instance of the class. None of its parameters are mandatory.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1009,6 +1072,152 @@ cpov.globalSettings.charset = "utf8";
 // is the same as...
 
 cpov.globalSettings.xset({numberOfWaves: 3, charset: "utf8"});</div>
+
+<h4>cpov Methods</h4>
+
+<p>This section only lists public methods commonly used in user programs.
+For the complete list, see the <a
+href="#tocInside_the_cpov_Object">developer documentation</a>.</p>
+
+<div class="fsig">cpov.deg2rad(<i>deg</i>)</div>
+
+<p class="fdesc">Converts the value of <code>deg</code> from degrees to radians
+and returns the result.</p>
+
+<div class="fsig">cpov.endAnimation()</div>
+
+<p class="fdesc">When called by the user program, this method terminates the
+animation loop. If a frame is in progress when it is called, it will not be
+output, so it is normally called after file output.</p>
+
+<div class="fsig">cpov.error(<i>level</i>, <i>message</i>, <i>location</i> = "CEPHALOPOV", <i>obj</i> = null)</div>
+
+<p class="fdesc">Outputs an error <code>message</code> using pretty colors if
+supported by the terminal. The <code>level</code> argument may be one of
+<code>"fatal"</code>, <code>"warn"</code>, <code>"info"</code>, or
+<code>"debug"</code>. If <code>level</code> is <code>"fatal"</code>, the program
+terminates immediately unless <code>cpov.settings.debug</code> is greater than
+<code>1</code>. (This is useful for debugging when working on CephaloPOV
+itself.) All other error levels simply emit an error message. This will appear
+on the terminal for <code>"warn"</code>, <code>"info"</code>, and
+<code>"debug"</code> at <code>cpov.verbosity</code> levels of <code>1</code>,
+<code>2</code>, and <code>3</code>, respectively. In all cases, the error will
+also be written to <code>cpov.settings.debugLog</code> if initialized.</p>
+
+<p class='fdesc'>The error message is prefixed with the <code>location</code>
+where the error occurred, usually a class and method name, and the object <code>serial</code>
+and <code>id</code>, if any, are appended to the end of the line.</p>
+
+
+<div class='code fdesc'>// Keyname //-------------------------------------------------------------------</div>
+
+<p class='fdesc'>where the initial slash appears in the first column. The
+keyname is extracted and used to index the following text up to the next special
+comment. Although the examples you will see in <code>snippets.js</code> all have
+a line of trailing dashes, everything past the last slash is ignored. The spaces
+on either side of the keyname are mandatory, and the name itself cannot contain
+any whitespace.</p>
+
+<p class='fdesc'>The resulting object is returned and used for inserting the
+named blocks of code into the generated code, mostly in
+<code>classes.js</code>.</p>
+
+<div class="fsig">cpov.outputFrame()</div>
+
+<p class="fdesc">The <code>cpov.outputFrame</code> method exists for user
+programs to call whenever they have finished setting up a scene. It takes no
+arguments, its behavior being determined mostly by
+<code>cpov.imageOptions</code> and <code>cpov.globalSettings</code>. That
+behavior is already described in great detail in <a
+href="#tocThe%20Animation%20Cycles">The Animation Cycles</a> and will not be
+repeated here.</p>
+
+<p class="fdesc">There is no return value. If any termination conditions are
+met, CephaloPOV will terminate with an exit code of <code>0</code>.</p>
+
+<div class="fsig">cpov.parseCLI(<i>optionMap</i>)</div>
+
+<p class="fdesc">Another function that will eventually migrate elsewhere,
+perhaps into its own package, <code>cpov.parseCLI</code> is a simple command
+line parser which implements the subset of the usual *nix conventions that
+CephaloPOV actually needs. It is passed a single argument, the
+<code>optionMap</code> object, thus:</p>
+
+<div class='code fdesc'>var optionMap = {
+    infile:     { short: "i", vals: [ ] },  // accumulates values
+    outfiles:   { short: "o", vals: [ ] },
+    preamble:   { short: "p", vals: [ ] },
+    sdlinclude: { short: "s", vals: [ ] },
+    verbose:    { short: "v", cnt: 0 },     // accumulates appearance counts
+    quietMode:  { short: "q", cnt: 0 },
+    debug:      { short: "d", cnt: 0 },
+    help:       { short: "h", cnt: 0 },
+}</div>
+
+<p class='fdesc'>The keys of the <code>optionMap</code> are the long options,
+the <code>short</code> members in the value objects are the short options. If a
+<code>vals</code> array is provided, arguments to the switch are accumulated
+therein. If a <code>cnt</code> counter is provided, the number of appearances of
+the switch are counted therein. You can't do both.</p>
+
+<p class='fdesc'>The <code>optionMap</code> is altered in place. If malformed
+user input is encountered, the program is terminated with a call to
+<code>cpov.error</code>.</p>
+
+<div class="fsig">cpov.primitiveDefIdentifier(<i>obj</i>)</div>
+
+<p class="fdesc">Given a CephaloPOV object, returns a unique string consisting
+of the form <code>#serial:id</code>. If the object does not have an <code>id</code>,
+both it and the interstitial colon are omitted. This is appended to the error
+messages emitted by <code>cpov.error</code>.</p>
+
+<div class="fsig">cpov.round(<i>n</i>, <i>d</i>)</div>
+
+<p class="fdesc">Takes a number, <code>n</code>, and returns it rounded
+to <code>d</code> decimal places.</p>
+
+<div class="fsig">cpov.runAnimation()</div>
+
+<p class="fdesc">This is the main animation loop which repeats, calling
+<code>cpov.outputFrame()</code> repeatedly until one of its termination
+conditions are met or the user program calls <code>cpov.endAnimation</code>.</p>
+
+<div class="fsig">cpov.tab(<i>stops</i>)</div>
+
+<p class="fdesc">One of the functions used in formatting generated code, both
+JavaScript and SDL, returns a string containing <code>4 * stops</code>
+spaces. Do not submit a pull request changing this to tabs or other numbers of
+spaces, or I will curse you and your progeny.</p>
+
+<div class="fsig">cpov.testStage(<i>type</i>, <i>size</i>)</div>
+
+<p class="fdesc">Returns an array of objects that serve as stages or backdrops
+for geometric objects generated for tests and illustrations in the CephaloPOV
+documentation.</p>
+
+<p class="fdesc">If <code>type</code> is given as <code>"corner"</code>, the generated
+stage consists of three adjacent faces of a cube around one corner in the same
+configuration as a corner reflector. The faces are <code>size</code> units square and
+the axes run through the centroids of each face. If <code>type</code> is <code>"triplane"</code>,
+then the stage takes the form of three translucent planes intersecting at the origin.</p>
+
+<p class="fdesc">Cameras and lighting are included in the stage. It is assumed that the final
+image will have a 1:1 aspect ratio, so you will have to adjust the camera
+parameters, particularly <code>camera.right</code>, if you want a different
+aspect ratio.</p>
+
+<p class="fdesc">It is highly likely that this function will be extended and
+changed in backwards-incompatible ways to serve the needs of documentation and
+testing, so if you want to use it outside of CephaloPOV itself, it's best to
+make your own copy of the function.</p>
+
+<div class="fsig">cpov.timerStats(<i>start</i>, <i>end</i>, <i>units</i> = 1)</div>
+
+<p class="fdesc">This function is used to calculate performance statistics. It
+takes a <code>start</code> and <code>end</code> time and a number of work
+<code>units</code>, and it returns an object containing the elapsed time in
+milliseconds and seconds and the average times per unit. (The units are usually
+frames.)</p>
 
 
 <h3>Vectors, Colors, and Matrices</h3>
@@ -1966,7 +2175,7 @@ at right was created by the following code:</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1988,7 +2197,7 @@ at right was created by the following code:</p>
 <tr><td>RW</td><td>N</td><td>blurSamples</td><td>[float]</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
 <tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2382,7 +2591,7 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
@@ -3672,7 +3881,7 @@ debug those portions. Everything else ends up in <code>snippets.js</code>,
 including the occasional entire class definition, as with
 <code>Matrix</code>.</p>
 
-<h3>The cpov Object</h3>
+<h3>Inside the cpov Object</h3>
 
 <p>Nearly everything other than class definitions and user code lives in the
 global <code>cpov</code> object, a singleton which is initialized in
@@ -4236,7 +4445,7 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Implement <code>cpov.settinsg.optionalLibraries</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Test and document <code>cpov.requireOptLib()</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
 
         <!-- Mesh/Mesh2 -->
@@ -4246,9 +4455,11 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td><code>Mesh2</code></td></tr>
 
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td><code>cpov.runAnimation()</code> and other undocumented <code>cpov</code> methods.</td></tr>
+
         <!-- Object documentation -->
 
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td><code>Mesh</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D2</td><td><code>Mesh</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>Mesh2</code> description and example</td></tr>
@@ -4259,8 +4470,6 @@ different functions, and look at the results of a rendering.</p>
 
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaAttenuation</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaInteraction</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.projectedThrough</code></td></tr>
 
         <tr><td class='pending'>pending</td><td>DOC</td><td>D5</td><td>Document the various spline types.</td></tr>
@@ -4303,6 +4512,8 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Atmospheric effects</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Reports</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaAttenuation</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.mediaInteraction</code></td></tr>
     </tbody>
 </table>
 
