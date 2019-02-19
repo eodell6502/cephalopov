@@ -49,6 +49,10 @@ main();
 
 
 
+//==============================================================================
+// Our friend, the main loop.
+//==============================================================================
+
 function main() {
 
     var opts = {
@@ -70,7 +74,8 @@ function main() {
     cpov.parseCLI(opts);
 
     if(opts.help.cnt) {
-        console.log("\nUsage: cpov [options] [-i] <input_file>...\n\n"
+        outputHeader();
+        console.log("Usage: cpov [options] [-i] <input_file>...\n\n"
             + "    -i, --infile     <filename>     Path to input file.\n"
             + "    -o, --outfiles   <template>     Template for output file names.\n"
             + "    -p, --preamble   <file(s)>      Files with text to prepend to output.\n"
@@ -188,9 +193,24 @@ function main() {
     else
         cpov.configLoad(null);
 
+    if(!cpov.settings.quietMode && cpov.settings.verbosity > 0)
+        outputHeader();
+
     userProgram(cpov); // main loop
 
 }
 
 
+//==============================================================================
+// Outputs the runtime header to console. This will become progressively more
+// ostentatious and ridiculous as time goes by.
+//==============================================================================
+
+function outputHeader() {
+    console.log(
+        "===========================================================================\n"
+        + "CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray\n"
+        + "===========================================================================\n"
+    );
+}
 
