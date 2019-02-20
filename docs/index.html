@@ -743,7 +743,9 @@ the config files. All of them are directly accessible to user programs.</p>
 <tr><td>RW</td><td>N</td><td>frameBegin</td><td>function</td><td>This callback function is called at the beginning of each frame.</td></tr>
 <tr><td>RW</td><td>N</td><td>frameEnd</td><td>function</td><td>This callback function is called at the end of each frame.</td></tr>
 <tr><td>RW</td><td>N</td><td>infile</td><td>string</td><td>This is the name of the user program file.</td></tr>
+<tr><td>RW</td><td>N</td><td>makeRenderScript</td><td>boolean</td><td>If <code>makeRenderScript</code> is <code>true</code> and <code>cpov.settings.povrayPath</code> is defined, CephaloPOV will generate a shell script to automate the rendering of the generated frames. For Linux and other Unix-alikes, this will be a bash script. Under Windows, it will be a <code>.bat</code> file.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputBase</td><td>string</td><td>Provides the template for generated filenames. The first substring of zeroes will be replaced with the frame number zero-padded to the same number of digits, and <code>.ini</code> and <code>.pov</code> will be appended to form the filename. The default is <code>"cpov0000"</code>.</td></tr>
+<tr><td>RW</td><td>N</td><td>povrayPath</td><td>string</td><td>Provides the full path to the POV-Ray executable. If the executable is already in your path, this is just the name of the executable itself. This is used to generate shell scripts to automate the rendering of animations, among other things.</td></tr>
 <tr><td>RW</td><td>N</td><td>preamble</td><td>string</td><td>If non-<code>null</code>, this specifies a string&mdash;presumably SDL&mdash;to prepend to all output <code>.pov</code> files. This can also be specified by passing a filename to the <code>-p</code> or <code>--preamble</code> command line switches.</td></tr>
 <tr><td>RW</td><td>N</td><td>quietMode</td><td>boolean</td><td>If true, console output will be suppressed. Can be set with the <code>-q</code> or <code>--quietMode</code> command line switches.</td></tr>
 <tr><td>RW</td><td>N</td><td>sdlIncludes</td><td>boolean</td><td>Specifies an array of one or more SDL include files. These will generate <code>#include</code> statements in the generated <code>.pov</code> files in the order given after the contents of <code>cpov.settings.preamble</code>.</td></tr>
@@ -4368,21 +4370,9 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td>Execution: Optionally generate <code>.sh</code>/<code>.bat</code> files</td></tr>
 
-        <!-- Mesh/Mesh2 -->
-
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C4</td><td>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C5</td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C6</td><td><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>C7</td><td><code>Mesh2</code></td></tr>
-
-        <!-- Object documentation -->
-
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D&star;</td><td><code>Mesh</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>Mesh2</code> description and example</td></tr>
 
         <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>Camera</code>: Pseudo-primitive in CSG integration</td></tr>
@@ -4392,8 +4382,8 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.projectedThrough</code></td></tr>
 
-        <tr><td class='pending'>pending</td><td>DOC</td><td>D5</td><td>Document internal optional libraries.</td></tr>
-        <tr><td class='pending'>pending</td><td>DOC</td><td>D5</td><td>Document the various spline types.</td></tr>
+        <tr><td class='pending'>pending</td><td>DOC</td><td>D6</td><td>Document internal optional libraries.</td></tr>
+        <tr><td class='pending'>pending</td><td>DOC</td><td>D7</td><td>Document the various spline types.</td></tr>
 
         <!-- Tests -->
 
@@ -4414,6 +4404,20 @@ different functions, and look at the results of a rendering.</p>
         </tr>
     <thead><tbody>
         <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
+
+        <!-- Mesh/Mesh2 -->
+
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>Mesh2</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Compact output format for <code>Triangle</code>s in <code>Mesh</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Mesh/Triangle</code>: Improve constructor validation</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>uvVectors</code> member in <code>Triangle</code>, check <code>Mesh</code> compatibility.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Mesh2</code></td></tr>
+
+        <!-- Object documentation -->
+
+        <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>Mesh</code> description and example</td></tr>
+
+
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Make sure <code>Primitive.destroy</code> recurses through child objects.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td>Validate <code>Polynomial.order</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td></td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
@@ -4458,6 +4462,7 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Direct support for ffmpeg/avisynth + Google speech API</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Drag in some color libraries, theme generators</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Eric Haines' table of object intersections, collision detection</td></tr>
+        <tr><td class='tbd'>TBD</td><td>TDB</td><td>TBD</td><td>External batch rendering util.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Fix <code>inputFileName</code> and <code>outputFileName</code> in <code>ImageOptions</code> if needed.</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Geometric query system</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>https://www.npmjs.com/package/ml-matrix (?)</td></tr>

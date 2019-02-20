@@ -45,6 +45,8 @@ cpov.objectSerial   = 0;         // running count of Primitives created
 cpov.serialMap      = { };       // maps serials to objects
 cpov.idMap          = { };       // maps identifiers to serials
 
+
+
 main();
 
 
@@ -175,10 +177,12 @@ function main() {
     cpov.imageOptions   = new ImageOptions();
 
     // FIXME: We really want to be *much* more selective than this.
+    // Is this even necessary at this point? It feels like a hangover from
+    // the early development phase, and everything should be in the global
+    // cpov object anyway.
 
     for(var item in cpov)
         global[item] = cpov[item];
-
 
     try {
         var userProgram = require(path.normalize(cpov.cwd) + "/" + cpov.settings.infile);
