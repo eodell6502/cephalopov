@@ -610,10 +610,6 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-    // Rendering script //------------------------------------------------------
-
-    cpov.makeRenderScript("./docs/src/illus.bat");
-
 }
 
 

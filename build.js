@@ -367,10 +367,10 @@ function readParamKeys(array, destObj) {
 function docHumper(doc, classname, def) {
 
     var immutableDesc = {
-        finite:  "If <code>true</code>, the shape is finite in extent.",
-        solid:   "If <code>true</code>, the shape is solid.",
-        csg:     "If <code>true</code>, the primitive is a composite CSG container.",
-        pseudo:  "If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV makes it act similar to one so it can be included in CSG objects."
+        finite:     "If <code>true</code>, the shape is finite in extent.",
+        solid:      "If <code>true</code>, the shape is solid.",
+        csg:        "If <code>true</code>, the primitive is a composite CSG container.",
+        csgOperand: "If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV treats it as similar to one in many ways."
     };
 
     var descDummy = "TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.";
