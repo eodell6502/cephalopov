@@ -24,7 +24,7 @@ deal with SDL at all, though it is easy to mix with existing SDL code.
 * Larger selection of spline types.
 * New camera features:
   * Cameras can automatically track moving objects.
-  * Cameras can be included in CSG unions.
+  * Cameras can be included in CSG union-like relationships.
   * A new stereoscopic camera type.
 * A full-featured geometric query system makes it easy for the math-impaired to build extremely complex objects.
 * Have documentation that is at least as awesome as the POV-Ray docs.
