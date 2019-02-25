@@ -4,9 +4,8 @@
 //# This is the entry point for the CephaloPOV CLI program.
 //##############################################################################
 
-var chalk = require("chalk");
-var cpov = require("./lib/cephalopov.js");
-var File = require("./lib/file.js");
+var cpov = require("./lib/cephalopov.js");  // FIXME
+
 
 var path = require("path");
 var os   = require("os");
@@ -102,7 +101,7 @@ function main() {
         cpov.settings.debug     = Math.min(opts.debug.cnt, 2);
 
         if(cpov.settings.debug == 2) {
-            cpov.debugLog = new File("cpov_debug.log", "w");
+            cpov.debugLog = new cpov.File("cpov_debug.log", "w");
         }
     }
 
@@ -128,7 +127,7 @@ function main() {
     if(opts.preamble.vals.length) {
         cpov.settings.preamble = "";
         for(var i = 0; i < opts.preamble.vals.length; i++) {
-            var fp = new File(opts.preamble.vals[i], "r");
+            var fp = new cpov.File(opts.preamble.vals[i], "r");
             if(!fp.open)
                 cpov.error("fatal", "Unable to open file " + opts.preamble.vals[i] + " for reading.", "CEPHALOPOV");
             cpov.settings.preamble += fp.read();
