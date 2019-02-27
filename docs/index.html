@@ -206,7 +206,7 @@ $(document).ready(function() {
 
 <p><span class='h2num'></span>CephaloPOV is a JavaScript scripting engine for
 POV-Ray. It is implemented as a Node command line program that loads a user
-script and executes it in an environment in which it can manipulate various
+program and executes it in an environment in which it can manipulate various
 JavaScript classes that map to POV-Ray's native objects, in addition to having
 full access to the Node ecosystem. CephaloPOV takes care of generating POV-Ray
 Scene Description Language files, both for static scenes and multi-frame
@@ -214,7 +214,7 @@ animations.</p>
 
 <p><i>The documentation as it stands is more or less complete as far as CephaloPOV
 itself is concerned, but the longer-term goal of being self-sufficient without
-requiring familiarity with POV-Ray is still a good ways away.</i></p>
+requiring familiarity with POV-Ray is still distant.</i></p>
 
 </dive>
 
@@ -257,10 +257,11 @@ a ways off.</span></p>
 
 <h3>Installation</h3>
 
-<p>CephaloPOV is packaged as a Node module. If you don't already have Node installed,
-<a href="https://nodejs.org/en/">take care of that first</a>. Then, using the Node package
-manager <code>npm</code>, which was installed with Node, you can install CephaloPOV. Open a terminal window --
-on Windows systems, you'll want to launch the "Node.js command prompt" -- and type the following
+<p>CephaloPOV is packaged as a Node module. If you don't already have Node 
+installed, <a href="https://nodejs.org/en/">take care of that first</a>. Then, 
+using the Node package manager <code>npm</code>, which was installed with Node, 
+you can install CephaloPOV. Open a terminal window -- on Windows systems, you'll 
+want to launch the "Node.js command prompt" -- and type the following 
 command:</p>
 
 <div class='code'>$ npm install cephalopov --global</div>
@@ -268,12 +269,13 @@ command:</p>
 <p>Boom. That's it. Henceforth, you can type <code>cpov</code> at the command prompt
 to start CephaloPOV.</p>
 
-<p>If you want copies of the examples used in the tutorials and some tools for
-hacking CephaloPOV's internals, you'll need to get the
-<code>cpov_examples</code> package from GitHub <a
-href="https://github.com/Waidthaler/cpov_examples">here</a>. (You can also get
-the <a href="https://github.com/Waidthaler/cephalopov">repo</a> used to build CephaloPOV and the npm package
-but you don't need it to use CephaloPOV or to run the examples.)</p>
+<p>If you want copies of the examples used in the tutorials and some tools for 
+hacking CephaloPOV's internals, you'll need to get the 
+<code>cpov_examples</code> package from GitHub <a 
+href="https://github.com/Waidthaler/cpov_examples">here</a>. (You can also get 
+the <a href="https://github.com/Waidthaler/cephalopov">repo</a> used to build 
+CephaloPOV and the npm package but you don't need it to use CephaloPOV or to run 
+the examples.)</p>
 
 <h4>Configuration Files</h4>
 
@@ -753,7 +755,7 @@ the config files. All of them are directly accessible to user programs.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>N</td><td>debug</td><td>integer</td><td>Determines the debugging mode. The legal values are
+<tr><td>RW</td><td>N</td><td>debug</td><td>integer</td><td>Determines the debugging mode. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -848,7 +850,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -867,7 +869,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -892,7 +894,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -918,7 +920,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -962,7 +964,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1025,7 +1027,7 @@ initialized to a default value of <code>1.0</code>.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2135,7 +2137,7 @@ more robust.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2157,7 +2159,7 @@ more robust.</p>
 <tr><td>RW</td><td>N</td><td>blurSamples</td><td>[float]</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
 <tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2551,7 +2553,7 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
@@ -4412,16 +4414,13 @@ different functions, and look at the results of a rendering.</p>
             <th>Description</th>
         </tr>
     <thead><tbody>
-        <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
 
-        <tr><td class='pending'>pending</td><td>TST</td><td>C&bigstar;</td><td><code>Camera</code>: <code>satellites</code> test.</td></tr>
+        <tr><td class='pending'>pending</td><td>TST</td><td>C&bigstar;</td><td><code>satellites</code> test: rotate, scale, and translate a sphere with three cube satellites on each axis.</td></tr>
 
         <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td>Multi-<code>Camera</code> <code>active</code> test at generation time.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
-
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td>Multi-<code>Camera</code> <code>active</code> test at generation time.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>LightSource</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
-
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.projectedThrough</code></td></tr>
@@ -4431,8 +4430,19 @@ different functions, and look at the results of a rendering.</p>
 
         <!-- Tests -->
 
-        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>A <em>lot</em> of tests and examples to go into <code>cpov_examples</code> repo before the next version.</td></tr>
-
+        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>
+			Separate repo for tests/examples and a <em>lot</em> of stuff to go into it before the next version.
+			<ul>
+				<li>Blob disc</li>
+				<li>Pyramids...</li>
+				<li>Parametric building</li>
+				<li>Stereogram</li>
+				<li>Equirectangular scene(s)</li>
+				<li>Heightfield oceanside scene</li>
+				<li>Navigable 360 pano building</li>
+				<li>Cruiser design</li>
+			</ul>
+		</td></tr>
     </tbody>
 </table>
 
@@ -4525,6 +4535,9 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Reorg: Script to pretty-print definition files</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Wrap Array attributes with Proxies to enforce type (?)</td></tr>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Turtle graphics -- snapshot mode forms part of the basis for this.</td></tr>
+		<tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>UTIL: ffmpeg-based animation generator</td></tr>
+		<tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>UTIL: Google speech api text-to-wav</td></tr>
+		<tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>UTIL: Render script</td></tr>
     </tbody>
 </table>
 
