@@ -206,7 +206,7 @@ $(document).ready(function() {
 
 <p><span class='h2num'></span>CephaloPOV is a JavaScript scripting engine for
 POV-Ray. It is implemented as a Node command line program that loads a user
-script and executes it in an environment in which it can manipulate various
+program and executes it in an environment in which it can manipulate various
 JavaScript classes that map to POV-Ray's native objects, in addition to having
 full access to the Node ecosystem. CephaloPOV takes care of generating POV-Ray
 Scene Description Language files, both for static scenes and multi-frame
@@ -214,7 +214,7 @@ animations.</p>
 
 <p><i>The documentation as it stands is more or less complete as far as CephaloPOV
 itself is concerned, but the longer-term goal of being self-sufficient without
-requiring familiarity with POV-Ray is still a good ways away.</i></p>
+requiring familiarity with POV-Ray is still distant.</i></p>
 
 </dive>
 
@@ -257,10 +257,11 @@ a ways off.</span></p>
 
 <h3>Installation</h3>
 
-<p>CephaloPOV is packaged as a Node module. If you don't already have Node installed,
-<a href="https://nodejs.org/en/">take care of that first</a>. Then, using the Node package
-manager <code>npm</code>, which was installed with Node, you can install CephaloPOV. Open a terminal window --
-on Windows systems, you'll want to launch the "Node.js command prompt" -- and type the following
+<p>CephaloPOV is packaged as a Node module. If you don't already have Node 
+installed, <a href="https://nodejs.org/en/">take care of that first</a>. Then, 
+using the Node package manager <code>npm</code>, which was installed with Node, 
+you can install CephaloPOV. Open a terminal window -- on Windows systems, you'll 
+want to launch the "Node.js command prompt" -- and type the following 
 command:</p>
 
 <div class='code'>$ npm install cephalopov --global</div>
@@ -268,12 +269,13 @@ command:</p>
 <p>Boom. That's it. Henceforth, you can type <code>cpov</code> at the command prompt
 to start CephaloPOV.</p>
 
-<p>If you want copies of the examples used in the tutorials and some tools for
-hacking CephaloPOV's internals, you'll need to get the
-<code>cpov_examples</code> package from GitHub <a
-href="https://github.com/Waidthaler/cpov_examples">here</a>. (You can also get
-the <a href="https://github.com/Waidthaler/cephalopov">repo</a> used to build CephaloPOV and the npm package
-but you don't need it to use CephaloPOV or to run the examples.)</p>
+<p>If you want copies of the examples used in the tutorials and some tools for 
+hacking CephaloPOV's internals, you'll need to get the 
+<code>cpov_examples</code> package from GitHub <a 
+href="https://github.com/Waidthaler/cpov_examples">here</a>. (You can also get 
+the <a href="https://github.com/Waidthaler/cephalopov">repo</a> used to build 
+CephaloPOV and the npm package but you don't need it to use CephaloPOV or to run 
+the examples.)</p>
 
 <h4>Configuration Files</h4>
 
@@ -4412,13 +4414,12 @@ different functions, and look at the results of a rendering.</p>
             <th>Description</th>
         </tr>
     <thead><tbody>
-        <!-- <tr><td></td><td><td></td></td><td></td></tr> -->
 
         <tr><td class='pending'>pending</td><td>TST</td><td>C&bigstar;</td><td><code>satellites</code> test: rotate, scale, and translate a sphere with three cube satellites on each axis.</td></tr>
 
         <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td>Multi-<code>Camera</code> <code>active</code> test at generation time.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td><code>LightSource</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td>Multi-<code>Camera</code> <code>active</code> test at generation time.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>LightSource</code> description and example</td></tr>
         <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
@@ -4436,7 +4437,7 @@ different functions, and look at the results of a rendering.</p>
 				<li>Pyramids...</li>
 				<li>Parametric building</li>
 				<li>Stereogram</li>
-				<li>Equirectangular scene</li>
+				<li>Equirectangular scene(s)</li>
 				<li>Heightfield oceanside scene</li>
 				<li>Navigable 360 pano building</li>
 				<li>Cruiser design</li>
@@ -4537,6 +4538,7 @@ different functions, and look at the results of a rendering.</p>
         <tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>Turtle graphics -- snapshot mode forms part of the basis for this.</td></tr>
 		<tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>UTIL: ffmpeg-based animation generator</td></tr>
 		<tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>UTIL: Google speech api text-to-wav</td></tr>
+		<tr><td class='tbd'>TBD</td><td>TBD</td><td>TBD</td><td>UTIL: Render script</td></tr>
     </tbody>
 </table>
 

@@ -57,11 +57,12 @@ cpov.settingsDef   = require("./lib/settingsDef.js");    // CephaloPOV-specific 
 // can be defined as SDL functions.
 //==============================================================================
 
-function ClassBuilder(name, obj, snippets = false) {
-    this.name     = name;
-    this.obj      = obj;
-    this.snippets = snippets;
-    this.allowSDL = true;
+function ClassBuilder(name, obj, snippets = false, mutableList = false) {
+    this.name        = name;
+    this.obj         = obj;
+    this.snippets    = snippets;
+    this.allowSDL    = true;
+    this.mutableList = mutableList;
 
     if(this.snippets)
         this.snippets = cpov.objectImport(this.snippets);
@@ -234,6 +235,15 @@ ClassBuilder.prototype.toString = function() {
 			src.push(this.align(rows) + "\n");
 
 		}
+    }
+
+    if(this.mutableList) {
+        src.push(tab2 + "// Mutable list //\n");
+        var tmp = [ ];
+    	for(var i = 0; i < this.obj.mutable.length; i++) {
+            tmp.push('"' + this.obj.mutable[i].name + '"');
+        }
+        src.push(tab2 + "this._mutableList = [ " + tmp.join(", ") + " ];\n");
     }
 
     // Object conBlock ---------------------------------------------------------
@@ -714,7 +724,7 @@ function main() {
         fp.write(new ClassBuilder("GlobalSettings", cpov.gsDef, "./lib/snippets.js") + "\n\n");
         fp.write("exports.GlobalSettings = GlobalSettings;\n\n\n");
 
-        var ioObj = new ClassBuilder("ImageOptions", cpov.ioDef, "./lib/snippets.js");
+        var ioObj = new ClassBuilder("ImageOptions", cpov.ioDef, "./lib/snippets.js", true);
         ioObj.allowSDL = false;
         fp.write(ioObj + "\n\n");
         fp.write("exports.ImageOptions = ImageOptions;\n\n\n");
