@@ -137,7 +137,7 @@ function main() {
         cpov.settings.infile = opts.infile.vals[0];
 
     if(opts.outfiles.vals.length == 0) {
-        cpov.error("warn", "No output template specified, using '" + cpov.settings.outputBase + "'.", "CEPHALOPOV");
+        cpov.error("info", "No output template specified, using '" + cpov.settings.outputBase + "'.", "CEPHALOPOV");
     } else {
         cpov.settings.outputBase = opts.outfiles.vals[0];
     }
