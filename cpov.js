@@ -102,20 +102,7 @@ function main() {
 
     if(opts.help.cnt) {
         outputHeader();
-        console.log("Usage: cpov [options] [-i] <input_file>...\n\n"
-            + "    -i, --infile     <filename>     Path to input file.\n"
-            + "    -o, --outfiles   <template>     Template for output file names.\n"
-            + "    -p, --preamble   <file(s)>      Files with text to prepend to output.\n"
-            + "    -s, --sdlInclude <filename(s)>  SDL files to include after preamble.\n"
-            + "    -c, --tickVal    <float>        Time increment per frame (default 1.0)\n"
-            + "    -t, --startTime  <float>        Start output at anim clock time (default 0.0)\n"
-            + "    -T, --endTime    <float>        End output at anim clock time (default Infinity)\n"
-            + "    -f, --startFrame <integer>      Start output at frame number (default 0)\n"
-            + "    -F, --endFrame   <integer>      End output at frame number (default Infinity)\n"
-            + "    -v, --verbose                   Increase verbosity (starts at 1, up to 4).\n"
-            + "    -q, --quietMode                 Suppress console output.\n"
-            + "    -d, --debug                     Display debugging info.\n"
-            + "    -h, --help                      Display this text.\n\n");
+        usageInstructions();
         process.exit(0);
     }
 
@@ -236,10 +223,38 @@ function main() {
 //==============================================================================
 
 function outputHeader() {
-    console.log(
-        "===========================================================================\n"
-        + "CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray\n"
-        + "===========================================================================\n"
-    );
+
+    if(!cpov.chalk.supportsColor) {
+        console.log(
+            "\n===========================================================================\n"
+            + "            CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray\n"
+            + "===========================================================================\n"
+        );
+    } else {
+        console.log(
+            "\n" + cpov.chalk.blue("===========================================================================") + "\n"
+            + cpov.chalk.yellow.bold("            CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray") + "\n"
+            + cpov.chalk.blue("===========================================================================") + "\n"
+        );
+    }
 }
 
+
+
+function usageInstructions() {
+
+    console.log(cpov.chalk.white.bold("  Usage: cpov [options] [-i] <input_file>...\n\n")
+        + cpov.chalk.yellow.bold("    -i") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--infile     ") + cpov.chalk.blue.bold("<filename>     ") + cpov.chalk.cyan.bold("Path to input file.\n")
+        + cpov.chalk.yellow.bold("    -o") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--outfiles   ") + cpov.chalk.blue.bold("<template>     ") + cpov.chalk.cyan.bold("Template for output file names.\n")
+        + cpov.chalk.yellow.bold("    -p") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--preamble   ") + cpov.chalk.blue.bold("<file(s)>      ") + cpov.chalk.cyan.bold("Files with text to prepend to output.\n")
+        + cpov.chalk.yellow.bold("    -s") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--sdlInclude ") + cpov.chalk.blue.bold("<filename(s)>  ") + cpov.chalk.cyan.bold("SDL files to include after preamble.\n")
+        + cpov.chalk.yellow.bold("    -c") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--tickVal    ") + cpov.chalk.blue.bold("<float>        ") + cpov.chalk.cyan.bold("Time increment per frame (def. 1.0)\n")
+        + cpov.chalk.yellow.bold("    -t") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--startTime  ") + cpov.chalk.blue.bold("<float>        ") + cpov.chalk.cyan.bold("Start output at anim clock time (def. 0.0)\n")
+        + cpov.chalk.yellow.bold("    -T") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--endTime    ") + cpov.chalk.blue.bold("<float>        ") + cpov.chalk.cyan.bold("End output at anim clock time (def. Inf.)\n")
+        + cpov.chalk.yellow.bold("    -f") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--startFrame ") + cpov.chalk.blue.bold("<integer>      ") + cpov.chalk.cyan.bold("Start output at frame number (default 0)\n")
+        + cpov.chalk.yellow.bold("    -F") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--endFrame   ") + cpov.chalk.blue.bold("<integer>      ") + cpov.chalk.cyan.bold("End output at frame number (default Inf.)\n")
+        + cpov.chalk.yellow.bold("    -v") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--verbose    ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Increase verbosity (starts at 1, up to 4).\n")
+        + cpov.chalk.yellow.bold("    -q") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--quietMode  ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Suppress console output.\n")
+        + cpov.chalk.yellow.bold("    -d") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--debug      ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Display debugging info.\n")
+        + cpov.chalk.yellow.bold("    -h") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--help       ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Display this text.\n\n"));
+}
