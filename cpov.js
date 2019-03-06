@@ -33,6 +33,7 @@ global.cpov = new (require("./lib/cephalopov.js"))();
 var path    = require("path");
 var os      = require("os");
 var process = require("process");
+var minicle = require("minicle");
 
 cpov.cwd      = process.cwd();
 
@@ -98,7 +99,7 @@ function main() {
         verbose:    { short: "v", cnt: 0 },     // accumulates appearance counts
     }
 
-    cpov.parseCLI(opts);
+    minicle(opts);
 
     if(opts.help.cnt) {
         outputHeader();
@@ -118,6 +119,15 @@ function main() {
         }
     }
 
+    if(opts.quietMode.cnt > 0) {
+        cpov.settings.verbosity = 0;
+        cpov.settings.quietMode = true;
+    }
+
+    if(!cpov.settings.quietMode && cpov.settings.verbosity > 0)
+        outputHeader();
+
+
     if(opts.infile.vals.length == 0)
         cpov.error("fatal", "No input file specified.", "CEPHALOPOV");
     else
@@ -127,11 +137,6 @@ function main() {
         cpov.error("info", "No output template specified, using '" + cpov.settings.outputBase + "'.", "CEPHALOPOV");
     } else {
         cpov.settings.outputBase = opts.outfiles.vals[0];
-    }
-
-    if(opts.quietMode.cnt > 0) {
-        cpov.settings.verbosity = 0;
-        cpov.settings.quietMode = true;
     }
 
     if(opts.sdlInclude.vals.length > 0)
@@ -208,9 +213,6 @@ function main() {
         cpov.configLoad(projectConfig.substr(0, projectConfig.length - 3) + ".config.js");
     else
         cpov.configLoad(null);
-
-    if(!cpov.settings.quietMode && cpov.settings.verbosity > 0)
-        outputHeader();
 
     userProgram(cpov); // main loop
 

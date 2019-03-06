@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
+    "minicle": "0.0.1",
     "word-wrap": "^1.2.3"
   },
   "devDependencies": {},

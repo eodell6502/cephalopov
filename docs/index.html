@@ -4131,35 +4131,6 @@ repeated here.</p>
 <p class="fdesc">There is no return value. If any termination conditions are
 met, CephaloPOV will terminate with an exit code of <code>0</code>.</p>
 
-<div class="fsig">cpov.parseCLI(<i>optionMap</i>)</div>
-
-<p class="fdesc">Another function that will eventually migrate elsewhere,
-perhaps into its own package, <code>cpov.parseCLI</code> is a simple command
-line parser which implements the subset of the usual *nix conventions that
-CephaloPOV actually needs. It is passed a single argument, the
-<code>optionMap</code> object, thus:</p>
-
-<div class='code fdesc'>var optionMap = {
-    infile:     { short: "i", vals: [ ] },  // accumulates values
-    outfiles:   { short: "o", vals: [ ] },
-    preamble:   { short: "p", vals: [ ] },
-    sdlinclude: { short: "s", vals: [ ] },
-    verbose:    { short: "v", cnt: 0 },     // accumulates appearance counts
-    quietMode:  { short: "q", cnt: 0 },
-    debug:      { short: "d", cnt: 0 },
-    help:       { short: "h", cnt: 0 },
-}</div>
-
-<p class='fdesc'>The keys of the <code>optionMap</code> are the long options,
-the <code>short</code> members in the value objects are the short options. If a
-<code>vals</code> array is provided, arguments to the switch are accumulated
-therein. If a <code>cnt</code> counter is provided, the number of appearances of
-the switch are counted therein. You can't do both.</p>
-
-<p class='fdesc'>The <code>optionMap</code> is altered in place. If malformed
-user input is encountered, the program is terminated with a call to
-<code>cpov.error</code>.</p>
-
 <div class="fsig">cpov.primitiveDefIdentifier(<i>obj</i>)</div>
 
 <p class="fdesc">Given a CephaloPOV object, returns a unique string consisting
