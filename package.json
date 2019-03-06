@@ -11,7 +11,7 @@
     "cpov": "cpov.js"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
+    "ansi-colors": "^3.2.4",
     "minicle": "0.0.1",
     "word-wrap": "^1.2.3"
   },
