@@ -1161,6 +1161,44 @@ identified by their original filename, e.g., <code>colors.inc</code>.</p>
 <code>cpov.outputFrame()</code> repeatedly until one of its termination
 conditions are met or the user program calls <code>cpov.endAnimation</code>.</p>
 
+<!--
+
+// fixme: what is s?
+
+<div class='fsig'>easeInBack(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>, s)</div>
+<div class='fsig'>easeInBounce(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInCirc(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInCubic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInElastic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInExpo(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutBack(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>, s)</div>
+<div class='fsig'>easeInOutBounce(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutCirc(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutCubic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutElastic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutExpo(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutQuad(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutQuart(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutQuint(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInOutSine(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInQuad(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInQuart(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInQuint(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeInSine(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutBack(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>, s)</div>
+<div class='fsig'>easeOutBounce(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutCirc(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutCubic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutElastic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutExpo(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutQuad(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutQuart(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutQuint(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsig'>easeOutSine(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+
+
+-->
+
 <h3>Vectors, Colors, and Matrices</h3>
 
 <p>Most of the geometry in POV-Ray is defined in terms of vectors, i.e., arrays of floats
@@ -2154,31 +2192,31 @@ more robust.</p>
 <tr><td>ultraWideAngle</td><td>ultra_wide_angle</td></tr>
 </tbody></table>
 </td></tr>
-<tr><td>RW</td><td>N</td><td>angle</td><td>float</td><td>Sets the width of the camera's viewing angle in degrees.</td></tr>
-<tr><td>RW</td><td>N</td><td>aperture</td><td>float</td><td>A non-zero value will enable simulated focal depth-of-field.</td></tr>
-<tr><td>RW</td><td>N</td><td>blurSamples</td><td>[float]</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>angle</td><td>float|[float]</td><td>When passed as a single float, sets the horizontal viewing angle in degrees. This alters the <code>direction</code> vector, setting it to <code>0.5 * right / Math.tan(angle/2)</code>. For perspective cameras, <code>angle</code> must be less than 180 degrees. For spherical cameras, angle can be passed as an array of two floats, the second element specifies the vertical viewing angle. If not specified, the vertical angle defaults to one-half of the horizontal angle.</td></tr>
+<tr><td>RW</td><td>N</td><td>aperture</td><td>float</td><td>When specified along with <code>blurSamples</code>, simulated depth-of-field is enabled, and <code>aperture</code> is inversely proportional the depth of the zone of sharpness. It functions similarly to f-stops, but does not map directly to them.</td></tr>
+<tr><td>RW</td><td>N</td><td>blurSamples</td><td>float|[float]</td><td>Specifies the minimum and, optionally, maximum number of samples to be used when <code>aperture</code> is non-zero. Values of 4, 7, 19, and 37 yield square bokeh, and all others produce round bokeh.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
-<tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero, with higher values resulting in greater precision. The default is 0.9.</td></tr>
 <tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
 <table class="sgrid codeDoc">
 <thead>
 
 <tr><th>Code</th><th>Meaning</th></tr>
 </thead><tbody>
-<tr><td>1</td><td>vertical cylinder, fixed viewpoint</td></tr>
-<tr><td>2</td><td>horizontal cylinder, fixed viewpoint</td></tr>
-<tr><td>3</td><td>vertical cylinder, viewpoint moves along the cylinder's axis</td></tr>
-<tr><td>4</td><td>horizontal cylinder, viewpoint moves along the cylinder's axis</td></tr>
+<tr><td>1</td><td>Vertical cylinder, fixed viewpoint. The axis lies along the <code>up</code> vector, and width is determined by <code>right</code> unless overridden by <code>angle</code>.</td></tr>
+<tr><td>2</td><td>Horizontal cylinder, fixed viewpoint. The axis lies along the <code>right</code> vector.</td></tr>
+<tr><td>3</td><td>vertical cylinder, viewpoint moves along the cylinder's axis. The axis lies along the <code>up</code> vector, and width is determined by <code>right</code> unless overridden by <code>angle</code>. The <code>up</code> vector determines the height of the image, and viewing rays are perpendicular to the <code>up</code> vector.</td></tr>
+<tr><td>4</td><td>horizontal cylinder, viewpoint moves along the cylinder's axis. The axis lies along the <code>right</code> vector, and viewing rays are perpendicular to <code>right</code>.</td></tr>
 </tbody></table>
 </td></tr>
-<tr><td>RW</td><td>N</td><td>direction</td><td>VectorXYZ</td><td>Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For most purposes, you will not need to set <code>direction</code>, but see the POV-Ray docs for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4">more details</a>.</td></tr>
-<tr><td>RW</td><td>N</td><td>focalPoint</td><td>VectorXYZ</td><td>Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>direction</td><td>VectorXYZ</td><td>Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For some camera types, this controls the horizontal field of view: shorter vectors zoom out and longer vectors zoom in. For most purposes, you will not need to set <code>direction</code> manually, using the easier <code>angle</code> attribute, but see the POV-Ray docs for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4">more details</a>. The default is <code>[0, 0, 1]</code>. Unit-length vectors should be used with <code>ultraWideAngle</code>, <code>panoramic</code>, and <code>cylindrical</code> cameras. The direction vector is ignored by <code>orthographic</code>, <code>fisheye</code>, and <code>omnimax</code> cameras.</td></tr>
+<tr><td>RW</td><td>N</td><td>focalPoint</td><td>VectorXYZ</td><td>Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero. This defines a point on a plane parallel to the view and defaults to <code>[0, 0, 0]</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>location</td><td>VectorXYZ</td><td>Specifies the location of the camera.</td></tr>
-<tr><td>RW</td><td>N</td><td>lookAt</td><td>VectorXYZ</td><td>Specifies the point at which the camera is aimed.</td></tr>
+<tr><td>RW</td><td>N</td><td>lookAt</td><td>VectorXYZ</td><td>If supplied, the camera will be aimed at this point by panning and tilting from the origin in conjunction with the <code>sky</code> vector.</td></tr>
 <tr><td>RW</td><td>N</td><td>right</td><td>VectorXYZ</td><td>Along with <code>up</code>, the <code>right</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[1.33, 0, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5">POV-Ray docs</a>. It also determines the handedness of the coordinate system.</td></tr>
-<tr><td>RW</td><td>N</td><td>sky</td><td>VectorXYZ</td><td>Determines where "up" is for the camera. By default, this is [0, 1, 0].</td></tr>
+<tr><td>RW</td><td>N</td><td>sky</td><td>VectorXYZ</td><td>Determines where "up" is for the camera before <code>lookAt</code> is applied, allowing the camera to be tilted. By default, this is <code>[0, 1, 0]</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>up</td><td>VectorXYZ</td><td>Along with <code>right</code>, the <code>up</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[0, 1, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5">POV-Ray docs</a>.</td></tr>
-<tr><td>RW</td><td>N</td><td>variance</td><td>float</td><td>When <code>aperture</code> is non-zero, <code>variance</code> tells POV-Ray the value of the smallest displayable color difference. The default, 0.0078125, can produce fairly grainy images. To fix this, try a value around 0.00001.</td></tr>
+<tr><td>RW</td><td>N</td><td>variance</td><td>float</td><td>When <code>aperture</code> is non-zero, <code>variance</code> tells POV-Ray the value of the smallest displayable color difference. The default, 0.0078125 (1/128), can produce fairly grainy images. To fix this, try a value around 0.00001.</td></tr>
 <tr><td>RW</td><td>N</td><td>vertAngle</td><td>float</td><td>For the spherical camera, this defines the vertical angle of the viewing area while <code>angle</code> specifies the horizontal angle.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Camera</code>, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csgOperand</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV treats it as similar to one in many ways. For a <code>Camera</code>, this is always <code>false</code>.</td></td></tr>
@@ -4413,10 +4451,10 @@ renaming variables and reformatting) for CephaloPOV.</p>
         </tr>
     <thead><tbody>
 
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td>Move easing functions to optional library</td></tr>
+
         <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td>Multi-<code>Camera</code> <code>active</code> test at generation time.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>LightSource</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.projectedThrough</code></td></tr>
@@ -4490,6 +4528,7 @@ renaming variables and reformatting) for CephaloPOV.</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td><code>LightSource.mediaAttenuation</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td><code>LightSource.mediaInteraction</code></td></tr>
+        <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
     </tbody>
 </table>
 
