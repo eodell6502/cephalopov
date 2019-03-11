@@ -226,7 +226,7 @@ function main() {
 
 function outputHeader() {
 
-    if(!cpov.chalk.supportsColor) {
+    if(!cpov.ac.supportsColor) {
         console.log(
             "\n===========================================================================\n"
             + "            CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray\n"
@@ -234,9 +234,9 @@ function outputHeader() {
         );
     } else {
         console.log(
-            "\n" + cpov.chalk.blue("===========================================================================") + "\n"
-            + cpov.chalk.yellow.bold("            CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray") + "\n"
-            + cpov.chalk.blue("===========================================================================") + "\n"
+            "\n" + cpov.ac.blue("===========================================================================") + "\n"
+            + cpov.ac.yellow.bold("            CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray") + "\n"
+            + cpov.ac.blue("===========================================================================") + "\n"
         );
     }
 }
@@ -245,18 +245,18 @@ function outputHeader() {
 
 function usageInstructions() {
 
-    console.log(cpov.chalk.white.bold("  Usage: cpov [options] [-i] <input_file>...\n\n")
-        + cpov.chalk.yellow.bold("    -i") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--infile     ") + cpov.chalk.blue.bold("<filename>     ") + cpov.chalk.cyan.bold("Path to input file.\n")
-        + cpov.chalk.yellow.bold("    -o") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--outfiles   ") + cpov.chalk.blue.bold("<template>     ") + cpov.chalk.cyan.bold("Template for output file names.\n")
-        + cpov.chalk.yellow.bold("    -p") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--preamble   ") + cpov.chalk.blue.bold("<file(s)>      ") + cpov.chalk.cyan.bold("Files with text to prepend to output.\n")
-        + cpov.chalk.yellow.bold("    -s") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--sdlInclude ") + cpov.chalk.blue.bold("<filename(s)>  ") + cpov.chalk.cyan.bold("SDL files to include after preamble.\n")
-        + cpov.chalk.yellow.bold("    -c") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--tickVal    ") + cpov.chalk.blue.bold("<float>        ") + cpov.chalk.cyan.bold("Time increment per frame (def. 1.0)\n")
-        + cpov.chalk.yellow.bold("    -t") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--startTime  ") + cpov.chalk.blue.bold("<float>        ") + cpov.chalk.cyan.bold("Start output at anim clock time (def. 0.0)\n")
-        + cpov.chalk.yellow.bold("    -T") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--endTime    ") + cpov.chalk.blue.bold("<float>        ") + cpov.chalk.cyan.bold("End output at anim clock time (def. Inf.)\n")
-        + cpov.chalk.yellow.bold("    -f") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--startFrame ") + cpov.chalk.blue.bold("<integer>      ") + cpov.chalk.cyan.bold("Start output at frame number (default 0)\n")
-        + cpov.chalk.yellow.bold("    -F") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--endFrame   ") + cpov.chalk.blue.bold("<integer>      ") + cpov.chalk.cyan.bold("End output at frame number (default Inf.)\n")
-        + cpov.chalk.yellow.bold("    -v") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--verbose    ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Increase verbosity (starts at 1, up to 4).\n")
-        + cpov.chalk.yellow.bold("    -q") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--quietMode  ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Suppress console output.\n")
-        + cpov.chalk.yellow.bold("    -d") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--debug      ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Display debugging info.\n")
-        + cpov.chalk.yellow.bold("    -h") + cpov.chalk.yellow(", ") + cpov.chalk.yellow.bold("--help       ") + cpov.chalk.blue.bold("               ") + cpov.chalk.cyan.bold("Display this text.\n\n"));
+    console.log(cpov.ac.white.bold("  Usage: cpov [options] [-i] <input_file>...\n\n")
+        + cpov.ac.yellow.bold("    -i") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--infile     ") + cpov.ac.blue.bold("<filename>     ") + cpov.ac.cyan.bold("Path to input file.\n")
+        + cpov.ac.yellow.bold("    -o") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--outfiles   ") + cpov.ac.blue.bold("<template>     ") + cpov.ac.cyan.bold("Template for output file names.\n")
+        + cpov.ac.yellow.bold("    -p") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--preamble   ") + cpov.ac.blue.bold("<file(s)>      ") + cpov.ac.cyan.bold("Files with text to prepend to output.\n")
+        + cpov.ac.yellow.bold("    -s") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--sdlInclude ") + cpov.ac.blue.bold("<filename(s)>  ") + cpov.ac.cyan.bold("SDL files to include after preamble.\n")
+        + cpov.ac.yellow.bold("    -c") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--tickVal    ") + cpov.ac.blue.bold("<float>        ") + cpov.ac.cyan.bold("Time increment per frame (def. 1.0)\n")
+        + cpov.ac.yellow.bold("    -t") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--startTime  ") + cpov.ac.blue.bold("<float>        ") + cpov.ac.cyan.bold("Start output at anim clock time (def. 0.0)\n")
+        + cpov.ac.yellow.bold("    -T") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--endTime    ") + cpov.ac.blue.bold("<float>        ") + cpov.ac.cyan.bold("End output at anim clock time (def. Inf.)\n")
+        + cpov.ac.yellow.bold("    -f") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--startFrame ") + cpov.ac.blue.bold("<integer>      ") + cpov.ac.cyan.bold("Start output at frame number (default 0)\n")
+        + cpov.ac.yellow.bold("    -F") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--endFrame   ") + cpov.ac.blue.bold("<integer>      ") + cpov.ac.cyan.bold("End output at frame number (default Inf.)\n")
+        + cpov.ac.yellow.bold("    -v") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--verbose    ") + cpov.ac.blue.bold("               ") + cpov.ac.cyan.bold("Increase verbosity (starts at 1, up to 4).\n")
+        + cpov.ac.yellow.bold("    -q") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--quietMode  ") + cpov.ac.blue.bold("               ") + cpov.ac.cyan.bold("Suppress console output.\n")
+        + cpov.ac.yellow.bold("    -d") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--debug      ") + cpov.ac.blue.bold("               ") + cpov.ac.cyan.bold("Display debugging info.\n")
+        + cpov.ac.yellow.bold("    -h") + cpov.ac.yellow(", ") + cpov.ac.yellow.bold("--help       ") + cpov.ac.blue.bold("               ") + cpov.ac.cyan.bold("Display this text.\n\n"));
 }
