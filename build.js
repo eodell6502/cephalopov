@@ -34,6 +34,7 @@ cpov.objDef        = require("./lib/objDef.js");         // Primitive subclasses
 cpov.gsDef         = require("./lib/gsDef.js");          // globalSettings
 cpov.ioDef         = require("./lib/ioDef.js");          // imageOptions
 cpov.settingsDef   = require("./lib/settingsDef.js");    // CephaloPOV-specific settings
+cpov.parseCLI      = require("minicle");
 
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of

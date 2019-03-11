@@ -138,6 +138,8 @@ table.sgrid > td { padding-left: 0.5em; padding-right: 0.5em; vertical-align: to
 table.sgrid td { border: 0.25pt solid black; }
 table.sgrid th { background-color: #3C607B; border: 0.25pt solid black; }
 
+table.sgrid td.code { font: 10pt Inconsolata; vertical-align: top; padding: 0.25em; }
+
 table.todo { width: 100%; }
 table.todo td.pending { text-align: center; background-color: #A00;    color: yellow; font-weight: bold; white-space: nowrap; }
 table.todo td.working { text-align: center; background-color: yellow;  color: #A00;   font-weight: bold; white-space: nowrap; }
@@ -164,6 +166,7 @@ table.codeDoc td { text-align: left; padding-left: 0.5em; padding-right: 0.5em; 
 table.codeDoc > tbody > tr > td:nth-child(1) { text-align: center; font-weight: bold; }
 
 div.fsig { font: bold 10pt Inconsolata; margin-bottom: 0.3em; margin-top: 1em; }
+div.fsigNoDesc { font: bold 10pt Inconsolata; margin-bottom: 0.3em; }
 p+div.fsig { margin-top: 1.25em; }
 .fdesc { margin-left: 1em; }
 
@@ -755,7 +758,7 @@ the config files. All of them are directly accessible to user programs.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>N</td><td>debug</td><td>integer</td><td>Determines the debugging mode. The legal values are 
+<tr><td>RW</td><td>N</td><td>debug</td><td>integer</td><td>Determines the debugging mode. The legal values are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -850,7 +853,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>display</td><td>boolean</td><td>If <code>true</code>, the image in progress will be displayed during rendering.</td></tr>
 <tr><td>RW</td><td>N</td><td>displayGamma</td><td>float<br/>string</td><td>A float defining the gamma to be used by the display during rendering or the string <code>"sRGB"</code> (roughly 2.2).</td></tr>
 <tr><td>RW</td><td>N</td><td>dither</td><td>boolean</td><td>If <code>true</code> (the default is <code>false</code>), output dithering is used.</td></tr>
-<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are: 
+<tr><td>RW</td><td>N</td><td>ditherMethod</td><td>string</td><td>Sets the dithering algorithm if dithering is turned on. The supported values are:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -869,7 +872,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>exePath</td><td>string</td><td>This should contain the full path to the POV-Ray executable if it is not in the system path.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray fatal error messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>fatalErrorCommand</td><td>string</td><td>Shell command to execute when POV-Ray encounters a fatal error.</td></tr>
-<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are 
+<tr><td>RW</td><td>N</td><td>fatalErrorReturn</td><td>string</td><td>Specifies the action to take when a fatal error occurs during the exectuion of the <code>fatalErrorCommand</code>. Action codes may be prefixed with "<code>-</code>" or "<code>!</code> to negate the action. The legal codes are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -894,7 +897,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>maxImageBuffer</td><td>integer</td><td>Specifies the number of megabytes of memory to reserve as an output buffer for images. The default is 128.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputAlpha</td><td>boolean</td><td>Enables or disables the alpha channel in output files. This only has an effect when the output file type supports alpha, i.e., PNG or Targa.</td></tr>
 <tr><td>RW</td><td>N</td><td>outputFileName</td><td>string</td><td>By default, the output file name is derived from the .pov scene file name. This option allows it to be set manually. If a directory name is given here instead of a file name, the default name is used and the file is written to the specified directory.</td></tr>
-<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below: 
+<tr><td>RW</td><td>N</td><td>outputFileType</td><td>string</td><td>Sets the format of the output file. These are all single-character codes as specified below:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -920,7 +923,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>preSceneReturn</td><td>string</td><td>Specifies the action to take when the <code>preSceneAction</code> fails. See <code>fatalExecutionReturn</code> for a list of legal values.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewEndSize</td><td>integer</td><td>Sets the final block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
 <tr><td>RW</td><td>N</td><td>previewStartSize</td><td>integer</td><td>Sets the initial block size in pixels for mosaic rendering. This must be an integer that is both a power of two and greater than zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are 
+<tr><td>RW</td><td>N</td><td>quality</td><td>integer</td><td>Determines rendering quality in the range (0 - 11), with higher values being better. The supported levels, with duplication to allow for future changes, are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -964,7 +967,7 @@ actually used.</p>
 <tr><td>RW</td><td>N</td><td>videoMode</td><td>char</td><td>A single character/digit which defines the hardware-dependent video mode.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningConsole</td><td>boolean</td><td>If <code>true</code>, POV-Ray warning messages are sent to the console.</td></tr>
 <tr><td>RW</td><td>N</td><td>warningFile</td><td>boolean<br/>string</td><td>If <code>true</code>, POV-Ray warning messages are written to <code>WARNING.OUT</code>. Alternatively, a custom filename may be specified here.</td></tr>
-<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are: 
+<tr><td>RW</td><td>N</td><td>warningLevel</td><td>integer</td><td>Specifies POV-Ray's warning level. The legal values are:
 <table class="sgrid codeDoc">
 <thead>
 
@@ -1027,7 +1030,7 @@ initialized to a default value of <code>1.0</code>.</p>
 <tr><td>RW</td><td>N</td><td>maxIntersections</td><td>integer</td><td>Sets the size of POV-Ray's internal "I-Stacks" for tracking ray/object intersections. The default value for <code>maxIntersections</code> is 64, but if a rendering produces an error message about an I-Stack overflow, you will have to increase this value until the error message disappears.</td></tr>
 <tr><td>RW</td><td>N</td><td>maxTraceLevel</td><td>integer</td><td>Sets an upper limit on the number of reflections that a ray can undergo before calculations are stopped and the pixel returns as black. Legal values are in the range 1-256. Increase the value only as needed to fix black spots in reflections as higher values require more memory and time to calculate.</td></tr>
 <tr><td>RW</td><td>N</td><td>mmPerUnit</td><td>float</td><td>Sets the number of millimeters per unit of space in the POV-Ray coordinate system, which affects the behavior of subsurface transport. The default is 10, i.e., 1 cm per unit.</td></tr>
-<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are 
+<tr><td>RW</td><td>N</td><td>noiseGenerator</td><td>integer</td><td>Specifies which noise generator POV-Ray will use. The default is 2. The legal values are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2137,7 +2140,7 @@ more robust.</p>
 <thead>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are 
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Defines the type of the camera. The legal values are
 <table class="sgrid codeDoc">
 <thead>
 
@@ -2154,31 +2157,31 @@ more robust.</p>
 <tr><td>ultraWideAngle</td><td>ultra_wide_angle</td></tr>
 </tbody></table>
 </td></tr>
-<tr><td>RW</td><td>N</td><td>angle</td><td>float</td><td>Sets the width of the camera's viewing angle in degrees.</td></tr>
-<tr><td>RW</td><td>N</td><td>aperture</td><td>float</td><td>A non-zero value will enable simulated focal depth-of-field.</td></tr>
-<tr><td>RW</td><td>N</td><td>blurSamples</td><td>[float]</td><td>Specifies the minimum and maximum number of samples to be used when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>angle</td><td>float|[float]</td><td>When passed as a single float, sets the horizontal viewing angle in degrees. This alters the <code>direction</code> vector, setting it to <code>0.5 * right / Math.tan(angle/2)</code>. For perspective cameras, <code>angle</code> must be less than 180 degrees. For spherical cameras, angle can be passed as an array of two floats, the second element specifies the vertical viewing angle. If not specified, the vertical angle defaults to one-half of the horizontal angle.</td></tr>
+<tr><td>RW</td><td>N</td><td>aperture</td><td>float</td><td>When specified along with <code>blurSamples</code>, simulated depth-of-field is enabled, and <code>aperture</code> is inversely proportional the depth of the zone of sharpness. It functions similarly to f-stops, but does not map directly to them.</td></tr>
+<tr><td>RW</td><td>N</td><td>blurSamples</td><td>float|[float]</td><td>Specifies the minimum and, optionally, maximum number of samples to be used when <code>aperture</code> is non-zero. Values of 4, 7, 19, and 37 yield square bokeh, and all others produce round bokeh.</td></tr>
 <tr><td>RW</td><td>N</td><td>bokeh</td><td>Color</td><td>Specifies the bokeh color.</td></tr>
-<tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero.</td></tr>
-<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to 
+<tr><td>RW</td><td>N</td><td>confidence</td><td>float</td><td>Specifies the confidence interval that determines when enough samples have been taken when <code>aperture</code> is non-zero, with higher values resulting in greater precision. The default is 0.9.</td></tr>
+<tr><td>RW</td><td>N</td><td>cylinderType</td><td>integer</td><td>If the cylinder camera type is used, <code>cyliderType</code> must be set with an integer in the range 1-4. These values correspond to
 <table class="sgrid codeDoc">
 <thead>
 
 <tr><th>Code</th><th>Meaning</th></tr>
 </thead><tbody>
-<tr><td>1</td><td>vertical cylinder, fixed viewpoint</td></tr>
-<tr><td>2</td><td>horizontal cylinder, fixed viewpoint</td></tr>
-<tr><td>3</td><td>vertical cylinder, viewpoint moves along the cylinder's axis</td></tr>
-<tr><td>4</td><td>horizontal cylinder, viewpoint moves along the cylinder's axis</td></tr>
+<tr><td>1</td><td>Vertical cylinder, fixed viewpoint. The axis lies along the <code>up</code> vector, and width is determined by <code>right</code> unless overridden by <code>angle</code>.</td></tr>
+<tr><td>2</td><td>Horizontal cylinder, fixed viewpoint. The axis lies along the <code>right</code> vector.</td></tr>
+<tr><td>3</td><td>vertical cylinder, viewpoint moves along the cylinder's axis. The axis lies along the <code>up</code> vector, and width is determined by <code>right</code> unless overridden by <code>angle</code>. The <code>up</code> vector determines the height of the image, and viewing rays are perpendicular to the <code>up</code> vector.</td></tr>
+<tr><td>4</td><td>horizontal cylinder, viewpoint moves along the cylinder's axis. The axis lies along the <code>right</code> vector, and viewing rays are perpendicular to <code>right</code>.</td></tr>
 </tbody></table>
 </td></tr>
-<tr><td>RW</td><td>N</td><td>direction</td><td>VectorXYZ</td><td>Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For most purposes, you will not need to set <code>direction</code>, but see the POV-Ray docs for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4">more details</a>.</td></tr>
-<tr><td>RW</td><td>N</td><td>focalPoint</td><td>VectorXYZ</td><td>Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero.</td></tr>
+<tr><td>RW</td><td>N</td><td>direction</td><td>VectorXYZ</td><td>Sets the direction vector of the camera before it is moved by <code>lookAt</code> and any rotations. For some camera types, this controls the horizontal field of view: shorter vectors zoom out and longer vectors zoom in. For most purposes, you will not need to set <code>direction</code> manually, using the easier <code>angle</code> attribute, but see the POV-Ray docs for <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_4">more details</a>. The default is <code>[0, 0, 1]</code>. Unit-length vectors should be used with <code>ultraWideAngle</code>, <code>panoramic</code>, and <code>cylindrical</code> cameras. The direction vector is ignored by <code>orthographic</code>, <code>fisheye</code>, and <code>omnimax</code> cameras.</td></tr>
+<tr><td>RW</td><td>N</td><td>focalPoint</td><td>VectorXYZ</td><td>Specifies the point at which the image is perfectly focused when <code>aperture</code> is non-zero. This defines a point on a plane parallel to the view and defaults to <code>[0, 0, 0]</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>location</td><td>VectorXYZ</td><td>Specifies the location of the camera.</td></tr>
-<tr><td>RW</td><td>N</td><td>lookAt</td><td>VectorXYZ</td><td>Specifies the point at which the camera is aimed.</td></tr>
+<tr><td>RW</td><td>N</td><td>lookAt</td><td>VectorXYZ</td><td>If supplied, the camera will be aimed at this point by panning and tilting from the origin in conjunction with the <code>sky</code> vector.</td></tr>
 <tr><td>RW</td><td>N</td><td>right</td><td>VectorXYZ</td><td>Along with <code>up</code>, the <code>right</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[1.33, 0, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5">POV-Ray docs</a>. It also determines the handedness of the coordinate system.</td></tr>
-<tr><td>RW</td><td>N</td><td>sky</td><td>VectorXYZ</td><td>Determines where "up" is for the camera. By default, this is [0, 1, 0].</td></tr>
+<tr><td>RW</td><td>N</td><td>sky</td><td>VectorXYZ</td><td>Determines where "up" is for the camera before <code>lookAt</code> is applied, allowing the camera to be tilted. By default, this is <code>[0, 1, 0]</code>.</td></tr>
 <tr><td>RW</td><td>N</td><td>up</td><td>VectorXYZ</td><td>Along with <code>right</code>, the <code>up</code> vector determines how POV-Ray calculates the aspect ratio of the image. By default, it is <code>[0, 1, 0]</code>. The cylindrical and orthographic cameras have different behaviors, for which see the <a href="http://povray.org/documentation/3.7.0/r3_4.html#r3_4_2_1_5">POV-Ray docs</a>.</td></tr>
-<tr><td>RW</td><td>N</td><td>variance</td><td>float</td><td>When <code>aperture</code> is non-zero, <code>variance</code> tells POV-Ray the value of the smallest displayable color difference. The default, 0.0078125, can produce fairly grainy images. To fix this, try a value around 0.00001.</td></tr>
+<tr><td>RW</td><td>N</td><td>variance</td><td>float</td><td>When <code>aperture</code> is non-zero, <code>variance</code> tells POV-Ray the value of the smallest displayable color difference. The default, 0.0078125 (1/128), can produce fairly grainy images. To fix this, try a value around 0.00001.</td></tr>
 <tr><td>RW</td><td>N</td><td>vertAngle</td><td>float</td><td>For the spherical camera, this defines the vertical angle of the viewing area while <code>angle</code> specifies the horizontal angle.</td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csg</td><td>boolean</td><td>If <code>true</code>, the primitive is a composite CSG container. For a <code>Camera</code>, this is always <code>false</code>.</td></td></tr>
 <tr><td>RO</td><td>&nbsp;</td><td>csgOperand</td><td>boolean</td><td>If <code>true</code>, the object is not actually a POV-Ray primitive object, but CephaloPOV treats it as similar to one in many ways. For a <code>Camera</code>, this is always <code>false</code>.</td></td></tr>
@@ -2553,7 +2556,7 @@ type and function type parameters are combined in <code>type</code>.</p>
 <tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>
 <thead><tbody>
 <tr><td>RW</td><td>Y</td><td>juliaParam</td><td>VectorXYZW</td><td>This is the standard julia parameter, <i>p</i>, in <i>f(h) + p</i>.</td></tr>
-<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are: 
+<tr><td>RW</td><td>Y</td><td>type</td><td>string</td><td>Specifies the type of julia fractal formula used. The legal values are:
 <table class="sgrid codeDoc">
 <thead>
 <tr><th>Julia Fractal Types</th></tr>
@@ -3592,6 +3595,108 @@ var union = new Union({ components: [ obj1, obj2 ] });</div>
 </tbody></table>
 </div dh="Union">
 
+<h3>Optional Libraries</h3>
+
+<p>CephaloPOV includes a small but growing number of optional standard libraries, where
+"standard" just means they ship with CephaloPOV and there's a special method to require
+them using handy aliases:</p>
+
+<div class='code'>var easing = cpov.requireOptLib("easingFuncs");
+var colors = cpov.requireOptLib("colors.inc");</div>
+
+<p>Some of the libraries are ports of POV-Ray include files to their JavaScript
+equivalents. These are generally loaded using their POV-Ray names, like
+<code>colors.inc</code>. Others provide useful functionality like Robert
+Penner's easing functions.</p>
+
+<h4>colors.inc</h4>
+
+<p>This is a straight port of the color names and RGB values in POV-Ray's standard
+include file, <code>colors.inc</code>.</p>
+
+<div class='code'>var colors = cpov.requireOptLib("colors.inc");</div>
+
+<p>Importing this library makes the following color values available:</p>
+
+<table class='sgrid' style='margin-left: auto; margin-right: auto;'>
+<tbody>
+    <tr>
+        <td class="code">aquamarine<br/>bakersChoc<br/>black<br/>blue<br/>blueViolet<br/>brass<br/>brightGold<br/>bronze2<br/>bronze<br/>brown<br/>cadetBlue<br/>clear<br/>coolCopper<br/>copper<br/>coral<br/>cornflowerBlue<br/>cyan<br/>darkBrown<br/>darkGreen<br/>darkOliveGreen<br/>darkOrchid<br/>darkPurple<br/>darkSlateBlue<br/>darkSlateGray<br/>darkSlateGrey<br/>darkTan<br/>darkTurquoise<br/>darkWood<br/>dimGray<br/>dimGrey </td>
+        <td class="code">dkGreenCopper<br/>dustyRose<br/>feldspar<br/>firebrick<br/>flesh<br/>forestGreen<br/>gold<br/>goldenrod<br/>gray05<br/>gray10<br/>gray15<br/>gray20<br/>gray25<br/>gray30<br/>gray35<br/>gray40<br/>gray45<br/>gray50<br/>gray55<br/>gray60<br/>gray65<br/>gray70<br/>gray75<br/>gray80<br/>gray85<br/>gray90<br/>gray95<br/>gray<br/>green<br/>greenCopper </td>
+        <td class="code">greenYellow<br/>grey05<br/>grey10<br/>grey15<br/>grey20<br/>grey25<br/>grey30<br/>grey35<br/>grey40<br/>grey45<br/>grey50<br/>grey55<br/>grey60<br/>grey65<br/>grey70<br/>grey75<br/>grey80<br/>grey85<br/>grey90<br/>grey95<br/>grey<br/>huntersGreen<br/>indianRed<br/>khaki<br/>lightBlue<br/>lightGray<br/>lightGrey<br/>lightPurple<br/>lightSteelBlue<br/>lightWood </td>
+        <td class="code">limeGreen<br/>magenta<br/>mandarinOrange<br/>maroon<br/>mediumAquamarine<br/>mediumBlue<br/>mediumForestGreen<br/>mediumGoldenrod<br/>mediumOrchid<br/>mediumSeaGreen<br/>mediumSlateBlue<br/>mediumSpringGreen<br/>mediumTurquoise<br/>mediumVioletRed<br/>mediumWood<br/>medPurple<br/>mica<br/>midnightBlue<br/>navy<br/>navyBlue<br/>neonBlue<br/>neonPink<br/>newMidnightBlue<br/>newTan<br/>oldGold<br/>orange<br/>orangeRed<br/>orchid<br/>paleGreen<br/>pink </td>
+        <td class="code">plum<br/>quartz<br/>red<br/>richBlue<br/>salmon<br/>scarlet<br/>seaGreen<br/>semiSweetChoc<br/>sienna<br/>silver<br/>skyBlue<br/>slateBlue<br/>spicyPink<br/>springGreen<br/>steelBlue<br/>summerSky<br/>tan<br/>thistle<br/>turquoise<br/>veryDarkBrown<br/>veryLightPurple<br/>violet<br/>violetRed<br/>vLightGray<br/>vLightGrey<br/>wheat<br/>white<br/>yellow<br/>yellowGreen</td>
+    </tr>
+</tbody>
+</table>
+
+<h4>easingFuncs</h4>
+
+<p>The <code>easingFuncs</code> library makes Robert Penner's easing functions
+available for use in animations.</p>
+
+<div class='code'>var easing = cpov.requireOptLib("easingFuncs");</div>
+
+<p>The following diagram illustrates the speed-over-time curves of the easing functions:</p>
+
+<img src="img/easingFunctions.png" style='display: block; margin-left: auto; margin-right: auto; padding-top: 1em; padding-bottom: 1em;'>
+
+<h5>Methods</h5>
+
+<p>All of the easing functions take the same four arguments:
+<code>currentTime</code>, <code>startVal</code>, <code>change</code>, and
+<code>duration</code>. (A few of them take an optional fifth argument,
+<code>s</code>, which is a tuning value.) The <code>currentTime</code> argument
+specifies the current time in whatever unit you're using, e.g., frames, seconds,
+etc., while <code>duration</code> specifies the total length of the easing
+sequence. The initial value of the property being eased is
+<code>startVal</code>, and <code>change</code> is the amount by which that value
+changes over the course of the animation.</p>
+
+<p>For example, if you want to animate some object's <i>x</i> value from 0 to
+50 over the course of thirty frames using <code>easeInBounce</code>, you might
+try something like this:</p>
+
+<div class='code'>var easing = cpov.requireOptLib("easingFuncs");
+
+for(var frame = 0; frame < 30; frame++) {
+    obj.center.x = easing.easeInBounce(frame, 0, 50, 30);
+    obj.snapshot();
+    cpov.outputFrame();
+}</div>
+
+<div class='fsigNoDesc'>easeInBack(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>, s)</div>
+<div class='fsigNoDesc'>easeInBounce(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInCirc(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInCubic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInElastic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInExpo(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutBack(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>, s)</div>
+<div class='fsigNoDesc'>easeInOutBounce(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutCirc(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutCubic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutElastic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutExpo(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutQuad(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutQuart(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutQuint(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInOutSine(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInQuad(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInQuart(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInQuint(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeInSine(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutBack(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>, s)</div>
+<div class='fsigNoDesc'>easeOutBounce(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutCirc(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutCubic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutElastic(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutExpo(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutQuad(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutQuart(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutQuint(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+<div class='fsigNoDesc'>easeOutSine(<i>currentTime</i>, <i>startVal</i>, <i>change</i>, <i>duration</i>)</div>
+
+
 <h2>Internals: Hacking CephaloPOV</h2>
 
 <p><span class='h2num'></span>This section, it will surprise absolutely no one,
@@ -4377,12 +4482,13 @@ directly, with modifications, or even as a model. I have also tried to credit
 everyone who provided technical instruction. If I missed anyone, please speak
 up.</p>
 
-<p>The first round of applause goes to David K. Buck and all of the many other
-developers who have built, maintained, and extended POV-Ray for the last three
-decades. A second round of applause goes to the folks who wrote POV-Ray's
-extensive documentation. Special thanks are also in order to Eric Haines, whose
-<i>Ray-Tracing News</i> kindled my interest in the field back when I was reading
-copies via gopher on a 3270 terminal at the University of Florida.</p>
+<p>The first round of applause goes to David K. Buck and all of the many
+subsequent developers who have built, maintained, and extended POV-Ray for the
+last three decades. A second round of applause goes to the folks who wrote
+POV-Ray's extensive documentation. Special thanks are also in order to Eric
+Haines, whose <i>Ray-Tracing News</i> kindled my interest in the field back when
+I was reading copies via gopher on a 3270 terminal at the University of
+Florida.</p>
 
 <p>CephaloPOV itself is licensed under the BSD 2-clause license, which appears
 at the head of most of the files in the sources. For the <code>npm</code>
@@ -4401,7 +4507,7 @@ renaming variables and reformatting) for CephaloPOV.</p>
 
 <h4>TODO</h4>
 
-<h5>Version 0.0.2</h5>
+<h5>Version 0.0.3</h5>
 
 <table class='sgrid todo'>
     <thead>
@@ -4412,21 +4518,10 @@ renaming variables and reformatting) for CephaloPOV.</p>
             <th>Description</th>
         </tr>
     <thead><tbody>
-
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D3</td><td><code>Camera</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D4</td><td>Multi-<code>Camera</code> <code>active</code> test at generation time.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>D5</td><td><code>LightSource</code> description and example</td></tr>
-        <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.looksLike</code></td></tr>
-        <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td><code>LightSource.projectedThrough</code></td></tr>
-
-		<tr><td class='pending'>pending</td><td>DOC</td><td>D6</td><td>Document easing functions</td></tr>
-        <tr><td class='pending'>pending</td><td>DOC</td><td>D7</td><td>Document internal optional libraries.</td></tr>
-        <tr><td class='pending'>pending</td><td>DOC</td><td>D8</td><td>Document the various spline types.</td></tr>
-
-        <!-- Tests -->
-
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C&bigstar;</td><td><code>LightSource</code>: Implement restrictions for area lights generally and the orient keyword in particular.</td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C2</td><td><code>LightSource.looksLike</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>C3</td><td><code>LightSource.projectedThrough</code></td></tr>
+        <tr><td class='pending'>pending</td><td>I+T</td><td>D&bigstar;</td><td><code>LightSource</code> description and examples</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>c</td><td>
 			Separate repo for tests/examples and a <em>lot</em> of stuff to go into it before the next version.
 			<ul>
@@ -4443,7 +4538,7 @@ renaming variables and reformatting) for CephaloPOV.</p>
     </tbody>
 </table>
 
-<h5>Version 0.0.3</h5>
+<h5>Version 0.0.4</h5>
 
 <table class='sgrid todo'>
     <thead>
@@ -4468,7 +4563,7 @@ renaming variables and reformatting) for CephaloPOV.</p>
 
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td><code>Mesh</code> description and example</td></tr>
 
-
+        <tr><td class='pending'>pending</td><td>DOC</td><td>D8</td><td>Document the various spline types.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td>Make sure <code>Primitive.destroy</code> recurses through child objects.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td>Validate <code>Polynomial.order</code>.</td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td><code>copy()</code> method across classes, both shallow and deep</td></tr>
@@ -4490,6 +4585,7 @@ renaming variables and reformatting) for CephaloPOV.</p>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td>Illustration stage generator: <span class='fixme'>translucent</span> XYZ planes, n x n, <span class='fixme'>adjust camera</span></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td><code>LightSource.mediaAttenuation</code></td></tr>
         <tr><td class='pending'>pending</td><td>I+T</td><td>&nbsp;</td><td><code>LightSource.mediaInteraction</code></td></tr>
+        <tr><td class='pending'>pending</td><td>IMP</td><td>c</td><td><code>Camera.normal</code></td></tr>
     </tbody>
 </table>
 
