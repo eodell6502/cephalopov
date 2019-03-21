@@ -48,8 +48,6 @@ for(var k in tmp) {
 
 cpov.settings = new Settings();
 
-console.log(cpov.cwd);
-
 //------------------------------------------------------------------------------
 // Internal state variables. These are distinct from the user-defined settings
 // in cpov.settings and should generally be treated as read-only from the POV of
