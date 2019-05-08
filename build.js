@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 global.cpov = new (require("./lib/cephalopov.js"))();
 
 var File  = require("./lib/file.js");
-var chalk = require("chalk");
+var ac    = require("ansi-colors");
 
 cpov.vectorDef     = require("./lib/vectorDef.js");      // Vector classes
 cpov.primitiveDef  = require("./lib/primitiveDef.js");   // Primitive base class
