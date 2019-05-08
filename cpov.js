@@ -32,7 +32,6 @@ global.cpov = new (require("./lib/cephalopov.js"))();
 
 var path    = require("path");
 var os      = require("os");
-var process = require("process");
 var minicle = require("minicle");
 
 cpov.cwd      = process.cwd();
@@ -100,7 +99,7 @@ function main() {
     minicle(opts);
 
     if(opts.help.cnt) {
-        outputHeader();
+        outputHeader("CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray");
         usageInstructions();
         process.exit(0);
     }
@@ -123,7 +122,7 @@ function main() {
     }
 
     if(!cpov.settings.quietMode && cpov.settings.verbosity > 0)
-        outputHeader();
+        outputHeader("CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray");
 
 
     if(opts.infile.vals.length == 0)
@@ -222,23 +221,41 @@ function main() {
 // ostentatious and ridiculous as time goes by.
 //==============================================================================
 
-function outputHeader() {
+function outputHeader(content, width = 76, lineChar = "=") {
 
-    if(!cpov.ac.supportsColor) {
-        console.log(
-            "\n===========================================================================\n"
-            + "            CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray\n"
-            + "===========================================================================\n"
-        );
-    } else {
-        console.log(
-            "\n" + cpov.ac.blue("===========================================================================") + "\n"
-            + cpov.ac.yellow.bold("            CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray") + "\n"
-            + cpov.ac.blue("===========================================================================") + "\n"
-        );
-    }
+    var line    = lineChar.repeat(width);
+    var title   = " ".repeat(Math.round(((width - 2) / 2) - (content.length / 2))) + content;
+    title += " ".repeat(width - 4 - title.length);
+
+    console.log(
+        "\n" + cpov.ac.blue(line) + "\n"
+        + cpov.ac.blue(lineChar + " ") + cpov.ac.yellow.bold(title) + cpov.ac.blue(" " + lineChar) + "\n"
+        + cpov.ac.blue(line) + "\n"
+    );
+
 }
 
+
+//==============================================================================
+// Outputs usage instructions.
+//==============================================================================
+
+// TODO: Replace usageInstructions
+
+function usage(usageStr, optionMap, descMap, exit = true) {
+
+    console.log(ac.white.bold("  Usage: " + usageStr + "\n\n"));
+    for(var longOpt in optionMap) {
+        console.log(ac.yellow.bold("    -" + optionMap[longOpt].short) + ac.yellow(", ")
+            + ac.yellow.bold("--" + longOpt + " ".repeat(12 - longOpt.length))
+            + ac.blue.bold(descMap[longOpt].args + " ".repeat(15 - descMap[longOpt].args.length))
+            + ac.cyan.bold(descMap[longOpt].desc));
+    }
+    console.log("\n");
+
+    if(exit)
+        process.exit(0);
+}
 
 
 function usageInstructions() {

@@ -1,6 +1,6 @@
 {
   "name": "cephalopov",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A JavaScript wrapper for and extension of POV-Ray. Currently in alpha.",
   "main": "cpov.js",
   "directories": {
