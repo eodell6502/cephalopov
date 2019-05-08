@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "ansi-colors": "^3.2.4",
-    "minicle": "^1.0.0",
+    "minicle": "^1.0.5",
     "word-wrap": "^1.2.3"
   },
   "devDependencies": {},
