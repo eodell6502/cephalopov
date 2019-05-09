@@ -33,6 +33,7 @@ global.cpov = new (require("./lib/cephalopov.js"))();
 const path    = require("path");
 const os      = require("os");
 const minicle = require("minicle");
+const mu      = require("minicle-usage");
 const ac      = require("ansi-colors");
 
 cpov.cwd      = process.cwd();
@@ -97,11 +98,13 @@ function main() {
         help:       { short: "h", cnt: 0,    args: "",              desc: "Display this text." },
     };
 
+    var headerText = "CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray";
+
     minicle(opts);
 
     if(opts.help.cnt) {
-        outputHeader("CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray");
-        usageInstructions(opts);
+        mu.header(headerText);
+        mu.usage(opts, { usageText: "cpov [options] [-i] <input_file>..." });
     }
 
     if(opts.verbose.cnt > 0)
@@ -122,7 +125,7 @@ function main() {
     }
 
     if(!cpov.settings.quietMode && cpov.settings.verbosity > 0)
-        outputHeader("CephaloPOV v" + cpov.version + " -- Scripting system for POV-Ray");
+        mu.header(headerText);
 
 
     if(opts.infile.vals.length == 0)
@@ -216,43 +219,5 @@ function main() {
 }
 
 
-//==============================================================================
-// Outputs the runtime header to console. This will become progressively more
-// ostentatious and ridiculous as time goes by.
-//==============================================================================
-
-function outputHeader(content, width = 76, lineChar = "=") {
-
-    var line    = lineChar.repeat(width);
-    var title   = " ".repeat(Math.round(((width - 2) / 2) - (content.length / 2))) + content;
-    title += " ".repeat(width - 4 - title.length);
-
-    console.log(
-        "\n" + cpov.ac.blue(line) + "\n"
-        + cpov.ac.blue(lineChar + " ") + cpov.ac.yellow.bold(title) + cpov.ac.blue(" " + lineChar) + "\n"
-        + cpov.ac.blue(line) + "\n"
-    );
-
-}
-
-
-//==============================================================================
-// Outputs usage instructions.
-//==============================================================================
-
-function usageInstructions(optionMap, exit = true) {
-
-    console.log(ac.white.bold("  Usage: cpov [options] [-i] <input_file>...\n\n"));
-    for(var longOpt in optionMap) {
-        console.log(ac.yellow.bold("    -" + optionMap[longOpt].short) + ac.yellow(", ")
-            + ac.yellow.bold("--" + longOpt + " ".repeat(12 - longOpt.length))
-            + ac.blue.bold(optionMap[longOpt].args + " ".repeat(15 - optionMap[longOpt].args.length))
-            + ac.cyan.bold(optionMap[longOpt].desc));
-    }
-    console.log("\n");
-
-    if(exit)
-        process.exit(0);
-}
 
 

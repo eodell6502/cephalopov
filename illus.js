@@ -28,20 +28,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 function main(cpov) {
-    cpov.settings.snapshotMode = true;
-    cpov.imageOptions.height = 320;
-    cpov.imageOptions.width  = 320;
+    cpov.settings.snapshotMode       = true;
+    cpov.imageOptions.height         = 320;
+    cpov.imageOptions.width          = 320;
     cpov.imageOptions.outputFileType = "N";
-    cpov.imageOptions.createIni = true;
-    cpov.imageOptions.outputAlpha = true;
-    cpov.imageOptions.antialias = true;
+    cpov.imageOptions.createIni      = true;
+    cpov.imageOptions.outputAlpha    = true;
+    cpov.imageOptions.antialias      = true;
     cpov.imageOptions.antialiasDepth = 9;
     cpov.imageOptions.includeHeaders = ["functions.inc"];
-	cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];
+    cpov.globalSettings.ambientLight = [0.25, 0.25, 0.25];
     cpov.globalSettings.assumedGamma = 1.0;
 
     var yellow = "texture { pigment { color <1, 1, 0> }}";
-	var red = "texture { pigment { color <1, 0, 0> }}";
+    var red = "texture { pigment { color <1, 0, 0> }}";
     var stage = cpov.testStage("corner", 6);
 
     // BicubicPatch //----------------------------------------------------------
@@ -50,24 +50,24 @@ function main(cpov) {
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new BicubicPatch({
-		type: 0,
-		flatness: 0.01,
-		uSteps: 4,
-		vSteps: 4,
-		points: [
-			[-2,  2, -2], [-2, -1, -1], [-2,  0, 0], [-2,  1, 1],
-			[-1,  1, -2], [-1,  2, -1], [-1, -1, 0], [-1,  0, 1],
-			[ 0,  0, -2], [ 0,  1, -1], [ 0,  2, 0], [ 0, -1, 1],
-			[ 2, -1, -2], [ 2,  0, -1], [ 2,  1, 0], [ 2,  2, 1],
-		],
-		texture: yellow
-	});
+        type: 0,
+        flatness: 0.01,
+        uSteps: 4,
+        vSteps: 4,
+        points: [
+            [-2,  2, -2], [-2, -1, -1], [-2,  0, 0], [-2,  1, 1],
+            [-1,  1, -2], [-1,  2, -1], [-1, -1, 0], [-1,  0, 1],
+            [ 0,  0, -2], [ 0,  1, -1], [ 0,  2, 0], [ 0, -1, 1],
+            [ 2, -1, -2], [ 2,  0, -1], [ 2,  1, 0], [ 2,  2, 1],
+        ],
+        texture: yellow
+    });
     obj.snapshot();
 
     cpov.outputFrame();
     obj.destroy();
 
-	// Blob //------------------------------------------------------------------
+    // Blob //------------------------------------------------------------------
 
     cpov.settings.outputBase = "./docs/src/blob_basic";
     stage[0].snapshot(); stage[1].snapshot();
@@ -75,13 +75,13 @@ function main(cpov) {
 
 
     var obj = new Blob({
-		components: [
-			new Sphere({ center: [-1.5, -1.5, -1.5], radius: 2, strength: 4 }),
-			new Sphere({ center: [   0,    0,    0], radius: 2, strength: 4 }),
-			new Sphere({ center: [ 1.5,  1.5,  1.5], radius: 2, strength: 4 }),
-		],
-		texture: yellow
-	});
+        components: [
+            new Sphere({ center: [-1.5, -1.5, -1.5], radius: 2, strength: 4 }),
+            new Sphere({ center: [   0,    0,    0], radius: 2, strength: 4 }),
+            new Sphere({ center: [ 1.5,  1.5,  1.5], radius: 2, strength: 4 }),
+        ],
+        texture: yellow
+    });
     obj.snapshot();
 
     cpov.outputFrame();
@@ -93,10 +93,10 @@ function main(cpov) {
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Box({
-		corner1: [2,2,2],
-		corner2: [-2, -2, -2],
-		texture: yellow
-	});
+        corner1: [2,2,2],
+        corner2: [-2, -2, -2],
+        texture: yellow
+    });
     obj.snapshot();
 
     cpov.outputFrame();
@@ -209,16 +209,16 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Disc //------------------------------------------------------------------
+    // Disc //------------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/disc_basic";
+    cpov.settings.outputBase = "./docs/src/disc_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Disc({
+    var obj = new Disc({
         center: [0, 0, 0],
-		radius: 2,
-		holeRadius: 1,
-		normal: [0, 1, 0],
+        radius: 2,
+        holeRadius: 1,
+        normal: [0, 1, 0],
         texture: yellow
     });
     obj.snapshot();
@@ -226,12 +226,12 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// HeightField //-----------------------------------------------------------
+    // HeightField //-----------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/heightfield_basic";
+    cpov.settings.outputBase = "./docs/src/heightfield_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new HeightField({
+    var obj = new HeightField({
         source: "hf_demo.png",
         waterLevel: 0.4,
         smooth: true,
@@ -244,9 +244,9 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// IsoSurface //------------------------------------------------------------
+    // IsoSurface //------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/isosurface_basic";
+    cpov.settings.outputBase = "./docs/src/isosurface_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new IsoSurface({
@@ -260,16 +260,16 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// JuliaFractal //----------------------------------------------------------
+    // JuliaFractal //----------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/julia_basic";
+    cpov.settings.outputBase = "./docs/src/julia_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new JuliaFractal({
-		juliaParam: [-0.083, 0.0, -0.83, -0.025],
-		type: "quaternion:sqr",
-		maxIter: 8,
-		precision: 15,
+    var obj = new JuliaFractal({
+        juliaParam: [-0.083, 0.0, -0.83, -0.025],
+        type: "quaternion:sqr",
+        maxIter: 8,
+        precision: 15,
         texture: yellow
     });
     obj.snapshot();
@@ -279,10 +279,10 @@ function main(cpov) {
 
     // Lathe //-----------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/lathe_basic";
+    cpov.settings.outputBase = "./docs/src/lathe_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Lathe({
+    var obj = new Lathe({
         points: [
             [0, -1.2],
             [1, -1.2],
@@ -310,14 +310,14 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Ovus //------------------------------------------------------------------
+    // Ovus //------------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/ovus_basic";
+    cpov.settings.outputBase = "./docs/src/ovus_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Ovus({
-		bottomRadius: 2,
-	    topRadius: 1,
+    var obj = new Ovus({
+        bottomRadius: 2,
+        topRadius: 1,
         texture: yellow
     });
     obj.snapshot();
@@ -325,14 +325,14 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Parametric //-----------------------------------------------------------
+    // Parametric //-----------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/parametric_basic";
+    cpov.settings.outputBase = "./docs/src/parametric_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var p2 = 2 * Math.PI;
 
-	var obj = new Parametric({
+    var obj = new Parametric({
         funcX: "&function { 1.0 * (1 - 0.5 * v / pi) * sin(5 * v + 0.5 *pi) * (1 - cos(u)) + 0.2 * sin(5 * v + 0.5 * pi) }",
         funcY: "&function { 8 * 0.5 * v / pi + 1.0 * (1 - 0.5 * v / pi) * sin(u) }",
         funcZ: "&function { 1.0 * (1 - 0.5 * v / pi ) * cos(5 * v + 0.5 * pi) * (1 - cos(u)) + 0.2 * cos(5 * v + 0.5 * pi) }",
@@ -357,14 +357,14 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Plane //----------------------------------------------------------------
+    // Plane //----------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/plane_basic";
+    cpov.settings.outputBase = "./docs/src/plane_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Plane({
-		distance: 0,
-		normal: [0, 1, 0],
+    var obj = new Plane({
+        distance: 0,
+        normal: [0, 1, 0],
         texture: yellow
     });
     obj.snapshot();
@@ -374,11 +374,11 @@ function main(cpov) {
 
     // Poly //-----------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/poly_basic";
+    cpov.settings.outputBase = "./docs/src/poly_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Poly({
-		order: 6,
+    var obj = new Poly({
+        order: 6,
         coefficients: [
              4, 0, 0, 0, 0, 0, 0, 0, 0, -4,
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -398,13 +398,13 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Polygon //--------------------------------------------------------------
+    // Polygon //--------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/polygon_basic";
+    cpov.settings.outputBase = "./docs/src/polygon_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Polygon({
-		points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
+    var obj = new Polygon({
+        points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
         texture: yellow
     });
     obj.snapshot();
@@ -414,11 +414,11 @@ function main(cpov) {
 
     // Poly //-----------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/polynomial_basic";
+    cpov.settings.outputBase = "./docs/src/polynomial_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Polynomial({
-		order: 2,
+    var obj = new Polynomial({
+        order: 2,
         coefficients: [
             [2, 0, 0,  1],
             [0, 2, 0,  1],
@@ -432,16 +432,16 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Prism //-----------------------------------------------------------------
+    // Prism //-----------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/prism_basic";
+    cpov.settings.outputBase = "./docs/src/prism_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Prism({
-		height1: -2,
-		height2: 2,
-		type: "linearSpline",
-		points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
+    var obj = new Prism({
+        height1: -2,
+        height2: 2,
+        type: "linearSpline",
+        points: [[-2, 2], [2, 2], [2, -2], [-2, -2], [-2, 2], [-1, 1], [1, 1], [1, -1], [-1, -1], [-1, 1]],
         texture: yellow
     });
     obj.snapshot();
@@ -449,12 +449,12 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Quadric //-----------------------------------------------------------
+    // Quadric //-----------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/quadric_basic";
+    cpov.settings.outputBase = "./docs/src/quadric_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Quadric({
+    var obj = new Quadric({
         coefficients: [ 1, -1, 1, 0, 0, 0, 0, 0, 0, -1 ],
         texture: yellow
     });
@@ -463,12 +463,12 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Quartic //-----------------------------------------------------------
+    // Quartic //-----------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/quartic_basic";
+    cpov.settings.outputBase = "./docs/src/quartic_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Quartic({
+    var obj = new Quartic({
         coefficients: [
             1, 0, 0, 0, 2, 0, 0, 2, 0, -104,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -483,9 +483,9 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Sor //-------------------------------------------------------------------
+    // Sor //-------------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/sor_basic";
+    cpov.settings.outputBase = "./docs/src/sor_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
     var obj = new Sor({
@@ -549,14 +549,14 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Superellipsoid //--------------------------------------------------------
+    // Superellipsoid //--------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/superellipsoid_basic";
+    cpov.settings.outputBase = "./docs/src/superellipsoid_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Superellipsoid({
-		e: 0.25,
-		n: 0.25,
+    var obj = new Superellipsoid({
+        e: 0.25,
+        n: 0.25,
         texture: yellow
     });
     obj.snapshot();
@@ -564,12 +564,12 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Text //------------------------------------------------------------------
+    // Text //------------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/text_basic";
+    cpov.settings.outputBase = "./docs/src/text_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Text({
+    var obj = new Text({
         displayText: "CPOV",
         font: "BebasNeueBold.ttf",
         fontType: "ttf",
@@ -584,12 +584,12 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Torus //-----------------------------------------------------------------
+    // Torus //-----------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/torus_basic";
+    cpov.settings.outputBase = "./docs/src/torus_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Torus({
+    var obj = new Torus({
         minorRadius: 0.5,
         majorRadius: 2,
         texture: yellow
@@ -599,30 +599,30 @@ function main(cpov) {
     cpov.outputFrame();
     obj.destroy();
 
-	// Transforms: Rotate //----------------------------------------------------
+    // Transforms: Rotate //----------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/xtestx";
+    cpov.settings.outputBase = "./docs/src/xtestx";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Box({
-		corner1: [1, 1, 1],
-		corner2: [-1, -1, -1],
-		texture: yellow
-	});
-	obj.transform = new Matrix("rotate", -25, 0, 0);
-	obj.transform = new Matrix("rotate", 25, 0, 0);
+    var obj = new Box({
+        corner1: [1, 1, 1],
+        corner2: [-1, -1, -1],
+        texture: yellow
+    });
+    obj.transform = new Matrix("rotate", -25, 0, 0);
+    obj.transform = new Matrix("rotate", 25, 0, 0);
 
-	obj.snapshot();
+    obj.snapshot();
 
     cpov.outputFrame();
     obj.destroy();
 
-	// Triangle //--------------------------------------------------------------
+    // Triangle //--------------------------------------------------------------
 
-	cpov.settings.outputBase = "./docs/src/triangle_basic";
+    cpov.settings.outputBase = "./docs/src/triangle_basic";
     stage[0].snapshot(); stage[1].snapshot();
 
-	var obj = new Triangle({
+    var obj = new Triangle({
         corner1: [ -1, -1, -1 ],
         corner2: [  1, -1, -1 ],
         corner3: [  0,  1,  1 ],
