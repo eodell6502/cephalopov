@@ -26,7 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 global.cpov = new (require("./lib/cephalopov.js"))();
 
 var File  = require("./lib/file.js");
-var chalk = require("chalk");
+var ac    = require("ansi-colors");
+var mu    = require("minicle-usage");
 
 cpov.vectorDef     = require("./lib/vectorDef.js");      // Vector classes
 cpov.primitiveDef  = require("./lib/primitiveDef.js");   // Primitive base class
@@ -35,6 +36,7 @@ cpov.gsDef         = require("./lib/gsDef.js");          // globalSettings
 cpov.ioDef         = require("./lib/ioDef.js");          // imageOptions
 cpov.settingsDef   = require("./lib/settingsDef.js");    // CephaloPOV-specific settings
 cpov.parseCLI      = require("minicle");
+
 
 //==============================================================================
 // The ClassBuilder object generates code for a JavaScript class from a set of
@@ -73,36 +75,14 @@ function ClassBuilder(name, obj, snippets = false, mutableList = false) {
 
 
 //------------------------------------------------------------------------------
-// Produces comment divider lines up to 132 characters long.
+// Produces comment divider lines.
 //------------------------------------------------------------------------------
 
-ClassBuilder.prototype.divider = function(stops, type, maxLength = 80) {
-    var line = {
-        "-": "//----------------------------------------------------------------------------------------------------------------------------------",
-        "=": "//=================================================================================================================================="
-    }
-
+ClassBuilder.prototype.divider = function(stops, lineChar, maxLength = 80) {
     var tabs = cpov.tab(stops);
-
-    return tabs + line[type].substr(0, maxLength - tabs.length);
+    return tabs + "//" + lineChar.repeat(maxLength - (tabs.length + 2));
 }
 
-
-//------------------------------------------------------------------------------
-// Pads a string with the specified character on the right or left.
-//------------------------------------------------------------------------------
-
-ClassBuilder.prototype.pad = function(str, num, padchar, side) {
-
-	var padding = [ ];
-
-	for(var i = 0; i < num; i++)
-		padding.push(padchar);
-
-	padding = padding.join("");
-
-	return (side == "left" ? padding : "") + str + (side == "right" ? padding : "");
-}
 
 //------------------------------------------------------------------------------
 // Given an array of arrays of strings, right-pads each column to make them all
@@ -112,26 +92,26 @@ ClassBuilder.prototype.pad = function(str, num, padchar, side) {
 
 ClassBuilder.prototype.align = function(rows) {
 
-	var width = [ ];
+    var width = [ ];
 
-	for(var i = 0; i < rows[0].length; i++)
-		width[i] = 0;
+    for(var i = 0; i < rows[0].length; i++)
+        width[i] = 0;
 
-	for(var r = 0; r < rows.length; r++) {
-		for(var c = 0; c < rows[r].length; c++) {
-			width[c] = Math.max(width[c], rows[r][c].length);
-		}
-	}
+    for(var r = 0; r < rows.length; r++) {
+        for(var c = 0; c < rows[r].length; c++) {
+            width[c] = Math.max(width[c], rows[r][c].length);
+        }
+    }
 
-	for(var r = 0; r < rows.length; r++) {
-		for(var c = 0; c < rows[r].length; c++) {
-			if(rows[r][c].length < width[c])
-				rows[r][c] = this.pad(rows[r][c], width[c] - rows[r][c].length, " ", "right");
-		}
-		rows[r] = rows[r].join("");
-	}
+    for(var r = 0; r < rows.length; r++) {
+        for(var c = 0; c < rows[r].length; c++) {
+            if(rows[r][c].length < width[c])
+                rows[r][c] = rows[r][c].padEnd(width[c] - rows[r][c].length, " ");
+        }
+        rows[r] = rows[r].join("");
+    }
 
-	return rows.join("\n");
+    return rows.join("\n");
 }
 
 
@@ -199,49 +179,49 @@ ClassBuilder.prototype.toString = function() {
 
     if(this.obj.immutable) {
 
-		var rows = [ ];
+        var rows = [ ];
 
-		src.push(tab2 + "// Immutable properties //\n");
+        src.push(tab2 + "// Immutable properties //\n");
 
         for(var i in this.obj.immutable) {
-			rows.push([tab2 + "this._" + i, " = ", this.obj.immutable[i] + ";"]);
+            rows.push([tab2 + "this._" + i, " = ", this.obj.immutable[i] + ";"]);
         }
 
-		src.push(this.align(rows) + "\n");
+        src.push(this.align(rows) + "\n");
     }
 
     // Mutable properties ------------------------------------------------------
 
     if(this.obj.mutable) {
 
-		if(this.obj.noInit) {
+        if(this.obj.noInit) {
 
-			// noop
+            // noop
 
-		} else {
+        } else {
 
-			var rows = [ ];
+            var rows = [ ];
 
-			src.push(tab2 + "// Mutable properties //\n");
+            src.push(tab2 + "// Mutable properties //\n");
 
-			for(var i = 0; i < this.obj.mutable.length; i++) {
-				if(this.obj.mutable[i].default) {
-					var init = this.obj.mutable[i].default;
-				} else {
-					var init = "null";
-				}
-				rows.push([tab2 + "this._" + this.obj.mutable[i].name, " = ", init + ";"]);
-			}
+            for(var i = 0; i < this.obj.mutable.length; i++) {
+                if(this.obj.mutable[i].default) {
+                    var init = this.obj.mutable[i].default;
+                } else {
+                    var init = "null";
+                }
+                rows.push([tab2 + "this._" + this.obj.mutable[i].name, " = ", init + ";"]);
+            }
 
-			src.push(this.align(rows) + "\n");
+            src.push(this.align(rows) + "\n");
 
-		}
+        }
     }
 
     if(this.mutableList) {
         src.push(tab2 + "// Mutable list //\n");
         var tmp = [ ];
-    	for(var i = 0; i < this.obj.mutable.length; i++) {
+        for(var i = 0; i < this.obj.mutable.length; i++) {
             tmp.push('"' + this.obj.mutable[i].name + '"');
         }
         src.push(tab2 + "this._mutableList = [ " + tmp.join(", ") + " ];\n");
@@ -257,7 +237,7 @@ ClassBuilder.prototype.toString = function() {
     // Initialization ----------------------------------------------------------
 
     if(!this.obj.conBlock) {
-    	src.push(tab2 + "// Initialization //\n");
+        src.push(tab2 + "// Initialization //\n");
         src.push(tab2 + "cpov.initObject(this, options);\n");
     }
 
@@ -410,52 +390,52 @@ function docHumper(doc, classname, def) {
 
     var descDummy = "TODO: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus quis turpis pretium condimentum ut eget neque. Integer pharetra imperdiet elit, eu malesuada tortor.";
 
-	var content = [ ];
-	var members = [ ];
+    var content = [ ];
+    var members = [ ];
 
-	//--------------------------------------------------------------------------
-	// The member names are prefixed so that they sort in the order of required,
-	// optional, immutable.
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // The member names are prefixed so that they sort in the order of required,
+    // optional, immutable.
+    //--------------------------------------------------------------------------
 
-	if(def.immutable !== undefined)
-		for(var k in def.immutable)
-			members.push("C" + k);
-	if(def.mutable !== undefined) {
-		for(var i = 0; i < def.mutable.length; i++) {
-			if(def.mutable[i].req) {
-				members.push("A" + def.mutable[i].name);
-			} else {
-				members.push("B" + def.mutable[i].name);
-			}
-		}
-	}
+    if(def.immutable !== undefined)
+        for(var k in def.immutable)
+            members.push("C" + k);
+    if(def.mutable !== undefined) {
+        for(var i = 0; i < def.mutable.length; i++) {
+            if(def.mutable[i].req) {
+                members.push("A" + def.mutable[i].name);
+            } else {
+                members.push("B" + def.mutable[i].name);
+            }
+        }
+    }
 
-	//--------------------------------------------------------------------------
-	// We want most attribute lists sorted, but there are a few, chiefly vectors
-	// that should appear in the order given.
-	//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // We want most attribute lists sorted, but there are a few, chiefly vectors
+    // that should appear in the order given.
+    //--------------------------------------------------------------------------
 
-	if(!cpov.isInArray(classname, ["VectorUV", "VectorXY", "VectorXYZ", "VectorXYZW", "Color"]))
-		members.sort(function(a,b) { return a.localeCompare(b, 'en', { sensitivity: "base" }) });
+    if(!cpov.isInArray(classname, ["VectorUV", "VectorXY", "VectorXYZ", "VectorXYZW", "Color"]))
+        members.sort(function(a,b) { return a.localeCompare(b, 'en', { sensitivity: "base" }) });
 
     for(var i = 0; i < members.length; i++)
         members[i] = members[i].substr(1);
 
-	content.push("<div dh=\"" + classname + "\">\n<table class='sgrid attrs'>\n"
+    content.push("<div dh=\"" + classname + "\">\n<table class='sgrid attrs'>\n"
         + "<thead>\n"
         + "<tr><th>&nbsp;</th><th>Req</th><th>Name</th><th>Type(s)</th><th>Description</th></tr>\n"
         + "<thead><tbody>");
 
-	for(var m = 0; m < members.length; m++) {
-		if(def.immutable !== undefined && def.immutable[members[m]] !== undefined) {
+    for(var m = 0; m < members.length; m++) {
+        if(def.immutable !== undefined && def.immutable[members[m]] !== undefined) {
             content.push("<tr><td>RO</td>"
                 + "<td>&nbsp;</td>"
                 + "<td>" + members[m] + "</td>"
                 + "<td>boolean</td>"
                 + "<td>" + immutableDesc[members[m]] + " For a <code>" + classname + "</code>, this is always <code>" + (def.immutable[members[m]] ? "true" : "false") + "</code>.</td>"
                 + "</td></tr>");
-		} else if(def.mutable !== undefined) {
+        } else if(def.mutable !== undefined) {
             for(var i = 0; i < def.mutable.length; i++) {
                 if(def.mutable[i].name != members[m])
                     continue;
@@ -477,14 +457,14 @@ function docHumper(doc, classname, def) {
                     + "<td>" + (def.mutable[i].tname === undefined ? "TODO" : def.mutable[i].tname) + "</td>"
                     + td + desc + "</td></tr>");
             }
-		}
-	}
+        }
+    }
 
     content.push("</tbody></table>\n</div dh=\"" + classname + "\">");
 
-	regex = new RegExp('<div +dh="' + classname + '">[^]*</div +dh="' + classname + '">');
+    regex = new RegExp('<div +dh="' + classname + '">[^]*</div +dh="' + classname + '">');
 
-	return doc.replace(regex, content.join("\n")) + "\n";
+    return doc.replace(regex, content.join("\n")) + "\n";
 }
 
 
@@ -581,12 +561,11 @@ function stringList(obj, article = false) {
 function main() {
 
     var opts = {
-        classes:   { short: "c", cnt: 0 },
-        snippets:  { short: "s", cnt: 0 },
-        proplist:  { short: "p", cnt: 0 },
-        objlist:   { short: "o", cnt: 0 },
-        docs:      { short: "d", cnt: 0 },
-		help:      { short: "h", cnt: 0 },
+        classes:   { short: "c", cnt: 0, desc: "Generate classes.js" },
+        snippets:  { short: "s", cnt: 0, desc: "Regenerate snippets.js --> snippets.new.js" },
+        objlist:   { short: "o", cnt: 0, desc: "Produce list of object classes" },
+        docs:      { short: "d", cnt: 0, desc: "Update autogen text in index.html" },
+        help:      { short: "h", cnt: 0, desc: "Display this text." },
     };
 
     cpov.parseCLI(opts);
@@ -595,13 +574,10 @@ function main() {
     for(var i in opts)
         optCount += opts[i].cnt;
 
+    mu.header("CephaloPOV build script");
+
     if(opts.help.cnt || optCount == 0) {
-        console.log("\nUsage: codegen [options]\n\n"
-            + "-c, --classes   Generate classes.js\n"
-            + "-d, --docs      Update autogen text in index.html\n"
-            + "-s, --snippets  Regenerate snippets.js --> snippets.new.js\n"
-            + "-o, --objlist   Produce list of object classes\n"
-            + "-h, --help      Display this text\n\n");
+        mu.usage(opts, { usageText: "build.js [options]" });
         return;
     }
 
@@ -751,7 +727,7 @@ function main() {
         // and so that they can be more easily located and analyzed for future
         // generations of codegen-like tools.
 
-		var snippets = cpov.objectImport("./lib/snippets.js");
+        var snippets = cpov.objectImport("./lib/snippets.js");
 
         // This is an ordered set where class names are concerned. (JS class
         // declarations are *not* hoisted.)
@@ -762,7 +738,7 @@ function main() {
         ];
 
         for(var m = 0; m < manual.length; m++)
-    		fp.write(snippets[manual[m]] + "\n\n\n");
+            fp.write(snippets[manual[m]] + "\n\n\n");
 
         fp.close();
     }

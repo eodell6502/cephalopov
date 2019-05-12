@@ -1,11 +1,14 @@
-# CephaloPOV
+# CephaloPOV 0.0.3
 
 CephaloPOV is a JavaScript library and Node.js commandline tool for generating 
 SDL (Scene Description Language) files for POV-Ray. It makes it easy to create 
 complex scenes and animations by writing JavaScript programs without having to 
 deal with SDL at all, though it is easy to mix with existing SDL code. 
 
-**It's also currently (2018-09-20) pre-alpha, but should reach stable beta by mid-2019.**
+**It's also currently (2019-05-08) in alpha, but should reach stable beta by 
+later this year. Despite appearances, the project has not been abandoned; the
+primary developer just happens to be working three jobs right now. Things
+will start moving shortly.**
 
 ## Design Goals
 
