@@ -3769,6 +3769,7 @@ files for the documentation and generic infrastructure like
                              primitives; used by build.js.
 /lib/primitiveDef.js ... Definition of the Primitive class; used by build.js.
 /lib/snippets.js ....... Manually produced code for inclusion in classes.js.
+/lib/textureDef.js ..... Definitions of Texture and related classes; used by build.js.
 /lib/vectorDef.js ...... Definitions of Vector* and Color classes; used by build.js.
 /LICENSE ............... All your base are belong to, well, all of us.
 /README.md ............. Generic README for GitHub and NPMjs
@@ -3861,11 +3862,12 @@ this can be omitted. The <code>desc</code> member holds a human-readable descrip
 the class for the docs. (This isn't actually in use yet, but it eventually will be. In
 the meantime, it's okay to leave it <code>false</code>.)</p>
 
-<p>If you look through the generated code in <code>classes.js</code>, you'll
-notice that almost all of the constructor methods take a single argument,
-<code>options</code>. This is the default produced when <code>conArgs</code>.
-Should you wish to override this behavior, <code>conArgs</code> can be set to a
-string which will be placed in the constructor signature.</p>
+<p>If you look through the generated code in <code>classes.js</code>, you'll 
+notice that almost all of the constructor methods take a single argument, 
+<code>options</code>. This is the default produced when <code>conArgs</code> is 
+<code>false</code>. Should you wish to override this behavior, 
+<code>conArgs</code> can be set to a string which will be placed in the 
+constructor signature.</p>
 
 <p>The <code>conBlock</code> member can be a string containing the name of a
 snippet to insert into the constructor method after the declaration of the

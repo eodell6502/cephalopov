@@ -1,0 +1,6588 @@
+PRAGMA: LOOP OPERATORS
+TO ADD: https://www.npmjs.com/package/polyhedra -- JSON format data from the Virtual Polyhedra by George W. Hart
+        or output from antiprism (http://www.antiprism.com)
+TODO: Scene with a couple of objects to perform manual syntax tests
+
+
+Next: finish
+
+FINISH:
+  finish { [FINISH_IDENTIFIER] [FINISH_ITEMS...] }
+FINISH_ITEMS:
+  ambient COLOR | diffuse [albedo] Amount [, Amount] | emission COLOR |
+  brilliance Amount | phong [albedo] Amount | phong_size Amount | specular [albedo] Amount |
+  roughness Amount | metallic [Amount] | reflection COLOR |
+  crand Amount | conserve_energy BOOL_ON_OFF |
+  reflection { Color_Reflecting_Min [REFLECTION_ITEMS...] } |
+  subsurface { translucency COLOR } |
+  irid { Irid_Amount [IRID_ITEMS...] }
+REFLECTION_ITEMS:
+  COLOR_REFLECTION_MAX | fresnel BOOL_ON_OFF |
+  falloff FLOAT_FALLOFF | exponent FLOAT_EXPONENT |
+  metallic FLOAT_METALLIC
+IRID_ITEMS:
+  thickness Amount | turbulence Amount
+
+
+Finish
+    identifier        - optional, non-empty string
+    ambient           - optional, Color
+    diffuse           - optional, float
+    diffuseAlbedo     - optional, boolean
+    diffuseBack       - optional, float
+    brilliance        - optional, float
+    emission          - optional, Color
+    crand             - optional, float
+    subsurface        - optional, Color  -- warn if globalSettings.subsurface is not set
+    phong             - optional, float
+    phongAlbedo       - optional, boolean
+    phongSize         - optional, float
+    specular          - optional, float
+    specularAlbedo    - optional, boolean
+    specularRoughness - optional, float
+    metallic          - optional, boolean
+    reflectMin        - optional, float
+    reflectMax        - optional, float
+    reflectFresnel    - optional, boolean
+    reflectFalloff    - optional, float
+    reflectExponent   - optional, float
+    reflectMetallic   - optional, float
+    conserveEnergy    - optional, boolean
+    iridescence       - optional, float
+    iridTurbulence    - optional, float
+
+
+pigment {
+    identifier (optional)
+    type: pattern_type | color | image_map { bitmap_type "bitmap.ext" [ image map modifiers ] }
+
+    + pattern_modifier
+    + color_list
+    + pigment_list
+    + color_map { color_map_body }
+    + pigment_map { pigment_map_body }
+    + quick_color color
+
+}
+
+pigment { color Orange }
+pigment { brick   color1, color2 }
+pigment { checker color1, color2 }
+pigment { hexagon color1, color2, color3 }
+pigment { object object_id color1, color2 }
+pigment { object object {} color1, color2 }
+
+
+texture: is a combination of pigments, normals, and finishes (and transformations).
+     plain texture: single pigment, optional normal, single finish
+     patterned texture: combines two or more plain patterns with a block pattern or blending function pattern. Nestable.
+     layered texture: two or more textures combined with alpha blending.
+
+The difference between the three types is a matter of duck typing rather than formal type.
+
+"Although we call a plain texture plain it may be a very complex texture with
+patterned pigments and normals. The term plain only means that it has a single
+pigment, normal, and finish."
+
+- All plain textures must have a pigment. If unspecified, the default is used.
+
+- Texture elements, which follow the optional texture identifier, are stacked,
+  with transformations affecting all preceding items.
+
+
+Texture {
+    identifier: comes first in output, identifies *this* texture for reuse
+}
+
+
+
+TEXTURE:
+  PLAIN_TEXTURE | PATTERNED_TEXTURE | LAYERED_TEXTURE
+PLAIN_TEXTURE:
+  texture {
+    [TEXTURE_IDENTIFIER]
+    [PNF_IDENTIFIER...]
+    [PNF_ITEMS...]
+    }
+PNF_IDENTIFIER:
+  PIGMENT_IDENTIFIER | NORMAL_IDENTIFIER | FINISH_IDENTIFIER
+PNF_ITEMS:
+  PIGMENT | NORMAL | FINISH | TRANSFORMATION
+LAYERED_TEXTURE:
+  NON_PATTERNED_TEXTURE...
+PATTERNED_TEXTURE:
+  texture {
+    [PATTERNED_TEXTURE_ID]
+    [TRANSFORMATIONS...]
+    } |
+  texture {
+    PATTERN_TYPE
+    [TEXTURE_PATTERN_MODIFIERS...]
+    } |
+  texture {
+    tiles TEXTURE tile2 TEXTURE
+    [TRANSFORMATIONS...]
+    } |
+  texture {
+    material_map {
+      BITMAP_TYPE "bitmap.ext"
+      [MATERIAL_MODS...] TEXTURE... [TRANSFORMATIONS...]
+      }
+    }
+TEXTURE_PATTERN_MODIFIER:
+  PATTERN_MODIFIER | TEXTURE_LIST |
+  texture_map { TEXTURE_MAP_BODY }
+
+
+Patterns with a default color map:
+
+    agate, bozo, brick, checker, hexagon, mandel, marble, radial, square,
+    triangular, wood
+
+General Patterns - can be used in textures, normals, and media:
+
+    agate, boxed, bozo, brick, bumps, cubic, cylindrical, density_file, dents,
+    facets, fractal, function, gradient, granite, hexagon, leopard, marble,
+    onion, pavement, pigment_pattern, planar, quilted, radial, ripples,
+    spherical, spiral1, spiral2, spotted, square, tiling, waves, wood, wrinkles
+
+Discontinuous patterns - cannot be used in normals
+
+    cells, checker, crackle, hexagon, object, square, triangular.
+
+================================================================================
+PATTERN MODIFIERS
+================================================================================
+
+PATTERN_MODIFIER:
+  BLEND_MAP_MODIFIER | AGATE_MODIFIER | DENSITY_FILE_MODIFIER |
+  QUILTED_MODIFIER | BRICK_MODIFIER | SLOPE_MODIFIER |
+  noise_generator Number| turbulence <Amount> |
+  octaves Count | omega Amount | lambda Amount |
+  warp { [WARP_ITEMS...] } | TRANSFORMATION
+BLEND_MAP_MODIFIER:
+  frequency Amount | phase Amount | ramp_wave | triangle_wave |
+  sine_wave | scallop_wave | cubic_wave | poly_wave [Exponent]
+AGATE_MODIFIER:
+  agate_turb Value
+BRICK_MODIFIER:
+  brick_size Size | mortar Size
+DENSITY_FILE_MODIFIER:
+  interpolate Type
+SLOPE_MODIFIERS:
+  <Altitude>
+  <Lo_slope,Hi_slope>
+  <Lo_alt,Hi_alt>
+QUILTED_MODIFIER:
+  control0 Value | control1 Value
+PIGMENT_MODIFIER:
+  PATTERN_MODIFIER | COLOR_LIST | PIGMENT_LIST |
+  color_map { COLOR_MAP_BODY } | colour_map { COLOR_MAP_BODY } |
+  pigment_map{ PIGMENT_MAP_BODY } | quick_color COLOR |
+  quick_colour COLOR
+COLOR NORMAL_MODIFIER:
+  PATTERN_MODIFIER | NORMAL_LIST |
+  normal_map { NORMAL_MAP_BODY } | slope_map{ SLOPE_MAP_BODY } |
+  bump_size Amount
+TEXTURE_PATTERN_MODIFIER:
+  PATTERN_MODIFIER | TEXTURE_LIST |
+  texture_map{ TEXTURE_MAP_BODY }
+DENSITY_MODIFIER:
+  PATTERN_MODIFIER | DENSITY_LIST | COLOR_LIST |
+  color_map { COLOR_MAP_BODY } | colour_map { COLOR_MAP_BODY } |
+  density_map { DENSITY_MAP_BODY }
+
+Default values for pattern modifiers:
+
+dist_exp        : 0
+falloff         : 2.0
+frequency       : 1.0
+lambda          : 2.0
+major_radius    : 1
+map_type        : 0
+noise_generator : 2
+octaves         : 6
+omega           : 0.5
+orientation     : <0,0,1>
+phase           : 0.0
+poly_wave       : 1.0
+strength        : 1.0
+turbulence      : <0,0,0>
+
+================================================================================
+BITMAP MODIFIERS: once, map_type, interpolate
+================================================================================
+
+"Normally there are an infinite number of repeating image maps, bump maps or
+material maps created over every unit square of the x-y-plane like tiles. By
+adding the once keyword after a file name you can eliminate all other copies of
+the map except the one at (0,0) to (1,1). In image maps, areas outside this unit
+square are treated as fully transparent. In bump maps, areas outside this unit
+square are left flat with no normal modification. In material maps, areas
+outside this unit square are textured with the first texture of the texture
+list."
+
+image_map {
+  gif "mypic.gif"
+  once
+}
+
+"The default projection of the image onto the x-y-plane is called a planar map
+type. This option may be changed by adding the map_type keyword followed by an
+integer number specifying the way to wrap the image around the object."
+
+sphere{<0,0,0>,1
+  pigment{
+    image_map {
+      gif "world.gif"
+      map_type 1
+      }
+    }
+  }
+
+map_type 0 ... default planar mapping
+         1 ... spherical mapping
+         2 ... cylindrical mapping
+         3 ... [still under development]
+         4 ... [still under development]
+         5 ... toroidal mapping
+         6 ... [not specified]
+         7 ... angular mapping for use with light probes
+
+interpolate 2: bilinear
+            3: bicubic
+            4: normalized
+
+    The default, which is presumably 1, is no interpolation.
+
+image_map {
+  gif "mypic.gif"
+  interpolate 2
+  }
+
+================================================================================
+GENERAL PATTERNS
+================================================================================
+
+AGATE
+
+pigment {
+  agate
+  agate_turb 0.5               // specific to agate (?)
+  color_map {MyMap}
+  }
+
+normal {
+  agate [Bump_Size]
+  [MODIFIERS...]
+  }
+
+
+texture {
+    pigment {
+        agate color_map{[0.0 Black][1.0 White]}
+        scale 0.5
+    }
+}
+
+texture{
+    pigment {White}
+        normal {
+            agate 1.6
+            scale 0.5
+    }
+    finish{phong 0.8 phong_size 200}
+ }
+
+--------------------------------------------------------------------------------
+
+BOZO/SPOTTED
+
+bozo and spotted are equivalent in the current version of POV.
+
+"Note: The appearance of the bozo pattern depends on the noise generator used.
+The default type is 2. This may be changed using the noise_generator keyword.
+See the section Pattern Modifiers: noise_generator."
+
+
+texture {
+    pigment {
+        bozo color_map{[0.0 Black][1.0 White]}
+        scale 0.24
+    }
+}
+
+texture{
+    pigment {White}
+    normal{
+        bozo 2.6
+        scale 0.24
+    }
+    finish{phong 0.8 phong_size 200}
+}
+
+
+--------------------------------------------------------------------------------
+
+BRICK
+
+"The brick pattern generates a pattern of bricks. The bricks are offset by half
+a brick length on every other row in the x- and z-directions.
+
+pigment {
+  brick COLOR_1, COLOR_2
+  [brick_size <Size>] [mortar Size]
+  }
+
+where COLOR_1 is the color of the mortar and COLOR_2 is the color of the brick
+itself. If no colors are specified a default deep red and dark gray are used.
+The default size of the brick and mortar together is <8, 3, 4.5> units. The
+default thickness of the mortar is 0.5 units. These values may be changed using
+the optional brick_size and mortar pattern modifiers. You may also use pigment
+statements in place of the colors."
+
+
+* Cannot use wave types, color_map, or slope_map
+
+
+pigment {
+  brick pigment{Jade}, pigment{Black_Marble}
+  }
+
+normal { brick 0.5 }
+
+normal {
+  brick normal{bumps 0.2}, normal{granite 0.3}
+  }
+
+texture {
+  brick texture{T_Gold_1A}, texture{Stone12}
+  }
+
+
+texture {
+    pigment {
+        brick color rgb<1,1,1> color rgb<0.5,0.1,0>
+        scale 0.1
+    }
+}
+
+
+texture {
+    pigment{White}
+    normal {
+        pigment_pattern {
+            brick color rgb<1,1,1> color rgb<0.5,0.1,0>
+            scale 0.1
+        }
+        , 0.5
+    }
+finish{phong 0.8 phong_size 200}
+}
+
+
+--------------------------------------------------------------------------------
+
+BUMPS
+
+* Cannot use normal_map, slope_map, or wave types
+* As pigment or texture, bumps is identical to spotted/bozo.
+* The same noise_generator conditions apply as with spotted/bozo.
+
+--------------------------------------------------------------------------------
+
+CUBIC
+
+"The cubic pattern takes six texture elements and maps each one to each of the
+six pyramids centered at each half-axis, effectively mapping each texture
+element to each side of a origin-centered cube. The first group of elements map
+to the positive half-axis, in the X, Y and Z axes respectively. The same order
+is applied to the last group of elements, except on the negative half-axis."
+
+texture {
+  cubic
+    TEXTURE_ELEMENT_1
+    ...
+    TEXTURE_ELEMENT_6
+  }
+
+--------------------------------------------------------------------------------
+
+CYLINDRICAL
+
+"The cylindrical pattern creates a one unit radius cylinder along the Y axis. It
+is computed by: value = 1.0-min(1, sqrt(X^2 + Z^2)) It starts at 1.0 at the
+origin and decreases to a minimum value of 0.0 as it approaches a distance of 1
+unit from the Y axis. It remains at 0.0 for all areas beyond that distance. This
+pattern was originally created for use with halo or media but it may be used
+anywhere any pattern may be used."
+
+--------------------------------------------------------------------------------
+
+DENSITY_FILE
+
+The density_file pattern is a 3-D bitmap pattern that occupies a unit cube from
+location <0,0,0> to <1,1,1>. The data file is a raw binary file format created
+for POV-Ray called df3 format.
+
+The data in the range of 0 to 255, in case of 8 bit resolution, are scaled into
+a float value in the range 0.0 to 1.0.
+
+The interpolate keyword may be specified to add interpolation of the data. The
+default value of zero specifies no interpolation. A value of one specifies
+tri-linear interpolation, a value of two specifies tri-cubic interpolation.
+
+pigment {
+  density_file df3 "filename.df3"
+  [interpolate Type] [PIGMENT_MODIFIERS...]
+  }
+
+normal {
+  density_file df3 "filename.df3" [, Bump_Size]
+  [interpolate Type]
+  [NORMAL_MODIFIERS...]
+  }
+
+df3 file format
+
+Header:
+
+The df3 format consists of a 6 byte header of three 16-bit integers with high
+order byte first. These three values give the x,y,z size of the data in pixels
+(or more appropriately called voxels ).
+
+Data:
+
+The header is followed by x*y*z unsigned integer bytes of data with a resolution
+of 8, 16 or 32 bit. The data are written with high order byte first
+(big-endian). The resolution of the data is determined by the size of the
+df3-file. That is, if the file is twice (minus header, of course) as long as an
+8 bit file then it is assumed to contain 16 bit ints and if it is four times as
+long 32 bit ints.
+
+--------------------------------------------------------------------------------
+
+DENTS
+
+Intended for use as a normal pattern, but can be used with pigments/textures.
+
+--------------------------------------------------------------------------------
+
+FACETS
+
+normal {
+  facets [coords SCALE_VALUE | size FACTOR]
+  [NORMAL_ITEMS...]
+  }
+
+For use with normals. Cannot be used with pigments (and presumably textures)
+
+--------------------------------------------------------------------------------
+
+Fractal patterns: MANDELBROT, JULIA, MAGNET (mandel|julia)
+
+MANDELBROT:
+  mandel ITERATIONS [, BUMP_SIZE]
+  [exponent EXPONENT]
+  [exterior EXTERIOR_TYPE, FACTOR]
+  [interior INTERIOR_TYPE, FACTOR]
+
+JULIA:
+  julia COMPLEX, ITERATIONS [, BUMP_SIZE]
+  [exponent EXPONENT]
+  [exterior EXTERIOR_TYPE, FACTOR]
+  [interior INTERIOR_TYPE, FACTOR]
+
+MAGNET MANDEL:
+  magnet MAGNET_TYPE mandel ITERATIONS [, BUMP_SIZE]
+  [exterior EXTERIOR_TYPE, FACTOR]
+  [interior INTERIOR_TYPE, FACTOR]
+
+MAGNET JULIA:
+  magnet MAGNET_TYPE julia COMPLEX, ITERATIONS [, BUMP_SIZE]
+  [exterior EXTERIOR_TYPE, FACTOR]
+  [interior INTERIOR_TYPE, FACTOR]
+
+box {<-2, -2, 0>, <2, 2, 0.1>
+  pigment {
+    julia <0.353, 0.288>, 30
+    interior 1, 1
+    color_map {
+      [0 rgb 0]
+      [0.2 rgb x]
+      [0.4 rgb x+y]
+      [1 rgb 1]
+      [1 rgb 0]
+      }
+    }
+  }
+
+
+ITERATIONS is the number of times to iterate (up to 2^32-1) the algorithm.
+
+COMPLEX is a 2D vector denoting a complex number.
+
+MAGNET_TYPE is either 1 or 2.
+
+exponent is an integer between 2 and 33. If not given, the default is 2.
+
+interior and exterior specify special coloring algorithms. You can specify one
+of them or both at the same time. They only work with the fractal patterns.
+
+EXTERIOR_TYPE and INTERIOR_TYPE are integer values between 0 and 6 (inclusive).
+When not specified, the default value of INTERIOR_TYPE is 0 and for
+EXTERIOR_TYPE 1.
+
+FACTOR is a float. The return value of the pattern is multiplied by FACTOR
+before returning it. This can be used to scale the value range of the pattern
+when using interior and exterior coloring (this is often needed to get the
+desired effect). The default value of FACTOR is 1.
+
+The different values of EXTERIOR_TYPE and INTERIOR_TYPE have the following meaning:
+
+0: Returns just 1
+1: For exterior: The number of iterations until bailout divided by ITERATIONS.
+
+Note: This is not scaled by FACTOR (since it is internally scaled by 1/ITERATIONS instead).
+
+    For interior: The absolute value of the smallest point in the orbit of the calculated point
+2: Real part of the last point in the orbit
+3: Imaginary part of the last point in the orbit
+4: Squared real part of the last point in the orbit
+5: Squared imaginary part of the last point in the orbit
+6: Absolute value of the last point in the orbit
+7: For exterior only: the number of iterations modulo FACTOR and divided by FACTOR.
+
+Note: This is of course not scaled by FACTOR. The covered range is 0 to FACTOR-1/FACTOR.
+
+8: For exterior only: the number of iterations modulo FACTOR+1 and divided by FACTOR.
+
+Note: This is of course not scaled by FACTOR. The covered range is 0 to 1.
+
+--------------------------------------------------------------------------------
+
+FUNCTION
+
+pigment {
+  function { USER_DEFINED_FUNCTIONS }
+  [PIGMENT_MODIFIERS...]
+  }
+
+By default a function takes three parameters (x,y,z) and you do not have to
+explicitly specify the parameter names when declaring it. When using the
+identifier, the parameters must be specified.
+
+#declare Foo = function { x + y + z}
+
+pigment {
+  function { Foo(x, y, z) }
+  [PIGMENT_MODIFIERS...]
+  }
+
+On the other hand, if you need more or less than three parameters when declaring
+a function, you also have to explicitly specify the parameter names.
+
+#declare Foo = function(x,y,z,t) { x + y + z + t}
+
+pigment {
+  function { Foo(x, y, z, 4) }
+  [PIGMENT_MODIFIERS...]
+  }
+Using function in a normal:
+
+#declare Foo = function { x + y + z}
+
+normal {
+  function { Foo(x, y, z) } [Bump_Size]
+  [MODIFIERS...]
+  }
+
+[ This has some very complicated possibilities; go back to the docs. ]
+
+--------------------------------------------------------------------------------
+
+GRADIENT
+
+pigment {
+  gradient <Orientation>  // vector pointing in the direction that the colors blend
+  [PIGMENT_MODIFIERS...]
+  }
+
+e.g., pigment { gradient x }
+
+normal {
+  gradient <Orientation> [, Bump_Size]
+  [NORMAL_MODIFIERS...]
+  }
+
+--------------------------------------------------------------------------------
+
+GRANITE
+
+Note: The appearance of the granite pattern depends on the noise generator used.
+The default type is 2. This may be changed using the noise_generator keyword.
+See the Pattern Modifiers section: noise_generator.
+
+--------------------------------------------------------------------------------
+
+LEOPARD
+
+Leopard creates regular geometric pattern of circular spots. The formula used
+is: value = Sqr((sin(x)+sin(y)+sin(z))/3)
+
+--------------------------------------------------------------------------------
+
+MARBLE
+
+pigment {
+  gradient x
+  color_map {
+    [0.0  color Yellow]
+    [1.0  color Cyan]
+    }
+  }
+
+Earlier versions of POV-Ray did not allow you to change wave types. Now that
+wave types can be changed for most any pattern, the distinction between marble
+and gradient x is only a matter of default wave types.
+
+When used with turbulence and an appropriate color map, this pattern looks like
+veins of color of real marble, jade or other types of stone. By default, marble
+has no turbulence.
+
+The marble pattern has a default color_map built in that results in a red, black
+and white pattern with smooth and sharp transitions.
+
+--------------------------------------------------------------------------------
+
+ONION
+
+The onion is a pattern of concentric spheres like the layers of an onion. Value
+= mod(sqrt(Sqr(X)+Sqr(Y)+Sqr(Z)), 1.0) Each layer is one unit thick.
+
+--------------------------------------------------------------------------------
+
+PAVEMENT
+
+pigment {
+  pavement
+  [PAVEMENT_MODIFIERS...]
+  }
+
+PAVEMENT_MODIFIERS:
+  number_of_sides SIDES_VALUE | number_of_tiles TILES_VALUE | pattern PATTERN_VALUE |
+  exterior EXTERIOR_VALUE | interior INTERIOR_VALUE | form FORM_VALUE |
+  PATTERN_MODIFIERS
+
+[ Also pretty effing complex, see docs for more ]
+
+--------------------------------------------------------------------------------
+
+PIGMENT
+
+PIGMENT:
+  pigment {
+    pigment_pattern { PIGMENT_BODY }
+    color_map { COLOR_MAP_BODY } |
+    colour_map { COLOR_MAP_BODY } |
+    pigment_map { PIGMENT_MAP_BODY }
+    }
+
+NORMAL:
+  normal {
+    pigment_pattern { PIGMENT_BODY } [Bump_Size]
+    normal_map { NORMAL_MAP_BODY }
+    }
+
+TEXTURE:
+  texture {
+    pigment_pattern { PIGMENT_BODY }
+    texture_map { TEXTURE_MAP_BODY }
+    }
+
+ITEM_MAP_BODY:
+  ITEM_MAP_IDENTIFIER | ITEM_MAP_ENTRY...
+  ITEM_MAP_ENTRY:
+  [ GRAY_VALUE  ITEM_MAP_ENTRY... ]
+
+--------------------------------------------------------------------------------
+
+PLANAR
+
+"The planar pattern creates a horizontal stripe plus or minus one unit above and
+below the X-Z plane. It is computed by: value =1.0- min(1, abs(Y)) It starts at
+1.0 at the origin and decreases to a minimum value of 0.0 as the Y values
+approaches a distance of 1 unit from the X-Z plane. It remains at 0.0 for all
+areas beyond that distance."
+
+--------------------------------------------------------------------------------
+
+QUILTED
+
+pigment {
+  quilted
+  [QUILTED_MODIFIERS...]
+  }
+
+normal {
+  quilted [Bump_Size]
+  [QUILTED_MODIFIERS...]
+  }
+
+
+QUILTED_MODIFIERS:
+  control0 Value_0 | control1 Value_1 | PIGMENT_MODIFIERS
+
+Cannot be used with a normal_map, slope_map, or wave type modifiers in a normal
+statement. Control values *should* be in a 0.0 to 1.0 range, but this is not
+required.
+
+--------------------------------------------------------------------------------
+
+RADIAL
+
+"The radial pattern is a radial blend that wraps around the +y-axis. The color
+for value 0.0 starts at the +x-direction and wraps the color map around from
+east to west with 0.25 in the -z-direction, 0.5 in -x, 0.75 at +z and back to
+1.0 at +x. Typically the pattern is used with a frequency modifier to create
+multiple bands that radiate from the y-axis. For example:"
+
+pigment {
+  radial
+  color_map {
+    [0.5 Black]
+    [0.5 White]
+    }
+  frequency 10
+  }
+
+Has a default color map built in.
+
+--------------------------------------------------------------------------------
+
+RIPPLES
+
+"Usually the ripples from any given center are about 1 unit apart. The frequency
+keyword changes the spacing between ripples. The phase keyword can be used to
+move the ripples outwards for realistic animation."
+
+"The number of ripple centers can be changed with the global parameter"
+
+global_settings { number_of_waves Count }
+
+"Cannot be used with normal_map, slope_map or wave type modifiers in a normal statement."
+
+--------------------------------------------------------------------------------
+
+SPHERICAL
+
+Unit sphere varying from 1.0 at the origin to 0.0 at one unit distance.
+
+--------------------------------------------------------------------------------
+
+SPIRAL1
+
+"The spiral1 pattern creates a spiral that winds around the z-axis similar to a
+screw. When viewed sliced in the x-y plane, it looks like the spiral arms of a
+galaxy."
+
+pigment {
+  spiral1 Number_of_Arms
+  [PIGMENT_MODIFIERS...]
+  }
+
+normal {
+  spiral1 Number_of_Arms [, Bump_Size]
+  [NORMAL_MODIFIERS...]
+  }
+
+"The pattern uses the triangle_wave wave type by default."
+
+--------------------------------------------------------------------------------
+
+SPIRAL2
+
+"The spiral2 pattern creates a double spiral that winds around the z-axis
+similar to spiral1 except that it has two overlapping spirals which twist in
+opposite directions. The result sometimes looks like a basket weave or perhaps
+the skin of pineapple. The center of a sunflower also has a similar double
+spiral pattern."
+
+pigment {
+  spiral2 Number_of_Arms
+  [PIGMENT_MODIFIERS...]
+  }
+
+normal {
+  spiral2 Number_of_Arms [, Bump_Size]
+  [NORMAL_MODIFIERS...]
+  }
+
+--------------------------------------------------------------------------------
+
+SPOTTED
+
+This is now identical to bozo.
+
+--------------------------------------------------------------------------------
+
+TILING
+
+"The tiling pattern creates a series tiles in the x-z plane."
+
+pigment {
+  tiling Pattern_Number
+  [PATTERN_MODIFIERS...]
+  }
+
+"For a pattern with N tile types (where N is the tiling type noted in the above
+image) the main color/texture of the tiles are at x/N with x going from 0 to
+N-1, and the extreme color/texture caulk for these tiles are at (x+1)/N. The
+bevel covers the range between these two values."
+
+~scenes/textures/pattern/tiling.pov
+
+--------------------------------------------------------------------------------
+
+WAVES
+
+Different wave shape, but syntactically identical to ripples.
+
+"Cannot be used with normal_map, slope_map or wave type modifiers in a normal
+statement."
+
+--------------------------------------------------------------------------------
+
+WOOD
+
+The wood pattern consists of concentric cylinders centered on the z-axis.
+
+Uses triangle wave by default and has a built-in color map.
+
+--------------------------------------------------------------------------------
+
+WRINKLES
+
+"Cannot be used with normal_map, slope_map or wave type modifiers in a normal
+statement."
+
+"The appearance of the wrinkles pattern depends on the noise generator used. The
+default type is 2."
+
+
+================================================================================
+DISCONTINUOUS PATTERNS
+================================================================================
+
+CELLS
+
+--------------------------------------------------------------------------------
+
+CHECKER
+
+--------------------------------------------------------------------------------
+
+CRACKLE
+
+--------------------------------------------------------------------------------
+
+HEXAGON
+
+--------------------------------------------------------------------------------
+
+OBJECT
+
+--------------------------------------------------------------------------------
+
+SQUARE
+
+--------------------------------------------------------------------------------
+
+TRIANGULAR
+
+================================================================================
+NORMAL-DEPENDENT PATTERNS
+================================================================================
+
+AOI
+
+--------------------------------------------------------------------------------
+
+SLOPE
+
+================================================================================
+SPECIAL PATTERNS
+================================================================================
+
+AVERAGE
+
+--------------------------------------------------------------------------------
+
+IMAGE
+
+================================================================================
+IMAGE MAP
+================================================================================
+
+
+
+### FINISHES ===================================================================
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// By Dan Farmer
+// Parabolic arches on the water.  Is this the St. Louis McDonalds?
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+
+global_settings {
+  assumed_gamma 2.2
+  max_trace_level 5
+}
+
+#include "colors.inc"
+#include "shapes.inc"
+#include "textures.inc"
+#include "metals.inc"
+#include "skies.inc"
+
+camera {
+   location <60.0, 0.0, -135.0>
+   angle 40
+   right     x*image_width/image_height
+   look_at <0.0, 0.0, 0.0>
+}
+
+// Light
+light_source {<200.0, 200.0, -150.0> colour red 1 green .5 }
+
+#declare New_Sky = sky_sphere { S_Cloud2 }
+#declare Old_Sky =
+sky_sphere {
+   pigment {
+      gradient y
+      colour_map {
+         [0.0 0.8  colour red 0.5 green 0.1 blue 0.7
+                   colour red 0.1 green 0.1 blue 0.9]
+         [0.8 1.0  colour red 0.1 green 0.1 blue 0.9
+                   colour red 0.1 green 0.1 blue 0.9]
+      }
+   }
+   pigment {
+      bozo
+      turbulence 0.7
+      colour_map {
+         [0.0 0.6  colour red 1.0 green 1.0 blue 1.0 filter 1.0
+                   colour red 1.0 green 1.0 blue 1.0 filter 1.0]
+         [0.6 0.8  colour red 1.0 green 1.0 blue 1.0 filter 1.0
+                   colour red 1.0 green 1.0 blue 1.0]
+         [0.8 1.001 colour red 1.0 green 1.0 blue 1.0
+                    colour red 0.8 green 0.8 blue 0.8]
+      }
+      scale <0.5, 0.2, 0.2>
+   }
+}
+
+sky_sphere { New_Sky }                      // changed by dmf '95
+
+// Define the ocean surface
+plane { y, -10.0
+   texture {
+      T_Chrome_2D
+      normal {
+         waves 0.05
+         frequency 5000.0
+         scale 3000.0
+      }
+   }
+}
+
+
+// Create the arches using CSG difference between two "squashed" paraboloids
+difference {
+   object { Paraboloid_Y
+      scale <20.0, 20.0, 5.0>
+      rotate 180*x
+      texture { T_Chrome_3C }
+   }
+   object { Paraboloid_Y
+      scale <18.0, 20.0, 18.0>
+      rotate 180*x
+      translate -2*y
+      texture { T_Copper_3C }
+   }
+   translate <0.0, 30.0, -25.0>
+}
+
+difference {
+   object { Paraboloid_Y
+      scale <20.0, 20.0, 5.0>
+      rotate 180*x
+      texture { T_Chrome_3C }
+   }
+   object { Paraboloid_Y
+      scale <18.0, 20.0, 18.0>
+      rotate 180*x
+      translate -2*y
+      texture { T_Copper_3C }
+   }
+   translate <0.0, 30.0, 50.0>
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Recursive cluster of mirrored spheres
+// After a classic, Sphereflake, by Eric Haines
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+
+global_settings {
+  assumed_gamma 2.2
+  max_trace_level 20
+}
+
+#include "colors.inc"
+
+//-------------------------------------------------------------------------
+// This scene uses a non-standard camera set-up.
+// (See CAMERA in the included documentation for details.)
+// If you are new to POV-Ray, you might want to try a different demo scene.
+//-------------------------------------------------------------------------
+camera { // This is an unusual camera since it is a converted file
+   location <2.31, 1.43, 1.65>
+   up <0, 0, 1>          // The Z axis is up and
+   right  -x*image_width/image_height
+   direction <0, -1.60746, 0> // Field of view 45 degrees
+   sky <0, 0, 1>
+   look_at <0, 0, -0.1>
+}
+
+sphere { <0, 0, 0>, 10000
+   hollow on
+   pigment { SkyBlue }
+   finish { ambient 1 diffuse .5}
+}
+
+light_source { <4, 3, 2 > color Gray30 }
+light_source { <1, -4, 4> color Gray30 }
+light_source { <-3, 1, 5> color Gray30 }
+
+plane { z, -0.5
+   pigment { color red 1.0 green 0.75 blue 0.33 }
+   finish { diffuse 1 } //ambient <0.15,0.1,0 .045>}
+} // ambient .15 .1 .045
+
+/*
+union {
+   sphere { <0.7, 0, 0>, 0.2 texture { pigment { Red }   finish { diffuse 0.7} } }
+   sphere { <0, 0.7, 0>, 0.2 texture { pigment { Green } finish { diffuse 0.7} } }
+   sphere { <0, 0, 0.7>, 0.2 texture { pigment { Blue }  finish { diffuse 0.7} } }
+}
+*/
+
+#declare Texture =
+texture {
+   finish {
+      ambient 0.03
+      diffuse 1
+      reflection 0.4
+      phong 1
+      phong_size 3
+   }
+   pigment { color red 0.5 green 0.45 blue 0.35 }
+}
+
+union {
+   sphere { <0, 0, 0>, 0.5
+      texture {
+         Texture
+          normal {
+             bumps 0.4
+             sine_wave
+             scale 0.025
+          }
+      }
+   }
+
+   union {
+      sphere { <0.272166, 0.272166, 0.544331>, 0.166667  }
+      sphere { <0.643951, 0.172546, 0>, 0.166667  }
+      sphere { <0.172546, 0.643951, 0>, 0.166667 }
+      sphere { <-0.371785, 0.0996195, 0.544331>, 0.166667  }
+      sphere { <-0.471405, 0.471405, 0>, 0.166667  }
+      sphere { <-0.643951, -0.172546, 0>, 0.166667  }
+      sphere { <0.0996195, -0.371785, 0.544331>, 0.166667  }
+      sphere { <-0.172546, -0.643951, 0>, 0.166667  }
+      sphere { <0.471405, -0.471405, 0>, 0.166667  }
+      texture { Texture }
+   }
+}
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// This file demonstrates the effect of metallic reflection,
+// formerly controlled by the "reflect_metallic" keyword
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+
+global_settings {
+  assumed_gamma 1.0
+  max_trace_level 5
+}
+
+#include "colors.inc"
+
+camera {
+	location <15,8,1>
+	angle    60
+        right    x*image_width/image_height
+	look_at  <0,2,0>
+}
+
+fog {Blue+Gray70 distance 700}
+
+plane {y, 0
+	pigment {crackle
+		color_map {
+			[0 Black]
+			[1 Gray80]
+		}
+	}
+}
+
+sphere {<-2,3,-6>,3 pigment {OrangeRed} finish {reflection {0.0}}}
+sphere {<0,3,0>,3   pigment {OrangeRed} finish {reflection {0.5}}}
+sphere {<-2,3,6>,3  pigment {OrangeRed} finish {reflection {0.5 metallic}}}
+
+text {ttf "cyrvetic.ttf","refl. 0.0 | refl. 0.5 | refl. 0.5",.1,0
+	rotate <0,-90,90>
+	translate <4,.05,-6>
+	pigment {White}
+}
+text {ttf "cyrvetic.ttf","+ reflect_metallic",.1,0
+	scale .6
+	rotate <0,-90,90>
+	translate <5,.03,2>
+	pigment {White}
+}
+
+light_source {<400,500,300> White*2}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision Ray Tracer Scene Description File
+// File: var_refl.pov
+// Desc: Demo of the three reflection types
+// Date: 2001/04/15
+// Auth: ingo
+// Updated 28. Aug 01 by Christoph Hormann
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+
+global_settings {
+  assumed_gamma 1.0
+}
+
+light_source {
+   < 100, 500,-500>
+   rgb 1
+}
+
+camera {
+   location  <0.0, 1.5, -8.0>
+   right     x*image_width/image_height
+   look_at   <0.0, 0.0, 20.0>
+   angle 55
+}
+
+sky_sphere {
+   pigment {
+      function { abs(y) }
+      turbulence 0.1
+      color_map { [0.0, rgb <0,0,0.6>] [1.0, rgb 1] }
+   }
+}
+
+#declare Water= box{
+   <-1,-2,-5>,<1,0.1,20>
+}
+
+difference {
+   plane {
+      y, 0
+      pigment {rgb <0,0.2,0>}
+   }
+   object{
+      Water
+      translate <-2.5,0,0>
+      texture {
+         pigment {checker color rgb 1 color blue 1 scale 0.1}
+      }
+   }
+   object{
+      Water
+      texture {
+         pigment {checker color rgb 1 color blue 1 scale 0.1}
+      }
+   }
+   object{
+      Water
+      translate <2.5,0,0>
+      texture {
+         pigment {checker color rgb 1 color blue 1 scale 0.1}
+      }
+   }
+}
+difference {
+   box {<-4,-0.001,-5.5>,<4,0.2,21>}
+   object{
+      Water
+      scale <1,3,1>
+      translate <-2.5,0,0>
+   }
+   object{
+      Water
+      scale <1,3,1>
+   }
+   object{
+      Water
+      scale <1,3,1>
+      translate <2.5,0,0>
+   }
+   pigment {rgb 0.75}
+}
+
+#declare WaterNormal=normal{
+    bozo 1
+    normal_map {
+        [ 0.3 waves translate -0.5 scale <1, 0.05, 1>*100000 frequency 100000]
+        [ 0.7 ripples translate -0.5 scale <1, 0.7, 1>*100000 frequency 100000]
+        [ 0.85 ripples translate -0.5 scale <1, 0.6, 1>*100000 frequency 100000]
+        [ 1.0 ripples translate -0.5  scale 100000 frequency 100000]
+    }
+    scale 1
+}
+
+object{
+   Water
+   scale 1.01
+   translate <-2.5,0,0>
+   material{
+      texture {
+         pigment {rgbf <1,1,1,1>}
+         normal{WaterNormal}
+         finish {
+            ambient 0
+            diffuse 0.1
+            reflection {
+              0.04, 1
+            }
+            specular 1.5
+            roughness 0.001
+            brilliance 0.01
+            conserve_energy
+         }
+      }
+      interior {
+         ior 1.33
+      }
+   }
+}
+object{
+   Water
+   scale 1.01
+   material{
+      texture {
+         pigment {rgbf <1,1,1,1>}
+         normal{WaterNormal}
+         finish {
+            ambient 0
+            diffuse 0.1
+            reflection {
+              0.04, 1
+              fresnel on
+            }
+            specular 1.5
+            roughness 0.001
+            brilliance 0.01
+            conserve_energy
+         }
+      }
+      interior {
+         ior 1.33
+      }
+   }
+}
+object{
+   Water
+   scale 1.01
+   translate <2.5,0,0>
+   material{
+      texture {
+         pigment {rgbf <1,1,1,1>}
+         normal{WaterNormal}
+         finish {
+            ambient 0
+            diffuse 0.1
+            reflection 1
+            specular 1.5
+            roughness 0.001
+            brilliance 0.01
+            conserve_energy
+         }
+      }
+      interior {
+         ior 1.33
+      }
+   }
+}
+
+
+#declare I=0;
+#declare N=10;
+#while (I<N)
+   cylinder {
+      <0, 0, 22>,<0,8,22>, 0.2
+      translate <-9+2*I,0,0>
+      pigment {rgb <1,0,0>}
+   }
+   #declare I=I+1;
+#end
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision Ray Tracer Scene Description File
+// File: var_reflection.pov
+// Desc: variable reflection demonstration scene
+// Date: August 2001
+// Auth: Christoph Hormann
+
+// -w320 -h240
+// -w512 -h384 +a0.3
+
+// reflection samples:
+// -------------------
+// 0: constant reflection 0.5
+// 1: variable reflection 0...1
+// 2: variable reflection 0...1 fresnel formula
+// 3: variable reflection 1...0 (inverse) fresnel formula
+// 4: variable reflection fresnel formula, changed falloff
+// 5: metallic reflection
+// 6: colored reflection
+// -------------------
+
+#version 3.6;
+
+global_settings {
+  assumed_gamma 1.0
+  max_trace_level 15
+}
+
+#include "colors.inc"
+
+light_source {
+  <1.5, -2.5, 2.5>*10000
+  color rgb 1.0
+}
+
+//-------------------------------------------------------------------------
+// This scene uses a non-standard camera set-up.
+// (See CAMERA in the included documentation for details.)
+// If you are new to POV-Ray, you might want to try a different demo scene.
+//-------------------------------------------------------------------------
+camera {
+  location    <0, -22, 6>
+  direction   y
+  sky         z
+  up          z
+  right     x*image_width/image_height
+  look_at     <0, 0, 2>
+  angle       44
+}
+
+sky_sphere {
+  pigment {
+    color rgb <0.55,0.65,1.0>
+  }
+  /*
+  pigment {
+    agate
+    color_map {
+      [0.6 color rgb 0.8 ]
+      [0.6 color rgb 0.5 ]
+    }
+    scale 0.06
+  }
+  */
+}
+
+// ----------------------------------------
+
+plane
+{
+  z, 0
+  texture
+  {
+    pigment {
+      checker
+      color rgb 1
+      color rgb 0.5
+
+      scale <1.8,10000,1.0>
+      translate -10
+      rotate 20*z
+    }
+    finish {
+      diffuse 0.7
+    }
+  }
+}
+
+// ----------------------------------------
+
+#declare Cnt=0;
+
+#while (Cnt < 7)
+
+  text
+  {
+    ttf
+    "crystal.ttf",
+    str(Cnt,0,0),
+    0.1,
+    0
+    scale 1.5
+    rotate 90*x
+
+    translate 0.3*z
+    translate 2*y
+
+    translate (-7.5+Cnt*2.5)*x
+
+    texture {
+      pigment { color rgb x }
+    }
+
+    no_reflection
+    no_shadow
+  }
+
+  #declare Mat=
+    material {
+      texture {
+        pigment { color rgbt <0, 1, 0, 1> }
+        finish {
+          ambient 0
+          diffuse 0
+
+          #switch (Cnt)
+            #case (0)
+              reflection 0.5
+              #break
+            #case (1)
+              reflection {
+                0, 1
+              }
+              #break
+            #case (2)
+              reflection {
+                0, 1
+                fresnel on
+              }
+              #break
+            #case (3)
+              reflection {
+                1, 0
+                fresnel on
+              }
+              #break
+            #case (4)
+              reflection {
+                0, 1
+                falloff 2
+              }
+              #break
+            #case (5)
+              reflection {
+                0.8
+                metallic
+              }
+              #break
+            #case (6)
+              reflection {
+                <0, 1, 0>, <0, 0, 1>
+                fresnel on
+              }
+              #break
+          #end
+
+          conserve_energy
+        }
+      }
+      interior {
+        ior 1.3
+      }
+    }
+
+
+  box {
+    <-1, -5, 0.25>, <1, 20000, 0.25>
+
+    translate (-7.5+Cnt*2.5)*x
+
+    material { Mat }
+  }
+
+  sphere {
+    <0, 0, 0.5>, 1.1
+
+    translate (-7.5+Cnt*2.5)*x
+
+    scale 0.7
+
+    translate -9*y
+
+    material { Mat }
+  }
+
+  #declare Cnt=Cnt+1;
+#end
+
+
+### NORMALS ====================================================================
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Bump map example
+// File by Drew Wells
+// NOTE: Calls for "bumpmap_.png", but any 320x200 png will work.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+camera {
+   location  <0, 0, -120>
+   angle 45
+   right     x*image_width/image_height
+   look_at   <0, 0,  0>
+}
+
+sphere { <0, 0, 0>, 25
+   pigment { rgb<1,1,1> }
+
+   normal {
+      bump_map {
+         png "bumpmap_.png"
+         bump_size 10
+         interpolate 2
+         once
+      }
+      scale 50              /* scaled and translated into position  */
+      translate <-25, -25, 0>
+   }
+   finish {  specular 0.8 }
+}
+
+plane { y, -25
+   pigment {Gold}
+  // finish {ambient 0.1 diffuse 0.5}
+}
+
+light_source {<100,120,-130> colour White}
+
+fog{ fog_type   2
+     distance   300
+     color      rgb<1,1,1>*0
+     fog_offset 0.1
+     fog_alt    1.5
+     turbulence 1.8
+   } //----------------
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision Ray Tracer Scene Description File
+// File: norm_acc.pov
+// Desc: normal accuracy sample
+// Date: April 2001
+// Auth: Christoph Hormann
+
+// -w512 -h384
+// -w640 -h480 +a0.3
+
+#version 3.7;
+
+global_settings {
+  assumed_gamma 1.0
+  max_trace_level 5
+}
+
+#include "colors.inc"
+#include "woods.inc"
+
+light_source {
+  <1.5, 0.3, 1.8>*10000
+  color rgb <0.9, 0.9, 1.0>
+}
+
+//-------------------------------------------------------------------------
+// This scene uses a non-standard camera set-up.
+// (See CAMERA in the included documentation for details.)
+// If you are new to POV-Ray, you might want to try a different demo scene.
+//-------------------------------------------------------------------------
+camera {
+  location    <22, 38, 24>
+  direction   y
+  sky         z
+  up          z
+  right       x*image_width/image_height
+  look_at     < 1, 0, 0>
+  angle       30
+}
+
+
+
+sphere {
+  <0, 0, 0>, 1
+  texture {
+    T_Wood35
+    finish {
+      diffuse 0
+      ambient 1
+    }
+    scale 0.3
+  }
+  scale 100000
+  no_shadow
+  hollow on
+}
+
+#declare Rad=0.2;
+#declare S_X=12;
+#declare S_Y=4.2;
+#declare S_XM=S_X-Rad;
+#declare S_YM=S_Y-Rad;
+
+union {
+  box { <-S_XM, -S_Y, -2.5>, <S_XM, S_Y, -3.0> }
+  box { <-S_X, -S_YM, -2.5>, <S_X, S_YM, -3.0> }
+  cylinder { <-S_XM, -S_YM, -2.5>, < S_XM, -S_YM, -2.5>, Rad }
+  cylinder { <-S_XM, -S_YM, -2.5>, <-S_XM,  S_YM, -2.5>, Rad }
+  cylinder { < S_XM,  S_YM, -2.5>, <-S_XM,  S_YM, -2.5>, Rad }
+  cylinder { < S_XM,  S_YM, -2.5>, < S_XM, -S_YM, -2.5>, Rad }
+
+  cylinder { <-S_XM, -S_YM, -2.5>, <-S_XM, -S_YM, -3.0>, Rad }
+  cylinder { <-S_XM,  S_YM, -2.5>, <-S_XM,  S_YM, -3.0>, Rad }
+  cylinder { < S_XM, -S_YM, -2.5>, < S_XM, -S_YM, -3.0>, Rad }
+  cylinder { < S_XM,  S_YM, -2.5>, < S_XM,  S_YM, -3.0>, Rad }
+
+  sphere { <-S_XM, -S_YM, -2.5>, Rad }
+  sphere { <-S_XM,  S_YM, -2.5>, Rad }
+  sphere { < S_XM, -S_YM, -2.5>, Rad }
+  sphere { < S_XM,  S_YM, -2.5>, Rad }
+
+  texture {
+    pigment { color NeonBlue }
+    finish {
+      diffuse 0.0
+      ambient 0.0
+      specular 0.3
+      roughness 0.07
+      reflection {
+        0.1
+        metallic
+      }
+    }
+  }
+}
+
+
+#macro Obj1(Acc)
+union {
+  sphere { <0, 0, 3>, 2 }
+  box { <-2.2, -2.2, -2.2>, <2.2, 2.2, 1> }
+
+  union {
+    text
+    {
+      ttf
+      "crystal.ttf",
+      concat("accuracy ", str(Acc, 0, 3)),
+      0.1, 0
+
+      texture { pigment { color MediumAquamarine } }
+
+      scale 0.7
+      rotate 180*z
+      rotate -40*x
+    }
+
+    intersection {
+      box { <0.2, 0.15, 1>, <-5.3, -0.5, -1.4> }
+      plane {
+        z, 0
+        rotate -40*x
+      }
+      texture {
+        pigment {
+          agate
+          color_map {
+            [0.3 color Blue*0.2 ]
+            [0.5 color Blue ]
+          }
+          scale 0.3
+        }
+        finish {
+          ambient 0.0
+          diffuse 0.35
+          specular 0.5
+        }
+      }
+    }
+
+    translate <2.6, 3.4, -1.8>
+  }
+
+  texture {
+    pigment { color rgb 1 }
+    normal {
+      granite 0.7
+      turbulence 0.2
+      scale 1.2
+      accuracy Acc
+    }
+    finish { diffuse 0.65 ambient 0.015 }
+  }
+
+}
+#end
+
+
+object {
+  Obj1(0.001)
+  translate <8, 0, 0>
+}
+
+object {
+  Obj1(0.02)
+  translate <0, 0, 0>
+}
+
+object {
+  Obj1(0.1)
+  translate <-8, 0, 0>
+}
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+#include "textures.inc"
+
+camera {
+  location  <0,10,-95>
+  right     x*image_width/image_height
+  direction 3*z
+}
+
+
+light_source { < 500, 500, -200> White*0.9}
+//light_source { <-500,  50, -200> White*0.1}
+
+#declare Radius =5;
+#declare RowSpace=1.35;
+#declare ColSpace=1.25;
+#declare Dist=0.9-Radius;
+#declare Row2=-Dist;
+#declare Row1=Row2+Radius*RowSpace*2;
+#declare Col1= -Radius*ColSpace*2;
+#declare Col2= Col1+Radius*ColSpace*2;
+#declare Col3= Col2+Radius*ColSpace*2;
+
+
+#declare Thing=
+object {
+   box{<-1,-1,-1>,<1,1,1>}
+   scale Radius
+   pigment {color rgb<1,1,1> }
+   finish  {phong 1 }
+}
+
+object { Thing normal {bumps  0.6} translate <Col1 ,Row1 ,Dist> }
+
+object {
+   Thing
+   normal {
+      bump_map { png "test.png" bump_size 1.0 use_index }
+      translate -(x+y)/2
+      scale 2*Radius
+   }
+   translate <Col2 ,Row1 ,Dist>
+}
+
+object { Thing normal {dents    1.5}  translate <Col3 ,Row1 ,Dist> }
+object { Thing normal {ripples  1.5}  translate <Col1 ,Row2 ,Dist> }
+object { Thing normal {waves    1.5}  translate <Col2 ,Row2 ,Dist> }
+object { Thing normal {wrinkles 1.5}  translate <Col3 ,Row2 ,Dist> }
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Weighted averaged normals example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings {
+  assumed_gamma 1.0
+  number_of_waves 1
+}
+
+#include "colors.inc"
+#include "textures.inc"
+
+camera {
+  location  <0,3,-31>
+  right     x*image_width/image_height
+  direction 3*z
+}
+
+
+light_source { < 500, 500, -300> White*.75}
+light_source { <-500,  50, -300> White*.25}
+
+#declare Thing = plane{z,0.1 hollow on clipped_by{box{-2,2}}}
+
+#default {pigment{White} finish{phong 1  phong_size 100}}
+
+object{Thing
+  normal {
+    average
+    normal_map {
+      [gradient x, -5.0 scallop_wave scale 0.5]
+      [gradient y, -5.0 scallop_wave scale 0.5]
+    }
+  }
+  translate <-3,5.5,0>
+}
+
+object{Thing
+  normal {
+    average
+    normal_map {
+      [gradient x, 5.0 triangle_wave scale 0.5]
+      [gradient y, 5.0 triangle_wave scale 0.5]
+    }
+  }
+  translate <3,5.5,0>
+}
+
+object{Thing
+  normal {
+    average
+    normal_map {
+      [3.0 gradient x, 5.0 triangle_wave scale 0.5]
+      [1.0 gradient y, 5.0 triangle_wave scale 0.5]
+    }
+  }
+  translate <-3,1,0>
+}
+
+object{Thing
+  normal {
+    average
+    normal_map {
+      [waves 2.0 frequency 3 translate < 1, 1,0>]
+      [waves 2.0 frequency 3 translate <-1,-1,0>]
+    }
+  }
+  translate <3,1,0>
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Normal_map example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+ camera {
+     location  <0,3,-31>
+     right     x*image_width/image_height
+     direction 3*z
+ }
+
+#declare Amt=<0,0,0>;
+
+ light_source { <200, 200, -100> color White}
+
+ #default {
+     pigment { White }
+     normal { bump_size 1.5 }
+     finish { phong 0.8 phong_size 200 }
+ }
+
+box{<-2,-2,0>,<2,2,1>
+  normal {
+    gradient x
+    normal_map{
+      [0.3 marble turbulence 0.5]
+      [0.7 gradient y scallop_wave scale .3]
+    }
+    translate -3*x
+    scale 2
+  }
+  translate <-3,5.50>
+}
+
+box{<-2,-2,0>,<2,2,1>
+  normal {
+    wood
+    normal_map{
+      [0.5 marble turbulence 0.5]
+      [0.5 radial sine_wave frequency 10 rotate x*90]
+    }
+  }
+  translate <3,5.50>
+}
+box{<-2,-2,0>,<2,2,1>
+  normal {
+    checker
+      normal { marble turbulence 0.5 }
+      normal { radial sine_wave frequency 10 rotate x*90}
+  }
+  translate <-3,1,0>
+}
+box{<-2,-2,0>,<2,2,1>
+  normal {
+    radial frequency 10
+    normal_map{
+      [0.5 gradient x triangle_wave scale .3]
+      [0.5 gradient z scallop_wave scale .3]
+    }
+    rotate x*90
+  }
+  translate <3,1,0>
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Slope_map example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+camera {
+     location  <0,0,-20>
+     right     x*image_width/image_height
+     direction 3*z
+ }
+
+#declare Amt=<0,0,0>;
+
+ light_source { <200, 200, -100> color White}
+
+ #default {
+     pigment { White  }
+     normal{
+         onion .8
+         scale .4
+     }
+     finish { phong 0.8 phong_size 200 }
+ }
+
+ #declare Thing =
+ box{ <-1,-1,0>,<1,1,1> scale .85 }
+
+ // top row, left to right
+ object { Thing
+     normal{
+     }
+     rotate Amt translate <-3,2,0>
+ }
+ object { Thing
+     normal{
+       slope_map {     // triangle_wave the hard way
+         [0   <0, 1>]   // start at bottom and slope up
+         [0.5 <1, 1>]   // halfway through reach top still climbing
+         [0.5 <1,-1>]   // abruptly slope down
+         [1   <0,-1>]   // finish on down slope at bottom
+       }
+     }
+     rotate Amt translate <0,2,0>
+ }
+ object { Thing
+     normal{
+       slope_map {         // sine_wave the hard way
+         [0    <0.5, 1>]   // start in middle and slope up
+         [0.25 <1.0, 0>]   // flat slope at top of wave
+         [0.5  <0.5,-1>]   // slope down at mid point
+         [0.75 <0.0, 0>]   // flat slope at bottom
+         [1    <0.5, 1>]   // finish in middle and slope up
+       }
+     }
+     rotate Amt translate <3,2,0>
+ }
+
+ // middle row, left to right
+ object { Thing
+     normal{
+       slope_map {      // reverse ramp wave
+         [0   <1,-1>]   // start at top and slope down
+         [1   <0,-1>]   // finish on down slope at bottom
+       }
+     }
+     rotate Amt translate <-3,0,0>
+ }
+ object { Thing
+     normal{
+       slope_map {      // scallop_wave the hard way
+         [0   <0, 1>]   // start at bottom and slope up
+         [0.5 <1, 0>]   // halfway through reach top flat
+         [1   <0,-1>]   // finish on down slope at bottom
+       }
+     }
+     rotate Amt translate <0,0,0>
+ }
+
+ object { Thing
+     normal{
+       slope_map {      // scallop_wave with steep slopes
+         [0   <0, 3>]   // 3.0 is suggested max
+         [0.5 <1, 0>]   // halfway through reach top flat
+         [1   <0,-3>]   // what goes up...
+       }
+     }
+     rotate Amt translate <3,0,0>
+ }
+
+ // bottom row, left to right
+ object { Thing
+     normal{
+       slope_map {      // Now let's get fancy
+         [0.0  <0, 1>]   // Do tiny tringle here
+         [0.2  <1, 1>]   //  down
+         [0.2  <1,-1>]   //     to
+         [0.4  <0,-1>]   //       here.
+         [0.4  <0, 0>]   // Flat area
+         [0.5  <0, 0>]   //   through here.
+         [0.5  <1, 0>]   // Square wave leading edge
+         [0.6  <1, 0>]   //   trailing edge
+         [0.6  <0, 0>]   // Flat again
+         [0.7  <0, 0>]   //   through here.
+         [0.7  <0, 3>]   // Start scallop
+         [0.8  <1, 0>]   //   flat on top
+         [0.9  <0,-3>]   //     finish here.
+         [0.9  <0, 0>]   // Flat remaining through 1.0
+       }
+       scale 2  // so you can see details
+     }
+     rotate Amt translate <-3,-2,0>
+ }
+
+ object { Thing
+     normal{
+       slope_map {      // Surf's up dude!
+         [0   <0,  0.0>]   // start at bottom flat
+         [0.7 <1,  0.0>]   // S-curv to flat top
+         [0.7 <0,  0.0>]   // drop to bottom
+         [1.0 <0,  0.0>]   //  flat
+       }
+     }
+     rotate Amt translate <0,-2,0>
+ }
+ object { Thing
+     normal{
+       slope_map {      // inverse scallop_wave
+         [0   <0, 0>]   // start at bottom flat
+         [0.5 <1, 3>]   // halfway through reach bottom peak
+         [0.5 <1,-3>]   // star down again
+         [1   <0, 0>]   // finish on flat bottom
+       }
+     }
+     rotate Amt translate <3,-2,0>
+ }
+
+
+
+### PATTERNS ===================================================================
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Agate pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     agate color_map{[0.0 Black][1.0 White]}
+     scale 0.5
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     agate 1.6
+     scale 0.5
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Bozo pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     bozo color_map{[0.0 Black][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     bozo 2.6
+     scale 0.24
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Brick pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     brick color rgb<1,1,1> color rgb<0.5,0.1,0>
+     scale 0.1
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     pigment_pattern{
+          brick color rgb<1,1,1> color rgb<0.5,0.1,0>
+          scale 0.1
+        }
+     , 0.5
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Bumps pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     bumps color_map{[0.0 Black][1.0 White]}
+     scale 0.124
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     bumps 0.5
+     scale 0.124
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision Ray Tracer Scene Description File
+// File: crackle_form.pov
+// Vers: 3.5
+// Desc: crackle form demonstration scene
+// Date: July/August 2001
+// Auth: Christoph Hormann
+
+// -w240 -h180 +sf1 +ef11 +kff20
+// -w320 -h240 +a0.3 +sf1 +ef11 +kff20
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#if (!clock_on)
+  #warning concat("This scene should be rendered as an animation\n",
+                  "use '+sf1 +ef11' for rendering all versions.\n")
+#end
+
+light_source {
+  <1.9, 1.6, 2.7>*10000
+  rgb 1.3
+}
+
+//-------------------------------------------------------------------------
+// This scene uses a non-standard camera set-up.
+// (See CAMERA in the included documentation for details.)
+// If you are new to POV-Ray, you might want to try a different demo scene.
+//-------------------------------------------------------------------------
+camera {
+  location    <-7, 24, 12>
+  direction   y
+  sky         z
+  up          z
+  right       (4/3)*x
+  look_at     <0, 0, 0>
+  angle       10
+}
+
+
+#macro P_Crack()
+  crackle
+  #if (frame_number=1)
+    form <-1,1,0>
+  #end
+  #if (frame_number=2)
+    form <1,0,0>
+  #end
+  #if (frame_number=3)
+    form <-0.5,0.9,0>
+  #end
+  #if (frame_number=4)
+    form <1.1,0,0>
+    metric 4
+  #end
+  #if (frame_number=5)
+    form <1.1,0,0>
+    metric 6
+  #end
+  #if (frame_number=6)
+    form <-0.2,0,0.9>
+  #end
+  #if (frame_number=7)
+    form <-0.5,-0.2,0.6>
+  #end
+  #if (frame_number=8)
+    form <0.5,0.5,-0.6>
+  #end
+  #if (frame_number=9)
+    form <0.4,0.4,-0.4>
+    metric 4
+  #end
+  #if (frame_number=10)
+    form <-0.5,1.0,-0.5>
+  #end
+  #if (frame_number=11)
+    form <1,-0.5,-0.25>
+  #end
+#end
+
+#declare P_Crack2=
+pigment {
+  P_Crack()
+}
+
+
+#declare P_Crack_Col=
+  pigment {
+    P_Crack()
+    color_map {
+      [ 0.0000 color rgb<0.2353, 0.1333, 0.4824> ]
+      [ 0.1000 color rgb<0.5647, 0.4353, 0.8000> ]
+      [ 0.2000 color rgb<0.6549, 0.4000, 0.8275> ]
+      [ 0.3000 color rgb<0.7294, 0.4039, 0.8471> ]
+      [ 0.7000 color rgb<0.9059, 0.5255, 0.8980> ]
+      [ 0.8000 color rgb<1.0000, 0.6784, 0.8549> ]
+      [ 0.9000 color rgb<0.9300, 0.6800, 0.5922> ]
+      [ 0.9300 color rgb<0.9000, 0.7000, 0.4078> ]
+      [ 0.9800 color rgb<0.9200, 0.7000, 0.3294> ]
+      [ 1.0000 color rgb<1.3000, 0.2000, 0.8000> ]
+    }
+    scale 0.9
+  }
+
+
+plane { z, -1.0
+
+  texture {
+    pigment {
+      P_Crack_Col
+    }
+  }
+}
+
+#declare fn_Crack=
+  function {
+    pigment {
+      P_Crack2
+      color_map { [0 rgb 0][1 rgb 1] }
+      scale 0.9
+    }
+  }
+
+isosurface {
+  #if (frame_number=0)
+    function { -(fn_Crack(x, y, z).gray-0.4) }
+  #end
+  #if (frame_number=1)
+    function { -(fn_Crack(x, y, z).gray-0.4) }
+  #end
+  #if (frame_number=2)
+    function { (fn_Crack(x, y, z).gray-0.4) }
+  #end
+  #if (frame_number=3)
+    function { -(fn_Crack(x, y, z).gray-0.5) }
+  #end
+  #if (frame_number=4)
+    function { (fn_Crack(x, y, z).gray-0.4) }
+  #end
+  #if (frame_number=5)
+    function { (fn_Crack(x, y, z).gray-0.4) }
+  #end
+  #if (frame_number=6)
+    function { (fn_Crack(x, y, z).gray-0.5) }
+  #end
+  #if (frame_number=7)
+    function { -(fn_Crack(x, y, z).gray-0.25) }
+  #end
+  #if (frame_number=8)
+    function { -(fn_Crack(x, y, z).gray-0.28) }
+  #end
+  #if (frame_number=9)
+    function { -(fn_Crack(x, y, z).gray-0.17) }
+  #end
+  #if (frame_number=10)
+    function { -(fn_Crack(x, y, z).gray-0.2) }
+  #end
+  #if (frame_number=11)
+    function { -(fn_Crack(x, y, z).gray-0.17) }
+  #end
+
+  #if (frame_number=0)
+    max_gradient 2.4
+  #end
+  #if (frame_number=1)
+    max_gradient 2.4
+  #end
+  #if (frame_number=2)
+    max_gradient 1.2
+  #end
+  #if (frame_number=3)
+    max_gradient 1.7
+  #end
+  #if (frame_number=4)
+    max_gradient 1.2
+  #end
+  #if (frame_number=5)
+    max_gradient 1.2
+  #end
+  #if (frame_number=6)
+    max_gradient 1.4
+  #end
+  #if (frame_number=7)
+    max_gradient 1.5
+  #end
+  #if (frame_number=8)
+    max_gradient 1.8
+  #end
+  #if (frame_number=9)
+    max_gradient 1.5
+  #end
+  #if (frame_number=10)
+    max_gradient 2.25
+  #end
+  #if (frame_number=11)
+    max_gradient 2
+  #end
+
+  accuracy 0.005
+  contained_by { box { <-1.0,-1.0,-1.0>,<1.0,1.0,1.0> } }
+
+  texture {
+    pigment { rgb <0.2, 0.8, 0.5> }
+    finish {
+      specular 0.5
+      roughness 0.04
+      diffuse 0.8
+      brilliance 2.0
+      ambient 0.1
+    }
+  }
+}
+
+
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// This file demonstrates some uses of the "crackle solid" pattern,
+// with a fake-granite tiled floor, and a zinc bucket.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+#include "woods.inc"
+
+camera { location <70,100,60>
+         right   x*image_width/image_height
+         angle 40
+         look_at <0,15,0>
+       }
+
+light_source {<40,350,300> White*1.5 spotlight point_at 0 radius 9 falloff 11}
+
+//--textures definitions--------------------------------
+
+#declare Stone1 = texture {
+ pigment {crackle solid
+          color_map {[0 Black][.2 Wheat*.5][.4 Black][.6 Wheat*.5][.8 Black][1 Wheat*.5]}
+          }
+ finish {phong .7 reflection {.4}}
+ normal {bumps .1 scale .2}
+ scale .1
+}
+
+#declare Stone2 = texture {
+ pigment {crackle solid
+          color_map {[0 Red][.2 Wheat][.4 Tan][.6 Wheat][.8 Red*.5][1 Wheat]}
+          }
+ scale .05
+}
+
+#declare Zinc1 = texture {
+ pigment {Gray80}
+ finish {phong .7 reflection {.3}}
+ normal {bumps .002 scale <.1,.1,10>}
+}
+
+#declare Zinc2 = texture {
+ pigment {Gray90}
+ finish {phong .6 reflection {.05}}
+ normal {bumps .002 scale <.1,.1,10> rotate y*90}
+}
+
+#declare Zinc3 = texture {
+ pigment {Gray60}
+ finish {phong .5 reflection {.3}}
+ normal {bumps .002 scale <.1,.1,10> rotate y*180}
+}
+
+#declare Zinc = texture {
+ crackle solid
+ texture_map {
+  [0.0 Zinc1]
+  [0.5 Zinc2]
+  [1.0 Zinc3]
+ }
+ scale 1
+}
+
+//--floor--------------------------------
+plane {y,0
+       texture {checker texture {Stone1} texture {Stone2} scale 20 translate y*10}
+       }
+
+//--bucket--------------------------------
+union {
+ cylinder {<0,0,0>,<0,2,0>,15}
+ difference {
+  cone {<0,2,0>,15,<0,40,0>,20}
+  cone {<0,2,0>,14.9,<0,41,0>,19.9}
+ }
+ torus {20 .4 translate y*40}
+  union {
+   torus {22 .4 clipped_by {plane {x,0}}}
+   cylinder {<0,0,18>,<0,0,22>,.4}
+   sphere {<0,0,22>,.4}
+   cylinder {<0,0,-18>,<0,0,-22>,.4}
+   sphere {<0,0,-22>,.4}
+   cylinder {<-21.5,0,-5>,<-21.5,0,5>,1.5 texture {T_Wood21 scale 20}}
+   rotate z*150
+   translate y*35}
+ texture {Zinc}
+ translate z*15
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Crackle pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     crackle color_map{[0.0 Black][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     crackle 1.6
+     scale 0.24
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision Ray Tracer Scene Description File
+// File: crackle2.pov
+// Desc: crackle pattern demonstration scene
+// Date: April 2001
+// Auth: Christoph Hormann
+
+// -w400 -h200
+// -w512 -h256 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+light_source {
+   <1.6, 1.9, 2.7>*10000
+   rgb 1.3
+}
+
+//-------------------------------------------------------------------------
+// This scene uses a non-standard camera set-up.
+// (See CAMERA in the included documentation for details.)
+// If you are new to POV-Ray, you might want to try a different demo scene.
+//-------------------------------------------------------------------------
+camera {
+   location    <7, 24, 12>
+   direction   y
+   sky         z
+   up          z
+   right       2.5*x
+   look_at     <0.0, 0, 0.3>
+   angle       30
+}
+
+
+sphere {
+   <0, 0, 0>, 1
+   texture {
+      pigment {
+         color rgb < 0.60, 0.70, 0.95 >
+      }
+      finish {
+         diffuse 0
+         ambient 1
+      }
+   }
+   scale 100000
+   no_shadow
+   hollow on
+}
+
+plane {
+   z, 0
+
+   texture {
+      pigment {
+         crackle
+         color_map {
+            [ 0.0 color rgb<0.356, 0.321, 0.274> ]
+            [ 0.1 color rgb<0.611, 0.500, 0.500> ]
+            [ 0.4 color rgb<0.745, 0.623, 0.623> ]
+            [ 1.0 color rgb<0.837, 0.782, 0.745> ]
+         }
+         warp { turbulence 0.6 }
+      }
+      finish {
+         diffuse 0.6
+         ambient 0.1
+         specular 0.2
+         reflection {
+            0.2, 0.6
+            fresnel on
+         }
+         conserve_energy
+      }
+
+   }
+
+}
+
+#macro Objs(Metr)
+
+union {
+   #local fn_Crack=
+   function {
+      pigment {
+         crackle
+         metric Metr
+         color_map { [0 rgb 0][1 rgb 1] }
+         scale 0.7
+      }
+   }
+
+
+   #local T_Crack=
+   texture {
+      pigment {
+         crackle
+         metric Metr
+         color_map {
+            [ 0.0000 color rgb<0.2353, 0.1333, 0.4824> ]
+            [ 0.1000 color rgb<0.5647, 0.4353, 0.8000> ]
+            [ 0.2000 color rgb<0.6549, 0.4000, 0.8275> ]
+            [ 0.3000 color rgb<0.7294, 0.4039, 0.8471> ]
+            [ 0.7000 color rgb<0.9059, 0.5255, 0.8980> ]
+            [ 0.8000 color rgb<1.0000, 0.6784, 0.8549> ]
+            [ 0.9000 color rgb<0.9725, 0.6980, 0.5922> ]
+            [ 0.9300 color rgb<0.9490, 0.7255, 0.4078> ]
+            [ 0.9800 color rgb<0.9725, 0.7255, 0.3294> ]
+            [ 1.0000 color rgb<0.3000, 0.2000, 0.8000> ]
+         }
+         scale 0.7
+      }
+      finish {
+         ambient 0.1
+         diffuse 0.7
+         brilliance 1.3
+         specular 0.3
+      }
+   }
+
+   superellipsoid {
+      <0.1, 0.1>
+      scale <1.0, 1.0, 0.6>
+      texture { T_Crack }
+      translate <0.0, 3.0, 0.3>
+   }
+
+   superellipsoid {
+      <0.1, 0.1>
+      scale <1.0, 1.0, 0.6>
+
+      texture {
+         pigment { rgb <0.2, 0.8, 0.5> }
+         finish {
+            specular 0.5
+            roughness 0.04
+            diffuse 0.8
+            brilliance 2.0
+            ambient 0.1
+         }
+         normal {
+            crackle 0.7
+            metric Metr
+            scale 0.7
+         }
+      }
+
+      translate <0.0, -3.0, 0.3>
+   }
+
+   #if (Metr != 1)
+      isosurface {
+         function { z-fn_Crack(x, y, 0.6).red*0.35 }
+         //evaluate 1, 1.2, 0.99
+         max_gradient 1.5
+         accuracy 0.001
+         contained_by { box { <-1.0,-1.0,-0.6>,<1.0,1.0,1.1> } }
+
+         texture {
+            pigment { rgb <0.3, 0.2, 0.95> }
+            finish {
+               specular 0.5
+               roughness 0.04
+               diffuse 0.8
+               brilliance 2.0
+               ambient 0.1
+            }
+         }
+
+         translate 0.6*z
+      }
+   #end
+
+
+   object {
+      text
+      {
+         ttf
+         "crystal.ttf",
+         concat("metric ", str(Metr,0,1)),
+         0.1, 0
+
+         rotate 90*x
+         rotate 180*z
+         scale 0.3
+         translate <0.85, 4.01, 0.5>
+
+         texture {
+            pigment { color Red*0.8 }
+         }
+      }
+   }
+
+   translate -1*y
+}
+#end
+
+
+object { Objs(1)   translate -5.0*x }
+object { Objs(1.5) translate -2.5*x }
+object { Objs(2)   translate  0.0*x }
+object { Objs(2.2) translate  2.5*x }
+object { Objs(3)   translate  5.0*x }
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision Ray Tracer Scene Description File
+// File: crackle3.pov
+// Desc: crackle pattern demonstration scene
+// Date: April 2001
+// Auth: Christoph Hormann
+
+// -w400 -h200
+// -w512 -h256 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+global_settings {
+  // conditionally comply with gamma correction handling
+  #if (version < 3.7)
+    assumed_gamma 1.0
+  #end
+}
+
+light_source {
+   <1.6, 1.9, 2.7>*10000
+   rgb 1.3
+}
+
+//-------------------------------------------------------------------------
+// This scene uses a non-standard camera set-up.
+// (See CAMERA in the included documentation for details.)
+// If you are new to POV-Ray, you might want to try a different demo scene.
+//-------------------------------------------------------------------------
+camera {
+   location    <7, 24, 12>
+   direction   y
+   sky         z
+   up          z
+   right       2.5*x
+   look_at     <0.0, 0, 0.3>
+   angle       30
+}
+
+
+sphere {
+   <0, 0, 0>, 1
+   texture {
+      pigment {
+         color rgb < 0.60, 0.70, 0.95 >
+      }
+      finish {
+         diffuse 0
+         ambient 1
+      }
+   }
+   scale 100000
+   no_shadow
+   hollow on
+}
+
+plane {
+   z, 0
+
+   texture {
+      pigment {
+         crackle
+         color_map {
+            [ 0.0 color rgb<0.356, 0.321, 0.274> ]
+            [ 0.1 color rgb<0.611, 0.500, 0.500> ]
+            [ 0.4 color rgb<0.745, 0.623, 0.623> ]
+            [ 1.0 color rgb<0.837, 0.782, 0.745> ]
+         }
+         warp { turbulence 0.6 }
+      }
+      finish {
+         diffuse 0.6
+         ambient 0.1
+         specular 0.2
+         reflection {
+            0.2, 0.6
+            fresnel on
+         }
+         conserve_energy
+      }
+
+   }
+
+}
+
+#macro Objs(Offs)
+
+union {
+   #local fn_Crack=
+   function {
+      pigment {
+         crackle
+         metric 2.5
+         offset Offs
+         color_map { [0 rgb 0][1 rgb 1] }
+         scale 0.7
+      }
+   }
+
+
+   #local T_Crack=
+   texture {
+      pigment {
+         crackle
+         metric 2.5
+         offset Offs
+         color_map {
+            [ 0.0000 color rgb<0.2353, 0.1333, 0.4824> ]
+            [ 0.1000 color rgb<0.5647, 0.4353, 0.8000> ]
+            [ 0.2000 color rgb<0.6549, 0.4000, 0.8275> ]
+            [ 0.3000 color rgb<0.7294, 0.4039, 0.8471> ]
+            [ 0.7000 color rgb<0.9059, 0.5255, 0.8980> ]
+            [ 0.8000 color rgb<1.0000, 0.6784, 0.8549> ]
+            [ 0.9000 color rgb<0.9725, 0.6980, 0.5922> ]
+            [ 0.9300 color rgb<0.9490, 0.7255, 0.4078> ]
+            [ 0.9800 color rgb<0.9725, 0.7255, 0.3294> ]
+            [ 1.0000 color rgb<0.3000, 0.2000, 0.8000> ]
+         }
+         scale 0.7
+      }
+      finish {
+         ambient 0.1
+         diffuse 0.7
+         brilliance 1.3
+         specular 0.3
+      }
+   }
+
+   superellipsoid {
+      <0.1, 0.1>
+      scale <1.0, 1.0, 0.6>
+      texture { T_Crack }
+      translate <0.0, 3.0, 0.3>
+   }
+
+   superellipsoid {
+      <0.1, 0.1>
+      scale <1.0, 1.0, 0.6>
+
+      texture {
+         pigment { rgb <0.2, 0.8, 0.5> }
+         finish {
+            specular 0.5
+            roughness 0.04
+            diffuse 0.8
+            brilliance 2.0
+            ambient 0.1
+         }
+         normal {
+            crackle 0.7
+            metric 2.5
+            offset Offs
+            scale 0.7
+         }
+      }
+
+      translate <0.0, -3.0, 0.3>
+   }
+
+   isosurface {
+      function { z-fn_Crack(x, y, 0.6).red*0.35 }
+      max_gradient 1.1 + (1-Offs)*0.4
+      accuracy 0.001
+      contained_by { box { <-1.0,-1.0,-0.6>,<1.0,1.0,1.1> } }
+
+      texture {
+         pigment { rgb <0.3, 0.2, 0.95> }
+         finish {
+            specular 0.5
+            roughness 0.04
+            diffuse 0.8
+            brilliance 2.0
+            ambient 0.1
+         }
+      }
+
+      translate 0.6*z
+   }
+
+   object {
+      text {
+         ttf "crystal.ttf",
+         concat("offset ", str(Offs,0,2)),
+         0.1, 0
+
+         rotate 90*x
+         rotate 180*z
+         scale 0.3
+         translate <0.85, 4.01, 0.5>
+
+         texture {
+            pigment { color Red*0.8 }
+         }
+      }
+   }
+
+   translate -1*y
+}
+#end
+
+
+object { Objs(0.0)  translate -5.0*x }
+object { Objs(0.25) translate -2.5*x }
+object { Objs(0.5)  translate  0.0*x }
+object { Objs(0.75) translate  2.5*x }
+object { Objs(1.0)  translate  5.0*x }
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Density_file pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     density_file df3 "spiral.df3" interpolate 1
+     translate <-0.5,-0.5,-0.5>
+     scale <1,1,0.1>
+     translate <0,0,-0.75>
+     color_map{[0.0 Black][1.0 White]}
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     density_file df3 "spiral.df3" ,2.6
+     interpolate 1
+     translate <-0.5,-0.5,-0.5>
+     scale <1,1,0.1>
+     translate <0,0,-0.75>
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Dents pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     dents color_map{[0.0 Black][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     dents 5.6
+     scale 0.24
+   }
+   finish{  phong 1 phong_size 400  reflection{ 0.1 }}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: fractals1.pov
+// Last updated: 6/5/02
+// Author: Juha Nieminen
+// Description:
+// Demonstrates the use of fractal patterns.
+// The fractals used are:
+// - Floor: magnet1m as both pigment and normal with
+//   interior type 1 in both and exterior type 5 in pigment.
+// - Left box: A julia pigment with interior type 1.
+// - Middle box: A mandelbrot pigment with interior type 5
+//   and exterior type 6.
+// - Right box: A mandel4 pigment with interior type 1
+//   and exterior type 5.
+// - Sphere: A julia4 normal.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings {
+  assumed_gamma 1.0
+  max_trace_level 5
+}
+
+camera { location <-1,2,-5>*1.2
+         right     x*image_width/image_height
+         look_at <0,0.2,0>
+         angle 35
+        }
+light_source { <10,50,-30>, 1 }
+
+// Floor made with magnet1m:
+plane
+{ -z,0
+  texture
+  { pigment
+    { magnet 1 mandel 50
+      color_map
+      { [0 rgb <1,.8,.5>]
+        [1 rgb <.8,.5,.4>]
+      }
+      interior 1,200
+      exterior 5,1
+    }
+    normal
+    { magnet 1 mandel 50 .2
+      slope_map
+      { [0 <1,0>][1 <0,-1>]
+      }
+      interior 1,200
+      accuracy .0005
+    }
+    finish { specular .5 reflection .5 }
+
+    translate <-1.9,-1,0>
+    scale 20
+  }
+  rotate x*90
+}
+
+// Julia:
+box
+{ <-2,-2,0><2,2,-.1>
+  pigment
+  { julia <.3,.44> 30
+    interior 1,1
+    color_map
+    { [0 rgb <.3,.2,.1>][.25 rgb x][.5 rgb x+y][1 rgb 1]
+    }
+    scale 1.3
+  }
+  translate y*2 scale .4
+  rotate <30,-20,0>
+  translate <-1.1,0,2>
+}
+
+// Mandel:
+box
+{ <-2,-2,0><2,2,-.1>
+  pigment
+  { mandel 10 color_map
+    { [0 rgb 0][.25 rgb z][.5 rgb <.1,.8,1>][1 rgb 1]
+    }
+    interior 5,2
+    exterior 6,.05
+    translate x*.6
+    scale 1.3
+  }
+  translate y*2 scale .4
+  rotate <30,0,0>
+  translate <.5,0,2.2>
+}
+
+// Mandel4:
+box
+{ <-2,-2,0><2,2,-.1>
+  pigment
+  { mandel 50
+    exponent 4
+    interior 1,.5
+    exterior 5,.01
+    color_map
+    { [0 rgb 0][.3 rgb y][.6 rgb <.5,1,0>][1 rgb x+y]
+    }
+    scale 1.3
+  }
+  translate y*2 scale .4
+  rotate <30,20,0>
+  translate <2,0,1.6>
+}
+
+// Julia4:
+sphere
+{ 0,2
+  pigment { rgb 1 }
+  normal
+  { julia <-.5,.5> 10 1
+    exponent 4
+    slope_map { [0 <0,0>][.5 <.5,1>][1 <1,0>] }
+    scale 1.5
+    rotate x*30
+  }
+  finish { specular .5 reflection .4 }
+  translate y*2
+  scale .15 translate <-.2,0,-1>
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: fractals2.pov
+// Last updated: 6/5/02
+// Author: Juha Nieminen
+// Description:
+// Demonstrates the use of fractal patterns.
+// The fractals used are:
+// - Wall: A magnet2m pigment with interior type 1.
+// - Floor: A mandelbrot pigment and normal with
+//   interior type 1.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings {
+  assumed_gamma 1.0
+  max_trace_level 5
+}
+
+camera { location <-2,5,-10>*1.4
+         look_at <0,-1,0>
+         right   x*image_width/image_height
+         angle   35
+       }
+light_source { <0,0,-.1>,<1,.95,.8> }
+
+// Magnet2m:
+plane
+{ -z,0
+  pigment
+  { magnet 2 mandel 300
+    color_map
+    { [0 rgb -.5]
+      [.2 rgb x]
+      [.3 rgb x+y]
+      [.5 rgb <.2,.5,.9>]
+      [1 rgb 1]
+    }
+    interior 1,200000
+    translate <-1.693285,-.69524>
+    scale 10000
+  }
+  finish { ambient 1 }
+}
+
+// Mandel:
+plane
+{ y,-1
+  texture
+  { pigment
+    { mandel 50
+      interior 1,5
+      color_map
+      { [0 rgb <.4,.2,.1>]
+        [.3 rgb <.8,.4,.1>]
+        [.6 rgb <1,.8,.4>]
+        [1 rgb 1]
+      }
+    }
+    normal
+    { mandel 80 1
+      interior 1,5
+      slope_map { [0 <0,0>][.5 <.5,1>][1 <1,0>] }
+    }
+    finish { specular 1 reflection .3 }
+
+    translate <.2,-1>
+    scale 10
+    rotate x*90
+  }
+}
+
+union
+{ sphere { <3.5,-.5,-1>,.5 }
+  sphere { <-3.5,-.5,-1>,.5 }
+  pigment { rgb <.5,1,.5> }
+  finish { specular .8 reflection .5 }
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: fractals3.pov
+// Last updated: 6/5/02
+// Author: Juha Nieminen
+// Description:
+// Demonstrates the use of fractal patterns.
+// Three parts of the Mandelbrot fractal forming an acronym.
+
+// In WinPov, use the right mouse button to copy the following
+// to the command line:
+// +W800 +H267 +a0.1
+
+#version 3.7;
+
+global_settings {
+  assumed_gamma 1.0
+}
+
+#declare P =
+  box
+  { <-2,-2,0><2,2,.1>
+    pigment
+    { mandel 1000
+      color_map { [0 rgb 0][.5 rgb y+z][1 rgb x+y][1 rgb 0] }
+      translate -<-.7653,.1005>
+      scale 1000
+      scale <-1,1,1>
+    }
+    finish { ambient 1 }
+  }
+
+#declare O =
+  box
+  { <-2,-2,0><2,2,.1>
+    pigment
+    { mandel 10000
+      color_map { [0 rgb 0][.5 rgb x][1 rgb x+y][1 rgb 0] }
+      translate
+       -<(-0.749979169204317290207435344827-0.749968488051973540207435344827)/2,
+         (0.008640613399268010370560473549+0.008630313716650822870560473549)/2>
+      scale 350000
+      rotate z*-45
+    }
+    finish { ambient 1 }
+  }
+
+#declare V =
+  box
+  { <-2,-2,0><2,2,.1>
+    pigment
+    { mandel 300
+      color_map { [.1 rgb 0][.5 rgb y][1 rgb 1][1 rgb 0] }
+      translate
+       -<(-0.596201137068877025831455721002-0.596168159011015697706455721002)/2,
+         (0.665096856611702768182969470741+0.665064938141339606920170835929)/2>
+      scale 130000
+      rotate z*-40
+    }
+    finish { ambient 1 }
+  }
+
+camera {
+          right x*3
+          location -z*4
+          look_at 0
+        }
+object { P translate -x*4 }
+object { O }
+object { V translate x*4 }
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Gradient pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     gradient x  color_map{[0.0 Black][0.1 Black][0.9 White][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     gradient x,  5.6
+     scale 0.24
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 }}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Granite pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     granite color_map{[0.0 Black][0.2 Black][0.8 White][1.0 White]}
+     scale 1
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     granite 2.6
+     scale 1
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 }}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Hexagon pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     hexagon color Black color White color Gray50
+     scale 0.124
+     rotate<90,0,0>
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     hexagon 1.6
+     scale 0.124
+     rotate<90,0,0>
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 } }
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Leopard pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     leopard color_map{[0.0 Black] [1.0 White]}
+     scale 0.124
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     leopard 5.6
+     scale 0.124
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 } }
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Mandelbrot pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     mandel 200  color_map{[0.0 Black][0.1 Black][0.9 White][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     mandel 200,  5.6
+     scale 0.24
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 }}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Marble pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     marble color_map{[0.0 Black][0.1 Black][0.9 White][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     marble 1.6
+     scale 0.24
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 }}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Onion pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     onion color_map{[0.0 Black][0.05 Black][0.9 White][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     onion 3.6
+     scale 0.24
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 } }
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// this scene demonstrates a possible use of the pigment_pattern pattern
+
+// first, we'll define a reasonably complex pigment, made of wrinkles
+// and leopard pigments mapped within a bozo pattern in another pigment.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+//the two basic pigments
+#declare Pig1 = pigment {
+ leopard
+ color_map {
+  [0 SteelBlue]
+  [1 Yellow]
+ }
+ sine_wave
+ scale .05
+}
+
+#declare Pig2 = pigment {
+ wrinkles
+ color_map {
+  [0.0 Orange]
+  [0.5 White]
+  [1.0 White]
+ }
+}
+
+//the complex pigment
+#declare Pig3 = pigment {
+ bozo
+ pigment_map {
+ [0 Pig1]
+ [1 Pig2]
+ }
+ triangle_wave
+ scale 1.5
+}
+
+//the first, greenish, sphere shows the complex pigment as is
+sphere {<0,4,0>,4 pigment {Pig3}
+                  normal {pigment_pattern {Pig3} 10 }
+       }
+
+//the second, gray, sphere shows how the complex pigment becomes
+//a new pattern with values from 0 to 1
+sphere {<0,4,0>,4
+        pigment {pigment_pattern {Pig3}}
+        normal {pigment_pattern {Pig3} 3.4}
+        translate z*12
+        }
+
+//and the big torus shows the new pattern with an orange color_map,
+//and an added normal using the same pattern to create visible craters
+//on the surface, following the complex pattern.
+torus {7 2
+        pigment {pigment_pattern {Pig3}
+                 color_map {
+                  [0 OrangeRed*.2]
+                  [1 OrangeRed*1.5]
+                  }
+                 }
+        normal {pigment_pattern {Pig3} 3.4}
+        finish {phong .8 phong_size 10}
+        translate y*2
+        }
+
+//some usual scene elements
+camera { location  <10,20,10>
+         right     x*image_width/image_height
+         look_at   <0,2,4>
+         angle     50
+       }
+plane {y,0 pigment {rgb <.2,.4,.3>}}
+light_source {<20,30,40> White*1.2}
+light_source {<-20,30,-40> Wheat*.5 shadowless}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Quilted pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+camera {
+     location  <0,0,-20>
+     right     x*image_width/image_height
+     direction 3*z
+ }
+
+ light_source { <300, 500, -500> color Gray65}
+ light_source { <-50,  10, -500> color Gray45}
+
+ #default {
+     pigment { White }
+     finish { phong 1 phong_size 400  reflection{ 0.1 } }
+ }
+
+ #declare Bump_Value = 5;
+ #declare Pattern_Scale = .85;
+
+ #declare Thing =
+ box{ <-1,-1,-1>,<1,1,1> scale .8 }
+
+ // top row, left to right
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 0 control1 0
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <-3,2,0>
+ }
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 0 control1 0.5
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <0,2,0>
+ }
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 0 control1 1
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <3,2,0>
+ }
+
+ // middle row, left to right
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 0.5 control1 0
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <-3,0,0>
+ }
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 0.5 control1 0.5
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <0,0,0>
+ }
+
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 0.5 control1 1
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <3,0,0>
+ }
+
+ // bottom row, left to right
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 1 control1 0
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <-3,-2,0>
+ }
+
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 1 control1 0.5
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <0,-2,0>
+ }
+ object { Thing
+     normal{
+         quilted Bump_Value
+         control0 1 control1 1
+         scale Pattern_Scale
+     }
+     rotate <-30,30,0>
+     translate <3,-2,0>
+ }
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Quilted pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     quilted color_map{[0.0 Black][0.1 Black][0.9 White][1.0 White] }
+     control0 1 control1 1
+     scale 0.3
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     quilted 0.4
+     control0 1 control1 1
+     scale 0.3
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 }}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Radial pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     radial frequency 8  color_map{[0.0 Black][0.1 Black][0.9 White][1.0 White]}
+     scale 0.24
+     rotate<90,0,0>
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     radial 1.6
+     frequency 8
+     scale 0.24
+     rotate<90,0,0>
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 } }
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Ripples pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     ripples
+     color_map{
+       [0.0 Black][0.1 Black][0.9 White][1.0 White]
+     }
+     scale 0.1
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     ripples 1.4
+     scale 0.1
+   }
+   finish{phong 1 phong_size 400 reflection{ 0.1 } }
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: slopemt.pov
+// Date: August 30 2001
+// Auth: Rune S. Johansen
+// Desc: This scene demonstrates the use of several slope pattern textures.
+//       First render SLOPEMT_DAT.POV and then render this file.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+
+global_settings {
+  assumed_gamma 2.2
+}
+
+camera {
+   location <0,1,-40>
+   right   x*image_width/image_height
+   angle 50
+   look_at <0,3,0>
+}
+
+// A bright blue sky.
+sky_sphere {
+   pigment {
+      gradient y
+      color_map {
+         [0.0, color <1.0,1.0,1.0>]
+         [0.2, color <0.8,0.9,1.0>]
+         [1.0, color <0.5,0.6,0.8>]
+      }
+   }
+}
+
+// Some light.
+light_source {<200,200,-200>, color rgb 1.2}
+
+// And some simple water.
+plane {
+   y, 0
+   pigment {color <0,0,0>}
+   normal {bumps 0.03 scale 0.05}
+   finish {reflection 0.7}
+}
+
+
+// Here are the basic textures.
+
+// Plain yellowish sand for the beaches.
+#declare Sand_Texture =
+texture {
+   pigment {color <0.9,0.8,0.5>}
+}
+
+// A green texture for grass, plants, trees, etc.
+#declare Vege_Texture =
+texture {
+   pigment {color <0.1,0.6,0.1>}
+}
+
+// A brown texture for the soil, where the plants can't grow.
+#declare Soil_Texture =
+texture {
+   pigment {color <0.7,0.6,0.5>}
+}
+
+// A grey texture for the rock, where there is not even any soil.
+#declare Rock_Texture =
+texture {
+   pigment {color <0.6,0.6,0.6>}
+}
+
+// A white texture for the snow.
+#declare Snow_Texture =
+texture {
+   pigment {color rgb 1.0}
+   finish {ambient 0.1 diffuse 0.8}
+}
+
+// Now for the slope pattern textures.
+// Before looking into these, try having a look at the
+// texture of the height_field at the bottom of this file.
+
+// A texture that has vegetation on the flat and low areas,
+// soil on the steeper and higher areas, and rock on the
+// steepest and highest areas.
+// Notice how the altitude values fit to the pattern values
+// in the texture_map of the height_field below.
+#declare Vege2Rock_Texture =
+texture {
+   slope {
+      -y*3, 0, 0.5
+      altitude y, 0.005, 0.400
+   }
+   texture_map {
+      [0.45, Vege_Texture]
+      [0.55, Soil_Texture]
+      [0.65, Soil_Texture]
+      [0.65, Rock_Texture]
+   }
+}
+
+// A texture that has snow on the flat and high areas,
+// and rock on the steeper and lower areas.
+// Notice how the altitude values fit to the pattern values
+// in the texture_map of the height_field below.
+// The altitude values have been switched around because we
+// want the snow near the top and not near the bottom.
+#declare Rock2Snow_Texture =
+texture {
+   slope {
+      -y*2, 0, 0.5
+      altitude y, 1.000, 0.400
+   }
+   texture_map {
+      [0.75, Snow_Texture]
+      [0.75, Rock_Texture]
+   }
+}
+
+
+// Here is the mountain.
+height_field {
+   "slopemt_dat_36.jpg"
+   scale <80,12,80>
+   translate <-40,-2,-30>
+   texture {
+      gradient y
+      scale 10
+      texture_map { // Notice the values in this texture_map.
+                    // Then compare them to the altitude values
+                    // in the slope pattern textures above.
+
+         [0.000, Sand_Texture] // At the foot of the mountain
+         [0.005, Sand_Texture] // we want some plain sand.
+
+         [0.005, Vege2Rock_Texture] // Then some vegetation,
+         [0.400, Vege2Rock_Texture] // soil and rock.
+
+         [0.400, Rock2Snow_Texture] // Then from rock to snow
+         [1.000, Rock2Snow_Texture] // at the top.
+
+      }
+   }
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: slopemt.pov
+// Date: August 30 2001
+// Auth: Rune S. Johansen
+// Desc: This scene demonstrates the use of several slope pattern textures.
+//       First render SLOPEMT_DAT.POV and then render this file.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+
+global_settings {
+  assumed_gamma 1.0
+}
+
+camera {
+   location <0,1,-40>
+   right   x*image_width/image_height
+   angle 50
+   look_at <0,3,0>
+}
+
+// A bright blue sky.
+sky_sphere {
+   pigment {
+      gradient y
+      color_map {
+         [0.0, color <1.0,1.0,1.0>]
+         [0.2, color <0.6,0.75,1.0>*0.8]
+         [1.0, color <0.5,0.6,0.8>*0.5]
+      }
+   }
+}
+
+// Some light.
+light_source {<200,200,-200>, color rgb 1.2}
+
+// And some simple water.
+plane {
+   y, 0
+   pigment {color <0,0,0>}
+   normal {bumps 0.03 scale 0.05}
+   finish {reflection 0.7}
+}
+
+
+// Here are the basic textures.
+
+// Plain yellowish sand for the beaches.
+#declare Sand_Texture =
+texture {
+   pigment {color <0.9,0.75,0.3>*0.9}
+}
+
+// A green texture for grass, plants, trees, etc.
+#declare Vege_Texture =
+texture {
+   pigment{ color <0.2,0.5,0.1>*0.5}
+   normal { bumps 0.5 scale 0.005 }
+}
+
+// A brown texture for the soil, where the plants can't grow.
+#declare Soil_Texture =
+texture {
+   pigment {color <0.77,0.6,0.35>*0.7}
+}
+
+// A grey texture for the rock, where there is not even any soil.
+#declare Rock_Texture =
+texture {
+   pigment {color <0.6,0.6,0.6>*0.5}
+}
+
+// A white texture for the snow.
+#declare Snow_Texture =
+texture {
+   pigment {color rgb 1.0}
+  // finish {ambient 0.1 diffuse 0.8}
+}
+
+// Now for the slope pattern textures.
+// Before looking into these, try having a look at the
+// texture of the height_field at the bottom of this file.
+
+// A texture that has vegetation on the flat and low areas,
+// soil on the steeper and higher areas, and rock on the
+// steepest and highest areas.
+// Notice how the altitude values fit to the pattern values
+// in the texture_map of the height_field below.
+#declare Vege2Rock_Texture =
+texture {
+   slope {
+      -y*3, 0, 0.5
+      altitude y, 0.005, 0.400
+   }
+   texture_map {
+      [0.45, Vege_Texture]
+      [0.55, Soil_Texture]
+      [0.65, Soil_Texture]
+      [0.65, Rock_Texture]
+   }
+}
+
+// A texture that has snow on the flat and high areas,
+// and rock on the steeper and lower areas.
+// Notice how the altitude values fit to the pattern values
+// in the texture_map of the height_field below.
+// The altitude values have been switched around because we
+// want the snow near the top and not near the bottom.
+#declare Rock2Snow_Texture =
+texture {
+   slope {
+      -y*2, 0, 0.5
+      altitude y, 1.000, 0.400
+   }
+   texture_map {
+      [0.75, Snow_Texture]
+      [0.75, Rock_Texture]
+   }
+}
+
+
+// Here is the mountain.
+height_field {
+   "slopemt_dat_37.jpg"
+   scale <80,15,80>
+   translate <-40,-5.5,-30>
+   texture {
+      gradient y
+      scale 10
+      texture_map { // Notice the values in this texture_map.
+                    // Then compare them to the altitude values
+                    // in the slope pattern textures above.
+
+         [0.000, Sand_Texture] // At the foot of the mountain
+         [0.005, Sand_Texture] // we want some plain sand.
+
+         [0.005, Vege2Rock_Texture] // Then some vegetation,
+         [0.400, Vege2Rock_Texture] // soil and rock.
+
+         [0.400, Rock2Snow_Texture] // Then from rock to snow
+         [1.000, Rock2Snow_Texture] // at the top.
+
+      }
+   }
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: slopemt_dat.pov
+// Date: August 30 2001
+// Auth: Rune S. Johansen
+// Desc: Render this file and then render SLOPEMT.POV.
+//
+// +w400 +h400
+
+#version 3.7;
+
+global_settings {
+  assumed_gamma 2.2
+  noise_generator 1
+  hf_gray_16
+}
+
+camera {
+   location 22*y
+   up y
+   right x
+   look_at 0
+}
+
+light_source {y, color 1}
+
+plane {
+   y, 0
+   texture {
+      pigment {
+         wrinkles
+         scale 0.8
+         color_map {
+            [0.0, color rgb 0.0]
+            [1.0, color rgb 1.6]
+         }
+      }
+      finish {ambient 0 diffuse 1}
+   }
+   texture {
+      pigment {
+         spherical translate -0.2*x
+         color_map {
+            [0.0, color rgb 1 transmit 1.0]
+            [0.3, color rgb 1 transmit 0.3]
+            [1.0, color rgb 1 transmit 0.0]
+         }
+      }
+      finish {ambient 0 diffuse 1}
+   }
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: slopemt_dat.pov
+// Date: August 30 2001
+// Auth: Rune S. Johansen
+// Desc: Render this file and then render SLOPEMT.POV.
+//
+// +w400 +h400
+
+#version 3.6;
+
+global_settings {
+  assumed_gamma 2.2
+  noise_generator 1
+  hf_gray_16
+}
+
+camera {
+   location 22*y
+   up y
+   right x
+   look_at 0
+}
+
+light_source {y, color 1}
+
+plane {
+   y, 0
+   texture {
+      pigment {
+         wrinkles
+         scale 0.8
+         color_map {
+            [0.0, color rgb 0.3]
+            [1.0, color rgb 1.6]
+         }
+      }
+      finish {ambient 0 diffuse 1}
+   }
+   texture {
+      pigment {
+         spherical translate -0.2*x
+         color_map {
+            [0.0, color rgb 1 transmit 1.0]
+            [0.3, color rgb 1 transmit 0.3]
+            [1.0, color rgb 1 transmit 0.0]
+         }
+      }
+      finish {ambient 0 diffuse 1}
+   }
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Spiral type 1 pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     spiral1 5
+     color_map{[0.0 Black][0.1 Black][0.9 White][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     spiral1 5, 1.6
+     scale 0.24
+   }
+   finish{phong 0.8 phong_size 400 reflection{ 0.1 } }
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Spiral type 2 pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     spiral2 5 color_map{[0.0 Black][0.1 Black][0.9 White][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     spiral2 5, 1.0
+     scale 0.24
+   }
+   finish{phong 1 phong_size 400  reflection{ 0.1 } }
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Spotted pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+global_settings {assumed_gamma 2.2}
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     spotted color_map{[0.0 Black][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     spotted 0.6
+     scale 0.24
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision Raytracer sample file.
+// A tiling pattern demo scene by Samuel Benge
+
+/******************************************************************************
+ * $File: //depot/povray/smp/distribution/scenes/textures/patterns/tiling.pov $
+ * $Revision: #2 $
+ * $Change: 5430 $
+ * $DateTime: 2011/03/21 10:42:00 $
+ * $Author: jholsenback $
+ *****************************************************************************/
+
+#version 3.7;
+
+global_settings {assumed_gamma 1.0}
+background {rgb 1}
+
+camera {location <0,10,-10> look_at <0,0,0> right  x*image_width/image_height}
+light_source {<0, 30, -30> color rgb 1}
+
+#include "colors.inc"
+#include "math.inc"
+
+// see the documentaion for possible patterns and types
+#declare TilingPattern = 5;
+#declare TileTypes    = 3;
+
+// change to yes to write the color_map to a text file
+#declare WriteMap = no;
+
+// 0 = caulk off
+// 1 = caulk at every color
+// TileTypes = caulk at n TileTypes
+#declare CaulkAt    = 1;
+#declare CaulkSize  = 0.2;
+#declare CaulkColor = White;
+
+#declare ColorArray =
+  array[12]{
+    Red,        White,
+    Green,      Yellow,
+    Blue,       Cyan,
+    IndianRed,  Pink,
+    DarkGreen,  Turquoise
+    Violet,     BlueViolet
+  };
+
+#if (WriteMap)
+  #fopen MapFile "tilemap.txt" write
+  #write (MapFile, "texture {\n  pigment {\n   tiling ",TilingPattern, "\n   color_map {\n")
+#end
+
+plane{y,0
+  texture{
+    pigment{
+      tiling TilingPattern
+      color_map{
+        #declare V=0;
+        #declare V2 = 0;
+        #while(V<TileTypes*2)
+          #if(mod(V,CaulkAt*2) = CaulkAt*2-1 & CaulkAt!=0)
+            #declare ThisColor = CaulkColor;
+           #else
+            #declare ThisColor =
+              ColorArray[mod(V,dimension_size(ColorArray,1))];
+          #end
+          #declare incre = (1.0-CaulkSize)*even(V)+CaulkSize*odd(V);
+          [ V2/TileTypes ThisColor]
+          [ (V2+incre)/TileTypes ThisColor]
+
+          #if (WriteMap)
+            #write (MapFile, "    [", str(V2/TileTypes,5,4)," rgb <", vstr(3, ThisColor,", ", 0,4),">]\n")
+            #write (MapFile, "    [", str((V2+incre)/TileTypes,5,4)," rgb <", vstr(3, ThisColor,", ", 0,4),">]\n")
+          #end
+
+          #declare V = V + 1;
+          #declare V2 = V2 + incre;
+        #end
+      }
+    }
+  }
+}
+
+#if (WriteMap)
+  #write (MapFile, "    }\n  }\n}\n")
+  #fclose MapFile
+#end
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Waves pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+global_settings {assumed_gamma 2.2}
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     waves
+     color_map{
+       [0.0  Black][1.0  White]
+     }
+     scale 0.1
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     waves 0.4
+     scale 0.1
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Wrinkles pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.6;
+global_settings {assumed_gamma 2.2}
+
+#include "colors.inc"
+
+#declare T1=
+ texture{
+   pigment{
+     wrinkles color_map{[0.0 Black][1.0 White]}
+     scale 0.24
+   }
+ }
+
+#declare T2=
+ texture{
+   pigment{White}
+   normal{
+     wrinkles 0.6
+     scale 0.24
+   }
+   finish{phong 0.8 phong_size 200}
+ }
+
+#include "pignorm.inc"
+
+
+### PIGMENTS ===================================================================
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Blackhole example, used with woodgrain pattern
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "textures.inc"
+
+camera
+{
+  location <0,0,-15>
+  direction 3*z
+}
+
+light_source { <300, 500, -500> color Gray65}
+light_source { <-50,  10, -500> color Gray65}
+
+#declare Thing = box {<-7, -3, 0>, <7, 3, 1>}
+
+// Macro for the adjustment of images for POV-Ray 3.6.2
+// for image_map with assumed_gamma = 1.0 ;
+#macro Correct_Pigment_Gamma(Orig_Pig, New_G)
+  #local Correct_Pig_fn =
+      function{ pigment {Orig_Pig} }
+  pigment{ average pigment_map{
+   [function{ pow(Correct_Pig_fn(x,y,z).x, New_G)}
+               color_map{[0 rgb 0][1 rgb<3,0,0>]}]
+   [function{ pow(Correct_Pig_fn(x,y,z).y, New_G)}
+               color_map{[0 rgb 0][1 rgb<0,3,0>]}]
+   [function{ pow(Correct_Pig_fn(x,y,z).z, New_G)}
+               color_map{[0 rgb 0][1 rgb<0,0,3>]}]
+   }}
+#end //
+// "image_map" gamma corrected:
+//    Correct_Pigment_Gamma(
+//    pigment{ PIGMENT }
+//    , Correct_Gamma )
+//------------------------------------------------
+//------------------------------------------------
+
+#declare Tree =
+
+Correct_Pigment_Gamma( // gamma correction
+pigment
+{  DMFWood4
+  scale 2
+  translate <1/2,0,1>
+  rotate x*85
+  translate 10*y
+}
+, 2.2 ) //, New_Gamma
+
+object
+{
+  Thing
+  pigment
+  {
+    Tree
+    warp
+    {
+      black_hole <0, 0, 0>, 0.5
+      falloff 3
+      strength 0.75
+      inverse
+      repeat <2, 1.5, 0>
+      turbulence <1.0, 0.5, 0>
+    }
+    warp
+    {
+      black_hole <0.15, 0.125, 0>, 0.5
+      falloff 7
+      strength 1.0
+      repeat <1.25, 1.25, 0>
+      turbulence <0.25, 0.25, 0>
+      inverse
+    }
+    warp
+    {
+      black_hole <0, 0, 0>, 1.0
+      falloff 2
+      strength 2
+      inverse
+   }
+  }
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File by Dan Farmer
+// Cantelope segments.  Uses onion for the cantelope interior and skin.
+// Demonstrates intersection of spheres and planes, onion texture,
+// color maps.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings { assumed_gamma 1.0 }
+
+#include "colors.inc"
+
+// Macro for the adjustment of images for POV-Ray 3.6.2
+// for image_map with assumed_gamma = 1.0 ;
+#macro Correct_Pigment_Gamma(Orig_Pig, New_G)
+  #local Correct_Pig_fn =
+      function{ pigment {Orig_Pig} }
+  pigment{ average pigment_map{
+   [function{ pow(Correct_Pig_fn(x,y,z).x, New_G)}
+               color_map{[0 rgb 0][1 rgb<3,0,0>]}]
+   [function{ pow(Correct_Pig_fn(x,y,z).y, New_G)}
+               color_map{[0 rgb 0][1 rgb<0,3,0>]}]
+   [function{ pow(Correct_Pig_fn(x,y,z).z, New_G)}
+               color_map{[0 rgb 0][1 rgb<0,0,3>]}]
+   }}
+#end //
+// "image_map" gamma corrected:
+//    Correct_Pigment_Gamma(
+//    pigment{ PIGMENT }
+//    , Correct_Gamma )
+//------------------------------------------------
+//------------------------------------------------
+
+#declare Melon = texture {
+   finish { ambient 0.2 }
+Correct_Pigment_Gamma( // gamma correction
+   pigment {
+      onion
+      color_map {
+         [0.0   0.95 color Orange       color Orange ]
+         [0.95  0.96 color Orange       color GreenYellow ]
+         [0.96  0.98 color GreenYellow  color Khaki  ]
+         [0.98  1.00 color NewTan       color DarkTan ]
+      }
+   }
+, 1.5 ) //, New_Gamma
+}
+
+camera {
+   location <-2, 3, -3>
+   angle 40
+   right   x*image_width/image_height
+   look_at <0, 0.10, 0>
+}
+
+
+// Light source
+#declare Grayscale = 0.25;
+#declare AmbientLight = color red Grayscale green Grayscale blue Grayscale;
+
+light_source { <-20, 30, -100> color White }
+
+light_source { <0, 50, 10> color AmbientLight }
+
+box { <-6,-1,-5>,<8,0,8>
+      pigment{ color rgb<0.45,0.38,0.35>*0.2  }
+      translate<0,-1,0>
+    } //
+
+// Flat-topped sphere/plane intersection
+#declare MelonHalf = intersection {
+   sphere { <0, 0, 0>, 1 }                // outer wall
+   sphere { <0, 0, 0>, 0.65 inverse }     // inner wall
+   plane { y, 0 }                         // top surface
+
+   texture { Melon }
+   bounded_by { sphere { <0, 0, 0>, 1.001 } }
+}
+
+// Quarter Wedge of above melon
+#declare MelonWedge = intersection {
+   sphere { <0, 0, 0>, 1 }                 // outer wall
+   sphere { <0, 0, 0>, 0.65 inverse }      // inner wall
+   plane { y, 0 rotate  45*x }             // top surface
+   plane { y, 0 rotate -45*x }             // top surface
+
+   texture { Melon }
+   bounded_by { sphere { <0, 0, 0>, 1.001 } }
+}
+
+object { MelonHalf }
+object { MelonWedge rotate 30*y translate <2, 0, 2> }
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File by Dan Farmer
+// Demonstrates one use of the powerful filter parameter for colors.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.5 max_trace_level 5}
+
+#include "colors.inc"
+#include "skies.inc"
+
+camera {
+   location <-1.5, 30.0, -150.0>
+   angle 35
+   right   x*image_width/image_height
+   look_at <0.0, 25.0, 35.0>
+}
+
+light_source { <100.0, 100.0, -200.0> colour White }
+
+/* Now draw the sky */
+sky_sphere { S_Cloud3 }
+
+/* sphere { <0.0, 0.0, 0.0>, 200000.0
+
+   finish {
+      ambient 1.0
+      diffuse 0.0
+   }
+   pigment {
+      bozo
+      turbulence 0.35
+      colour_map {
+         [0.0 0.5   colour red 0.5 green 0.6 blue 1.0
+                    colour red 0.6 green 0.5 blue 1.0]
+         [0.5 0.6   colour red 0.5 green 0.6 blue 1.0
+                    colour red 1.0 green 1.0 blue 1.0]
+         [0.6 1.001 colour red 1.0 green 1.0 blue 1.0
+                    colour red 0.5 green 0.5 blue 0.5]
+      }
+      quick_color SkyBlue
+      scale 100000.0
+   }
+}  */
+
+plane { <0.0, 1.0, 0.0>, 0.0
+   pigment { NeonBlue }
+   finish {reflection 0.15}
+}
+
+/*******************************************************************************/
+/*
+  This next object uses the filter parameter to make a sphere with
+  a "cutout" checker pattern.
+
+  Don't limit this idea to checker patterns.  Try it with gradient and
+  bozo, for example. Or maybe marble with filter 1.0 for all but the
+  "veins".
+  Try a series of "nested" concentric spheres, all with the transparent
+  checker pattern as its surface, perhaps in different colors.
+*/
+
+sphere { <0.0, 25.0, 0.0>, 25.0
+   pigment {
+      checker colour YellowGreen colour Clear
+      quick_color White
+      scale <4.0, 50.0, 2.0>
+      rotate <90, 0.0, -90.0>
+   }
+   finish {
+      brilliance 8
+      phong 1
+      phong_size 100
+   }
+
+ }
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Crackle pattern example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "shapes.inc"
+#include "textures.inc"
+
+camera {
+    location <0,0,-3.5>
+    angle 65
+    right   x*image_width/image_height
+    look_at <0,0,0>
+}
+
+light_source { <-200.0, 200.0, -800.0> colour White }
+
+sphere { <-1.0 0.0 0.0> 1
+    pigment {
+        crackle
+        colour_map {
+            [0.05 colour rgb<0, 0, 0> ]
+            [0.08 colour rgb<0, 1, 1> ]
+            [0.10 colour rgb<0, 1, 1> ]
+            [1.00 colour rgb<0, 0, 1> ]
+        }
+    scale 0.3
+    }
+    finish { Shiny }
+}
+
+sphere { <1.0 0.0 0.0> 1
+    pigment {
+        crackle
+        turbulence 0.5
+        colour_map {
+            [0.05 colour rgb<0, 0, 0> ]
+            [0.08 colour rgb<0, 1, 1> ]
+            [0.10 colour rgb<0, 1, 1> ]
+            [1.00 colour rgb<0, 0, 1> ]
+        }
+    scale 0.3
+    }
+    finish { Shiny }
+}
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File  by Dan Farmer.
+// File creates a pentagram made up of dodecahedrons.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 2.2 }
+
+#include "shapes.inc"
+#include "shapes2.inc"
+#include "colors.inc"
+
+#declare AnObject =
+object {
+   Dodecahedron
+   bounded_by {sphere{<0, 0, 0>, 1.5}}    // Ver 3.0: leave this in. -dmf
+   translate y*1.8
+   rotate x*72
+}
+
+#declare VeryDarkWood1 = color red 0.30 green 0.15 blue 0.09;
+#declare DarkWood1 =  color red 0.60 green 0.30 blue 0.18;
+
+#default {
+   finish {
+      ambient 0.2
+      diffuse 0.8
+      specular 0.75
+      roughness 0.008
+      reflection 0.15
+   }
+}
+
+#declare Wooden1 =
+pigment {
+   wood
+   turbulence 0.04
+   octaves 3
+   scale <0.05, .05, 1>
+   colour_map {
+      [0.00, 0.10 color DarkWood1     color DarkWood1]
+      [0.10, 0.90 color DarkWood1     color VeryDarkWood1]
+      [0.90, 1.01 color VeryDarkWood1 color VeryDarkWood1]
+   }
+   rotate y*90
+}
+
+#declare DarkWood2 = color red 0.52 green 0.37 blue 0.26;
+#declare VeryDarkWood2  = color red 0.42 green 0.26 blue 0.15;
+#declare Wooden2 =
+pigment {
+   wood
+   turbulence 0.03
+   octaves 4
+   scale <0.05, .05, 1>
+   colour_map {
+      [0.00, 0.10 color DarkWood2     color DarkWood2]
+      [0.10, 0.90 color DarkWood2     color VeryDarkWood2]
+      [0.90, 1.01 color VeryDarkWood2 color VeryDarkWood2]
+   }
+   rotate y*90
+}
+
+#declare DarkWood3  = colour red 0.4 green 0.133 blue 0.066;
+#declare VeryDarkWood3  = colour red 0.2 green 0.065 blue 0.033;
+#declare Wooden3 =
+pigment {
+   wood
+   turbulence 0.05
+   octaves 2
+   scale <0.05, .05, 1>
+   colour_map {
+      [0.00, 0.10 color DarkWood3      color DarkWood3]
+      [0.10, 0.90 color DarkWood3      color VeryDarkWood3]
+      [0.90, 1.01 color VeryDarkWood3  color VeryDarkWood3]
+   }
+   rotate y*90
+}
+
+#declare DarkWood4 = colour red 0.888 green 0.600 blue 0.3;
+#declare VeryDarkWood4  = colour red 0.6 green 0.4 blue 0.2;
+#declare Wooden4 =
+pigment {
+   wood
+   turbulence 0.04
+   octaves 3
+   scale <0.05, .05, 1>
+   colour_map {
+      [0.00, 0.10 color DarkWood4      color DarkWood4]
+      [0.10, 0.90 color DarkWood4      color VeryDarkWood4]
+      [0.90, 1.01 color VeryDarkWood4  color VeryDarkWood4]
+   }
+   rotate y*90
+}
+
+#declare DarkWood5  = colour red 0.3 green 0.1 blue 0.05;
+#declare VeryDarkWood5  = colour red 0.25 green 0.07 blue 0.038;
+#declare Wooden5 =
+pigment {
+   wood
+   turbulence 0.05
+   octaves 6
+   scale <0.075, .075, 1>
+   colour_map {
+      [0.00, 0.10 color DarkWood5      color DarkWood5]
+      [0.10, 0.90 color DarkWood5      color VeryDarkWood5]
+      [0.90, 1.01 color VeryDarkWood5  color VeryDarkWood5]
+   }
+   rotate y*89
+}
+
+camera {
+   location  <0, 0, -6>
+   angle 40
+   right   x*image_width/image_height
+   look_at   <0, 0,   0>
+}
+
+light_source {<5,   5, -30>  color White }
+light_source {<0, -10, -10>  color Gray80 }
+
+
+// Counter-clockwise, from top
+
+object { AnObject texture {pigment{Wooden1} } }
+
+object { AnObject texture {pigment{Wooden2} } rotate  z*72 }
+
+object { AnObject texture {pigment{Wooden4} } rotate z*144 }
+
+object { AnObject texture {pigment{Wooden3} } rotate z*216 }
+
+object { AnObject texture {pigment{Wooden5} } rotate z*288 }
+
+background { Gray20 }
+
+// end of file
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Fun with filter (and other neat tricks).
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0 max_trace_level 5}
+
+#include "shapes.inc"
+#include "colors.inc"
+
+camera {
+   location  <0, 3, -4.5>
+   angle 65
+   right   x*image_width/image_height
+   look_at <0, 0.4, 0>
+}
+
+// Floor, with phoney gray "planks"
+plane { y, 0
+
+   pigment {
+      gradient x
+      color_map {
+         [0,    0.25 color Gray      color Gray]
+         [0.25, 0.50 color DimGray   color LightGray]
+         [0.50, 0.75 color LightGray color Gray]
+         [0.75, 1    color Gray      color Gray]
+      }
+      scale <0.45, 1, 1>
+   }
+   finish{ambient 0.1 diffuse 0.7}
+}
+
+//  Note: Clear = color White filter 1
+
+// A blobby sphere
+sphere  { <0.25, 1, -1.8>, 1
+    pigment {
+      bozo
+      turbulence 0.5
+      octaves 1
+      scale 0.2
+      color_map {
+         [0.0  color rgbf<1,0.1,0,0.5>]
+         [0.2  color rgbf<1,0.1,0,0.5>]
+         [0.6  color rgbf<1,0.8,0,1> ]
+         [0.6  color Clear]
+         [1.0  color Clear]
+      }
+   }
+   finish {ambient 0.15  diffuse 0.7}
+}
+
+// A sliced green box
+object { UnitBox
+   rotate 45*y
+   translate <-3.0, 1, 3>
+
+   pigment {
+      gradient y
+      color_map {
+         [0,   0.5 color rgb<0.1,0.6,0> color rgb<0.1,0.6,0> ]
+         [0.5, 1   color Clear color Clear]
+      }
+      scale 0.5
+   }
+}
+
+// A yellow, swirly finite cylinder
+object { Disk_Y
+   translate <3, 1, 4>
+
+   pigment {
+      gradient y
+      turbulence 2
+      octaves 1
+      color_map {
+         [0,   0.5 color rgb<1,0.7,0> color  rgb<1,0.7,0> ]
+         [0.5, 1   color Clear  color Clear]
+      }
+      scale 0.5
+   }
+}
+
+light_source { <20, 12, -40> colour White }
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Imagemap interpolation example
+// File by Drew Wells
+// NOTE: Requires "test.png"
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+
+#declare Bilinear = 2.0;
+#declare Norm_Dist = 4.0;
+#declare TestMap = "test.png"             // use your own, if you wish
+
+camera {
+   location <0.0, 0.0, -2.0>
+   angle 65
+   right   x*image_width/image_height
+   look_at <0, 0, 0>
+}
+
+light_source { <100.0, 120.0, -130.0> colour White }
+
+#default {
+   finish {
+      ambient 0.2
+      diffuse 0.8
+      specular 0.3
+      roughness 0.002
+      brilliance 2
+   }
+}
+
+// Left hemisphere: no interpolation
+union {
+    sphere { 0, 1.0
+       clipped_by { plane { x, 0 } }
+       pigment {
+          image_map {
+            png TestMap gamma 2.2
+            map_type 1                    // spherical map type
+            interpolate 2
+          }
+       }
+       translate -0.035*x                 // move hemi-sphere left
+    }
+
+    // Right hemisphere: try both Binlinear (1) and Norm_Dist (2)
+    sphere { 0, 1.0
+       clipped_by { plane { -x, 0 } }
+       pigment {
+          image_map {
+            png TestMap gamma 2.2
+            map_type 1                    // spherical map type
+            interpolate Norm_Dist
+          }
+       }
+       translate 0.035*x                  // move hemi-sphere right
+    }
+    rotate <45, 0, 0>
+}
+
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Iridescence "amount" example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "textures.inc"
+#include "shapes.inc"
+
+camera {
+  location <0, 0, -10>
+  right   x*image_width/image_height
+  angle 23
+  look_at  <0, 0, 0>
+}
+light_source { < 150, 150, -2500> colour Gray90 }
+
+// Top row: varies irid amount
+union {
+    sphere { <-1, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid {0.25 thickness 2/4 turbulence 0.75}
+        }
+    }
+    sphere { < 0, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid {0.5 thickness 2/4 turbulence 0.75}
+        }
+    }
+    sphere { < 1, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid  {0.75 thickness 2/4 turbulence 0.75}
+        }
+    }
+translate y*1
+}
+
+// Center row: varies irid thickness
+union {
+    sphere { <-1, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid {0.5 thickness 0.5 turbulence 0.5}
+        }
+    }
+    sphere { < 0, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid {0.5 thickness 2 turbulence 0.5}
+        }
+    }
+    sphere { < 1, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid  {0.5 thickness 8 turbulence 0.5}
+        }
+    }
+}
+
+// Right bottom: varies irid turbulence
+union {
+    sphere { <-1, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid {0.5 thickness 2 turbulence 0.1}
+        }
+    }
+    sphere { < 0, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid {0.5 thickness 2 turbulence 1}
+        }
+    }
+    sphere { < 1, 0, 0>, 0.45
+        pigment { White }
+        finish {
+            Shiny
+            diffuse 0.2
+            irid  {0.5 thickness 2 turbulence 2}
+        }
+    }
+translate -y*1
+}
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Image map example
+// File by Alexander Enzmann
+// NOTE: Requires "test.png"
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+
+#declare Bi = 2;
+
+#declare Texture0 = /* Planar image map */
+texture {pigment{image_map { png "test.png" map_type 0 once interpolate Bi } } }
+
+#declare Texture1 = /* Spherical image map */
+texture {pigment{image_map { png "test.png" map_type 1 interpolate Bi } } }
+
+sphere { <0, 0, 0>, 1
+   texture { Texture1 }
+   scale 10
+   rotate -90*y
+   translate <-12, 0, 20>
+}
+
+plane {
+   z, 0
+   hollow on
+   clipped_by {box { <0, 0, -1>, <1, 1, 1> } }
+   texture { Texture0 }
+   translate <-0.5, -0.5, 0>
+   scale 20
+   rotate <20, 30, 0>
+   translate <12, 0, 20>
+}
+
+camera {
+   location  <0, 0, -20>
+   angle 65
+   right   x*image_width/image_height
+   look_at <0, 0, 0>
+}
+
+light_source { <0, 300, -200> colour White }
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Image_map demonstration, shows various types of mapping
+// File by Alexander Enzmann
+// NOTE: Requires "test.png"
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "shapes.inc"
+
+#declare Bi = 2.0;
+
+#declare Texture2 = /* Cylindrical image map */
+texture {pigment{image_map {png "test.png" map_type 2 once interpolate Bi } } }
+
+#declare Texture5 = /* Torus image map */
+texture {pigment{image_map {png "test.png" map_type 5 interpolate Bi } } }
+
+cylinder { <0,0,0>, y, 1
+   open
+   texture { Texture2 }
+   translate <0, -0.5, 0>
+   scale <7, 14, 7>
+   rotate <40, -60, 0>
+   translate <-12, 11, 20>
+}
+
+object { Hyperboloid_Y
+   translate 1*y scale <1, 0.5, 1>
+   texture { Texture2 }
+   scale <1, 2, 1> translate <0, -1, 0>
+   clipped_by {box{<-2,-1,-2>,<2,1,2>} } //bounded_by{clipped_by}
+   scale <5, 7, 5>
+   rotate <-40, -90, 0>
+   translate <-12, -11, 20>
+}
+
+/* Torus having major radius = 6.4, minor radius = 3.5 */
+
+torus { 6.4, 3.5
+   texture { Texture5 }
+   rotate -90*y
+   rotate -20*x
+   translate <12, 11, 20>
+}
+
+object { Paraboloid_Y
+   texture { Texture2 }
+   clipped_by{box{<-2,0,-2>,<2,1,2>} } //bounded_by{clipped_by}
+   translate <0, -0.5, 0>
+   scale <8, 16, 8>
+   rotate <-40, 0, 0>
+   translate <12, -11, 12>
+}
+
+camera {
+   location  <0, 0, -25>
+   angle 65
+   right   x*image_width/image_height
+   look_at <0, 0, 0>
+}
+
+light_source {<0, 600, -400> colour White}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Material_map example
+// File by Drew Wells
+// NOTE: Uses povmap.png
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "textures.inc"
+#include "skies.inc"
+
+camera {
+   location  <0,  0,-120>
+   right   x*image_width/image_height
+   angle 35
+   look_at  <0,0,0>
+}
+
+
+sphere { <0, 0, 0>, 25
+   texture {
+      material_map {
+         png "povmap.png"
+         /* Now a list of textures to map with instead of colors */
+         texture {
+            pigment {color red 0.3 green 0.1 blue 1}
+            normal  {ripples 0.85 frequency 10 }
+            finish  {specular 0.75}
+            scale 5
+         }
+
+         texture {
+            pigment {White}
+            finish {ambient 0 diffuse 0 reflection 0.9 specular 0.75}
+         }
+
+         texture {pigment{NeonPink} finish{Luminous}}
+
+         texture {
+            pigment {
+               gradient y
+               colour_map {
+                  [0.00, 0.33  colour red 1 green 0 blue 0
+                               colour red 0 green 0 blue 1]
+                  [0.33, 0.66  colour red 0 green 0 blue 1
+                               colour red 0 green 1 blue 0]
+                  [0.66, 1.001 colour red 0 green 1 blue 0
+                               colour red 1 green 0 blue 0]
+               }
+            }
+            finish{specular 0.75}
+            scale 8
+         }
+      }
+      scale 30
+      translate <-15, -15, 0>
+   }
+}
+
+/*Sky*/
+sky_sphere { S_Cloud2 }
+
+plane { y,-25
+   pigment {
+      checker  color Gold color Firebrick
+      scale 10
+   }
+   finish {
+      ambient 0.1
+      diffuse 0.8
+      /*reflection 0.6*/
+   }
+}
+
+
+light_source {<100, 140, -130> colour White}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Pigment_map example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "textures.inc"
+
+camera {
+  location <0,3,-31>
+  right   x*image_width/image_height
+  angle 23
+  look_at <0,3,01>
+}
+
+plane {
+  y, -1.01
+  pigment {checker White, Black rotate<0,45,0>}
+}
+
+plane {
+  z, 3.01
+  hollow on
+  pigment {checker White, Black rotate<0,0,45>}
+}
+
+light_source { <300, 500, -500> color Gray65}
+light_source { <-50,  10, -500> color Gray65}
+
+box{<-2,-2,0>,<2,2,1>
+  pigment {
+    gradient x
+    pigment_map{
+      [0.2 Jade]
+      [0.4 radial frequency 10 rotate x*90]
+      [0.6 radial frequency 10 rotate x*90]
+      [0.8 DMFWood4 scale 3 rotate x*80]
+    }
+  }
+  translate <-3,5.50>
+}
+
+box{<-2,-2,0>,<2,2,1>
+  pigment {
+    wood
+    pigment_map{
+      [0.2 Jade]
+      [0.4 radial frequency 10 rotate x*90]
+      [0.6 radial frequency 10 rotate x*90]
+      [0.8 DMFWood4 scale 3 rotate x*80]
+    }
+  }
+  translate <3,5.50>
+}
+box{<-2,-2,0>,<2,2,1>
+  pigment {
+    checker
+      pigment { Jade }
+      pigment { radial frequency 10 rotate x*90}
+  }
+  translate <-3,1,0>
+}
+box{<-2,-2,0>,<2,2,1>
+  pigment {
+    radial frequency 6
+    pigment_map{
+      [0.2 Jade]
+      [0.4 radial frequency 10]
+      [0.6 radial frequency 10]
+      [0.8 DMFWood4 scale 3 rotate x*10]
+    }
+    rotate x*90
+  }
+  translate <3,1,0>
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+camera {
+  location <0,7,-100>
+  right   x*image_width/image_height
+  angle 20 //direction 4 *z
+  look_at <0,7.5,0>
+}
+
+plane {
+  z, 3.01
+  hollow on
+  pigment {checker color rgb<1,1,1>, color rgb<1,1,1>*0  rotate<0,0,45>}
+}
+
+light_source { <300, 500, -500> color rgb<1,1,1>*0.65}
+light_source { <-50,  10, -500> color rgb<1,1,1>*0.65}
+
+#declare Radius =2.5;
+#declare RowSpace=1.35;
+#declare ColSpace=1.25;
+#declare Dist=0.9-Radius;
+#declare Row3=-Dist;
+#declare Row2=Row3+Radius*RowSpace*2;
+#declare Row1=Row2+Radius*RowSpace*2;
+#declare Col1= -Radius*ColSpace*4;
+#declare Col2= Col1+Radius*ColSpace*2;
+#declare Col3= Col2+Radius*ColSpace*2;
+#declare Col4= Col3+Radius*ColSpace*2;
+#declare Col5= Col4+Radius*ColSpace*2;
+
+
+#declare Thing=
+intersection {
+   sphere {<0, 0, 0>, 1}
+   box{<-1,-1,-1><1,1,1> translate z*0.4 rotate 45*y}
+   scale Radius
+}
+
+
+object {Thing pigment {agate}       translate <Col1 ,Row1 ,Dist>}
+object {Thing pigment {bozo}        translate <Col2 ,Row1 ,Dist>}
+object {Thing pigment {checker}     translate <Col3 ,Row1 ,Dist>}
+object {Thing pigment {color rgb<1,1,1>} translate <Col4 ,Row1 ,Dist>}
+object {Thing pigment {gradient x}       translate <Col5 ,Row1 ,Dist>}
+
+object {Thing pigment {granite}                 translate <Col1 ,Row2 ,Dist>}
+object {Thing pigment {hexagon rotate -x*90}    translate <Col2 ,Row2 ,Dist>}
+object {Thing pigment {image_map{png "test.png"}
+        translate -(x+y)/2
+        scale 2*Radius}  translate <Col3 ,Row2 ,Dist>}
+object {Thing pigment {leopard scale .3}    translate <Col4 ,Row2 ,Dist>}
+object {Thing pigment {mandel 256} translate <Col5 ,Row2 ,Dist>}
+
+object {Thing pigment {marble turbulence .8}  translate <Col1 ,Row3 ,Dist>}
+object {Thing pigment {onion}   translate <Col2 ,Row3 ,Dist>}
+object {Thing pigment {radial rotate -x*90}  translate <Col3 ,Row3 ,Dist>}
+object {Thing pigment {spotted} translate <Col4 ,Row3 ,Dist>}
+object {Thing pigment {wood turbulence .15 scale .5} translate <Col5 ,Row3 ,Dist>}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Demo using the spiral1 texture ... by Dieter Bayer, May 1994
+//
+// 9 discs with different spiral1 textures.
+//
+// The scaling factor of the texture, i.e. the number of turns
+// one "arm" of the spiral makes, decreases from left to right.
+//
+// The number of "arms" of the spiral,
+// increases from top to bottom.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+//
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "shapes.inc"
+
+/* factors used for positioning the discs */
+
+#declare X = 2.1;
+#declare Y = 2.0;
+
+/* arms used */
+
+#declare O1 = 3;
+#declare O2 = 6;
+#declare O3 = 9;
+
+/* scaling used */
+
+#declare S1 = 100;
+#declare S2 = 1;
+#declare S3 = 0.2;
+
+/* Spiral 1 */
+
+#declare Spiral1 =
+texture {
+  pigment {
+    spiral1 O1
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S1, S1, S1>
+}
+
+/* Spiral 2 */
+
+#declare Spiral2 =
+texture {
+  pigment {
+    spiral1 O1
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S2, S2, S2>
+}
+
+/* Spiral 3 */
+
+#declare Spiral3 =
+texture {
+  pigment {
+    spiral1 O1
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S3, S3, S3>
+}
+
+/* Spiral 4 */
+
+#declare Spiral4 =
+texture {
+  pigment {
+    spiral1 O2
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S1, S1, S1>
+}
+
+/* Spiral 5 */
+
+#declare Spiral5 =
+texture {
+  pigment {
+    spiral1 O2
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S2, S2, S2>
+}
+
+/* Spiral 6 */
+
+#declare Spiral6 =
+texture {
+  pigment {
+    spiral1 O2
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+
+  }
+  finish { ambient 1 }
+  scale <S3, S3, S3>
+}
+
+/* Spiral 7 */
+
+#declare Spiral7 =
+texture {
+  pigment {
+    spiral1 O3
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S1, S1, S1>
+}
+
+/* Spiral 8 */
+
+#declare Spiral8 =
+texture {
+  pigment {
+    spiral1 O3
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S2, S2, S2>
+}
+
+/* Spiral 9 */
+
+#declare Spiral9 =
+texture {
+  pigment {
+    spiral1 O3
+    color_map { [ 0.0 color rgb<1,1,1>]
+                [ 1.0 color rgb<0.0,0.1,0.3>]}
+  }
+  finish { ambient 1 }
+  scale <S3, S3, S3>
+}
+
+camera {
+  location <0, 0, -6.5>
+  right   x*image_width/image_height
+  angle 65
+  look_at <0, 0, 0>
+}
+
+background { color rgb<1,1,1>*0.5 }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral1 } translate <-1.5*X, +1*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral2 } translate <-0.5*X, +1*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral3 } translate <+0.5*X, +1*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral4 } translate <-1*X,  0*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral5 } translate < 0*X,  0*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral6 } translate <+1*X,  0*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral7 } translate <-0.5*X, -1*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral8 } translate < 0.5*X, -1*Y, 0> }
+
+disc { <0, 0, 0>, <0, 0, 1>, 1 hollow on texture { Spiral9 } translate <+1.5*X, -1*Y, 0> }
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// File: transmitfx.pov
+// Last updated: 30/8/01
+// Author: Rune S. Johansen
+// Description:
+// This file demonstrates how to create special effect filters
+// by using "transmit" creatively, also outside of the 0 to 1 range.
+
+// The shadows are a bit confusing, but try to render both
+// with and without them.
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#declare Shadows = off;
+
+//-------------------------------------------------------------------------
+// This scene uses a non-standard camera set-up.
+// (See CAMERA in the included documentation for details.)
+// If you are new to POV-Ray, you might want to try a different demo scene.
+//-------------------------------------------------------------------------
+// A camera that looks down from above.
+camera {
+   orthographic
+   location 6*y
+   look_at 0
+}
+
+// A light.
+light_source {<0,300,100>, color 1.5}
+
+// And a nice blue checkered plane
+plane {
+   y, -3
+   pigment {checker color <0.1,0.4,0.9>, color <0.1,0.6,0.9> scale 0.5}
+}
+
+union {
+   box {<-5,-1, 0>, <5,-1, 0.9>}
+   box {<-5,-1,-3>, <5,-1,-2.1>}
+   pigment {color <0.0,0.2,0.5>}
+   finish {ambient 1 diffuse 0}
+   no_shadow
+}
+
+// A union with a brown sphere, a white torus
+// and a disc with no texture.
+#declare FilterAndSphere =
+union {
+   sphere {
+      <0.3,-2,0.4>, 0.7
+      pigment {color <0.9,0.6,0.1>}
+      finish {phong 1}
+   }
+   torus {
+      0.9, 0.05
+      pigment {color rgb 1}
+   }
+   disc {0, y, 0.9} // the disc will be textured later
+   #if (Shadows=off) no_shadow #end
+   translate -0.2*z
+}
+
+// Just a macro to create the text labels
+#macro Label (String1,String2,Location)
+   union {
+      text {
+         ttf "crystal.ttf", String1, 0.1, <0,0>
+         rotate 90*x scale 0.5 translate <-0.9,0,-1.5>
+      }
+      text {
+         ttf "crystal.ttf", String2, 0.1, <0,0>
+         rotate 90*x scale 0.5 translate <-0.9,0,-1.9>
+      }
+      clipped_by {plane {y, -0.01}}
+      translate Location
+      pigment {color rgb 1}
+      finish {ambient 1 diffuse 0}
+      no_shadow
+   }
+#end
+
+// CENTER DISC: NO EFFECT
+// With a transmit value of 1.0, things seen through this
+// disc look the same.
+object {
+   FilterAndSphere
+
+// This texture will apply only to the disc:
+   pigment {color rgb 0.0 transmit 1.0}
+   finish {ambient 1 diffuse 0}
+
+   translate <-2,0,+2>
+}
+Label ("rgb 0.0","t   1.0",<-2,0,+2>)
+
+// TOP DISC: DARK EFFECT
+// With a black color and a transmit value of 0.5, things
+// seen through this disc look darker.
+object {
+   FilterAndSphere
+// This texture will apply only to the disc:
+   pigment {color rgb 0.0 transmit 0.5}
+   finish {ambient 1 diffuse 0}
+   translate < 0,0,+2>
+}
+Label ("rgb 0.0","t   0.5",< 0,0,+2>)
+
+// UPPER RIGHT DISC: BRIGHT EFFECT
+// With a black color and a transmit value of 2.0, things
+// seen through this disc look brighter.
+object {
+   FilterAndSphere
+// This texture will apply only to the disc:
+   pigment {color rgb 0.0 transmit 2.0}
+   finish {ambient 1 diffuse 0}
+   translate <+2,0,+2>
+}
+Label ("rgb 0.0","t   2.0",<+2,0,+2>)
+
+// LOWER RIGHT DISC: CONTRAST DOWN
+// With a gray color and a transmit value of 0.5, things
+// seen through this disc have less contrast.
+object {
+   FilterAndSphere
+// This texture will apply only to the disc:
+   pigment {color rgb 0.5 transmit 0.5}
+   finish {ambient 1 diffuse 0}
+   translate <-3,0,-1>
+}
+Label ("rgb 0.5","t   0.5",<-3,0,-1>)
+
+// BOTTOM DISC: CONTRAST UP
+// With a gray color and a transmit value of 2.0, things
+// seen through this disc have more contrast.
+object {
+   FilterAndSphere
+// This texture will apply only to the disc:
+   pigment {color rgb 0.5 transmit 2.0}
+   finish {ambient 1 diffuse 0}
+   translate <-1,0,-1>
+}
+Label ("rgb 0.5","t   2.0",<-1,0,-1>)
+
+// LOWER LEFT DISC: TOTAL CONTRAST
+// With a gray color and a transmit value of 1000, things
+// seen through this disc have very high contrast.
+object {
+   FilterAndSphere
+// This texture will apply only to the disc:
+   pigment {color rgb 0.5 transmit 1000}
+   finish {ambient 1 diffuse 0}
+   translate <+1,0,-1>
+}
+Label ("rgb 0.5","t  1000",<+1,0,-1>)
+
+// UPPER LEFT DISC: INVERT COLORS
+// With a gray color and a transmit value of -1, things
+// seen through this disc have inverted colors! Fun, eh?
+object {
+   FilterAndSphere
+// This texture will apply only to the disc:
+   pigment {color rgb 0.5 transmit -1}
+   finish {ambient 1 diffuse 0}
+   translate <+3,0,-1>
+}
+Label ("rgb 0.5","t  -1.0",<+3,0,-1>)
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Weighted averaged textures example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 2.2}
+
+#include "colors.inc"
+#include "textures.inc"
+
+camera {
+  location <0,3,-31>
+  right   x*image_width/image_height
+  angle 23
+  look_at  <0,3,0>
+}
+
+
+plane {  z, 4.01  hollow on pigment  { color rgb<1,1,1>}}
+
+light_source { <300, 500, -500> color Gray65}
+light_source { <-50,  10, -500> color Gray65}
+
+#declare Thing = plane{z,0.1 hollow on clipped_by{box{-2,2}}}
+
+
+object{Thing
+  texture {
+    average
+    texture_map {
+      [pigment{Jade} finish{ambient .2}]
+      [pigment{radial frequency 10} finish{phong 1} rotate x*90]
+    }
+  }
+  translate <-3,5.5,0>
+}
+
+object{Thing
+  texture {
+    average
+    texture_map {
+      [pigment{DMFWood4} scale 3 rotate x*80]
+      [pigment{radial frequency 10} finish{phong 1} rotate x*90]
+    }
+  }
+  translate <3,5.5,0>
+}
+
+object{Thing
+  texture {
+    average
+    texture_map {
+      [3.0 pigment{Jade} finish{ambient .2}]
+      [1.0 pigment{radial frequency 10} finish{phong 1} rotate x*90]
+    }
+  }
+  translate <-3,1,0>
+}
+
+object{Thing
+  texture {
+    average
+    texture_map {
+      [pigment{radial frequency 10} finish{phong 1} rotate x*90 translate < 1, 1,0>]
+      [pigment{radial frequency 10} finish{phong 1} rotate x*90 translate <-1,-1,0>]
+    }
+  }
+  translate <3,1,0>
+}
+
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Texture_map example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "textures.inc"
+
+
+camera {
+  location <0,3,-31>
+  right   x*image_width/image_height
+  angle 21
+  look_at  <0,3,0>
+}
+
+plane {
+  y, -1.01
+  pigment {checker White, Black}
+}
+
+plane {
+  z, 3.01
+  hollow on
+  pigment {checker White, Black}
+}
+
+light_source { <300, 500, -500> color Gray65}
+light_source { <-50,  10, -500> color Gray65}
+
+
+sphere{0,2
+  texture {
+    gradient x
+    texture_map{
+      [0.2 pigment{Jade} finish{ambient .2}]
+      [0.4 pigment{radial frequency 10} finish{phong 1} rotate x*90]
+      [0.6 pigment{radial frequency 10} finish{phong 1} rotate x*90]
+      [0.8 pigment{DMFWood4} scale 3 rotate x*80]
+    }
+  }
+  translate <-3,5.25,0>
+}
+
+sphere{0,2
+  texture {
+    wood
+    texture_map{
+      [0.2 pigment{Jade} finish{ambient .2}]
+      [0.4 pigment{radial frequency 10} finish{phong 1} rotate x*90]
+      [0.6 pigment{radial frequency 10} finish{phong 1} rotate x*90]
+      [0.8 pigment{DMFWood4} scale 3 rotate x*80]
+    }
+  }
+  translate <3,5.25,0>
+}
+
+sphere{0,2
+  texture {
+    checker
+      texture { pigment{Jade} finish{ambient .2} }
+      texture { pigment{radial frequency 10} finish{phong 1} rotate x*90}
+  }
+  translate <-3,1,0>
+}
+
+sphere{0,2
+  texture {
+    radial frequency 6
+    texture_map{
+      [0.2 pigment{Jade} finish{ambient .2}]
+      [0.4 pigment{radial frequency 10} finish{phong 1} ]
+      [0.6 pigment{radial frequency 10} finish{phong 1} ]
+      [0.8 pigment{DMFWood4} scale 3 rotate x*10]
+    }
+    rotate x*90
+  }
+  translate <3,1,0>
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Texture warp example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+
+camera {
+  location <0,3,-31>
+  right   x*image_width/image_height
+  direction 3.5*z
+}
+
+plane {  y,-1.01  hollow on pigment {checker Yellow,White}}
+
+plane {  z, 4.01  hollow on pigment {checker Yellow,White}}
+
+light_source { <300, 500, -500> color Gray65}
+light_source { <-50,  10, -500> color Gray65}
+
+#declare Thing = plane{z,0.1 hollow on clipped_by{box{-2,2}}}
+#declare Test = pigment{image_map{png "test.png"} translate -1/2 scale 4}
+
+object{Thing
+  pigment { Test
+
+//This is the traditional non-warp turbulence in the X direction only
+    turbulence 0.4*x octaves 2
+
+// followed by a rotate left 90 degrees.  The result is a rotated image
+// with the turbulence rotated with it as see in the upper left
+    rotate 90*z
+  }
+  translate <-3,5.25,0>
+}
+
+object{Thing
+  pigment { Test
+// Here we rotate first, then do X turbulence.  However the upper
+//  right image shows that traditional POV-Ray syntax always transforms
+//  the turbulence with the pattern, regardless of the order specified.
+
+    rotate 90*z
+    turbulence 0.4*x octaves 2
+  }
+  translate <3,5.25,0>
+}
+
+object{Thing
+  pigment { Test
+// Here we do the rotation first
+    rotate 90*z
+
+// and then do the turbulence in a new warp statement.  The results in the
+// lower left are what we wanted all along.
+    warp{turbulence 0.4*x octaves 2}
+  }
+  translate <-3,1,0>
+}
+
+object{Thing
+  pigment { Test
+// This lower right image shows that putting the warp statement first,
+//  reverses the order and behaves the same as the upper images.
+//  The turbulence is rotated with the pattern.  The results are slightly
+//  different than the upper images.  That is because here, the turb happens
+//  after the transformations that are inside the declared Test pigment.
+    warp{turbulence 0.4*x octaves 2}
+    rotate 90*z
+  }
+  translate <3,1,0>
+}
+// This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+// To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+// or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View,
+// California, 94041, USA.
+
+// Persistence Of Vision raytracer sample file.
+// Texture warp example
+//
+// -w320 -h240
+// -w800 -h600 +a0.3
+
+#version 3.7;
+global_settings {assumed_gamma 1.0}
+
+#include "colors.inc"
+#include "textures.inc"
+
+camera {
+  location <0,3,-29>
+  right   x*image_width/image_height
+  direction 3.5*z
+}
+
+plane {  y,-1.01  hollow on pigment {checker Yellow,White}}
+
+plane {  z, 4.01  hollow on pigment {checker Yellow,White}}
+
+light_source { <300, 500, -500> color Gray65}
+light_source { <-50,  10, -500> color Gray65}
+
+
+// Macro for the adjustment of images for POV-Ray 3.6.2
+// for image_map with assumed_gamma = 1.0 ;
+#macro Correct_Pigment_Gamma(Orig_Pig, New_G)
+  #local Correct_Pig_fn =
+      function{ pigment {Orig_Pig} }
+  pigment{ average pigment_map{
+   [function{ pow(Correct_Pig_fn(x,y,z).x, New_G)}
+               color_map{[0 rgb 0][1 rgb<3,0,0>]}]
+   [function{ pow(Correct_Pig_fn(x,y,z).y, New_G)}
+               color_map{[0 rgb 0][1 rgb<0,3,0>]}]
+   [function{ pow(Correct_Pig_fn(x,y,z).z, New_G)}
+               color_map{[0 rgb 0][1 rgb<0,0,3>]}]
+   }}
+#end //
+// "image_map" gamma corrected:
+//    Correct_Pigment_Gamma(
+//    pigment{ PIGMENT }
+//    , Correct_Gamma )
+//------------------------------------------------
+//------------------------------------------------
+
+#declare Thing = plane{z,0.1 hollow on clipped_by{box{<-2.75,-2,-2>,<2.75,2,2>}}}
+
+#declare Tree =
+  Correct_Pigment_Gamma( // gamma correction
+    pigment{ DMFWood4 scale 2 translate <1/2,0,1>
+             rotate x*85 translate 10*y}
+, 2.1 ) //, New_Gamma
+
+object{Thing
+  pigment{ Tree }
+  translate <-3,5.25,0>
+}
+
+object{Thing
+  pigment{ Tree
+    warp{repeat x*2}
+  }
+  translate <3,5.25,0>
+}
+
+object{Thing
+  pigment{ Tree
+    warp{repeat x*2 offset z*0.25}
+  }
+  translate <-3,1,0>
+}
+
+object{Thing
+  pigment{ Tree
+    warp{repeat x*2 flip y}
+  }
+  translate <3,1,0>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################
+
+Modify error to have unique error codes as with Xpapi, and allow them to be
+turned off (except for fatal errors) either from the command line or, for larger
+sets, a config file.
+
+
+
+
+
+

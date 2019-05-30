@@ -30,6 +30,7 @@ var ac    = require("ansi-colors");
 var mu    = require("minicle-usage");
 
 cpov.vectorDef     = require("./lib/vectorDef.js");      // Vector classes
+cpov.textureDef    = require("./lib/textureDef.js");     // Texture classes
 cpov.primitiveDef  = require("./lib/primitiveDef.js");   // Primitive base class
 cpov.objDef        = require("./lib/objDef.js");         // Primitive subclasses
 cpov.gsDef         = require("./lib/gsDef.js");          // globalSettings
@@ -596,9 +597,12 @@ function main() {
         docs = docHumper(docs, "GlobalSettings", cpov.gsDef);
         docs = docHumper(docs, "Settings", cpov.settingsDef);
 
-        for(var k in cpov.vectorDef) {
+        for(var k in cpov.vectorDef)
             docs = docHumper(docs, k.substr(0, 1).toUpperCase() + k.substr(1), cpov.vectorDef[k]);
-        }
+
+        for(var k in cpov.textureDef)
+            docs = docHumper(docs, k.substr(0, 1).toUpperCase() + k.substr(1), cpov.textureDef[k]);
+
 
         docs = docs.replace(/\$keylist\.([A-Za-z]+)/g, function(match, p1) {
             if(cpov[p1] !== undefined) {
@@ -630,6 +634,8 @@ function main() {
         for(var name in cpov.objDef)
             objects.push(name.substr(0, 1).toUpperCase() + name.substr(1));
         for(var name in cpov.vectorDef)
+            objects.push(name.substr(0, 1).toUpperCase() + name.substr(1));
+        for(var name in cpov.textureDef)
             objects.push(name.substr(0, 1).toUpperCase() + name.substr(1));
 
         objects.sort();
@@ -718,6 +724,12 @@ function main() {
         for(var pname in cpov.vectorDef) {
             var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
             fp.write(new ClassBuilder(cname, cpov.vectorDef[pname], "./lib/snippets.js") + "\n\n");
+            fp.write("exports." + cname + " = " + cname + ";\n\n\n");
+        }
+
+        for(var pname in cpov.textureDef) {
+            var cname = pname.substr(0, 1).toLocaleUpperCase() + pname.substr(1);
+            fp.write(new ClassBuilder(cname, cpov.textureDef[pname], "./lib/snippets.js") + "\n\n");
             fp.write("exports." + cname + " = " + cname + ";\n\n\n");
         }
 
