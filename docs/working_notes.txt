@@ -4,52 +4,7 @@ TO ADD: https://www.npmjs.com/package/polyhedra -- JSON format data from the Vir
 TODO: Scene with a couple of objects to perform manual syntax tests
 
 
-Next: finish
 
-FINISH:
-  finish { [FINISH_IDENTIFIER] [FINISH_ITEMS...] }
-FINISH_ITEMS:
-  ambient COLOR | diffuse [albedo] Amount [, Amount] | emission COLOR |
-  brilliance Amount | phong [albedo] Amount | phong_size Amount | specular [albedo] Amount |
-  roughness Amount | metallic [Amount] | reflection COLOR |
-  crand Amount | conserve_energy BOOL_ON_OFF |
-  reflection { Color_Reflecting_Min [REFLECTION_ITEMS...] } |
-  subsurface { translucency COLOR } |
-  irid { Irid_Amount [IRID_ITEMS...] }
-REFLECTION_ITEMS:
-  COLOR_REFLECTION_MAX | fresnel BOOL_ON_OFF |
-  falloff FLOAT_FALLOFF | exponent FLOAT_EXPONENT |
-  metallic FLOAT_METALLIC
-IRID_ITEMS:
-  thickness Amount | turbulence Amount
-
-
-Finish
-    identifier        - optional, non-empty string
-    ambient           - optional, Color
-    diffuse           - optional, float
-    diffuseAlbedo     - optional, boolean
-    diffuseBack       - optional, float
-    brilliance        - optional, float
-    emission          - optional, Color
-    crand             - optional, float
-    subsurface        - optional, Color  -- warn if globalSettings.subsurface is not set
-    phong             - optional, float
-    phongAlbedo       - optional, boolean
-    phongSize         - optional, float
-    specular          - optional, float
-    specularAlbedo    - optional, boolean
-    specularRoughness - optional, float
-    metallic          - optional, boolean
-    reflectMin        - optional, float
-    reflectMax        - optional, float
-    reflectFresnel    - optional, boolean
-    reflectFalloff    - optional, float
-    reflectExponent   - optional, float
-    reflectMetallic   - optional, float
-    conserveEnergy    - optional, boolean
-    iridescence       - optional, float
-    iridTurbulence    - optional, float
 
 
 pigment {
@@ -6563,18 +6518,6 @@ object{Thing
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ################################################################################
 
 Modify error to have unique error codes as with Xpapi, and allow them to be
@@ -6582,7 +6525,31 @@ turned off (except for fatal errors) either from the command line or, for larger
 sets, a config file.
 
 
+################################################################################
 
+Lines
+
+* Intercept Form:
+
+Where b is the x-intercept and a is the y-intercept, x/b + y/a = 1
+
+* Standard Form:
+
+Same variables as the intercept form, a * x + b * y = c, where c = a * b
+
+* Point-slope Form:
+
+Slope m = change in y / change in x or (y - y1) / (x - x1)
+
+y - y1 = m(x - x1) where x and y are zero and x1, y1 is any point on the line
+
+* Slope-intercept form:
+
+Given y-intercept b and slope m:  y = m(x + b)
+
+* Two-point form:
+
+y - y1 = ((y2 - y1)/(x2 - x1)) (x - x1)
 
 
 
